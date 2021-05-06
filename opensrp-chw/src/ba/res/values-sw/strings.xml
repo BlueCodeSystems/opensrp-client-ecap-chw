@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">WAJA</string>
+    <string name="login_title">USAID Boresha Afya  \n WAJA app</string>
+    <string name="nav_logo">USAID Boresha Afya</string>
+    <string name="menu_anc">Wajawazito</string>
+    <string name="menu_pnc">Baada ya Kujifungua</string>
+    <string name="hiv_referral">Kliniki ya Tiba na matunzo (CTC)</string>
+    <string name="tb_referral">Kliniki ya kutibu kifua kikuu</string>
+    <string name="gbv_referral">Huduma ya kuzui ukatili wa kijinsia (dawati la jinsia)</string>
+    <string name="child_gbv_referral">Huduma ya kuzui ukatili wa kijinsia (dawati la jinsia)</string>
+    <string name="created">Imeumbwa: %s</string>
+</resources>

@@ -1,0 +1,96 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    ext.kotlinVersion = '1.4.0'
+    ext.koinVersion = '2.0.1'
+    ext.espressoVersion = '3.2.0'
+    ext.dokkaVersion = '0.10.1'
+
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "http://dl.bintray.com/ona/kujaku" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.10.2"
+        classpath 'io.fabric.tools:gradle:1.31.2'
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokkaVersion}"
+        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.5"
+}
+
+allprojects {
+
+    tasks.whenTaskAdded { task ->
+        if (task.name == "lint") {
+            task.enabled = false
+        }
+    }
+
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://jitpack.io' }
+        maven { url "https://acra.googlecode.com/svn/repository/releases" }
+        maven { url "https://repo.maven.apache.org/maven2" }
+        maven { url "https://cloudant.github.io/cloudant-sync-eap/repository" }
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+        maven { url "https://dl.bintray.com/ona/rdt-capture" }
+        maven { url "http://dl.bintray.com/ona/kujaku" }
+        maven { url 'https://dl.bintray.com/ibm-watson-health/ibm-fhir-server-releases' }
+        maven { url "https://dl.bintray.com/ona/kujaku" }
+    }
+}
+
+project.ext.preDexLibs = !project.hasProperty('disablePreDex')
+
+subprojects {
+
+    group = 'org.smartregister'
+
+    ext.androidToolsBuildGradle = '4.0.1'
+    ext.androidBuildToolsVersion = '29.0.3'
+    ext.androidMinSdkVersion = 19
+    ext.androidCompileSdkVersion = 29
+    ext.androidTargetSdkVersion = 29
+
+    ext.androidAnnotationsVersion = '3.0.1'
+    ext.androidAnnotationsAPIVersion = '3.0.1'
+
+    // Improve build server performance by allowing disabling of pre-dexing
+    // (see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.)
+    project.plugins.whenPluginAdded { plugin ->
+        if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+def isReleaseBuild() {
+    return version.contains("SNAPSHOT") == false
+}
