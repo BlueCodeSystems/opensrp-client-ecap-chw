@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="org.smartregister.chw.activity.AncMemberMapActivity">
 
-    <io.ona.kujaku.views.KujakuMapView
+    <!--<io.ona.kujaku.views.KujakuMapView
         android:id="@+id/kujakuMapView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -14,7 +14,7 @@
         app:mapbox_uiAttributionGravity="center_horizontal|bottom"
         app:mapbox_uiLogoGravity="center_horizontal|bottom"
         app:mapbox_uiLogoMarginRight="30dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
 
 
 

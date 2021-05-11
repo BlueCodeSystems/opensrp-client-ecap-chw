@@ -6,7 +6,9 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.commons:commons-lang3:3.10'
-        classpath 'com.android.tools.build:gradle:4.0.2'
+        classpath 'com.android.tools.build:gradle:4.1.3'
+        //classpath 'com.google.gms:google-services:4.3.5'
+        //classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
     }
 }
 
@@ -14,15 +16,21 @@ allprojects {
     repositories {
         maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
+        //maven { url "http://dl.bintray.com/ona/kujaku" }
         maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://repo1.maven.org/maven2/com/ibm/fhir' }
         mavenLocal()
+    }
+    configurations.all {
+        resolutionStrategy.force 'org.objenesis:objenesis:2.6'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.crashlytics'
 apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -31,7 +39,43 @@ jacoco {
     toolVersion = "0.8.5"
 }
 
+//git hub packages access
+/*
+gpr.usr=YOUR_GITHUB_USERID
+gpr.key=YOUR_PERSONAL_ACCESS_TOKEN
+*/
+
+/*gpr.usr=computer-wiz
+gpr.key=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*/
+
+def githubProperties = new Properties()
+//Read the github properties content
+githubProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+
 android {
+    /*
+    git package repositories using maven
+    * */
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /**
+             * Configure path of the package repository on Github using the GITHUB_USER_ID and * Git Repository */
+            url = uri("https://maven.pkg.github.com/ellykits/neat-form")
+            url = uri("https://maven.pkg.github.com/io.ona.rdt-capture/lib")
+            url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-model")
+            url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-path")
+            url = uri("https://mvnrepository.com/artifact/com.ibm.fhir/fhir-path")
+            credentials {
+                /** get credentials from local.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN otherwise ** Set env variable GPR_USER & GPR_API_KEY**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion androidCompileSdkVersion
     buildToolsVersion androidBuildToolsVersion
@@ -157,21 +201,21 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.md'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.md'
+        //exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/LICENSE.md'
+        //exclude 'META-INF/LICENSE.txt'
+        //exclude 'META-INF/NOTICE.txt'
+        //exclude 'META-INF/NOTICE'
         exclude 'META-INF/NOTICE.md'
+        //exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/INDEX.LIST'
+        //exclude 'META-INF/DEPENDENCIES'
+        //exclude 'META-INF/notice.txt'
+        //exclude 'META-INF/license.txt'
+        //exclude 'META-INF/dependencies.txt'
+        //exclude 'META-INF/LGPL2.1'
+        //exclude 'LICENSE.txt'
     }
 
     testOptions {
@@ -316,6 +360,12 @@ android {
 }
 
 dependencies {
+
+    implementation "com.nerdstone:neat-form-core:1.1.4"
+    implementation "io.ona.rdt-capture:lib:2.1.0"
+    implementation "com.ibm.fhir:fhir-model:4.7.1"
+    implementation "com.ibm.fhir:fhir-path:4.7.1"
+
     implementation('org.smartregister:opensrp-client-chw-core:2.0.30-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
@@ -325,13 +375,15 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'com.rengwuxian.materialedittext', module: 'library'
         exclude group: 'stax', module: 'stax-api'
+        exclude group: 'io.ona.kujaku', module: 'library'
     }
 
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:5.1.0'
-    implementation('io.ona.kujaku:library:0.9.0') {
+
+    /*implementation('io.ona.kujaku:library:0.9.0') {
         exclude group: 'com.android.volley', module: 'volley'
         exclude group: 'stax', module: 'stax-api'
-    }
+    }*/
 
     //Do not upgrade to 1.1.0 due to compatibility issues
     implementation 'androidx.appcompat:appcompat:1.2.0'
