@@ -1,6 +1,6 @@
 package org.smartregister.chw.activity;
 
-import android.os.Bundle;
+/*import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mapbox.geojson.BoundingBox;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
-/*import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -18,7 +18,7 @@ import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;*/
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.turf.TurfMeasurement;
 
 import org.json.JSONException;
@@ -31,16 +31,18 @@ import org.smartregister.chw.core.utils.CoreConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-/*import io.ona.kujaku.utils.CoordinateUtils;
-import io.ona.kujaku.views.KujakuMapView;*/
-import timber.log.Timber;
+import io.ona.kujaku.utils.CoordinateUtils;
+import io.ona.kujaku.views.KujakuMapView;
+import timber.log.Timber;*/
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AncMemberMapActivity extends AppCompatActivity {
 
-    public static final String RECYCLER_VIEW_POSITION_PROPERTY = "recycler-view-position";
-    /*private KujakuMapView kujakuMapView;
+    /*public static final String RECYCLER_VIEW_POSITION_PROPERTY = "recycler-view-position";
+    private KujakuMapView kujakuMapView;
     private GeoJsonSource communityTransportersSource;
-    private LatLng userLocation;*/
+    private LatLng userLocation;
     private static int BOUNDING_BOX_PADDING = 100;
 
     @Override
@@ -48,14 +50,14 @@ public class AncMemberMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anc_member_map);
 
-        /*kujakuMapView = findViewById(R.id.kujakuMapView);
+        kujakuMapView = findViewById(R.id.kujakuMapView);
         kujakuMapView.onCreate(savedInstanceState);
         kujakuMapView.showCurrentLocationBtn(true);
         kujakuMapView.setDisableMyLocationOnMapMove(true);
 
-        userLocation = extractUserLocation();*/
+        userLocation = extractUserLocation();
 
-        /*kujakuMapView.getMapAsync(new OnMapReadyCallback() {
+        kujakuMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
                 Style.Builder builder = new Style.Builder().fromUri("asset://ba_anc_style.json");
@@ -72,16 +74,16 @@ public class AncMemberMapActivity extends AppCompatActivity {
                     }
                 });
             }
-        });*/
+        });
     }
 
-    /*private void addCommunityTransporterClickListener(@NonNull KujakuMapView kujakuMapView) {
+    private void addCommunityTransporterClickListener(@NonNull KujakuMapView kujakuMapView) {
         kujakuMapView.setOnFeatureClickListener(features -> {
             // We only pick the first one
             Feature feature = features.get(0);
             featureClicked(feature);
         }, "community-transporters");
-    }*/
+    }
 
     private void featureClicked(@NonNull Feature feature) {
         String responderName = feature.getStringProperty(CoreConstants.JsonAssets.RESPONDER_NAME);
@@ -90,14 +92,14 @@ public class AncMemberMapActivity extends AppCompatActivity {
                 .show();
     }
 
-   /* @Nullable
+    @Nullable
     private LatLng extractUserLocation() {
         double latitude = Double.parseDouble("-1.9885");
         double longitude = Double.parseDouble("33.7799");
         return new LatLng(latitude, longitude);
-    }*/
+    }
 
-    /*private void zoomToPatientLocation(@NonNull MapboxMap mapboxMap, @Nullable BoundingBox boundingBox) {
+    private void zoomToPatientLocation(@NonNull MapboxMap mapboxMap, @Nullable BoundingBox boundingBox) {
         if (userLocation != null && boundingBox == null) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(userLocation)
@@ -133,9 +135,9 @@ public class AncMemberMapActivity extends AppCompatActivity {
 
             mapboxMap.animateCamera(CameraUpdateFactory.newLatLngBounds(LatLngBounds.from(north, east, south, west), BOUNDING_BOX_PADDING));
         }
-    }*/
+    }
 
-    /*@Nullable
+    @Nullable
     private BoundingBox showCommunityTransporters(@NonNull MapboxMap mapboxMap, @Nullable FeatureCollection featureCollection) {
         if (featureCollection != null && featureCollection.features() != null && featureCollection.features().size() > 0 && communityTransportersSource != null) {
             //CameraPosition cameraPosition = new CameraPosition.Builder(). featureCollection.bbox();
@@ -153,14 +155,14 @@ public class AncMemberMapActivity extends AppCompatActivity {
         }
 
         return null;
-    }*/
+    }
 
-    /*@Nullable
+    @Nullable
     private FeatureCollection loadCommunityTransporters() {
         return FeatureCollection.fromFeatures(getRespondersFeatureList());
-    }*/
+    }
 
-    /*private List<Feature> getRespondersFeatureList() {
+    private List<Feature> getRespondersFeatureList() {
         List<CommunityResponderModel> communityResponders = ChwApplication.getInstance().communityResponderRepository().readAllResponders();
         List<Feature> featureList = new ArrayList<>();
         int counter = 0;
@@ -176,9 +178,9 @@ public class AncMemberMapActivity extends AppCompatActivity {
             }
         }
         return featureList;
-    }*/
+    }
 
-    /*private Feature getFeature(CommunityResponderModel communityResponderModel) throws JSONException {
+    private Feature getFeature(CommunityResponderModel communityResponderModel) throws JSONException {
         String[] latLong = communityResponderModel.getResponderLocation().split(" ");
         double latitude = Double.parseDouble(latLong[0]);
         double longitude = Double.parseDouble(latLong[1]);
@@ -189,9 +191,9 @@ public class AncMemberMapActivity extends AppCompatActivity {
         properties.put(CoreConstants.JsonAssets.RESPONDER_PHONE_NUMBER, communityResponderModel.getResponderPhoneNumber());
         feature.setProperties(properties);
         return Feature.fromJson(feature.toJSON().toString());
-    }*/
+    }
 
-    /*@Override
+    @Override
     protected void onStart() {
         super.onStart();
         if (kujakuMapView != null) {
