@@ -10,7 +10,7 @@ import android.os.Build;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.evernote.android.job.JobManager;
-/*import com.mapbox.mapboxsdk.Mapbox;*/
+//import com.mapbox.mapboxsdk.Mapbox;
 import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.domain.Form;
 
@@ -93,7 +93,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/*import io.ona.kujaku.KujakuLibrary;*/
+//import io.ona.kujaku.KujakuLibrary;
 import timber.log.Timber;
 
 import static org.koin.core.context.GlobalContext.getOrNull;
