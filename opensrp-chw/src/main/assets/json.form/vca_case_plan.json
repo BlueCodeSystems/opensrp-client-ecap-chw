@@ -1094,7 +1094,7 @@
         "openmrs_entity":"",
         "openmrs_entity_id":"",
         "type":"spacer",
-        "spacer_height":"15dp"
+        "spacer_height":"40dp"
       },
       {
         "key":"remarks",
