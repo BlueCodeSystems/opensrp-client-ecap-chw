@@ -956,5 +956,181 @@
         }
       }
     ]
+  },
+  "step7":{
+    "title":"Questions",
+    "fields":[
+      {
+        "key": "art_assessment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "ART Assessement",
+        "options": [
+          {
+            "key": "art_assessment",
+            "text": "ART Assessment | Child/Adolescent Living with HIV (C/ALHIV) ART Number",
+            "value": "false"
+          },
+          {
+            "key":"remark1",
+            "openmrs_entity_parent":"",
+            "openmrs_entity":"",
+            "openmrs_entity_id":"",
+            "type":"edit_text",
+            "hint":"Remarks",
+            "edit_type":"name",
+            "v_regex":{
+              "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+              "err":"Error"
+            }
+          }
+        ]
+      },
+
+      {
+        "key": "q1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Q1",
+        "options": [
+          {
+            "key": "Q1",
+            "text": "HIV-Exposed Infant (HEI), (for child 0-2 years old)",
+            "value": "false"
+          },
+          {
+            "key":"remark2",
+            "openmrs_entity_parent":"",
+            "openmrs_entity":"",
+            "openmrs_entity_id":"",
+            "type":"edit_text",
+            "hint":"Remarks",
+            "edit_type":"name",
+            "v_regex":{
+              "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+              "err":"Error"
+            }
+          }
+        ]
+      },
+
+      {
+        "key": "q1.1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Q1.1",
+        "options": [
+          {
+            "key": "Q1.1",
+            "text": "Children of People Living with HIV",
+            "value": "false"
+          },
+          {
+            "key":"remark3",
+            "openmrs_entity_parent":"",
+            "openmrs_entity":"",
+            "openmrs_entity_id":"",
+            "type":"edit_text",
+            "hint":"Remarks",
+            "edit_type":"name",
+            "v_regex":{
+              "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+              "err":"Error"
+            }
+          }
+        ]
+      },
+      {
+        "key": "q8",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Q8",
+        "options": [
+          {
+            "key": "Q8",
+            "text": "Children of People Living with HIV",
+            "value": "false"
+          },
+          {
+            "key":"remark4",
+            "openmrs_entity_parent":"",
+            "openmrs_entity":"",
+            "openmrs_entity_id":"",
+            "type":"edit_text",
+            "hint":"Remarks",
+            "edit_type":"name",
+            "v_regex":{
+              "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+              "err":"Error"
+            }
+          }
+        ]
+      },
+      {
+        "key": "q9-19",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Q9-19",
+        "options": [
+          {
+            "key": "Q9-19",
+            "text": "Girls at risk of HIV infection (at-risk AGYW)",
+            "value": "false"
+          },
+          {
+            "key":"remark5",
+            "openmrs_entity_parent":"",
+            "openmrs_entity":"",
+            "openmrs_entity_id":"",
+            "type":"edit_text",
+            "hint":"Remarks",
+            "edit_type":"name",
+            "v_regex":{
+              "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+              "err":"Error"
+            }
+          }
+        ]
+      },
+
+      {
+        "key": "Q14",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Q14",
+        "options": [
+          {
+            "key": "Q14.1",
+            "text": "Children/adolescent who has experienced sexual violence/gender-based violence",
+            "value": "false"
+          },
+          {
+            "key":"remark6",
+            "openmrs_entity_parent":"",
+            "openmrs_entity":"",
+            "openmrs_entity_id":"",
+            "type":"edit_text",
+            "hint":"Remarks",
+            "edit_type":"name",
+            "v_regex":{
+              "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+              "err":"Error"
+            }
+          }
+        ]
+      }
+    ]
   }
 }
