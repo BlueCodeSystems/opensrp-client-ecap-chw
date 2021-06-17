@@ -26,13 +26,13 @@
 
     <application
         android:name=".application.ChwApplication"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
-        android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
         android:theme="@style/ChwTheme"
         tools:replace="android:theme">
-
+        <activity android:name=".ConsentForm"></activity>
         <activity
             android:name=".activity.FamilyPlanningMemberProfileActivity"
             android:label="@string/family_planning"
@@ -125,8 +125,8 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ChildProfileActivity"
-            android:launchMode="singleTop"
             android:label="@string/child_details"
+            android:launchMode="singleTop"
             android:theme="@style/ChwTheme.NoActionBar">
             <intent-filter>
                 <action android:name="org.smartregister.action.THINKMD_ASSESSMENT" />
@@ -135,9 +135,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="smartregister.org"
-                    android:path="/" />
+                    android:path="/"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -173,6 +173,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -254,20 +255,18 @@
             android:label="@string/title_family_detail"
             android:parentActivityName=".activity.AllClientsRegisterActivity"
             android:theme="@style/FamilyTheme.NoActionBar" />
-
         <activity
             android:name=".activity.AncMemberMapActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".core.activity.CoreCommunityRespondersRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
-        <activity android:name=".activity.GuideBooksTutorialsActivity"
-            android:theme="@style/ChwTheme.NoActionBar"/>
-
-        <activity android:name=".activity.GuideBooksCounselingActivity"
-            android:theme="@style/ChwTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.GuideBooksTutorialsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.GuideBooksCounselingActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
