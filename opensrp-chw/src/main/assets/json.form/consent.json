@@ -1,0 +1,149 @@
+{
+  "count": "3",
+  "encounter_type": "Consent form",
+  "entity_id": "",
+  "relational_id": "",
+  "validate_on_submit": true,
+  "show_errors_on_submit": true,
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "steps": {
+    "title": "Consent form",
+    "fields": [
+
+      {
+        "key": "childs_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "childs name",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter childs name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter childs name"
+        }
+      },
+
+
+
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Arr number",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter ART Number"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter ART Number"
+        },
+        "relevance": {
+          "step1:child_name": {
+            "type": "string",
+            "ex": "equalTo(., \"test\")"
+          }
+        }
+      },
+
+
+
+      {
+        "key": "nrc_guardian",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "NRC",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter guardian`s NRC"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter a valid guardian`s NRC"
+        }
+      },
+
+
+
+      {
+        "key": "Current_Date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "current_date",
+        "type": "time_picker",
+        "hint": "Date",
+        "expanded": false,
+        "duration": {
+          "label": "Time"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      }
+
+    ]
+  }
+
+
+
+}
