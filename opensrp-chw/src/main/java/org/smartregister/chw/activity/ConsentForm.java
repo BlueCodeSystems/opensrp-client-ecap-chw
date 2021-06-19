@@ -20,10 +20,10 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
+public class ConsentForm extends CoreFamilyRegisterActivity {
 
     public static void startFamilyRegisterForm(Activity activity) {
-        Intent intent = new Intent(activity, FamilyRegisterActivity.class);
+        Intent intent = new Intent(activity, ConsentForm.class);
         intent.putExtra(Constants.ACTIVITY_PAYLOAD.ACTION, Constants.ACTION.START_REGISTRATION);
         activity.startActivity(intent);
     }
@@ -37,7 +37,7 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
     @Override
     protected void registerBottomNavigation() {
         super.registerBottomNavigation();
-        FamilyRegisterActivity.registerBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
+        ConsentForm.registerBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
     }
 
     @Override
