@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.smartregister.chw.fragment.JobAidsDashboardFragment">
+    tools:context="org.smartregister.chw.ecap.smartregister.chw.fragment.JobAidsDashboardFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"

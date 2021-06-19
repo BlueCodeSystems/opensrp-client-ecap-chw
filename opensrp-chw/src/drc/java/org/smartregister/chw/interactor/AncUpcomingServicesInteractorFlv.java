@@ -2,7 +2,7 @@ package org.smartregister.chw.interactor;
 
 import android.content.Context;
 
-import org.smartregister.chw.R;
+import ecap.smartregister.chw.R;
 import org.smartregister.chw.anc.domain.MemberObject;
 import org.smartregister.chw.anc.model.BaseUpcomingService;
 

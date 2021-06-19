@@ -17,8 +17,7 @@
     
     -->
 
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/family_list"
         android:name="org.smartregister.chw.FamilyListFragment"
         android:layout_width="@dimen/item_width"
@@ -27,12 +26,16 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="org.smartregister.chw.activity.FamilyListActivity"
-        tools:listitem="@layout/family_list_content" />
+        tools:listitem="@layout/family_list_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <FrameLayout
         android:id="@+id/family_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="3">
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 package org.smartregister.chw.model;
 
-import org.smartregister.chw.R;
+import ecap.smartregister.chw.R;
 import org.smartregister.chw.core.model.NavigationOption;
 import org.smartregister.chw.util.Constants;
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="18dp"
-    tools:context="org.smartregister.chw.activity.GuideBooksTutorialsActivity">
+    tools:context="org.smartregister.chw.ecap.smartregister.chw.activity.GuideBooksTutorialsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutTutorials"
