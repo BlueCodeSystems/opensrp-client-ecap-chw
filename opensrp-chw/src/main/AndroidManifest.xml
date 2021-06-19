@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.smartregister.chw">
+    package="ecap.smartregister.chw">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,7 +25,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".application.ChwApplication"
+        android:name="ecap.smartregister.chw.application.ChwApplication"
         android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:supportsRtl="true"
@@ -34,79 +34,79 @@
         tools:replace="android:theme">
 
         <activity
-            android:name=".activity.FamilyPlanningMemberProfileActivity"
+            android:name="ecap.smartregister.chw.activity.FamilyPlanningMemberProfileActivity"
             android:label="@string/family_planning"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AncUpcomingServicesActivity"
+            android:name="ecap.smartregister.chw.activity.AncUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AncMedicalHistoryActivity"
+            android:name="ecap.smartregister.chw.activity.AncMedicalHistoryActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AncHomeVisitActivity"
+            android:name="ecap.smartregister.chw.activity.AncHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AncRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.AncRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AncMemberProfileActivity"
+            android:name="ecap.smartregister.chw.activity.AncMemberProfileActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.PncUpcomingServicesActivity"
+            android:name="ecap.smartregister.chw.activity.PncUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.PncMedicalHistoryActivity"
+            android:name="ecap.smartregister.chw.activity.PncMedicalHistoryActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.PncHomeVisitActivity"
+            android:name="ecap.smartregister.chw.activity.PncHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.PncRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.PncRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.PncMemberProfileActivity"
+            android:name="ecap.smartregister.chw.activity.PncMemberProfileActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.MalariaRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.MalariaRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FpRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.FpRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity android:name=".core.activity.ChwP2pModeSelectActivity" />
         <activity
-            android:name=".activity.JobAidsActivity"
+            android:name="ecap.smartregister.chw.activity.JobAidsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FamilyRemoveMemberActivity"
+            android:name="ecap.smartregister.chw.activity.FamilyRemoveMemberActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FamilyProfileMenuActivity"
+            android:name="ecap.smartregister.chw.activity.FamilyProfileMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FamilyRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.FamilyRegisterActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FamilyProfileActivity"
+            android:name="ecap.smartregister.chw.activity.FamilyProfileActivity"
             android:label="@string/title_family_detail"
-            android:parentActivityName=".activity.FamilyRegisterActivity"
+            android:parentActivityName="ecap.smartregister.chw.activity.FamilyRegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChwTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.smartregister.chw.activity.FamilyRegisterActivity" />
+                android:value="ecap.smartregister.chw.activity.FamilyRegisterActivity" />
         </activity>
         <activity
-            android:name=".activity.FamilyOtherMemberProfileActivity"
+            android:name="ecap.smartregister.chw.activity.FamilyOtherMemberProfileActivity"
             android:label="@string/title_family_detail"
-            android:parentActivityName=".activity.FamilyRegisterActivity"
+            android:parentActivityName="ecap.smartregister.chw.activity.FamilyRegisterActivity"
             android:theme="@style/FamilyTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.smartregister.chw.activity.FamilyProfileActivity" />
+                android:value="ecap.smartregister.chw.activity.FamilyProfileActivity" />
         </activity>
         <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
@@ -115,16 +115,16 @@
             android:theme="@style/FamilyTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".activity.ChildRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.ChildRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.UpcomingServicesActivity"
+            android:name="ecap.smartregister.chw.activity.UpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.ChildHomeVisitActivity"
+            android:name="ecap.smartregister.chw.activity.ChildHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.ChildProfileActivity"
+            android:name="ecap.smartregister.chw.activity.ChildProfileActivity"
             android:launchMode="singleTop"
             android:label="@string/child_details"
             android:theme="@style/ChwTheme.NoActionBar">
@@ -141,7 +141,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ChildMedicalHistoryActivity"
+            android:name="ecap.smartregister.chw.activity.ChildMedicalHistoryActivity"
             android:label="@string/medical_history"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
@@ -157,13 +157,13 @@
             android:label="@string/upcoming_services"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.IndividualProfileRemoveActivity"
+            android:name="ecap.smartregister.chw.activity.IndividualProfileRemoveActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.ClientReferralActivity"
+            android:name="ecap.smartregister.chw.activity.ClientReferralActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="ecap.smartregister.chw.activity.LoginActivity"
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -177,11 +177,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AboveFiveChildProfileActivity"
+            android:name="ecap.smartregister.chw.activity.AboveFiveChildProfileActivity"
             android:label="@string/child_details"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.MalariaProfileActivity"
+            android:name="ecap.smartregister.chw.activity.MalariaProfileActivity"
             android:label="@string/malaria"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
@@ -189,21 +189,21 @@
             android:label="@string/anc_register"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.MalariaUpcomingServicesActivity"
+            android:name="ecap.smartregister.chw.activity.MalariaUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.ReferralRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.ReferralRegisterActivity"
             android:label="@string/anc_register"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.ReferralRegistrationActivity"
+            android:name="ecap.smartregister.chw.activity.ReferralRegistrationActivity"
             android:label="@string/issue_referral"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FpFollowUpVisitActivity"
+            android:name="ecap.smartregister.chw.activity.FpFollowUpVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.SickFormMedicalHistory"
+            android:name="ecap.smartregister.chw.activity.SickFormMedicalHistory"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".core.activity.HIA2ReportsActivity"
@@ -223,16 +223,16 @@
             android:name=".core.activity.CoreStockInventoryItemDetailsReportActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.ReportsActivity"
+            android:name="ecap.smartregister.chw.activity.ReportsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.FragmentBaseActivity"
+            android:name="ecap.smartregister.chw.activity.FragmentBaseActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.PinLoginActivity"
+            android:name="ecap.smartregister.chw.activity.PinLoginActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AllClientsRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.AllClientsRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".core.activity.DisplayCarePlanActivity"
@@ -241,32 +241,32 @@
             android:name="org.smartregister.opd.activity.BaseOpdFormActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.SickChildJsonFormActivity"
+            android:name="ecap.smartregister.chw.activity.SickChildJsonFormActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.UpdatesRegisterActivity"
+            android:name="ecap.smartregister.chw.activity.UpdatesRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.UpdateRegisterDetailsActivity"
+            android:name="ecap.smartregister.chw.activity.UpdateRegisterDetailsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name=".activity.AllClientsMemberProfileActivity"
+            android:name="ecap.smartregister.chw.activity.AllClientsMemberProfileActivity"
             android:label="@string/title_family_detail"
-            android:parentActivityName=".activity.AllClientsRegisterActivity"
+            android:parentActivityName="ecap.smartregister.chw.activity.AllClientsRegisterActivity"
             android:theme="@style/FamilyTheme.NoActionBar" />
 
         <activity
-            android:name=".activity.AncMemberMapActivity"
+            android:name="ecap.smartregister.chw.activity.AncMemberMapActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 
         <activity
             android:name=".core.activity.CoreCommunityRespondersRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 
-        <activity android:name=".activity.GuideBooksTutorialsActivity"
+        <activity android:name="ecap.smartregister.chw.activity.GuideBooksTutorialsActivity"
             android:theme="@style/ChwTheme.NoActionBar"/>
 
-        <activity android:name=".activity.GuideBooksCounselingActivity"
+        <activity android:name="ecap.smartregister.chw.activity.GuideBooksCounselingActivity"
             android:theme="@style/ChwTheme.NoActionBar"/>
 
         <meta-data
@@ -292,12 +292,12 @@
         <service android:name="org.smartregister.sync.intent.ValidateIntentService" />
         <service android:name="org.smartregister.service.ImageUploadSyncService" />
         <service android:name=".anc.intent.HomeVisitIntentService" />
-        <service android:name=".sync.intent.ChwSyncTaskIntentService" />
+        <service android:name="ecap.smartregister.chw.sync.intent.ChwSyncTaskIntentService" />
         <service android:name="org.smartregister.sync.intent.PlanIntentService" />
-        <service android:name=".intent.ChwPncCloseDateIntent" />
+        <service android:name="ecap.smartregister.chw.intent.ChwPncCloseDateIntent" />
         <service android:name="org.smartregister.reporting.service.IndicatorGeneratorIntentService" />
-        <service android:name=".service.SchedulesIntentService" />
-        <service android:name=".sync.ChwSyncIntentService" />
+        <service android:name="ecap.smartregister.chw.service.SchedulesIntentService" />
+        <service android:name="ecap.smartregister.chw.sync.ChwSyncIntentService" />
         <service android:name=".core.service.StockUsageReportService" />
         <service android:name="org.smartregister.growthmonitoring.service.intent.WeightForHeightIntentService" />
 

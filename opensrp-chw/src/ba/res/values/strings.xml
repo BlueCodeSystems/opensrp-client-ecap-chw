@@ -10,4 +10,15 @@
     <string name="gbv_referral">Gender Based Violence Referral</string>
     <string name="child_gbv_referral">Child Gender Based Violence Referral</string>
     <string name="created">Created: %s</string>
+    <string-array name="form_names_array">
+        <item>Select Form</item>
+        <item>Consent form</item>
+        <item>VCA index screening form</item>
+        <item>Household screening form</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

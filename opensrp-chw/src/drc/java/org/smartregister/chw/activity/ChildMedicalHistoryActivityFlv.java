@@ -1,6 +1,6 @@
 package org.smartregister.chw.activity;
 
-import org.smartregister.chw.R;
+import ecap.smartregister.chw.R;
 import org.smartregister.chw.anc.util.NCUtils;
 import org.smartregister.chw.core.activity.DefaultChildMedicalHistoryActivityFlv;
 import org.smartregister.chw.core.utils.CoreChildUtils;
