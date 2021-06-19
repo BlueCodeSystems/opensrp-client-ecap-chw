@@ -1,0 +1,1348 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 276824064 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2754), pid=664, tid=0x00007f9953efe700
+#
+# JRE version: OpenJDK Runtime Environment (8.0_242) (build 1.8.0_242-release-1644-b3-6222593)
+# Java VM: OpenJDK 64-Bit Server VM (25.242-b3-6222593 mixed mode linux-amd64 compressed oops)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f9970079000):  VMThread [stack: 0x00007f9953dff000,0x00007f9953eff000] [id=749]
+
+Stack: [0x00007f9953dff000,0x00007f9953eff000],  sp=0x00007f9953efd490,  free space=1017k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xa1317d]  VMError::report_and_die()+0x15d
+V  [libjvm.so+0x4d7bca]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x8a
+V  [libjvm.so+0x878fb8]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0xd8
+V  [libjvm.so+0x87088f]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x1f
+V  [libjvm.so+0x8ea5fb]  PSVirtualSpace::expand_by(unsigned long)+0x5b
+V  [libjvm.so+0x8db36b]  PSOldGen::expand_by(unsigned long) [clone .part.109]+0x1b
+V  [libjvm.so+0x8db52b]  PSOldGen::expand(unsigned long) [clone .part.111]+0xdb
+V  [libjvm.so+0x8dbe08]  PSOldGen::resize(unsigned long)+0x188
+V  [libjvm.so+0x8e14ac]  PSParallelCompact::invoke_no_policy(bool)+0x98c
+V  [libjvm.so+0x8e859d]  PSScavenge::invoke()+0x17d
+V  [libjvm.so+0x89c9e3]  ParallelScavengeHeap::failed_mem_allocate(unsigned long)+0x63
+V  [libjvm.so+0xa14d24]  VM_ParallelGCFailedAllocation::doit()+0x84
+V  [libjvm.so+0xa191b7]  VM_Operation::evaluate()+0x47
+V  [libjvm.so+0xa17b98]  VMThread::evaluate_operation(VM_Operation*)+0x218
+V  [libjvm.so+0xa17ff9]  VMThread::loop()+0x219
+V  [libjvm.so+0xa18453]  VMThread::run()+0x83
+V  [libjvm.so+0x8760c2]  java_start(Thread*)+0xf2
+
+VM_Operation (0x00007f98d5d1dc80): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0x00007f994c595800
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f98f8004800 JavaThread "ForkJoinPool-2-worker-2" daemon [_thread_blocked, id=26539, stack(0x00007f98d591c000,0x00007f98d5a1d000)]
+  0x00007f98f0061000 JavaThread "ForkJoinPool-2-worker-0" daemon [_thread_blocked, id=26538, stack(0x00007f98d5a1d000,0x00007f98d5b1e000)]
+  0x00007f994c34a800 JavaThread "ForkJoinPool-2-worker-3" daemon [_thread_blocked, id=20854, stack(0x00007f98d581b000,0x00007f98d591c000)]
+  0x00007f994c595800 JavaThread "ForkJoinPool-2-worker-1" daemon [_thread_blocked, id=20849, stack(0x00007f98d5c1f000,0x00007f98d5d20000)]
+  0x0000000001621000 JavaThread "WorkerExecutor Queue Thread 6" [_thread_blocked, id=12659, stack(0x00007f98d3914000,0x00007f98d3a15000)]
+  0x00000000016a9000 JavaThread "WorkerExecutor Queue Thread 4" [_thread_blocked, id=12605, stack(0x00007f98d3b16000,0x00007f98d3c17000)]
+  0x00000000016c4800 JavaThread "WorkerExecutor Queue Thread 3" [_thread_blocked, id=12604, stack(0x00007f98d5318000,0x00007f98d5419000)]
+  0x0000000001188000 JavaThread "Cache worker for Java compile cache (/home/chobela/AndroidStudioProjects/opensrp-chw-ecap-ii-client/.gradle/6.1.1/javaCompile)" [_thread_blocked, id=31529, stack(0x00007f98d48af000,0x00007f98d49b0000)]
+  0x0000000001147000 JavaThread "Cache worker for Java compile cache (/home/chobela/.gradle/caches/6.1.1/javaCompile)" [_thread_blocked, id=31473, stack(0x00007f98d49b0000,0x00007f98d4ab1000)]
+  0x0000000001174000 JavaThread "RMI Reaper" [_thread_blocked, id=17801, stack(0x00007f98d4bb2000,0x00007f98d4cb3000)]
+  0x0000000001172800 JavaThread "RMI TCP Accept-0" daemon [_thread_blocked, id=17800, stack(0x00007f98d4cb3000,0x00007f98d4db4000)]
+  0x0000000001092000 JavaThread "GC Daemon" daemon [_thread_blocked, id=17240, stack(0x00007f98d4dd9000,0x00007f98d4eda000)]
+  0x00000000010a9000 JavaThread "RMI Scheduler(0)" daemon [_thread_blocked, id=17230, stack(0x00007f99229fd000,0x00007f9922afe000)]
+  0x0000000001100800 JavaThread "process reaper" daemon [_thread_in_native, id=12070, stack(0x00007f98d4eda000,0x00007f98d4f13000)]
+  0x00007f99701c5000 JavaThread "WorkerExecutor Queue" [_thread_blocked, id=31930, stack(0x00007f98d5419000,0x00007f98d551a000)]
+  0x00007f991001e000 JavaThread "Cache worker for execution history cache (/home/chobela/AndroidStudioProjects/opensrp-chw-ecap-ii-client/.gradle/6.1.1/executionHistory)" [_thread_blocked, id=32430, stack(0x00007f98d6107000,0x00007f98d6208000)]
+  0x00007f9910364000 JavaThread "Execution worker for ':' Thread 3" [_thread_blocked, id=26433, stack(0x00007f98d6208000,0x00007f98d6309000)]
+  0x00007f9910360800 JavaThread "Execution worker for ':' Thread 2" [_thread_blocked, id=26424, stack(0x00007f98d6309000,0x00007f98d640a000)]
+  0x00007f991035f800 JavaThread "Execution worker for ':'" [_thread_blocked, id=26421, stack(0x00007f98d8011000,0x00007f98d8112000)]
+  0x00007f991035a000 JavaThread "Cache worker for file content cache (/home/chobela/AndroidStudioProjects/opensrp-chw-ecap-ii-client/.gradle/6.1.1/fileContent)" [_thread_blocked, id=25885, stack(0x00007f98d7f10000,0x00007f98d8011000)]
+  0x00007f9910359800 JavaThread "Cache worker for file content cache (/home/chobela/.gradle/caches/6.1.1/fileContent)" [_thread_blocked, id=25819, stack(0x00007f99226fa000,0x00007f99227fb000)]
+  0x00007f9910346000 JavaThread "Memory manager" [_thread_blocked, id=25673, stack(0x00007f9921cf4000,0x00007f9921df5000)]
+  0x00007f9910062800 JavaThread "pool-5-thread-1" [_thread_blocked, id=23088, stack(0x00007f98d8112000,0x00007f98d8213000)]
+  0x00007f991005f000 JavaThread "Cache worker for Build Output Cleanup Cache (/home/chobela/AndroidStudioProjects/opensrp-chw-ecap-ii-client/.gradle/buildOutputCleanup)" [_thread_blocked, id=22466, stack(0x00007f99227fb000,0x00007f99228fc000)]
+  0x00007f991005c000 JavaThread "Build operations Thread 4" [_thread_blocked, id=22458, stack(0x00007f99225f9000,0x00007f99226fa000)]
+  0x00007f991005b000 JavaThread "Build operations Thread 3" [_thread_blocked, id=22457, stack(0x00007f98dabdf000,0x00007f98dace0000)]
+  0x00007f991005a800 JavaThread "Build operations Thread 2" [_thread_blocked, id=22451, stack(0x00007f98daade000,0x00007f98dabdf000)]
+  0x00007f991005a000 JavaThread "Build operations" [_thread_blocked, id=22450, stack(0x00007f98d7e0f000,0x00007f98d7f10000)]
+  0x00007f991004f000 JavaThread "Cache worker for cache directory md-rule (/home/chobela/.gradle/caches/6.1.1/md-rule)" [_thread_blocked, id=20379, stack(0x00007f9920db4000,0x00007f9920eb5000)]
+  0x00007f991004d800 JavaThread "Cache worker for cache directory md-supplier (/home/chobela/.gradle/caches/6.1.1/md-supplier)" [_thread_blocked, id=20333, stack(0x00007f9921df5000,0x00007f9921ef6000)]
+  0x00007f9910028800 JavaThread "Cache worker for file hash cache (/home/chobela/AndroidStudioProjects/opensrp-chw-ecap-ii-client/.gradle/6.1.1/fileHashes)" [_thread_blocked, id=19413, stack(0x00007f9920eb5000,0x00007f9920fb6000)]
+  0x00007f9910027800 JavaThread "Cache worker for checksums cache (/home/chobela/AndroidStudioProjects/opensrp-chw-ecap-ii-client/.gradle/checksums)" [_thread_blocked, id=19150, stack(0x00007f98dade1000,0x00007f98daee2000)]
+  0x00007f9910027000 JavaThread "Thread-51" [_thread_blocked, id=19149, stack(0x00007f98dace0000,0x00007f98dade1000)]
+  0x00007f9910025800 JavaThread "Asynchronous log dispatcher for DefaultDaemonConnection: socket connection from /127.0.0.1:38529 to /127.0.0.1:49704" [_thread_blocked, id=19147, stack(0x00007f9922cfe000,0x00007f9922dff000)]
+  0x00007f990c009000 JavaThread "Daemon worker Thread 3" [_thread_blocked, id=19142, stack(0x00007f99228fc000,0x00007f99229fd000)]
+  0x00007f990c00a800 JavaThread "Cancel handler" [_thread_blocked, id=19141, stack(0x00007f98db952000,0x00007f98dba53000)]
+  0x00007f990c007000 JavaThread "Handler for socket connection from /127.0.0.1:38529 to /127.0.0.1:49704" [_thread_in_native, id=19140, stack(0x00007f98d9a55000,0x00007f98d9b56000)]
+  0x00007f991402b800 JavaThread "Daemon Thread 3" [_thread_blocked, id=19139, stack(0x00007f9922dff000,0x00007f9922f00000)]
+  0x00007f99087f7800 JavaThread "Cache worker for execution history cache (/home/chobela/.gradle/caches/6.1.1/executionHistory)" [_thread_blocked, id=7363, stack(0x00007f9920cb3000,0x00007f9920db4000)]
+  0x00007f9908186000 JavaThread "Cache worker for file hash cache (/home/chobela/.gradle/caches/6.1.1/fileHashes)" [_thread_blocked, id=2848, stack(0x00007f99220f6000,0x00007f99221f7000)]
+  0x00007f9908178000 JavaThread "File lock request listener" [_thread_in_native, id=2822, stack(0x00007f99221f7000,0x00007f99222f8000)]
+  0x00007f9908201800 JavaThread "Cache worker for journal cache (/home/chobela/.gradle/caches/journal-1)" [_thread_blocked, id=2800, stack(0x00007f99222f8000,0x00007f99223f9000)]
+  0x00007f99702d8800 JavaThread "Daemon periodic checks" [_thread_blocked, id=1827, stack(0x00007f9922f00000,0x00007f9923001000)]
+  0x00007f99700ff800 JavaThread "Incoming local TCP Connector on port 38529" [_thread_in_native, id=1783, stack(0x00007f9923008000,0x00007f9923109000)]
+  0x00007f99704f0800 JavaThread "Daemon health stats" [_thread_blocked, id=1625, stack(0x00007f992330e000,0x00007f992340f000)]
+  0x00007f99700c1800 JavaThread "Service Thread" daemon [_thread_blocked, id=821, stack(0x00007f9953419000,0x00007f995351a000)]
+  0x00007f99700be000 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=818, stack(0x00007f995351b000,0x00007f995361b000)]
+  0x00007f99700bc800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=817, stack(0x00007f995361c000,0x00007f995371c000)]
+  0x00007f99700b9800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=816, stack(0x00007f995371d000,0x00007f995381d000)]
+  0x00007f99700b7800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=815, stack(0x00007f995381d000,0x00007f995391e000)]
+  0x00007f9970087800 JavaThread "Finalizer" daemon [_thread_blocked, id=759, stack(0x00007f9953bfc000,0x00007f9953cfd000)]
+  0x00007f9970083000 JavaThread "Reference Handler" daemon [_thread_blocked, id=753, stack(0x00007f9953cfd000,0x00007f9953dfe000)]
+  0x00007f997000b800 JavaThread "main" [_thread_blocked, id=721, stack(0x00007f9978126000,0x00007f9978226000)]
+
+Other Threads:
+=>0x00007f9970079000 VMThread [stack: 0x00007f9953dff000,0x00007f9953eff000] [id=749]
+  0x00007f99700c4000 WatcherThread [stack: 0x00007f9953319000,0x00007f9953419000] [id=822]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f99700078e0] ExpandHeap_lock - owner thread: 0x00007f9970079000
+[0x00007f9970007f60] Threads_lock - owner thread: 0x00007f9970079000
+[0x00007f9970008460] Heap_lock - owner thread: 0x00007f994c595800
+
+heap address: 0x0000000080000000, size: 2048 MB, Compressed Oops mode: 32-bit
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x0000000100000000
+
+Heap:
+ PSYoungGen      total 465920K, used 0K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 232960K, 0% used [0x00000000f1c80000,0x00000000f1c80000,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 835556K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 89% used [0x0000000080000000,0x00000000b2ff9010,0x00000000b9000000)
+ Metaspace       used 131585K, capacity 138632K, committed 139672K, reserved 1171456K
+  class space    used 16227K, capacity 17601K, committed 17840K, reserved 1048576K
+
+Card table byte_map: [0x00007f997553b000,0x00007f997593c000] byte_map_base: 0x00007f997513b000
+
+Marking Bits: (ParMarkBitMap*) 0x00007f99777f97e0
+ Begin Bits: [0x00007f9958000000, 0x00007f995a000000)
+ End Bits:   [0x00007f995a000000, 0x00007f995c000000)
+
+Polling page: 0x00007f9978252000
+
+CodeCache: size=245760Kb used=106637Kb max_used=107044Kb free=139122Kb
+ bounds [0x00007f9961000000, 0x00007f99679f0000, 0x00007f9970000000]
+ total_blobs=29019 nmethods=28039 adapters=891
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 1611.865 Thread 0x00007f99700bc800 nmethod 40710 0x00007f9967141590 code [0x00007f99671417c0, 0x00007f9967142858]
+Event: 1611.865 Thread 0x00007f99700bc800 40774       4       com.android.tools.r8.code.v0::a (54 bytes)
+Event: 1611.872 Thread 0x00007f99700be000 40780       3       com.android.tools.r8.code.f3::i (8 bytes)
+Event: 1611.872 Thread 0x00007f99700be000 nmethod 40780 0x00007f99671bcb10 code [0x00007f99671bcc80, 0x00007f99671bced0]
+Event: 1611.872 Thread 0x00007f99700be000 40781       3       com.android.tools.r8.code.f3::a (19 bytes)
+Event: 1611.873 Thread 0x00007f99700be000 nmethod 40781 0x00007f9966a71e50 code [0x00007f9966a71fe0, 0x00007f9966a72418]
+Event: 1611.910 Thread 0x00007f99700bc800 nmethod 40774 0x00007f996601e810 code [0x00007f996601e9a0, 0x00007f996601f098]
+Event: 1611.910 Thread 0x00007f99700bc800 40783       4       com.android.tools.r8.graph.h0$u::equals (52 bytes)
+Event: 1611.917 Thread 0x00007f99700bc800 nmethod 40783 0x00007f996666a010 code [0x00007f996666a160, 0x00007f996666a2b8]
+Event: 1611.917 Thread 0x00007f99700bc800 40784       4       com.android.tools.r8.dex.r::a (137 bytes)
+
+GC Heap History (10 events):
+Event: 1602.917 GC heap after
+Heap after GC invocations=214 (full 14):
+ PSYoungGen      total 436224K, used 203243K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 203264K, 99% used [0x00000000f3980000,0x00000000ffffae48,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 667155K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 71% used [0x0000000080000000,0x00000000a8b84ea8,0x00000000b9000000)
+ Metaspace       used 131864K, capacity 139258K, committed 139416K, reserved 1171456K
+  class space    used 16304K, capacity 17763K, committed 17840K, reserved 1048576K
+}
+Event: 1604.091 GC heap before
+{Heap before GC invocations=215 (full 14):
+ PSYoungGen      total 436224K, used 436203K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 100% used [0x00000000d5580000,0x00000000e3900000,0x00000000e3900000)
+  from space 203264K, 99% used [0x00000000f3980000,0x00000000ffffae48,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 667155K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 71% used [0x0000000080000000,0x00000000a8b84ea8,0x00000000b9000000)
+ Metaspace       used 131870K, capacity 139258K, committed 139416K, reserved 1171456K
+  class space    used 16304K, capacity 17763K, committed 17840K, reserved 1048576K
+Event: 1604.374 GC heap after
+Heap after GC invocations=215 (full 14):
+ PSYoungGen      total 465920K, used 232949K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 232960K, 99% used [0x00000000e3900000,0x00000000f1c7d608,0x00000000f1c80000)
+  to   space 232960K, 0% used [0x00000000f1c80000,0x00000000f1c80000,0x0000000100000000)
+ ParOldGen       total 933888K, used 669327K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 71% used [0x0000000080000000,0x00000000a8da3c20,0x00000000b9000000)
+ Metaspace       used 131870K, capacity 139258K, committed 139416K, reserved 1171456K
+  class space    used 16304K, capacity 17763K, committed 17840K, reserved 1048576K
+}
+Event: 1606.236 GC heap before
+{Heap before GC invocations=216 (full 14):
+ PSYoungGen      total 465920K, used 465685K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 99% used [0x00000000d5580000,0x00000000e38c7ff0,0x00000000e3900000)
+  from space 232960K, 99% used [0x00000000e3900000,0x00000000f1c7d608,0x00000000f1c80000)
+  to   space 232960K, 0% used [0x00000000f1c80000,0x00000000f1c80000,0x0000000100000000)
+ ParOldGen       total 933888K, used 669327K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 71% used [0x0000000080000000,0x00000000a8da3c20,0x00000000b9000000)
+ Metaspace       used 131873K, capacity 139258K, committed 139416K, reserved 1171456K
+  class space    used 16304K, capacity 17763K, committed 17840K, reserved 1048576K
+Event: 1608.209 GC heap after
+Heap after GC invocations=216 (full 14):
+ PSYoungGen      total 465920K, used 232945K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 232960K, 99% used [0x00000000f1c80000,0x00000000ffffc6f0,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 695937K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 74% used [0x0000000080000000,0x00000000aa7a06d8,0x00000000b9000000)
+ Metaspace       used 131873K, capacity 139258K, committed 139416K, reserved 1171456K
+  class space    used 16304K, capacity 17763K, committed 17840K, reserved 1048576K
+}
+Event: 1610.328 GC heap before
+{Heap before GC invocations=217 (full 14):
+ PSYoungGen      total 465920K, used 465905K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 100% used [0x00000000d5580000,0x00000000e3900000,0x00000000e3900000)
+  from space 232960K, 99% used [0x00000000f1c80000,0x00000000ffffc6f0,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 695937K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 74% used [0x0000000080000000,0x00000000aa7a06d8,0x00000000b9000000)
+ Metaspace       used 131959K, capacity 139356K, committed 139672K, reserved 1171456K
+  class space    used 16309K, capacity 17770K, committed 17840K, reserved 1048576K
+Event: 1611.324 GC heap after
+Heap after GC invocations=217 (full 14):
+ PSYoungGen      total 465920K, used 222787K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 232960K, 95% used [0x00000000e3900000,0x00000000f1290cc8,0x00000000f1c80000)
+  to   space 232960K, 0% used [0x00000000f1c80000,0x00000000f1c80000,0x0000000100000000)
+ ParOldGen       total 933888K, used 763979K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 81% used [0x0000000080000000,0x00000000aea12d30,0x00000000b9000000)
+ Metaspace       used 131959K, capacity 139356K, committed 139672K, reserved 1171456K
+  class space    used 16309K, capacity 17770K, committed 17840K, reserved 1048576K
+}
+Event: 1611.931 GC heap before
+{Heap before GC invocations=218 (full 14):
+ PSYoungGen      total 465920K, used 455747K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 100% used [0x00000000d5580000,0x00000000e3900000,0x00000000e3900000)
+  from space 232960K, 95% used [0x00000000e3900000,0x00000000f1290cc8,0x00000000f1c80000)
+  to   space 232960K, 0% used [0x00000000f1c80000,0x00000000f1c80000,0x0000000100000000)
+ ParOldGen       total 933888K, used 763979K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 81% used [0x0000000080000000,0x00000000aea12d30,0x00000000b9000000)
+ Metaspace       used 131963K, capacity 139356K, committed 139672K, reserved 1171456K
+  class space    used 16309K, capacity 17770K, committed 17840K, reserved 1048576K
+Event: 1625.852 GC heap after
+Heap after GC invocations=218 (full 14):
+ PSYoungGen      total 465920K, used 97631K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 232960K, 41% used [0x00000000f1c80000,0x00000000f7bd7d10,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 910261K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 97% used [0x0000000080000000,0x00000000b78ed568,0x00000000b9000000)
+ Metaspace       used 131963K, capacity 139356K, committed 139672K, reserved 1171456K
+  class space    used 16309K, capacity 17770K, committed 17840K, reserved 1048576K
+}
+Event: 1625.852 GC heap before
+{Heap before GC invocations=219 (full 15):
+ PSYoungGen      total 465920K, used 97631K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 232960K, 0% used [0x00000000d5580000,0x00000000d5580000,0x00000000e3900000)
+  from space 232960K, 41% used [0x00000000f1c80000,0x00000000f7bd7d10,0x0000000100000000)
+  to   space 232960K, 0% used [0x00000000e3900000,0x00000000e3900000,0x00000000f1c80000)
+ ParOldGen       total 933888K, used 910261K [0x0000000080000000, 0x00000000b9000000, 0x00000000d5580000)
+  object space 933888K, 97% used [0x0000000080000000,0x00000000b78ed568,0x00000000b9000000)
+ Metaspace       used 131963K, capacity 139356K, committed 139672K, reserved 1171456K
+  class space    used 16309K, capacity 17770K, committed 17840K, reserved 1048576K
+
+Deoptimization events (10 events):
+Event: 1603.654 Thread 0x00000000016a9000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f99664b75bc method=java.util.HashMap$TreeNode.find(ILjava/lang/Object;Ljava/lang/Class;)Ljava/util/HashMap$TreeNode; @ 58
+Event: 1610.035 Thread 0x00007f98f0061000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f996613ec84 method=com.android.tools.r8.graph.H$c.equals(Ljava/lang/Object;)Z @ 18
+Event: 1610.155 Thread 0x00007f98f8004800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f99664fea4c method=com.android.tools.r8.graph.H0.a(Ljava/util/Collection;Ljava/util/function/Consumer;)Lcom/android/tools/r8/v/a/a/a/h/G0; @ 85
+Event: 1610.171 Thread 0x00007f994c595800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f99664fea4c method=com.android.tools.r8.graph.H0.a(Ljava/util/Collection;Ljava/util/function/Consumer;)Lcom/android/tools/r8/v/a/a/a/h/G0; @ 85
+Event: 1611.692 Thread 0x00007f994c595800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f9966561f10 method=com.android.tools.r8.graph.H$c.equals(Ljava/lang/Object;)Z @ 1
+Event: 1611.697 Thread 0x00007f994c595800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f996642f78c method=com.android.tools.r8.graph.h0$u.equals(Ljava/lang/Object;)Z @ 2
+Event: 1611.880 Thread 0x00007f994c595800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f99667ecd44 method=com.android.tools.r8.dex.r.a(Ljava/util/List;Ljava/util/Map;Lcom/android/tools/r8/graph/T;)V @ 5
+Event: 1611.881 Thread 0x00007f994c595800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f99667ecd44 method=com.android.tools.r8.dex.r.a(Ljava/util/List;Ljava/util/Map;Lcom/android/tools/r8/graph/T;)V @ 5
+Event: 1611.881 Thread 0x00007f994c595800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f99667ecd44 method=com.android.tools.r8.dex.r.a(Ljava/util/List;Ljava/util/Map;Lcom/android/tools/r8/graph/T;)V @ 5
+Event: 1611.881 Thread 0x00007f994c595800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f99667ecd44 method=com.android.tools.r8.dex.r.a(Ljava/util/List;Ljava/util/Map;Lcom/android/tools/r8/graph/T;)V @ 5
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 1594.814 Thread 0x00007f991802c800 Implicit null exception at 0x00007f9961af34af to 0x00007f9961af35a5
+Event: 1594.814 Thread 0x00007f98e80a9800 Implicit null exception at 0x00007f9961af34af to 0x00007f9961af35a5
+Event: 1594.814 Thread 0x00007f9918020800 Implicit null exception at 0x00007f9961af34af to 0x00007f9961af35a5
+Event: 1596.843 Thread 0x00007f991802b800 Implicit null exception at 0x00007f996710f2ff to 0x00007f9967114391
+Event: 1596.960 Thread 0x00007f9910346000 Exception <a 'java/io/IOException'> (0x00000000e149d4a8) thrown at [/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 1596.961 Thread 0x00007f991802b800 Exception <a 'sun/nio/fs/UnixException'> (0x00000000e1169768) thrown at [/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 1601.267 Thread 0x00007f991802c800 Exception <a 'sun/nio/fs/UnixException'> (0x00000000d6a1a5d0) thrown at [/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 1601.358 Thread 0x00007f98e80a9800 Exception <a 'sun/nio/fs/UnixException'> (0x00000000d83e2b78) thrown at [/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 1601.960 Thread 0x00007f9910346000 Exception <a 'java/io/IOException'> (0x00000000e2ef7fa0) thrown at [/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+Event: 1608.210 Thread 0x00007f9910346000 Exception <a 'java/io/IOException'> (0x00000000d55bf140) thrown at [/buildbot/src/googleplex-android/openjdk/out/hotspot/src/share/vm/prims/jni.cpp, line 710]
+
+Events (10 events):
+Event: 1611.881 Thread 0x00007f994c595800 Uncommon trap: trap_request=0xffffffde fr.pc=0x00007f99667ecd44
+Event: 1611.881 Thread 0x00007f994c595800 DEOPT PACKING pc=0x00007f99667ecd44 sp=0x00007f98d5d1deb0
+Event: 1611.881 Thread 0x00007f994c595800 DEOPT UNPACKING pc=0x00007f996104547a sp=0x00007f98d5d1dea8 mode 2
+Event: 1611.881 Thread 0x00007f994c595800 Uncommon trap: trap_request=0xffffffde fr.pc=0x00007f99667ecd44
+Event: 1611.881 Thread 0x00007f994c595800 DEOPT PACKING pc=0x00007f99667ecd44 sp=0x00007f98d5d1deb0
+Event: 1611.881 Thread 0x00007f994c595800 DEOPT UNPACKING pc=0x00007f996104547a sp=0x00007f98d5d1dea8 mode 2
+Event: 1611.881 Thread 0x00007f994c595800 Uncommon trap: trap_request=0xffffffde fr.pc=0x00007f99667ecd44
+Event: 1611.881 Thread 0x00007f994c595800 DEOPT PACKING pc=0x00007f99667ecd44 sp=0x00007f98d5d1deb0
+Event: 1611.881 Thread 0x00007f994c595800 DEOPT UNPACKING pc=0x00007f996104547a sp=0x00007f98d5d1dea8 mode 2
+Event: 1611.929 Executing VM operation: ParallelGCFailedAllocation
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 08:02 9437757                            /home/chobela/Desktop/android-studio/jre/bin/java
+00401000-00402000 r--p 00000000 08:02 9437757                            /home/chobela/Desktop/android-studio/jre/bin/java
+00402000-00403000 rw-p 00001000 08:02 9437757                            /home/chobela/Desktop/android-studio/jre/bin/java
+01058000-04fbe000 rw-p 00000000 00:00 0                                  [heap]
+80000000-b9000000 rw-p 00000000 00:00 0 
+c9800000-d5580000 ---p 00000000 00:00 0 
+d5580000-100000000 rw-p 00000000 00:00 0 
+100000000-10116c000 rw-p 00000000 00:00 0 
+10116c000-140000000 ---p 00000000 00:00 0 
+7f98c4000000-7f98c6ca0000 rw-p 00000000 00:00 0 
+7f98c6ca0000-7f98c8000000 ---p 00000000 00:00 0 
+7f98cc000000-7f98d0000000 rw-p 00000000 00:00 0 
+7f98d2acf000-7f98d2bcf000 rw-p 00000000 00:00 0 
+7f98d2bcf000-7f98d2ccf000 ---p 00000000 00:00 0 
+7f98d2ccf000-7f98d2ecf000 rw-p 00000000 00:00 0 
+7f98d2f14000-7f98d3114000 rw-p 00000000 00:00 0 
+7f98d3114000-7f98d3314000 rw-p 00000000 00:00 0 
+7f98d3314000-7f98d3514000 rw-p 00000000 00:00 0 
+7f98d3514000-7f98d3714000 rw-p 00000000 00:00 0 
+7f98d3714000-7f98d3914000 rw-p 00000000 00:00 0 
+7f98d3914000-7f98d3917000 ---p 00000000 00:00 0 
+7f98d3917000-7f98d3a15000 rw-p 00000000 00:00 0 
+7f98d3a15000-7f98d3a18000 ---p 00000000 00:00 0 
+7f98d3a18000-7f98d3b16000 rw-p 00000000 00:00 0 
+7f98d3b16000-7f98d3b19000 ---p 00000000 00:00 0 
+7f98d3b19000-7f98d3e17000 rw-p 00000000 00:00 0 
+7f98d3e17000-7f98d4017000 rw-p 00000000 00:00 0 
+7f98d4017000-7f98d4217000 rw-p 00000000 00:00 0 
+7f98d42a2000-7f98d44a2000 rw-p 00000000 00:00 0 
+7f98d44a2000-7f98d46a2000 rw-p 00000000 00:00 0 
+7f98d46af000-7f98d48af000 rw-p 00000000 00:00 0 
+7f98d48af000-7f98d48b2000 ---p 00000000 00:00 0 
+7f98d48b2000-7f98d49b0000 rw-p 00000000 00:00 0 
+7f98d49b0000-7f98d49b3000 ---p 00000000 00:00 0 
+7f98d49b3000-7f98d4ab1000 rw-p 00000000 00:00 0 
+7f98d4ab1000-7f98d4ab4000 ---p 00000000 00:00 0 
+7f98d4ab4000-7f98d4bb2000 rw-p 00000000 00:00 0 
+7f98d4bb2000-7f98d4bb5000 ---p 00000000 00:00 0 
+7f98d4bb5000-7f98d4cb3000 rw-p 00000000 00:00 0 
+7f98d4cb3000-7f98d4cb6000 ---p 00000000 00:00 0 
+7f98d4cb6000-7f98d4db4000 rw-p 00000000 00:00 0 
+7f98d4db4000-7f98d4dcf000 r--s 00394000 08:02 9568687                    /home/chobela/Desktop/android-studio/jre/jre/lib/ext/cldrdata.jar
+7f98d4dcf000-7f98d4dd9000 r--s 00116000 08:02 9568685                    /home/chobela/Desktop/android-studio/jre/jre/lib/ext/localedata.jar
+7f98d4dd9000-7f98d4ddc000 ---p 00000000 00:00 0 
+7f98d4ddc000-7f98d4eda000 rw-p 00000000 00:00 0 
+7f98d4eda000-7f98d4edd000 ---p 00000000 00:00 0 
+7f98d4edd000-7f98d4f13000 rw-p 00000000 00:00 0 
+7f98d4f13000-7f98d4f18000 r-xp 00000000 08:02 18498627                   /tmp/native-platform3590706823030303395dir/libnative-platform.so
+7f98d4f18000-7f98d5117000 ---p 00005000 08:02 18498627                   /tmp/native-platform3590706823030303395dir/libnative-platform.so
+7f98d5117000-7f98d5118000 rw-p 00004000 08:02 18498627                   /tmp/native-platform3590706823030303395dir/libnative-platform.so
+7f98d5118000-7f98d5318000 rw-p 00000000 00:00 0 
+7f98d5318000-7f98d531b000 ---p 00000000 00:00 0 
+7f98d531b000-7f98d5419000 rw-p 00000000 00:00 0 
+7f98d5419000-7f98d541c000 ---p 00000000 00:00 0 
+7f98d541c000-7f98d571a000 rw-p 00000000 00:00 0 
+7f98d571a000-7f98d571d000 ---p 00000000 00:00 0 
+7f98d571d000-7f98d581b000 rw-p 00000000 00:00 0 
+7f98d581b000-7f98d581e000 ---p 00000000 00:00 0 
+7f98d581e000-7f98d591c000 rw-p 00000000 00:00 0 
+7f98d591c000-7f98d591f000 ---p 00000000 00:00 0 
+7f98d591f000-7f98d5a1d000 rw-p 00000000 00:00 0 
+7f98d5a1d000-7f98d5a20000 ---p 00000000 00:00 0 
+7f98d5a20000-7f98d5b1e000 rw-p 00000000 00:00 0 
+7f98d5b1e000-7f98d5b21000 ---p 00000000 00:00 0 
+7f98d5b21000-7f98d5c1f000 rw-p 00000000 00:00 0 
+7f98d5c1f000-7f98d5c22000 ---p 00000000 00:00 0 
+7f98d5c22000-7f98d5d20000 rw-p 00000000 00:00 0 
+7f98d5d20000-7f98d5d23000 ---p 00000000 00:00 0 
+7f98d5d23000-7f98d5e21000 rw-p 00000000 00:00 0 
+7f98d5e21000-7f98d5e24000 ---p 00000000 00:00 0 
+7f98d5e24000-7f98d5f22000 rw-p 00000000 00:00 0 
+7f98d5f22000-7f98d5f25000 ---p 00000000 00:00 0 
+7f98d5f25000-7f98d5f5b000 rw-p 00000000 00:00 0 
+7f98d5f5b000-7f98d5f5e000 ---p 00000000 00:00 0 
+7f98d5f5e000-7f98d5f94000 rw-p 00000000 00:00 0 
+7f98d5f94000-7f98d5f97000 ---p 00000000 00:00 0 
+7f98d5f97000-7f98d5fcd000 rw-p 00000000 00:00 0 
+7f98d5fcd000-7f98d5fd0000 ---p 00000000 00:00 0 
+7f98d5fd0000-7f98d6006000 rw-p 00000000 00:00 0 
+7f98d6006000-7f98d6009000 ---p 00000000 00:00 0 
+7f98d6009000-7f98d6107000 rw-p 00000000 00:00 0 
+7f98d6107000-7f98d610a000 ---p 00000000 00:00 0 
+7f98d610a000-7f98d6208000 rw-p 00000000 00:00 0 
+7f98d6208000-7f98d620b000 ---p 00000000 00:00 0 
+7f98d620b000-7f98d6309000 rw-p 00000000 00:00 0 
+7f98d6309000-7f98d630c000 ---p 00000000 00:00 0 
+7f98d630c000-7f98d660a000 rw-p 00000000 00:00 0 
+7f98d660a000-7f98d680a000 rw-p 00000000 00:00 0 
+7f98d680a000-7f98d6a0a000 rw-p 00000000 00:00 0 
+7f98d6a0a000-7f98d6c0a000 rw-p 00000000 00:00 0 
+7f98d6c0a000-7f98d6e0a000 rw-p 00000000 00:00 0 
+7f98d6e0a000-7f98d700a000 rw-p 00000000 00:00 0 
+7f98d700a000-7f98d720a000 rw-p 00000000 00:00 0 
+7f98d720a000-7f98d740a000 rw-p 00000000 00:00 0 
+7f98d740a000-7f98d760a000 rw-p 00000000 00:00 0 
+7f98d760a000-7f98d780a000 rw-p 00000000 00:00 0 
+7f98d780a000-7f98d7a0a000 rw-p 00000000 00:00 0 
+7f98d7a0a000-7f98d7a0f000 r--s 0003d000 08:02 9568684                    /home/chobela/Desktop/android-studio/jre/jre/lib/ext/sunjce_provider.jar
+7f98d7a0f000-7f98d7c0f000 rw-p 00000000 00:00 0 
+7f98d7c0f000-7f98d7e0f000 rw-p 00000000 00:00 0 
+7f98d7e0f000-7f98d7e12000 ---p 00000000 00:00 0 
+7f98d7e12000-7f98d7f10000 rw-p 00000000 00:00 0 
+7f98d7f10000-7f98d7f13000 ---p 00000000 00:00 0 
+7f98d7f13000-7f98d8011000 rw-p 00000000 00:00 0 
+7f98d8011000-7f98d8014000 ---p 00000000 00:00 0 
+7f98d8014000-7f98d8112000 rw-p 00000000 00:00 0 
+7f98d8112000-7f98d8115000 ---p 00000000 00:00 0 
+7f98d8115000-7f98d8413000 rw-p 00000000 00:00 0 
+7f98d8413000-7f98d8613000 rw-p 00000000 00:00 0 
+7f98d8613000-7f98d8813000 rw-p 00000000 00:00 0 
+7f98d8813000-7f98d8a13000 rw-p 00000000 00:00 0 
+7f98d8a13000-7f98d8c13000 rw-p 00000000 00:00 0 
+7f98d8c13000-7f98d8e13000 rw-p 00000000 00:00 0 
+7f98d8e13000-7f98d8e1b000 r--s 00027000 08:02 18496772                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.10/6229be3465805c99db1142ad75e6c6ddeac0b04c/kotlin-stdlib-common-1.4.10.jar
+7f98d8e1b000-7f98d8e22000 r--s 0003f000 08:02 18496261                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.10/4b95f4897fa13f2cd904aee711aeafc0c5295cd8/commons-codec-1.10.jar
+7f98d8e22000-7f98d8e24000 r--s 0000c000 08:02 18503414                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.4/c51c00206bb913cd8612b24abd9fa98ae89719b1/commons-cli-1.4.jar
+7f98d8e24000-7f98d8e39000 r--s 00157000 08:02 18496771                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.10/ea29e063d2bbe695be13e9d044dcfb0c7add398e/kotlin-stdlib-1.4.10.jar
+7f98d8e39000-7f98d8e3a000 r--s 00000000 08:02 18496770                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.4.10/30e46450b0bb3dbf43898d2f461be4a942784780/kotlin-stdlib-jdk7-1.4.10.jar
+7f98d8e3a000-7f98d8e3e000 r--s 00031000 08:02 18496023                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.6/815893df5f31da2ece4040fe0a12fd44b577afaf/commons-io-2.6.jar
+7f98d8e3e000-7f98d8e3f000 r--s 00003000 08:02 18503416                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/4.0.2/7a02e91a44f845b7b0d2a309731f0906c7cf089d/baseLibrary-4.0.2.jar
+7f98d8e3f000-7f98d8e40000 r--s 00003000 08:02 18503413                   /home/chobela/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/4.0.2/f81a43250456490561f646948eaaedfa328c9d3c/databinding-common-4.0.2.jar
+7f98d8e40000-7f98d8e7a000 r--s 00284000 08:02 18496178                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.72/86613e1a669a701b0c660bfd2af4f82a7ae11fca/kotlin-reflect-1.3.72.jar
+7f98d8e7a000-7f98d8e81000 r--s 00049000 08:02 18496177                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.10/acc54d9b28bdffe4bbde89ed2e4a1e86b5285e2b/httpcore-4.4.10.jar
+7f98d8e81000-7f98d8e8e000 r--s 000af000 08:02 18496176                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.6/1afe5621985efe90a92d0fbc9be86271efbe796f/httpclient-4.5.6.jar
+7f98d8e8e000-7f98d8e90000 r--s 00009000 08:02 18496173                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.5.6/164343da11db817e81e24e0d9869527e069850c9/httpmime-4.5.6.jar
+7f98d8e90000-7f98d8e91000 r--s 00002000 08:02 18503412                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/27.0.2/dd061fe870a504b65e7948aaa41d74de9f5a1042/annotations-27.0.2.jar
+7f98d8e91000-7f98d8edc000 r--s 002ff000 08:02 18484874                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15on/1.56/a153c6f9744a3e9dd6feab5e210e1c9861362ec7/bcprov-jdk15on-1.56.jar
+7f98d8edc000-7f98d8eed000 r--s 00097000 08:02 18484873                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.56/4648af70268b6fdb24674fb1fd7c1fcc73db1231/bcpkix-jdk15on-1.56.jar
+7f98d8eed000-7f98d8ef4000 r--s 0004f000 08:02 18503411                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/4.0.2/89d46c47575f83df57013492411b4fb6be4af07c/apksig-4.0.2.jar
+7f98d8ef4000-7f98d8ef7000 r--s 00008000 08:02 18503410                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/4.0.2/7777680adf23676ec48e5d3cba8424095b566da4/builder-model-4.0.2.jar
+7f98d8ef7000-7f98d8efc000 r--s 0002d000 08:02 18503409                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apkzlib/4.0.2/426d1addd0ea074978ca92e16f447a345170cc4e/apkzlib-4.0.2.jar
+7f98d8efc000-7f98d8f02000 r--s 00029000 08:02 18503408                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-crashlytics-buildtools/2.4.1/10a11d94ef2b7b50de48efd1b81e6bb634d20cec/firebase-crashlytics-buildtools-2.4.1.jar
+7f98d8f02000-7f98d8f09000 r--s 0009e000 08:02 18503405                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aapt2-proto/4.0.2-6197926/d6e1477fb90ed11cf59bad5b3a580434cee152c3/aapt2-proto-4.0.2-6197926.jar
+7f98d8f09000-7f98d8f2f000 r--s 00360000 08:02 18503406                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/27.0.2/dc412a03d6fea52ce21f82de562355bf4041b92d/protos-27.0.2.jar
+7f98d8f2f000-7f98d8f30000 r--s 00003000 08:02 18496759                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.4.10/998caa30623f73223194a8b657abd2baec4880ea/kotlin-stdlib-jdk8-1.4.10.jar
+7f98d8f30000-7f98d8f35000 r--s 0003c000 08:02 18503407                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/common/27.0.2/732ff4d436eca68373af8e799798364009b208b5/common-27.0.2.jar
+7f98d8f35000-7f98d8f38000 r--s 00017000 08:02 18503404                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/27.0.2/6cede1653bfad08b99af765378ebe3995ddb0d2a/shared-27.0.2.jar
+7f98d8f38000-7f98d8f3d000 r--s 0002d000 08:02 18503403                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/27.0.2/5a409edb5602236acfa262ad377b33121b5aaf7c/repository-27.0.2.jar
+7f98d8f3d000-7f98d8f3f000 r--s 00009000 08:02 18503402                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/27.0.2/f8f799c93390884f6bac104ee19e642864e48f0/dvlib-27.0.2.jar
+7f98d8f3f000-7f98d8f43000 r--s 00019000 08:02 18503401                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/27.0.2/3fa2397a654c670d33ff24df66778d9fed7689e4/layoutlib-api-27.0.2.jar
+7f98d8f43000-7f98d8f4c000 r--s 00092000 08:02 18503400                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/27.0.2/122ba180ec28bca9810ef38604e912f2a59a30a6/sdklib-27.0.2.jar
+7f98d8f4c000-7f98d8f4e000 r--s 00008000 08:02 18503399                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/27.0.2/dec970bdbc973d7dc45f80ae12fc890d2530f2a3/tracker-27.0.2.jar
+7f98d8f4e000-7f98d8f50000 r--s 00008000 08:02 18503398                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android/zipflinger/4.0.2/580b97b848365eb258e81935fe8f02cba28784a7/zipflinger-4.0.2.jar
+7f98d8f50000-7f98d8f51000 r--s 00002000 08:02 18503397                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android/signflinger/4.0.2/5e545567b802e0111fa2c0a6908a2693bf0dd900/signflinger-4.0.2.jar
+7f98d8f51000-7f98d8f57000 r--s 00053000 08:02 18503396                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/27.0.2/7fc4b97ca780053c12c625ecb5543bb223d1faa9/ddmlib-27.0.2.jar
+7f98d8f57000-7f98d8f58000 r--s 00003000 08:02 18503395                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/4.0.2/2c6b76f3df4a99611fb480619fd48178e84656d/builder-test-api-4.0.2.jar
+7f98d8f58000-7f98d8f72000 r--s 0014c000 08:02 18503394                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/27.0.2/5c77a2be5b1f0efc95199314ab07eb47c7631e4a/sdk-common-27.0.2.jar
+7f98d8f72000-7f98d8f75000 r--s 0002f000 08:02 18503393                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/27.0.2/fd0d327b96098464304f4355c1dd901881b6255f/manifest-merger-27.0.2.jar
+7f98d8f75000-7f98d8f77000 r--s 00009000 08:02 18496744                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.android.gms/strict-version-matcher-plugin/1.2.2/2c0d2f9d874dddd7c8a12664111e89be8bfb2c23/strict-version-matcher-plugin-1.2.2.jar
+7f98d8f77000-7f98d8f80000 r--s 0006d000 08:02 18503392                   /home/chobela/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-compiler-common/4.0.2/c30455c9f44ea55bc3d6995f05cd670e3752293f/databinding-compiler-common-4.0.2.jar
+7f98d8f80000-7f98d8f84000 r--s 00012000 08:02 18503391                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/4.0.2/b1c13362c92749ec5fabb430f6f5e157a33a4d7c/gradle-api-4.0.2.jar
+7f98d8f84000-7f98d8f85000 r--s 00004000 08:02 18503390                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/27.0.2/d7cee108e284f2a22c7152d0d20d66506c9c4be2/lint-gradle-api-27.0.2.jar
+7f98d8f85000-7f98d8f86000 r--s 00003000 08:02 18503389                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/crash/27.0.2/47e1aebe75e5bdb48bd2221294afd0ed24906fb7/crash-27.0.2.jar
+7f98d8f86000-7f98d8f8c000 r--s 00063000 08:02 18503387                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aaptcompiler/4.0.2/c3b07662f3b280469ea21dfaa1f380507eaa5a0a/aaptcompiler-4.0.2.jar
+7f98d8f8c000-7f98d8fec000 r--s 00843000 08:02 18503415                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/4.0.2/f7c2532c2f16f90d22742f80844f9c592297724b/builder-4.0.2.jar
+7f98d8fec000-7f98d8fee000 r--s 00011000 08:02 18503386                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-crashlytics-gradle/2.4.1/b5b10a5670981d2e316a905f8b2a2be714572a71/firebase-crashlytics-gradle-2.4.1.jar
+7f98d8fee000-7f98d8ff0000 r--s 00008000 08:02 18496737                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/4.3.4/47ac73f12375b90588fe92ce61d0979b409a3355/google-services-4.3.4.jar
+7f98d8ff0000-7f98d904d000 r--s 004a5000 08:02 18503388                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/4.0.2/9b29b8c0c23741d5ab9131207306fd1a5e797a82/gradle-4.0.2.jar
+7f98d904d000-7f98d9055000 r--s 00078000 08:02 18503385                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.10/e155460aaf5b464062a09c3923f089ce99128a17/commons-lang3-3.10.jar
+7f98d9055000-7f98d9255000 rw-p 00000000 00:00 0 
+7f98d9255000-7f98d944f000 rw-p 00000000 00:00 0 
+7f98d944f000-7f98d9455000 ---p 00000000 00:00 0 
+7f98d9455000-7f98d9655000 rw-p 00000000 00:00 0 
+7f98d9655000-7f98d9855000 rw-p 00000000 00:00 0 
+7f98d9855000-7f98d9a55000 rw-p 00000000 00:00 0 
+7f98d9a55000-7f98d9a58000 ---p 00000000 00:00 0 
+7f98d9a58000-7f98d9d56000 rw-p 00000000 00:00 0 
+7f98d9d56000-7f98d9f56000 rw-p 00000000 00:00 0 
+7f98d9f56000-7f98d9f59000 r--s 00011000 08:02 18484896                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.sun.activation/javax.activation/1.2.0/bf744c1e2776ed1de3c55c8dac1057ec331ef744/javax.activation-1.2.0.jar
+7f98d9f59000-7f98d9f60000 r--s 0004b000 08:02 18503340                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.11/3acb4705652e16236558f0f4f2192cc33c3bd189/commons-codec-1.11.jar
+7f98d9f60000-7f98d9f78000 r--s 00115000 08:02 18503339                   /home/chobela/.gradle/caches/modules-2/files-2.1/xerces/xercesImpl/2.9.1/1136d197e2755bbde296ceee217ec5fe2917477b/xercesImpl-2.9.1.jar
+7f98d9f78000-7f98d9f7a000 r--s 0000e000 08:02 18491781                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar
+7f98d9f7a000-7f98d9f7e000 r--s 0003c000 08:02 18503338                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/16313e02a793435009f1e458fa4af5d879f6fb11/commons-lang-2.4.jar
+7f98d9f7e000-7f98d9f81000 r--s 00013000 08:02 18503336                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.6/1e55d2a0253ea37745d33062852fd2c90027432/ezmorph-1.0.6.jar
+7f98d9f81000-7f98d9f8f000 r--s 0007f000 08:02 18503337                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/761ea405b9b37ced573d2df0d1e3a4e0f9edc668/commons-collections-3.2.1.jar
+7f98d9f8f000-7f98d9f94000 r--s 00034000 08:02 18503335                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.8.0/c651d5103c649c12b20d53731643e5fffceb536/commons-beanutils-1.8.0.jar
+7f98d9f94000-7f98d9f96000 r--s 0000c000 08:02 18496267                   /home/chobela/.gradle/caches/modules-2/files-2.1/javax.activation/javax.activation-api/1.2.0/85262acf3ca9816f9537ca47d5adeabaead7cb16/javax.activation-api-1.2.0.jar
+7f98d9f96000-7f98d9f9c000 r--s 00047000 08:02 18496269                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.sun.xml.fastinfoset/FastInfoset/1.2.15/bb7b7ec0379982b97c62cd17465cb6d9155f68e8/FastInfoset-1.2.15.jar
+7f98d9f9c000-7f98d9f9d000 r--s 00008000 08:02 18496265                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jvnet.staxex/stax-ex/1.8/8cc35f73da321c29973191f2cf143d29d26a1df7/stax-ex-1.8.jar
+7f98d9f9d000-7f98d9f9f000 r--s 00005000 08:02 18496263                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/3.0.7/c197c86ceec7318b1284bffb49b54226ca774003/istack-commons-runtime-3.0.7.jar
+7f98d9f9f000-7f98d9fa2000 r--s 0000f000 08:02 18496259                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/txw2/2.3.1/a09d2c48d3285f206fafbffe0e50619284e92126/txw2-2.3.1.jar
+7f98d9fa2000-7f98d9fa6000 r--s 0001c000 08:02 18496257                   /home/chobela/.gradle/caches/modules-2/files-2.1/javax.xml.bind/jaxb-api/2.3.1/8531ad5ac454cc2deb9d4d32c40c4d7451939b5d/jaxb-api-2.3.1.jar
+7f98d9fa6000-7f98d9fa7000 r--s 00000000 08:02 18496255                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.codehaus.mojo/animal-sniffer-annotations/1.18/f7aa683ea79dc6681ee9fb95756c999acbb62f5d/animal-sniffer-annotations-1.18.jar
+7f98d9fa7000-7f98d9fa9000 r--s 00001000 08:02 18496253                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.3/ba035118bc8bac37d7eff77700720999acd9986d/j2objc-annotations-1.3.jar
+7f98d9fa9000-7f98d9fb3000 r--s 00027000 08:02 18496251                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/2.8.1/eb2e8ab75598548cc8acf9a1ca227e480e01881e/checker-qual-2.8.1.jar
+7f98d9fb3000-7f98d9fb4000 r--s 00000000 08:02 18496249                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/b421526c5f297295adef1c886e5246c39d4ac629/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
+7f98d9fb4000-7f98d9fb6000 r--s 00000000 08:02 18496247                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.1/1dcf1de382a0bf95a3d8b0849546c88bac1292c9/failureaccess-1.0.1.jar
+7f98d9fb6000-7f98d9fb8000 r--s 00003000 08:02 18493193                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar
+7f98d9fb8000-7f98d9fb9000 r--s 0000a000 08:02 18484894                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/ccbc77a5fd907ef863c29f3596c6f54ffa4e9442/kxml2-2.3.0.jar
+7f98d9fb9000-7f98d9fc4000 r--s 00081000 08:02 18486973                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.trove4j/trove4j/20160824/33c3e174a9c8368d93761d3d12712db18e903959/trove4j-20160824.jar
+7f98d9fc4000-7f98d9fcd000 r--s 00064000 08:02 18484891                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.12/84caa68576e345eb5e7ae61a0e5a9229eb100d7b/commons-compress-1.12.jar
+7f98d9fcd000-7f98d9fcf000 r--s 00005000 08:02 18503334                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.2/81d61b7f33ebeab314e07de0cc596f8e858d97/slf4j-api-1.7.2.jar
+7f98d9fcf000-7f98d9fd3000 r--s 00025000 08:02 18503333                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.googlecode.javaewah/JavaEWAH/1.1.6/94ad16d728b374d65bd897625f3fbb3da223a2b6/JavaEWAH-1.1.6.jar
+7f98d9fd3000-7f98d9fd4000 r--s 00010000 08:02 18503332                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.jcraft/jzlib/1.1.1/a1551373315ffc2f96130a0e5704f74e151777ba/jzlib-1.1.1.jar
+7f98d9fd4000-7f98d9fd8000 r--s 00041000 08:02 18503331                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.jcraft/jsch/0.1.55/bbd40e5aa7aa3cfad5db34965456cee738a42a50/jsch-0.1.55.jar
+7f98d9fd8000-7f98d9fda000 r--s 00013000 08:02 18503330                   /home/chobela/.gradle/caches/modules-2/files-2.1/xml-resolver/xml-resolver/1.2/3d0f97750b3a03e0971831566067754ba4bfd68c/xml-resolver-1.2.jar
+7f98d9fda000-7f98d9fdd000 r--s 0001c000 08:02 18503329                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sourceforge.nekohtml/nekohtml/1.9.16/61e35204e5a8fdb864152f84e2e3b33ab56f50ab/nekohtml-1.9.16.jar
+7f98d9fdd000-7f98d9fe1000 r--s 00022000 08:02 18503328                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sf.json-lib/json-lib/2.3/f35340c0a0380141f62c72b76c8fb4bfa638d8c1/json-lib-2.3-jdk15.jar
+7f98d9fe1000-7f98d9fe7000 r--s 00044000 08:02 18503327                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.antlr/antlr4-runtime/4.5.2-1/7fe31fde811943a1970cc97359557c57747026ef/antlr4-runtime-4.5.2-1.jar
+7f98d9fe7000-7f98d9fe9000 r--s 00003000 08:02 18484895                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar
+7f98d9fe9000-7f98d9ff1000 r--s 00027000 08:02 18503326                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.0/1c752cce0ead8d504ccc88a4fed6471fd83ab0dd/kotlin-stdlib-common-1.4.0.jar
+7f98d9ff1000-7f98d9ff8000 r--s 0005d000 08:02 18503325                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.4.0/3920267a992cf133d654bd99f5cc9b0b6d5abf1e/kotlin-build-common-1.4.0.jar
+7f98d9ff8000-7f98da003000 r--s 00081000 08:02 18493863                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.deps/trove4j/1.0.20181211/216c2e14b070f334479d800987affe4054cd563f/trove4j-1.0.20181211.jar
+7f98da003000-7f98da011000 r--s 000a5000 08:02 18503324                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-embeddable/1.4.0/633873c93bba12bcf764e1cf8fb36baa5501b8ff/kotlin-daemon-embeddable-1.4.0.jar
+7f98da011000-7f98da013000 r--s 00009000 08:02 18503323                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.4.0/52ac54a56c9121f54fcca387c5a0f441d1af9be8/kotlin-script-runtime-1.4.0.jar
+7f98da013000-7f98da014000 r--s 0000f000 08:02 18496245                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.json/json/20180813/8566b2b0391d9d4479ea225645c6ed47ef17fe41/json-20180813.jar
+7f98da014000-7f98da01a000 r--s 00045000 08:02 18491780                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.6/6f14738ec2e9dd0011e343717fa624a10f8aab64/jdom2-2.0.6.jar
+7f98da01a000-7f98da01c000 r--s 00002000 08:02 18496243                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.3.2/d1a0c5032570e0f64be6b4d9c90cdeb103129029/error_prone_annotations-2.3.2.jar
+7f98da01c000-7f98da01d000 r--s 00001000 08:02 18496241                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value-annotations/1.6.2/ed193d86e0af90cc2342aedbe73c5d86b03fa09b/auto-value-annotations-1.6.2.jar
+7f98da01d000-7f98da032000 r--s 00123000 08:02 18491724                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-base/6.0.3/7135739d2d3834964c543ed21e2936ce34747aca/proguard-base-6.0.3.jar
+7f98da032000-7f98da046000 r--s 000f7000 08:02 18496183                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-runtime/2.3.1/dd6dda9da676a54c5b36ca2806ff95ee017d8738/jaxb-runtime-2.3.1.jar
+7f98da046000-7f98da048000 r--s 00016000 08:02 18496181                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.10.0/712c178d35185d8261295913c9f2a7d6867a6007/javapoet-1.10.0.jar
+7f98da048000-7f98da04b000 r--s 00033000 08:02 18484881                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.googlecode.juniversalchardet/juniversalchardet/1.0.3/cd49678784c46aa8789c060538e0154013bb421b/juniversalchardet-1.0.3.jar
+7f98da04b000-7f98da04f000 r--s 0002a000 08:02 18484880                   /home/chobela/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar
+7f98da04f000-7f98da066000 r--s 00154000 08:02 18484879                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.antlr/antlr4/4.5.3/f35db7e4b2446e4174ba6a73db7bd6b3e6bb5da1/antlr4-4.5.3.jar
+7f98da066000-7f98da067000 r--s 00003000 08:02 18496767                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/4.0.1/75023e7dd74bbae2c67cbe5b4011f1c36c1cb7f3/baseLibrary-4.0.1.jar
+7f98da067000-7f98da068000 r--s 00003000 08:02 18496768                   /home/chobela/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/4.0.1/cdca8698ee545b79d656a4f1eeb103f60fad3ed1/databinding-common-4.0.1.jar
+7f98da068000-7f98da070000 r--s 00049000 08:02 18503322                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.13/853b96d3afbb7bf8cc303fe27ee96836a10c1834/httpcore-4.4.13.jar
+7f98da070000-7f98da07d000 r--s 000b1000 08:02 18503321                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.11/f6d42fee5110c227bac18a550a297e028f2fb21a/httpclient-4.5.11.jar
+7f98da07d000-7f98da07e000 r--s 00002000 08:02 18496769                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/27.0.1/45964f66d43e7c1b7e584d5a840084cc7f3810b5/annotations-27.0.1.jar
+7f98da07e000-7f98da0b0000 r--s 00270000 08:02 18496175                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/28.1-jre/b0e91dcb6a44ffb6221b5027e12a5cb34b841145/guava-28.1-jre.jar
+7f98da0b0000-7f98da0b4000 r--s 0002f000 08:02 18484864                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.1/8fbd0579dc68aba6186935cc1bee21d2f3e7ec1c/jimfs-1.1.jar
+7f98da0b4000-7f98da0b5000 r--s 00003000 08:02 18484876                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar
+7f98da0b5000-7f98da1da000 r--s 00f5d000 08:02 18484875                   /home/chobela/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.2.0/5ad3a2bb04143f70aa0765fc29fc29571a7d6b34/fastutil-7.2.0.jar
+7f98da1da000-7f98da1db000 r--s 00000000 08:02 18485599                   /home/chobela/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar
+7f98da1db000-7f98da23a000 r--s 003f7000 08:02 18503320                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15on/1.61/df4b474e71be02c1349c3292d98886f888d1f7/bcprov-jdk15on-1.61.jar
+7f98da23a000-7f98da242000 r--s 00048000 08:02 18503319                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpg-jdk15on/1.61/422656435514ab8a28752b117d5d2646660a0ace/bcpg-jdk15on-1.61.jar
+7f98da242000-7f98da256000 r--s 000c0000 08:02 18503318                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.61/89bb3aa5b98b48e584eee2a7401b7682a46779b4/bcpkix-jdk15on-1.61.jar
+7f98da256000-7f98da258000 r--s 00002000 08:02 18484872                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.5.0/81241ff7078ef14f42ea2a8995fa09c096256e6b/javawriter-2.5.0.jar
+7f98da258000-7f98da25f000 r--s 0004f000 08:02 18496766                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/4.0.1/1d51b699fb84ad226c4a8253e3108d1b1fd2663f/apksig-4.0.1.jar
+7f98da25f000-7f98da264000 r--s 0002d000 08:02 18483534                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apkzlib/4.0.1/bba5765dbeea157cfb8d03abf577c9404cebbbfa/apkzlib-4.0.1.jar
+7f98da264000-7f98da267000 r--s 00008000 08:02 18496753                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/4.0.1/31651881299e35d8040b92b2dc13d0fa861d7ec/builder-model-4.0.1.jar
+7f98da267000-7f98da28d000 r--s 00281000 08:02 18503317                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.eclipse.jgit/org.eclipse.jgit/5.5.1.201910021850-r/e0ba7a468e8c62da8521ca3a06a061d4dde95223/org.eclipse.jgit-5.5.1.201910021850-r.jar
+7f98da28d000-7f98da28f000 r--s 00009000 08:02 18503316                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.5.11/a0da6f21987ce0cf521b39f97f7a4e9480b05e54/httpmime-4.5.11.jar
+7f98da28f000-7f98da292000 r--s 00026000 08:02 18503315                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy.modules.http-builder/http-builder/0.7.1/a21771ae3da5ce9f5c4d7a60c1e716666aa2acf9/http-builder-0.7.1.jar
+7f98da292000-7f98da295000 r--s 00015000 08:02 18503314                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.github.gundy/semver4j/0.16.4/de8c77583e97bbbd3cdbe5f406b583e9b081ff56/semver4j-0.16.4.jar
+7f98da295000-7f98da2b8000 r--s 0014d000 08:02 18503313                   /home/chobela/.gradle/caches/modules-2/files-2.1/de.undercouch/gradle-download-task/4.0.2/2aaf2b081cd0dd5b3cf25fde69a20b043dd46fbd/gradle-download-task-4.0.2.jar
+7f98da2b8000-7f98da2bd000 r--s 00036000 08:02 18493513                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar
+7f98da2bd000-7f98da2d2000 r--s 00157000 08:02 18503312                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.0/63e75298e93d4ae0b299bb869cf0c627196f8843/kotlin-stdlib-1.4.0.jar
+7f98da2d2000-7f98da2ec000 r--s 00173000 08:02 18503311                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.3.7/8e2eb78158638b33793d204ffef0b65c4a578e1c/kotlinx-coroutines-core-1.3.7.jar
+7f98da2ec000-7f98da2ee000 r--s 0000a000 08:02 18503310                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-util-io/1.4.0/892aff2cd076de6908d847c242c7617991eb5f19/kotlin-util-io-1.4.0.jar
+7f98da2ee000-7f98da2f3000 r--s 00030000 08:02 18503309                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.4.0/9c5c5503c8f96b477661789168b3f4a3c61a6c6e/kotlin-scripting-common-1.4.0.jar
+7f98da2f3000-7f98da2f7000 r--s 0002c000 08:02 18503308                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.4.0/d807bf2ab36765af04b29319989322efd5ad1401/kotlin-scripting-jvm-1.4.0.jar
+7f98da2f7000-7f98da2f8000 r--s 00000000 08:02 18496182                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.72/3adfc2f4ea4243e01204be8081fe63bde6b12815/kotlin-stdlib-jdk7-1.3.72.jar
+7f98da2f8000-7f98da2fe000 r--s 00036000 08:02 18503307                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-util-klib/1.4.0/154ab2ab6c7ee86ae8895928e4210ab3279293b0/kotlin-util-klib-1.4.0.jar
+7f98da2fe000-7f98da2ff000 r--s 00002000 08:02 18503306                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.4.0/d3751c44c35697b15e7b2e433d61c9a02e2d8346/kotlin-gradle-plugin-model-1.4.0.jar
+7f98da2ff000-7f98da302000 r--s 00013000 08:02 18503304                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.4.0/568b2867d73b4db7b57a014e023932173c7f6abe/kotlin-gradle-plugin-api-1.4.0.jar
+7f98da302000-7f98da33d000 r--s 00288000 08:02 18503305                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.4.0/aa2101a19d8688e368ae6e35e8967550ced73884/kotlin-reflect-1.4.0.jar
+7f98da33d000-7f98da348000 r--s 0009a000 08:02 18503303                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.4.0/bb5f661403b726c9f7fa5d943ef97f3a2b188aba/kotlin-daemon-client-1.4.0.jar
+7f98da348000-7f98da34f000 r--s 00047000 08:02 18503301                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-impl-embeddable/1.4.0/b2446c3e97bc1aeb4c5e5565c25393f377827aca/kotlin-scripting-compiler-impl-embeddable-1.4.0.jar
+7f98da34f000-7f98da357000 r--s 00055000 08:02 18503300                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.4.0/44a713572690b1a8b1e58ea2d82ebb27bf0e1e1b/kotlin-scripting-compiler-embeddable-1.4.0.jar
+7f98da357000-7f98da359000 r--s 00004000 08:02 18503299                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.4.0/aec9f31481241d377fd9555e07a03e3ebe7e011b/kotlin-compiler-runner-1.4.0.jar
+7f98da359000-7f98da5de000 r--s 02626000 08:02 18503302                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.4.0/e5f0d669a77787ccbccd49c71b57bfd7b35faec4/kotlin-compiler-embeddable-1.4.0.jar
+7f98da5de000-7f98da5e7000 r--s 00070000 08:02 18503297                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.4.0/b10de696fb26620d57a208cad1ccbbffe68f17e9/kotlin-android-extensions-1.4.0.jar
+7f98da5e7000-7f98da5ef000 r--s 00066000 08:02 18503296                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.4.0/3b7c2e681476d812d1c9d6fe7bdc27ee57658fd8/kotlin-annotation-processing-gradle-1.4.0.jar
+7f98da5ef000-7f98da601000 r--s 00185000 08:02 18496146                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.10.0/410b61dd0088aab4caa05739558d43df248958c9/protobuf-java-3.10.0.jar
+7f98da601000-7f98da608000 r--s 0009e000 08:02 18496765                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aapt2-proto/4.0.1-6197926/8d80782449481fdb258c74eea76a739d7aa513d7/aapt2-proto-4.0.1-6197926.jar
+7f98da608000-7f98da62e000 r--s 00360000 08:02 18496763                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/27.0.1/b0eb2f65155b033b34b2214d24ee4c1a55c87621/protos-27.0.1.jar
+7f98da62e000-7f98da63e000 r--s 00107000 08:02 18496143                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.crypto.tink/tink/1.3.0-rc2/c7efb1ecc3b667b8a0789a1b019b06269037e19b/tink-1.3.0-rc2.jar
+7f98da63e000-7f98da641000 r--s 00010000 08:02 18496142                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.10.0/a68c906db83e93babbb4024ce91e7441bb7598dd/protobuf-java-util-3.10.0.jar
+7f98da641000-7f98da644000 r--s 0001d000 08:02 18496141                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-core/1.0.0-beta09/c98ee0e5579aed97e17f605a89b101115a2f5a61/jetifier-core-1.0.0-beta09.jar
+7f98da644000-7f98da8c0000 r--s 01c59000 08:02 18496760                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/bundletool/0.13.2/bb629ece022e5aa20cff66517e728c89f9667721/bundletool-0.13.2.jar
+7f98da8c0000-7f98da8c1000 r--s 00003000 08:02 18491708                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-gradle/6.0.3/e5becf2356695a396b788110e386c38bad523bfc/proguard-gradle-6.0.3.jar
+7f98da8c1000-7f98da8c3000 r--s 0000f000 08:02 18484853                   /home/chobela/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/4.9/ee9e9eaa0a35360dcfeac129ff4923215fd65904/jopt-simple-4.9.jar
+7f98da8c3000-7f98da8c5000 r--s 0001a000 08:02 18496139                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/7.0/d74d4ba0dee443f68fb2dcb7fcdb945a2cd89912/asm-7.0.jar
+7f98da8c5000-7f98da8c7000 r--s 0000b000 08:02 18496138                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/7.0/29bc62dcb85573af6e62e5b2d735ef65966c4180/asm-tree-7.0.jar
+7f98da8c7000-7f98da8c9000 r--s 00007000 08:02 18496137                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/7.0/4b310d20d6f1c6b7197a75f1b5d69f169bc8ac1f/asm-analysis-7.0.jar
+7f98da8c9000-7f98da8ca000 r--s 00013000 08:02 18496136                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/7.0/18d4d07010c24405129a6dbb0e92057f8779fb9d/asm-util-7.0.jar
+7f98da8ca000-7f98da8cc000 r--s 00012000 08:02 18496135                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/7.0/478006d07b7c561ae3a92ddc1829bca81ae0cdd1/asm-commons-7.0.jar
+7f98da8cc000-7f98da8d1000 r--s 00025000 08:02 18496134                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-processor/1.0.0-beta09/fb2a015ff56e24939a88593ac73b84e627864476/jetifier-processor-1.0.0-beta09.jar
+7f98da8d1000-7f98da8d2000 r--s 00000000 08:02 18484847                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/transform-api/2.0.0-deprecated-use-gradle-api/47f6c56527c42425742fa9b56ffd3fd80763fe03/transform-api-2.0.0-deprecated-use-gradle-api.jar
+7f98da8d2000-7f98da8d3000 r--s 00003000 08:02 18496133                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.72/916d54b9eb6442b615e6f1488978f551c0674720/kotlin-stdlib-jdk8-1.3.72.jar
+7f98da8d3000-7f98da8d8000 r--s 0003c000 08:02 18496758                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/common/27.0.1/62d59d2a0ee7d0cd7bbeba97ddce45f7898ec6c6/common-27.0.1.jar
+7f98da8d8000-7f98da8db000 r--s 00017000 08:02 18496757                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/27.0.1/e8392bf59b50b69a669e1a9f3372229a2f13ad53/shared-27.0.1.jar
+7f98da8db000-7f98da8e0000 r--s 0002d000 08:02 18496756                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/27.0.1/98db9058a7f3ea335570747b02300c5d943f522b/repository-27.0.1.jar
+7f98da8e0000-7f98da8e2000 r--s 00009000 08:02 18496755                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/27.0.1/1ae27de1c6f283d169aea24911fd1bef7a8e9c74/dvlib-27.0.1.jar
+7f98da8e2000-7f98da8e6000 r--s 00019000 08:02 18496754                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/27.0.1/cc1c6634155a19ec9f2365f0b48e5916ecf56b5f/layoutlib-api-27.0.1.jar
+7f98da8e6000-7f98da8ef000 r--s 00092000 08:02 18496752                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/27.0.1/c6ddf0399d70930644cca38fa17df09839bfaa76/sdklib-27.0.1.jar
+7f98da8ef000-7f98da8f1000 r--s 00008000 08:02 18496751                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/27.0.1/aa98760c9f8bb77b84744d756233ce5f6afd67b4/tracker-27.0.1.jar
+7f98da8f1000-7f98da8f3000 r--s 00008000 08:02 18496750                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android/zipflinger/4.0.1/b57ae10c6be9486bef6164085e2c7b041b98c03c/zipflinger-4.0.1.jar
+7f98da8f3000-7f98da8f9000 r--s 00053000 08:02 18496748                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/27.0.1/56c5d2bfc359ebf0836dbe4d444c9df811bd5523/ddmlib-27.0.1.jar
+7f98da8f9000-7f98da913000 r--s 0014c000 08:02 18496745                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/27.0.1/b17dd4434faa51c5bcae5c15a9c4d19077e515af/sdk-common-27.0.1.jar
+7f98da913000-7f98da916000 r--s 0002f000 08:02 18496746                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/27.0.1/de404ba12ad2b6dd000209487e594c9f1296979a/manifest-merger-27.0.1.jar
+7f98da916000-7f98da976000 r--s 00843000 08:02 18496740                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/4.0.1/15b68fa31a20c9cb981105913e6df499f064db7d/builder-4.0.1.jar
+7f98da976000-7f98daa2f000 r--s 00836000 08:02 18503295                   /home/chobela/.gradle/caches/modules-2/files-2.1/io.fabric.tools/gradle/1.31.2/e627c7b29e9b297914bd2d57802a99027aa3629c/gradle-1.31.2.jar
+7f98daa2f000-7f98daa81000 r--s 003ec000 08:02 18503292                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.4.0/83dabc202077b667d565bfa9b27589c91c85fcfa/kotlin-gradle-plugin-1.4.0.jar
+7f98daa81000-7f98daade000 r--s 004a5000 08:02 18496739                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/4.0.1/b9123dfbc635d6b2ae0d1d497e54ce6ddb204e2a/gradle-4.0.1.jar
+7f98daade000-7f98daae1000 ---p 00000000 00:00 0 
+7f98daae1000-7f98dabdf000 rw-p 00000000 00:00 0 
+7f98dabdf000-7f98dabe2000 ---p 00000000 00:00 0 
+7f98dabe2000-7f98dace0000 rw-p 00000000 00:00 0 
+7f98dace0000-7f98dace3000 ---p 00000000 00:00 0 
+7f98dace3000-7f98dade1000 rw-p 00000000 00:00 0 
+7f98dade1000-7f98dade4000 ---p 00000000 00:00 0 
+7f98dade4000-7f98daee2000 rw-p 00000000 00:00 0 
+7f98daee2000-7f98daef9000 r-xp 00000000 08:02 18099717                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f98daef9000-7f98db0f9000 ---p 00017000 08:02 18099717                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f98db0f9000-7f98db0fa000 r--p 00017000 08:02 18099717                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f98db0fa000-7f98db0fb000 rw-p 00018000 08:02 18099717                   /lib/x86_64-linux-gnu/libresolv-2.27.so
+7f98db0fb000-7f98db0fd000 rw-p 00000000 00:00 0 
+7f98db0fd000-7f98db102000 r-xp 00000000 08:02 18099708                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f98db102000-7f98db302000 ---p 00005000 08:02 18099708                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f98db302000-7f98db303000 r--p 00005000 08:02 18099708                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f98db303000-7f98db304000 rw-p 00006000 08:02 18099708                   /lib/x86_64-linux-gnu/libnss_dns-2.27.so
+7f98db304000-7f98db306000 r-xp 00000000 08:02 18092720                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f98db306000-7f98db505000 ---p 00002000 08:02 18092720                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f98db505000-7f98db506000 r--p 00001000 08:02 18092720                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f98db506000-7f98db507000 rw-p 00002000 08:02 18092720                   /lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2
+7f98db507000-7f98db707000 rw-p 00000000 00:00 0 
+7f98db707000-7f98db739000 r-xp 00000000 08:02 9830426                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libsunec.so
+7f98db739000-7f98db73a000 ---p 00032000 08:02 9830426                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libsunec.so
+7f98db73a000-7f98db73f000 r--p 00032000 08:02 9830426                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libsunec.so
+7f98db73f000-7f98db741000 rw-p 00037000 08:02 9830426                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libsunec.so
+7f98db741000-7f98db952000 rw-p 00000000 00:00 0 
+7f98db952000-7f98db955000 ---p 00000000 00:00 0 
+7f98db955000-7f98dbc53000 rw-p 00000000 00:00 0 
+7f98dbc53000-7f98dc000000 r--s 0338c000 08:02 10225911                   /home/chobela/.gradle/caches/jars-3/2c55e483c5e437647e330876312244e7/kotlin-plugin.jar
+7f98dc000000-7f98dd311000 rw-p 00000000 00:00 0 
+7f98dd311000-7f98e0000000 ---p 00000000 00:00 0 
+7f98e0000000-7f98e0103000 rw-p 00000000 00:00 0 
+7f98e0103000-7f98e4000000 ---p 00000000 00:00 0 
+7f98e4000000-7f98e475b000 rw-p 00000000 00:00 0 
+7f98e475b000-7f98e8000000 ---p 00000000 00:00 0 
+7f98e8000000-7f98e8b68000 rw-p 00000000 00:00 0 
+7f98e8b68000-7f98ec000000 ---p 00000000 00:00 0 
+7f98ec000000-7f98ec219000 rw-p 00000000 00:00 0 
+7f98ec219000-7f98f0000000 ---p 00000000 00:00 0 
+7f98f0000000-7f98f1426000 rw-p 00000000 00:00 0 
+7f98f1426000-7f98f4000000 ---p 00000000 00:00 0 
+7f98f4000000-7f98f4040000 rw-p 00000000 00:00 0 
+7f98f4040000-7f98f8000000 ---p 00000000 00:00 0 
+7f98f8000000-7f98f802f000 rw-p 00000000 00:00 0 
+7f98f802f000-7f98fc000000 ---p 00000000 00:00 0 
+7f98fc000000-7f98fc3e0000 rw-p 00000000 00:00 0 
+7f98fc3e0000-7f9900000000 ---p 00000000 00:00 0 
+7f9900000000-7f9900021000 rw-p 00000000 00:00 0 
+7f9900021000-7f9904000000 ---p 00000000 00:00 0 
+7f9904000000-7f990417d000 rw-p 00000000 00:00 0 
+7f990417d000-7f9908000000 ---p 00000000 00:00 0 
+7f9908000000-7f990a8c8000 rw-p 00000000 00:00 0 
+7f990a8c8000-7f990c000000 ---p 00000000 00:00 0 
+7f990c000000-7f990c032000 rw-p 00000000 00:00 0 
+7f990c032000-7f9910000000 ---p 00000000 00:00 0 
+7f9910000000-7f9913ff9000 rw-p 00000000 00:00 0 
+7f9913ff9000-7f9914000000 ---p 00000000 00:00 0 
+7f9914000000-7f9914068000 rw-p 00000000 00:00 0 
+7f9914068000-7f9918000000 ---p 00000000 00:00 0 
+7f9918000000-7f991808a000 rw-p 00000000 00:00 0 
+7f991808a000-7f991c000000 ---p 00000000 00:00 0 
+7f991c000000-7f991c021000 rw-p 00000000 00:00 0 
+7f991c021000-7f9920000000 ---p 00000000 00:00 0 
+7f9920000000-7f9920001000 r--s 00002000 08:02 18496749                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android/signflinger/4.0.1/12a1261923aea039b9ecc0983b05bd6b867264d3/signflinger-4.0.1.jar
+7f9920001000-7f9920002000 r--s 00003000 08:02 18496747                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/4.0.1/8a9a1fc09a94ba43a83c34456d8d150ce3591a76/builder-test-api-4.0.1.jar
+7f9920002000-7f992000b000 r--s 0006d000 08:02 18496742                   /home/chobela/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-compiler-common/4.0.1/45126bcd8d415ea7bbe4cc434784b24f14be3ac1/databinding-compiler-common-4.0.1.jar
+7f992000b000-7f992000f000 r--s 00012000 08:02 18496743                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/4.0.1/fd184bd994cc0047b9353b3548645544b352d129/gradle-api-4.0.1.jar
+7f992000f000-7f9920010000 r--s 00004000 08:02 18496741                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/27.0.1/9f64963b928bf7448aa2750e66cefb085beac921/lint-gradle-api-27.0.1.jar
+7f9920010000-7f9920011000 r--s 00003000 08:02 18496773                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/crash/27.0.1/543ada2d3f4d681505790cbbc705cd3464304275/crash-27.0.1.jar
+7f9920011000-7f9920017000 r--s 00063000 08:02 18496738                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aaptcompiler/4.0.1/7579690083a0c5f728b3715e4729154bbfd33f03/aaptcompiler-4.0.1.jar
+7f9920017000-7f9920019000 r--s 00003000 08:02 18503294                   /home/chobela/.gradle/caches/modules-2/files-2.1/com.dicedmelon.gradle/jacoco-android/0.1.4/f1e5d44d4b6626f19be270b45a078430f0fcb09c/jacoco-android-0.1.4.jar
+7f9920019000-7f9920020000 r--s 0004c000 08:02 18503341                   /home/chobela/.gradle/caches/modules-2/files-2.1/org.jetbrains.dokka/dokka-gradle-plugin/0.10.1/16161bba6fcb227b6326173dc39ca7d45ea937a1/dokka-gradle-plugin-0.10.1.jar
+7f9920020000-7f9920023000 r--s 00018000 08:02 18503298                   /home/chobela/.gradle/caches/modules-2/files-2.1/gradle.plugin.org.kt3k.gradle.plugin/coveralls-gradle-plugin/2.10.2/3baae81363bb5ff88084dcb469fa65be97500cb/coveralls-gradle-plugin-2.10.2.jar
+7f9920023000-7f9920024000 r--s 0000d000 08:02 9568681                    /home/chobela/Desktop/android-studio/jre/jre/lib/ext/sunec.jar
+7f9920024000-7f9920028000 r--s 0003a000 08:02 9568688                    /home/chobela/Desktop/android-studio/jre/jre/lib/ext/sunpkcs11.jar
+7f9920028000-7f992002a000 r--s 00016000 08:02 9437809                    /home/chobela/Desktop/android-studio/jre/jre/lib/jce.jar
+7f992002a000-7f992022a000 rw-p 00000000 00:00 0 
+7f992022a000-7f992022f000 r--s 00036000 08:02 10225913                   /home/chobela/.gradle/caches/jars-3/9874e1624a05557f45f30154906e752e/gson-2.8.6.jar
+7f992022f000-7f99202a0000 r--s 0066e000 08:02 274646                     /home/chobela/.gradle/caches/jars-3/fafb47ba756870b96002c62052967e87/groovy-all-2.4.17.jar
+7f99202a0000-7f99202b3000 r--s 00345000 08:02 9437807                    /home/chobela/Desktop/android-studio/jre/jre/lib/resources.jar
+7f99202b3000-7f99204b3000 rw-p 00000000 00:00 0 
+7f99204b3000-7f99206b3000 rw-p 00000000 00:00 0 
+7f99206b3000-7f99208b3000 rw-p 00000000 00:00 0 
+7f99208b3000-7f9920ab3000 rw-p 00000000 00:00 0 
+7f9920ab3000-7f9920cb3000 rw-p 00000000 00:00 0 
+7f9920cb3000-7f9920cb6000 ---p 00000000 00:00 0 
+7f9920cb6000-7f9920db4000 rw-p 00000000 00:00 0 
+7f9920db4000-7f9920db7000 ---p 00000000 00:00 0 
+7f9920db7000-7f9920eb5000 rw-p 00000000 00:00 0 
+7f9920eb5000-7f9920eb8000 ---p 00000000 00:00 0 
+7f9920eb8000-7f99211b6000 rw-p 00000000 00:00 0 
+7f99211b6000-7f99211b7000 r--s 00000000 08:02 12458320                   /home/chobela/.gradle/caches/jars-3/497c99dc43ce8fece95d0e589f2459bd/gradle-appengine-builder-model-0.1.0.jar
+7f99211b7000-7f99211bb000 r--s 0004b000 08:02 10225872                   /home/chobela/.gradle/caches/jars-3/32044c386922f5cecf97eaccd5fdd243/android-extensions-ide.jar
+7f99211bb000-7f99211be000 r--s 00004000 08:02 10225890                   /home/chobela/.gradle/caches/jars-3/474bcb72b9532908d390b7e9b51d2249/annotations.jar
+7f99211be000-7f99211c6000 r--s 000d2000 08:02 10223672                   /home/chobela/.gradle/caches/jars-3/7136f75d05cfdc62313c1374e7f03a3b/gradle-tooling-extension-impl.jar
+7f99211c6000-7f99211e0000 r--s 002c9000 08:02 10225857                   /home/chobela/.gradle/caches/jars-3/33e96dfac398288a681a46e4863f9038/sdk-common.jar
+7f99211e0000-7f99211f4000 r--s 0013d000 08:02 12192120                   /home/chobela/.gradle/caches/jars-3/d1ab99c475b94d1d9aa4be806ce14b44/kotlin-stdlib-1.3.72.jar
+7f99211f4000-7f9921226000 r--s 00277000 08:02 10225850                   /home/chobela/.gradle/caches/jars-3/6b77ec927338a5d18736c56ad6ff4160/guava-28.2-jre.jar
+7f9921226000-7f992122c000 r--s 000a3000 08:02 10225846                   /home/chobela/.gradle/caches/jars-3/e3769242286c9289a2185fe51b59cd44/android-base-common.jar
+7f992122c000-7f992125c000 r--s 02a1f000 08:02 10225842                   /home/chobela/.gradle/caches/jars-3/6d8f18752f3561dbd50a9aab367336a2/sdk-tools.jar
+7f992125c000-7f9921261000 r--s 0002e000 08:02 19018463                   /home/chobela/.gradle/caches/jars-3/a49fa52c8844d7efb973de5f1d41095f/kotlin-gradle-tooling.jar
+7f9921261000-7f99215fb000 r--s 04559000 08:02 10225836                   /home/chobela/.gradle/caches/jars-3/d53be2e1b67b2f85f533a44897d1e647/android.jar
+7f99215fb000-7f99215fd000 r--s 0000c000 08:02 10223665                   /home/chobela/.gradle/caches/jars-3/847348420f30e7aeac3f4e7f24e9bb67/external-system-rt.jar
+7f99215fd000-7f9921608000 r--s 000aa000 08:02 12192052                   /home/chobela/.gradle/caches/jars-3/2daa8a88fb68b91149a30998d45aa1f5/ion-java-1.5.2-2.jar
+7f9921608000-7f9921631000 r--s 004e2000 08:02 10223645                   /home/chobela/.gradle/caches/jars-3/45ed0ae62860493ba75e02716138dfa4/util.jar
+7f9921631000-7f992163c000 r--s 00081000 08:02 12191877                   /home/chobela/.gradle/caches/jars-3/b60b5dd218cf67e8c7a89e4eb4952e61/trove4j.jar
+7f992163c000-7f9921641000 r--s 00055000 08:02 10223638                   /home/chobela/.gradle/caches/jars-3/42d0a2660516fee163d1cf83bae143bb/gradle-tooling-extension-api.jar
+7f9921641000-7f9921642000 r--s 00002000 08:02 10223633                   /home/chobela/.gradle/caches/jars-3/a6ce0fea611ce5fc7663b85bdc167049/gradle-toolingLoaderRt.jar
+7f9921642000-7f9921906000 r--s 01c65000 08:02 10223629                   /home/chobela/.gradle/caches/jars-3/3df8cd05cb0c6213ff77f8cec79028ce/gradle-api-impldep-6.1.1.jar
+7f9921906000-7f9921a7a000 r--s 00d0a000 08:02 10223621                   /home/chobela/.gradle/caches/jars-3/6ea1e8155310d879d66b539663a8ec15/gradle-api-6.1.1.jar
+7f9921a7a000-7f9921c7a000 rw-p 00000000 00:00 0 
+7f9921c7a000-7f9921cf4000 r--s 01104000 08:02 9437755                    /home/chobela/Desktop/android-studio/jre/lib/tools.jar
+7f9921cf4000-7f9921cf7000 ---p 00000000 00:00 0 
+7f9921cf7000-7f9921df5000 rw-p 00000000 00:00 0 
+7f9921df5000-7f9921df8000 ---p 00000000 00:00 0 
+7f9921df8000-7f99220f6000 rw-p 00000000 00:00 0 
+7f99220f6000-7f99220f9000 ---p 00000000 00:00 0 
+7f99220f9000-7f99221f7000 rw-p 00000000 00:00 0 
+7f99221f7000-7f99221fa000 ---p 00000000 00:00 0 
+7f99221fa000-7f99222f8000 rw-p 00000000 00:00 0 
+7f99222f8000-7f99222fb000 ---p 00000000 00:00 0 
+7f99222fb000-7f99225f9000 rw-p 00000000 00:00 0 
+7f99225f9000-7f99225fc000 ---p 00000000 00:00 0 
+7f99225fc000-7f99226fa000 rw-p 00000000 00:00 0 
+7f99226fa000-7f99226fd000 ---p 00000000 00:00 0 
+7f99226fd000-7f99227fb000 rw-p 00000000 00:00 0 
+7f99227fb000-7f99227fe000 ---p 00000000 00:00 0 
+7f99227fe000-7f99228fc000 rw-p 00000000 00:00 0 
+7f99228fc000-7f99228ff000 ---p 00000000 00:00 0 
+7f99228ff000-7f99229fd000 rw-p 00000000 00:00 0 
+7f99229fd000-7f9922a00000 ---p 00000000 00:00 0 
+7f9922a00000-7f9922cfe000 rw-p 00000000 00:00 0 
+7f9922cfe000-7f9922d01000 ---p 00000000 00:00 0 
+7f9922d01000-7f9922dff000 rw-p 00000000 00:00 0 
+7f9922dff000-7f9922e02000 ---p 00000000 00:00 0 
+7f9922e02000-7f9922f00000 rw-p 00000000 00:00 0 
+7f9922f00000-7f9922f03000 ---p 00000000 00:00 0 
+7f9922f03000-7f9923001000 rw-p 00000000 00:00 0 
+7f9923001000-7f9923008000 r--s 00000000 08:02 12601091                   /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache
+7f9923008000-7f992300b000 ---p 00000000 00:00 0 
+7f992300b000-7f9923109000 rw-p 00000000 00:00 0 
+7f9923109000-7f992310e000 r--s 000a3000 08:02 9437815                    /home/chobela/Desktop/android-studio/jre/jre/lib/jsse.jar
+7f992310e000-7f992330e000 rw-p 00000000 00:00 0 
+7f992330e000-7f9923311000 ---p 00000000 00:00 0 
+7f9923311000-7f992340f000 rw-p 00000000 00:00 0 
+7f992340f000-7f9923417000 r-xp 00000000 08:02 9830422                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libmanagement.so
+7f9923417000-7f9923418000 r--p 00007000 08:02 9830422                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libmanagement.so
+7f9923418000-7f9923419000 rw-p 00008000 08:02 9830422                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libmanagement.so
+7f9923419000-7f992341b000 r--s 00010000 08:02 10522088                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-tooling-api-builders-6.1.1.jar
+7f992341b000-7f992342a000 r--s 000fc000 08:02 10522091                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-instant-execution-6.1.1.jar
+7f992342a000-7f992342b000 r--s 00005000 08:02 10522109                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-build-profile-6.1.1.jar
+7f992342b000-7f992342d000 r--s 00003000 08:02 10522066                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-tooling-native-6.1.1.jar
+7f992342d000-7f9923431000 r--s 00017000 08:02 10522068                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-testing-native-6.1.1.jar
+7f9923431000-7f9923434000 r--s 00011000 08:02 10522182                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/junit-platform-commons-1.3.1.jar
+7f9923434000-7f9923435000 r--s 00001000 08:02 10522184                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/opentest4j-1.1.1.jar
+7f9923435000-7f9923439000 r--s 0001d000 08:02 10522181                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/junit-platform-engine-1.3.1.jar
+7f9923439000-7f992343a000 r--s 00000000 08:02 10522183                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/apiguardian-api-1.0.0.jar
+7f992343a000-7f992343d000 r--s 00015000 08:02 10522139                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/junit-platform-launcher-1.3.1.jar
+7f992343d000-7f992343e000 r--s 00003000 08:02 10522087                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-testing-junit-platform-6.1.1.jar
+7f992343e000-7f9923441000 r--s 0000f000 08:02 10522065                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-signing-6.1.1.jar
+7f9923441000-7f9923443000 r--s 0000a000 08:02 10522075                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-scala-6.1.1.jar
+7f9923443000-7f9923444000 r--s 00004000 08:02 10522108                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-resources-sftp-6.1.1.jar
+7f9923444000-7f992344f000 r--s 00074000 08:02 10522141                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aws-java-sdk-kms-1.11.633.jar
+7f992344f000-7f9923451000 r--s 00005000 08:02 10522149                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jmespath-java-1.11.633.jar
+7f9923451000-7f9923468000 r--s 000e1000 08:02 10522140                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aws-java-sdk-s3-1.11.633.jar
+7f9923468000-7f9923472000 r--s 00081000 08:02 10522180                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/ion-java-1.0.2.jar
+7f9923472000-7f9923489000 r--s 000d5000 08:02 10522142                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aws-java-sdk-core-1.11.633.jar
+7f9923489000-7f992348b000 r--s 00004000 08:02 10522104                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-resources-s3-6.1.1.jar
+7f992348b000-7f992349b000 r--s 0008d000 08:02 10522153                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/joda-time-2.10.4.jar
+7f992349b000-7f99234ae000 r--s 00137000 08:02 10522150                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jackson-databind-2.9.10.jar
+7f99234ae000-7f99234b1000 r--s 0000e000 08:02 10522152                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jackson-annotations-2.9.10.jar
+7f99234b1000-7f99234b5000 r--s 0004c000 08:02 10522151                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jackson-core-2.9.10.jar
+7f99234b5000-7f99234b6000 r--s 00001000 08:02 10522132                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/google-http-client-jackson2-1.25.0.jar
+7f99234b6000-7f99234c0000 r--s 00056000 08:02 10522133                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/google-http-client-1.25.0.jar
+7f99234c0000-7f99234c3000 r--s 0000d000 08:02 10522131                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/google-oauth-client-1.25.0.jar
+7f99234c3000-7f99234c8000 r--s 0002d000 08:02 10522115                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/google-api-client-1.25.0.jar
+7f99234c8000-7f99234cc000 r--s 0001d000 08:02 10522114                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/google-api-services-storage-v1-rev136-1.25.0.jar
+7f99234cc000-7f99234ce000 r--s 00003000 08:02 10522105                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-resources-gcs-6.1.1.jar
+7f99234ce000-7f99234d4000 r--s 00031000 08:02 10522077                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-platform-play-6.1.1.jar
+7f99234d4000-7f99234e6000 r--s 00078000 08:02 10522094                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-platform-native-6.1.1.jar
+7f99234e6000-7f99234e9000 r--s 0000d000 08:02 10522086                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-language-scala-6.1.1.jar
+7f99234e9000-7f99234f4000 r--s 00054000 08:02 10522069                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-language-native-6.1.1.jar
+7f99234f4000-7f99234fb000 r--s 00035000 08:02 10522128                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/simple-4.1.21.jar
+7f99234fb000-7f9923508000 r--s 00125000 08:02 10522126                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/rhino-1.7.10.jar
+7f9923508000-7f992350c000 r--s 00012000 08:02 10522078                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-javascript-6.1.1.jar
+7f992350c000-7f992350f000 r--s 00011000 08:02 10522080                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-jacoco-6.1.1.jar
+7f992350f000-7f9923511000 r--s 00002000 08:02 10522073                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-ide-play-6.1.1.jar
+7f9923511000-7f9923513000 r--s 00011000 08:02 10522136                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/dd-plist-1.21.jar
+7f9923513000-7f992351a000 r--s 00035000 08:02 10522067                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-ide-native-6.1.1.jar
+7f992351a000-7f9923524000 r--s 00063000 08:02 10522074                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-ide-6.1.1.jar
+7f9923524000-7f9923526000 r--s 00007000 08:02 10522076                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-ear-6.1.1.jar
+7f9923526000-7f992352a000 r--s 0001b000 08:02 10522064                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-code-quality-6.1.1.jar
+7f992352a000-7f992352c000 r--s 0000b000 08:02 10522130                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-plugin-api-3.0.4.jar
+7f992352c000-7f9923532000 r--s 0003f000 08:02 10522118                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-compat-3.0.4.jar
+7f9923532000-7f992353a000 r--s 0003b000 08:02 10522081                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-build-init-6.1.1.jar
+7f992353a000-7f992353b000 r--s 00003000 08:02 10522106                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-build-cache-http-6.1.1.jar
+7f992353b000-7f992353d000 r--s 00009000 08:02 10522063                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-antlr-6.1.1.jar
+7f992353d000-7f9923541000 r--s 0001f000 08:02 10522082                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-kotlin-dsl-tooling-builders-6.1.1.jar
+7f9923541000-7f9923545000 r--s 00014000 08:02 10522079                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-ivy-6.1.1.jar
+7f9923545000-7f9923547000 r--s 0000b000 08:02 10522098                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-publish-6.1.1.jar
+7f9923547000-7f992354a000 r--s 0000c000 08:02 10522121                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/pmaven-groovy-0.8-20100325.jar
+7f992354a000-7f992354b000 r--s 00004000 08:02 10522120                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/pmaven-common-0.8-20100325.jar
+7f992354b000-7f992354f000 r--s 00021000 08:02 10522179                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/xbean-reflect-3.7.jar
+7f992354f000-7f9923556000 r--s 00032000 08:02 10522123                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-container-default-1.7.1.jar
+7f9923556000-7f9923557000 r--s 00008000 08:02 10522113                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/wagon-http-shared-3.0.0.jar
+7f9923557000-7f9923558000 r--s 00002000 08:02 10522112                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/wagon-http-3.0.0.jar
+7f9923558000-7f9923559000 r--s 00002000 08:02 10522122                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/wagon-file-3.0.0.jar
+7f9923559000-7f992355c000 r--s 0000a000 08:02 10522174                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-classworlds-2.5.1.jar
+7f992355c000-7f992355e000 r--s 0000c000 08:02 10522177                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/wagon-provider-api-3.0.0.jar
+7f992355e000-7f9923560000 r--s 00006000 08:02 10522124                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aether-connector-wagon-1.13.1.jar
+7f9923560000-7f9923567000 r--s 00032000 08:02 10522072                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-maven-6.1.1.jar
+7f9923567000-7f9923569000 r--s 0000d000 08:02 10522071                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-plugin-development-6.1.1.jar
+7f9923569000-7f992356f000 r--s 0003d000 08:02 10522135                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/snakeyaml-1.17.jar
+7f992356f000-7f9923571000 r--s 0000f000 08:02 10522164                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jcommander-1.72.jar
+7f9923571000-7f992357a000 r--s 00089000 08:02 10522134                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/testng-6.3.1.jar
+7f992357a000-7f992357c000 r--s 00009000 08:02 10522162                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/hamcrest-core-1.3.jar
+7f992357c000-7f9923584000 r--s 00045000 08:02 10522137                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/junit-4.12.jar
+7f9923584000-7f9923589000 r--s 0005a000 08:02 10522138                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/bsh-2.0b6.jar
+7f9923589000-7f992358d000 r--s 0001c000 08:02 10522089                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-testing-jvm-6.1.1.jar
+7f992358d000-7f9923595000 r--s 00034000 08:02 10522096                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-testing-base-6.1.1.jar
+7f9923595000-7f9923597000 r--s 0000f000 08:02 10522085                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-language-groovy-6.1.1.jar
+7f9923597000-7f992359f000 r--s 00045000 08:02 10522090                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-language-java-6.1.1.jar
+7f992359f000-7f99235a1000 r--s 00006000 08:02 10522092                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-language-jvm-6.1.1.jar
+7f99235a1000-7f99235a8000 r--s 00040000 08:02 10522095                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-diagnostics-6.1.1.jar
+7f99235a8000-7f99235ac000 r--s 0001b000 08:02 10522093                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-platform-jvm-6.1.1.jar
+7f99235ac000-7f99235b3000 r--s 00029000 08:02 10522099                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-platform-base-6.1.1.jar
+7f99235b3000-7f99235b5000 r--s 00006000 08:02 10522129                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jatl-0.2.3.jar
+7f99235b5000-7f99235b7000 r--s 00010000 08:02 10522097                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-reporting-6.1.1.jar
+7f99235b7000-7f99235be000 r--s 00042000 08:02 10522083                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-plugins-6.1.1.jar
+7f99235be000-7f99235c3000 r--s 0002c000 08:02 10522070                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-kotlin-dsl-provider-plugins-6.1.1.jar
+7f99235c3000-7f99235c4000 r--s 00000000 08:02 10518751                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-runtime-api-info-6.1.1.jar
+7f99235c4000-7f99235c5000 r--s 00000000 08:02 10521912                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-installation-beacon-6.1.1.jar
+7f99235c5000-7f99235c7000 r--s 00006000 08:02 10522169                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-repository-metadata-3.0.4.jar
+7f99235c7000-7f99235c9000 r--s 0000c000 08:02 10522157                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-aether-provider-3.0.4.jar
+7f99235c9000-7f99235ca000 r--s 00003000 08:02 10522160                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aether-spi-1.13.1.jar
+7f99235ca000-7f99235cd000 r--s 0001d000 08:02 10522158                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aether-impl-1.13.1.jar
+7f99235cd000-7f99235d1000 r--s 0001c000 08:02 10522159                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aether-util-1.13.1.jar
+7f99235d1000-7f99235d4000 r--s 00013000 08:02 10522161                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/aether-api-1.13.1.jar
+7f99235d4000-7f99235d6000 r--s 0000b000 08:02 10522166                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-artifact-3.0.4.jar
+7f99235d6000-7f99235da000 r--s 00021000 08:02 10522167                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-model-builder-3.0.4.jar
+7f99235da000-7f99235dc000 r--s 00026000 08:02 10522168                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-model-3.0.4.jar
+7f99235dc000-7f99235de000 r--s 0000a000 08:02 10522171                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-settings-3.0.4.jar
+7f99235de000-7f99235e0000 r--s 00002000 08:02 10522173                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-cipher-1.7.jar
+7f99235e0000-7f99235e2000 r--s 00000000 08:02 10522175                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-component-annotations-1.5.5.jar
+7f99235e2000-7f99235e4000 r--s 0000d000 08:02 10522176                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-interpolation-1.14.jar
+7f99235e4000-7f99235e8000 r--s 0003c000 08:02 10522178                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-utils-3.1.0.jar
+7f99235e8000-7f99235eb000 r--s 00008000 08:02 10522170                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-settings-builder-3.0.4.jar
+7f99235eb000-7f99235f7000 r--s 0007d000 08:02 10522119                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/maven-core-3.0.4.jar
+7f99235f7000-7f992360c000 r--s 00116000 08:02 10522117                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/ivy-2.3.0.jar
+7f992360c000-7f9923611000 r--s 00036000 08:02 10522127                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gson-2.8.5.jar
+7f9923611000-7f9923628000 r-xp 00000000 08:02 18096346                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f9923628000-7f9923827000 ---p 00017000 08:02 18096346                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f9923827000-7f9923828000 r--p 00016000 08:02 18096346                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f9923828000-7f9923829000 rw-p 00017000 08:02 18096346                   /lib/x86_64-linux-gnu/libgcc_s.so.1
+7f9923829000-7f99239a2000 r-xp 00000000 08:02 12322120                   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f99239a2000-7f9923ba2000 ---p 00179000 08:02 12322120                   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f9923ba2000-7f9923bac000 r--p 00179000 08:02 12322120                   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f9923bac000-7f9923bae000 rw-p 00183000 08:02 12322120                   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+7f9923bae000-7f9923bb2000 rw-p 00000000 00:00 0 
+7f9923bb2000-7f9923bb8000 r-xp 00000000 08:02 10243255                   /home/chobela/.gradle/native/31/linux-amd64/libnative-platform.so
+7f9923bb8000-7f9923db7000 ---p 00006000 08:02 10243255                   /home/chobela/.gradle/native/31/linux-amd64/libnative-platform.so
+7f9923db7000-7f9923db8000 rw-p 00005000 08:02 10243255                   /home/chobela/.gradle/native/31/linux-amd64/libnative-platform.so
+7f9923db8000-7f9924000000 r--s 022ac000 08:02 10521988                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-compiler-embeddable-1.3.61-patched-for-gradle-6.1.1.jar
+7f9924000000-7f9924021000 rw-p 00000000 00:00 0 
+7f9924021000-7f9928000000 ---p 00000000 00:00 0 
+7f9928000000-7f9928021000 rw-p 00000000 00:00 0 
+7f9928021000-7f992c000000 ---p 00000000 00:00 0 
+7f992c000000-7f992fde7000 rw-p 00000000 00:00 0 
+7f992fde7000-7f9930000000 ---p 00000000 00:00 0 
+7f9930000000-7f9932010000 rw-p 00000000 00:00 0 
+7f9932010000-7f9934000000 ---p 00000000 00:00 0 
+7f9934000000-7f9934021000 rw-p 00000000 00:00 0 
+7f9934021000-7f9938000000 ---p 00000000 00:00 0 
+7f9938000000-7f993ab93000 rw-p 00000000 00:00 0 
+7f993ab93000-7f993c000000 ---p 00000000 00:00 0 
+7f993c000000-7f993c0aa000 rw-p 00000000 00:00 0 
+7f993c0aa000-7f9940000000 ---p 00000000 00:00 0 
+7f9940000000-7f9940021000 rw-p 00000000 00:00 0 
+7f9940021000-7f9944000000 ---p 00000000 00:00 0 
+7f9944000000-7f9944062000 rw-p 00000000 00:00 0 
+7f9944062000-7f9948000000 ---p 00000000 00:00 0 
+7f9948000000-7f9948773000 rw-p 00000000 00:00 0 
+7f9948773000-7f994c000000 ---p 00000000 00:00 0 
+7f994c000000-7f994d089000 rw-p 00000000 00:00 0 
+7f994d089000-7f9950000000 ---p 00000000 00:00 0 
+7f9950000000-7f9950001000 r--s 00006000 08:02 10522172                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/plexus-sec-dispatcher-1.3.jar
+7f9950001000-7f9950002000 r--s 00013000 08:02 10522116                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/asm-util-7.1.jar
+7f9950002000-7f995003a000 r--s 001f6000 08:02 10522101                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-dependency-management-6.1.1.jar
+7f995003a000-7f9950053000 r--s 0013a000 08:02 10522146                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/xercesImpl-2.12.0.jar
+7f9950053000-7f9950055000 r--s 0001d000 08:02 10522145                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/nekohtml-1.9.22.jar
+7f9950055000-7f995005b000 r--s 0005b000 08:02 10522144                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jcifs-1.3.17.jar
+7f995005b000-7f995005e000 r--s 0000e000 08:02 10522107                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-resources-http-6.1.1.jar
+7f995005e000-7f9950061000 r--s 0000c000 08:02 10522103                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-plugin-use-6.1.1.jar
+7f9950061000-7f9950065000 r--s 00041000 08:02 10522147                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jsch-0.1.55.jar
+7f9950065000-7f9950079000 r--s 000c0000 08:02 10522154                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/bcpkix-jdk15on-1.61.jar
+7f9950079000-7f9950081000 r--s 00048000 08:02 10522125                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/bcpg-jdk15on-1.63.jar
+7f9950081000-7f99500e2000 r--s 0042a000 08:02 10522155                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/bcprov-jdk15on-1.63.jar
+7f99500e2000-7f99500e4000 r--s 00010000 08:02 10522165                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/jzlib-1.1.3.jar
+7f99500e4000-7f9950109000 r--s 00281000 08:02 10522111                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/org.eclipse.jgit-5.5.0.201909110433-r.jar
+7f9950109000-7f9950110000 r--s 0004e000 08:02 10522156                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/commons-codec-1.13.jar
+7f9950110000-7f9950118000 r--s 00049000 08:02 10522163                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/httpcore-4.4.12.jar
+7f9950118000-7f9950125000 r--s 000b1000 08:02 10522143                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/httpclient-4.5.10.jar
+7f9950125000-7f9950128000 r--s 0000c000 08:02 10522100                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-version-control-6.1.1.jar
+7f9950128000-7f995012b000 r--s 0000d000 08:02 10522102                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-composite-builds-6.1.1.jar
+7f995012b000-7f9950130000 r--s 0001d000 08:02 10522110                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/plugins/gradle-workers-6.1.1.jar
+7f9950130000-7f9950133000 r--s 00008000 08:02 10521897                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-build-events-6.1.1.jar
+7f9950133000-7f995013e000 r--s 00081000 08:02 10522032                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/trove4j-1.0.20181211.jar
+7f995013e000-7f9950155000 r--s 00109000 08:02 10522041                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-daemon-embeddable-1.3.61.jar
+7f9950155000-7f9950157000 r--s 00009000 08:02 10522040                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-script-runtime-1.3.61.jar
+7f9950157000-7f9950191000 r--s 00283000 08:02 10522034                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-reflect-1.3.61.jar
+7f9950191000-7f9950192000 r--s 00000000 08:02 10521986                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-kotlin-dsl-tooling-models-6.1.1.jar
+7f9950192000-7f9950193000 r--s 00007000 08:02 10521911                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-wrapper-6.1.1.jar
+7f9950193000-7f99501a3000 r--s 0004f000 08:02 10521901                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-tooling-api-6.1.1.jar
+7f99501a3000-7f99501b3000 r--s 0026b000 08:02 10522024                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlinx-metadata-jvm-0.1.0.jar
+7f99501b3000-7f99501b4000 r--s 00002000 08:02 10522023                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-sam-with-receiver-compiler-plugin-1.3.61.jar
+7f99501b4000-7f99501bb000 r--s 00042000 08:02 10522022                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-scripting-compiler-impl-embeddable-1.3.61.jar
+7f99501bb000-7f99501c2000 r--s 00040000 08:02 10522021                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-scripting-compiler-embeddable-1.3.61.jar
+7f99501c2000-7f99501c5000 r--s 00019000 08:02 10522020                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-scripting-jvm-host-embeddable-1.3.61.jar
+7f99501c5000-7f99501c8000 r--s 00027000 08:02 10522019                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-scripting-jvm-1.3.61.jar
+7f99501c8000-7f99501cd000 r--s 00026000 08:02 10522018                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-scripting-common-1.3.61.jar
+7f99501cd000-7f99501ce000 r--s 00000000 08:02 10522035                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-stdlib-jdk7-1.3.61.jar
+7f99501ce000-7f99501cf000 r--s 00003000 08:02 10522016                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-stdlib-jdk8-1.3.61.jar
+7f99501cf000-7f99501ec000 r--s 00176000 08:02 10521580                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-kotlin-dsl-6.1.1.jar
+7f99501ec000-7f99501ee000 r--s 00005000 08:02 10521924                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-worker-processes-6.1.1.jar
+7f99501ee000-7f99501f4000 r--s 0002d000 08:02 10521918                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-execution-6.1.1.jar
+7f99501f4000-7f99501f6000 r--s 00007000 08:02 10521916                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-model-groovy-6.1.1.jar
+7f99501f6000-7f99501f8000 r--s 00000000 08:02 10521926                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-jvm-services-6.1.1.jar
+7f99501f8000-7f99501fa000 r--s 00006000 08:02 10521920                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-build-cache-packaging-6.1.1.jar
+7f99501fa000-7f99501fe000 r--s 0000e000 08:02 10521921                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-build-cache-6.1.1.jar
+7f99501fe000-7f99501ff000 r--s 00005000 08:02 10521991                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-docs-6.1.1.jar
+7f99501ff000-7f9950208000 r--s 0002d000 08:02 10522033                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/xml-apis-1.4.01.jar
+7f9950208000-7f9950214000 r--s 0008b000 08:02 10522025                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/commons-compress-1.19.jar
+7f9950214000-7f9950216000 r--s 00007000 08:02 10522011                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/asm-analysis-7.1.jar
+7f9950216000-7f9950218000 r--s 0000b000 08:02 10522012                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/asm-tree-7.1.jar
+7f9950218000-7f995021a000 r--s 00010000 08:02 10522009                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/asm-commons-7.1.jar
+7f995021a000-7f995021f000 r--s 0001a000 08:02 10521983                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-snapshots-6.1.1.jar
+7f995021f000-7f9950221000 r--s 00003000 08:02 10522037                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/annotations-13.0.jar
+7f9950221000-7f9950229000 r--s 00022000 08:02 10522043                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-stdlib-common-1.3.61.jar
+7f9950229000-7f995023d000 r--s 00131000 08:02 10522036                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kotlin-stdlib-1.3.61.jar
+7f995023d000-7f9950256000 r--s 000de000 08:02 10521919                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-model-core-6.1.1.jar
+7f9950256000-7f995025b000 r--s 00016000 08:02 10521929                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-resources-6.1.1.jar
+7f995025b000-7f9950262000 r--s 00036000 08:02 10521923                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-persistent-cache-6.1.1.jar
+7f9950262000-7f9950264000 r--s 00006000 08:02 10521956                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-base-services-groovy-6.1.1.jar
+7f9950264000-7f9950265000 r--s 00000000 08:02 10522017                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/javax.inject-1.jar
+7f9950265000-7f995026a000 r--s 00021000 08:02 10521915                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-file-collections-6.1.1.jar
+7f995026a000-7f995026c000 r--s 00006000 08:02 10521927                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-process-services-6.1.1.jar
+7f995026c000-7f995026e000 r--s 00004000 08:02 10521996                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/log4j-over-slf4j-1.7.28.jar
+7f995026e000-7f9950270000 r--s 00000000 08:02 10521995                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/jul-to-slf4j-1.7.28.jar
+7f9950270000-7f9950272000 r--s 00003000 08:02 10521997                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/jcl-over-slf4j-1.7.28.jar
+7f9950272000-7f995027a000 r--s 00038000 08:02 10521925                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-logging-6.1.1.jar
+7f995027a000-7f995027c000 r--s 00006000 08:02 10521985                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-files-6.1.1.jar
+7f995027c000-7f995027d000 r--s 00004000 08:02 10522044                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-freebsd-amd64-libcpp-0.19.jar
+7f995027d000-7f995027e000 r--s 00004000 08:02 10522045                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-freebsd-amd64-libstdcpp-0.19.jar
+7f995027e000-7f9950280000 r--s 00004000 08:02 10522046                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-freebsd-i386-libcpp-0.19.jar
+7f9950280000-7f9950281000 r--s 00004000 08:02 10522047                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-freebsd-i386-libstdcpp-0.19.jar
+7f9950281000-7f9950282000 r--s 00002000 08:02 10522048                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-aarch64-0.19.jar
+7f9950282000-7f9950283000 r--s 00002000 08:02 10522049                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-amd64-0.19.jar
+7f9950283000-7f9950284000 r--s 00002000 08:02 10522050                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-i386-0.19.jar
+7f9950284000-7f9950285000 r--s 00003000 08:02 10522051                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-osx-amd64-0.19.jar
+7f9950285000-7f9950286000 r--s 00011000 08:02 10522052                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-windows-amd64-0.19.jar
+7f9950286000-7f9950288000 r--s 00010000 08:02 10522053                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-windows-amd64-min-0.19.jar
+7f9950288000-7f9950289000 r--s 0000f000 08:02 10522054                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-windows-i386-0.19.jar
+7f9950289000-7f995028a000 r--s 0000f000 08:02 10522055                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-windows-i386-min-0.19.jar
+7f995028a000-7f995028b000 r--s 00001000 08:02 10522056                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-aarch64-ncurses5-0.19.jar
+7f995028b000-7f995028c000 r--s 00002000 08:02 10522057                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-aarch64-ncurses6-0.19.jar
+7f995028c000-7f995028e000 r--s 00001000 08:02 10522058                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-amd64-ncurses5-0.19.jar
+7f995028e000-7f9950293000 r--s 0001a000 08:02 10522030                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-0.19.jar
+7f9950293000-7f9950297000 r--s 00043000 08:02 10522027                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/jansi-1.18.jar
+7f9950297000-7f9950317000 r--s 00778000 08:02 10521994                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/groovy-all-1.3-2.5.8.jar
+7f9950317000-7f9953318000 rw-p 00000000 00:00 0 
+7f9953318000-7f9953319000 ---p 00000000 00:00 0 
+7f9953319000-7f9953419000 rw-p 00000000 00:00 0 
+7f9953419000-7f995341c000 ---p 00000000 00:00 0 
+7f995341c000-7f995351a000 rw-p 00000000 00:00 0 
+7f995351a000-7f995351b000 ---p 00000000 00:00 0 
+7f995351b000-7f995351e000 ---p 00000000 00:00 0 
+7f995351e000-7f995361b000 rw-p 00000000 00:00 0 
+7f995361b000-7f995361c000 ---p 00000000 00:00 0 
+7f995361c000-7f995361f000 ---p 00000000 00:00 0 
+7f995361f000-7f995371c000 rw-p 00000000 00:00 0 
+7f995371c000-7f995371d000 ---p 00000000 00:00 0 
+7f995371d000-7f9953720000 ---p 00000000 00:00 0 
+7f9953720000-7f995381d000 rw-p 00000000 00:00 0 
+7f995381d000-7f9953820000 ---p 00000000 00:00 0 
+7f9953820000-7f995391e000 rw-p 00000000 00:00 0 
+7f995391e000-7f9953bfc000 r--p 00000000 08:02 12322815                   /usr/lib/locale/locale-archive
+7f9953bfc000-7f9953bff000 ---p 00000000 00:00 0 
+7f9953bff000-7f9953cfd000 rw-p 00000000 00:00 0 
+7f9953cfd000-7f9953d00000 ---p 00000000 00:00 0 
+7f9953d00000-7f9953dfe000 rw-p 00000000 00:00 0 
+7f9953dfe000-7f9953dff000 ---p 00000000 00:00 0 
+7f9953dff000-7f9954000000 rw-p 00000000 00:00 0 
+7f9954000000-7f99540a3000 rw-p 00000000 00:00 0 
+7f99540a3000-7f9958000000 ---p 00000000 00:00 0 
+7f9958000000-7f995c000000 rw-p 00000000 00:00 0 
+7f995c000000-7f995fffd000 rw-p 00000000 00:00 0 
+7f995fffd000-7f9960000000 ---p 00000000 00:00 0 
+7f9960000000-7f9960001000 r--s 00001000 08:02 10522059                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-amd64-ncurses6-0.19.jar
+7f9960001000-7f9960002000 r--s 00001000 08:02 10522060                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-i386-ncurses5-0.19.jar
+7f9960002000-7f9960003000 r--s 00001000 08:02 10522061                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/native-platform-linux-i386-ncurses6-0.19.jar
+7f9960003000-7f9960006000 r--s 0000d000 08:02 10521938                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-native-6.1.1.jar
+7f9960006000-7f9960007000 r--s 00003000 08:02 10521978                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-build-option-6.1.1.jar
+7f9960007000-7f9960009000 r--s 0000c000 08:02 10522031                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/objenesis-2.6.jar
+7f9960009000-7f996000b000 r--s 00000000 08:02 10522039                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/minlog-1.2.jar
+7f996000b000-7f9960011000 r--s 0004d000 08:02 10522029                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/kryo-2.24.0.jar
+7f9960011000-7f9960017000 r--s 0006d000 08:02 10522026                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/fastutil-8.3.0-min.jar
+7f9960017000-7f996001e000 r--s 0002f000 08:02 10521932                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-messaging-6.1.1.jar
+7f996001e000-7f996004e000 r--s 0024c000 08:02 10522002                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/guava-27.1-android.jar
+7f996004e000-7f996006e000 r--s 00204000 08:02 10522014                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/ant-1.10.7.jar
+7f996006e000-7f99600aa000 r--s 0020c000 08:02 10521914                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-core-6.1.1.jar
+7f99600aa000-7f99600b9000 r--s 00045000 08:02 10521922                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-core-api-6.1.1.jar
+7f99600b9000-7f99600c6000 r--s 00064000 08:02 10521975                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-base-services-6.1.1.jar
+7f99600c6000-7f99600dd000 r-xp 00000000 08:02 9830425                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnet.so
+7f99600dd000-7f99600de000 r--p 00016000 08:02 9830425                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnet.so
+7f99600de000-7f99600df000 rw-p 00017000 08:02 9830425                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnet.so
+7f99600df000-7f99600ef000 r-xp 00000000 08:02 9830441                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnio.so
+7f99600ef000-7f99600f0000 ---p 00010000 08:02 9830441                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnio.so
+7f99600f0000-7f99600f1000 r--p 00010000 08:02 9830441                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnio.so
+7f99600f1000-7f99600f2000 rw-p 00011000 08:02 9830441                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libnio.so
+7f99600f2000-7f99600ff000 r--s 00067000 08:02 10518750                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-launcher-6.1.1.jar
+7f99600ff000-7f9960e2d000 rw-p 00000000 00:00 0 
+7f9960e2d000-7f9961000000 r--s 03cdf000 08:02 9437813                    /home/chobela/Desktop/android-studio/jre/jre/lib/rt.jar
+7f9961000000-7f99679f0000 rwxp 00000000 00:00 0 
+7f99679f0000-7f9970000000 ---p 00000000 00:00 0 
+7f9970000000-7f9973ffe000 rw-p 00000000 00:00 0 
+7f9973ffe000-7f9974000000 ---p 00000000 00:00 0 
+7f9974000000-7f9974002000 r--s 00005000 08:02 10521979                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-cli-6.1.1.jar
+7f9974002000-7f9974003000 r--s 00000000 08:02 10521990                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-pineapple-6.1.1.jar
+7f9974003000-7f9974005000 r--s 00003000 08:02 10521989                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-hashing-6.1.1.jar
+7f9974005000-7f9974007000 r--s 00003000 08:02 10522028                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/jsr305-3.0.2.jar
+7f9974007000-7f9974009000 r--s 00009000 08:02 10522000                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/slf4j-api-1.7.28.jar
+7f9974009000-7f9974e8c000 rw-p 00000000 00:00 0 
+7f9974e8c000-7f9974e8d000 ---p 00000000 00:00 0 
+7f9974e8d000-7f9974f8d000 rw-p 00000000 00:00 0 
+7f9974f8d000-7f9974f8e000 ---p 00000000 00:00 0 
+7f9974f8e000-7f997508e000 rw-p 00000000 00:00 0 
+7f997508e000-7f997508f000 ---p 00000000 00:00 0 
+7f997508f000-7f997518f000 rw-p 00000000 00:00 0 
+7f997518f000-7f9975190000 ---p 00000000 00:00 0 
+7f9975190000-7f9975458000 rw-p 00000000 00:00 0 
+7f9975458000-7f997553b000 ---p 00000000 00:00 0 
+7f997553b000-7f9975703000 rw-p 00000000 00:00 0 
+7f9975703000-7f99757e5000 ---p 00000000 00:00 0 
+7f99757e5000-7f997593b000 rw-p 00000000 00:00 0 
+7f997593b000-7f9975ae4000 rw-p 00000000 00:00 0 
+7f9975ae4000-7f9975cfc000 ---p 00000000 00:00 0 
+7f9975cfc000-7f9975d07000 r-xp 00000000 08:02 18099710                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f9975d07000-7f9975f06000 ---p 0000b000 08:02 18099710                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f9975f06000-7f9975f07000 r--p 0000a000 08:02 18099710                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f9975f07000-7f9975f08000 rw-p 0000b000 08:02 18099710                   /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f9975f08000-7f9975f0e000 rw-p 00000000 00:00 0 
+7f9975f0e000-7f9975f25000 r-xp 00000000 08:02 18099706                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f9975f25000-7f9976124000 ---p 00017000 08:02 18099706                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f9976124000-7f9976125000 r--p 00016000 08:02 18099706                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f9976125000-7f9976126000 rw-p 00017000 08:02 18099706                   /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f9976126000-7f9976128000 rw-p 00000000 00:00 0 
+7f9976128000-7f9976133000 r-xp 00000000 08:02 18099713                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f9976133000-7f9976332000 ---p 0000b000 08:02 18099713                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f9976332000-7f9976333000 r--p 0000a000 08:02 18099713                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f9976333000-7f9976334000 rw-p 0000b000 08:02 18099713                   /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f9976334000-7f997633c000 r-xp 00000000 08:02 18099707                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f997633c000-7f997653c000 ---p 00008000 08:02 18099707                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f997653c000-7f997653d000 r--p 00008000 08:02 18099707                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f997653d000-7f997653e000 rw-p 00009000 08:02 18099707                   /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f997653e000-7f9976545000 r-xp 00000000 08:02 18099718                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f9976545000-7f9976744000 ---p 00007000 08:02 18099718                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f9976744000-7f9976745000 r--p 00006000 08:02 18099718                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f9976745000-7f9976746000 rw-p 00007000 08:02 18099718                   /lib/x86_64-linux-gnu/librt-2.27.so
+7f9976746000-7f99768e3000 r-xp 00000000 08:02 18099703                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f99768e3000-7f9976ae2000 ---p 0019d000 08:02 18099703                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f9976ae2000-7f9976ae3000 r--p 0019c000 08:02 18099703                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f9976ae3000-7f9976ae4000 rw-p 0019d000 08:02 18099703                   /lib/x86_64-linux-gnu/libm-2.27.so
+7f9976ae4000-7f9977713000 r-xp 00000000 08:02 10093043                   /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/server/libjvm.so
+7f9977713000-7f99777bb000 r--p 00c2e000 08:02 10093043                   /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/server/libjvm.so
+7f99777bb000-7f99777e4000 rw-p 00cd6000 08:02 10093043                   /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/server/libjvm.so
+7f99777e4000-7f9977828000 rw-p 00000000 00:00 0 
+7f9977828000-7f9977a0f000 r-xp 00000000 08:02 18092676                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f9977a0f000-7f9977c0f000 ---p 001e7000 08:02 18092676                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f9977c0f000-7f9977c13000 r--p 001e7000 08:02 18092676                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f9977c13000-7f9977c15000 rw-p 001eb000 08:02 18092676                   /lib/x86_64-linux-gnu/libc-2.27.so
+7f9977c15000-7f9977c19000 rw-p 00000000 00:00 0 
+7f9977c19000-7f9977c1c000 r-xp 00000000 08:02 18099494                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f9977c1c000-7f9977e1b000 ---p 00003000 08:02 18099494                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f9977e1b000-7f9977e1c000 r--p 00002000 08:02 18099494                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f9977e1c000-7f9977e1d000 rw-p 00003000 08:02 18099494                   /lib/x86_64-linux-gnu/libdl-2.27.so
+7f9977e1d000-7f9977e37000 r-xp 00000000 08:02 18099716                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f9977e37000-7f9978036000 ---p 0001a000 08:02 18099716                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f9978036000-7f9978037000 r--p 00019000 08:02 18099716                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f9978037000-7f9978038000 rw-p 0001a000 08:02 18099716                   /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f9978038000-7f997803c000 rw-p 00000000 00:00 0 
+7f997803c000-7f9978063000 r-xp 00000000 08:02 18090260                   /lib/x86_64-linux-gnu/ld-2.27.so
+7f9978063000-7f9978068000 r--s 00041000 08:02 10522008                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/commons-lang-2.6.jar
+7f9978068000-7f997806c000 r--s 00031000 08:02 10522003                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/commons-io-2.6.jar
+7f997806c000-7f99780dd000 rw-p 00000000 00:00 0 
+7f99780dd000-7f99780f8000 r-xp 00000000 08:02 9830421                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libzip.so
+7f99780f8000-7f99780f9000 r--p 0001a000 08:02 9830421                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libzip.so
+7f99780f9000-7f99780fa000 rw-p 0001b000 08:02 9830421                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libzip.so
+7f99780fa000-7f9978122000 r-xp 00000000 08:02 9830429                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libjava.so
+7f9978122000-7f9978123000 r--p 00027000 08:02 9830429                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libjava.so
+7f9978123000-7f9978125000 rw-p 00028000 08:02 9830429                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libjava.so
+7f9978125000-7f9978126000 ---p 00000000 00:00 0 
+7f9978126000-7f9978129000 ---p 00000000 00:00 0 
+7f9978129000-7f9978228000 rw-p 00000000 00:00 0 
+7f9978228000-7f997823e000 r-xp 00000000 08:02 9437749                    /home/chobela/Desktop/android-studio/jre/lib/amd64/jli/libjli.so
+7f997823e000-7f997823f000 r--p 00015000 08:02 9437749                    /home/chobela/Desktop/android-studio/jre/lib/amd64/jli/libjli.so
+7f997823f000-7f9978240000 rw-p 00016000 08:02 9437749                    /home/chobela/Desktop/android-studio/jre/lib/amd64/jli/libjli.so
+7f9978240000-7f9978242000 rw-p 00000000 00:00 0 
+7f9978242000-7f9978244000 r--s 00000000 08:02 10522042                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/failureaccess-1.0.1.jar
+7f9978244000-7f9978246000 r--s 0001b000 08:02 10522013                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/asm-7.1.jar
+7f9978246000-7f9978247000 r--s 00004000 08:02 10522038                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/ant-launcher-1.10.7.jar
+7f9978247000-7f9978249000 r--s 00001000 08:02 10521913                   /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-bootstrap-6.1.1.jar
+7f9978249000-7f9978251000 rw-s 00000000 08:02 18493201                   /tmp/hsperfdata_chobela/664
+7f9978251000-7f9978252000 rw-p 00000000 00:00 0 
+7f9978252000-7f9978253000 ---p 00000000 00:00 0 
+7f9978253000-7f9978260000 r-xp 00000000 08:02 9830417                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libverify.so
+7f9978260000-7f9978262000 r--p 0000c000 08:02 9830417                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libverify.so
+7f9978262000-7f9978263000 rw-p 0000e000 08:02 9830417                    /home/chobela/Desktop/android-studio/jre/jre/lib/amd64/libverify.so
+7f9978263000-7f9978264000 r--p 00027000 08:02 18090260                   /lib/x86_64-linux-gnu/ld-2.27.so
+7f9978264000-7f9978265000 rw-p 00028000 08:02 18090260                   /lib/x86_64-linux-gnu/ld-2.27.so
+7f9978265000-7f9978266000 rw-p 00000000 00:00 0 
+7ffea7410000-7ffea7431000 rw-p 00000000 00:00 0                          [stack]
+7ffea74af000-7ffea74b2000 r--p 00000000 00:00 0                          [vvar]
+7ffea74b2000-7ffea74b4000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Xmx2048m -Dfile.encoding=UTF-8 -Duser.country=ZM -Duser.language=en -Duser.variant 
+java_command: org.gradle.launcher.daemon.bootstrap.GradleDaemon 6.1.1
+java_class_path (initial): /home/chobela/.gradle/wrapper/dists/gradle-6.1.1-all/cfmwm155h49vnt3hynmlrsdst/gradle-6.1.1/lib/gradle-launcher-6.1.1.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/usr/lib/jvm/jdk-10
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/chobela/.dotnet/tools:/usr/lib/jvm/jdk-10/bin:/usr/lib/jvm/jdk-9.0.4/db/bin:/usr/lib/jvm/jdk-9.0.4/jre/bin
+USERNAME=chobela
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xa13c80], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xa13c80], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x874670], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x874670], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x874670], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x874670], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x874540], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x874730], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.so+0x874730], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.so+0x874730], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x874730], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.1 LTS"
+
+uname:Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:11 UTC 2021 x86_64
+libc:glibc 2.27 NPTL 2.27 
+rlimit: STACK 8192k, CORE 0k, NPROC 31013, NOFILE 1048576, AS infinity
+load average:32.24 14.52 8.25
+
+/proc/meminfo:
+MemTotal:        8040600 kB
+MemFree:          139112 kB
+MemAvailable:      98308 kB
+Buffers:            9516 kB
+Cached:           332584 kB
+SwapCached:         2316 kB
+Active:          6364436 kB
+Inactive:         992892 kB
+Active(anon):    6332988 kB
+Inactive(anon):   951400 kB
+Active(file):      31448 kB
+Inactive(file):    41492 kB
+Unevictable:        1924 kB
+Mlocked:            1924 kB
+SwapTotal:       2097148 kB
+SwapFree:              0 kB
+Dirty:                52 kB
+Writeback:           468 kB
+AnonPages:       7015488 kB
+Mapped:           253400 kB
+Shmem:            269188 kB
+Slab:             296700 kB
+SReclaimable:     125156 kB
+SUnreclaim:       171544 kB
+KernelStack:       22752 kB
+PageTables:       111424 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     6117448 kB
+Committed_AS:   21805100 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      669684 kB
+DirectMap2M:     7591936 kB
+DirectMap1G:           0 kB
+
+container (cgroup) information:
+container_type: cgroupv1
+cpu_cpuset_cpus: 0-3
+cpu_memory_nodes: 0
+active_processor_count: 4
+cpu_quota: -1
+cpu_period: 100000
+cpu_shares: -1
+memory_limit_in_bytes: -1
+memory_and_swap_limit_in_bytes: -2
+memory_soft_limit_in_bytes: -1
+memory_usage_in_bytes: 7639076864
+memory_max_usage_in_bytes: 7681220608
+
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 142 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+stepping	: 9
+microcode	: 0xde
+cpu MHz		: 2500.086
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds
+bogomips	: 5399.81
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+stepping	: 9
+microcode	: 0xde
+cpu MHz		: 2499.999
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds
+bogomips	: 5399.81
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+stepping	: 9
+microcode	: 0xde
+cpu MHz		: 2500.398
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds
+bogomips	: 5399.81
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+stepping	: 9
+microcode	: 0xde
+cpu MHz		: 2500.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds
+bogomips	: 5399.81
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 8040600k(139112k free), swap 2097148k(0k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.242-b3-6222593) for linux-amd64 JRE (1.8.0_242-release-1644-b3-6222593), built by "android-build" with gcc 4.8
+
+time: Tue Jun  8 15:17:44 2021
+timezone: CAT
+elapsed time: 1675 seconds (0d 0h 27m 55s)
+
