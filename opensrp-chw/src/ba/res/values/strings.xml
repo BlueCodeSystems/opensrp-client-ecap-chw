@@ -15,10 +15,9 @@
         <item>Consent form</item>
         <item>VCA index screening form</item>
         <item>Household screening form</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Household enrollment form</item>
+        <item>VCA case plan form</item>
+        <item>VCA assessment form</item>
+        <item>Household enrollment form</item>
     </string-array>
 </resources>

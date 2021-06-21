@@ -83,18 +83,27 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
                 switch (selectedItem)
                 {
                     case "Consent form":
-                        startFormActivity("initial_level_facility_form","","");
+                        startFormActivity("consent_form","","");
                         break;
                     case "Household screening form":
                         startFormActivity("household_screening_form","","");
                         break;
                     case "VCA index screening form":
                         startFormActivity("vca_index_screening","","");
+                        break;
+                    case "VCA case plan form":
+                        startFormActivity("vca_case_plan","","");
+                        break;
+                    case "VCA assessment form":
+                        startFormActivity("vca_assessment","","");
+                        break;
+                    case "Household enrollment form":
+                        startFormActivity("hh_enrollment","","");
+                        break;
                     default:
 
                 }
                 Timber.d("Selected is: %s", selectedItem);
-                showToast(selectedItem);//
 
             }
 
