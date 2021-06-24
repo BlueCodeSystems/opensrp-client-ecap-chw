@@ -9,9 +9,9 @@
     <string name="child_under_five">Child under 5 years</string>
     <string name="add_eligible_child">Eligible child</string>
     <string name="add_child_under_11" tools:ignore="MissingTranslation">Add child under 11</string>
-    <string name="go_to_family_s_profile">Go to family\'s profile</string>
-    <string name="family_has_nothing_due">Family has nothing due</string>
-    <string name="family_has_services_due">Family has services due</string>
+    <string name="go_to_family_s_profile">Go to Household\'s profile</string>
+    <string name="family_has_nothing_due">Household has nothing due</string>
+    <string name="family_has_services_due">Household has services due</string>
     <string name="vaccine_service_overdue"><![CDATA[%1$s <font color=#f04646>overdue (%2$s)</font></b>]]></string>
     <string name="vaccine_service_due"><![CDATA[%1$s <font color=#000000>due (%2$s)</font></b>]]></string>
     <string name="vaccine_service_upcoming"><![CDATA[%1$s <font color=#7f7f7f>upcoming (%2$s)</font></b>]]></string>
@@ -444,5 +444,10 @@
     <string name="birth_certificate_num_error_msg">Birth certificate number must be unique and cannot exceed 15 digits.</string>
     
     <string name="unauthorized_group">This account is not allowed to access this device</string>
+
+    <!--Ecap Strings -->
+        <string name="all_households"> All households</string>
+        <string name="all_Vcas"> VCAs</string>
+        <string name="return_to_household">Return to household</string>
 
 </resources>

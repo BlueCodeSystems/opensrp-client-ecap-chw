@@ -10,6 +10,7 @@ import com.vijay.jsonwizard.domain.Form;
 import ecap.smartregister.chw.R;
 import ecap.smartregister.chw.application.ChwApplication;
 import org.smartregister.chw.core.activity.CoreFamilyRegisterActivity;
+import org.smartregister.chw.core.custom_views.FamilyFloatingMenu;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import ecap.smartregister.chw.fragment.FamilyRegisterFragment;
 import ecap.smartregister.chw.listener.ChwBottomNavigationListener;
@@ -51,7 +52,9 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
         ChwApplication.getInstance().notifyAppContextChange(); // initialize the language (bug in translation)
-
+        FamilyFloatingMenu familyFloatingMenu = new FamilyFloatingMenu(this
+        );
+       // familyFloatingMenu.setGravity();
         action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
         if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
             startFormActivity("initial_level_facility_form","","");
