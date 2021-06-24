@@ -121,6 +121,7 @@
           "err": "Please enter a valid name"
         }
       },
+
       {
         "key": "Childs_Last_Name",
         "openmrs_entity_parent": "",
@@ -140,6 +141,7 @@
           "err": "Please enter a valid name"
         }
       },
+
 
       {
         "key": "art_number",

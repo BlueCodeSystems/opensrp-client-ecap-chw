@@ -66,6 +66,9 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
         }
     }
 
+
+
+
     @Override
     protected void setupViews() {
         super.setupViews();
@@ -297,4 +300,6 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
         intent.putExtra(org.smartregister.chw.anc.util.Constants.ANC_MEMBER_OBJECTS.MEMBER_PROFILE_OBJECT, memberObject);
         startActivity(intent);
     }
+
+
 }
