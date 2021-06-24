@@ -1,11 +1,10 @@
 {
   "count": "3",
-  "encounter_type": "Consent form",
-  "consent": {
-    "encounter_type": "Consent form"
-  },
+  "encounter_type": "Test",
   "entity_id": "",
   "relational_id": "",
+  "validate_on_submit": true,
+  "show_errors_on_submit": true,
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -98,46 +97,27 @@
 
 
 
+
+
   "step3": {
     "title": "Certificate of consent",
 
     "fields": [
       {
-        "key": "Childs_First_Name",
+        "key": "childs_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "entity_id": "mother",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "Childs first name ",
+        "hint": " Child`s Full Name",
         "edit_type": "name",
-        "look_up": "true",
         "v_required": {
           "value": "true",
-          "err": "Please enter childs first name"
+          "err": "Please enter childs name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "Childs_Last_Name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "entity_id": "mother",
-        "type": "edit_text",
-        "hint": "Childs last name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter childs last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "err": "Please enter childs name"
         }
       },
 
@@ -181,16 +161,20 @@
 
 
       {
-        "key": "Guardian_NRC",
+        "key": "nrc_guardian",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "NRC_Number",
-        "entity_id": "guardian",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "Guardian NRC number",
+        "hint": "Guardian`s NRC",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter guardian`s NRC"
+        },
         "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
-          "err": "Number must take the format of ######/##/#"
+          "value": "[0-9]*",
+          "err": "Guardian`s NRC cannot be empty"
         }
       },
 
