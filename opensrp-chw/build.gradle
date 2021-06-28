@@ -235,6 +235,22 @@ android {
 
     flavorDimensions 'baseDimension'
     productFlavors {
+        ecap {
+            dimension = 'baseDimension'
+            applicationIdSuffix ".ecap"
+            versionCode 8
+            versionName "0.0.1"
+            buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
+            buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
+            buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
+//            buildConfigField "String", 'opensrp_url_debug', '"https://ba-unified-stage.smartregister.org/opensrp/"'
+            buildConfigField "String[]", "LOCATION_HIERACHY", '{"Country","Province","District","Ward","Health Facility"}'
+            buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS", '{"District" , "Ward", "Health Facility"}'
+            buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"District" , "Ward", "Health Facility"}'
+            buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
+            buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
+            buildConfigField "int", "DATABASE_VERSION", '1'
+        }
         ba {
             dimension = 'baseDimension'
             applicationIdSuffix ".ba"
