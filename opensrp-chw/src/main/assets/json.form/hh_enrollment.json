@@ -65,10 +65,6 @@
         "type":"edit_text",
         "hint":"Care Giver First Name",
         "edit_type":"name",
-        "v_required":{
-          "value":"true",
-          "err":"{{family_register.step1.first_name.v_required.err}}"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"{{family_register.step1.first_name.v_regex.err}}"
@@ -82,10 +78,6 @@
         "type":"edit_text",
         "hint":"Care Giver Last Name",
         "edit_type":"name",
-        "v_required":{
-          "value":"true",
-          "err":"{{family_register.step1.last_name.v_required.err}}"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"{{family_register.step1.last_name.v_regex.err}}"
@@ -119,10 +111,6 @@
         },
         "min_date":"today-120y",
         "max_date":"today-15y",
-        "v_required":{
-          "value":"true",
-          "err":"{{family_register.step2.dob.v_required.err}}"
-        },
         "relevance":{
           "rules-engine":{
             "ex-rules":{
@@ -203,10 +191,6 @@
         "type":"edit_text",
         "hint":"Number of Children < 5 in household",
         "edit_type":"children_less_5",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -220,10 +204,6 @@
         "type":"edit_text",
         "hint":"Number of Males < 5 in household",
         "edit_type":"m_less_5",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -237,10 +217,6 @@
         "type":"edit_text",
         "hint":"Number of Females < 5 in household",
         "edit_type":"m_less_5",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -254,10 +230,6 @@
         "type":"edit_text",
         "hint":"Number of Children 10-19 in household",
         "edit_type":"children_10-19",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -271,10 +243,6 @@
         "type":"edit_text",
         "hint":"Number of Males 10-19 in household",
         "edit_type":"m_less_5",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -288,10 +256,6 @@
         "type":"edit_text",
         "hint":"Number of Females 10-19 in household",
         "edit_type":"m_less_5",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -305,10 +269,6 @@
         "type":"edit_text",
         "hint":"Main Source of Income",
         "edit_type":"income_source",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -322,10 +282,6 @@
         "type":"edit_text",
         "hint":"No. of women currently pregnant in houseld",
         "edit_type":"pregnant_women",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        },
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error}"
@@ -560,10 +516,6 @@
         },
         "min_date":"today-120y",
         "max_date":"today-15y",
-        "v_required":{
-          "value":"true",
-          "err":"Date of Birth Required"
-        },
         "relevance":{
           "rules-engine":{
             "ex-rules":{
@@ -679,10 +631,6 @@
         },
         "min_date":"today-120y",
         "max_date":"today-15y",
-        "v_required":{
-          "value":"true",
-          "err":"Date of Birth Required"
-        },
         "relevance":{
           "rules-engine":{
             "ex-rules":{
@@ -798,10 +746,6 @@
         },
         "min_date":"today-120y",
         "max_date":"today-15y",
-        "v_required":{
-          "value":"true",
-          "err":"Date of Birth Required"
-        },
         "relevance":{
           "rules-engine":{
             "ex-rules":{
@@ -917,10 +861,6 @@
         },
         "min_date":"today-120y",
         "max_date":"today-15y",
-        "v_required":{
-          "value":"true",
-          "err":"Date of Birth Required"
-        },
         "relevance":{
           "rules-engine":{
             "ex-rules":{
@@ -1036,10 +976,6 @@
         },
         "min_date":"today-120y",
         "max_date":"today-15y",
-        "v_required":{
-          "value":"true",
-          "err":"Date of Birth Required"
-        },
         "relevance":{
           "rules-engine":{
             "ex-rules":{

@@ -3,6 +3,7 @@ package ecap.smartregister.chw.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vijay.jsonwizard.domain.Form;
@@ -54,7 +55,7 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         ChwApplication.getInstance().notifyAppContextChange(); // initialize the language (bug in translation)
         FamilyFloatingMenu familyFloatingMenu = new FamilyFloatingMenu(this
         );
-       // familyFloatingMenu.setGravity();
+       familyFloatingMenu.setGravity(Gravity.BOTTOM);
         action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
         if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
             startFormActivity("initial_level_facility_form","","");

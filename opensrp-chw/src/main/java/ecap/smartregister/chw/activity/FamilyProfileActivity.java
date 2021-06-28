@@ -103,6 +103,9 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
                     case "Household enrollment form":
                         startFormActivity("hh_enrollment","","");
                         break;
+                    case "Referral form":
+                        startFormActivity("referral_form","","");
+                        break;
                     default:
 
                 }

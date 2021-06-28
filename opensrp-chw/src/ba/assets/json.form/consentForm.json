@@ -112,10 +112,6 @@
         "hint": "Childs first name ",
         "edit_type": "name",
         "look_up": "true",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter childs first name"
-        },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
@@ -132,10 +128,6 @@
         "hint": "Childs last name ",
         "edit_type": "name",
         "look_up": "true",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter childs last name"
-        },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
@@ -151,10 +143,6 @@
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter childs ART number "
-        },
         "v_regex": {
           "value": "[0-9]*",
           "err": "ART cannot be empty"
@@ -174,11 +162,7 @@
           "Private-duty caregiver",
           "Respite caregiver"
 
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the relationship caregiver"
-        }
+        ]
       },
 
 
@@ -206,10 +190,6 @@
         "expanded": false,
         "duration": {
           "label": "Date"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Current date cannot be empty"
         }
       },
 
@@ -232,12 +212,7 @@
           }
 
 
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please check the box if you are agree"
-
-        }
+        ]
 
       }
 
