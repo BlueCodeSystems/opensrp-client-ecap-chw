@@ -1,0 +1,822 @@
+{
+  "count": "3",
+  "encounter_type": "case service report",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Basic Information",
+    "next": "step2",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "District",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Enter district",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter district"
+        }
+
+      },
+
+
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Enter ward ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Ward cannot be empty"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid ward name"
+        }
+      },
+
+      {
+        "key": "residence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Enter residence ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Residence cannot be empty"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Residence"
+        }
+      },
+      {
+        "key": "Implementing Partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": " ",
+        "type": "spinner",
+        "hint": "Implementing Partner ",
+
+        "values": [
+          "Project Concern Zambia (PCZ)",
+          "Young Women Christian Association (YWCA) ",
+          "Bwafwano Integrated Services Organization (BISO)",
+          "Bwafwano Integrated Services Organization (BISO)",
+          "Circle of Hope (COH)",
+          "Zambia Episcopal Conference (ZEC)"
+
+        ]
+      },
+
+      {
+        "key": "Case Worker Surname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Case Worker Surname",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter case worker surname"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "Case worker first name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Case worker first name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter case worker first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "Beneficiary Surname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Beneficiary Surname",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter case beneficiary surname"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "Beneficiary name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Beneficiary first name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter beneficiary first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+
+      {
+        "key": "Referral date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "event",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": " Referral date",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Referral date"
+        }
+      },
+
+      {
+        "key": "Beneficiary Date of Birth ",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": "Beneficiary Date of Birth",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Beneficiary Date of Birth "
+        }
+      },
+
+
+      {
+        "key": "Name of Receiving Organization",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": " Name of Receiving Organization",
+        "edit_text_style": "bordered",
+        "v_required": {
+          "value": false,
+          "err":  "Name of Receiving Organization is empty"
+        }
+      },
+
+
+      {
+        "key": "Beneficiary Sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Beneficiary Sex",
+        "values": [
+          "Male",
+          "Female"
+
+        ]
+      },
+
+
+      {
+        "key": "Beneficiary Code",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Beneficiary Code",
+        "edit_text_style": "bordered"
+
+      }
+
+
+
+    ]
+  },
+
+
+
+  "step2": {
+    "title": "Services Provided for Children, Caregiver and Household",
+    "display_back_button": "true",
+    "fields": [
+
+      {
+        "key": "Health Services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Health Services",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "editable": true,
+        "read_only": true,
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+
+          {
+            "key": " CD4",
+            "text": " CD4",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+
+          },
+          {
+            "key": " HIV adherence support",
+            "text": " HIV adherence support",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Early infant diagnosis (PCR)",
+            "text": "Early infant diagnosis (PCR)",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Post-GBV Care (pre-exposure prophylaxis)",
+            "text": "Post-GBV Care (pre-exposure prophylaxis)",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Substance Abuse Support by a trained provider",
+            "text": "Substance Abuse Support by a trained provider",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "TB Screening",
+            "text": "TB Screening",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Supplementary or Therapeutic feeding ",
+            "text": "Supplementary or Therapeutic feeding ",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+
+          },
+          {
+            "key": "Family planning methods",
+            "text": "Family planning methods",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "PrEP",
+            "text": "PrEP",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Insecticide Treated Net",
+            "text": "Insecticide Treated Net",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+
+          {
+            "key": "Age-appropriate HIV/AIDS treatment literacy (CLHIV)",
+            "text": "Age-appropriate HIV/AIDS treatment literacy (CLHIV) ",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Family Planning (Women’s Health)",
+            "text": "Family Planning (Women’s Health)",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "VMMC",
+            "text": "VMMC",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+
+          },
+
+          {
+            "key": "Immunization",
+            "text": "Immunization",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Condom",
+            "text": "Condom",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Routine health care",
+            "text": "Routine health care",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Emergency Health Care",
+            "text": "Emergency Health Care",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Age-appropriate counselling and HIV disclosure support",
+            "text": "Age-appropriate counselling and HIV disclosure support",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "HIV treatment and care",
+            "text": "HIV treatment and care",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "PMTCT",
+            "text": "PMTCT",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Household Hygiene counselling/WASH",
+            "text": "Household Hygiene counselling/WASH",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Sexually transmitted infections (STIs) ",
+            "text": "Sexually transmitted infections (STIs) ",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Viral Load (PCR)",
+            "text": "Viral Load (PCR)",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+
+
+        ]
+
+      },
+
+
+      {
+        "key": "Other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Other health service or education Specify: ",
+        "edit_text_style": "bordered"
+
+      },
+
+
+      {
+        "key": "Safety Services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Safety Services",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "editable": true,
+        "read_only": true,
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+
+          {
+            "key": "Emergency shelter/care facility",
+            "text": "Emergency shelter/care facility",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+
+          },
+
+          {
+            "key": "Post Violence Trauma Support Counselling",
+            "text": "Post Violence Trauma Support Counselling",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Legal Assistance ",
+            "text": "Legal Assistance ",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+
+
+
+        ]
+
+
+
+      },
+
+      {
+        "key": "Other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Other Protection and/ or Legal service",
+        "edit_text_style": "bordered"
+
+      },
+
+
+      {
+        "key": "Schooled Services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Schooled Services",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "editable": true,
+        "read_only": true,
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+
+          {
+            "key": "Support VCAs with uniforms and/or book materials",
+            "text": "Support VCAs with uniforms and/or book materials",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+
+          },
+
+          {
+            "key": "Re-enrolment (for dropouts or teen mothers) ",
+            "text": "Re-enrolment (for dropouts or teen mothers) ",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": " Tuition/Bursaries/Fee waiver",
+            "text": " Tuition/Bursaries/Fee waiver",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+
+
+
+        ]
+
+
+
+      },
+
+      {
+        "key": "Other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Other Education Support.Specify:",
+        "edit_text_style": "bordered"
+
+      },
+
+
+
+      {
+        "key": "Stability Services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "label": "Stability Services",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "editable": true,
+        "read_only": true,
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+
+          {
+            "key": "Cash transfer/social grant",
+            "text": "Cash transfer/social grant",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+
+          },
+
+          {
+            "key": "Short term emergency cash support",
+            "text": "Short term emergency cash support",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Food security program/intervention",
+            "text": "Food security program/intervention",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+
+
+
+        ]
+
+
+
+      },
+
+      {
+        "key": "Other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Other economic strengthening Specify:",
+        "edit_text_style": "bordered"
+
+      },
+
+
+      {
+        "key": "Surname the individual providing service ",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Surname the individual providing service ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter surname the individual providing service "
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "First name the individual providing service ",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "First name the individual providing service ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter first name of the individual providing service"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "Job title",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Job title",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter job title"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "Date a service is provided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "event",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": " Date a service is provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+      },
+
+      {
+        "key": "Signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_data_type": "",
+        "type": "check_box",
+        "label": " I agree to the information provided",
+        "label_text_style": "italic",
+        "options": [
+
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false,
+            "openmrs_choice_id": ""
+          }
+
+
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please check the box if you are agree"
+
+        }
+
+      }
+
+
+    ]
+  }
+
+
+
+}

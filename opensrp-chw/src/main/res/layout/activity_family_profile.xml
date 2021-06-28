@@ -219,6 +219,5 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_base_profile" />
-    <include layout="@layout/buttons" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

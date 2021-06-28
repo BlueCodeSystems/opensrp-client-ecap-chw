@@ -73,11 +73,7 @@
           "North Western",
           "Copperbelt",
           "Northen"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Province"
-        }
+        ]
       },
       {
         "key": "district",
@@ -92,11 +88,7 @@
           "Kapiri",
           "Choma",
           "Kafue"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the District"
-        }
+        ]
       },
       {
         "key": "ward",
@@ -135,11 +127,7 @@
           "UTH",
           "Levy Mwanawasa",
           "Chelstone Clinic"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Health facility"
-        }
+        ]
       },
       {
         "key": "partners",
@@ -152,11 +140,7 @@
           "JPHIEGO",
           "JSI",
           "PCZ"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Partner"
-        }
+        ]
       },
       {
         "key": "name_of_adolescent",
@@ -197,10 +181,6 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Name of caregiver is required"
         }
       },
       {
@@ -210,11 +190,7 @@
         "openmrs_entity_id": "address2",
         "type": "edit_text",
         "hint": "Physical  address ",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the home address"
-        }
+        "edit_type": "name"
       },
       {
         "key": "Guardian_NRC",

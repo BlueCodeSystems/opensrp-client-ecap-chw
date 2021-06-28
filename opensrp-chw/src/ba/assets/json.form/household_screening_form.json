@@ -249,11 +249,7 @@
           "North Western",
           "Copperbelt",
           "Northen"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Province"
-        }
+        ]
       },
       {
         "key": "district",
@@ -268,11 +264,7 @@
           "Kapiri",
           "Choma",
           "Kafue"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the District"
-        }
+        ]
       },
       {
         "key": "ward",
@@ -311,11 +303,7 @@
           "UTH",
           "Levy Mwanawasa",
           "Chelstone Clinic"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Health facility"
-        }
+        ]
       },
       {
         "key": "partners",
@@ -328,11 +316,7 @@
           "JPHIEGO",
           "JSI",
           "PCZ"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Partner"
-        }
+        ]
       },
       {
         "key": "name_of_adolescent",
@@ -386,10 +370,6 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of prrimary caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Name of primary caregiver  is required"
         }
       },
       {
@@ -399,11 +379,7 @@
         "openmrs_entity_id": "address2",
         "type": "edit_text",
         "hint": "Physical  address ",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the home address"
-        }
+        "edit_type": "name"
       },
       {
         "key": "Guardian_NRC",
@@ -448,10 +424,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "v_required": {
-          "value": true,
-          "err": "Please specify the number of family members"
-        },
         "value": [
           {
             "key": "name_of_caregiver",
@@ -464,10 +436,6 @@
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
               "err": "Full Name of Family Member can only contain letters"
-            },
-            "v_required": {
-              "value": "true",
-              "err": "Full Name of Family Member \n(SURNAME, First Name) is required"
             }
           },
           {
@@ -563,10 +531,6 @@
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
               "err": "relationship_to_primary_caregiver can only contain letters"
-            },
-            "v_required": {
-              "value": "true",
-              "err": "relationship_to_primary_caregiver can only contain letters"
             }
           },
           {
@@ -594,11 +558,7 @@
             "values": [
               "Male",
               "Female"
-            ],
-            "v_required": {
-              "value": "true",
-              "err": "Please enter the sex"
-            }
+            ]
           },
           {
             "key": "hiv_status",
@@ -893,7 +853,7 @@
 
     ]
   },
-  "step6": {
+  "step5": {
     "title": "D II. For Adolescent Girls and Young Women (AGYW) 10-17 years.",
     "next": "step6",
     "fields": [
@@ -904,10 +864,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
-        "v_required": {
-          "value": true,
-          "err": "Please specify the number of Adolescents"
-        },
         "value": [
           {
             "key": "name_of_adolescent",
@@ -920,10 +876,6 @@
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
               "err": "Name of Adolescent can only contain letters"
-            },
-            "v_required": {
-              "value": "true",
-              "err": "Name of adolescent is required"
             }
           },
           {
@@ -1281,7 +1233,7 @@
       }
       ]
 },
-      "step8" : {
+      "step6" : {
         "title": "E: For Primary Caregivers Only\nFor questions E.1-E.10, interview the PRIMARY CAREGIVER separately, in privacy. Probe where needed. ONLY ASK QUESTION 8 IF THE CAREGIVER IS FEMALE. Emphasise that she is at liberty not to respond.",
         "next" : "step7",
         "fields": [
@@ -1499,7 +1451,7 @@
       }
     ]
       },
-  "step9" : {
+  "step7" : {
     "title": "Only enrol the family if they have an index VCA that fit into at least one of the following categories: (1) Children/Adolescents Living with HIV (C/ALHIV) (2) HIV Exposed Infants (HEIs) (3) Children of Women Living with HIV (4) Adolescent Girls and Young Women (AGYW) (5) Survivors of Sexual Violence; and (6) Children of Female Sex Workers (FSWs). ",
     "fields": [
       {

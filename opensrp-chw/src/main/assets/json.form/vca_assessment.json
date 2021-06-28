@@ -65,10 +65,6 @@
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
-          "err":"Error"
         }
       },
       {
@@ -81,10 +77,6 @@
         "edit_type":"name",
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
           "err":"Error"
         }
       },
@@ -99,10 +91,6 @@
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
-          "err":"Error"
         }
       },
       {
@@ -115,10 +103,6 @@
         "edit_type":"name",
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
           "err":"Error"
         }
       },
@@ -133,10 +117,6 @@
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
-          "err":"Error"
         }
       },
       {
@@ -145,11 +125,7 @@
         "hint":"Date of Birth",
         "expanded":false,
         "min_date":"today-5y",
-        "max_date":"today",
-        "v_required":{
-          "value":"true",
-          "err":"Error"
-        }
+        "max_date":"today"
       },
       {
         "key":"caregiver_name",
@@ -161,10 +137,6 @@
         "edit_type":"name",
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
           "err":"Error"
         }
       },
@@ -179,10 +151,6 @@
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
-          "err":"Error"
         }
       },
       {
@@ -195,10 +163,6 @@
         "edit_type":"name",
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error"
-        },
-        "v_required":{
-          "value":"true",
           "err":"Error"
         }
       }

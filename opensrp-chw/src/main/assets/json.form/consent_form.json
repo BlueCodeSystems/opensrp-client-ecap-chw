@@ -111,10 +111,6 @@
         "type": "edit_text",
         "hint": " Child`s Full Name",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter childs name"
-        },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter childs name"
@@ -129,10 +125,6 @@
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter childs ART number "
-        },
         "v_regex": {
           "value": "[0-9]*",
           "err": "ART cannot be empty"
@@ -152,11 +144,7 @@
           "Private-duty caregiver",
           "Respite caregiver"
 
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the relationship caregiver"
-        }
+        ]
       },
 
 
@@ -168,10 +156,6 @@
         "type": "edit_text",
         "hint": "Guardian`s NRC",
         "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter guardian`s NRC"
-        },
         "v_regex": {
           "value": "[0-9]*",
           "err": "Guardian`s NRC cannot be empty"
@@ -188,10 +172,6 @@
         "expanded": false,
         "duration": {
           "label": "Date"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Current date cannot be empty"
         }
       },
 
@@ -214,12 +194,7 @@
           }
 
 
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please check the box if you are agree"
-
-        }
+        ]
 
       }
 
