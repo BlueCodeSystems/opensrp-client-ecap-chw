@@ -1,0 +1,486 @@
+{
+  "count": "1",
+  "encounter_type": "mother initial form",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Mother details",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "Mothers_First_Name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Mothers first name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter mother`s first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "Mothers_Last_Name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Mothers last name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter mother`s last name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "Date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "event",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": "Date referred to OVC program for tracing",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter date referred to OVC program for tracing"
+        }
+      },
+
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter childs ART number "
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "ART cannot be empty"
+        }
+      },
+
+      {
+        "key": "list_1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Childs name 1",
+        "edit_text_style": "bordered",
+        "v_required": {
+          "value": true,
+          "err": "Please enter childs name"
+        }
+      },
+
+      {
+        "key": "user_select",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+
+        "options": [
+          {
+            "key": "M",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "M"
+          },
+          {
+            "key": "F",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "F"
+          }
+        ]
+      },
+
+      {
+        "key": "list_2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Childs name 2",
+        "edit_text_style": "bordered"
+
+      },
+
+      {
+        "key": "user_select",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+
+        "options": [
+          {
+            "key": "M",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "M"
+          },
+          {
+            "key": "F",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "F"
+          }
+        ]
+      },
+
+      {
+        "key": "list_3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "hint": "Childs name 3",
+        "edit_text_style": "bordered"
+
+      },
+
+      {
+        "key": "user_select",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+
+        "options": [
+          {
+            "key": "M",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "M"
+          },
+          {
+            "key": "F",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "F"
+          }
+        ]
+      },
+
+
+      {
+        "key": "Date_Birth",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "Child's DOB",
+        "label_info_title": "Child's Date of Birth",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the date of birth"
+        }
+      },
+
+      {
+        "key": "user_select_testing",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Was the child linked to testing?",
+        "options": [
+          {
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "No"
+          }
+        ]
+      },
+
+      {
+        "key": "user_select_HIV",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Was the child tested for HIV?",
+        "label_info_text": "Applicable if a child was linked to testing",
+
+        "options": [
+          {
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "No"
+          }
+        ]
+      },
+
+
+      {
+        "key": "HIV Status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "HIV Status  ",
+        "type": "spinner",
+        "hint": "HIV Status  ",
+        "label_info_text": "Applicable if the child was tested for HIV",
+        "values": [
+          "HIV+",
+          "HIV-",
+          "Unknown"
+
+        ]
+      },
+
+
+      {
+        "key": "user_select_ART",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Is the child already on ART?",
+        "label_info_text": "Applicable if the child is HIV positive",
+
+        "options": [
+          {
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "No"
+          }
+        ]
+      },
+
+
+      {
+        "key": "user_select_enrollment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Has the child been offered enrollment into the OVC Program?",
+
+
+        "options": [
+          {
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "No"
+          }
+
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "You need to make a selection"
+        }
+      },
+
+
+      {
+        "key": "user_select_OVC_program",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Has the child been enrolled into the OVC Program?",
+
+        "options": [
+          {
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "You need to make a selection"
+        }
+      },
+
+
+      {
+        "key": "Mothers residence",
+        "openmrs_entity_parent": "usual_residence",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "hint": "Mothers residence",
+        "tree": [
+
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please enter mothers residential area"
+        }
+      },
+
+
+      {
+        "key": "Mothers_Number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "phone",
+        "openmrs_entity_id": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Mothers phone number",
+        "v_numeric": {
+          "value": "true",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Number cannot be empty"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      }
+
+
+
+
+
+    ]
+  }
+
+}
