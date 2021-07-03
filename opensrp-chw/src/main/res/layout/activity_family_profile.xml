@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ecap.smartregister.chw.activity.FamilyProfileActivity">
+    tools:context="com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_appbarlayout"
