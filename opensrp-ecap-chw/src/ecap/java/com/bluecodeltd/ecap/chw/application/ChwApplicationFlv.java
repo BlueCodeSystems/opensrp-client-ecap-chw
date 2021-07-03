@@ -16,7 +16,7 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public boolean hasReferrals() {
-        return true;
+        return false;
     }
 
     @Override
@@ -36,12 +36,12 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public boolean hasChildSickForm() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean hasFamilyPlanning() {
-        return true;
+        return false;
     }
 
     @Override
@@ -51,16 +51,16 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public boolean hasMalaria() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean hasServiceReport() {
-        return true;
+        return false;
     }
 
     public boolean hasQR() {
-        return true;
+        return false;
     }
 
     @Override
@@ -70,17 +70,17 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public boolean hasTasks() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean hasStockUsageReport() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean hasFamilyLocationRow() {
-        return true;
+        return false;
     }
 
     @Override
