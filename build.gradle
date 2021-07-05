@@ -54,30 +54,8 @@ allprojects {
         maven { url "https://cloudant.github.io/cloudant-sync-eap/repository" }
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
-        //aven { url "https://dl.bintray.com/ona/rdt-capture" }
-        //maven { url "http://dl.bintray.com/ona/kujaku" }
-        //maven { url 'https://dl.bintray.com/ibm-watson-health/ibm-fhir-server-releases' }
         maven { url 'https://repo1.maven.org/maven2/com/ibm/fhir' }
     }
-
-    /*repositories {
-        google()
-        jcenter()
-        mavenLocal()
-        mavenCentral()
-        maven { url 'https://maven.google.com' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url 'https://jitpack.io' }
-        maven { url "https://acra.googlecode.com/svn/repository/releases" }
-        maven { url "https://repo.maven.apache.org/maven2" }
-        maven { url "https://cloudant.github.io/cloudant-sync-eap/repository" }
-        maven { url 'https://maven.fabric.io/public' }
-        maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
-        maven { url "https://dl.bintray.com/ona/rdt-capture" }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
-        maven { url 'https://dl.bintray.com/ibm-watson-health/ibm-fhir-server-releases' }
-        maven { url "https://dl.bintray.com/ona/kujaku" }
-    }*/
 }
 
 project.ext.preDexLibs = !project.hasProperty('disablePreDex')
