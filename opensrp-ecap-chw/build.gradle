@@ -54,6 +54,7 @@ android {
             url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-model")
             url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-path")
             url = uri("https://mvnrepository.com/artifact/com.ibm.fhir/fhir-path")
+            url = uri("https://github.com/BlueCodeSystems/opensrp-client-household")
             credentials {
                 /** get credentials from local.properties in root project folder file with
                  ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN otherwise ** Set env variable GPR_USER & GPR_API_KEY**/
@@ -79,7 +80,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "ecap.smartregister.chw"
+        applicationId "com.bluecodeltd.chw"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionCode 2
