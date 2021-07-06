@@ -35,11 +35,13 @@ public class NavigationModelFlv implements NavigationModel.Flavor {
 
             navigationOptions.addAll(Arrays.asList(op1,op2 ,op3,op4));
 
-            if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH)
+           /* if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH)
                // navigationOptions.add(op8);
 
             //navigationOptions.add(op9);
         }
+        */
+
 
         return navigationOptions;
     }
