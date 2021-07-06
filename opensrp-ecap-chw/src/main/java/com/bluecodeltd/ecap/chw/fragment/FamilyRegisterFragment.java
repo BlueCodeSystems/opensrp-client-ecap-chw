@@ -80,5 +80,11 @@ public class FamilyRegisterFragment extends CoreFamilyRegisterFragment {
         return " and (" + CoreConstants.TABLE_NAME.FAMILY + "." + DBConstants.KEY.FIRST_NAME + " like '%" + filters + "%' or "
                 + CoreConstants.TABLE_NAME.FAMILY + "." + DBConstants.KEY.LAST_NAME + " like '%" + filters + "%')";
     }
+
+    @Override
+    public void setupViews(View view) {
+        super.setupViews(view);
+        dueOnlyLayout.setVisibility(View.GONE);
+    }
     
 }
