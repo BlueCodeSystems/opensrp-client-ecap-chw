@@ -38,7 +38,7 @@ allprojects {
         mavenCentral()
         maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
+        //maven { url "http://dl.bintray.com/ona/kujaku" }
         maven { url 'https://maven.fabric.io/public' }
 
         /** GitHub packages **/
