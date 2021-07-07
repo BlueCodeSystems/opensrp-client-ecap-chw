@@ -1,0 +1,21 @@
+# Intial CI for the ECAP II project to validate code at build level before pull requests and when a new push is made to the main branch for PR purposes
+# Gradle build is used for the contained andoid project.
+
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code from new commit
+        uses: actions/checkout@v2
+      - name: Build the app using code in new commit
+        run: ./gradlew build
