@@ -12,21 +12,9 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        maven { url 'https://maven.google.com' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
-        maven { url 'https://maven.fabric.io/public' }
-        mavenLocal()
-    }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
-//apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.google.firebase.crashlytics'
 apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -36,33 +24,87 @@ jacoco {
 }
 
 def githubProperties = new Properties()
-//Read the github properties content
-githubProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
-android {
+//Read the local/github properties content
+if (project.rootProject.file("local.properties").exists()) {
+    githubProperties.load(new FileInputStream(rootProject.file("local.properties")))
+} else if (project.rootProject.file("github.properties").exists()) {
+    githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+}
 
-	/*
-    git package repositories using maven
-    * */
+allprojects {
     repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url "http://dl.bintray.com/ona/kujaku" }
+        maven { url 'https://maven.fabric.io/public' }
+
+        /** GitHub packages **/
+
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/ellykits/neat-form")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
         maven {
             name = "GitHubPackages"
             /**
              * Configure path of the package repository on Github using the GITHUB_USER_ID and * Git Repository */
-            url = uri("https://maven.pkg.github.com/ellykits/neat-form")
             url = uri("https://maven.pkg.github.com/io.ona.rdt-capture/lib")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-model")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-path")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-ecap-chw-core")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
             url = uri("https://mvnrepository.com/artifact/com.ibm.fhir/fhir-path")
             credentials {
-                /** get credentials from local.properties in root project folder file with
-                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN otherwise ** Set env variable GPR_USER & GPR_API_KEY**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-household")
+            credentials {
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
     }
+}
 
+android {
 
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion androidCompileSdkVersion
@@ -79,7 +121,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "ecap.smartregister.chw"
+        applicationId "com.bluecodeltd.chw"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionCode 2
@@ -246,12 +288,12 @@ android {
 
 dependencies {
 
-	implementation "com.nerdstone:neat-form-core:1.1.4"
+    implementation "com.nerdstone:neat-form-core:1.1.4"
     implementation "io.ona.rdt-capture:lib:2.1.0"
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-    implementation('org.smartregister:opensrp-client-chw-core:2.0.30-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-ecap-chw-core:1.0.0-RELEASE@aar') {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'androidx.legacy', module: 'legacy-support-v4'
