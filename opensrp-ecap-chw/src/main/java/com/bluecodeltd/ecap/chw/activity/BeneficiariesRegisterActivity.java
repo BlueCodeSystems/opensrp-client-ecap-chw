@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.bluecodeltd.ecap.chw.R;
 
 
-public class CoreBeneficiariesRegisterActivity extends AppCompatActivity {
+public class BeneficiariesRegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
