@@ -1,6 +1,5 @@
 *.iml
 .gradle
-/local.properties
 /captures
 *.ipr
 *.iws
