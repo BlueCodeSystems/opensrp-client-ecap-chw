@@ -9,6 +9,9 @@ import android.os.Build;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.evernote.android.job.JobManager;
 //import com.mapbox.mapboxsdk.Mapbox;
 import com.vijay.jsonwizard.NativeFormLibrary;
@@ -26,14 +29,10 @@ import org.smartregister.CoreLibrary;
 import org.smartregister.P2POptions;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.AncRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.ChildRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.FpRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.LoginActivity;
-import com.bluecodeltd.ecap.chw.activity.MalariaRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.PncRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
 import org.smartregister.chw.anc.AncLibrary;
@@ -352,11 +351,14 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     @NotNull
     public Map<String, Class> getRegisteredActivities() {
         Map<String, Class> registeredActivities = new HashMap<>();
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.ANC_REGISTER_ACTIVITY, AncRegisterActivity.class);
+       // registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.ANC_REGISTER_ACTIVITY, AncRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.FAMILY_REGISTER_ACTIVITY, FamilyRegisterActivity.class);
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.CHILD_REGISTER_ACTIVITY, ChildRegisterActivity.class);
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PNC_REGISTER_ACTIVITY, PncRegisterActivity.class);
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MALARIA_REGISTER_ACTIVITY, MalariaRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.CASE_PLAN_REGISTER_ACTIVITY, CasePlanRegisterActivity.class );
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.INDEX_REGISTER_ACTIVITY, IndexRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.BENEFICIARIES_REGISTER_ACTIVITY, BeneficiariesRegisterActivity.class);
+        //registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.CHILD_REGISTER_ACTIVITY, ChildRegisterActivity.class);
+        //registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PNC_REGISTER_ACTIVITY, PncRegisterActivity.class);
+        //registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MALARIA_REGISTER_ACTIVITY, MalariaRegisterActivity.class);
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRALS_REGISTER_ACTIVITY, ReferralRegisterActivity.class);
         }

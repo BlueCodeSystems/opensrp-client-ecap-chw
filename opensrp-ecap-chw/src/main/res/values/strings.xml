@@ -427,6 +427,9 @@
     <!--Ecap Strings -->
         <string name="all_households"> All households</string>
         <string name="all_Vcas"> VCAs</string>
+        <string name="all_benefeciaries"> Beneficiaries</string>
+        <string name="all_indexes"> Indexes</string>
+        <string name="all_case_plans"> Case plans</string>
         <string name="return_to_household">Return to household</string>
 
 </resources>
