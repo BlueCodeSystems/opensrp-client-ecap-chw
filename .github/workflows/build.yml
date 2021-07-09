@@ -23,7 +23,7 @@ jobs:
           java-version: 1.8
         
       - name: prepare git credentials and add to branch image local.properties before buildning 
-        run: echo ${{secrets.GIT_USER}} > opensrp-client-ecap-chw/local.properties && ${{secrets.ACCESS_TOKEN}} > opensrp-client-ecap-chw/local.properties
+        run: echo ${{secrets.GIT_USER}} > /local.properties && ${{secrets.ACCESS_TOKEN}} > /local.properties
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build the app using code in new commit
