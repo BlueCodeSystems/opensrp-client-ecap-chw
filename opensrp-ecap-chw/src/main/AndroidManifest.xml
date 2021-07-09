@@ -73,7 +73,6 @@
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.FpRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-        <activity android:name=".core.activity.ChwP2pModeSelectActivity" />
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.JobAidsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -144,18 +143,7 @@
             android:name="com.bluecodeltd.ecap.chw.activity.ChildMedicalHistoryActivity"
             android:label="@string/medical_history"
             android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.CoreChildMedicalHistoryActivity"
-            android:label="@string/medical_history"
-            android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.CoreUpcomingServicesActivity"
-            android:label="@string/upcoming_services"
-            android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.CoreFpUpcomingServicesActivity"
-            android:label="@string/upcoming_services"
-            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.IndividualProfileRemoveActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -184,10 +172,7 @@
             android:name="com.bluecodeltd.ecap.chw.activity.MalariaProfileActivity"
             android:label="@string/malaria"
             android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.CoreAncRegisterActivity"
-            android:label="@string/anc_register"
-            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.MalariaUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -205,23 +190,7 @@
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.SickFormMedicalHistory"
             android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.HIA2ReportsActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.ReportSummaryActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.ServiceJsonFormActivity"
-            android:label="@string/stock_usage_report"
-            android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.CoreStockInventoryReportActivity"
-            android:label="@string/stock_usage_report"
-            android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.CoreStockInventoryItemDetailsReportActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.ReportsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -234,9 +203,7 @@
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-        <activity
-            android:name=".core.activity.DisplayCarePlanActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name="org.smartregister.opd.activity.BaseOpdFormActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -259,16 +226,14 @@
             android:name="com.bluecodeltd.ecap.chw.activity.AncMemberMapActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 
-        <activity
-            android:name=".core.activity.CoreCommunityRespondersRegisterActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity android:name="com.bluecodeltd.ecap.chw.activity.GuideBooksTutorialsActivity"
             android:theme="@style/ChwTheme.NoActionBar"/>
 
         <activity android:name="com.bluecodeltd.ecap.chw.activity.GuideBooksCounselingActivity"
             android:theme="@style/ChwTheme.NoActionBar"/>
 
+        <activity android:name=".activity.IndexRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3f94f9c3caeff331b3a2bd8c2182b663ad6a955a" />
@@ -283,23 +248,14 @@
                 android:resource="@xml/captured_images_path" />
         </provider>
 
-        <service android:name="org.smartregister.immunization.service.intent.VaccineIntentService" />
-        <service android:name="org.smartregister.immunization.service.intent.RecurringIntentService" />
         <service android:name="org.smartregister.sync.intent.PullUniqueIdsIntentService" />
         <service android:name="org.smartregister.sync.intent.ExtendedSyncIntentService" />
         <service android:name="org.smartregister.sync.intent.SyncLocationsByLevelAndTagsIntentService" />
         <service android:name="org.smartregister.sync.intent.DocumentConfigurationIntentService" />
         <service android:name="org.smartregister.sync.intent.ValidateIntentService" />
         <service android:name="org.smartregister.service.ImageUploadSyncService" />
-        <service android:name=".anc.intent.HomeVisitIntentService" />
-        <service android:name="com.bluecodeltd.ecap.chw.sync.intent.ChwSyncTaskIntentService" />
-        <service android:name="org.smartregister.sync.intent.PlanIntentService" />
-        <service android:name="com.bluecodeltd.ecap.chw.intent.ChwPncCloseDateIntent" />
-        <service android:name="org.smartregister.reporting.service.IndicatorGeneratorIntentService" />
         <service android:name="com.bluecodeltd.ecap.chw.service.SchedulesIntentService" />
         <service android:name="com.bluecodeltd.ecap.chw.sync.ChwSyncIntentService" />
-        <service android:name=".core.service.StockUsageReportService" />
-        <service android:name="org.smartregister.growthmonitoring.service.intent.WeightForHeightIntentService" />
 
         <uses-library
             android:name="org.apache.http.legacy"
