@@ -21,8 +21,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: prepare git credentials and add to branch image local.properties before buildning
-        run: echo 'gpr.usr=computer-wiz' > /local.properties && 'gpr.key=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' > /local.properties
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build the app using code in new commit
