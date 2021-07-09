@@ -21,11 +21,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-        env:
-          GIT_USER_VAL = ${{secrets.GIT_USER}}
-          ACCESS_TOKEN_VAL = ${{secrets.ACCESS_TOKEN}}
+        
       - name: prepare git credentials and add to branch image local.properties before buildning 
-        run: echo $GIT_USER_VAL > opensrp-client-ecap-chw/local.properties && $ACCESS_TOKEN_VAL > opensrp-client-ecap-chw/local.properties
+        run: echo ${{secrets.GIT_USER}} > opensrp-client-ecap-chw/local.properties && ${{secrets.ACCESS_TOKEN}} > opensrp-client-ecap-chw/local.properties
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build the app using code in new commit
