@@ -10,7 +10,6 @@
             "field": "identifiers.opensrp_id"
           }
         },
-
         {
           "column_name": "mother_surname",
           "type": "Client",
@@ -25,8 +24,6 @@
             "field": "mothers_first_name"
           }
         },
-
-
         {
           "column_name": "ovc_date",
           "type": "Event",
@@ -34,8 +31,6 @@
             "field": "ovc_date"
           }
         },
-
-
         {
           "column_name": "art_number",
           "type": "Client",
@@ -43,15 +38,12 @@
             "field": "attributes.art_number"
           }
         },
-
-
         {
           "column_name": "Child",
-          "column_name":  "first_name",
-          "column_name":  "last_name",
-          "column_name":  "sex",
-          "column_name":  "birthdate",
-
+          "column_name": "first_name",
+          "column_name": "last_name",
+          "column_name": "sex",
+          "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
             "field": "child",
@@ -61,8 +53,6 @@
             "field": "birthdate"
           }
         },
-
-
         {
           "column_name": "user_select_test",
           "column_name": "Yes_user_select_test",
@@ -74,7 +64,6 @@
             "field": "attributes.no"
           }
         },
-
         {
           "column_name": "user_select_hiv",
           "column_name": "Yes_user_select_hiv",
@@ -86,8 +75,6 @@
             "field": "attributes.No"
           }
         },
-
-
         {
           "column_name": "hiv_status",
           "type": "Client",
@@ -95,7 +82,6 @@
             "field": "attributes.hiv_status"
           }
         },
-
         {
           "column_name": "user_select_art",
           "column_name": "Yes_user_select_art",
@@ -107,7 +93,6 @@
             "field": "attributes.no"
           }
         },
-
         {
           "column_name": "user_select_enrollment",
           "column_name": "yes_enrollment",
@@ -119,7 +104,6 @@
             "field": "attributes.no"
           }
         },
-
         {
           "column_name": "user_select_ovc_program",
           "column_name": "Yes_ovc_program",
@@ -131,7 +115,6 @@
             "field": "attributes.no"
           }
         },
-
         {
           "column_name": "village_compound",
           "type": "Client",
@@ -139,7 +122,6 @@
             "field": "addresss.village_compound"
           }
         },
-
         {
           "column_name": "mothers_number",
           "type": "Client",
@@ -147,7 +129,6 @@
             "field": "identifiers.mothers_number"
           }
         },
-
         {
           "column_name": "comment",
           "type": "Client",
@@ -155,7 +136,6 @@
             "field": "attributes.comment"
           }
         }
-
       ]
     },
     {
@@ -2609,6 +2589,214 @@
           "json_mapping": {
             "field": "obs.formSubmissionField",
             "concept": "notification_dismissal_date"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_client_index",
+      "columns": [
+        {
+          "column_name": "lastName",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
+          }
+        },
+        {
+          "column_name": "firstName",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sex"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdate"
+          }
+        },
+        {
+          "column_name": "index_check_box",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.index_check_box"
+          }
+        },
+        {
+          "column_name": "date_referred",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.date_referred"
+          }
+        },
+        {
+          "column_name": "date_offered_enrollment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "date_offered_enrollment"
+          }
+        },
+        {
+          "column_name": "acceptance",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.acceptance"
+          }
+        },
+        {
+          "column_name": "date_enrolled",
+          "type": "Event",
+          "json_mapping": {
+            "field": "date_enrolled"
+          }
+        },
+        {
+          "column_name": "date_hiv_known",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.date_hiv_known"
+          }
+        },
+        {
+          "column_name": "art_check_box",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.art_check_box"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "date_started_art",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.date_started_art"
+          }
+        },
+        {
+          "column_name": "vl_check_box",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attribute.vl_check_box"
+          }
+        },
+        {
+          "column_name": "date_last_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.date_last_vl"
+          }
+        },
+        {
+          "column_name": "vl_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.vl_result"
+          }
+        },
+        {
+          "column_name": "vl_suppressed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.vl_suppressed"
+          }
+        },
+        {
+          "column_name": "next_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.next_vl"
+          }
+        },
+        {
+          "column_name": "vl_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.vl_result"
+          }
+        },
+        {
+          "column_name": "child_mmd",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.child_mmd"
+          }
+        },
+        {
+          "column_name": "level_mmd",
+          "type": "Event",
+          "json_mapping": {
+            "field": "level_mmd"
+          }
+        },
+        {
+          "column_name": "caregiverFirstName",
+          "type": "Client",
+          "json_mapping": {
+            "field": "caregiverFirstName"
+          }
+        },
+        {
+          "column_name": "caregiverLastName",
+          "type": "Client",
+          "json_mapping": {
+            "field": "caregiverLastName"
+          }
+        },
+        {
+          "column_name": "sex",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.sex"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdate"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relation"
+          }
+        },
+        {
+          "column_name": "residence",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.residence"
+          }
+        },
+        {
+          "column_name": "phone_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.phone_number"
           }
         }
       ]

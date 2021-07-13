@@ -432,5 +432,6 @@
         <string name="all_case_plans"> Case plans</string>
         <string name="return_to_household">Return to household</string>
     <string name="add_index">Add New</string>
+    <string name="saving_index">Saving Index Person</string>
 
 </resources>
