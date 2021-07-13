@@ -2,20 +2,21 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 
 import androidx.fragment.app.Fragment;
 
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONObject;
-import org.smartregister.chw.core.custom_views.FamilyFloatingMenu;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.client.utils.domain.Form;
+import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
@@ -30,17 +31,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(IndexRegisterActivity.this, null, null);
-
-        ChwApplication.getInstance().notifyAppContextChange(); // initialize the language (bug in translation)
-        FamilyFloatingMenu familyFloatingMenu = new FamilyFloatingMenu(this
-        );
-        familyFloatingMenu.setGravity(Gravity.BOTTOM);
-        action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
-        if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
-            startFormActivity("mother_index","","");
-
-        }
+        NavigationMenu.getInstance(this, null, null);
     }
 
     @Override
@@ -65,7 +56,16 @@ public class IndexRegisterActivity extends BaseRegisterActivity {
 
     @Override
     public void startFormActivity(JSONObject jsonObject) {
-        //Overridden
+        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        intent.putExtra(Constants.JSON, jsonObject.toString());
+        Form form = new Form();
+        form.setName(getString(R.string.add_fam));
+        form.setActionBarBackground(R.color.family_actionbar);
+        form.setNavigationBackground(R.color.family_navigation);
+        form.setHomeAsUpIndicator(R.mipmap.ic_cross_white);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+
+        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
     }
 
     @Override

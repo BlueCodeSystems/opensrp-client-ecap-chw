@@ -11,6 +11,8 @@ import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.JobAidsActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportsActivity;
+import com.bluecodeltd.ecap.chw.custom_view.AlertDialogForIndexRegistrationRegister;
+
 import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
 import org.smartregister.view.activity.BaseRegisterActivity;
 
@@ -39,6 +41,8 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
             BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
             baseRegisterActivity.startQrCodeScanner();
             return false;
+        } else if (item.getItemId() == R.id.action_register_index) {
+           new  AlertDialogForIndexRegistrationRegister(context).buildAlertDialogForIndexRegistration().show();
         } else if (item.getItemId() == R.id.action_register) {
 
             if (context instanceof IndexRegisterActivity) {

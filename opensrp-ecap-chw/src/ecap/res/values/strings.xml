@@ -21,4 +21,9 @@
         <item>Household enrollment form</item>
         <item>Referral form</item>
     </string-array>
+    <string-array name="index_register_dialog_options">
+        <item>Child</item>
+        <item>Mother</item>
+    </string-array>
+
 </resources>
