@@ -12,11 +12,6 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
     private IndexRegisterFragmentContract.View view;
 
     @Override
-    public void sayHello(Context context) {
-        Utils.showShortToast(context, "Hey there");
-    }
-
-    @Override
     public void initView(IndexRegisterFragmentContract.View view) {
         this.view = view;
     }

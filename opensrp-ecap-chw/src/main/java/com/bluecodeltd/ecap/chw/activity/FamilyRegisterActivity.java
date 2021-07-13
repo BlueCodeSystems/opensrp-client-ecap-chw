@@ -66,7 +66,7 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean optionsMenu = super.onCreateOptionsMenu(menu);
         MenuItem indexRegisterMenu = menu.findItem(R.id.action_register_index);
-        if (indexRegisterMenu != null) {
+        if (indexRegisterMenu != null && indexRegisterMenu.isVisible()) {
             indexRegisterMenu.setVisible(false);
         }
         return optionsMenu;
