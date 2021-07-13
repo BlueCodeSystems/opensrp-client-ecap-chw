@@ -295,7 +295,7 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-    implementation('org.smartregister:opensrp-ecap-chw-core:1.0.0-RELEASE@aar') {
+    implementation('org.smartregister:opensrp-ecap-chw-core:1.0.1-RELEASE@aar') {
 //    implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
