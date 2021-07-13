@@ -120,6 +120,15 @@
             android:name="com.bluecodeltd.ecap.chw.activity.UpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name="com.bluecodeltd.ecap.chw.activity.ChildHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
