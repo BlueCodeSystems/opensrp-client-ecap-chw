@@ -2,15 +2,19 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 
 import androidx.fragment.app.Fragment;
 
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
+import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 
 import org.json.JSONObject;
+import org.smartregister.chw.core.custom_views.FamilyFloatingMenu;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.view.activity.BaseRegisterActivity;
@@ -21,10 +25,22 @@ import java.util.Map;
 
 public class IndexRegisterActivity extends BaseRegisterActivity {
 
+    public String action = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(this, null, null);
+        NavigationMenu.getInstance(IndexRegisterActivity.this, null, null);
+
+        ChwApplication.getInstance().notifyAppContextChange(); // initialize the language (bug in translation)
+        FamilyFloatingMenu familyFloatingMenu = new FamilyFloatingMenu(this
+        );
+        familyFloatingMenu.setGravity(Gravity.BOTTOM);
+        action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
+        if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
+            startFormActivity("mother_index","","");
+
+        }
     }
 
     @Override
