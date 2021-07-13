@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
 
@@ -32,9 +34,18 @@ public class IndexRegisterActivity extends BaseRegisterActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
-
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean optionsMenu = super.onCreateOptionsMenu(menu);
+        MenuItem familyRegisterMenu = menu.findItem(R.id.action_register);
+        if (familyRegisterMenu != null) {
+            familyRegisterMenu.setVisible(false);
+        }
+        return optionsMenu;
+    }
+
 
     @Override
     protected void initializePresenter() {

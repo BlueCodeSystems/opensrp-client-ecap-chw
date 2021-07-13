@@ -26,8 +26,6 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        super.onNavigationItemSelected(item);
-
         if (item.getItemId() == R.id.action_family) {
             if (context instanceof FamilyRegisterActivity) {
                 BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
@@ -42,28 +40,16 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
             baseRegisterActivity.startQrCodeScanner();
             return false;
         } else if (item.getItemId() == R.id.action_register_index) {
-           new  AlertDialogForIndexRegistrationRegister(context).buildAlertDialogForIndexRegistration().show();
+            new AlertDialogForIndexRegistrationRegister(context).buildAlertDialogForIndexRegistration().show();
+            return true;
         } else if (item.getItemId() == R.id.action_register) {
-
-            if (context instanceof IndexRegisterActivity) {
-                BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
-                baseRegisterActivity.startFormActivity("mother_index","","");
-            } else if (context instanceof FamilyRegisterActivity){
-                BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
-                baseRegisterActivity.startFormActivity("family_register","","");
-            }else {
-                FamilyRegisterActivity.startFamilyRegisterForm(context);
-
-            }
-
-            return false;
+            FamilyRegisterActivity.startFamilyRegisterForm(context);
+            return true;
         } else if (item.getItemId() == R.id.action_job_aids) {
-            //view.setSelectedItemId(R.id.action_family);
             Intent intent = new Intent(context, JobAidsActivity.class);
             context.startActivity(intent);
             return false;
         } else if (item.getItemId() == R.id.action_report) {
-            //view.setSelectedItemId(R.id.action_family);
             Intent intent = new Intent(context, ReportsActivity.class);
             context.startActivity(intent);
             return false;

@@ -11,6 +11,7 @@ public class Constants extends CoreConstants {
     public static final String MALARIA_REFERRAL_FORM = "malaria_referral_form";
     public static final String ALL_CLIENT_REGISTRATION_FORM = "all_clients_registration_form";
     public static final String JSON = "json";
+    public static final String MOTHER = "Mother";
     public static String pregnancyOutcome = "preg_outcome";
     public static String INITIAL_LEVEL_FACILITY_FORM ="initial_level_facility_form";
     public static String FAMILY_MEMBER_LOCATION_TABLE = "ec_family_member_location";

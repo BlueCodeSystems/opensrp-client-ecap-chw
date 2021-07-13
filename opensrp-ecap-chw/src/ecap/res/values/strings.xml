@@ -2,7 +2,7 @@
     <string name="app_name">Ecap II</string>
     <string name="login_title">USAID ECAP-II  \n ZAMBIA</string>
     <string name="nav_logo">USAID Ecap II</string>
-    <string name="add_family">Add New</string>
+    <string name="add_family">Add Household</string>
     <string name="menu_anc">ANC</string>
     <string name="menu_pnc">PNC</string>
     <string name="sick_child_title">SICK CHILD FORM</string>
