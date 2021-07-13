@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.JobAidsActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportsActivity;
 import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
@@ -40,10 +41,13 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
             return false;
         } else if (item.getItemId() == R.id.action_register) {
 
-            if (context instanceof FamilyRegisterActivity) {
+            if (context instanceof IndexRegisterActivity) {
                 BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
-                baseRegisterActivity.startFormActivity("initial_level_facility_form","","");
-            } else {
+                baseRegisterActivity.startFormActivity("mother_index","","");
+            } else if (context instanceof FamilyRegisterActivity){
+                BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
+                baseRegisterActivity.startFormActivity("family_register","","");
+            }else {
                 FamilyRegisterActivity.startFamilyRegisterForm(context);
 
             }

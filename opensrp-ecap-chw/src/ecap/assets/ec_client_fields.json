@@ -1,6 +1,164 @@
 {
   "bindobjects": [
     {
+      "name": "mother_register",
+      "columns": [
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.opensrp_id"
+          }
+        },
+
+        {
+          "column_name": "mother_surname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_surname"
+          }
+        },
+        {
+          "column_name": "mothers_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "mothers_first_name"
+          }
+        },
+
+
+        {
+          "column_name": "ovc_date",
+          "type": "Event",
+          "json_mapping": {
+            "field": "ovc_date"
+          }
+        },
+
+
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+
+
+        {
+          "column_name": "Child",
+          "column_name":  "first_name",
+          "column_name":  "last_name",
+          "column_name":  "sex",
+          "column_name":  "birthdate",
+
+          "type": "Client",
+          "json_mapping": {
+            "field": "child",
+            "field": "first_name",
+            "field": "last_name",
+            "field": "sex",
+            "field": "birthdate"
+          }
+        },
+
+
+        {
+          "column_name": "user_select_test",
+          "column_name": "Yes_user_select_test",
+          "column_name": "No_user_select_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.user_select_test",
+            "field": "attributes.yes",
+            "field": "attributes.no"
+          }
+        },
+
+        {
+          "column_name": "user_select_hiv",
+          "column_name": "Yes_user_select_hiv",
+          "column_name": "No_user_select_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.user_select_hivV",
+            "field": "attributes.Yes",
+            "field": "attributes.No"
+          }
+        },
+
+
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+
+        {
+          "column_name": "user_select_art",
+          "column_name": "Yes_user_select_art",
+          "column_name": "No_user_select_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.user_select_art",
+            "field": "attributes.yes",
+            "field": "attributes.no"
+          }
+        },
+
+        {
+          "column_name": "user_select_enrollment",
+          "column_name": "yes_enrollment",
+          "column_name": "no_enrollment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "user_select_enrollment",
+            "field": "attributes.yes",
+            "field": "attributes.no"
+          }
+        },
+
+        {
+          "column_name": "user_select_ovc_program",
+          "column_name": "Yes_ovc_program",
+          "column_name": "No_ovc_program",
+          "type": "Client",
+          "json_mapping": {
+            "field": "user_select_ovc_program",
+            "field": "attributes.yes",
+            "field": "attributes.no"
+          }
+        },
+
+        {
+          "column_name": "village_compound",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresss.village_compound"
+          }
+        },
+
+        {
+          "column_name": "mothers_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.mothers_number"
+          }
+        },
+
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        }
+
+      ]
+    },
+    {
       "name": "ec_family",
       "columns": [
         {
