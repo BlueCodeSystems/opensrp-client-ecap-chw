@@ -32,6 +32,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
+
+
     }
 
     @Override
