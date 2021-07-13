@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.bluecodeltd.ecap.chw.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -51,14 +54,22 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
         ChwApplication.getInstance().notifyAppContextChange(); // initialize the language (bug in translation)
-        FamilyFloatingMenu familyFloatingMenu = new FamilyFloatingMenu(this
-        );
-       familyFloatingMenu.setGravity(Gravity.BOTTOM);
+        FamilyFloatingMenu familyFloatingMenu = new FamilyFloatingMenu(this);
+        familyFloatingMenu.setGravity(Gravity.BOTTOM);
         action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
         if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
             startFormActivity("initial_level_facility_form","","");
-
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean optionsMenu = super.onCreateOptionsMenu(menu);
+        MenuItem indexRegisterMenu = menu.findItem(R.id.action_register_index);
+        if (indexRegisterMenu != null) {
+            indexRegisterMenu.setVisible(false);
+        }
+        return optionsMenu;
     }
 
     @Override

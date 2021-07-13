@@ -14,11 +14,12 @@
         android:icon="@mipmap/ic_add_family"
         android:title="@string/add_family"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_register_index"
         android:enabled="true"
         android:icon="@mipmap/ic_add_family"
-        android:title="Add index"
+        android:title="@string/add_index"
         app:showAsAction="ifRoom" />
 
     <item
