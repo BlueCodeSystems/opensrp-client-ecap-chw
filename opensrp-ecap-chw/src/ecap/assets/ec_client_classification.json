@@ -300,7 +300,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "client_index",
+            "field_value": "child_index",
             "creates_case": [
               "ec_client_index"
             ]

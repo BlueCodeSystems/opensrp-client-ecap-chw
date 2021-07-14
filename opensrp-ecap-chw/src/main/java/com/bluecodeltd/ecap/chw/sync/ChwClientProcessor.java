@@ -12,6 +12,8 @@ import com.bluecodeltd.ecap.chw.dao.ChwChildDao;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import com.bluecodeltd.ecap.chw.service.ChildAlertService;
+import com.bluecodeltd.ecap.chw.util.Constants;
+
 import org.smartregister.domain.Event;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.jsonmapping.ClientClassification;
@@ -38,6 +40,9 @@ public class ChwClientProcessor extends CoreClientProcessor {
             String baseEntityID = eventClient.getEvent().getBaseEntityId();
 
             switch (eventType) {
+                case Constants.CHILD_INDEX:
+                    processEvent(eventClient.getEvent(), eventClient.getClient(), clientClassification);
+                    break;
                 case CoreConstants.EventType.REMOVE_FAMILY:
                     ChwApplication.getInstance().getScheduleRepository().deleteSchedulesByFamilyEntityID(baseEntityID);
                 case CoreConstants.EventType.REMOVE_MEMBER:
