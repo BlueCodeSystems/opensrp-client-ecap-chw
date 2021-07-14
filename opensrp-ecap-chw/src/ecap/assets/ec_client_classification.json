@@ -297,6 +297,13 @@
             "creates_case": [
               "ec_not_yet_done_referral"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "client_index",
+            "creates_case": [
+              "ec_client_index"
+            ]
           }
         ]
       }
