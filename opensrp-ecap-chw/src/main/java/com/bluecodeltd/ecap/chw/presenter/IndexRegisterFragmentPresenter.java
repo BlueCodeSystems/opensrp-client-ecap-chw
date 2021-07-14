@@ -1,11 +1,8 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
-import android.content.Context;
-
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 
 import org.smartregister.chw.core.utils.CoreConstants;
-import org.smartregister.util.Utils;
 
 public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentContract.Presenter {
 
