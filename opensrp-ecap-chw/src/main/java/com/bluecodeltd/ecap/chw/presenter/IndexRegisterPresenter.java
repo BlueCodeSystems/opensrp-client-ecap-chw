@@ -4,27 +4,33 @@ import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
+import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 
 import org.apache.commons.lang3.tuple.Triple;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import timber.log.Timber;
 
-public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, IndexRegisterContract.InteractorCallBack {
+public class IndexRegisterPresenter implements IndexRegisterContract.Presenter {
 
     private IndexRegisterContract.View view;
     private IndexRegisterContract.Model model;
     private IndexRegisterContract.Interactor interactor;
 
-    IndexRegisterActivity currentView = (IndexRegisterActivity) getView();
+    private WeakReference<IndexRegisterContract.View> activityWeakReference;
 
     public IndexRegisterPresenter(IndexRegisterContract.View view) {
         this.view = view;
+        activityWeakReference = new WeakReference<>(view);
         interactor = new IndexRegisterInteractor(this);
+        setModel(new IndexRegisterModel());
     }
 
-
+    public void setModel(IndexRegisterContract.Model model) {
+        this.model = model;
+    }
 
     @Override
     public void registerViewConfigurations(List<String> list) {
@@ -54,13 +60,13 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
             view.toggleDialogVisibility(true);
 
 
-            ChildIndexEventClient childEventClientList = model.processRegistration(jsonString);
+            ChildIndexEventClient childIndexEventClient = model.processRegistration(jsonString);
 
-            if (childEventClientList == null || childEventClientList.isEmpty()) {
+            if (childIndexEventClient == null) {
                 return;
             }
 
-            interactor.saveRegistration(childEventClientList, jsonString, isEditMode, this);
+            interactor.saveRegistration(childIndexEventClient, isEditMode);
 
         } catch (Exception e) {
             Timber.e(e);
@@ -70,28 +76,13 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
     @Override
     public void onRegistrationSaved() {
         view.toggleDialogVisibility(false);
-
     }
 
     @Override
-    public IndexRegisterContract.View getView() {
+    public IndexRegisterActivity getView() {
+        if (activityWeakReference.get() != null) {
+            return (IndexRegisterActivity) view;
+        }
         return null;
-    }
-
-    @Override
-    public void onUniqueIdFetched(Triple<String, String, String> triple, String entityId) {
-
-    }
-
-    @Override
-    public void onNoUniqueId() {
-       // Utils.showShortToast(this, "No Unique ID Found");
-        //TODO : NO Unique ID toast message
-
-    }
-
-    @Override
-    public void onRegistrationSaved(boolean isEditMode, boolean isSaved, List<ChildIndexEventClient> familyEventClientList) {
-
     }
 }
