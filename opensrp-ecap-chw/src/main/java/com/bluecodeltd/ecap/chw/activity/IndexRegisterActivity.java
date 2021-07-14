@@ -109,7 +109,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){
             String json = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
-            indexRegisterPresenter().saveForm(json);
+            indexRegisterPresenter().saveForm(json, false);
         }
     }
 
