@@ -2597,6 +2597,13 @@
       "name": "ec_client_index",
       "columns": [
         {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
           "column_name": "lastName",
           "type": "Client",
           "json_mapping": {
