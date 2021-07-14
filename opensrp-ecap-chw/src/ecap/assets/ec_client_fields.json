@@ -2604,17 +2604,17 @@
           }
         },
         {
-          "column_name": "lastName",
-          "type": "Client",
-          "json_mapping": {
-            "field": "lastName"
-          }
-        },
-        {
-          "column_name": "firstName",
+          "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
             "field": "firstName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
           }
         },
         {

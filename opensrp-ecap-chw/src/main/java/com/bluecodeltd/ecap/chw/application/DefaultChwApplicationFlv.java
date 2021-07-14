@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.application;
 
+import com.bluecodeltd.ecap.chw.util.Constants;
+
 import org.smartregister.chw.core.utils.ChildDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
@@ -254,7 +256,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.FAMILY, CoreConstants.TABLE_NAME.FAMILY_MEMBER, CoreConstants.TABLE_NAME.CHILD};
+        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER, CoreConstants.TABLE_NAME.CHILD};
     }
 
     @Override
@@ -274,6 +276,12 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.FIRST_NAME, DBConstants.KEY.MIDDLE_NAME,
                 DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
         });
+
+        map.put(Constants.EC_CLIENT_INDEX, new String[]{
+                DBConstants.KEY.BASE_ENTITY_ID,
+                DBConstants.KEY.FIRST_NAME,
+                DBConstants.KEY.LAST_NAME,
+        });
         return map;
     }
 
@@ -291,6 +299,12 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
         map.put(CoreConstants.TABLE_NAME.CHILD, new String[]{ChildDBConstants.KEY.LAST_HOME_VISIT, ChildDBConstants.KEY.VISIT_NOT_DONE, DBConstants.KEY
                 .LAST_INTERACTED_WITH, ChildDBConstants.KEY.DATE_CREATED, DBConstants.KEY.DATE_REMOVED, DBConstants.KEY.DOB, ChildDBConstants.KEY.ENTRY_POINT
+        });
+
+        map.put(Constants.EC_CLIENT_INDEX, new String[]{
+                DBConstants.KEY.BASE_ENTITY_ID,
+                DBConstants.KEY.FIRST_NAME,
+                DBConstants.KEY.LAST_NAME,
         });
         return map;
     }
