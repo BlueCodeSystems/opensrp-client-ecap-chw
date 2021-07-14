@@ -56,11 +56,10 @@
     "next": "step2",
     "fields": [
       {
-        "key": "lastName",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "lastName",
-        "entity_id": "Child",
+        "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "Child`s last name ",
         "edit_type": "name",
@@ -75,11 +74,10 @@
         }
       },
       {
-        "key": "firstName",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "firstName",
-        "entity_id": "Child",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "Child`s first name ",
         "edit_type": "name",
