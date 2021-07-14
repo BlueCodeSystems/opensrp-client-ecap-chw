@@ -58,7 +58,7 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         familyFloatingMenu.setGravity(Gravity.BOTTOM);
         action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
         if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
-            startFormActivity("initial_level_facility_form","","");
+            startFormActivity("family_register","","");
         }
     }
 
