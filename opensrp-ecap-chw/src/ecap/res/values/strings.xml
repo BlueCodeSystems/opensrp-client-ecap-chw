@@ -25,5 +25,14 @@
         <item>Child</item>
         <item>Mother</item>
     </string-array>
+    <!--Ecap Strings -->
+    <string name="all_households"> All households</string>
+    <string name="all_Vcas"> VCAs</string>
+    <string name="all_benefeciaries"> Beneficiaries</string>
+    <string name="all_indexes"> Indexes</string>
+    <string name="all_case_plans"> Case plans</string>
+    <string name="return_to_household">Return to household</string>
+    <string name="add_index">Add Index</string>
+    <string name="saving_index">Saving Index Person</string>
 
 </resources>
