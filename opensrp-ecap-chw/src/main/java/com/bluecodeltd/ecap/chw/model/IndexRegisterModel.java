@@ -35,7 +35,7 @@ public class IndexRegisterModel implements IndexRegisterContract.Model {
             JSONArray fields = JsonFormUtils.fields(formJsonObject);
             if (fields != null) {
                 FormTag formTag = getFormTag();
-                Event event = JsonFormUtils.createEvent(fields, metadata, formTag, entityId, encounterType, Constants.CHILD_INDEX);
+                Event event = JsonFormUtils.createEvent(fields, metadata, formTag, entityId, encounterType, Constants.EC_CLIENT_INDEX);
                 tagSyncMetadata(event);
                 Client client = JsonFormUtils.createBaseClient(fields, formTag, entityId );
                 return new ChildIndexEventClient(event, client);

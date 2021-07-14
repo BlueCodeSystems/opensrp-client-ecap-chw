@@ -10,13 +10,13 @@ import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.repository.AllSharedPreferences;
-import org.smartregister.repository.BaseRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.JsonFormUtils;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -28,6 +28,7 @@ public class IndexRegisterInteractor implements IndexRegisterContract.Interactor
 
     public IndexRegisterInteractor(IndexRegisterContract.Presenter presenter) {
         this.presenter = presenter;
+        this.appExecutors = new AppExecutors();
     }
 
     @Override
@@ -54,20 +55,15 @@ public class IndexRegisterInteractor implements IndexRegisterContract.Interactor
                     }
 
                     JSONObject eventJsonObject = new JSONObject(JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject, BaseRepository.TYPE_Unsynced);
-
-                    org.smartregister.domain.Event domainEvent = JsonFormUtils.gson.fromJson(eventJsonObject.toString(),
-                            org.smartregister.domain.Event.class);
-                    org.smartregister.domain.Client domainClient = JsonFormUtils.gson.fromJson(eventJsonObject.toString(),
-                            org.smartregister.domain.Client.class);
-
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
 
                     Long lastUpdatedAtDate = allSharedPreferences().fetchLastUpdatedAtDate(0);
                     Date currentSyncDate = new Date(lastUpdatedAtDate);
-                    getClientProcessorForJava().processClient(Collections.singletonList(
-                            new EventClient(domainEvent, domainClient)));
-                    allSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    allSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
                 } catch (Exception e) {
                     Timber.e(e);
                 }
