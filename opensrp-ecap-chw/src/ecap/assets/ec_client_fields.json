@@ -1,6 +1,253 @@
 {
   "bindobjects": [
     {
+      "name": "ec_client_index",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "birth_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdate"
+          }
+        },
+        {
+          "column_name": "index_check_box",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "index_check_box"
+          }
+        },
+        {
+          "column_name": "date_referred",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_referred"
+          }
+        },
+        {
+          "column_name": "date_offered_enrollment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_offered_enrollment"
+          }
+        },
+        {
+          "column_name": "acceptance",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "acceptance"
+          }
+        },
+        {
+          "column_name": "date_enrolled",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_enrolled"
+          }
+        },
+        {
+          "column_name": "date_hiv_known",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_hiv_known"
+          }
+        },
+        {
+          "column_name": "art_check_box",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "art_check_box"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "art_number"
+          }
+        },
+        {
+          "column_name": "date_started_art",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_started_art"
+          }
+        },
+        {
+          "column_name": "vl_check_box",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_check_box"
+          }
+        },
+        {
+          "column_name": "date_last_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_last_vl"
+          }
+        },
+        {
+          "column_name": "vl_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_result"
+          }
+        },
+        {
+          "column_name": "vl_suppressed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_suppressed"
+          }
+        },
+        {
+          "column_name": "next_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "next_vl"
+          }
+        },
+        {
+          "column_name": "vl_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "next_vl"
+          }
+        },
+        {
+          "column_name": "child_mmd",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "child_mmd"
+          }
+        },
+        {
+          "column_name": "level_mmd",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "level_mmd"
+          }
+        },
+        {
+          "column_name": "caregiver_FirstName",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_FirstName"
+          }
+        },
+        {
+          "column_name": "caregiver_LastName",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_LastName"
+          }
+        },
+        {
+          "column_name": "caregiver_sex",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.caregiver_sex"
+          }
+        },
+        {
+          "column_name": "caregiver_birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_birthdate"
+          }
+        },
+        {
+          "column_name": "caregiver_hiv_status",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.caregiver_hiv_status"
+          }
+        },
+        {
+          "column_name": "relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relation"
+          }
+        },
+        {
+          "column_name": "residence",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.residence"
+          }
+        },
+        {
+          "column_name": "phone_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.phone_number"
+          }
+        },
+        {
+          "column_name": "entity_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "entityType"
+          }
+        },
+        {
+          "column_name": "event_date",
+          "type": "Event",
+          "json_mapping": {
+            "field": "eventDate",
+            "event_type": "child_index"
+          }
+        }
+      ]
+    },
+    {
       "name": "mother_register",
       "columns": [
         {
@@ -2589,221 +2836,6 @@
           "json_mapping": {
             "field": "obs.formSubmissionField",
             "concept": "notification_dismissal_date"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ec_client_index",
-      "columns": [
-        {
-          "column_name": "base_entity_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "baseEntityId"
-          }
-        },
-        {
-          "column_name": "first_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "firstName"
-          }
-        },
-        {
-          "column_name": "last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "lastName"
-          }
-        },
-        {
-          "column_name": "sex",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.sex"
-          }
-        },
-        {
-          "column_name": "birthdate",
-          "type": "Client",
-          "json_mapping": {
-            "field": "birthdate"
-          }
-        },
-        {
-          "column_name": "index_check_box",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.index_check_box"
-          }
-        },
-        {
-          "column_name": "date_referred",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.date_referred"
-          }
-        },
-        {
-          "column_name": "date_offered_enrollment",
-          "type": "Event",
-          "json_mapping": {
-            "field": "date_offered_enrollment"
-          }
-        },
-        {
-          "column_name": "acceptance",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.acceptance"
-          }
-        },
-        {
-          "column_name": "date_enrolled",
-          "type": "Event",
-          "json_mapping": {
-            "field": "date_enrolled"
-          }
-        },
-        {
-          "column_name": "date_hiv_known",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.date_hiv_known"
-          }
-        },
-        {
-          "column_name": "art_check_box",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.art_check_box"
-          }
-        },
-        {
-          "column_name": "art_number",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.art_number"
-          }
-        },
-        {
-          "column_name": "date_started_art",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.date_started_art"
-          }
-        },
-        {
-          "column_name": "vl_check_box",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attribute.vl_check_box"
-          }
-        },
-        {
-          "column_name": "date_last_vl",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.date_last_vl"
-          }
-        },
-        {
-          "column_name": "vl_result",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.vl_result"
-          }
-        },
-        {
-          "column_name": "vl_suppressed",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.vl_suppressed"
-          }
-        },
-        {
-          "column_name": "next_vl",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.next_vl"
-          }
-        },
-        {
-          "column_name": "vl_result",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.vl_result"
-          }
-        },
-        {
-          "column_name": "child_mmd",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.child_mmd"
-          }
-        },
-        {
-          "column_name": "level_mmd",
-          "type": "Event",
-          "json_mapping": {
-            "field": "level_mmd"
-          }
-        },
-        {
-          "column_name": "caregiverFirstName",
-          "type": "Client",
-          "json_mapping": {
-            "field": "caregiverFirstName"
-          }
-        },
-        {
-          "column_name": "caregiverLastName",
-          "type": "Client",
-          "json_mapping": {
-            "field": "caregiverLastName"
-          }
-        },
-        {
-          "column_name": "sex",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.sex"
-          }
-        },
-        {
-          "column_name": "birthdate",
-          "type": "Client",
-          "json_mapping": {
-            "field": "birthdate"
-          }
-        },
-        {
-          "column_name": "hiv_status",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.hiv_status"
-          }
-        },
-        {
-          "column_name": "relation",
-          "type": "Client",
-          "json_mapping": {
-            "field": "relation"
-          }
-        },
-        {
-          "column_name": "residence",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.residence"
-          }
-        },
-        {
-          "column_name": "phone_number",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.phone_number"
           }
         }
       ]
