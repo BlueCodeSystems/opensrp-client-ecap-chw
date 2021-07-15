@@ -69,6 +69,9 @@ public class ChwClientProcessor extends CoreClientProcessor {
         if (eventClient != null && eventClient.getEvent() != null) {
             String baseEntityID = eventClient.getEvent().getBaseEntityId();
             switch (eventType) {
+                case Constants.CHILD_INDEX:
+                    processEvent(eventClient.getEvent(), eventClient.getClient(), clientClassification);
+                    break;
                 case CoreConstants.EventType.CHILD_HOME_VISIT:
                 case CoreConstants.EventType.CHILD_VISIT_NOT_DONE:
                 case CoreConstants.EventType.CHILD_REGISTRATION:
