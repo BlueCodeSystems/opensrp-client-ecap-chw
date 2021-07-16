@@ -56,7 +56,7 @@
     "next": "step2",
     "fields": [
       {
-        "key": "firstName",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "firstName",
@@ -74,7 +74,7 @@
         }
       },
       {
-        "key": "lastName",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "lastName",
@@ -329,10 +329,10 @@
         }
       },
       {
-        "key": "vc_check_box",
+        "key": "vl_check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vc_check_box",
+        "openmrs_entity_id": "vl_check_box",
         "type": "native_radio",
         "label": "Is child eligible for VL test?",
         "label_text_style": "bold",
@@ -379,7 +379,7 @@
         "key": "vl_last_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_result",
+        "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
         "hint": "Last VL results",
         "v_required": {
@@ -508,10 +508,10 @@
     "title": "Details of Caregiver (Parent/Guardian)",
     "fields": [
       {
-        "key": "caregiverFirstName",
+        "key": "caregiver_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiverFirstName",
+        "openmrs_entity_id": "caregiver_first_name",
         "entity_id": "mother",
         "type": "edit_text",
         "hint": "Caregiver first name ",
@@ -527,11 +527,12 @@
         }
       },
       {
-        "key": "caregiverLastName",
+        "key": "caregiver_last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiverLastName",
+        "openmrs_entity_id": "caregiver_last_name",
         "type": "edit_text",
+        "entity_id": "mother",
         "hint": "Caregiver last name",
         "edit_type": "name",
         "look_up": "true",
@@ -545,11 +546,12 @@
         }
       },
       {
-        "key": "caregiverSex",
+        "key": "caregiver_sex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiverSex",
+        "openmrs_entity_id": "caregiver_sex",
         "type": "spinner",
+        "entity_id": "mother",
         "hint": "Sex",
         "values": [
           "Male",
@@ -561,11 +563,12 @@
         }
       },
       {
-        "key": "caregiverBirthdate",
+        "key": "caregiver_birth_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiverBirthdate",
+        "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
+        "entity_id": "mother",
         "hint": "Caregiver`s D.O.B",
         "expanded": false,
         "duration": {
@@ -584,6 +587,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "spinner",
+        "entity_id": "mother",
         "hint": "HIV Status",
         "values": [
           "HIV+",
@@ -601,6 +605,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relation",
         "type": "spinner",
+        "entity_id": "mother",
         "hint": "Relationship to Child",
         "values": [
           "Parent",
@@ -618,6 +623,7 @@
         "openmrs_entity_id": "residence",
         "openmrs_data_type": "text",
         "type": "edit_text",
+        "entity_id": "mother",
         "hint": "Village/Compound",
         "tree": [
         ],
@@ -632,6 +638,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "phone_number",
         "type": "edit_text",
+        "entity_id": "mother",
         "hint": "Caregivers phone number",
         "v_numeric": {
           "value": false,
