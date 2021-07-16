@@ -1,5 +1,5 @@
 {
-  "count": "8",
+  "count": "3",
   "encounter_type": "child_index",
   "entity_id": "",
   "relational_id": "",
@@ -51,38 +51,15 @@
       "value": ""
     }
   },
-
   "step1": {
     "title": "Child’s Details",
     "next": "step2",
     "fields": [
-
       {
-        "key": "last_name",
+        "key": "firstName",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "entity_id": "Child",
-        "type": "edit_text",
-        "hint": "Child`s last name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter childs last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "entity_id": "Child",
+        "openmrs_entity_id": "firstName",
         "type": "edit_text",
         "hint": "Child`s first name ",
         "edit_type": "name",
@@ -96,8 +73,24 @@
           "err": "Please enter a valid name"
         }
       },
-
-
+      {
+        "key": "lastName",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "lastName",
+        "type": "edit_text",
+        "hint": "Child`s last name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter childs last name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
       {
         "key": "gender",
         "openmrs_entity_parent": "",
@@ -114,12 +107,11 @@
           "err": "Please select gender"
         }
       },
-
       {
-        "key": "birth_date",
+        "key": "birthdate",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "birth_date",
+        "openmrs_entity_id": "birthdate",
         "type": "date_picker",
         "hint": "Child's DOB",
         "label_info_title": "Child's Date of Birth",
@@ -143,7 +135,6 @@
         "label": "Was child identified through Index?",
         "label_text_style": "bold",
         "text_color": "#000000",
-
         "exclusive": [
           "Yes"
         ],
@@ -152,37 +143,24 @@
             "key": "yes",
             "text": "Yes",
             "value": false
-
           },
-
-
-
           {
-            "key":"no",
+            "key": "no",
             "text": "No",
             "value": false
-
-
           }
-
         ],
         "v_required": {
           "value": false,
           "err": "You`re required check the index box"
         }
       }
-
-
-
     ]
   },
-
-
   "step2": {
     "title": "Enrolment on OVC program",
     "next": "step3",
     "fields": [
-
       {
         "key": "date_referred",
         "openmrs_entity_parent": "",
@@ -202,8 +180,6 @@
           "err": "Please enter date Referred"
         }
       },
-
-
       {
         "key": "date_offered_enrollment",
         "openmrs_entity_parent": "",
@@ -223,8 +199,6 @@
           "err": "Please enter date Referred"
         }
       },
-
-
       {
         "key": "acceptance",
         "openmrs_entity_parent": "",
@@ -234,7 +208,6 @@
         "label": "Do you accept the offer of the enrollment? ",
         "label_text_style": "bold",
         "text_color": "#000000",
-
         "exclusive": [
           "Yes"
         ],
@@ -246,31 +219,23 @@
             "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "Yes"
           },
-
-
-
           {
-            "key":"no",
+            "key": "no",
             "text": "No",
             "value": false,
             "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "No"
-
-
           }
-
         ],
         "v_required": {
           "value": false,
           "err": "You`re required check the enrollment offer"
         }
       },
-
-
       {
         "key": "date_enrolled",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "date_enrolled",
         "type": "date_picker",
         "hint": "Date Enrolled ",
@@ -285,54 +250,28 @@
           "value": false,
           "err": "Please enter date you were enrolled"
         }
-      }
-
-    ]
-  },
-
-
-
-  "step3": {
-    "title": "Year when HIV status known",
-    "next": "step4",
-    "fields": [
-
-
+      },
       {
         "key": "date_hiv_known",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_hiv_known",
-        "type": "date_picker",
+        "type": "edit_text",
         "hint": "Date HIV was known",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "child_initial_form_calculation.yml"
-            }
-          }
+        "v_required": {
+          "value": false,
+          "err": "Please enter year"
         }
-      }
-    ]
-  },
-
-
-  "step4": {
-    "title": "ART status details",
-    "next": "step5",
-    "fields": [
-
-
+      },
       {
         "key": "art_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_check_box",
         "type": "native_radio",
         "label": "Is the child currently on ART?",
         "label_text_style": "bold",
         "text_color": "#000000",
-
         "exclusive": [
           "Yes"
         ],
@@ -341,28 +280,22 @@
             "key": "yes",
             "text": "Yes",
             "value": false
-
           },
-
           {
-            "key":"no",
+            "key": "no",
             "text": "No",
             "value": false
-
-
           }
-
         ],
         "v_required": {
           "value": false,
           "err": "You`re required check the ART number check box"
         }
       },
-
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
@@ -376,7 +309,6 @@
           "err": "ART cannot be empty"
         }
       },
-
       {
         "key": "date_started_art",
         "openmrs_entity_parent": "",
@@ -395,28 +327,16 @@
           "value": false,
           "err": "Please enter date Referred"
         }
-      }
-
-
-    ]
-  },
-
-  "step5": {
-    "title": "Details of Child's Viral Load",
-    "next": "step6",
-    "fields": [
-
-
+      },
       {
         "key": "vc_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vc_check_box",
         "type": "native_radio",
         "label": "Is child eligible for VL test?",
         "label_text_style": "bold",
         "text_color": "#000000",
-
         "exclusive": [
           "Yes"
         ],
@@ -425,24 +345,18 @@
             "key": "Yes",
             "text": "Yes",
             "value": false
-
           },
-
           {
-            "key":"No",
+            "key": "No",
             "text": "No",
             "value": false
-
           }
-
         ],
         "v_required": {
           "value": false,
           "err": "You're required to keep VL test check box checked"
         }
       },
-
-
       {
         "key": "date_last_vl",
         "openmrs_entity_parent": "",
@@ -450,46 +364,42 @@
         "openmrs_entity_id": "date_last_vl",
         "type": "date_picker",
         "hint": "Date of last VL test",
-
         "expanded": false,
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": false,
           "err": "Please enter date Referred"
         }
       },
-
       {
-        "key": "vl_result",
+        "key": "vl_last_result",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_result",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Last VL results",
-        "values": [
-          "Less than 1000 copies/ml",
-          "Greater than 1000 copies/ml"
-        ],
         "v_required": {
           "value": false,
           "err": "Enter VL last results"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Last VL results must be an integer"
         }
       },
-
       {
         "key": "vl_suppressed",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_suppressed",
         "type": "native_radio",
         "label": "Is child VL suppressed? (less than 1000 copies/ml)",
         "label_text_style": "bold",
         "text_color": "#000000",
-
         "exclusive": [
           "Yes"
         ],
@@ -498,86 +408,61 @@
             "key": "yes",
             "text": "Yes",
             "value": false
-
           },
-
           {
-            "key":"no",
+            "key": "no",
             "text": "No",
             "value": false
           }
-
         ],
         "v_required": {
           "value": false,
           "err": "Tick `Yes` if child was indexed or `No` to mean child was`nt indexed "
         }
-      }
-    ]
-  },
-
-  "step6": {
-    "title": "Date of next VL test ",
-    "next": "step7",
-    "fields": [
-
-
-
+      },
       {
-        "key": "next_vl",
+        "key": "date_next_vl",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "next_vl",
+        "openmrs_entity_id": "date_next_vl",
         "type": "date_picker",
-        "hint": "Next VL test",
-
+        "hint": "Date of next VL test",
         "expanded": false,
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
-        "max_date": "today",
+        "min_date": "today",
+        "max_date": "today + 100y",
         "v_required": {
           "value": false,
-          "err": "Please enter the date for the next VL test"
+          "err": "Please enter date of next viral load"
         }
       },
-
       {
-        "key": "vl_result",
+        "key": "vl_next_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "vl_result",
-        "type": "spinner",
-        "hint": "Last VL results",
-        "values": [
-          "Less than 1000 copies/ml",
-          "Greater than 1000 copies/ml"
-        ],
+        "openmrs_entity_id": "vl_next_result",
+        "type": "edit_text",
+        "hint": "VL next results",
         "v_required": {
           "value": false,
-          "err": "Enter VL last results"
+          "err": "Enter VL next results"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Last VL results must be an integer"
         }
-      }
-    ]
-  },
-
-  "step7": {
-    "title": "Multi-Month Dispensing (MMD) ",
-    "next": "step8",
-    "fields": [
-
-
+      },
       {
         "key": "child_mmd",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
         "label": "Is the child on MMD?",
         "label_text_style": "bold",
         "text_color": "#000000",
-
         "exclusive": [
           "Yes"
         ],
@@ -586,32 +471,24 @@
             "key": "yes",
             "text": "Yes",
             "value": false
-
-
           },
-
           {
-            "key":"no",
+            "key": "no",
             "text": "No",
             "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "No",
             "label_info_title": "Child on MMD",
             "label_info_text": "Check to mean `No` for MMD"
           }
-
         ],
         "v_required": {
           "value": false,
           "err": "You`re required to check the box"
         }
       },
-
-
       {
         "key": "level_mmd",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "spinner",
         "hint": "Level of MMD for child ",
@@ -619,29 +496,22 @@
           "Less than 3 month",
           "Between 3-5 months",
           "6 months or more"
-
         ],
         "v_required": {
           "value": false,
           "err": "Select level of MMD for child"
         }
       }
-
-
     ]
   },
-
-  "step8": {
+  "step3": {
     "title": "Details of Caregiver (Parent/Guardian)",
-
     "fields": [
-
-
       {
         "key": "caregiverFirstName",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_FirstName",
+        "openmrs_entity_id": "caregiverFirstName",
         "entity_id": "mother",
         "type": "edit_text",
         "hint": "Caregiver first name ",
@@ -656,13 +526,11 @@
           "err": "Please enter a valid name"
         }
       },
-
-
       {
         "key": "caregiverLastName",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_LastName",
+        "openmrs_entity_id": "caregiverLastName",
         "type": "edit_text",
         "hint": "Caregiver last name",
         "edit_type": "name",
@@ -676,14 +544,13 @@
           "err": "Please enter a valid name"
         }
       },
-
       {
-        "key": "sex",
+        "key": "caregiverSex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_sex",
+        "openmrs_entity_id": "caregiverSex",
         "type": "spinner",
-        "hint": "Gender",
+        "hint": "Sex",
         "values": [
           "Male",
           "Female"
@@ -693,18 +560,16 @@
           "err": "Please select gender"
         }
       },
-
       {
-        "key": "birthdate",
+        "key": "caregiverBirthdate",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_birthdate",
+        "openmrs_entity_id": "caregiverBirthdate",
         "type": "date_picker",
         "hint": "Caregiver`s D.O.B",
-
         "expanded": false,
         "duration": {
-          "label": "Date"
+          "label": "Age"
         },
         "min_date": "today-100y",
         "max_date": "today",
@@ -713,27 +578,23 @@
           "err": "Enter caregivers date of birth"
         }
       },
-
       {
-        "key": "hiv_status",
+        "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "spinner",
-        "hint": "HIV Status  ",
+        "hint": "HIV Status",
         "values": [
           "HIV+",
           "HIV-",
           "Unknown"
-
         ],
         "v_required": {
           "value": false,
           "err": "Select HIV status"
         }
       },
-
-
       {
         "key": "relation",
         "openmrs_entity_parent": "",
@@ -750,9 +611,6 @@
           "err": "Select "
         }
       },
-
-
-
       {
         "key": "residence",
         "openmrs_entity_parent": "",
@@ -760,17 +618,14 @@
         "openmrs_entity_id": "residence",
         "openmrs_data_type": "text",
         "type": "edit_text",
-        "hint": "Caregiver residence",
+        "hint": "Village/Compound",
         "tree": [
-
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Please enter the caregivers residential area"
         }
       },
-
-
       {
         "key": "phone_number",
         "openmrs_entity_parent": "",
