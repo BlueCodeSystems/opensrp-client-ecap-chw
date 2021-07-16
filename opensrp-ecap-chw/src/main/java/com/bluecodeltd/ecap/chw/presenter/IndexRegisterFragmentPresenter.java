@@ -2,8 +2,6 @@ package com.bluecodeltd.ecap.chw.presenter;
 
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 
-import org.smartregister.chw.core.utils.CoreConstants;
-
 public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentContract.Presenter {
 
     private IndexRegisterFragmentContract.View view;
