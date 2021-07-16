@@ -29,7 +29,6 @@ import timber.log.Timber;
 
 public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
 
-
     public static void startFamilyRegisterForm(Activity activity) {
         Intent intent = new Intent(activity, FamilyRegisterActivity.class);
         intent.putExtra(Constants.ACTIVITY_PAYLOAD.ACTION, CoreConstants.ACTION.START_REGISTRATION);
@@ -67,7 +66,7 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         boolean optionsMenu = super.onCreateOptionsMenu(menu);
         MenuItem indexRegisterMenu = menu.findItem(R.id.action_register_index);
         if (indexRegisterMenu != null && indexRegisterMenu.isVisible()) {
-            indexRegisterMenu.setVisible(false);
+            menu.removeItem(R.id.action_register_index);
         }
         return optionsMenu;
     }

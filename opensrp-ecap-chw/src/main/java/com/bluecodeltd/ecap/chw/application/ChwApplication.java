@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.application;
 
+import static org.koin.core.context.GlobalContext.getOrNull;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,9 +11,31 @@ import android.os.Build;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity;
+import com.bluecodeltd.ecap.chw.BuildConfig;
+import com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
+import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.FpRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.LoginActivity;
+import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
+import com.bluecodeltd.ecap.chw.configs.AllClientsRegisterRowOptions;
+import com.bluecodeltd.ecap.chw.custom_view.NavigationMenuFlv;
+import com.bluecodeltd.ecap.chw.job.BasePncCloseJob;
+import com.bluecodeltd.ecap.chw.job.ChwJobCreator;
+import com.bluecodeltd.ecap.chw.job.ScheduleJob;
+import com.bluecodeltd.ecap.chw.model.NavigationModelFlv;
+import com.bluecodeltd.ecap.chw.repository.ChwRepository;
+import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
+import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
+import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
+import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
+import com.bluecodeltd.ecap.chw.util.FileUtils;
+import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
+import com.bluecodeltd.ecap.chw.util.Utils;
 import com.evernote.android.job.JobManager;
 import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.domain.Form;
@@ -26,42 +50,19 @@ import org.smartregister.AllConstants;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
 import org.smartregister.P2POptions;
-import com.bluecodeltd.ecap.chw.BuildConfig;
-import com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
-import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.FpRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.LoginActivity;
-import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
-import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
 import org.smartregister.chw.anc.AncLibrary;
 import org.smartregister.chw.anc.domain.Visit;
-import com.bluecodeltd.ecap.chw.configs.AllClientsRegisterRowOptions;
 import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.provider.CoreAllClientsRegisterQueryProvider;
 import org.smartregister.chw.core.service.CoreAuthorizationService;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.FormUtils;
-import com.bluecodeltd.ecap.chw.custom_view.NavigationMenuFlv;
 import org.smartregister.chw.fp.FpLibrary;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
-import com.bluecodeltd.ecap.chw.job.BasePncCloseJob;
-import com.bluecodeltd.ecap.chw.job.ChwJobCreator;
-import com.bluecodeltd.ecap.chw.job.ScheduleJob;
 import org.smartregister.chw.malaria.MalariaLibrary;
-import com.bluecodeltd.ecap.chw.model.NavigationModelFlv;
 import org.smartregister.chw.pnc.PncLibrary;
 import org.smartregister.chw.referral.ReferralLibrary;
-import com.bluecodeltd.ecap.chw.repository.ChwRepository;
-import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
-import com.bluecodeltd.ecap.chw.service.ChildAlertService;
-import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
-import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
-import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
-import com.bluecodeltd.ecap.chw.util.FileUtils;
-import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
-import com.bluecodeltd.ecap.chw.util.Utils;
 import org.smartregister.commonregistry.CommonFtsObject;
 import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.configurableviews.helper.JsonSpecHelper;
@@ -91,10 +92,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-//import io.ona.kujaku.KujakuLibrary;
 import timber.log.Timber;
-
-import static org.koin.core.context.GlobalContext.getOrNull;
 
 public class ChwApplication extends CoreChwApplication implements SyncStatusBroadcastReceiver.SyncStatusListener, P2pProcessingStatusBroadcastReceiver.StatusUpdate {
 
@@ -398,7 +396,6 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
             ChwScheduleTaskExecutor.getInstance().execute(visit.getBaseEntityId(), visit.getVisitType(), visit.getDate());
 
-            ChildAlertService.updateAlerts(visit.getBaseEntityId());
         }
     }
 
@@ -612,6 +609,8 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         Map<String, String[]> getFTSSearchMap();
 
         Map<String, String[]> getFTSSortMap();
+
+        ChwApplication chwAppInstance();
     }
 
 }

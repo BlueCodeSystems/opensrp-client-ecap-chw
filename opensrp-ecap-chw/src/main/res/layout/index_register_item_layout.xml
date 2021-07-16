@@ -4,27 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.vijay.jsonwizard.views.CustomTextView
         android:id="@+id/familyNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Johnte Family"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.vijay.jsonwizard.views.CustomTextView
         android:id="@+id/villageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:text="Morty Funa"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
-        android:text="Kalabo"
-        android:textSize="20sp"
+        android:textSize="@dimen/px_14_to_sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/familyNameTextView" />

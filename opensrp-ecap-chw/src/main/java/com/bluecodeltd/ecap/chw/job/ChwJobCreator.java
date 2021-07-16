@@ -52,9 +52,6 @@ public class ChwJobCreator implements JobCreator {
                 return new SyncLocationsByLevelAndTagsServiceJob();
             case DocumentConfigurationServiceJob.TAG:
                 return new DocumentConfigurationServiceJob(DocumentConfigurationIntentService.class);
-            //TODO uncomment to enable plans
-            /*case PlanIntentServiceJob.TAG:
-                return new PlanIntentServiceJob();*/
             default:
                 Timber.d("Looks like you tried to create a job " + tag + " that is not declared in the Chw Job Creator");
                 return null;
