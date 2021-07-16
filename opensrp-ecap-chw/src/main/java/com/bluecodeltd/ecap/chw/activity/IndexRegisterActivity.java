@@ -45,7 +45,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         boolean optionsMenu = super.onCreateOptionsMenu(menu);
         MenuItem familyRegisterMenu = menu.findItem(R.id.action_register);
         if (familyRegisterMenu != null && familyRegisterMenu.isVisible()) {
-            familyRegisterMenu.setVisible(false);
+           menu.removeItem(R.id.action_register);
         }
         return optionsMenu;
     }

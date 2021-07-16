@@ -36,9 +36,10 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     @Override
     public void getView(Cursor cursor, SmartRegisterClient smartRegisterClient, IndexRegisterViewHolder indexRegisterViewHolder) {
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
-        String family = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
-        String village = Utils.getValue(personObjectClient.getColumnmaps(), "landmark", true);;
-        indexRegisterViewHolder.setupViews(family, village);
+        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
+        String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
+        String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
+        indexRegisterViewHolder.setupViews(firstName + lastName, residence);
     }
 
     @Override

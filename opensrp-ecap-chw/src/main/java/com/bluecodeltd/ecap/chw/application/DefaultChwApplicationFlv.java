@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.application;
 
 import com.bluecodeltd.ecap.chw.util.Constants;
 
+import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.utils.ChildDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
@@ -308,5 +309,10 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
     @Override
     public boolean showsPhysicallyDisabledView() {
         return true;
+    }
+
+    @Override
+    public ChwApplication chwAppInstance() {
+        return (ChwApplication) CoreChwApplication.getInstance();
     }
 }

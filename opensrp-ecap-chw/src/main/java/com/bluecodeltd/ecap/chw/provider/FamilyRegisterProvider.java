@@ -151,18 +151,18 @@ public class FamilyRegisterProvider extends CoreRegisterProvider {
         @Override
         protected Void doInBackground(Void... params) {
             list = getChildren(familyBaseEntityId);
-
-            if (ChwApplication.getApplicationFlavor().hasANC())
-                ancWomanCount = getAncWomenCount(familyBaseEntityId);
-
-            if (ChwApplication.getApplicationFlavor().hasPNC())
-                pncWomanCount = getPncWomenCount(familyBaseEntityId);
-
-            if (ChwApplication.getApplicationFlavor().hasMalaria())
-                malariaCount = MalariaDao.getMalariaFamilyMembersCount(familyBaseEntityId);
-
-            if (ChwApplication.getApplicationFlavor().hasFamilyPlanning())
-                fpCount = FpDao.getFpWomenCount(familyBaseEntityId) != null ? FpDao.getFpWomenCount(familyBaseEntityId) : 0;
+//
+//            if (ChwApplication.getApplicationFlavor().hasANC())
+//                ancWomanCount = getAncWomenCount(familyBaseEntityId);
+//
+//            if (ChwApplication.getApplicationFlavor().hasPNC())
+//                pncWomanCount = getPncWomenCount(familyBaseEntityId);
+//
+//            if (ChwApplication.getApplicationFlavor().hasMalaria())
+//                malariaCount = MalariaDao.getMalariaFamilyMembersCount(familyBaseEntityId);
+//
+//            if (ChwApplication.getApplicationFlavor().hasFamilyPlanning())
+//                fpCount = FpDao.getFpWomenCount(familyBaseEntityId) != null ? FpDao.getFpWomenCount(familyBaseEntityId) : 0;
 
             services = getFamilyDueState(familyBaseEntityId);
             return null;

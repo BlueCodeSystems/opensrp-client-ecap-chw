@@ -261,7 +261,6 @@
         <service android:name="org.smartregister.sync.intent.DocumentConfigurationIntentService" />
         <service android:name="org.smartregister.sync.intent.ValidateIntentService" />
         <service android:name="org.smartregister.service.ImageUploadSyncService" />
-        <service android:name="com.bluecodeltd.ecap.chw.service.SchedulesIntentService" />
         <service android:name="com.bluecodeltd.ecap.chw.sync.ChwSyncIntentService" />
 
         <uses-library
