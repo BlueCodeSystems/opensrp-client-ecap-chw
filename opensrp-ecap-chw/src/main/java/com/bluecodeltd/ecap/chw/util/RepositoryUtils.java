@@ -1,8 +1,9 @@
 package com.bluecodeltd.ecap.chw.util;
 
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+
 import net.sqlcipher.database.SQLiteDatabase;
 
-import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.util.DatabaseMigrationUtils;
@@ -43,11 +44,9 @@ public interface RepositoryUtils {
             List<String> columns = new ArrayList<>();
             columns.add(CoreConstants.DB_CONSTANTS.DETAILS);
             columns.add(DBConstants.KEY.ENTITY_TYPE);
-            DatabaseMigrationUtils.addFieldsToFTSTable(db, CoreChwApplication.createCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY, columns);
+            DatabaseMigrationUtils.addFieldsToFTSTable(db, ChwApplication.getApplicationFlavor().chwAppInstance().getCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY, columns);
 
         } catch (Exception e) {
             Timber.e(e, "commonUpgrade -> Failed to add column 'entity_type' and 'details' to ec_family_search ");
-        }
-    }
-
+        }   }
 }

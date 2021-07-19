@@ -2,11 +2,12 @@ package com.bluecodeltd.ecap.chw.repository;
 
 import android.content.Context;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.smartregister.AllConstants;
-import com.bluecodeltd.ecap.chw.BuildConfig;
-import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.repository.CoreChwRepository;
 
 import timber.log.Timber;
@@ -15,7 +16,7 @@ public class ChwRepository extends CoreChwRepository {
     private Context context;
 
     public ChwRepository(Context context, org.smartregister.Context openSRPContext) {
-        super(context, AllConstants.DATABASE_NAME, BuildConfig.DATABASE_VERSION, openSRPContext.session(), CoreChwApplication.createCommonFtsObject(), openSRPContext.sharedRepositoriesArray());
+        super(context, AllConstants.DATABASE_NAME, BuildConfig.DATABASE_VERSION, openSRPContext.session(), ChwApplication.getApplicationFlavor().chwAppInstance().getCommonFtsObject(), openSRPContext.sharedRepositoriesArray());
         this.context = context;
     }
 
