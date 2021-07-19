@@ -304,6 +304,13 @@
             "creates_case": [
               "ec_client_index"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "mother_index",
+            "creates_case": [
+              "ec_mother_index"
+            ]
           }
         ]
       }
