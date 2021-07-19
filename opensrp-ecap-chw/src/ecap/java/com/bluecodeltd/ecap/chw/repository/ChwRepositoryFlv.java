@@ -219,13 +219,13 @@ public class ChwRepositoryFlv {
             // add missing columns
             List<String> columns = new ArrayList<>();
             columns.add(ChildDBConstants.KEY.RELATIONAL_ID);
-            DatabaseMigrationUtils.addFieldsToFTSTable(db, CoreChwApplication.createCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY_MEMBER, columns);
+            DatabaseMigrationUtils.addFieldsToFTSTable(db, ChwApplication.getApplicationFlavor().chwAppInstance().getCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY_MEMBER, columns);
 
             // add missing columns
             List<String> child_columns = new ArrayList<>();
             child_columns.add(DBConstants.KEY.DOB);
             child_columns.add(DBConstants.KEY.DATE_REMOVED);
-            DatabaseMigrationUtils.addFieldsToFTSTable(db, CoreChwApplication.createCommonFtsObject(), CoreConstants.TABLE_NAME.CHILD, child_columns);
+            DatabaseMigrationUtils.addFieldsToFTSTable(db, ChwApplication.getApplicationFlavor().chwAppInstance().getCommonFtsObject(), CoreConstants.TABLE_NAME.CHILD, child_columns);
 
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion12 ");
@@ -306,7 +306,7 @@ public class ChwRepositoryFlv {
     private static void upgradeToVersion18(SQLiteDatabase db) {
         try {
             DatabaseMigrationUtils.createAddedECTables(db,
-                    new HashSet<>(Arrays.asList("ec_not_yet_done_referral", "ec_family_planning", "ec_sick_child_followup", "ec_malaria_followup_hf", "ec_pnc_danger_signs_outcome", "ec_anc_danger_signs_outcome", "ec_referral", "ec_family_planning_update")),
+                    new HashSet<>(Arrays.asList("ec_client_index", "ec_not_yet_done_referral", "ec_family_planning", "ec_sick_child_followup", "ec_malaria_followup_hf", "ec_pnc_danger_signs_outcome", "ec_anc_danger_signs_outcome", "ec_referral", "ec_family_planning_update")),
                     ChwApplication.createCommonFtsObject());
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion18");
@@ -353,7 +353,7 @@ public class ChwRepositoryFlv {
             List<String> columns = new ArrayList<>();
             columns.add(DBConstants.KEY.VILLAGE_TOWN);
             columns.add(ChwDBConstants.NEAREST_HEALTH_FACILITY);
-            DatabaseMigrationUtils.addFieldsToFTSTable(db, CoreChwApplication.createCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY, columns);
+            DatabaseMigrationUtils.addFieldsToFTSTable(db, ChwApplication.getApplicationFlavor().chwAppInstance().getCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY, columns);
 
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion22 ");

@@ -18,6 +18,86 @@
           }
         },
         {
+          "column_name": "entry_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "entry_type"
+          }
+        },
+        {
+          "column_name": "children_less_5",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "children_less_5"
+          }
+        },
+        {
+          "column_name": "males_less_5",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "males_less_5"
+          }
+        },
+        {
+          "column_name": "females_less_5",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "females_less_5"
+          }
+        },
+        {
+          "column_name": "children_10_19",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "children_10_19"
+          }
+        },
+        {
+          "column_name": "males_10_19",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "males_10_19"
+          }
+        },
+        {
+          "column_name": "females_10_19",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "females_10_19"
+          }
+        },
+        {
+          "column_name": "fam_source_income",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.income",
+            "concept": "fam_source_income"
+          }
+        },
+        {
+          "column_name": "pregnant_women",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "pregnant_women"
+          }
+        },
+        {
+          "column_name": "monthly_expenses",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.expenses",
+            "concept": "monthly_expenses"
+          }
+        },
+        {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
@@ -28,7 +108,7 @@
           "column_name": "last_name",
           "type": "Client",
           "json_mapping": {
-            "field": "lastName"
+            "field": "surname"
           }
         },
         {
@@ -39,10 +119,10 @@
           }
         },
         {
-          "column_name": "quarter_clan",
+          "column_name": "plot_no",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.commune"
+            "field": "addresses.plot_no"
           }
         },
         {
@@ -53,10 +133,10 @@
           }
         },
         {
-          "column_name": "landmark",
+          "column_name": "township",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.landmark"
+            "field": "addresses.township"
           }
         },
         {
@@ -67,13 +147,7 @@
             "concept": "163277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
           }
         },
-        {
-          "column_name": "fam_source_income",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.fam_source_income"
-          }
-        },
+
         {
           "column_name": "family_head",
           "type": "Client",
@@ -107,6 +181,14 @@
           "type": "Event",
           "json_mapping": {
             "field": "entityType"
+          }
+        },
+        {
+          "column_name": "event_date",
+          "type": "Event",
+          "json_mapping": {
+            "field": "eventDate",
+            "event_type": "Family Registration"
           }
         }
       ]

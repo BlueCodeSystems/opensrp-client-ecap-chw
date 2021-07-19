@@ -2,6 +2,7 @@
     <string name="app_name">Ecap II</string>
     <string name="login_title">USAID ECAP-II  \n ZAMBIA</string>
     <string name="nav_logo">USAID Ecap II</string>
+    <string name="add_family">Add Household</string>
     <string name="menu_anc">ANC</string>
     <string name="menu_pnc">PNC</string>
     <string name="sick_child_title">SICK CHILD FORM</string>
@@ -20,4 +21,19 @@
         <item>Household enrollment form</item>
         <item>Referral form</item>
     </string-array>
+    <string-array name="index_register_dialog_options">
+        <item>Child</item>
+        <item>Mother</item>
+    </string-array>
+    <!--Ecap Strings -->
+    <string name="all_households"> All households</string>
+    <string name="all_Vcas"> VCAs</string>F
+    <string name="all_benefeciaries"> Beneficiaries</string>
+    <string name="all_indexes"> Indexes</string>
+    <string name="all_case_plans"> Case plans</string>
+    <string name="return_to_household">Return to household</string>
+    <string name="add_index">Add Index</string>
+    <string name="saving_index">Saving Index Person</string>
+    <string name="all_index_title">All indexes</string>
+
 </resources>

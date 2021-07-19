@@ -3,6 +3,8 @@ package com.bluecodeltd.ecap.chw.application;
 import org.smartregister.chw.core.utils.ChildDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
+import com.bluecodeltd.ecap.chw.util.Constants;
+
 import org.smartregister.family.util.DBConstants;
 
 import java.util.HashMap;
@@ -108,6 +110,11 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
     }
 
     @Override
+    public String[] getFTSTables() {
+        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER};
+    }
+
+    @Override
     public Map<String, String[]> getFTSSearchMap() {
         Map<String, String[]> map = new HashMap<>();
         map.put(CoreConstants.TABLE_NAME.FAMILY, new String[]{
@@ -120,10 +127,12 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
         });
 
-        map.put(CoreConstants.TABLE_NAME.CHILD, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.FIRST_NAME, DBConstants.KEY.MIDDLE_NAME,
-                DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
+        map.put(Constants.EC_CLIENT_INDEX, new String[]{
+                DBConstants.KEY.BASE_ENTITY_ID,
+                DBConstants.KEY.FIRST_NAME,
+                DBConstants.KEY.LAST_NAME,
         });
+
         return map;
     }
 
