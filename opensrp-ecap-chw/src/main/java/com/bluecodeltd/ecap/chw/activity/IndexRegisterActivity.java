@@ -72,7 +72,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         Form form = new Form();
         try {
             if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE).equalsIgnoreCase(Constants.CHILD_INDEX)) {
+                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
+                            .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
                 form.setWizard(true);
                 form.setName(getString(R.string.child_details));
                 form.setHideSaveLabel(true);
@@ -102,7 +103,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
-                    if (Constants.CHILD_INDEX.equalsIgnoreCase(
+                    if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                         indexRegisterPresenter().saveForm(json, false);
                     }

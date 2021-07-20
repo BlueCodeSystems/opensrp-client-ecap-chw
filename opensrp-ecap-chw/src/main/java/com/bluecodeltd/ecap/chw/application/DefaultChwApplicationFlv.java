@@ -257,7 +257,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER, CoreConstants.TABLE_NAME.CHILD};
+        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EcapClientTable.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER, CoreConstants.TABLE_NAME.CHILD};
     }
 
     @Override
@@ -278,7 +278,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
         });
 
-        map.put(Constants.EC_CLIENT_INDEX, new String[]{
+        map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
                 DBConstants.KEY.BASE_ENTITY_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
@@ -298,7 +298,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 DBConstants.KEY.LAST_INTERACTED_WITH, DBConstants.KEY.DATE_REMOVED, DBConstants.KEY.RELATIONAL_ID
         });
 
-        map.put(Constants.EC_CLIENT_INDEX, new String[]{
+        map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
                 DBConstants.KEY.BASE_ENTITY_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,

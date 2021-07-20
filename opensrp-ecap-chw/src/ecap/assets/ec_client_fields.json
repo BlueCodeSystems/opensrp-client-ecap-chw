@@ -222,6 +222,13 @@
           "json_mapping": {
             "field": "attributes.phone_number"
           }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateRemoved"
+          }
         }
       ]
     },
