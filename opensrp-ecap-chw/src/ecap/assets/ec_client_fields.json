@@ -11,17 +11,17 @@
           }
         },
         {
-          "column_name": "last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "last_name"
-          }
-        },
-        {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "first_name"
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
           }
         },
         {
@@ -213,7 +213,7 @@
           "column_name": "residence",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.residence"
+            "field": "attributes.residence"
           }
         },
         {
