@@ -7,6 +7,7 @@ import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 
 import org.apache.commons.lang3.tuple.Triple;
+import org.smartregister.domain.FetchStatus;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -75,7 +76,8 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter {
 
     @Override
     public void onRegistrationSaved() {
-        view.toggleDialogVisibility(false);
+        getView().toggleDialogVisibility(false);
+        getView().refreshList(FetchStatus.fetched);
     }
 
     @Override

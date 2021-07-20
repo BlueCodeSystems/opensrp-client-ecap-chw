@@ -619,7 +619,7 @@
       {
         "key": "residence",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "residence",
         "openmrs_data_type": "text",
         "type": "edit_text",
