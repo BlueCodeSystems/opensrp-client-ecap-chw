@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Child’s Details",
+    "title": "Child's Details",
     "next": "step2",
     "fields": [
       {
