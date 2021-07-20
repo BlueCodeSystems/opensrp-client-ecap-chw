@@ -14,14 +14,14 @@
           "column_name": "last_name",
           "type": "Client",
           "json_mapping": {
-            "field": "lastName"
+            "field": "last_name"
           }
         },
         {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "firstName"
+            "field": "first_name"
           }
         },
         {
@@ -233,7 +233,7 @@
       ]
     },
     {
-      "name": "mother_register",
+      "name": "ec_mother_index",
       "columns": [
         {
           "column_name": "unique_id",
