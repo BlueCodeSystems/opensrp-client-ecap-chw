@@ -39,7 +39,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
-        indexRegisterViewHolder.setupViews(firstName + lastName, residence);
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence);
     }
 
     @Override
