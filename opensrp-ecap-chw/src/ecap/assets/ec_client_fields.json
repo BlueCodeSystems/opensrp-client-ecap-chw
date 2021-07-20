@@ -388,6 +388,41 @@
           }
         },
         {
+          "column_name": "enrollment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.enrollment_date"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.healthFacility"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.householdId"
+          }
+        },
+        {
+          "column_name": "caregiver_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attribute.caregiverId"
+          }
+        },
+        {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
@@ -402,6 +437,147 @@
           }
         },
         {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdate"
+          }
+        },
+        {
+          "column_name": "entry_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "entry_type"
+          }
+        },
+        {
+          "column_name": "caregiver_education",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_education"
+          }
+        },
+        {
+          "column_name": "caregiver_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_nrc"
+          }
+        },
+        {
+          "column_name": "children_less_5",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "children_less_5"
+          }
+        },
+        {
+          "column_name": "males_less_5",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "males_less_5"
+          }
+        },
+        {
+          "column_name": "females_less_5",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "females_less_5"
+          }
+        },
+        {
+          "column_name": "children_10_17",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "children_10_17"
+          }
+        },
+        {
+          "column_name": "males_10_17",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "males_10_17"
+          }
+        },
+        {
+          "column_name": "females_10_17",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "females_10_17"
+          }
+        },
+        {
+          "column_name": "fam_source_income",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.fam_source_income"
+          }
+        },
+        {
+          "column_name": "monthly_expenses",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.monthlyExpenses"
+          }
+        },
+        {
+          "column_name": "marital_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.marital_status"
+          }
+        },
+        {
+          "column_name": "pregnant_women",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "pregnant_women"
+          }
+        },
+        {
+          "column_name": "current_phone_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.currentPhone"
+          }
+        },
+        {
+          "column_name": "current_plot_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.currentPlot"
+          }
+        },
+        {
+          "column_name": "current_street_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.currentStreet"
+          }
+        },
+        {
+          "column_name": "current_township_compound",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.currentTownship"
+          }
+        },
+        {
           "column_name": "village_town",
           "type": "Client",
           "json_mapping": {
@@ -409,26 +585,171 @@
           }
         },
         {
-          "column_name": "landmark",
+          "column_name": "permanent_phone_number",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.landmark"
+            "field": "attributes.permanentPhone"
+          }
+        },
+        {
+          "column_name": "permanent_plot_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.permanentPlot"
+          }
+        },
+        {
+          "column_name": "permanent_street_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.permanentStreet"
+          }
+        },
+        {
+          "column_name": "permanent_township_compound",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.permanentTownship"
+          }
+        },
+        {
+          "column_name": "permanent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.permanentVillage"
+          }
+        },
+        {
+          "column_name": "permanent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.permanentVillage"
+          }
+        },
+        {
+          "column_name": "children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.children"
+          }
+        },
+        {
+          "column_name": "other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other"
+          }
+        },
+        {
+          "column_name": "emergency_contact_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.emergency_contact_name"
+          }
+        },
+        {
+          "column_name": "contact_relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.contact_relation"
+          }
+        },
+        {
+          "column_name": "contact_street_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.contact_street_name"
+          }
+        },
+        {
+          "column_name": "contact_township_compound",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.contact_township_compound"
+          }
+        },
+        {
+          "column_name": "contact_telephone_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_telephone_number"
           }
         },
         {
           "column_name": "gps",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "163277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "gps"
           }
         },
         {
-          "column_name": "nearest_facility",
+          "column_name": "immunization_group",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.immunization_group"
+          }
+        },
+        {
+          "column_name": "malaria_beds",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "162724AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "malaria_beds"
+          }
+        },
+        {
+          "column_name": "malaria_itns",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "malaria_itns"
+          }
+        },
+        {
+          "column_name": "household_member_had_malaria",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "household_member_had_malaria"
+          }
+        },
+        {
+          "column_name": "nutrition_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "nutrition_assessment"
+          }
+        },
+        {
+          "column_name": "case_worker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_name"
+          }
+        },
+        {
+          "column_name": "case_worker_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_nrc"
+          }
+        },
+        {
+          "column_name": "date_signed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_signed"
+          }
+        },
+        {
+          "column_name": "signature",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "signature"
           }
         },
         {
