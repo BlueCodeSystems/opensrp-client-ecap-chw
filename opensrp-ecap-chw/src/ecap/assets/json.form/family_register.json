@@ -73,29 +73,161 @@
         }
       },
       {
-        "key": "fam_name",
+        "key": "enrollment_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "enrollment_date",
+        "type": "date_picker",
+        "hint": "Enrollment date",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district",
+        "type": "spinner",
+        "hint": "Select district",
+        "values": [
+          "Chongwe",
+          "Monze",
+          "Kapiri",
+          "Choma",
+          "Kafue"
+        ]
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "health_facility",
+        "type": "spinner",
+        "hint": "Name of health facility",
+        "values": [
+          "UTH",
+          "Levy Mwanawasa",
+          "Chelstone Clinic"
+        ]
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "household_id",
         "type": "edit_text",
-        "hint": "{{family_register.step1.fam_name.hint}}",
-        "edit_type": "name",
+        "hint": "Household ID",
+        "edit_type": "number",
         "v_required": {
-          "value": "true",
-          "err": "{{family_register.step1.fam_name.v_required.err}}"
+          "value": false,
+          "err": "Please enter household ID"
         },
         "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step1.fam_name.v_regex.err}}"
+          "value": "[0-9]*",
+          "err": "Household ID cannot be empty"
         }
       },
       {
-        "key":"entry_type",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person_attribute",
-        "openmrs_entity_id":"entry_type",
-        "type":"spinner",
-        "hint":"Type of Entry",
+        "key": "caregiver_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "caregiver_id",
+        "type": "edit_text",
+        "hint": "Caregiver ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Caregiver ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Caregiver ID cannot be empty"
+        }
+      },
+      {
+        "key": "caregiver_first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "caregiver_first_name",
+        "entity_id": "mother",
+        "type": "edit_text",
+        "hint": "Caregiver first name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter caregiver first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caregiver_last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "caregiver_last_name",
+        "type": "edit_text",
+        "hint": "Caregiver last name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter a valid name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "gender",
+        "type": "spinner",
+        "hint": "Sex",
+        "values": [
+          "Male",
+          "Female"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select gender"
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "entity_id": "mother",
+        "hint": "Caregiver`s D.O.B",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Enter caregivers date of birth"
+        }
+      },
+      {
+        "key": "entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "entry_type",
+        "type": "spinner",
+        "hint": "Type of Entry",
         "values": [
           "Transfer from ZAMFAM",
           "Referral From Facility",
@@ -108,81 +240,128 @@
         ]
       },
       {
-        "key":"children_less_5",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"children_less_5",
-        "type":"edit_text",
-        "hint":"Number of Children < 5 in household",
-        "edit_type":"number",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
+        "key": "caregiver_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_education",
+        "type": "native_radio",
+        "label": "Caregiver’s education leve",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          },
+          {
+            "key": "highest_grade",
+            "text": "Highest grade",
+            "value": false
+          },
+          {
+            "key": "college_university",
+            "text": "College/University",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re to select the level of education"
         }
       },
       {
-        "key":"males_less_5",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"males_less_5",
-        "type":"edit_text",
-        "hint":"Number of Males < 5 in household",
-        "edit_type":"number",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
+        "key": "caregiver_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_nrc",
+        "entity_id": "Caregiver NRC",
+        "type": "edit_text",
+        "hint": "Caregiver NRC number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
+          "err": "Number must take the format of ######/##/#"
         }
       },
       {
-        "key":"females_less_5",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"females_less_5",
-        "type":"edit_text",
-        "hint":"Number of Females < 5 in household",
-        "edit_type":"number",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
+        "key": "children_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "children_less_5",
+        "type": "edit_text",
+        "hint": "Number of Children < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         }
       },
       {
-        "key":"children_10_19",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"children_10_19",
-        "type":"edit_text",
-        "hint":"Number of Children 10-19 in household",
-        "edit_type":"number",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
+        "key": "males_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_less_5",
+        "type": "edit_text",
+        "hint": "Number of Males < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         }
       },
       {
-        "key":"males_10_19",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"males_10_19",
-        "type":"edit_text",
-        "hint":"Number of Males 10-19 in household",
-        "edit_type":"number",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
+        "key": "females_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_less_5",
+        "type": "edit_text",
+        "hint": "Number of Females < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         }
       },
       {
-        "key":"females_10_19",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"females_10_19",
-        "type":"edit_text",
-        "hint":"Number of Females 10-19 in household",
-        "edit_type":"number",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
+        "key": "children_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "children_10_17",
+        "type": "edit_text",
+        "hint": "Number of Children 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "males_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_10_17",
+        "type": "edit_text",
+        "hint": "Number of Males 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "females_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_10_17",
+        "type": "edit_text",
+        "hint": "Number of Females 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         }
       },
       {
@@ -221,90 +400,251 @@
         ]
       },
       {
-        "key":"monthly_expenses",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"monthly_expenses",
+        "key": "monthly_expenses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "monthly_expenses",
+        "type": "native_radio",
+        "label": "Estimated household expenses per month",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "Less than K500",
+            "text": "Less than K500",
+            "value": false
+          },
+          {
+            "key": "K500 -K999",
+            "text": "K500 -K999",
+            "value": false
+          },
+          {
+            "key": "K1,000 –K1,999",
+            "text": "K1,000 –K1,999",
+            "value": false
+          },
+          {
+            "key": "K2,000 –K4,999",
+            "text": "K2,000 –K4,999",
+            "value": false
+          },
+          {
+            "key": "Greater than K5,000",
+            "text": "Greater than K5,000",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re required to select income source"
+        }
+      },
+      {
+        "key": "marital_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "marital_status",
         "type": "spinner",
-        "hint":"Estimated household expenses per month",
+        "hint": "Marital Status",
         "values": [
-          "Less than 500",
-          "K500 - K999",
-          "K1,000 - K1,999"
+          "Never Married",
+          "Married",
+          "Widowed/Divorced",
+          "Not Married, in relationship"
         ],
         "keys": [
-          "less_500",
-          "500_999",
-          "1000_1999"
+          "never_married",
+          "married",
+          "widowed",
+          "not_married"
         ]
       },
       {
-        "key":"pregnant_women",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"pregnant_women",
-        "type":"edit_text",
-        "hint":"No. of Women currently pregnant in household",
-        "edit_type":"name",
-        "v_required":{
-          "value":"true",
-          "err":"Required"
-        }
-      },
-      {
-        "key": "fam_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "cityVillage",
-        "type": "edit_text",
-        "edit_type": "name",
-        "hint": "{{family_register.step1.fam_village.hint}}",
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step1.fam_village.v_required.err}}"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step1.fam_village.v_regex.err}}"
-        }
-      },
-      {
-        "key":"plot_no",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person_address",
-        "openmrs_entity_id":"plot_no",
-        "type":"edit_text",
-        "hint":"House Number / Plot Number",
-        "edit_type":"name"
-      },
-      {
-        "key": "street",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "street",
-        "type": "edit_text",
-        "hint": "Street"
-      },
-      {
-        "key":"township",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person_address",
-        "openmrs_entity_id":"township",
-        "type":"edit_text",
-        "hint":"Township / Compound",
-        "edit_type":"name",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key": "gps",
+        "key": "pregnant_women",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "163277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "openmrs_data_type": "text",
-        "type": "gps"
+        "openmrs_entity_id": "pregnant_women",
+        "type": "edit_text",
+        "hint": "No. of Women currently pregnant in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "current_phone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "current_phone_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "current phone number phone number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "current_plot_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "current_plot_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "current phone number phone number",
+        "v_numeric": {
+          "value": false,
+          "err": "Plot number"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "current_street_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "current_street_name",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "current plot number number",
+        "v_numeric": {
+          "value": false,
+          "err": "Current street name"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "current_township_compound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "current_township_compound",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Current Township/Compound",
+        "v_numeric": {
+          "value": false,
+          "err": "Current Township/Compound"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "current_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "current_village",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Current village",
+        "v_numeric": {
+          "value": false,
+          "err": "Current village"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "permanent_phone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "permanent_phone_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "permanent phone number phone number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "permanent_plot_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "permanent_plot_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "current phone number phone number",
+        "v_numeric": {
+          "value": false,
+          "err": "permanent number"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "permanent_street_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "permanent_street_name",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "current plot number number",
+        "v_numeric": {
+          "value": false,
+          "err": "Current street name"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "permanent_township_compound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "permanent_township_compound",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Current Township/Compound",
+        "v_numeric": {
+          "value": false,
+          "err": "Current Township/Compound"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "permanent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "permanent_address",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "permanent village",
+        "v_numeric": {
+          "value": false,
+          "err": "permanent village"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
       }
     ]
   },
@@ -330,642 +670,570 @@
         }
       },
       {
-        "key": "first_name",
+        "key": "children",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of children<18",
+        "repeating_group_label": "Child",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.first_name.hint}}",
-        "edit_type": "name",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children",
         "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.first_name.v_required.err}}"
+          "value": false,
+          "err": "Please specify the number of children"
         },
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step2.first_name.v_regex.err}}"
-        }
-      },
-      {
-        "key": "middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "middle_name",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.middle_name.hint}}",
-        "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.middle_name.v_required.err}}"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step2.middle_name.v_regex.err}}"
-        }
-      },
-      {
-        "key": "surname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "surname",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.surname.hint}}",
-        "edit_type": "name",
-        "read_only": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step2.surname.v_regex.err}}"
-        },
-        "calculation": {
+        "value": [
+          {
+            "key": "child_birthdate",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "child_birthdate",
+            "entity": "child",
+            "type": "date_picker",
+            "hint": "Child's DOB",
+            "label_info_title": "Child's Date of Birth",
+            "expanded": false,
+            "duration": {
+              "label": "Age"
+            },
+            "min_date": "today-19y",
+            "max_date": "today",
+            "v_required": {
+              "value": false,
+              "err": "Please enter the date of birth"
+            }
+          },
+          {
+            "key": "child_gender",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "child_gender",
+            "entity": "child",
+            "type": "spinner",
+            "hint": "Sex",
+            "values": [
+              "Male",
+              "Female"
+            ],
+            "v_required": {
+              "value": false,
+              "err": "Specify sex"
+            }
+          },
+          {
+            "key": "in_school",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "in_school",
+            "type": "native_radio",
+            "label": "Is the child in school",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "exclusive": [
+              "Yes"
+            ],
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes",
+                "value": false
+              },
+              {
+                "key": "no",
+                "text": "No",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You`re required to check the box"
+            }
+          },
+          {
+            "key": "school_name",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "school_name",
+            "type": "edit_text",
+            "hint": "School name",
+            "v_required": {
+              "value": false,
+              "err": "Enter VL last results"
+            },
+            "v_regex": {
+              "value": "[0-9]*",
+              "err": "Last VL results must be an integer"
+            }
+          },
+          {
+            "key": "tested",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "tested",
+            "type": "native_radio",
+            "label": "Was child test?",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "exclusive": [
+              "Yes"
+            ],
+            "options": [
+              {
+                "key": "Yes",
+                "text": "Yes",
+                "value": false
+              },
+              {
+                "key": "No",
+                "text": "No",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You're required to check box"
+            }
+          },
+          {
+            "key": "hiv_status",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "hiv_status",
+            "type": "spinner",
+            "hint": "HIV Status",
+            "values": [
+              "HIV+",
+              "HIV-",
+              "HEI"
+            ],
+            "v_required": {
+              "value": false,
+              "err": "Select HIV status"
+            }
+          }
+        ],
+        "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "family_register_calculation.yml"
             }
           }
         }
       },
       {
-        "key": "dob",
+        "key": "other",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of Others Living in Household",
+        "repeating_group_label": "Others Living in Household",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdate",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of children"
+        },
+        "value": [
+          {
+            "key": "child_birthdate",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "child_birthdate",
+            "entity": "",
+            "type": "date_picker",
+            "hint": "DOB",
+            "expanded": false,
+            "duration": {
+              "label": "Age"
+            },
+            "min_date": "today-19y",
+            "max_date": "today",
+            "v_required": {
+              "value": false,
+              "err": "Please enter the date of birth"
+            }
+          },
+          {
+            "key": "tested",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "tested",
+            "type": "native_radio",
+            "label": "Test for HIV?",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "exclusive": [
+              "Yes"
+            ],
+            "options": [
+              {
+                "key": "Yes",
+                "text": "Yes",
+                "value": false
+              },
+              {
+                "key": "No",
+                "text": "No",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You're required to check box"
+            }
+          },
+          {
+            "key": "hiv_status",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "hiv_status",
+            "type": "spinner",
+            "hint": "HIV Status",
+            "values": [
+              "HIV+",
+              "HIV-",
+              "HEI"
+            ],
+            "v_required": {
+              "value": false,
+              "err": "Select HIV status"
+            }
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+            }
+          }
+        }
+      },
+      {
+        "key": "emergency_contact_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "emergency_contact_name",
+        "type": "edit_text",
+        "hint": "Emergency Contact Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Emergency Contact Name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Emergency Contact Name"
+        }
+      },
+      {
+        "key": "contact_relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "relationship",
+        "openmrs_entity_id": "contact_relation",
+        "type": "edit_text",
+        "hint": "Relation to Caregiver",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Relation to Caregiver"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Relation to Caregiver"
+        }
+      },
+      {
+        "key": "contact_street_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "contact_street_name",
+        "type": "edit_text",
+        "hint": "Contact House No/Street Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Street Name"
+        }
+      },
+      {
+        "key": "contact_township_compound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "current_plot_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Contact Township/Compound",
+        "v_numeric": {
+          "value": false,
+          "err": "Contact Township/Compound"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        }
+      },
+      {
+        "key": "contact_telephone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_telephone_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "contact telephone number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "gps",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "gps",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+      {
+        "key": "immunization_group",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Immunization Status children<5",
+        "repeating_group_label": "Child",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "immunization_group",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of children"
+        },
+        "value": [
+          {
+            "key": "immunization",
+            "label": "Immunization Status –Has the child received the following vaccinations?",
+            "type": "check_box",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "options": [
+              {
+                "key": "bcg",
+                "text": "BIRTH-BCG",
+                "value": false
+              },
+              {
+                "key": "opv0",
+                "text": "BIRTH-OPV0",
+                "value": false
+              },
+              {
+                "key": "dtp1",
+                "text": "6 WEEKS-DTP1",
+                "value": false
+              },
+              {
+                "key": "OPV1",
+                "text": "6 WEEKS-OPV1",
+                "value": false
+              },
+              {
+                "key": "PCV1",
+                "text": "6 WEEKS-PCV1",
+                "value": false
+              },
+              {
+                "key": "ROT1",
+                "text": "6 WEEKS-ROT1",
+                "value": false
+              },
+              {
+                "key": "DTP2",
+                "text": "10 WEEKS-DTP2",
+                "value": false
+              },
+              {
+                "key": "OPV2",
+                "text": "10 WEEKS-OPV2",
+                "value": false
+              },
+              {
+                "key": "PCV2",
+                "text": "10 WEEKS-PCV2",
+                "value": false
+              },
+              {
+                "key": "ROT2",
+                "text": "10 WEEKS-ROT2",
+                "value": false
+              },
+              {
+                "key": "DTP3",
+                "text": "14 WEEKS-DTP3",
+                "value": false
+              },
+              {
+                "key": "OPV3",
+                "text": "14 WEEKS-OPV3",
+                "value": false
+              },
+              {
+                "key": "PCV3",
+                "text": "14 WEEKS-PCV3",
+                "value": false
+              },
+              {
+                "key": "MEASL R1",
+                "text": "9 MNTHS-MEASL R1",
+                "value": false
+              },
+              {
+                "key": "MEASL R1",
+                "text": "18MNTHS-MEASL R1",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "This is a required field"
+            }
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+            }
+          }
+        }
+      },
+      {
+        "key": "malaria_beds",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "malaria_beds",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "edit_text": "number",
+        "hint": "Number of malaria beds in household",
+        "tree": [
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Number of beds in household"
+        }
+      },
+      {
+        "key": "malaria_itns",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "malaria_itns",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "edit_text": "number",
+        "hint": "Number of malaria ITNs in use",
+        "tree": [
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Number of ITNs  in use"
+        }
+      },
+      {
+        "key": "household_member_had_malaria",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_member_had_malaria",
         "type": "date_picker",
-        "hint": "{{family_register.step2.dob.hint}}",
+        "hint": "Last time household member had malaria",
         "expanded": false,
         "duration": {
-          "label": "{{family_register.step2.dob.duration.label}}"
+          "label": ""
         },
-        "min_date": "today-120y",
-        "max_date": "today-15y",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.dob.v_required.err}}"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
+          "value": false,
+          "err": "Last time household member had malaria"
         }
       },
       {
-        "key": "age_calculated",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "hidden",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "dob_unknown",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdateApprox",
-        "type": "check_box",
-        "label": "{{family_register.step2.dob_unknown.label}}",
-        "options": [
-          {
-            "key": "dob_unknown",
-            "text": "{{family_register.step2.dob_unknown.options.dob_unknown.text}}",
-            "text_size": "18px",
-            "value": "false"
-          }
-        ]
-      },
-      {
-        "key": "age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age_entered",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.age.hint}}",
-        "v_numeric_integer": {
-          "value": "true",
-          "err": "{{family_register.step2.age.v_numeric_integer.err}}"
-        },
-        "v_numeric": {
-          "value": "true",
-          "err": "{{family_register.step2.age.v_numeric.err}}"
-        },
-        "v_min": {
-          "value": "15",
-          "err": "{{family_register.step2.age.v_min.err}}"
-        },
-        "v_max": {
-          "value": "120",
-          "err": "{{family_register.step2.age.v_max.err}}"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
-        },
-        "v_required": {
-          "value": true,
-          "err": "{{family_register.step2.age.v_required.err}}"
-        }
-      },
-      {
-        "key":"marital_status",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person_attribute",
-        "openmrs_entity_id":"marital_status",
-        "type":"spinner",
-        "hint":"Marital Status",
-        "values": [
-          "Never Married",
-          "Married",
-          "Widowed/Divorced",
-          "Not Married, in relationship"
-        ],
-        "keys": [
-          "never_married",
-          "married",
-          "widowed",
-          "not_married"
-        ]
-      },
-      {
-        "key": "id_avail",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "id_avail",
-        "type": "check_box",
-        "label": "{{family_register.step2.id_avail.label}}",
-        "label_text_style": "normal",
-        "text_color": "#C0C0C0",
-        "exclusive": [
-          "chk_none"
-        ],
-        "options": [
-          {
-            "key": "chk_national_id",
-            "text": "{{family_register.step2.id_avail.options.chk_national_id.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "chk_national_id"
-          },
-          {
-            "key": "chk_voters_id",
-            "text": "{{family_register.step2.id_avail.options.chk_voters_id.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "chk_voters_id"
-          },
-          {
-            "key": "chk_drivers_license",
-            "text": "{{family_register.step2.id_avail.options.chk_drivers_license.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "chk_drivers_license"
-          },
-          {
-            "key": "chk_passport",
-            "text": "{{family_register.step2.id_avail.options.chk_passport.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "chk_passport"
-          },
-          {
-            "key": "chk_none",
-            "text": "{{family_register.step2.id_avail.options.chk_none.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "chk_none"
-          }
-        ]
-      },
-      {
-        "key": "national_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "National_ID",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.national_id.hint}}",
-        "edit_type": "name",
-        "relevance": {
-          "step2:id_avail": {
-            "ex-checkbox": [
-              {
-                "or": [
-                  "chk_national_id"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      {
-        "key": "voter_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Voter_Registration_Number",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.voter_id.hint}}",
-        "edit_type": "name",
-        "relevance": {
-          "step2:id_avail": {
-            "ex-checkbox": [
-              {
-                "or": [
-                  "chk_voters_id"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      {
-        "key": "driver_license",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Driver_License_Number",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.driver_license.hint}}",
-        "edit_type": "name",
-        "relevance": {
-          "step2:id_avail": {
-            "ex-checkbox": [
-              {
-                "or": [
-                  "chk_drivers_license"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      {
-        "key": "passport",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Passport_Number",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.passport.hint}}",
-        "edit_type": "name",
-        "relevance": {
-          "step2:id_avail": {
-            "ex-checkbox": [
-              {
-                "or": [
-                  "chk_passport"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      {
-        "key": "sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "gender",
-        "type": "spinner",
-        "hint": "{{family_register.step2.sex.hint}}",
-        "values": [
-          "{{family_register.step2.sex.values[0]}}",
-          "{{family_register.step2.sex.values[1]}}"
-        ],
-        "keys": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.sex.v_required.err}}"
-        }
-      },
-      {
-        "key": "wra",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "hidden",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mra",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "hidden",
-        "values": ""
-      },
-      {
-        "key": "preg_1yr",
+        "key": "nutrition_assessment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "160692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "spinner",
-        "hint": "{{family_register.step2.preg_1yr.hint}}",
-        "values": [
-          "{{family_register.step2.preg_1yr.values[0]}}",
-          "{{family_register.step2.preg_1yr.values[1]}}"
-        ],
-        "keys": [
-          "Yes",
-          "No"
-        ],
-        "openmrs_choice_ids": {
-          "Yes": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-          "No": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.preg_1yr.v_required.err}}"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "disabilities",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "162558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "spinner",
-        "hint": "{{family_register.step2.disabilities.hint}}",
-        "values": [
-          "{{family_register.step2.disabilities.values[0]}}",
-          "{{family_register.step2.disabilities.values[1]}}"
-        ],
-        "keys": [
-          "Yes",
-          "No"
-        ],
-        "openmrs_choice_ids": {
-          "Yes": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-          "No": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.disabilities.v_required.err}}"
-        }
-      },
-      {
-        "key": "type_of_disability",
-        "openmrs_entity_parent": "162558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity_id": "nutrition_assessment",
         "type": "edit_text",
-        "hint": "{{family_register.step2.type_of_disability.hint}}",
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.type_of_disability.v_required.err}}"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "phone_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "phone_number",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.phone_number.hint}}",
-        "v_numeric": {
-          "value": "true",
-          "err": "{{family_register.step2.phone_number.v_numeric.err}}"
-        },
+        "read_only": "true",
+        "hint": "Child Nutrition Assessment (under 5)",
+        "edit_type": "name",
+        "look_up": "true",
         "v_regex": {
-          "value": "(0[0-9]{9})|\\s*",
-          "err": "{{family_register.step2.phone_number.v_regex.err}}"
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Nutrition assessment"
         }
       },
       {
-        "key": "other_phone_number",
-        "openmrs_entity_parent": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.other_phone_number.hint}}",
-        "v_numeric": {
-          "value": "true",
-          "err": "{{family_register.step2.other_phone_number.v_numeric.err}}"
-        },
-        "v_regex": {
-          "value": "(0[0-9]{9})|\\s*",
-          "err": "{{family_register.step2.other_phone_number.v_regex.err}}"
-        }
-      },
-      {
-        "key": "service_provider",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "1542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "check_box",
-        "label": "{{family_register.step2.service_provider.label}}",
-        "label_text_style": "normal",
-        "text_color": "#C0C0C0",
-        "exclusive": [
-          "chk_none"
-        ],
-        "options": [
-          {
-            "key": "chk_farmer",
-            "text": "{{family_register.step2.service_provider.options.chk_farmer.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1538AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_cs",
-            "text": "{{family_register.step2.service_provider.options.chk_cs.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "162944AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_nurse",
-            "text": "{{family_register.step2.service_provider.options.chk_nurse.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1577AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_teacher",
-            "text": "{{family_register.step2.service_provider.options.chk_teacher.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "162946AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_th",
-            "text": "{{family_register.step2.service_provider.options.chk_th.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1821AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_chw",
-            "text": "{{family_register.step2.service_provider.options.chk_chw.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1555AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_tba",
-            "text": "{{family_register.step2.service_provider.options.chk_tba.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1575AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_chmis",
-            "text": "{{family_register.step2.service_provider.options.chk_chmis.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "163334AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_cbd",
-            "text": "{{family_register.step2.service_provider.options.chk_cbd.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1744AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_hbc",
-            "text": "{{family_register.step2.service_provider.options.chk_hbc.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "161359AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_cimmci",
-            "text": "{{family_register.step2.service_provider.options.chk_cimmci.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "163096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_other",
-            "text": "{{family_register.step2.service_provider.options.chk_other.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "chk_none",
-            "text": "{{family_register.step2.service_provider.options.chk_none.text}}",
-            "value": false,
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "164369AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.service_provider.v_required.err}}"
-        }
-      },
-      {
-        "key": "leader",
+        "key": "case_worker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Community_Leader",
-        "type": "check_box",
-        "label": "{{family_register.step2.leader.label}}",
-        "label_text_style": "normal",
-        "text_color": "#C0C0C0",
-        "exclusive": [
-          "chk_none"
-        ],
-        "options": [
-          {
-            "key": "chk_religious",
-            "text": "{{family_register.step2.leader.options.chk_religious.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Religious_Leader"
-          },
-          {
-            "key": "chk_traditional",
-            "text": "{{family_register.step2.leader.options.chk_traditional.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Traditional_leader"
-          },
-          {
-            "key": "chk_political",
-            "text": "{{family_register.step2.leader.options.chk_political.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Political_leader"
-          },
-          {
-            "key": "chk_influential",
-            "text": "{{family_register.step2.leader.options.chk_influential.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Influential_Leader"
-          },
-          {
-            "key": "chk_other",
-            "text": "{{family_register.step2.leader.options.chk_other.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Other_Community_Leader_Type"
-          },
-          {
-            "key": "chk_none",
-            "text": "{{family_register.step2.leader.options.chk_none.text}}",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Not_a_Community_Leader"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.leader.v_required.err}}"
-        }
-      },
-      {
-        "key": "leader_other",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Other_Community_Leader_Type_Name",
+        "openmrs_entity_id": "case_worker_name",
+        "entity_id": "mother",
         "type": "edit_text",
-        "hint": "{{family_register.step2.leader_other.hint}}",
+        "hint": "Case Worker Name",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.leader_other.v_required.err}}"
-        },
-        "relevance": {
-          "step2:leader": {
-            "ex-checkbox": [
-              {
-                "or": [
-                  "chk_other"
-                ]
-              }
-            ]
-          }
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Case Worker Name"
         }
+      },
+      {
+        "key": "case_worker_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_worker_nrc",
+        "entity_id": "guardian",
+        "type": "edit_text",
+        "hint": "Case Worker Name  NRC number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_signed",
+        "type": "date_picker",
+        "hint": "Date signed",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date signed"
+        }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "signature",
+        "openmrs_data_type": "select one",
+        "type": "check_box",
+        "label": "I have read and understood the information regarding on the household enrollment",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false,
+            "openmrs_choice_id": ""
+          }
+        ]
       }
     ]
   },
