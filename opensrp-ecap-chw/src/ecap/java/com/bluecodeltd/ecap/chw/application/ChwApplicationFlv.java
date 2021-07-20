@@ -111,7 +111,7 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER};
+        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EcapClientTable.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER};
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
         });
 
-        map.put(Constants.EC_CLIENT_INDEX, new String[]{
+        map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
                 DBConstants.KEY.BASE_ENTITY_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,

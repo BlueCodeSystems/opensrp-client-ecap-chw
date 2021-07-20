@@ -19,6 +19,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.referral.R.id;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
@@ -39,17 +40,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        boolean optionsMenu = super.onCreateOptionsMenu(menu);
-        MenuItem familyRegisterMenu = menu.findItem(R.id.action_register);
-        if (familyRegisterMenu != null && familyRegisterMenu.isVisible()) {
-           menu.removeItem(R.id.action_register);
-        }
-        return optionsMenu;
-    }
-
 
     @Override
     protected void initializePresenter() {
@@ -82,7 +72,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         Form form = new Form();
         try {
             if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE).equalsIgnoreCase(Constants.CHILD_INDEX)) {
+                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
+                            .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
                 form.setWizard(true);
                 form.setName(getString(R.string.child_details));
                 form.setHideSaveLabel(true);
@@ -112,7 +103,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
-                    if (Constants.CHILD_INDEX.equalsIgnoreCase(
+                    if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                         indexRegisterPresenter().saveForm(json, false);
                     }
@@ -142,6 +133,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         if (bottomNavigationView != null) {
             Utils.setupBottomNavigation(bottomNavigationHelper, bottomNavigationView,
                     new ChwBottomNavigationListener(this));
+            bottomNavigationView.getMenu().removeItem(R.id.action_register);
         }
     }
 

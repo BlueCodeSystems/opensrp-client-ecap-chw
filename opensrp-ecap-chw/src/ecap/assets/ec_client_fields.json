@@ -11,17 +11,17 @@
           }
         },
         {
-          "column_name": "last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "lastName"
-          }
-        },
-        {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
             "field": "firstName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
           }
         },
         {
@@ -213,7 +213,7 @@
           "column_name": "residence",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.residence"
+            "field": "attributes.residence"
           }
         },
         {
@@ -222,11 +222,18 @@
           "json_mapping": {
             "field": "attributes.phone_number"
           }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateRemoved"
+          }
         }
       ]
     },
     {
-      "name": "mother_register",
+      "name": "ec_mother_index",
       "columns": [
         {
           "column_name": "unique_id",
