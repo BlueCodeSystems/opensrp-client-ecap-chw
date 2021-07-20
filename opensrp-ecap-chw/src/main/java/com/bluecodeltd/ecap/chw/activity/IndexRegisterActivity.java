@@ -19,6 +19,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.referral.R.id;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
@@ -39,17 +40,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        boolean optionsMenu = super.onCreateOptionsMenu(menu);
-        MenuItem familyRegisterMenu = menu.findItem(R.id.action_register);
-        if (familyRegisterMenu != null && familyRegisterMenu.isVisible()) {
-           menu.removeItem(R.id.action_register);
-        }
-        return optionsMenu;
-    }
-
 
     @Override
     protected void initializePresenter() {
@@ -142,6 +132,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         if (bottomNavigationView != null) {
             Utils.setupBottomNavigation(bottomNavigationHelper, bottomNavigationView,
                     new ChwBottomNavigationListener(this));
+            bottomNavigationView.getMenu().removeItem(R.id.action_register);
         }
     }
 
