@@ -257,7 +257,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_hiv_known",
         "type": "edit_text",
-        "hint": "Date HIV was known",
+        "hint": "Year HIV was known",
         "v_required": {
           "value": false,
           "err": "Please enter year"

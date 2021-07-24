@@ -51,15 +51,6 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "opensrp_id",
-        "hidden": "true",
-        "type": "barcode",
-        "barcode_type": "qrcode"
-      },
-      {
         "key": "mother_surname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
