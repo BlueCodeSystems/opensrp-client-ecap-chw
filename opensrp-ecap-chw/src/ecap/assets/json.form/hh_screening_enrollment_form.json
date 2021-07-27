@@ -56,12 +56,22 @@
     "next": "step2",
     "fields": [
       {
+        "key": "index_vca_sub_pop_part1",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part A: Index VCA Sub Population",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
         "key": "name_of_vca",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "A1.Name of VCA",
+        "hint": "Name of VCA",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -74,7 +84,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "age",
         "type": "edit_text",
-        "hint": "Age",
+        "hint": "Age of VCA",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
@@ -85,7 +95,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "sex",
         "type": "edit_text",
-        "hint": "Sex",
+        "hint": "Sex of VCA",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -98,7 +108,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
         "type": "native_radio",
-        "label": " A4. What is the age of the child/adolescent?",
+        "label": "What is the age of the child/adolescent?",
         "options": [
           {
             "key": "c_alhiv",
@@ -127,7 +137,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "A5. health_facility",
+        "hint": "Name of Health Facility",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -140,7 +150,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "province",
         "type": "edit_text",
-        "hint": "A6. Province",
+        "hint": "Province",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -153,20 +163,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "district",
         "type": "edit_text",
-        "hint": "A7. District",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of district only take letters"
-        }
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "hint": "A7. District",
+        "hint": "District",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -179,7 +176,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "ward",
         "type": "edit_text",
-        "hint": "A8. ward",
+        "hint": "Ward",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -192,7 +189,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "village",
         "type": "edit_text",
-        "hint": "A9. Village/Compound",
+        "hint": "Village/Compound",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -205,7 +202,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "assigned_community_case_worker",
         "type": "edit_text",
-        "hint": "A10. Name of assigned community case worker",
+        "hint": "Name of assigned community case worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -219,11 +216,21 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "name_of_facility_based_case_worker",
         "type": "edit_text",
-        "hint": "A11. Name of facility based case worker",
+        "hint": "Name of facility based case worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of facility based case worker only take letters"
+        }
+      },
+      {
+        "key": "household_information",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part B: Household Information",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
         }
       },
       {
@@ -232,7 +239,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "province",
         "type": "spinner",
-        "hint": "B1.Province",
+        "hint": "Province",
         "values": [
           "Lusaka",
           "Central",
@@ -252,7 +259,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "district",
         "type": "spinner",
-        "hint": "B2. District",
+        "hint": "District",
         "values": [
           "Chongwe",
           "Monze",
@@ -267,7 +274,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "B3. Ward",
+        "hint": "Ward",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -280,7 +287,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "B4. Village/Compound",
+        "hint": "Village/Compound",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -293,7 +300,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "health_facility",
         "type": "spinner",
-        "hint": "B5. Name of Health Facility HH Accesses Health Services",
+        "hint": "Name of Health Facility HH Accesses Health Services",
         "values": [
           "UTH",
           "Levy Mwanawasa",
@@ -306,7 +313,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "spinner",
-        "hint": "B6. Implementing Partner:",
+        "hint": "Implementing Partner:",
         "values": [
           "JPHIEGO",
           "JSI",
@@ -347,7 +354,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
-        "hint": "B8. Screening Location:",
+        "hint": "Screening Location:",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -360,7 +367,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "B9.Name of primary caregiver",
+        "hint": "Name of primary caregiver",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -417,6 +424,16 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "value": [
+          {
+            "key": "household_summary_information",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Part C: Household Summary Information",
+            "text_color": "#000000",
+            "v_required": {
+              "value": true
+            }
+          },
           {
             "key": "name_of_caregiver",
             "openmrs_entity_parent": "",
@@ -579,6 +596,16 @@
             ]
           }
         ]
+      },
+      {
+        "key": "other_vca_sub_pop_screening_in_household",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part D: Other VCA Sub Population Screening in Household",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
       },
       {
         "key": "is_the_index_vca_a_c/alhiv_or_hei_or_victim_of_sexual_violence_or_children_of_fsw",
@@ -1211,6 +1238,16 @@
         ]
       },
       {
+        "key": "primary_caregivers_only",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part E: For Primary Caregivers Only",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
         "key": "experienced_violence_in_the_home_in_the_last_six_months",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -1495,35 +1532,9 @@
     "title":" Household Enrollment",
     "fields":[
       {
-        "key":"first_name",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person",
-        "openmrs_entity_id":"first_name",
-        "type":"edit_text",
-        "hint":"Care Giver First Name",
-        "edit_type":"name",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"{{family_register.step1.first_name.v_regex.err}}"
-        }
-      },
-      {
-        "key":"last_name",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person",
-        "openmrs_entity_id":"last_name",
-        "type":"edit_text",
-        "hint":"Care Giver Last Name",
-        "edit_type":"name",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"{{family_register.step1.last_name.v_regex.err}}"
-        }
-      },
-      {
         "key":"sex",
         "type":"radio",
-        "label":"Select Male / Female",
+        "label":"Caregiver Gender(Select Male / Female)",
         "options":[
           {
             "key":"male",
@@ -1541,7 +1552,7 @@
         "openmrs_entity":"person",
         "openmrs_entity_id":"birthdate",
         "type":"date_picker",
-        "hint":"Date of Birth",
+        "hint":"Caregiver Date of Birth",
         "expanded":false,
         "duration":{
           "label":"{{family_register.step2.dob.duration.label}}"
@@ -1594,19 +1605,6 @@
             "text":"College/University"
           }
         ]
-      },
-      {
-        "key":"caregiver_nrc",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"person_attribute",
-        "openmrs_entity_id":"NRC_Number",
-        "entity_id":"",
-        "type":"edit_text",
-        "hint":"Caregiver NRC number",
-        "v_regex":{
-          "value":"([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
-          "err":"Number must take the format of ######/##/#"
-        }
       },
       {
         "key":"spacer",
@@ -1713,7 +1711,7 @@
         "openmrs_entity":"person",
         "openmrs_entity_id":"",
         "type":"edit_text",
-        "hint":"No. of women currently pregnant in houseld",
+        "hint":"No. of women currently pregnant in household",
         "edit_type":"pregnant_women",
         "v_regex":{
           "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
@@ -1777,136 +1775,6 @@
             "text":"Not Married, in relationship"
           }
         ]
-      },
-      {
-        "key":"telephone",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Telephone",
-        "edit_type":"telephone",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"plot_no",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"House Number / Plot Number",
-        "edit_type":"plot_no",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"streetname",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Street Name",
-        "edit_type":"plot_no",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"township",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Township / Compound",
-        "edit_type":"plot_no",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"village",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Village",
-        "edit_type":"plot_no",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"telephone2",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Telephone",
-        "edit_type":"telephone2",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"plot_no2",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"House Number / Plot Number",
-        "edit_type":"plot_no2",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"streetname2",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Street Name",
-        "edit_type":"plot_no2",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"township2",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Township / Compound",
-        "edit_type":"township2",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
-      },
-      {
-        "key":"village2",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"",
-        "openmrs_entity_id":"",
-        "type":"edit_text",
-        "hint":"Village",
-        "edit_type":"village2",
-        "v_regex":{
-          "value":"[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err":"Error}"
-        }
       },
       {
         "key":"vca_id_1",
