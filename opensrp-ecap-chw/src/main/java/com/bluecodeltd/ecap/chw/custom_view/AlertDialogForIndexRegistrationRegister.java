@@ -14,7 +14,7 @@ import timber.log.Timber;
 
 public class AlertDialogForIndexRegistrationRegister {
     Context context;
-    String[] items = {"Child", "Mother"};
+    String[] items = {"VCA", "Mother","Sex worker"};
     String selectedItem;
 
     public AlertDialogForIndexRegistrationRegister(Context context) {
@@ -38,7 +38,12 @@ public class AlertDialogForIndexRegistrationRegister {
                         JSONObject indexRegisterForm;
                         if (Constants.MOTHER.equalsIgnoreCase(selectedItem)) {
                             indexRegisterForm = formUtils.getFormJson("mother_index");
-                        } else {
+                        } else
+                        if (Constants.VCA.equalsIgnoreCase(selectedItem)) {
+                            indexRegisterForm = formUtils.getFormJson("mother_index");
+                        }
+                        else {
+                            //ToDo add sex worker form below
                             indexRegisterForm = formUtils.getFormJson("child_index");
                         }
                         indexRegisterActivity.startFormActivity(indexRegisterForm);

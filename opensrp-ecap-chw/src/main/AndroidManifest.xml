@@ -173,6 +173,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.AboveFiveChildProfileActivity"
             android:label="@string/child_details"
@@ -180,6 +181,10 @@
         <activity
             android:name="com.bluecodeltd.ecap.chw.activity.MalariaProfileActivity"
             android:label="@string/malaria"
+            android:theme="@style/ChwTheme.NoActionBar" />
+
+        <activity android:name=".activity.IdentificationRegisterActivity"
+            android:label="Identified"
             android:theme="@style/ChwTheme.NoActionBar" />
 
         <activity

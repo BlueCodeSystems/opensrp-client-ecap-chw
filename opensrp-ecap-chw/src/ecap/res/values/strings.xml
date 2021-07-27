@@ -22,12 +22,13 @@
         <item>Referral form</item>
     </string-array>
     <string-array name="index_register_dialog_options">
-        <item>Child</item>
+        <item>VCA</item>
         <item>Mother</item>
+        <item>Sex worker</item>
     </string-array>
     <!--Ecap Strings -->
     <string name="all_households"> All households</string>
-    <string name="all_Vcas"> VCAs</string>F
+    <string name="all_Vcas"> VCAs</string>
     <string name="all_benefeciaries"> Beneficiaries</string>
     <string name="all_indexes"> Indexes</string>
     <string name="all_case_plans"> Case plans</string>
