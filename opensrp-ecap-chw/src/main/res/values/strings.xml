@@ -433,5 +433,7 @@
         <string name="return_to_household">Return to household</string>
     <string name="add_index">Add New</string>
     <string name="saving_index">Saving Index Person</string>
+    <string name="Identify">identify</string>
+    <string name="all_identification">identification</string>
 
 </resources>
