@@ -50,6 +50,8 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         FamilyRegisterActivity.registerBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
         if (bottomNavigationView != null) {
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
+            bottomNavigationView.getMenu().removeItem(R.id.action_register);
+            bottomNavigationView.getMenu().removeItem(R.id.action_family);
         }
     }
 
