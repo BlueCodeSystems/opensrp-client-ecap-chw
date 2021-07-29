@@ -93,7 +93,7 @@
             android:label="@string/title_family_detail"
             android:parentActivityName="com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ChwTheme.NoActionBar">
+            android:theme="@style/ChwFamilyTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity" />

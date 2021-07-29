@@ -22,9 +22,9 @@
         <item>Referral form</item>
     </string-array>
     <string-array name="index_register_dialog_options">
-        <item>VCA</item>
+        <item>Vulnerable Child/Adolescent</item>
         <item>Mother</item>
-        <item>Sex worker</item>
+        <item>Sex Worker</item>
     </string-array>
     <!--Ecap Strings -->
     <string name="all_households"> All households</string>

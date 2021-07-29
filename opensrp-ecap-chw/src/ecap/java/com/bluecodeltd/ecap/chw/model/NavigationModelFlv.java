@@ -24,11 +24,11 @@ public class NavigationModelFlv implements NavigationModel.Flavor {
             NavigationOption indexesNavigationOption = new NavigationOption(R.mipmap.sidemenu_index, R.mipmap.sidemenu_index_active, R.string.all_indexes, Constants.DrawerMenu.INDEX, 0);
             //NavigationOption casePlansNavigationOption = new NavigationOption(R.mipmap.sidemenu_case_plan, R.mipmap.sidemenu_case_plan_active, R.string.all_case_plans, Constants.DrawerMenu.CASE_PLANS, 0);
 
-            NavigationOption identfificationNavigationOption = new NavigationOption(R.mipmap.sidemenu_case_plan, R.mipmap.sidemenu_case_plan_active, R.string.all_identification, Constants.DrawerMenu.IDENTIFICATION, 0);
+           // NavigationOption identfificationNavigationOption = new NavigationOption(R.mipmap.sidemenu_case_plan, R.mipmap.sidemenu_case_plan_active, R.string.all_identification, Constants.DrawerMenu.IDENTIFICATION, 0);
             if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH && BuildConfig.BUILD_FOR_BORESHA_AFYA_SOUTH)
                 navigationOptions.add(new NavigationOption(R.mipmap.sidemenu_families, R.mipmap.sidemenu_families_active, R.string.menu_all_clients, CoreConstants.DrawerMenu.ALL_CLIENTS, 0));
 
-            navigationOptions.addAll(Arrays.asList(identfificationNavigationOption,indexesNavigationOption,allFamiliesNavigationOption, beneficiariesNavigationOption));
+            navigationOptions.addAll(Arrays.asList(indexesNavigationOption,allFamiliesNavigationOption, beneficiariesNavigationOption));
         }
 
         return navigationOptions;
