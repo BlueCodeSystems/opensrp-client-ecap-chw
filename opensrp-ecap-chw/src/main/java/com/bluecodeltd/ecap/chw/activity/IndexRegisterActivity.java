@@ -134,6 +134,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             Utils.setupBottomNavigation(bottomNavigationHelper, bottomNavigationView,
                     new ChwBottomNavigationListener(this));
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
+            bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
+
         }
     }
 

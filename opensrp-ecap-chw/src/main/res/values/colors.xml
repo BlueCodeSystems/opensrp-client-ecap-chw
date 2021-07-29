@@ -5,6 +5,12 @@
     <color name="primary">#218CC5</color>
     <color name="chw_primary_dark">#0d384e</color>
     <color name="chw_accent">#3797ca</color>
+
+    <color name="chw_family_primary">#009900</color>
+    <color name="chw_family_primary_dark">#037003</color>
+    <color name="chw_family_accent">#024a02</color>
+
+
     <color name="primaryAccent">#3797ca</color>
     <color name="primaryBackground">#a6d1e7</color>
     <color name="medical_bar">#3B404D</color>
