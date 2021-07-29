@@ -7,6 +7,13 @@
         "fields": [
           {
             "field": "eventType",
+            "field_value": "household_screening",
+            "creates_case": [
+              "ec_hh_screening_enrollment"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
               "ec_family"

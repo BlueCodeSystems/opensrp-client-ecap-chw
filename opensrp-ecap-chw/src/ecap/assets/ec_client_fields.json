@@ -1,6 +1,39 @@
 {
   "bindobjects": [
     {
+      "name": "ec_hh_screening_enrollment",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "name_of_vca",
+          "type": "Client",
+          "json_mapping": {
+            "field": "name_of_vca"
+          }
+        },
+        {
+          "column_name": "age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.age"
+          }
+        },
+        {
+          "column_name": "sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "sex"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_client_index",
       "columns": [
         {
