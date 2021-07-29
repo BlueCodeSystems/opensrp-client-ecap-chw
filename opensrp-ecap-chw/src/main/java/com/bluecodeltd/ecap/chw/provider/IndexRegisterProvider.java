@@ -1,18 +1,15 @@
 package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -24,6 +21,7 @@ import org.smartregister.view.contract.SmartRegisterClients;
 import org.smartregister.view.dialog.FilterOption;
 import org.smartregister.view.dialog.ServiceModeOption;
 import org.smartregister.view.dialog.SortOption;
+import org.smartregister.view.fragment.BaseRegisterFragment;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
@@ -31,9 +29,11 @@ import java.text.MessageFormat;
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder>, View.OnClickListener {
 
     private final Context context;
+    private View.OnClickListener onClickListener;
 
-    public IndexRegisterProvider(Context context) {
+    public IndexRegisterProvider(Context context, View.OnClickListener onClickListener) {
         this.context = context;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -43,6 +43,8 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
         indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence);
+        indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
+        indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
 
     @Override
@@ -97,8 +99,9 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
     @Override
     public void onClick(View v) {
-       // Utils.showShortToast(v.getContext(), ((TextView)v).getText().toString() +" Clicked");
 
-        Toast.makeText(v.getContext(), ((TextView)v).getText().toString(), Toast.LENGTH_LONG).show();
+        Utils.showShortToast(v.getContext(), ((TextView)v).getText().toString() +" Clicked");
+
+       // Toast.makeText(v.getContext(), ((TextView)v).getText().toString(), Toast.LENGTH_LONG).show();
     }
 }
