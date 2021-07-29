@@ -45,10 +45,9 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
         } else if (item.getItemId() == R.id.action_register) {
             FamilyRegisterActivity.startFamilyRegisterForm(context);
             return true;
-        } else if (item.getItemId() == R.id.action_job_aids) {
-            Intent intent = new Intent(context, JobAidsActivity.class);
-            context.startActivity(intent);
-            return false;
+        } else if (item.getItemId() == R.id.action_identifcation) {
+            new AlertDialogForIndexRegistrationRegister(context).buildAlertDialogForIndexRegistration().show();
+            return true;
         } else if (item.getItemId() == R.id.action_report) {
             Intent intent = new Intent(context, ReportsActivity.class);
             context.startActivity(intent);
