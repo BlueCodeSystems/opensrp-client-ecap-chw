@@ -1,8 +1,7 @@
 {
   "count": "5",
-  "encounter_type": "vca_screening_index",
+  "skip_blank_steps" : true,
   "encounter_type": "child_index",
-  "encounter_type": "consent",
   "entity_id": "",
   "relational_id": "",
   "metadata": {
@@ -1550,7 +1549,7 @@
     ]
   },
   "step2": {
-    "title": "Goal of the USAID ECAP II OVC complehensive VCA program",
+    "title": "Goal of the USAID ECAP II OVC comprehensive VCA program",
     "next": "step3",
     "fields": [
       {
@@ -1576,18 +1575,17 @@
         "toaster_info_title": "Information Toaster Info Title"
       },
       {
-        "key": "check_box",
+        "key": "consent_check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "check_box",
+        "openmrs_entity_id": "consent_check_box",
         "openmrs_data_type": "select one",
         "type": "check_box",
-        "label": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
         "label_text_style": "italic",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
+            "key": "consent_check_box",
+            "text": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
             "value": false,
             "openmrs_choice_id": ""
           }
@@ -1615,6 +1613,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
