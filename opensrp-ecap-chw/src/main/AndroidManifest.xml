@@ -108,6 +108,11 @@
                 android:value="com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity" />
         </activity>
         <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity"
+            android:label="Index Details"
+            android:theme="@style/FamilyTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

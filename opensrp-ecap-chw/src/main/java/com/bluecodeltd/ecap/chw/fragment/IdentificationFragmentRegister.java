@@ -8,9 +8,7 @@ import android.widget.LinearLayout;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IdentificationRegisterFragmentContract;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IdentificationRegisterFragmentPresenter;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
@@ -112,7 +110,7 @@ public class IdentificationFragmentRegister extends BaseRegisterFragment impleme
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext());
+        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_family"));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);

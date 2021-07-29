@@ -108,7 +108,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
         startActivity(intent);
 
-        Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
 
     }
 
@@ -119,7 +119,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext());
+        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_client_index"));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
