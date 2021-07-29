@@ -1,15 +1,18 @@
 package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -94,6 +97,8 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
     @Override
     public void onClick(View v) {
-        Utils.showShortToast(v.getContext(), ((TextView)v).getText().toString() +" Clicked");
+       // Utils.showShortToast(v.getContext(), ((TextView)v).getText().toString() +" Clicked");
+
+        Toast.makeText(v.getContext(), ((TextView)v).getText().toString(), Toast.LENGTH_LONG).show();
     }
 }
