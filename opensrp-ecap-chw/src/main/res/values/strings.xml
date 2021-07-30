@@ -425,15 +425,21 @@
     <string name="unauthorized_group">This account is not allowed to access this device</string>
 
     <!--Ecap Strings -->
-        <string name="all_households"> All households</string>
-        <string name="all_Vcas"> VCAs</string>
-        <string name="all_benefeciaries"> Beneficiaries</string>
-        <string name="all_indexes"> Indexes</string>
-        <string name="all_case_plans"> Case plans</string>
-        <string name="return_to_household">Return to household</string>
+    <string name="all_households"> All households</string>
+    <string name="all_Vcas"> VCAs</string>
+    <string name="all_benefeciaries"> Beneficiaries</string>
+    <string name="all_indexes"> Indexes</string>
+    <string name="all_case_plans"> Case plans</string>
+    <string name="return_to_household">Return to household</string>
     <string name="add_index">Add New</string>
     <string name="saving_index">Saving Index Person</string>
     <string name="Identify">Add New Index</string>
     <string name="all_identification">identification</string>
+    <string name="title_activity_index_details">IndexDetailsActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

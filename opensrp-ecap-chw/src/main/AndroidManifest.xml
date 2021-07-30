@@ -3,95 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bluecodeltd.ecap.chw">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <application
-        android:name="com.bluecodeltd.ecap.chw.application.ChwApplication"
-        android:networkSecurityConfig="@xml/network_security_config"
+        android:name=".application.ChwApplication"
         android:allowBackup="true"
-        android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
         android:theme="@style/ChwTheme"
         tools:replace="android:theme">
 
+
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FamilyPlanningMemberProfileActivity"
+            android:name=".activity.FamilyPlanningMemberProfileActivity"
             android:label="@string/family_planning"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AncUpcomingServicesActivity"
+            android:name=".activity.AncUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AncMedicalHistoryActivity"
+            android:name=".activity.AncMedicalHistoryActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AncHomeVisitActivity"
+            android:name=".activity.AncHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AncRegisterActivity"
+            android:name=".activity.AncRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AncMemberProfileActivity"
+            android:name=".activity.AncMemberProfileActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.PncUpcomingServicesActivity"
+            android:name=".activity.PncUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.PncMedicalHistoryActivity"
+            android:name=".activity.PncMedicalHistoryActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.PncHomeVisitActivity"
+            android:name=".activity.PncHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.PncRegisterActivity"
+            android:name=".activity.PncRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.PncMemberProfileActivity"
+            android:name=".activity.PncMemberProfileActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.MalariaRegisterActivity"
+            android:name=".activity.MalariaRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FpRegisterActivity"
+            android:name=".activity.FpRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.JobAidsActivity"
+            android:name=".activity.JobAidsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FamilyRemoveMemberActivity"
+            android:name=".activity.FamilyRemoveMemberActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FamilyProfileMenuActivity"
+            android:name=".activity.FamilyProfileMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity"
+            android:name=".activity.FamilyRegisterActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity"
+            android:name=".activity.FamilyProfileActivity"
             android:label="@string/title_family_detail"
-            android:parentActivityName="com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity"
+            android:parentActivityName=".activity.FamilyRegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChwFamilyTheme.NoActionBar">
             <meta-data
@@ -99,13 +79,19 @@
                 android:value="com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity" />
         </activity>
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FamilyOtherMemberProfileActivity"
+            android:name=".activity.FamilyOtherMemberProfileActivity"
             android:label="@string/title_family_detail"
-            android:parentActivityName="com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity"
+            android:parentActivityName=".activity.FamilyRegisterActivity"
             android:theme="@style/FamilyTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity" />
+        </activity>
+        <activity
+            android:name=".activity.IndexDetailsActivity"
+            android:label="@string/title_family_detail"
+            android:theme="@style/FamilyTheme.NoActionBar">
+
         </activity>
         <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
@@ -114,27 +100,27 @@
             android:theme="@style/FamilyTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ChildRegisterActivity"
+            android:name=".activity.ChildRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.UpcomingServicesActivity"
+            android:name=".activity.UpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity"
+            android:name=".activity.IndexRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity"
+            android:name=".activity.BeneficiariesRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity"
+            android:name=".activity.CasePlanRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ChildHomeVisitActivity"
+            android:name=".activity.ChildHomeVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ChildProfileActivity"
-            android:launchMode="singleTop"
+            android:name=".activity.ChildProfileActivity"
             android:label="@string/child_details"
+            android:launchMode="singleTop"
             android:theme="@style/ChwTheme.NoActionBar">
             <intent-filter>
                 <action android:name="org.smartregister.action.THINKMD_ASSESSMENT" />
@@ -143,24 +129,23 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="smartregister.org"
-                    android:path="/" />
+                    android:path="/"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ChildMedicalHistoryActivity"
+            android:name=".activity.ChildMedicalHistoryActivity"
             android:label="@string/medical_history"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.IndividualProfileRemoveActivity"
+            android:name=".activity.IndividualProfileRemoveActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ClientReferralActivity"
+            android:name=".activity.ClientReferralActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -170,81 +155,77 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AboveFiveChildProfileActivity"
+            android:name=".activity.AboveFiveChildProfileActivity"
             android:label="@string/child_details"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.MalariaProfileActivity"
+            android:name=".activity.MalariaProfileActivity"
             android:label="@string/malaria"
             android:theme="@style/ChwTheme.NoActionBar" />
-
-        <activity android:name=".activity.IdentificationRegisterActivity"
+        <activity
+            android:name=".activity.IdentificationRegisterActivity"
             android:label="Identified"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.MalariaUpcomingServicesActivity"
+            android:name=".activity.MalariaUpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity"
+            android:name=".activity.ReferralRegisterActivity"
             android:label="@string/anc_register"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ReferralRegistrationActivity"
+            android:name=".activity.ReferralRegistrationActivity"
             android:label="@string/issue_referral"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FpFollowUpVisitActivity"
+            android:name=".activity.FpFollowUpVisitActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.SickFormMedicalHistory"
-            android:theme="@style/ChwTheme.NoActionBar" />
-
-        <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.ReportsActivity"
+            android:name=".activity.SickFormMedicalHistory"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.FragmentBaseActivity"
+            android:name=".activity.ReportsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.PinLoginActivity"
+            android:name=".activity.FragmentBaseActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity"
+            android:name=".activity.PinLoginActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
+        <activity
+            android:name=".activity.AllClientsRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.opd.activity.BaseOpdFormActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.SickChildJsonFormActivity"
+            android:name=".activity.SickChildJsonFormActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity"
+            android:name=".activity.UpdatesRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.UpdateRegisterDetailsActivity"
+            android:name=".activity.UpdateRegisterDetailsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AllClientsMemberProfileActivity"
+            android:name=".activity.AllClientsMemberProfileActivity"
             android:label="@string/title_family_detail"
-            android:parentActivityName="com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity"
+            android:parentActivityName=".activity.AllClientsRegisterActivity"
             android:theme="@style/FamilyTheme.NoActionBar" />
-
         <activity
-            android:name="com.bluecodeltd.ecap.chw.activity.AncMemberMapActivity"
+            android:name=".activity.AncMemberMapActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
-        <activity android:name="com.bluecodeltd.ecap.chw.activity.GuideBooksTutorialsActivity"
-            android:theme="@style/ChwTheme.NoActionBar"/>
-
-        <activity android:name="com.bluecodeltd.ecap.chw.activity.GuideBooksCounselingActivity"
-            android:theme="@style/ChwTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.GuideBooksTutorialsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.GuideBooksCounselingActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -266,11 +247,33 @@
         <service android:name="org.smartregister.sync.intent.DocumentConfigurationIntentService" />
         <service android:name="org.smartregister.sync.intent.ValidateIntentService" />
         <service android:name="org.smartregister.service.ImageUploadSyncService" />
-        <service android:name="com.bluecodeltd.ecap.chw.sync.ChwSyncIntentService" />
+        <service android:name=".sync.ChwSyncIntentService" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>
