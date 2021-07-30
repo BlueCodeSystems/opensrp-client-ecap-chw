@@ -53,8 +53,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rcase_plan = (RelativeLayout)findViewById(R.id.case_plan);
         txtName = findViewById(R.id.myname);
 
-        /*String data = getIntent().getExtras().getString("client");
-        txtName.setText(data);*/
+        String data = getIntent().getExtras().getString("client");
+        txtName.setText(data);
     }
 
 
