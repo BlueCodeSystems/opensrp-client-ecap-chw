@@ -1638,6 +1638,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1654,6 +1661,13 @@
         "v_required": {
           "value": false,
           "err": "Please select gender"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1673,6 +1687,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date of birth"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1702,6 +1723,13 @@
         "v_required": {
           "value": false,
           "err": "You're required check the index box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       }
     ]
@@ -1723,7 +1751,15 @@
           "label": "Age"
         },
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+
       },
       {
         "key": "screening_location",
@@ -1736,7 +1772,15 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Screening location  only take letters"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
+
       },
       {
         "key": "date_referred",
@@ -1755,6 +1799,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter date Referred"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1774,6 +1825,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter date Referred"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1807,6 +1865,13 @@
         "v_required": {
           "value": false,
           "err": "You're required check the enrollment offer"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1826,6 +1891,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter date you were enrolled"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1838,6 +1910,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter year"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1867,6 +1946,13 @@
         "v_required": {
           "value": false,
           "err": "You're required check the ART number check box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1884,6 +1970,13 @@
         "v_regex": {
           "value": "[0-9]*",
           "err": "ART cannot be empty"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1903,6 +1996,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter date Referred"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1932,6 +2032,13 @@
         "v_required": {
           "value": false,
           "err": "You're required to keep VL test check box checked"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1950,6 +2057,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter date Referred"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1966,6 +2080,13 @@
         "v_regex": {
           "value": "[0-9]*",
           "err": "Last VL results must be an integer"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1995,6 +2116,13 @@
         "v_required": {
           "value": false,
           "err": "Tick 'Yes' if child was indexed or 'No' to mean child was'nt indexed "
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2013,6 +2141,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter date of next viral load"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2029,6 +2164,13 @@
         "v_regex": {
           "value": "[0-9]*",
           "err": "Last VL results must be an integer"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2060,6 +2202,13 @@
         "v_required": {
           "value": false,
           "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2077,6 +2226,13 @@
         "v_required": {
           "value": false,
           "err": "Select level of MMD for child"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       }
     ]
@@ -2101,6 +2257,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2120,6 +2283,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2137,6 +2307,13 @@
         "v_required": {
           "value": false,
           "err": "Please select gender"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2156,6 +2333,13 @@
         "v_required": {
           "value": false,
           "err": "Enter caregivers date of birth"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2174,6 +2358,13 @@
         "v_required": {
           "value": false,
           "err": "Select HIV status"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2191,6 +2382,13 @@
         "v_required": {
           "value": false,
           "err": "Select "
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2207,6 +2405,13 @@
         "v_required": {
           "value": false,
           "err": "Please enter the caregivers residential area"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2224,6 +2429,13 @@
         "v_regex": {
           "value": "(09[5-7][0-9]{7})|s*",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
         }
       }
     ]

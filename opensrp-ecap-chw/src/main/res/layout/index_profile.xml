@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="0dp"
                 android:paddingStart="0dp"
-                android:text="Return to all households"
+                android:text="Child Index"
                 android:textColor="@color/white"
                 android:textSize="@dimen/register_member_title_size" />
 
@@ -76,7 +76,7 @@
                     android:layout_toRightOf="@+id/imageview_profile"
                     android:paddingLeft="0dp"
                     android:paddingStart="0dp"
-                    android:text="Charity Otala"
+                    android:text="Chobela Kakumbi"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/register_member_name_size" />
 
@@ -193,31 +193,12 @@
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="#E2E363"
-            app:tabIndicatorHeight="4dp"
-            app:tabMaxWidth="0dp"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_base_profile" />
+    <include layout="@layout/profile_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
