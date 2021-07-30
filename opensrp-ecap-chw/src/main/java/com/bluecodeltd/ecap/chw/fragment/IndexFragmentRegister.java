@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,9 @@ import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
+import org.smartregister.family.util.Constants;
+import org.smartregister.family.util.DBConstants;
+import org.smartregister.util.Utils;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
@@ -103,10 +107,26 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     protected void onViewClicked(View view) {
 
+      //  Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
+
+       // startActivity(intent);
+        goToIndexDetailActivity((CommonPersonObjectClient) view.getTag());
+
+    }
+
+    protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
+
+
+
+        String firstname = client.getColumnmaps().get("first_name");
+        String lastname = client.getColumnmaps().get("last_name");
+
+        String fullname = firstname + " " + lastname;
+
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
+        intent.putExtra("client", fullname);
 
         startActivity(intent);
-
     }
 
     @Override
