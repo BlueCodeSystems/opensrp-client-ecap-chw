@@ -24,4 +24,5 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         familyNameTextView.setText(family);
         villageTextView.setText(village);
     }
+
 }

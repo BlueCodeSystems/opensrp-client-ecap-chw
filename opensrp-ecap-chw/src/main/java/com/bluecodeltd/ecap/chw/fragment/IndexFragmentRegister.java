@@ -1,15 +1,19 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
@@ -99,6 +103,10 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     protected void onViewClicked(View view) {
 
+        Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
+
+        startActivity(intent);
+
     }
 
     @Override
@@ -108,8 +116,8 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext());
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_family"));
+        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_client_index"));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }

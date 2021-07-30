@@ -75,7 +75,7 @@
       {
         "key": "enrollment_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "enrollment_date",
         "type": "date_picker",
         "hint": "Enrollment date",
@@ -83,10 +83,6 @@
         "expanded": false,
         "duration": {
           "label": ""
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Required"
         },
         "min_date": "01-01-1900",
         "max_date": "today"
@@ -98,10 +94,6 @@
         "openmrs_entity_id": "district",
         "type": "spinner",
         "hint": "Select district",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "values": [
           "Chongwe",
           "Monze",
@@ -113,14 +105,10 @@
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "health_facility",
         "type": "spinner",
         "hint": "Name of health facility",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "values": [
           "UTH",
           "Levy Mwanawasa",
@@ -130,13 +118,14 @@
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "household_id",
         "type": "edit_text",
         "hint": "Household ID",
+        "edit_type": "number",
         "v_required": {
-          "value": "true",
-          "err": "Required"
+          "value": false,
+          "err": "Please enter household ID"
         },
         "v_regex": {
           "value": "[0-9]*",
@@ -146,14 +135,14 @@
       {
         "key": "caregiver_id",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "caregiver_id",
         "type": "edit_text",
         "hint": "Caregiver ID",
         "edit_type": "number",
         "v_required": {
-          "value": "true",
-          "err": "Required"
+          "value": false,
+          "err": "Please enter Caregiver ID"
         },
         "v_regex": {
           "value": "[0-9]*",
@@ -161,20 +150,40 @@
         }
       },
       {
-        "key": "first_name",
+        "key": "caregiver_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
+        "openmrs_entity_id": "caregiver_first_name",
+        "entity_id": "mother",
         "type": "edit_text",
-        "hint": "{{family_register.step1.fam_name.hint}}",
+        "hint": "Caregiver first name ",
         "edit_type": "name",
+        "look_up": "true",
         "v_required": {
-          "value": "true",
-          "err": "{{family_register.step1.fam_name.v_required.err}}"
+          "value": false,
+          "err": "Please enter caregiver first name"
         },
         "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step1.fam_name.v_regex.err}}"
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caregiver_last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "caregiver_last_name",
+        "type": "edit_text",
+        "hint": "Caregiver last name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter a valid name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
         }
       },
       {
@@ -219,10 +228,6 @@
         "openmrs_entity_id": "entry_type",
         "type": "spinner",
         "hint": "Type of Entry",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "values": [
           "Transfer from ZAMFAM",
           "Referral From Facility",
@@ -276,10 +281,6 @@
         "entity_id": "Caregiver NRC",
         "type": "edit_text",
         "hint": "Caregiver NRC number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"
@@ -369,10 +370,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fam_source_income",
         "hint": "Income Source",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -403,26 +400,48 @@
         ]
       },
       {
-        "key":"monthly_expenses",
-        "openmrs_entity_parent":"",
-        "openmrs_entity":"concept",
-        "openmrs_entity_id":"monthly_expenses",
-        "type": "spinner",
-        "hint":"Estimated household expenses per month",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "values": [
-          "Less than 500",
-          "K500 - K999",
-          "K1,000 - K1,999"
+        "key": "monthly_expenses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "monthly_expenses",
+        "type": "native_radio",
+        "label": "Estimated household expenses per month",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
         ],
-        "keys": [
-          "less_500",
-          "500_999",
-          "1000_1999"
-        ]
+        "options": [
+          {
+            "key": "Less than K500",
+            "text": "Less than K500",
+            "value": false
+          },
+          {
+            "key": "K500 -K999",
+            "text": "K500 -K999",
+            "value": false
+          },
+          {
+            "key": "K1,000 –K1,999",
+            "text": "K1,000 –K1,999",
+            "value": false
+          },
+          {
+            "key": "K2,000 –K4,999",
+            "text": "K2,000 –K4,999",
+            "value": false
+          },
+          {
+            "key": "Greater than K5,000",
+            "text": "Greater than K5,000",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re required to select income source"
+        }
       },
       {
         "key": "marital_status",
@@ -431,10 +450,6 @@
         "openmrs_entity_id": "marital_status",
         "type": "spinner",
         "hint": "Marital Status",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "values": [
           "Never Married",
           "Married",
@@ -464,15 +479,11 @@
       {
         "key": "current_phone_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "current_phone_number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "type": "number",
+        "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current phone number",
+        "hint": "current phone number phone number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
@@ -485,15 +496,11 @@
       {
         "key": "current_plot_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "current_plot_number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "type": "number",
+        "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current plot number",
+        "hint": "current phone number phone number",
         "v_numeric": {
           "value": false,
           "err": "Plot number"
@@ -506,15 +513,11 @@
       {
         "key": "current_street_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_address",
         "openmrs_entity_id": "current_street_name",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current street name",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "hint": "current plot number number",
         "v_numeric": {
           "value": false,
           "err": "Current street name"
@@ -527,15 +530,11 @@
       {
         "key": "current_township_compound",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_address",
         "openmrs_entity_id": "current_township_compound",
         "type": "edit_text",
         "entity_id": "mother",
         "hint": "Current Township/Compound",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
         "v_numeric": {
           "value": false,
           "err": "Current Township/Compound"
@@ -546,30 +545,30 @@
         }
       },
       {
-        "key": "fam_village",
+        "key": "current_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "cityVillage",
+        "openmrs_entity_id": "current_village",
         "type": "edit_text",
-        "edit_type": "name",
-        "hint": "Current Village",
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step1.fam_village.v_required.err}}"
+        "entity_id": "mother",
+        "hint": "Current village",
+        "v_numeric": {
+          "value": false,
+          "err": "Current village"
         },
         "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "{{family_register.step1.fam_village.v_regex.err}}"
+          "value": "",
+          "err": ""
         }
       },
       {
         "key": "permanent_phone_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "permanent_phone_number",
-        "type": "number",
+        "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Permanent phone number",
+        "hint": "permanent phone number phone number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
@@ -586,7 +585,7 @@
         "openmrs_entity_id": "permanent_plot_number",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Permanent plot number",
+        "hint": "current phone number phone number",
         "v_numeric": {
           "value": false,
           "err": "permanent number"
@@ -603,7 +602,7 @@
         "openmrs_entity_id": "permanent_street_name",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Permanent street name",
+        "hint": "current plot number number",
         "v_numeric": {
           "value": false,
           "err": "Current street name"
@@ -617,7 +616,7 @@
         "key": "permanent_township_compound",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "Permanent_township_compound",
+        "openmrs_entity_id": "permanent_township_compound",
         "type": "edit_text",
         "entity_id": "mother",
         "hint": "Current Township/Compound",
@@ -637,7 +636,7 @@
         "openmrs_entity_id": "permanent_address",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Permanent village",
+        "hint": "permanent village",
         "v_numeric": {
           "value": false,
           "err": "permanent village"
@@ -957,7 +956,7 @@
       {
         "key": "contact_township_compound",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_address",
         "openmrs_entity_id": "current_plot_number",
         "type": "edit_text",
         "entity_id": "mother",
@@ -989,6 +988,14 @@
         }
       },
       {
+        "key": "gps",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "gps",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+      {
         "key": "immunization_group",
         "type": "repeating_group",
         "reference_edit_text": "",
@@ -998,7 +1005,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "immunization_group",
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Please specify the number of children"
         },
         "value": [
@@ -1111,7 +1118,7 @@
         "tree": [
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Number of beds in household"
         }
       },
@@ -1186,7 +1193,7 @@
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "guardian",
         "type": "edit_text",
-        "hint": "Case Worker NRC number",
+        "hint": "Case Worker Name  NRC number",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"
@@ -1227,14 +1234,6 @@
             "openmrs_choice_id": ""
           }
         ]
-      },
-      {
-        "key": "gps",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "gps",
-        "openmrs_data_type": "text",
-        "type": "gps"
       }
     ]
   },
