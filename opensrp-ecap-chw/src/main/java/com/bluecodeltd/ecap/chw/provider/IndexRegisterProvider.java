@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -46,6 +48,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
+
 
     @Override
     public void getFooterView(RecyclerView.ViewHolder viewHolder,int currentPageCount, int totalPageCount, boolean hasNextPage, boolean hasPreviousPage) {
@@ -96,6 +99,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     public boolean isFooterViewHolder(RecyclerView.ViewHolder viewHolder) {
         return viewHolder instanceof FooterViewHolder;
     }
+
 
     @Override
     public void onClick(View v) {

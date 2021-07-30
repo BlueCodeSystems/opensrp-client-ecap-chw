@@ -97,7 +97,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_toEndOf="@+id/CallTextView"
                     android:layout_toRightOf="@+id/CallTextView"
-                    android:text="VCA Assessment"
+                    android:text="Vulnerability Assessment"
                     android:textColor="@color/black"
                     android:textStyle="italic"
                     android:visibility="visible" />

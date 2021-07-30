@@ -1549,7 +1549,7 @@
     ]
   },
   "step2": {
-    "title": "Goal of the USAID ECAP II OVC comprehensive VCA program",
+    "title": "Consent Form",
     "next": "step3",
     "fields": [
       {
@@ -2239,6 +2239,7 @@
   },
   "step5": {
     "title": "Details of Caregiver (Parent/Guardian)",
+    "next": "step6",
     "fields": [
       {
         "key": "caregiver_first_name",
@@ -2430,6 +2431,29 @@
           "value": "(09[5-7][0-9]{7})|s*",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "step6": {
+    "title": "END",
+    "fields": [
+      {
+        "key": "has_no_consent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "text": "You have not Consented to this form",
+        "toaster_type": "warning",
+        "toaster_info_text": "You have not Consented to this form",
+        "toaster_info_title": "Warnings",
         "relevance": {
           "rules-engine": {
             "ex-rules": {

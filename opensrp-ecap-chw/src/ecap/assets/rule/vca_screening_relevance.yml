@@ -215,3 +215,10 @@ priority: 1
 condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
+---
+name: step6_has_no_consent
+description: has_no_consent relevance
+priority: 1
+condition: "!step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
