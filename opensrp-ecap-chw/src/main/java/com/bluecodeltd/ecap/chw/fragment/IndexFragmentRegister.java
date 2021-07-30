@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -12,6 +13,7 @@ import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
@@ -100,10 +102,10 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected void onViewClicked(View view) {
-        Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-        startActivity(intent);
 
-       // Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
+
+        startActivity(intent);
 
     }
 

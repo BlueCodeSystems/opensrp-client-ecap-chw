@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -34,6 +35,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan;
+    private TextView txtName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rhousehold = (RelativeLayout)findViewById(R.id.household);
         rassessment = (RelativeLayout)findViewById(R.id.assessment);
         rcase_plan = (RelativeLayout)findViewById(R.id.case_plan);
+        txtName = findViewById(R.id.myname);
+
+        /*String data = getIntent().getExtras().getString("client");
+        txtName.setText(data);*/
     }
 
 

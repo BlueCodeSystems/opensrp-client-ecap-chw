@@ -22,15 +22,15 @@
         <item>Referral form</item>
     </string-array>
     <string-array name="index_register_dialog_options">
-        <item>Vulnerable Child/Adolescent</item>
-        <item>Mother</item>
-        <item>Sex Worker</item>
+        <item>VCA Sub Population Screening</item>
+        <item>Index Mother Register</item>
+        <item>Female Sex Worker Screening</item>
     </string-array>
     <!--Ecap Strings -->
     <string name="all_households"> All households</string>
     <string name="all_Vcas"> VCAs</string>
     <string name="all_benefeciaries"> Case Plans</string>
-    <string name="all_positive"> HIV Positive Children</string>
+    <string name="all_positive"> Facility OVC Register</string>
     <string name="all_indexes"> Indexes</string>
     <string name="all_case_plans"> Case plans</string>
     <string name="return_to_household">Return to household</string>
