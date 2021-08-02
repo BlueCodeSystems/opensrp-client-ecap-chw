@@ -13,6 +13,27 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
+name: step5_caregiver_firstname
+description: caregiver_firstname relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_village
+description: Village relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_phone_number
+description: Phone number relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
 name: step3_gender
 description: gender relevance
 priority: 1
@@ -220,5 +241,26 @@ name: step6_has_no_consent
 description: has_no_consent relevance
 priority: 1
 condition: "!step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_on_hiv_treatment
+description: is_on_hiv_treatment relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_viral_load_test_results_on_file
+description: is_viral_load_test_results_on_file relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_tb_screening_results_on_file
+description: is_tb_screening_results_on_file relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"

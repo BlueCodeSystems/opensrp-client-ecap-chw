@@ -1,0 +1,49 @@
+---
+name: step3_first_name
+description: Child's First Name
+priority: 1
+condition: "step3_first_name == ''"
+actions:
+  - "calculation = step1_adolescent_first_name"
+---
+name: step3_last_name
+description: Child's Last Name
+priority: 1
+condition: "step3_last_name == ''"
+actions:
+  - "calculation = step1_adolescent_last_name"
+---
+name: step3_birthdate
+description: Child's dob
+priority: 1
+condition: "step3_birthdate == ''"
+actions:
+  - "calculation = step1_adolescent_birthdate"
+---
+name: step5_caregiver_firstname
+description: Caregiver Firstname
+priority: 1
+condition: "step5_caregiver_firstname == ''"
+actions:
+  - "calculation = step1_adolescent_name_of_caregiver"
+---
+name: step5_village
+description: Caregiver Village
+priority: 1
+condition: "step5_village == ''"
+actions:
+  - "calculation = step1_adolescent_village"
+---
+name: step5_phone_number
+description: Caregiver Phone
+priority: 1
+condition: "step5_phone_number == ''"
+actions:
+  - "calculation = step1_adolescent_phone"
+---
+name: step3_gender
+description: Adolescent Gender
+priority: 1
+condition: "step3_gender == ''"
+actions:
+  - "calculation = step1_adolescent_gender"
