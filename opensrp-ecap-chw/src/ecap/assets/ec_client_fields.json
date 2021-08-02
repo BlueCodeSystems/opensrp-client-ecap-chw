@@ -117,10 +117,73 @@
           }
         },
         {
+          "column_name": "other_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_school"
+          }
+        },
+        {
           "column_name": "is_hiv_positive",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode"
+          }
+        },
+        {
+          "column_name": "is_on_hiv_treatment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_on_hiv_treatment"
+          }
+        },
+        {
+          "column_name": "is_viral_load_test_results_on_file",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_viral_load_test_results_on_file"
+          }
+        },
+        {
+          "column_name": "is_tb_screening_results_on_file",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_tb_screening_results_on_file"
+          }
+        },
+        {
+          "column_name": "screened_for_malnutrition",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "screened_for_malnutrition"
+          }
+        },
+        {
+          "column_name": "gets_tb_preventive_therapy",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "gets_tb_preventive_therapy"
+          }
+        },
+        {
+          "column_name": "takes_drugs_to_prevent_other_diseases",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "gets_tb_preventive_therapy"
+          }
+        },
+        {
+          "column_name": "less_3",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "less_3"
           }
         }
       ]

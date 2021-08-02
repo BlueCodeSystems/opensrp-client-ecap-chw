@@ -209,7 +209,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please enter Child's last name"
+          "err": "Please enter Birth Date"
         }
       },
       {
@@ -236,7 +236,7 @@
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "addressFields.physical_address",
         "type": "edit_text",
-        "hint": "Physical  address",
+        "hint": "Physical address",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -319,14 +319,13 @@
             "key": "not_in_school",
             "text": "not in school"
           }
-        ],
-        "value": "pre_school"
+        ]
       },
       {
         "key": "other_school",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_school",
         "type": "edit_text",
         "hint": "School",
         "edit_type": "name",
@@ -347,7 +346,6 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
-        "value": "no",
         "label": "Is the Child/Adolescent HIV-positive",
         "options": [
           {
@@ -469,7 +467,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "takes_drugs_to_prevent_other_diseases",
@@ -490,22 +495,23 @@
         ]
       },
       {
-        "key": "is_in_0_to_2_years_age_group",
+        "key": "less_3",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "is_in_0_to_2_years_age_group",
-        "type": "native_radio",
-        "label": "D1.Is the Child in the 0-2 years age group? (If no, screen for other sub populations).",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        "openmrs_entity_id": "less_3",
+        "type": "edit_text",
+        "hidden": "true",
+        "value": "yes",
+        "hint": "Less than 3yrs Old",
+        "edit_type": "name",
+        "label": "D1. Is the Child in the 0-2 years age group? (If no, screen for other sub populations).",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
-        ]
+        }
       },
       {
         "key": "born_from_hiv_positive_mother",
