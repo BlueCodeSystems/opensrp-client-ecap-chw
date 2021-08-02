@@ -47,3 +47,12 @@ priority: 1
 condition: "step3_gender == ''"
 actions:
   - "calculation = step1_adolescent_gender"
+---
+name: step1_age_calculated
+description: Age calculated
+priority: 1
+condition: "true"
+actions:
+  - "calculation = helper.getDifferenceDays(step1_adolescent_birthdate) / 365.25"
+
+
