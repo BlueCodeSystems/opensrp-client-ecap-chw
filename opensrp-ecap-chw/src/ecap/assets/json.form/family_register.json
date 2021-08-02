@@ -1,10 +1,8 @@
 {
-  "validate_on_submit": true,
-  "show_errors_on_submit": false,
-  "count": "2",
-  "encounter_type": "Family Registration",
+  "count": 2,
+  "encounter_type": "household_screening",
   "entity_id": "",
-  "relational_id": "",
+  "show_errors_on_submit": true,
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -54,9 +52,1495 @@
     }
   },
   "step1": {
-    "title": "{{family_register.step1.title}}",
+    "title": " Household Screening",
     "next": "step2",
     "fields": [
+      {
+        "key": "index_vca_sub_pop_part1",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part A: Index VCA Sub Population",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "name_of_vca",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name_of_vca",
+        "type": "edit_text",
+        "hint": "Name of VCA",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        }
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "edit_text",
+        "hint": "Age of VCA",
+        "v_numeric": {
+          "value": "true",
+          "err": "Age can only contain numbers"
+        }},
+      {
+        "key": "sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "sex",
+        "type": "edit_text",
+        "hint": "Sex of VCA",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward  only takes letters"
+        }
+      },
+      {
+        "key": "sub_population",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sub_population",
+        "type": "native_radio",
+        "label": "What is the age of the child/adolescent?",
+        "options": [
+          {
+            "key": "c_alhiv",
+            "text": "C/ALHIV"
+          },
+          {
+            "key": "hei",
+            "text": "HEI,"
+          },
+          {
+            "key": "children_of_wlhiv",
+            "text": "Children of WLHIV"
+          },
+          {
+            "key": "agyw",
+            "text": "AGYW"
+          },
+          {
+            "key": "survivor_of_sexual_violence",
+            "text": "Children of FSW"
+          }
+        ]},
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Name of Health Facility",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        }
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "province",
+        "type": "edit_text",
+        "hint": "Province",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of province only takes letters"
+        }
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district",
+        "type": "edit_text",
+        "hint": "District",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of district only take letters"
+        }
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of ward only take letters"
+        }
+      },
+      {
+        "key": "village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "village",
+        "type": "edit_text",
+        "hint": "Village/Compound",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Village/Compound only take letters"
+        }
+      },
+      {
+        "key": "assigned_community_case_worker",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "assigned_community_case_worker",
+        "type": "edit_text",
+        "hint": "Name of assigned community case worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of assigned community case worker only take letters"
+        }
+      },
+      {
+
+        "key": "name_of_facility_based_case_worker",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "name_of_facility_based_case_worker",
+        "type": "edit_text",
+        "hint": "Name of facility based case worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of facility based case worker only take letters"
+        }
+      },
+      {
+        "key": "household_information",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part B: Household Information",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "Province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "province",
+        "type": "spinner",
+        "hint": "Province",
+        "values": [
+          "Lusaka",
+          "Central",
+          "Western",
+          "Southern",
+          "Eastern",
+          "Munchinga",
+          "Luapula",
+          "North Western",
+          "Copperbelt",
+          "Northen"
+        ]
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "district",
+        "type": "spinner",
+        "hint": "District",
+        "values": [
+          "Chongwe",
+          "Monze",
+          "Kapiri",
+          "Choma",
+          "Kafue"
+        ]
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Ward",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward  only takes letters"
+        }
+      },
+      {
+        "key": "village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Village/Compound",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Village/Compound  only takes letters"
+        }
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "health_facility",
+        "type": "spinner",
+        "hint": "Name of Health Facility HH Accesses Health Services",
+        "values": [
+          "UTH",
+          "Levy Mwanawasa",
+          "Chelstone Clinic"
+        ]
+      },
+      {
+        "key": "partners",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Implementing Partner:",
+        "values": [
+          "JPHIEGO",
+          "JSI",
+          "PCZ"
+        ]
+      },
+      {
+        "key": "name_of_adolescent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "Name of adolescent",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of adolescent only take letters"
+        }
+      },
+      {
+        "key": "date_of_screening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_of_screening",
+        "type": "date_picker",
+        "hint": "Date of screening",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+      {
+        "key": "screening_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "screening_location",
+        "type": "edit_text",
+        "hint": "Screening Location:",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Screening location  only take letters"
+        }
+      },
+      {
+        "key": "name_of_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "Name of primary caregiver",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of prrimary caregiver can only contain letters"
+        }
+      },
+      {
+        "key": "Residential_Address",
+        "openmrs_entity_parent": "usual_residence",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "address2",
+        "type": "edit_text",
+        "hint": "Physical  address ",
+        "edit_type": "name"
+      },
+      {
+        "key": "Guardian_NRC",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "NRC_Number",
+        "entity_id": "guardian",
+        "type": "edit_text",
+        "hint": "Guardian NRC number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+
+
+        "key": "Guardian_Number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Telephone number",
+        "v_numeric": {
+          "value": "true",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|\\s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+
+        "key": "household_summary_information",
+        "type": "repeating_group",
+        "reference_edit_text_hint": "Number of households",
+        "repeating_group_label": "Household summary information ",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "value": [
+          {
+            "key": "household_summary_information",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Part C: Household Summary Information",
+            "text_color": "#000000",
+            "v_required": {
+              "value": true
+            }
+          },
+          {
+            "key": "name_of_caregiver",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "name",
+            "type": "edit_text",
+            "hint": "Name of caregiver",
+            "edit_type": "name",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Full Name of Family Member can only contain letters"
+            }
+          },
+          {
+            "key": "sub_group",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "sub_group",
+            "type": "native_radio",
+            "label": "Tick as appropriate \n I index VCA (as in above); S sibling of Index VCA; O other HH member; C caregiver",
+            "options": [
+              {
+                "key": "index_vca",
+                "text": "I"
+              },
+              {
+                "key": "sibling_of_index",
+                "text": "Sibling of index"
+              },
+              {
+                "key": "other_hh_member",
+                "text": "Other HH member"
+              },
+              {
+                "key": "caregiver",
+                "text": "Caregiver"
+              }
+            ]
+          },
+          {
+            "key": "sub_population_for_children_0_17years_in_household",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "sub_population_for_children_0_17years_in_household",
+            "type": "native_radio",
+            "label": "Tick as appropriate \n I index VCA (as in above); S sibling of Index VCA; O other HH member; C caregiver",
+            "options": [
+              {
+                "key": "index_vca",
+                "text": "I"
+              },
+              {
+                "key": "sibling_of_index",
+                "text": "Sibling of index"
+              },
+              {
+                "key": "other_hh_member",
+                "text": "Other HH member"
+              },
+              {
+                "key": "caregiver",
+                "text": "Caregiver"
+              }
+            ]
+          },
+          {
+            "key": "sub_population_for_children_0_17years_in_household",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "sub_population_for_children_0_17years_in_household",
+            "type": "native_radio",
+            "label": "Indicate subpopulation for Children 0-17 years in Household. (HIV+ Children/Adolescent 0-19 years should be categorized as C/ALHIV) Refer to note below & tick all that apply ",
+            "options": [
+              {
+                "key": "1",
+                "text": "1"
+              },
+              {
+                "key": "2",
+                "text": "2"
+              },
+              {
+                "key": "3",
+                "text": "3"
+              },
+              {
+                "key": "4",
+                "text": "4"
+              },
+              {
+                "key": "5",
+                "text": "5"
+              }
+            ]
+          },
+          {
+            "key": "relationship_to_primary_caregiver",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "relationship_to_primary_caregiver",
+            "type": "edit_text",
+            "hint": "Name of caregiver",
+            "edit_type": "name",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "relationship_to_primary_caregiver can only contain letters"
+            }
+          },
+          {
+            "key": "dob",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "birthdate",
+            "type": "date_picker",
+            "hint": "Date of birth",
+            "look_up": "true",
+            "expanded": false,
+            "duration": {
+              "label": "Age"
+            },
+            "min_date": "01-01-1900",
+            "max_date": "today-1y"
+          },
+          {
+            "key": "Sex",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "gender",
+            "type": "spinner",
+            "hint": "Sex",
+            "values": [
+              "Male",
+              "Female"
+            ]
+          },
+          {
+            "key": "hiv_status",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "tick_applicable",
+            "type": "native_radio",
+            "label": "Tick applicable ",
+            "options": [
+              {
+                "key": "hiv_pos",
+                "text": "HIV pos"
+              },
+              {
+                "key": "hiv_neg",
+                "text": "HIV Neg"
+              },
+              {
+                "key": "hei",
+                "text": "HEI"
+              },
+              {
+                "key": "status_unknown",
+                "text": "status_unknown"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "other_vca_sub_pop_screening_in_household",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part D: Other VCA Sub Population Screening in Household",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "is_the_index_vca_a_c/alhiv_or_hei_or_victim_of_sexual_violence_or_children_of_fsw",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "D1.1 Is the index VCA a C/ALHIV, HEI, Victim of Sexual Violence, or Children of FSW?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "all_other_household_members_0_17years_know_their_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "all_other_household_members_0_17years_know_their_hiv_status",
+        "type": "native_radio",
+        "label": "D1.2.Do all the siblings/other household members 0-17 years know their HIV status? (If not, offer HIV index testing/ collect dried blood spot (DBS) if VCA is HEI as part of enrollment for children/adolescents with unknown status)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "are_there_children_who_are_hiv_positive_and_on_active_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_on_active_treatment",
+        "type": "native_radio",
+        "label": "D1.3 Are there children/adolescents who are HIV+ and active on treatment? (If HIV-positive categorize as an index C/ALHIV VCA; If not active on treatment, refer to treatment and care as part if enrollment)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "is_the_female_caregiver_hiv_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "D1.4 Is the female caregiver HIV-positive (WLHIV)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status",
+        "type": "native_radio",
+        "label": "D1.5.If the female caregiver is HIV+, do all the biological children 0-17 years know their HIV status? (if not, offer index testing as part of enrollment for all biological children 0-17 years and DBS for all HEIs)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "D1.6. If other household member 0-2 years is HEI, are they receiving breastfeeding? (Categorize as HEI VCA)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "if_there_are_children_in_the_household_aged_0_5years_are_they_enrolled_in_an_early_childhood_development_program",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "D1.7 If there are children in the household aged 0-5 years, are the enrolled in an Early Childhood Development Program and are their developmental milestones tracked? (If not, refer to ECD services at enrollment)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
+        "type": "native_radio",
+        "label": "DI.8 Have all children and adolescents in the household been screened for malnutrition? (If not, refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
+        "type": "native_radio",
+        "label": "DI.9 If HEI receiving breastfeeding, are they receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines (If not refer and provide preventive care and support services as part of enrollment) ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "if_other_household_member_0_17years_is_a_victim_of_sexual_violence_have_they_received clinical care ",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "if_other_household_member_0_17years_is_a_victim_of_sexual_violence_have_they_received clinical care ",
+        "type": "native_radio",
+        "label": " D1.10 If other household member 0-17 years is a victim of sexual violence, have they received clinical care (PEP, HIV testing, emergency contraceptive, STI testing, psychosocial counseling) or non-clinical care (legal services). (Categorize as victim of Sexual Violence VCA. If not all care and support services were received, refer to appropriate clinical and non-clinical services as part of enrolment)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "clinical_care_yes",
+            "text": "Received clinical care"
+          },
+          {
+            "key": "clinical_care_no",
+            "text": "Did not receive clinical care"
+          },
+          {
+            "key": "non_clinical_care_yes",
+            "text": "Received  non clinical care"
+          },
+          {
+            "key": "non_clinical_care_no",
+            "text": "Did not receive  non clinical care"
+          }
+        ]
+      },
+      {
+        "key": "have_all_the male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "have_all_the male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
+        "type": "native_radio",
+        "label": "DI.12 Have all the male HIV-negative VCA in the household 15 years and above received voluntary medical male circumcision (VMMC)? (If not refer to VMMC services at enrollment)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "child_been_screened_for_malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "D11. Has the child (6 months and above) been screened for malnutrition?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "child_gets_drugs_to_prevent_tb",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "D12. Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "for_adolescent_girls_and_young_women_10_17years",
+        "type": "repeating_group",
+        "repeating_group_label": " For questions DII.1 – DII.16, ask EACH OF THE AGYW 10–17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed. If there are no AGYW 10-17 years in the household, proceed to section E ",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
+        "value": [
+          {
+            "key": "name_of_adolescent",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "name",
+            "type": "edit_text",
+            "hint": "Name of Adolescent",
+            "edit_type": "name",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Name of Adolescent can only contain letters"
+            }
+          },
+          {
+            "key": "is_the_agyw_10_17years",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_10_17years",
+            "type": "native_radio",
+            "label": "DII.1 Is the AGYW 10 -17 years? ",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "is_the_agyw_sexually_active",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_sexually_active",
+            "type": "native_radio",
+            "label": "DII.2 Is the AGYW sexually active?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "is_the_agyw_having_sex_with_older_men",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_having_sex_with_older_men",
+            "type": "native_radio",
+            "label": "DII.3 Is the AGYW having sex with older men??",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "is_the_agyw_engaged_in_transactional_sex",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_engaged_in_transactional_sex",
+            "type": "native_radio",
+            "label": "DII.4 Is the AGYW engaged in transactional sex?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "is_the_agyw_engaged_in_sex_work",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_engaged_in_sex_work",
+            "type": "native_radio",
+            "label": "DII.4 Is the AGYW engaged in sex work?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "is_the_agyw_engaged_in_sex_work",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_engaged_in_sex_work",
+            "type": "native_radio",
+            "label": "DII.5 Is the AGYW engaged in sex work?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "is_the_agyw_food_or_economically_secure",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_food_or_economically_secure",
+            "type": "native_radio",
+            "label": "DII.6 Is the AGYW food or economically secure?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "did_the_agyw_marry_early",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "did_the_agyw_marry_early",
+            "type": "native_radio",
+            "label": "DII.7 Did the AGYW marry early (child marriage)?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "did_the_agyw_give_birth_before_age_of_18",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "did_the_agyw_give_birth_before_age_of_18",
+            "type": "native_radio",
+            "label": "DII.8 Did the AGYW give birth before the age of 18?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
+            "type": "native_radio",
+            "label": "DII.9  Does the AGYW have a partner who is violent or has experienced violence?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
+            "type": "native_radio",
+            "label": "DII.10  Has the AGYW ever been diagnosed with a sexually transmitted disease?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "has_the_agyw_been_tested_for_hiv",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
+            "type": "native_radio",
+            "label": "DII.11  Has the AGYW been tested for hiv?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "did_the_agyw_been_tested_for_hiv",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
+            "type": "native_radio",
+            "label": "DII.11  Has the AGYW been tested for hiv?",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "did_the_agyw_test_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "did_the_agyw_test_positive",
+        "type": "native_radio",
+        "label": "DII.12  Did the AGYW test HIV+? (if yes, the AGYW should be categorized as CLHIV) and refer to appropriate treatment and care services at enrollment ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "is_the_agyw_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "is_the_agyw_in_school",
+        "type": "native_radio",
+        "label": "DII.13 Is the AGYW in school? If not, refer to education support services at enrollment  ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "agyw_receiving_an_economic_strengthening_intervention",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
+        "type": "native_radio",
+        "label": "DII.14. Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "pregnancy_prevention_methods_use_by_agyw",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
+        "type": "native_radio",
+        "label": "DII.15 Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
+        "options": [
+          {
+            "key": "prep",
+            "text": "PrEP"
+          },
+          {
+            "key": "pep",
+            "text": "PEP"
+          },
+          {
+            "key": "family_Planning_method",
+            "text": "Family planning method"
+          },
+          {
+            "key": "condoms",
+            "text": "Condoms"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ]
+      },
+      {
+        "key": "other_pregnancy_prevention_method_used_by_agyw",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
+        "type": "edit_text",
+        "hint": "Other pregnancy prevention methods",
+        "relevance": {
+          "step6:pregnancy_prevention_methods_used_by_agyw": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+
+      },
+      {
+        "key": "did_agyw_answer_to_any",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "did_agyw_answer_to_any",
+        "type": "native_radio",
+        "label": "DII.16. Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "primary_caregivers_only",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part E: For Primary Caregivers Only",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "experienced_violence_in_the_home_in_the_last_six_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "experienced_violence_in_the_home_in_the_last_six_months",
+        "type": "native_radio",
+        "label": "E1.Have you experienced violence in the home in the last six months?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "the_children_experienced_violence_in_the_home_in_the_last_six_months?",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "E2. Have the children experienced violence in the home in the last six months?? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "knows_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "knows_hiv_status",
+        "type": "native_radio",
+        "label": "E3. Do you know your HIV status?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "active_on_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "E4. If HIV positive/WLHIV, are you active on treatment? (If not, refer to appropriate treatment and care services as part of enrolment)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "virally_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "virally_suppressed",
+        "type": "native_radio",
+        "label": "E5. Are you virally suppressed as of your most recent viral load test?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "viral_load_results",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "viral_load_results",
+        "type": "edit_text",
+        "hint": "Result of most recent viral load test. (If not virally suppressed, refer and provide appropriate care and support services",
+        "v_numeric": {
+          "value": "true",
+          "err": "Viral load can only contain numbers"
+        }},
+      {
+        "key": "date_of_last_viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "date_picker",
+        "hint": "Viral load",
+        "label_info_title": "Date of last viral load",
+        "expanded": false,
+        "min_date": "today-50y",
+        "max_date": "today"
+      },
+      {
+        "key": "test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "test",
+        "openmrs_entity_id": "test",
+        "type": "edit_text",
+        "hint": "Test",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  test name"
+        }
+      },
+      {
+        "key": "if_hiv_positive_have_biological_children",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
+        "type": "native_radio",
+        "label": "E7.If HIV+, do you have biological children 0-2 years?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "enrolled_in_the_pmtct_program",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "enrolled_in_the_pmtct_program",
+        "type": "native_radio",
+        "label": "E8. If yes, are you and your biological children enrolled in the PMTCT program? (If not, refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "are_there_any_reasons_you may_be_at_risk for_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "are_there_any_reasons_you may_be_at_risk for_hiv",
+        "type": "native_radio",
+        "label": " E.9 hIf HIV negative, are there any reasons you may be at risk for HIV? \n(If Yes, state reason: ………………………………………………………………………………. And provide appropriate preventive services as part of enrollment)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }, {
+            "key": "reasons_might_be_at_risk_of_hiv",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "reasons_might_be_at_risk_of_hiv",
+            "type": "edit_text",
+            "hint": "State reasons might be at risk of hiv",
+            "relevance": {
+              "step6: are_there_any_reasons_you may_be_at_risk for_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "key": "household_food_socially_and_economically_secure",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
+        "type": "native_radio",
+        "label": "E10.Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.). If not, refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "vca_sub_population_is_approved_for_enrollment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "vca_sub_population_is_approved_for_enrollment",
+        "type": "native_radio",
+        "label": "THIS FAMILY IS APPROVED FOR ENROLLMENT",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "screening_carried_out_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "Carried out by",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "date_screening_carried_out",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "date_screening_carried_out",
+        "type": "date_picker",
+        "hint": "Date of screening",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+      {
+        "key": "approved_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "approved_by",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "date_approved",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "date_approved",
+        "type": "date_picker",
+        "hint": "Date of screening",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      }
+    ]
+  },
+  "step2":{
+    "title":" Household Enrollment",
+    "fields":[
+      {
+        "key": "household_enrollment_part1",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part 1 Of Household Enrollment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
       {
         "key": "unique_id",
         "openmrs_entity_parent": "",
@@ -86,34 +1570,6 @@
         },
         "min_date": "01-01-1900",
         "max_date": "today"
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "spinner",
-        "hint": "Select district",
-        "values": [
-          "Chongwe",
-          "Monze",
-          "Kapiri",
-          "Choma",
-          "Kafue"
-        ]
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "health_facility",
-        "type": "spinner",
-        "hint": "Name of health facility",
-        "values": [
-          "UTH",
-          "Levy Mwanawasa",
-          "Chelstone Clinic"
-        ]
       },
       {
         "key": "household_id",
@@ -147,43 +1603,6 @@
         "v_regex": {
           "value": "[0-9]*",
           "err": "Caregiver ID cannot be empty"
-        }
-      },
-      {
-        "key": "caregiver_first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "caregiver_first_name",
-        "entity_id": "mother",
-        "type": "edit_text",
-        "hint": "Caregiver first name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter caregiver first name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "caregiver_last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "caregiver_last_name",
-        "type": "edit_text",
-        "hint": "Caregiver last name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter a valid name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
         }
       },
       {
@@ -271,19 +1690,6 @@
         "v_required": {
           "value": false,
           "err": "You`re to select the level of education"
-        }
-      },
-      {
-        "key": "caregiver_nrc",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_nrc",
-        "entity_id": "Caregiver NRC",
-        "type": "edit_text",
-        "hint": "Caregiver NRC number",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
-          "err": "Number must take the format of ######/##/#"
         }
       },
       {
@@ -645,12 +2051,17 @@
           "value": "",
           "err": ""
         }
-      }
-    ]
-  },
-  "step2": {
-    "title": "{{family_register.step2.title}}",
-    "fields": [
+      },
+      {
+        "key": "household_enrollment_part2",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part 2 Of Household Enrollment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
       {
         "key": "unique_id",
         "openmrs_entity_parent": "",
@@ -1236,6 +2647,5 @@
         ]
       }
     ]
-  },
-  "properties_file_name": "family_register"
+  }
 }
