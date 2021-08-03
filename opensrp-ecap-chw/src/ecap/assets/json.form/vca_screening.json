@@ -148,8 +148,10 @@
         "type": "spinner",
         "hint": "Partners",
         "values": [
-          "JPHIEGO",
-          "JSI",
+          "YWCA",
+          "BISO",
+          "ZEC",
+          "COH",
           "PCZ"
         ],
         "v_required": {
@@ -384,6 +386,25 @@
         }
       },
       {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward only takes letters"
+        },
+        "relevance": {
+          "step1:is_on_hiv_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "is_viral_load_test_results_on_file",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -514,10 +535,10 @@
         }
       },
       {
-        "key": "born_from_hiv_positive_mother",
+        "key": "positive_mother",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "born_from_hiv_positive_mother",
+        "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
         "label": "Was the child born from a mother who is HIV-positive? (if no, screen for other sub populations).",
         "options": [
@@ -547,7 +568,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "is_mother_adhering_to_treatment",
@@ -565,7 +593,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "is_mother_virally_suppressed",
@@ -583,25 +618,35 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "child_been_tested_for_hiv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_been_tested_for_hiv",
-        "type": "native_radio",
-        "label": "Has the child been tested for HIV?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        "type": "edit_text",
+        "value": "yes",
+        "hint": "Has the child been tested for HIV?",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward only takes letters"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
-        ]
+        }
       },
       {
         "key": "is_child_hiv_positive",
@@ -609,7 +654,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_child_hiv_positive",
         "type": "native_radio",
-        "label": "D7. Is the child HIV-positive? (if yes, Child should also be categorized as C/ALHIV)",
+        "label": "D7. Is the child HIV-positive?",
         "options": [
           {
             "key": "yes",
@@ -619,7 +664,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "child_receiving_breastfeeding",
@@ -645,7 +697,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_tested_for_hiv_inline_with_guidelines",
         "type": "native_radio",
-        "label": "If Yes to D8, has the child been tested for HIV in line with the guidelines?",
+        "label": "Has the child been tested for HIV in line with the guidelines?",
         "options": [
           {
             "key": "yes",
@@ -657,7 +709,7 @@
           }
         ],
         "relevance": {
-          "step4:child_receiving_breastfeeding": {
+          "step1:child_receiving_breastfeeding": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }

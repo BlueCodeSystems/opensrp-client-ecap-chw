@@ -51,7 +51,7 @@ actions:
 name: step3_index_check_box
 description: index_check_box relevance
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3 || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "shelper.formatDate(step1_adolescent_birthdate,'y') < 3 || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
@@ -276,5 +276,33 @@ name: step1_less_3
 description: less 3
 priority: 1
 condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_mother_currently_on_treatment
+description: is_mother_currently_on_treatment
+priority: 1
+condition: "step1_positive_mother.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_mother_virally_suppressed
+description: is_mother_virally_suppressed
+priority: 1
+condition: "step1_positive_mother.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_mother_adhering_to_treatment
+description: is_mother_adhering_to_treatment
+priority: 1
+condition: "step1_positive_mother.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_child_hiv_positive
+description: is_child_hiv_positive
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
