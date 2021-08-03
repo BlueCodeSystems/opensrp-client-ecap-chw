@@ -185,6 +185,102 @@
             "field": "obs.fieldCode",
             "concept": "less_3"
           }
+        },
+        {
+          "column_name": "positive_mother",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "positive_mother"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "art_number"
+          }
+        },
+        {
+          "column_name": "is_mother_currently_on_treatment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_mother_currently_on_treatment"
+          }
+        },
+        {
+          "column_name": "is_mother_adhering_to_treatment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_mother_adhering_to_treatment"
+          }
+        },
+        {
+          "column_name": "is_mother_virally_suppressed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_mother_virally_suppressed"
+          }
+        },
+        {
+          "column_name": "is_child_hiv_positive",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "is_child_hiv_positive"
+          }
+        },
+        {
+          "column_name": "child_receiving_breastfeeding",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "child_receiving_breastfeeding"
+          }
+        },
+        {
+          "column_name": "child_tested_for_hiv_inline_with_guidelines",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "child_tested_for_hiv_inline_with_guidelines"
+          }
+        },
+        {
+          "column_name": "receives_drugs_to_prevent_hiv_and_other_illnesses",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "receives_drugs_to_prevent_hiv_and_other_illnesses"
+          }
+        },
+        {
+          "column_name": "child_been_screened_for_malnutrition",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "child_been_screened_for_malnutrition"
+          }
+        },
+        {
+          "column_name": "child_gets_drugs_to_prevent_tb",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "child_gets_drugs_to_prevent_tb"
+          }
+        },
+        {
+          "column_name": "child_enrolled_in_early_childhood_development_program",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "child_enrolled_in_early_childhood_development_program"
+          }
         }
       ]
     },
