@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Child’s Details",
+    "title": "Child's Details",
     "next": "step2",
     "fields": [
       {
@@ -61,7 +61,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Child`s first name ",
+        "hint": "Child's first name ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -77,9 +77,9 @@
         "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
+        "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Child`s last name ",
+        "hint": "Child's last name ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -152,7 +152,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "You`re required check the index box"
+          "err": "You're required check the index box"
         }
       }
     ]
@@ -229,7 +229,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "You`re required check the enrollment offer"
+          "err": "You're required check the enrollment offer"
         }
       },
       {
@@ -257,7 +257,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_hiv_known",
         "type": "edit_text",
-        "hint": "Date HIV was known",
+        "hint": "Year HIV was known",
         "v_required": {
           "value": false,
           "err": "Please enter year"
@@ -289,7 +289,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "You`re required check the ART number check box"
+          "err": "You're required check the ART number check box"
         }
       },
       {
@@ -417,7 +417,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Tick `Yes` if child was indexed or `No` to mean child was`nt indexed "
+          "err": "Tick 'Yes' if child was indexed or 'No' to mean child was'nt indexed "
         }
       },
       {
@@ -477,12 +477,12 @@
             "text": "No",
             "value": false,
             "label_info_title": "Child on MMD",
-            "label_info_text": "Check to mean `No` for MMD"
+            "label_info_text": "Check to mean 'No' for MMD"
           }
         ],
         "v_required": {
           "value": false,
-          "err": "You`re required to check the box"
+          "err": "You're required to check the box"
         }
       },
       {
@@ -569,7 +569,7 @@
         "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
         "entity_id": "mother",
-        "hint": "Caregiver`s D.O.B",
+        "hint": "Caregiver's D.O.B",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -619,7 +619,7 @@
       {
         "key": "residence",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "residence",
         "openmrs_data_type": "text",
         "type": "edit_text",

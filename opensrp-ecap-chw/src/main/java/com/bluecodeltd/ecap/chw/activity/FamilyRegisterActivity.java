@@ -11,9 +11,11 @@ import com.bluecodeltd.ecap.chw.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+
 import org.smartregister.chw.core.activity.CoreFamilyRegisterActivity;
 import org.smartregister.chw.core.custom_views.FamilyFloatingMenu;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+
 import com.bluecodeltd.ecap.chw.fragment.FamilyRegisterFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -46,6 +48,11 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
     protected void registerBottomNavigation() {
         super.registerBottomNavigation();
         FamilyRegisterActivity.registerBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
+            bottomNavigationView.getMenu().removeItem(R.id.action_register);
+            bottomNavigationView.getMenu().removeItem(R.id.action_family);
+        }
     }
 
     @Override
@@ -57,18 +64,8 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         familyFloatingMenu.setGravity(Gravity.BOTTOM);
         action = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
         if (action != null && action.equals(Constants.ACTION.START_REGISTRATION)) {
-            startFormActivity("family_register","","");
+            startFormActivity("family_register", "", "");
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        boolean optionsMenu = super.onCreateOptionsMenu(menu);
-        MenuItem indexRegisterMenu = menu.findItem(R.id.action_register_index);
-        if (indexRegisterMenu != null && indexRegisterMenu.isVisible()) {
-            menu.removeItem(R.id.action_register_index);
-        }
-        return optionsMenu;
     }
 
     @Override

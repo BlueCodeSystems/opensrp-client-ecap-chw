@@ -51,25 +51,6 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "mothers_first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "mothers_first_name",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Mothers first name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter mother`s first name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
         "key": "mother_surname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -89,9 +70,28 @@
         }
       },
       {
+        "key": "mothers_first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "mothers_first_name",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Mothers first name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter mother`s first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
         "key": "ovc_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ovc_date",
         "type": "date_picker",
         "hint": "Date referred to OVC program for tracing",
@@ -138,10 +138,10 @@
         },
         "value": [
           {
-            "key": "child_first_name",
+            "key": "first_name",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "child_first_name",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "first_name",
             "entity": "child",
             "type": "edit_text",
             "hint": "Child`s first name ",
@@ -157,10 +157,10 @@
             }
           },
           {
-            "key": "child_last_name",
+            "key": "last_name",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "child_last_name",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "last_name",
             "entity": "child",
             "type": "edit_text",
             "hint": "Child's last name ",
@@ -176,10 +176,10 @@
             }
           },
           {
-            "key": "child_gender",
+            "key": "sex",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "child_gender",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "sex",
             "entity": "child",
             "type": "spinner",
             "hint": "Sex",
@@ -193,10 +193,10 @@
             }
           },
           {
-            "key": "child_birthdate",
+            "key": "birthdate",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "child_birthdate",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "birthdate",
             "entity": "child",
             "type": "date_picker",
             "hint": "Child's DOB",
@@ -223,7 +223,7 @@
       {
         "key": "user_select_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "user_select_test",
         "type": "native_radio",
         "label_text_style": "bold",
@@ -232,20 +232,24 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
-            "value": false
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "yes",
+            "text": "Yes"
           },
           {
             "key": "no",
-            "text": "No",
-            "value": false
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "no",
+            "text": "No"
           }
         ]
       },
       {
         "key": "user_select_hiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "user_select_hiv",
         "type": "native_radio",
         "label_text_style": "bold",
@@ -254,20 +258,24 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
-            "value": false
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "Yes",
+            "text": "Yes"
           },
           {
             "key": "no",
-            "text": "No",
-            "value": false
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "No",
+            "text": "No"
           }
         ]
       },
       {
         "key": "hiv_status",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_status",
         "type": "spinner",
         "hint": "HIV Status  ",
@@ -280,7 +288,7 @@
       {
         "key": "user_select_art",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "user_select_art",
         "type": "native_radio",
         "label_text_style": "bold",
@@ -288,21 +296,25 @@
         "label": "Is the child already on ART?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "Yes",
+            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No",
-            "value": false
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "No",
+            "text": "No"
           }
         ]
       },
       {
         "key": "user_select_enrollment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "user_select_enrollment",
         "type": "native_radio",
         "label_text_style": "bold",
@@ -310,14 +322,18 @@
         "label": "Has the child been offered enrollment into the OVC Program?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "Yes",
+            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No",
-            "value": false
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "No",
+            "text": "No"
           }
         ],
         "v_required": {
@@ -328,7 +344,7 @@
       {
         "key": "user_select_ovc_program",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "user_select_ovc_program",
         "type": "native_radio",
         "label_text_style": "bold",
@@ -336,14 +352,18 @@
         "label": "Has the child been enrolled into the OVC Program?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
+            "key": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "Yes",
+            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No",
-            "value": false
+            "key": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "No",
+            "text": "No"
           }
         ],
         "v_required": {

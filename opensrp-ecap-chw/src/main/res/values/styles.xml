@@ -13,6 +13,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ChwFamilyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/chw_family_primary</item>
+        <item name="colorPrimaryDark">@color/chw_family_primary_dark</item>
+        <item name="colorAccent">@color/chw_family_accent</item>
+    </style>
+
+    <style name="ChwFamilyTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
     <style name="ChwTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="ChwTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
