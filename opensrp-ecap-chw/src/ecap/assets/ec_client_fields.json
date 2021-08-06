@@ -211,6 +211,14 @@
           }
         },
         {
+          "column_name": "mother_art_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "mother_art_number"
+          }
+        },
+        {
           "column_name": "is_mother_adhering_to_treatment",
           "type": "Event",
           "json_mapping": {

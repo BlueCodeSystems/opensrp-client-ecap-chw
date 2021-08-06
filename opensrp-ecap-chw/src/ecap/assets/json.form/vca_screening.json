@@ -57,27 +57,25 @@
     "next": "step2",
     "fields": [
       {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "A. Administrative Information"
+      },
+      {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "stateProvince",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Province",
-        "values": [
-          "Lusaka",
-          "Central",
-          "Western",
-          "Southern",
-          "Eastern",
-          "Muchinga",
-          "Luapula",
-          "North Western",
-          "Copperbelt",
-          "Northern"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select Province"
+        "value" : "Southern",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Province only takes letters"
         }
       },
       {
@@ -87,6 +85,7 @@
         "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
+        "value": "Choma",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -100,6 +99,7 @@
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
+        "value": "Choma Central",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -112,6 +112,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
+        "value": "Test Village",
         "hint": "Village/Compund",
         "edit_type": "name",
         "v_regex": {
@@ -129,6 +130,8 @@
         "openmrs_entity": "Client",
         "openmrs_entity_id": "addressFields.health_facility",
         "type": "edit_text",
+        "read_only": "true",
+        "value": "Choma Central Hospital",
         "hint": "Health facility",
         "edit_type": "name",
         "v_regex": {
@@ -165,7 +168,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_first_name",
         "type": "edit_text",
-        "hint": "Child's first name ",
+        "hint": "VCA first name ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -183,7 +186,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_last_namee",
         "type": "edit_text",
-        "hint": "Child's last name ",
+        "hint": "VCA last name ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -201,7 +204,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "Date of birth",
+        "hint": "VCA Date of birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -278,12 +281,36 @@
         }
       },
       {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd2",
+        "type": "label",
+        "text": "B. Socio-Demographic Information"
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
         "key": "adolescent_gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_gender",
         "type": "spinner",
-        "hint": "Adolescent's Gender",
+        "hint": "VCA Gender",
         "values": [
           "Male",
           "Female"
@@ -299,7 +326,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent in School?",
+        "label": "Is the VCA in School?",
         "options": [
           {
             "key": "pre_school",
@@ -341,6 +368,30 @@
             "ex": "equalTo(., \"other\")"
           }
         }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd3",
+        "type": "label",
+        "text": "C. Children/Adolescents Living with HIV (C/ALHIV)"
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
       },
       {
         "key": "is_hiv_positive",
@@ -393,10 +444,6 @@
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        },
         "relevance": {
           "step1:is_on_hiv_treatment": {
             "type": "string",
@@ -535,12 +582,36 @@
         }
       },
       {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd4",
+        "type": "label",
+        "text": "D. HIV Exposed Infant (HEI)"
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
         "key": "positive_mother",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
-        "label": "Was the child born from a mother who is HIV-positive? (if no, screen for other sub populations).",
+        "label": "Was the child born from a mother who is HIV-positive?",
         "options": [
           {
             "key": "yes",
@@ -558,7 +629,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_currently_on_treatment",
         "type": "native_radio",
-        "label": "Is the mother currently on treatment?",
+        "label": "Is the mother currently on HIV treatment?",
         "options": [
           {
             "key": "yes",
@@ -574,6 +645,21 @@
             "ex-rules": {
               "rules-file": "vca_screening_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "mother_art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Mothers' ART Number",
+        "edit_type": "name",
+        "relevance": {
+          "step1:is_mother_currently_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -638,7 +724,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
+          "err": "Only takes letters"
         },
         "relevance": {
           "rules-engine": {
@@ -654,7 +740,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_child_hiv_positive",
         "type": "native_radio",
-        "label": "D7. Is the child HIV-positive?",
+        "label": "Is the child HIV-positive?",
         "options": [
           {
             "key": "yes",
@@ -707,21 +793,16 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "step1:child_receiving_breastfeeding": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
+        ]
       },
       {
-        "key": "receives_drugs_to_prevent_hiv_and_other_illnesses",
+        "key": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses",
         "type": "native_radio",
-        "label": "D10. Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
+        "read_only": "true",
+        "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
         "options": [
           {
             "key": "yes",
@@ -731,14 +812,28 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:child_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
       },
       {
-        "key": "child_been_screened_for_malnutrition",
+        "key": "child_been_screened_for_malnutrition_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_been_screened_for_malnutrition",
         "type": "native_radio",
+        "read_only": "true",
         "label": "Has the child (6 months and above) been screened for malnutrition?",
         "options": [
           {
@@ -749,14 +844,28 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:child_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
       },
       {
-        "key": "child_gets_drugs_to_prevent_tb",
+        "key": "child_gets_drugs_to_prevent_tb_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
         "type": "native_radio",
+        "read_only": "true",
         "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
         "options": [
           {
@@ -767,7 +876,20 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:child_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
       },
       {
         "key": "child_enrolled_in_early_childhood_development_program",
@@ -785,7 +907,44 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:child_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd5",
+        "type": "label",
+        "text": "E. Children of Women Living with HIV (WLHIV)",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
       },
       {
         "key": "is_biological_child_of_mother_living_with_hiv",
@@ -793,7 +952,9 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_biological_child_of_mother_living_with_hiv",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent a biological child of a mother living with HIV? (If not, screen for another sub populations).",
+        "value": "yes",
+        "read_only": "true",
+        "label": "Is the Child/Adolescent a biological child of a mother living with HIV?",
         "options": [
           {
             "key": "yes",
@@ -803,7 +964,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "child_tested_for_hiv_with_mother_as_index_client",
@@ -811,6 +979,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
+        "read_only": "true",
         "label": "E2. Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
         "options": [
           {
@@ -821,15 +990,23 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "value": "no",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
-        "key": "child_hiv_positive_and_0_to_19_years",
+        "key": "is_mother_currently_on_treatment_wlhiv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_hiv_positive_and_0_to_19_years",
+        "openmrs_entity_id": "is_mother_currently_on_treatment_wlhiv",
         "type": "native_radio",
-        "label": "Is the child HIV+ and 0-19 years? (if yes, Child should be categorized as Children of WLHIV and C/ALHIV)",
+        "label": "Is the mother currently on HIV treatment?",
         "options": [
           {
             "key": "yes",
@@ -839,15 +1016,37 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
-        "key": "child_hiv_negative_and_0_to_17_years",
+        "key": "mother_art_number_wlhiv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_hiv_negative_and_0_to_17_years",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Mothers' ART Number",
+        "edit_type": "name",
+        "relevance": {
+          "step1:is_mother_currently_on_treatment_wlhiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "is_mother_adhering_to_treatment_wlhiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "is_mother_adhering_to_treatment_wlhiv",
         "type": "native_radio",
-        "label": "Is the child HIV- and 0-17 years?",
+        "label": "Is the mother adhering to treatment?",
         "options": [
           {
             "key": "yes",
@@ -857,15 +1056,22 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
-        "key": "child_0_to_2_years",
+        "key": "is_mother_virally_suppressed_wlhiv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_0_to_2_years",
+        "openmrs_entity_id": "is_mother_virally_suppressed_wlhiv",
         "type": "native_radio",
-        "label": "Is the child 0-2 years? (if yes, and not HIV+, Child should also be categorized as HEI) ",
+        "label": "Is the mother virally suppressed?",
         "options": [
           {
             "key": "yes",
@@ -875,43 +1081,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
-      },
-      {
-        "key": "mother_currently_on_hiv_treatment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "mother_currently_on_hiv_treatment",
-        "type": "native_radio",
-        "label": "Is the mother currently on HIV treatment? ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
-        ]
-      },
-      {
-        "key": "mother_adhering_to_treatment_or_virally_suppressed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "mother_adhering_to_treatment_or_virally_suppressed",
-        "type": "native_radio",
-        "label": "Is the mother adhering to treatment/virally suppressed? ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
+        }
       },
       {
         "key": "child_receiving_any_hiv_and_violence_prevention_intervention",
@@ -929,25 +1106,45 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
-        "key": "is_agyw_10_to_17_years_age",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd6",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "is_agyw_10_to_17_years_age",
-        "type": "native_radio",
-        "label": "F1.Is the AGYW 10 -17 years?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        "openmrs_entity_id": "hd6",
+        "type": "label",
+        "text": "F. At Risk Adolescent Girls and Young Women (AGYW)",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
-        ]
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
       },
       {
         "key": "agyw_sexually_active",
@@ -965,7 +1162,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
@@ -973,7 +1177,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
         "type": "native_radio",
-        "label": "If sexually active, is the AGYW using any of these HIV/pregnancy prevention methods?",
+        "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?",
         "options": [
           {
             "key": "prep",
@@ -995,7 +1199,14 @@
             "key": "non_of_the_prevention_methods",
             "text": "Non of the prevention methods"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_having_sex_with_older_men",
@@ -1013,7 +1224,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_engaged_in_transactional_sex",
@@ -1031,7 +1249,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agwy_engaged_in_sex_work",
@@ -1049,7 +1274,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_food_or_economically_insecure",
@@ -1067,7 +1299,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_marry_early",
@@ -1085,7 +1324,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_give_birth_before_the_age_of_18",
@@ -1103,7 +1349,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
@@ -1121,7 +1374,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness",
@@ -1139,79 +1399,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
-      },
-      {
-        "key": "child_answer_yes_to_any_of_the_questions_from_f1_f11",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_answer_yes_to_any_of_the_questions_from_f1_f11",
-        "type": "native_radio",
-        "label": "Did the child answer yes to any of the questions from F1-F11? (If yes, categorize as At Risk AGYW)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
-        ]
-      },
-      {
-        "key": "agyw_been_tested_for_hiv",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "agyw_been_tested_for_hiv",
-        "type": "native_radio",
-        "label": "Has the AGYW been tested for HIV?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "did_the_agyw_test_hiv+",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "did_the_agyw_test_hiv+",
-        "type": "native_radio",
-        "label": "If tested for HIV, did the AGYW test HIV+ (if yes, the AGYW should be categorized as C/ALHIV only)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "agyw_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "agyw_in_school",
-        "type": "native_radio",
-        "label": "Is the AGYW in school?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
+        }
       },
       {
         "key": "agyw_receiving_an_economic_strengthening_intervention",
@@ -1229,7 +1424,22 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hd7",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd7",
+        "type": "label",
+        "text": "G. Children/Adolescents who are Survivors of Sexual Violence"
       },
       {
         "key": "child_ever_experienced_sexual_violence",
@@ -1237,7 +1447,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
-        "label": "Has the child/adolescent ever experienced sexual violence? (If yes, categorize as Survivor of Sexual Violence. If no, screen for other sub populations). ",
+        "label": "Has the child/adolescent ever experienced sexual violence?",
         "options": [
           {
             "key": "yes",
@@ -1247,7 +1457,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       },
       {
         "key": "child_still_living_in_the_same_household_as_the_perpetrator",
@@ -1265,7 +1481,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       },
       {
         "key": "child_supported_to_seek_justice",
@@ -1283,7 +1505,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       },
       {
         "key": "did_the_child_access_clinical_care",
@@ -1301,7 +1529,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       },
       {
         "key": "child_clinical_care_services_received",
@@ -1339,7 +1573,13 @@
             "key": "non_of_the_clinical_care_services",
             "text": "Non of the clinical care services"
           }
-        ]
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       },
       {
         "key": "other_child_clinical_care_services_received",
@@ -1356,40 +1596,12 @@
         }
       },
       {
-        "key": "child_tested_for_hiv",
+        "key": "hd8",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_tested_for_hiv",
-        "type": "native_radio",
-        "label": "Was the child tested for HIV? ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "was_test_result_positive",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "was_test_result_positive",
-        "type": "native_radio",
-        "label": "If tested for HIV, was the test result positive? (If yes, categorize as C/ALHIV as well)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
+        "openmrs_entity_id": "hd8",
+        "type": "label",
+        "text": "H. Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)"
       },
       {
         "key": "is_the_child_caregiver_an_fsw",
@@ -1410,12 +1622,12 @@
         ]
       },
       {
-        "key": "has_the_child_been_tested_for_hiv",
+        "key": "fsw_prevention_intervention",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "has_the_child_been_tested_for_hiv",
+        "openmrs_entity_id": "fsw_prevention_intervention",
         "type": "native_radio",
-        "label": "Has the child/adolescent been tested for HIV?",
+        "label": "Is the Child/Adolescent receiving any age-appropriate HIV and sexual violence prevention intervention?",
         "options": [
           {
             "key": "yes",
@@ -1425,67 +1637,19 @@
             "key": "no",
             "text": "No"
           }
-        ]
-      },
-      {
-        "key": "fsw_child_hiv_test_result_positive",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "fsw_child_hiv_test_result_positive",
-        "type": "native_radio",
-        "label": "If yes, was the HIV test result positive? (If yes, categorize as C/ALHIV as well)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
           }
-        ]
+        }
       },
       {
-        "key": "fsw_child_receiving_any_age_appropriate_hiv_and_sexual_violence_prevention_intervention",
+        "key": "fsw_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "fsw_child_receiving_any_age_appropriate_hiv_and_sexual_violence_prevention_intervention",
-        "type": "native_radio",
-        "label": "H4.Is the Child/Adolescent receiving any age-appropriate HIV and sexual violence prevention intervention?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "fsw_child_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "fsw_child_in_school",
-        "type": "native_radio",
-        "label": "Is the Child/Adolescent in school?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
+        "openmrs_entity_id": "fsw_economic_strengthening_intervention",
         "type": "native_radio",
         "label": "Is the Adolescent and caregiver receiving any economic strengthening intervention?",
         "options": [
@@ -1497,25 +1661,21 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step7:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       },
       {
-        "key": "vca_sub_population_is_approved_for_enrollment",
+        "key": "spacer",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "vca_sub_population_is_approved_for_enrollment",
-        "type": "native_radio",
-        "label": "THIS VCA SUB POPULATION IS APPROVED FOR ENROLLMENT",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spacer",
+        "spacer_height": "15dp"
       },
       {
         "key": "screening_carried_out_by",
@@ -1618,6 +1778,89 @@
     "title": "Child's Details",
     "next": "step4",
     "fields": [
+      {
+        "key": "subpop1_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop1_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_type": "positive",
+        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop2_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop2_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
+        "toaster_type": "positive",
+        "toaster_info_text": "HIV Exposed Infant (HEI)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop3_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
+        "toaster_type": "positive",
+        "toaster_info_text": "Children of Women Living with HIV (WLHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop4_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_type": "positive",
+        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop5_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop5_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "toaster_type": "positive",
+        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "toaster_info_title": "Sub Population"
+      },
       {
         "key": "first_name",
         "openmrs_entity_parent": "",
@@ -1737,28 +1980,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "index_check_box",
-        "type": "native_radio",
-        "label": "Was child identified through Index?",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Was child identified through Index?",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward only takes letters"
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
           }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required check the index box"
         },
         "relevance": {
           "rules-engine": {
