@@ -307,6 +307,7 @@ dependencies {
         exclude group: 'com.rengwuxian.materialedittext', module: 'library'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'io.ona.kujaku', module: 'library'
+        exclude group: 'com.github.lecho', module: 'hellocharts-library'
     }
 
     implementation 'androidx.core:core-ktx:1.3.2'
@@ -318,7 +319,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     //For viewing PDFs in the app
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
     implementation 'androidx.wear:wear:1.0.0'
