@@ -300,9 +300,10 @@
           },
           {
             "field": "eventType",
-            "field_value": "child_index",
+            "field_value": "Sub Population",
             "creates_case": [
-              "ec_client_index"
+              "ec_sub_population",
+              "ec_child_index"
             ]
           }
         ]
