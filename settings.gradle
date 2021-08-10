@@ -1,4 +1,4 @@
 include ':opensrp-ecap-chw'
 
-include ':opensrp-ecap-chw-core'
-project(":opensrp-ecap-chw-core").projectDir = new File("../opensrp-client-ecap-chw-core/opensrp-ecap-chw-core")
+//include ':opensrp-ecap-chw-core'
+//project(":opensrp-ecap-chw-core").projectDir = new File("../opensrp-client-ecap-chw-core/opensrp-ecap-chw-core")
