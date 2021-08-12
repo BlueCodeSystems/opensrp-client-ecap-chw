@@ -1,18 +1,18 @@
 package com.bluecodeltd.ecap.chw.application;
 
+import static org.smartregister.util.Utils.isEmptyCollection;
+
+import com.bluecodeltd.ecap.chw.BuildConfig;
+import com.bluecodeltd.ecap.chw.activity.LoginActivity;
+
 import org.apache.commons.lang3.StringUtils;
 import org.smartregister.SyncConfiguration;
 import org.smartregister.SyncFilter;
-import com.bluecodeltd.ecap.chw.BuildConfig;
-import com.bluecodeltd.ecap.chw.activity.LoginActivity;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.view.activity.BaseLoginActivity;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import static org.smartregister.util.Utils.isEmptyCollection;
 
 /**
  * Created by samuelgithengi on 10/19/18.
@@ -109,5 +109,10 @@ public class ChwSyncConfiguration extends SyncConfiguration {
     @Override
     public Class<? extends BaseLoginActivity> getAuthenticationActivity() {
         return LoginActivity.class;
+    }
+
+    @Override
+    public boolean validateUserAssignments() {
+        return false;
     }
 }
