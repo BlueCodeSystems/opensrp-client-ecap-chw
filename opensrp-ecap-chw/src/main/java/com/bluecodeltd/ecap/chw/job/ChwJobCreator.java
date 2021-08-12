@@ -3,20 +3,15 @@ package com.bluecodeltd.ecap.chw.job;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.sync.ChwSyncIntentService;
+import com.bluecodeltd.ecap.chw.sync.intent.ChwSyncTaskIntentService;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import org.smartregister.chw.core.job.ChwIndicatorGeneratingJob;
-import org.smartregister.chw.core.job.HomeVisitServiceJob;
-import org.smartregister.chw.core.job.StockUsageReportJob;
-import org.smartregister.chw.core.job.VaccineRecurringServiceJob;
-import com.bluecodeltd.ecap.chw.sync.ChwSyncIntentService;
-import com.bluecodeltd.ecap.chw.sync.intent.ChwSyncTaskIntentService;
 import org.smartregister.job.DocumentConfigurationServiceJob;
 import org.smartregister.job.ExtendedSyncServiceJob;
 import org.smartregister.job.ImageUploadServiceJob;
-import org.smartregister.job.P2pServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncLocationsByLevelAndTagsServiceJob;
 import org.smartregister.job.SyncServiceJob;

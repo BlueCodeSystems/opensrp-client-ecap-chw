@@ -54,14 +54,14 @@
           }
         },
         {
-          "column_name": "adolescent_first_name",
+          "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.adolescent_first_name"
           }
         },
         {
-          "column_name": "adolescent_last_name",
+          "column_name": "last_name",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.adolescent_last_name"
@@ -288,6 +288,13 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "child_enrolled_in_early_childhood_development_program"
+          }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateRemoved"
           }
         }
       ]

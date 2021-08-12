@@ -1,22 +1,14 @@
 package com.bluecodeltd.ecap.chw.interactor;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.LoginJobScheduler;
-import org.smartregister.chw.core.job.ChwIndicatorGeneratingJob;
-import org.smartregister.chw.core.job.HomeVisitServiceJob;
-import org.smartregister.chw.core.job.StockUsageReportJob;
-import org.smartregister.chw.core.job.VaccineRecurringServiceJob;
-import com.bluecodeltd.ecap.chw.job.BasePncCloseJob;
 import com.bluecodeltd.ecap.chw.job.ScheduleJob;
-import org.smartregister.immunization.job.VaccineServiceJob;
+
 import org.smartregister.job.DocumentConfigurationServiceJob;
 import org.smartregister.job.ImageUploadServiceJob;
-import org.smartregister.job.PlanIntentServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncLocationsByLevelAndTagsServiceJob;
 import org.smartregister.job.SyncServiceJob;
-import org.smartregister.job.SyncTaskServiceJob;
 
 import java.util.concurrent.TimeUnit;
 
