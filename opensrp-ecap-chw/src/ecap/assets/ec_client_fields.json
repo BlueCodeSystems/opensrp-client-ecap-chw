@@ -1,7 +1,7 @@
 {
   "bindobjects": [
     {
-      "name": "ec_client_index",
+      "name": "ec_sub_population",
       "columns": [
         {
           "column_name": "base_entity_id",

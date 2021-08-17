@@ -130,7 +130,6 @@
         "openmrs_entity": "Client",
         "openmrs_entity_id": "addressFields.health_facility",
         "type": "edit_text",
-        "read_only": "true",
         "value": "Choma Central Hospital",
         "hint": "Health facility",
         "edit_type": "name",
@@ -267,14 +266,6 @@
         "openmrs_entity_id": "adolescent_phone",
         "type": "edit_text",
         "hint": "Telephone/Mobile",
-        "v_numeric": {
-          "value": "true",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "(09[5-7][0-9]{7})|\\s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
         "v_required": {
           "value": true,
           "err": "Please enter Phone Number"
@@ -517,7 +508,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "gets_tb_preventive_therapy",
