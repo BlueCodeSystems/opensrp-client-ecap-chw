@@ -62,13 +62,13 @@ public class Constants extends CoreConstants {
     }
 
     public interface EcapEncounterType {
-        String CHILD_INDEX = "child_index";
+        String CHILD_INDEX = "Sub Population";
         String MOTHER_INDEX = "mother_index";
         String IDENTIFICATION = "identification";
     }
 
     public interface EcapClientTable {
-        String EC_CLIENT_INDEX = "ec_client_index";
+        String EC_CLIENT_INDEX = "ec_child";
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
     }
 }
