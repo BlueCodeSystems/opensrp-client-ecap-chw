@@ -108,7 +108,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sub_population",
         "type": "native_radio",
-        "label": "What is the age of the child/adolescent?",
+        "label": "Subpopulation (tick as appropriate):",
         "options": [
           {
             "key": "c_alhiv",
