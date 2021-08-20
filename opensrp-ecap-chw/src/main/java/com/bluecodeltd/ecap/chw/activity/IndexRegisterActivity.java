@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -67,33 +68,24 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     @Override
     public void startFormActivity(JSONObject jsonObject) {
-        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
 
-        Form form = new Form();
         try {
-            if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
-                            .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                form.setWizard(true);
-                form.setName(getString(R.string.child_details));
-                form.setHideSaveLabel(true);
-                form.setNextLabel(getString(R.string.next));
-                form.setPreviousLabel(getString(R.string.previous));
-                form.setSaveLabel(getString(R.string.submit));
-                form.setNavigationBackground(R.color.primary);
-            } else {
-                form.setWizard(false);
-                form.setHideSaveLabel(true);
-                form.setNextLabel("");
-            }
-            intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("x","My Ward X");
+
+            Log.d("jjson", "myjson : " + jsonObject.toString());
+
+            Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+            Form form = new Form();
+            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+            startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
         } catch (JSONException e) {
-            Timber.e(e);
+            e.printStackTrace();
         }
 
-        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
-        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
-        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
     }
 
     @Override

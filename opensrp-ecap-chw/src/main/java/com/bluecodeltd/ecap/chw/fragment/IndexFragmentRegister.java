@@ -12,11 +12,11 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
+import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
-import org.smartregister.family.util.Constants;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.util.Utils;
 import org.smartregister.view.customcontrols.CustomFontTextView;
@@ -137,7 +137,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     public void initializeAdapter() {
         IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_client_index"));
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }
