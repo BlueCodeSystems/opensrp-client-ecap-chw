@@ -268,12 +268,19 @@ actions:
 name: step3_subpop3_toast
 description: subpop3_toast relevance
 priority: 1
-condition: "(is_biological_child_of_mother_living_with_hiv.contains('yes') && step1_is_hiv_positive.contains('yes')) || (step1_is_hiv_positive.contains('no') && helper.formatDate(step1_adolescent_birthdate,'y') < 18 && is_biological_child_of_mother_living_with_hiv.contains('yes'))"
+condition: "(is_biological_child_of_mother_living_with_hiv.contains('yes') && step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20) || (is_biological_child_of_mother_living_with_hiv.contains('no') && step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step5_subpop5_toast
 description: subpop5_toast relevance
+priority: 1
+condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_subpop6_toast
+description: subpop6_toast relevance
 priority: 1
 condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
 actions:
@@ -324,70 +331,70 @@ actions:
 name: step1_is_mother_currently_on_treatment
 description: is_mother_currently_on_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_is_mother_virally_suppressed
 description: is_mother_virally_suppressed
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_is_mother_adhering_to_treatment
 description: is_mother_adhering_to_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_is_child_hiv_positive
 description: is_child_hiv_positive
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes')"
+condition: "step1_is_hiv_positive.contains('yes') && step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_receiving_breastfeeding
 description: child_receiving_breastfeeding
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_tested_for_hiv_inline_with_guidelines
 description: child_tested_for_hiv_inline_with_guidelines
 priority: 1
-condition: "step1_positive_mother.contains('yes') && step1_child_receiving_breastfeeding.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses
 description: receives_drugs_to_prevent_hiv_and_other_illnesses
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_been_screened_for_malnutrition
 description: child_been_screened_for_malnutrition
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_gets_drugs_to_prevent_tb
 description: child_gets_drugs_to_prevent_tb
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_enrolled_in_early_childhood_development_program
 description: child_enrolled_in_early_childhood_development_program
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
@@ -429,14 +436,14 @@ actions:
 name: step1_agyw_sexually_active
 description: agyw_sexually_active
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18 && step1_adolescent_gender.contains('female')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_hd6
 description: hd6
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18 && step1_adolescent_gender.contains('female')"
 actions:
   - "isRelevant = true"
 ---
@@ -524,16 +531,23 @@ condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_child_clinical_care_services_received
+description: child_clinical_care_services_received
+priority: 1
+condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_fsw_prevention_intervention
 description: fsw_prevention_intervention
 priority: 1
-condition: "step1_is_the_child_caregiver_an_fsw.contains('other')"
+condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_fsw_economic_strengthening_intervention
 description: fsw_economic_strengthening_intervention
 priority: 1
-condition: "step1_is_the_child_caregiver_an_fsw.contains('other')"
+condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
 actions:
   - "isRelevant = true"
