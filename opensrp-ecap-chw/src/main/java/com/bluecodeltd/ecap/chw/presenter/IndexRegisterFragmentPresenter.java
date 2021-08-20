@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
+import com.bluecodeltd.ecap.chw.util.Constants;
 
 public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentContract.Presenter {
 
@@ -24,10 +25,13 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
     @Override
     public void initializeQueries(String s) {
 
-        String countSelect = "SELECT COUNT(*) FROM ec_client_index";
-        String mainSelect = "SELECT id as _id, relationalid, relationalid as relational_id, first_name, last_name, physical_address FROM ec_client_index";
+        String children = Constants.EcapClientTable.EC_CLIENT_INDEX;
+        String population = Constants.EcapClientTable.EC_POPULATION;
 
-        getView().initializeQueryParams("ec_client_index", countSelect, mainSelect);
+        String countSelect = "SELECT COUNT(*) FROM " + children;
+        String mainSelect = "SELECT id as _id, relationalid, relationalid AS relational_id, first_name, last_name, health_facility AS residence FROM " + children;
+
+        getView().initializeQueryParams(Constants.EcapClientTable.EC_CLIENT_INDEX, countSelect, mainSelect);
         getView().initializeAdapter();
         getView().countExecute();
         getView().filterandSortInInitializeQueries();

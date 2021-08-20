@@ -1,4 +1,11 @@
 ---
+name: step1_screened_for_malnutrition
+description: screened_for_malnutrition relevance
+priority: 1
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 0.6)"
+actions:
+  - "isRelevant = true"
+---
 name: step3_first_name
 description: first_name relevance
 priority: 1
@@ -244,6 +251,13 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
+name: step3_subpop1
+description: subpop1 relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
 name: step3_subpop2_toast
 description: subpop2_toast relevance
 priority: 1
@@ -415,14 +429,14 @@ actions:
 name: step1_agyw_sexually_active
 description: agyw_sexually_active
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_hd6
 description: hd6
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
@@ -450,42 +464,42 @@ actions:
 name: step1_agyw_food_or_economically_insecure
 description: agyw_food_or_economically_insecure
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_agyw_marry_early
 description: agyw_marry_early
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_agyw_give_birth_before_the_age_of_18
 description: agyw_give_birth_before_the_age_of_18
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_agyw_have_a_partner_who_is_violent_or_has_experienced_violence
 description: agyw_have_a_partner_who_is_violent_or_has_experienced_violence
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness
 description: agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_agyw_receiving_an_economic_strengthening_intervention
 description: agyw_receiving_an_economic_strengthening_intervention
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---
