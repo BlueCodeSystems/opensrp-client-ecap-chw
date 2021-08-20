@@ -25,13 +25,11 @@ public class IndexRegisterModel implements IndexRegisterContract.Model {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            String entityId = formJsonObject.getString(JsonFormUtils.ENTITY_ID);
+            String entityId  = JsonFormUtils.generateRandomUUIDString();
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
-            if (StringUtils.isBlank(entityId)) {
-                entityId = JsonFormUtils.generateRandomUUIDString();
-            }
+
             JSONArray fields = JsonFormUtils.fields(formJsonObject);
             //TODO Separate child fields from mother fields and create new events for both but process data in the same table - ec_client_index.
             // Remember to include mother details fields in ec_client_fields table
