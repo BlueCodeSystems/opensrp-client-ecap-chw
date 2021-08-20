@@ -1,13 +1,20 @@
 {
   "bindobjects": [
     {
-      "name": "ec_client_index",
+      "name": "ec_sub_population",
       "columns": [
         {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
             "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
           }
         },
         {
@@ -42,7 +49,7 @@
           "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "addressFields.health_facility"
+            "field": "attributes.health_facility"
           }
         },
         {
@@ -296,6 +303,13 @@
           "json_mapping": {
             "field": "attributes.dateRemoved"
           }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationalid"
+          }
         }
       ]
     },
@@ -472,7 +486,7 @@
           "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.healthFacility"
+            "field": "attributes.health_facility"
           }
         },
         {
@@ -1172,6 +1186,81 @@
           "type": "Client",
           "json_mapping": {
             "field": "gender"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_client_index",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.opensrp_id"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "subpop1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop1"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthDate"
+          }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateRemoved"
           }
         }
       ]
