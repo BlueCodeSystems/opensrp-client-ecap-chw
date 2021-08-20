@@ -58,7 +58,7 @@ actions:
 name: step1_child_gets_drugs_to_prevent_tb_hei
 description: child_gets_drugs_to_prevent_tb_hei
 priority: 1
-condition: "step1_child_been_screened_for_malnutrition_hei == ''"
+condition: "step1_child_gets_drugs_to_prevent_tb_hei == ''"
 actions:
   - "calculation = step1_gets_tb_preventive_therapy"
 ---

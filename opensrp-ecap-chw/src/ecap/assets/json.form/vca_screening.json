@@ -300,16 +300,18 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_gender",
-        "type": "spinner",
+        "type": "native_radio",
         "hint": "VCA Gender",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select gender"
-        }
+        "options": [
+          {
+            "key": "Male",
+            "text": "Male"
+          },
+          {
+            "key": "Female",
+            "text": "Female"
+          }
+        ]
       },
       {
         "key": "school",
@@ -401,6 +403,7 @@
             "text": "No"
           }
         ]
+
       },
       {
         "key": "is_on_hiv_treatment",
@@ -927,14 +930,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd5",
         "type": "label",
-        "text": "E. Children of Women Living with HIV (WLHIV)",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
+        "text": "E. Children of Women Living with HIV (WLHIV)"
       },
       {
         "key": "spacer",
@@ -950,8 +946,6 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_biological_child_of_mother_living_with_hiv",
         "type": "native_radio",
-        "value": "yes",
-        "read_only": "true",
         "label": "Is the Child/Adolescent a biological child of a mother living with HIV?",
         "options": [
           {
@@ -975,10 +969,9 @@
         "key": "child_tested_for_hiv_with_mother_as_index_client",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "9",
+        "openmrs_entity_id": "child_tested_for_hiv_with_mother_as_index_client",
         "type": "native_radio",
-        "read_only": "true",
-        "label": "E2. Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
+        "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
         "options": [
           {
             "key": "yes",
@@ -1455,13 +1448,7 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
-          }
-        }
+        ]
       },
       {
         "key": "child_still_living_in_the_same_household_as_the_perpetrator",
@@ -1481,9 +1468,10 @@
           }
         ],
         "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1505,9 +1493,10 @@
           }
         ],
         "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1529,9 +1518,10 @@
           }
         ],
         "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1573,9 +1563,10 @@
           }
         ],
         "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1607,7 +1598,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_the_child_caregiver_an_fsw",
         "type": "native_radio",
-        "label": "Is the child/adolescent’s caregiver an FSW? (If yes, proceed to H2. If, no, proceed to Guidance for Enrollment)",
+        "label": "Is the child/adolescent’s caregiver an FSW?",
         "options": [
           {
             "key": "yes",
@@ -1637,9 +1628,10 @@
           }
         ],
         "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1661,9 +1653,10 @@
           }
         ],
         "relevance": {
-          "step7:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1836,7 +1829,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop4_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population :At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_type": "positive",
         "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
@@ -1854,20 +1847,135 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop5_toast",
         "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "toaster_type": "positive",
+        "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop6_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop6_toast",
+        "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "toaster_type": "positive",
         "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_info_title": "Sub Population"
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "subpop1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop1",
-        "hidden": "true",
+        "read_only": "true",
         "type": "edit_text",
-        "value": "1",
-        "hint": "Sub Population",
+        "value": "true",
+        "hint": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop2",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "HIV Exposed Infant (HEI)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children of Women Living with HIV (WLHIV)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children/Adolescents who are Survivors of Sexual Violence",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop6",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop6",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "edit_type": "name",
         "relevance": {
           "rules-engine": {
@@ -1998,6 +2106,7 @@
         "openmrs_entity_id": "index_check_box",
         "type": "edit_text",
         "read_only": "true",
+        "value": "yes",
         "hint": "Was child identified through Index?",
         "edit_type": "name",
         "v_regex": {
@@ -2008,13 +2117,6 @@
           "rules-engine": {
             "ex-rules": {
               "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
             }
           }
         }

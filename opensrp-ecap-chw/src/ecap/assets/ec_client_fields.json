@@ -1222,6 +1222,41 @@
           }
         },
         {
+          "column_name": "subpop2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop2"
+          }
+        },
+        {
+          "column_name": "subpop3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop3"
+          }
+        },
+        {
+          "column_name": "subpop4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop4"
+          }
+        },
+        {
+          "column_name": "subpop5",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop5"
+          }
+        },
+        {
+          "column_name": "subpop6",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop6"
+          }
+        },
+        {
           "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
