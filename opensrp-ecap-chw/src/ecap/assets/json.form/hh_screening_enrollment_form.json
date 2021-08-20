@@ -62,7 +62,7 @@
         "text": "Part A: Index VCA Sub Population",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": false
         }
       },
       {
@@ -230,7 +230,7 @@
         "text": "Part B: Household Information",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": false
         }
       },
       {
@@ -397,8 +397,6 @@
         }
       },
       {
-
-
         "key": "Guardian_Number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -415,7 +413,6 @@
         }
       },
       {
-
         "key": "household_summary_information",
         "type": "repeating_group",
         "reference_edit_text_hint": "Number of households",
@@ -431,7 +428,7 @@
             "text": "Part C: Household Summary Information",
             "text_color": "#000000",
             "v_required": {
-              "value": true
+              "value": false
             }
           },
           {
@@ -604,7 +601,7 @@
         "text": "Part D: Other VCA Sub Population Screening in Household",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": false
         }
       },
       {
@@ -1285,7 +1282,7 @@
         "text": "Part E: For Primary Caregivers Only",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": false
         }
       },
       {
@@ -1570,31 +1567,16 @@
     ]
   },
   "step2":{
-    "title":" Household Enrollment",
+    "title":"Household Enrollment",
     "fields":[
       {
         "key": "household_enrollment_part1",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part 1 Of Household Enrollment",
+        "text": "Part 1: Household Enrollment",
         "text_color": "#000000",
         "v_required": {
-          "value": true
-        }
-      },
-      {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "opensrp_id",
-        "hidden": "true",
-        "type": "barcode",
-        "barcode_type": "qrcode",
-        "hint": "{{family_register.step1.unique_id.hint}}",
-        "scanButtonText": "{{family_register.step1.unique_id.scanButtonText}}",
-        "v_numeric": {
-          "value": "true",
-          "err": "{{family_register.step1.unique_id.v_numeric.err}}"
+          "value": false
         }
       },
       {

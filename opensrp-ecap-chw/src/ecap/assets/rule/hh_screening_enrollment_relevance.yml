@@ -1,0 +1,22 @@
+---
+name: step1_offer_HIV_index_testing
+description: offer_HIV_index_testing relevance
+priority: 1
+condition: "step1_all_other_household_members_0_17years_know_their_hiv_status.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_refer_to_treatment_and_care
+description: refer_to_treatment_and_care relevance
+priority: 1
+condition: "step1_are_there_children_who_are_hiv_positive_and_on_active_treatment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status
+description: if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status relevance
+priority: 1
+condition: "step1_is_the_female_caregiver_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
+
