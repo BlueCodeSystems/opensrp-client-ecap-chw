@@ -127,8 +127,8 @@
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "Client",
-        "openmrs_entity_id": "addressFields.health_facility",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
         "type": "edit_text",
         "value": "Choma Central Hospital",
         "hint": "Health facility",
@@ -172,7 +172,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter Child's first name"
+          "err": "Please enter VCA first name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -190,7 +190,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter Child's last name"
+          "err": "Please enter VCA last name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -275,7 +275,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "1",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -291,7 +291,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "2",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -364,7 +364,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "3",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -380,7 +380,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "4",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -583,7 +583,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "5",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -599,7 +599,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "6",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -917,7 +917,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "7",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -940,7 +940,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "8",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -975,7 +975,7 @@
         "key": "child_tested_for_hiv_with_mother_as_index_client",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "9",
         "type": "native_radio",
         "read_only": "true",
         "label": "E2. Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
@@ -1117,7 +1117,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "10",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -1140,7 +1140,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "11",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -1671,7 +1671,7 @@
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "666",
         "type": "spacer",
         "spacer_height": "15dp"
       },
@@ -1706,7 +1706,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "approved_by",
         "type": "edit_text",
-        "hint": "approved_by",
+        "hint": "Approved By",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1860,6 +1860,24 @@
         "toaster_info_title": "Sub Population"
       },
       {
+        "key": "subpop1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1",
+        "hidden": "true",
+        "type": "edit_text",
+        "value": "1",
+        "hint": "Sub Population",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -1896,7 +1914,7 @@
         "look_up": "true",
         "v_required": {
           "value": false,
-          "err": "Please enter childs last name"
+          "err": "Please enter VCA last name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2234,7 +2252,7 @@
         "edit_type": "number",
         "v_required": {
           "value": false,
-          "err": "Please enter childs ART number "
+          "err": "Please enter VCA ART number "
         },
         "v_regex": {
           "value": "[0-9]*",
