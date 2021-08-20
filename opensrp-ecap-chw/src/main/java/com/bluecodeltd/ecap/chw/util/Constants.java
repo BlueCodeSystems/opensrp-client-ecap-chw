@@ -68,7 +68,8 @@ public class Constants extends CoreConstants {
     }
 
     public interface EcapClientTable {
-        String EC_CLIENT_INDEX = "ec_child";
+        String EC_CLIENT_INDEX = "ec_client_index";
+        String EC_POPULATION = "ec_sub_population";
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
     }
 }
