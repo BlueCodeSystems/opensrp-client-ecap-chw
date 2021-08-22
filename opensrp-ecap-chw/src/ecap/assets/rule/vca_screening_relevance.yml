@@ -9,238 +9,238 @@ actions:
 name: step3_first_name
 description: first_name relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_last_name
 description: last_name relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_firstname
 description: caregiver_firstname relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_village
 description: Village relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_phone_number
 description: Phone number relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_gender
 description: gender relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_birthdate
 description: birthdate relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_index_check_box
 description: index_check_box relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_of_screening
 description: date_of_screening relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_screening_location
 description: screening_location relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_referred
 description: date_referred relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_offered_enrollment
 description: date_offered_enrollment relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_acceptance
 description: acceptance relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_enrolled
 description: date_enrolled relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_hiv_known
 description: date_hiv_known relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_art_check_box
 description: art_check_box relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_art_number
 description: art_number relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_started_art
 description: date_started_art relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_vl_check_box
 description: vl_check_box relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_last_vl
 description: date_last_vl relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_vl_last_result
 description: vl_last_result relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_vl_suppressed
 description: vl_suppressed relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_date_next_vl
 description: date_next_vl relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_vl_next_result
 description: vl_next_result relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_child_mmd
 description: child_mmd relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) || step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step4_level_mmd
 description: level_mmd relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_first_name
 description: caregiver_first_name relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_last_name
 description: caregiver_last_name relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_sex
 description: caregiver_sex relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_birth_date
 description: caregiver_birth_date relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_hiv_status
 description: caregiver_hiv_status relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_relation
 description: relation relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_residence
 description: residence relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
 name: step5_phone_number
 description: phone_number relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step2_consent_check_box.contains('consent_check_box'))||(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes') && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box'))||(step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box'))"
 actions:
   - "isRelevant = true"
 ---
@@ -261,14 +261,28 @@ actions:
 name: step3_subpop2_toast
 description: subpop2_toast relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step2_consent_check_box.contains('consent_check_box')"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_subpop2
+description: subpop2 relevance
+priority: 1
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_subpop3_toast
 description: subpop3_toast relevance
 priority: 1
-condition: "(is_biological_child_of_mother_living_with_hiv.contains('yes') && step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20) || (is_biological_child_of_mother_living_with_hiv.contains('no') && step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_subpop3
+description: subpop3 relevance
+priority: 1
+condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -321,6 +335,13 @@ condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_takes_drugs_to_prevent_other_diseases
+description: takes_drugs_to_prevent_other_diseases
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_less_3
 description: less 3
 priority: 1
@@ -328,73 +349,80 @@ condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
+name: step1_positive_mother
+description: positive_mother
+priority: 1
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_is_mother_currently_on_treatment
 description: is_mother_currently_on_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_is_mother_virally_suppressed
 description: is_mother_virally_suppressed
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_is_mother_adhering_to_treatment
 description: is_mother_adhering_to_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
-actions:
-  - "isRelevant = true"
----
-name: step1_is_child_hiv_positive
-description: is_child_hiv_positive
-priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_receiving_breastfeeding
 description: child_receiving_breastfeeding
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_tested_for_hiv_inline_with_guidelines
 description: child_tested_for_hiv_inline_with_guidelines
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses
 description: receives_drugs_to_prevent_hiv_and_other_illnesses
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_been_screened_for_malnutrition
 description: child_been_screened_for_malnutrition
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_gets_drugs_to_prevent_tb
 description: child_gets_drugs_to_prevent_tb
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_enrolled_in_early_childhood_development_program
 description: child_enrolled_in_early_childhood_development_program
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_biological_child_of_mother_living_with_hiv
+description: is_biological_child_of_mother_living_with_hiv
+priority: 1
+condition: "(step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20) || (step1_is_hiv_positive.contains('no') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
   - "isRelevant = true"
 ---

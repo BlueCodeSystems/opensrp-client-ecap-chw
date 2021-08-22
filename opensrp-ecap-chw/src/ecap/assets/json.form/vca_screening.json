@@ -313,8 +313,6 @@
           }
         ]
       },
-
-
       {
         "key": "school",
         "openmrs_entity_parent": "",
@@ -562,7 +560,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "less_3",
@@ -623,7 +628,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "is_mother_currently_on_treatment",
@@ -737,12 +749,12 @@
         }
       },
       {
-        "key": "is_child_hiv_positive",
+        "key": "child_receiving_breastfeeding",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "is_child_hiv_positive",
+        "openmrs_entity_id": "child_receiving_breastfeeding",
         "type": "native_radio",
-        "label": "Is the child HIV-positive?",
+        "label": "Is the child receiving breast feeding?",
         "options": [
           {
             "key": "yes",
@@ -762,24 +774,6 @@
         }
       },
       {
-        "key": "child_receiving_breastfeeding",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_receiving_breastfeeding",
-        "type": "native_radio",
-        "label": "Is the child receiving breast feeding?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
         "key": "child_tested_for_hiv_inline_with_guidelines",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -795,7 +789,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
@@ -880,9 +881,10 @@
           }
         ],
         "relevance": {
-          "step1:child_receiving_breastfeeding": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         },
         "calculation": {
@@ -911,9 +913,10 @@
           }
         ],
         "relevance": {
-          "step1:child_receiving_breastfeeding": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -931,14 +934,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd5",
         "type": "label",
-        "text": "E. Children of Women Living with HIV (WLHIV)",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
+        "text": "E. Children of Women Living with HIV (WLHIV)"
       },
       {
         "key": "spacer",
@@ -964,7 +960,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "child_tested_for_hiv_with_mother_as_index_client",
@@ -973,7 +976,7 @@
         "openmrs_entity_id": "9",
         "type": "native_radio",
         "read_only": "true",
-        "label": "E2. Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
+        "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
         "options": [
           {
             "key": "yes",
@@ -984,7 +987,7 @@
             "text": "No"
           }
         ],
-        "value": "no",
+        "value": "No",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1885,10 +1888,46 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop1",
-        "hidden": "true",
+        "read_only": "true",
         "type": "edit_text",
-        "value": "1",
-        "hint": "Sub Population",
+        "value": "true",
+        "hint": "Children/Adolescents Living with HIV (C/ALHIV) ",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop2",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "HIV Exposed Infant (HEI)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children of Women Living with HIV (WLHIV)",
         "edit_type": "name",
         "relevance": {
           "rules-engine": {
