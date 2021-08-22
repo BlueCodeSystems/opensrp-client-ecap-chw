@@ -35,7 +35,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan;
-    private TextView txtName;
+    private TextView txtName, txtFacility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +52,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = (RelativeLayout)findViewById(R.id.assessment);
         rcase_plan = (RelativeLayout)findViewById(R.id.case_plan);
         txtName = findViewById(R.id.myname);
+        txtFacility = findViewById(R.id.mfacility);
 
+        String facility = getIntent().getExtras().getString("mfacility");
         String data = getIntent().getExtras().getString("client");
+
         txtName.setText(data);
+        txtFacility.setText("Health Facility : " + facility);
     }
 
 
