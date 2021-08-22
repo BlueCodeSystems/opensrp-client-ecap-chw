@@ -392,7 +392,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent HIV-positive",
+        "label": "Is the Child/Adolescent HIV Positive",
         "options": [
           {
             "key": "yes",
@@ -1125,14 +1125,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd6",
         "type": "label",
-        "text": "F. At Risk Adolescent Girls and Young Women (AGYW)",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
+        "text": "F. At Risk Adolescent Girls and Young Women (AGYW)"
       },
       {
         "key": "spacer",
@@ -1386,6 +1379,31 @@
         "openmrs_entity_id": "agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness",
         "type": "native_radio",
         "label": "Has the AGYW ever been diagnosed with a Sexually Transmitted Illness (STI)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "agyw_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "agyw_in_school",
+        "type": "native_radio",
+        "label": "Is the AGYW in school?",
         "options": [
           {
             "key": "yes",
@@ -1928,6 +1946,24 @@
         "type": "edit_text",
         "value": "true",
         "hint": "Children of Women Living with HIV (WLHIV)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
         "edit_type": "name",
         "relevance": {
           "rules-engine": {
