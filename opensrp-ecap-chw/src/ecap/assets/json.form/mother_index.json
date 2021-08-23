@@ -51,25 +51,6 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "mother_surname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "mother_surname",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Mothers surname",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter mother`s last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
         "key": "mothers_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -89,12 +70,31 @@
         }
       },
       {
+        "key": "mother_surname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "mother_surname",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Mothers surname",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter mother`s last name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
         "key": "ovc_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ovc_date",
         "type": "date_picker",
-        "hint": "Date referred to OVC program for tracing",
+        "hint": "Date referred to OVC \nprogram for tracing",
         "expanded": false,
         "duration": {
           "label": ""
@@ -211,6 +211,157 @@
               "value": false,
               "err": "Please enter the date of birth"
             }
+          },
+          {
+            "key": "user_select_test",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "user_select_test",
+            "type": "native_radio",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "label": "Was the child linked to testing?",
+            "options": [
+              {
+                "key": "yes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "no",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "user_select_hiv",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "user_select_hiv",
+            "type": "native_radio",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "label": "Was the child tested for HIV?",
+            "options": [
+              {
+                "key": "yes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "Yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "No",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "hiv_status",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_status",
+            "type": "spinner",
+            "hint": "HIV Status  ",
+            "values": [
+              "HIV+",
+              "HIV-",
+              "Unknown"
+            ]
+          },
+          {
+            "key": "user_select_art",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "user_select_art",
+            "type": "native_radio",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "label": "Is the child already on ART?",
+            "options": [
+              {
+                "key": "Yes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "Yes",
+                "text": "Yes"
+              },
+              {
+                "key": "No",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "No",
+                "text": "No"
+              }
+            ]
+          },
+          {
+            "key": "user_select_enrollment",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "user_select_enrollment",
+            "type": "native_radio",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "label": "Has the child been offered enrollment into the OVC Program?",
+            "options": [
+              {
+                "key": "Yes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "Yes",
+                "text": "Yes"
+              },
+              {
+                "key": "No",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "No",
+                "text": "No"
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You need to make a selection"
+            }
+          },
+          {
+            "key": "user_select_ovc_program",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "user_select_ovc_program",
+            "type": "native_radio",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "label": "Has the child been enrolled into the OVC Program?",
+            "options": [
+              {
+                "key": "Yes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "Yes",
+                "text": "Yes"
+              },
+              {
+                "key": "No",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "person_attribute",
+                "openmrs_entity_id": "No",
+                "text": "No"
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You need to make a selection"
+            }
           }
         ],
         "relevance": {
@@ -218,157 +369,6 @@
             "ex-rules": {
             }
           }
-        }
-      },
-      {
-        "key": "user_select_test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "user_select_test",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Was the child linked to testing?",
-        "options": [
-          {
-            "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "user_select_hiv",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "user_select_hiv",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Was the child tested for HIV?",
-        "options": [
-          {
-            "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "hiv_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_status",
-        "type": "spinner",
-        "hint": "HIV Status  ",
-        "values": [
-          "HIV+",
-          "HIV-",
-          "Unknown"
-        ]
-      },
-      {
-        "key": "user_select_art",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "user_select_art",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Is the child already on ART?",
-        "options": [
-          {
-            "key": "Yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "user_select_enrollment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "user_select_enrollment",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Has the child been offered enrollment into the OVC Program?",
-        "options": [
-          {
-            "key": "Yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You need to make a selection"
-        }
-      },
-      {
-        "key": "user_select_ovc_program",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "user_select_ovc_program",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Has the child been enrolled into the OVC Program?",
-        "options": [
-          {
-            "key": "Yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You need to make a selection"
         }
       },
       {
