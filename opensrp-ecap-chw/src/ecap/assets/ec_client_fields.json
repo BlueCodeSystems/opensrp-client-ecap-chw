@@ -1276,14 +1276,6 @@
           }
         },
         {
-          "column_name": "phone_number",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        },
-        {
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
@@ -1431,25 +1423,25 @@
           }
         },
         {
-          "column_name": "implementing_partners",
+          "column_name": "partner",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "implementing_partners"
+            "concept": "partner"
           }
         },
         {
-          "column_name": "first_name_of_caregiver",
+          "column_name": "caregiver_first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "firstName"
+            "field": "attributes.caregiver_first_name"
           }
         },
         {
-          "column_name": "second_name_of_caregiver",
+          "column_name": "caregiver_second_name",
           "type": "Client",
           "json_mapping": {
-            "field": "lastName"
+            "field": "attributes.caregiver_second_name"
           }
         },
         {
@@ -1503,11 +1495,11 @@
           }
         },
         {
-          "column_name": "initial_updated",
+          "column_name": "question",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "initial_updated"
+            "concept": "question"
           }
         },
         {
@@ -1543,11 +1535,11 @@
           }
         },
         {
-          "column_name": "additional_remarks",
+          "column_name": "remarks",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "additional_remarks"
+            "concept": "remarks"
           }
         },
         {
