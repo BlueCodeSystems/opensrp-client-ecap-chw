@@ -134,7 +134,8 @@
           "column_name": "is_hiv_positive",
           "type": "Event",
           "json_mapping": {
-            "field": "obs.fieldCode"
+            "field": "obs.fieldCode",
+            "concept": "is_hiv_positive"
           }
         },
         {
@@ -1246,14 +1247,14 @@
           "column_name": "gender",
           "type": "Client",
           "json_mapping": {
-            "field": "gender"
+            "field": "attributes.gender"
           }
         },
         {
           "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
-            "field": "birthDate"
+            "field": "attributes.birthDate"
           }
         },
         {

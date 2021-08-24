@@ -34,7 +34,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan;
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
     private TextView txtName, txtFacility;
 
     @Override
@@ -51,14 +51,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rhousehold = (RelativeLayout)findViewById(R.id.household);
         rassessment = (RelativeLayout)findViewById(R.id.assessment);
         rcase_plan = (RelativeLayout)findViewById(R.id.case_plan);
+        referral = (RelativeLayout)findViewById(R.id.referral);
         txtName = findViewById(R.id.myname);
-        txtFacility = findViewById(R.id.mfacility);
+        //txtFacility = findViewById(R.id.mfacility);
 
         String facility = getIntent().getExtras().getString("mfacility");
         String data = getIntent().getExtras().getString("client");
 
         txtName.setText(data);
-        txtFacility.setText("Health Facility : " + facility);
+       // txtFacility.setText("Health Facility : " + facility);
     }
 
 
@@ -145,6 +146,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.referral:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("referral");
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
@@ -157,6 +171,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rhousehold.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
+            referral.setVisibility(View.VISIBLE);
 
         } else {
 
@@ -165,7 +180,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rhousehold.setVisibility(View.GONE);
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
-
+            referral.setVisibility(View.GONE);
         }
     }
 

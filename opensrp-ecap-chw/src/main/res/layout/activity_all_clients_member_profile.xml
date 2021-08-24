@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="100dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -56,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="test"
+                    android:text="ECAP II"
                     android:paddingLeft="0dp"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/activity_title_size" />
@@ -77,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="tesssss"
+                        android:text="Copperbelt"
                         android:paddingLeft="0dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/text_black" />
@@ -97,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="kkkkkk"
+                        android:text="Ndola"
                         android:paddingLeft="0dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/text_black"
@@ -120,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingLeft="0dp"
-                        android:text="blabla"
+                        android:text="Ndola Central Hospital"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/text_black" />
                 </LinearLayout>
@@ -133,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/register_list_top_bottom_min_padding"
-                    android:text="@string/family_head"
+                    android:text="Chobela Kakumbi"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/register_list_desc_size"
@@ -150,7 +152,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/register_list_desc_size"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -201,7 +203,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/family_image"
                 android:gravity="center_horizontal"
-                android:text="@string/family_has_nothing_due"
+                android:text="Household Profile"
                 android:textColor="@android:color/black" />
 
             <org.smartregister.view.customcontrols.CustomFontTextView
@@ -213,6 +215,53 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/family_image"
                 android:text="@string/go_to_family_s_profile"
+                android:textColor="@android:color/darker_gray" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/family_has_row2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_background_selctor"
+            android:padding="20dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/family_image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/childrow_family" />
+
+            <ImageView
+                android:id="@+id/family_arrow_image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/row_goto" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/textview_v_has"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image2"
+                android:gravity="center_horizontal"
+                android:text="Vulnerability Assessment Results"
+                android:textColor="@android:color/black" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/text_view_family_profile2"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview_v_has"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image2"
+                android:text="Go to Assessment Profile"
                 android:textColor="@android:color/darker_gray" />
 
         </RelativeLayout>

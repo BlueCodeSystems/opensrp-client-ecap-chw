@@ -2,7 +2,7 @@
 name: step1_screened_for_malnutrition
 description: screened_for_malnutrition relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 0.6)"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 0.6)"
 actions:
   - "isRelevant = true"
 ---
@@ -359,7 +359,7 @@ actions:
 name: step1_gets_tb_preventive_therapy
 description: gets_tb_preventive_therapy relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes')"
+condition: "step1_is_hiv_positive.contains('yes') && step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -412,29 +412,22 @@ condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_ado
 actions:
   - "isRelevant = true"
 ---
-name: step1_child_tested_for_hiv_inline_with_guidelines
-description: child_tested_for_hiv_inline_with_guidelines
+name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses_hei
+description: receives_drugs_to_prevent_hiv_and_other_illnesses_hei
 priority: 1
 condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses
-description: receives_drugs_to_prevent_hiv_and_other_illnesses
+name: step1_child_been_screened_for_malnutrition_hei
+description: child_been_screened_for_malnutrition_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 0.6 && step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_child_been_screened_for_malnutrition
-description: child_been_screened_for_malnutrition
-priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
-actions:
-  - "isRelevant = true"
----
-name: step1_child_gets_drugs_to_prevent_tb
-description: child_gets_drugs_to_prevent_tb
+name: step1_child_gets_drugs_to_prevent_tb_hei
+description: child_gets_drugs_to_prevent_tb_hei
 priority: 1
 condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:

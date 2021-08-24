@@ -500,7 +500,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "screened_for_malnutrition",
         "type": "native_radio",
-        "label": "Has the child/adolescent (6 months and above) been screened for malnutrition?",
+        "label": "Has the child/adolescent been screened for malnutrition?",
         "options": [
           {
             "key": "yes",
@@ -804,72 +804,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses",
         "type": "native_radio",
-        "read_only": "true",
         "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "step1:child_receiving_breastfeeding": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "child_been_screened_for_malnutrition_hei",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_been_screened_for_malnutrition",
-        "type": "native_radio",
-        "read_only": "true",
-        "label": "Has the child (6 months and above) been screened for malnutrition?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "step1:child_receiving_breastfeeding": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "child_gets_drugs_to_prevent_tb_hei",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
-        "type": "native_radio",
-        "read_only": "true",
-        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
         "options": [
           {
             "key": "yes",
@@ -886,11 +821,54 @@
               "rules-file": "vca_screening_relevance.yml"
             }
           }
-        },
-        "calculation": {
+        }
+      },
+      {
+        "key": "child_been_screened_for_malnutrition_hei",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "child_been_screened_for_malnutrition",
+        "type": "native_radio",
+        "label": "Has the child (6 months and above) been screened for malnutrition?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_gets_drugs_to_prevent_tb_hei",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
+        "type": "native_radio",
+        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
             }
           }
         }
@@ -2070,10 +2048,11 @@
       {
         "key": "gender",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
-        "type": "name",
-        "hint": "Gender",
+        "type": "native_radio",
+        "read_only": "true",
+        "label": "VCA Gender",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2087,12 +2066,22 @@
               "rules-file": "vca_screening_calculation.yml"
             }
           }
-        }
+        },
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ]
       },
       {
         "key": "birthdate",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
         "read_only": "true",
