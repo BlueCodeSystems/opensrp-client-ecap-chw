@@ -34,8 +34,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
+<<<<<<< HEAD
     private RelativeLayout rhousehold, rassessment, rcase_plan;
     private TextView txtName;
+=======
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
+    private TextView txtName, txtFacility;
+>>>>>>> sub-population
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +56,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rhousehold = (RelativeLayout)findViewById(R.id.household);
         rassessment = (RelativeLayout)findViewById(R.id.assessment);
         rcase_plan = (RelativeLayout)findViewById(R.id.case_plan);
+<<<<<<< HEAD
         txtName = findViewById(R.id.myname);
 
         String data = getIntent().getExtras().getString("client");
         txtName.setText(data);
+=======
+        referral = (RelativeLayout)findViewById(R.id.referral);
+        txtName = findViewById(R.id.myname);
+        //txtFacility = findViewById(R.id.mfacility);
+
+        String facility = getIntent().getExtras().getString("mfacility");
+        String data = getIntent().getExtras().getString("client");
+
+        txtName.setText(data);
+       // txtFacility.setText("Health Facility : " + facility);
+>>>>>>> sub-population
     }
 
 
@@ -141,6 +158,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 break;
+<<<<<<< HEAD
+=======
+            case R.id.referral:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("referral");
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+>>>>>>> sub-population
         }
     }
 
@@ -153,6 +186,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rhousehold.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
+<<<<<<< HEAD
+=======
+            referral.setVisibility(View.VISIBLE);
+>>>>>>> sub-population
 
         } else {
 
@@ -161,7 +198,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rhousehold.setVisibility(View.GONE);
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
+<<<<<<< HEAD
 
+=======
+            referral.setVisibility(View.GONE);
+>>>>>>> sub-population
         }
     }
 

@@ -27,4 +27,9 @@ opensrp-chw/togo/
 opensrp-chw/liberia/
 opensrp-chw/lmh/
 *google-services.json
+<<<<<<< HEAD
 hs_err_pid*
+=======
+hs_err_pid*
+opensrp-ecap-chw/ecap/*
+>>>>>>> sub-population

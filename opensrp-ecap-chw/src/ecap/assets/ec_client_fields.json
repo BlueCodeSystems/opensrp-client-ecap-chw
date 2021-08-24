@@ -134,7 +134,12 @@
           "column_name": "is_hiv_positive",
           "type": "Event",
           "json_mapping": {
+<<<<<<< HEAD
             "field": "obs.fieldCode"
+=======
+            "field": "obs.fieldCode",
+            "concept": "is_hiv_positive"
+>>>>>>> sub-population
           }
         },
         {
@@ -1246,14 +1251,22 @@
           "column_name": "gender",
           "type": "Client",
           "json_mapping": {
+<<<<<<< HEAD
             "field": "gender"
+=======
+            "field": "attributes.gender"
+>>>>>>> sub-population
           }
         },
         {
           "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
+<<<<<<< HEAD
             "field": "birthDate"
+=======
+            "field": "attributes.birthDate"
+>>>>>>> sub-population
           }
         },
         {

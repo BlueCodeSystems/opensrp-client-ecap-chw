@@ -116,6 +116,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
+<<<<<<< HEAD
 
 
         String firstname = client.getColumnmaps().get("first_name");
@@ -126,6 +127,17 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
         intent.putExtra("client", fullname);
 
+=======
+        String firstname = client.getColumnmaps().get("first_name");
+        String lastname = client.getColumnmaps().get("last_name");
+        String facility = client.getColumnmaps().get("health_facility");
+
+        String fullname = firstname + " " + lastname;
+       // Log.i(getClass().getName(), "facility : " + firstname.toString());
+        Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
+        intent.putExtra("client", fullname);
+        intent.putExtra("mfacility", facility);
+>>>>>>> sub-population
         startActivity(intent);
     }
 

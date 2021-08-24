@@ -29,7 +29,11 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
         String population = Constants.EcapClientTable.EC_POPULATION;
 
         String countSelect = "SELECT COUNT(*) FROM " + children;
+<<<<<<< HEAD
         String mainSelect = "SELECT id as _id, relationalid, relationalid AS relational_id, first_name, last_name, health_facility AS residence FROM " + children;
+=======
+        String mainSelect = "SELECT id as _id, relationalid, relationalid AS relational_id, first_name, last_name, health_facility, health_facility AS residence FROM " + children;
+>>>>>>> sub-population
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_CLIENT_INDEX, countSelect, mainSelect);
         getView().initializeAdapter();
