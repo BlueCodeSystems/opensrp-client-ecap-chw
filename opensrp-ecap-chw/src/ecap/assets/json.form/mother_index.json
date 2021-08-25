@@ -51,10 +51,10 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "mothers_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "mothers_first_name",
+        "openmrs_entity_id": "first_name",
         "entity_id": "",
         "type": "edit_text",
         "hint": "Mothers first name ",
@@ -70,10 +70,10 @@
         }
       },
       {
-        "key": "mother_surname",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "mother_surname",
+        "openmrs_entity_id": "last_name",
         "entity_id": "",
         "type": "edit_text",
         "hint": "Mothers surname",
@@ -91,7 +91,7 @@
       {
         "key": "ovc_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "ovc_date",
         "type": "date_picker",
         "hint": "Date referred to OVC \nprogram for tracing",
@@ -130,8 +130,8 @@
         "reference_edit_text_hint": "Number of children",
         "repeating_group_label": "Child",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children",
         "v_required": {
           "value": false,
           "err": "Please specify the number of children"
@@ -373,7 +373,7 @@
       },
       {
         "key": "village_compound",
-        "openmrs_entity_parent": "usual_residence",
+        "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "village_compound",
         "openmrs_data_type": "text",
@@ -408,11 +408,15 @@
       },
       {
         "key": "comment",
-        "type": "edit_text",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "comment",
-        "hint": "Add a comment"
+        "type": "edit_text",
+        "hint": "Add a comment",
+        "v_required": {
+          "value": false,
+          "err": "Comment"
+        }
       }
     ]
   }
