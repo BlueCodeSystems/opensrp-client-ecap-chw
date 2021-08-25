@@ -317,31 +317,46 @@
       "name": "ec_mother_index",
       "columns": [
         {
-          "column_name": "unique_id",
+          "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.opensrp_id"
+            "field": "baseEntityId"
           }
         },
         {
-          "column_name": "mother_surname",
+          "column_name": "relational_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_surname"
+            "field": "relationships.family"
           }
         },
         {
-          "column_name": "mothers_first_name",
+          "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "mothers_first_name"
+            "field": "first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "last_name"
           }
         },
         {
           "column_name": "ovc_date",
           "type": "Event",
           "json_mapping": {
-            "field": "ovc_date"
+            "field": "obs.fieldCode",
+            "concept": "ovc_date"
+          }
+        },
+        {
+          "column_name": "children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.children"
           }
         },
         {
@@ -352,101 +367,25 @@
           }
         },
         {
-          "column_name": "Child",
-          "column_name": "first_name",
-          "column_name": "last_name",
-          "column_name": "sex",
-          "column_name": "birthdate",
-          "type": "Client",
-          "json_mapping": {
-            "field": "child",
-            "field": "first_name",
-            "field": "last_name",
-            "field": "sex",
-            "field": "birthdate"
-          }
-        },
-        {
-          "column_name": "user_select_test",
-          "column_name": "Yes_user_select_test",
-          "column_name": "No_user_select_test",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.user_select_test",
-            "field": "attributes.yes",
-            "field": "attributes.no"
-          }
-        },
-        {
-          "column_name": "user_select_hiv",
-          "column_name": "Yes_user_select_hiv",
-          "column_name": "No_user_select_hiv",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.user_select_hivV",
-            "field": "attributes.Yes",
-            "field": "attributes.No"
-          }
-        },
-        {
-          "column_name": "hiv_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_status"
-          }
-        },
-        {
-          "column_name": "user_select_art",
-          "column_name": "Yes_user_select_art",
-          "column_name": "No_user_select_art",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.user_select_art",
-            "field": "attributes.yes",
-            "field": "attributes.no"
-          }
-        },
-        {
-          "column_name": "user_select_enrollment",
-          "column_name": "yes_enrollment",
-          "column_name": "no_enrollment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "user_select_enrollment",
-            "field": "attributes.yes",
-            "field": "attributes.no"
-          }
-        },
-        {
-          "column_name": "user_select_ovc_program",
-          "column_name": "Yes_ovc_program",
-          "column_name": "No_ovc_program",
-          "type": "Client",
-          "json_mapping": {
-            "field": "user_select_ovc_program",
-            "field": "attributes.yes",
-            "field": "attributes.no"
-          }
-        },
-        {
           "column_name": "village_compound",
           "type": "Client",
           "json_mapping": {
-            "field": "addresss.village_compound"
+            "field": "addresses.village_compound"
           }
         },
         {
           "column_name": "mothers_number",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.mothers_number"
+            "field": "attributes.mothers_number"
           }
         },
         {
           "column_name": "comment",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
-            "field": "attributes.comment"
+            "field": "obs.fieldCode",
+            "concept": "comment"
           }
         }
       ]
@@ -1276,6 +1215,13 @@
           }
         },
         {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
@@ -1307,127 +1253,112 @@
           "column_name": "village",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.village"
+            "field": "attributes.village"
           }
         },
         {
           "column_name": "chibombo_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "chibombo_health_facility"
+            "field": "attributes.chibombo_health_facility"
           }
         },
         {
           "column_name": "chisamba_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "chisamba_health_facility"
+            "field": "attributes.chisamba_health_facility"
           }
         },
         {
           "column_name": "mkushi_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "mkushi_health_facility"
+            "field": "attributes.mkushi_health_facility"
           }
         },
         {
           "column_name": "mumbwa_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "mumbwa_health_facility"
+            "field": "attributes.mumbwa_health_facility"
           }
         },
         {
           "column_name": "kabwe_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "kabwe_health_facility"
+            "field": "attributes.kabwe_health_facility"
           }
         },
         {
           "column_name": "kapiri_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "kapiri_health_facility"
+            "field": "attributes.kapiri_health_facility"
           }
         },
         {
           "column_name": "chikankata_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "chikankata_health_facility"
+            "field": "attributes.chikankata_health_facility"
           }
         },
         {
           "column_name": "mazabuka_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "mazabuka_health_facility"
+            "field": "attributes.mazabuka_health_facility"
           }
         },
         {
           "column_name": "monze_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "monze_health_facility"
+            "field": "attributes.monze_health_facility"
           }
         },
         {
           "column_name": "choma_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "choma_health_facility"
+            "field": "attributes.choma_health_facility"
           }
         },
         {
           "column_name": "kalomo_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "kalomo_health_facility"
+            "field": "attributes.kalomo_health_facility"
           }
         },
         {
           "column_name": "namwala_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "namwala_health_facility"
+            "field": "attributes.namwala_health_facility"
           }
         },
         {
           "column_name": "sinazongwe_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "sinazongwe_health_facility"
+            "field": "attributes.sinazongwe_health_facility"
           }
         },
         {
           "column_name": "livingstone_health_facility",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "livingstone_health_facility"
+            "field": "attributes.livingstone_health_facility"
           }
         },
         {
           "column_name": "partner",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "partner"
+            "field": "attributes.partner"
           }
         },
         {
@@ -1452,10 +1383,10 @@
           }
         },
         {
-          "column_name": "caregiver_hiv_status",
+          "column_name": "caregiver_status",
           "type": "Client",
           "json_mapping": {
-            "concept": "attributes.caregiver_hiv_status"
+            "concept": "attributes.caregiver_status"
           }
         },
         {
@@ -1466,10 +1397,10 @@
           }
         },
         {
-          "column_name": "physical_address",
+          "column_name": "addresses.physical_address_address",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.physical_address"
+            "field": "addresses.physical_address_address"
           }
         },
         {
@@ -1480,10 +1411,10 @@
           }
         },
         {
-          "column_name": "caregiver_nrc",
+          "column_name": "nrc_caregiver",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_nrc"
+            "field": "attributes.nrc_caregiver"
           }
         },
         {
@@ -1495,11 +1426,11 @@
           }
         },
         {
-          "column_name": "question",
+          "column_name": "case_plan_question",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "question"
+            "concept": "case_plan_question"
           }
         },
         {
@@ -1532,6 +1463,14 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "safe"
+          }
+        },
+        {
+          "column_name": "safe_vulnerabilities",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "safe_vulnerabilities"
           }
         },
         {
