@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
+import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
+import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -95,6 +97,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
+
                     if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                         indexRegisterPresenter().saveForm(json, false);

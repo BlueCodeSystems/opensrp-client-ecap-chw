@@ -21,23 +21,8 @@ import timber.log.Timber;
 
 public class MotherIndexModel implements MotherIndexContract.Model {
 
-    private final Event event;
-    private final Client client;
-
-    public MotherIndexModel(Event event, Client client) {
-        this.event = event;
-        this.client = client;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public MotherIndexModel processRegistration(String jsonString) {
+    @Override
+    public MotherIndexEventClient processRegistration(String jsonString) {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
@@ -53,8 +38,10 @@ public class MotherIndexModel implements MotherIndexContract.Model {
                 Event event = JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                         encounterType, Constants.EcapClientTable.EC_MOTHER_INDEX);
                 tagSyncMetadata(event);
+
                 Client client = JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                return new MotherIndexModel(event, client);
+
+                return new MotherIndexEventClient(event, client);
             }
 
         } catch (JSONException e) {

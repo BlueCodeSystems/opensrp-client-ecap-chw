@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
 
 import org.json.JSONObject;
@@ -34,12 +35,12 @@ public class MotherIndexInteractor implements MotherIndexContract.Interactor {
     }
 
     @Override
-    public boolean saveRegistration(MotherIndexModel motherIndexModel, boolean isEditMode) {
+    public boolean saveRegistration(MotherIndexEventClient motherIndexEventClient, boolean isEditMode) {
 
         Runnable runnable = () -> {
 
-            Event event = motherIndexModel.getEvent();
-            Client client = motherIndexModel.getClient();
+            Event event = motherIndexEventClient.getEvent();
+            Client client = motherIndexEventClient.getClient();
 
             if (event != null && client != null) {
                 try {
@@ -94,4 +95,5 @@ public class MotherIndexInteractor implements MotherIndexContract.Interactor {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+
 }

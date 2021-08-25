@@ -109,6 +109,9 @@
             android:name=".activity.IndexRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.MotherIndexActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.BeneficiariesRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

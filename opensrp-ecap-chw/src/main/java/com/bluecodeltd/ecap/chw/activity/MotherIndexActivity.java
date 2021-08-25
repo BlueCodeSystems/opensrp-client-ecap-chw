@@ -8,6 +8,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
+import com.bluecodeltd.ecap.chw.fragment.MotherIndexFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
@@ -90,10 +91,11 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){
             String json = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
-                    if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
+                    if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                         motherIndexPresenter().saveForm(json, false);
                     }

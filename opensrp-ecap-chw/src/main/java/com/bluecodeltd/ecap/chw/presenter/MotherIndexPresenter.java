@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
+import android.util.Log;
+
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
@@ -8,6 +10,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.interactor.MotherIndexInteractor;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
+import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
 
 import org.smartregister.domain.FetchStatus;
@@ -64,13 +67,13 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
             view.toggleDialogVisibility(true);
 
 
-            ChildIndexEventClient childIndexEventClient = model.processRegistration(jsonString);
+            MotherIndexEventClient motherIndexEventClient = model.processRegistration(jsonString);
 
-            if (childIndexEventClient == null) {
+            if (motherIndexEventClient == null) {
                 return;
             }
 
-            interactor.saveRegistration(childIndexEventClient, isEditMode);
+            interactor.saveRegistration(motherIndexEventClient, isEditMode);
 
         } catch (Exception e) {
             Timber.e(e);
