@@ -166,7 +166,7 @@
       {
         "key": "village",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "village",
         "type": "edit_text",
         "hint": "Village",
@@ -179,7 +179,7 @@
       {
         "key": "chibombo_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "chibombo_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -218,7 +218,7 @@
       {
         "key": "chisamba_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "chisamba_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -249,7 +249,7 @@
       {
         "key": "mkushi_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mkushi_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -278,7 +278,7 @@
       {
         "key": "mumbwa_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mumbwa_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -315,7 +315,7 @@
       {
         "key": "kabwe_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "kabwe_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -360,7 +360,7 @@
       {
         "key": "kapiri_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "kapiri_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -397,7 +397,7 @@
       {
         "key": "chikankata_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "chikankata_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -428,7 +428,7 @@
       {
         "key": "mazabuka_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mazabuka_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -473,7 +473,7 @@
       {
         "key": "monze_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "monze_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -508,7 +508,7 @@
       {
         "key": "choma_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "choma_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -549,7 +549,7 @@
       {
         "key": "kalomo_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "kalomo_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -578,7 +578,7 @@
       {
         "key": "namwala_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "namwala_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -621,7 +621,7 @@
       {
         "key": "sinazongwe_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sinazongwe_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -648,7 +648,7 @@
       {
         "key": "livingstone_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "livingstone_health_facility",
         "type": "spinner",
         "hint": "Health Facility",
@@ -689,18 +689,22 @@
       {
         "key": "partner",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partner",
         "type": "spinner",
         "hint": "Partners",
         "values": [
-          "JPHIEGO",
-          "JSI",
+          "YWCA",
+          "BISO",
+          "ZEC",
+          "COH",
           "PCZ"
         ],
         "keys": [
-          "JPHIEGO",
-          "JSI",
+          "YWCA",
+          "BISO",
+          "ZEC",
+          "COH",
           "PCZ"
         ],
         "v_required": {
@@ -756,20 +760,22 @@
         }
       },
       {
-        "key": "caregiver_hiv_status",
+        "key": "caregiver_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_hiv_status",
+        "openmrs_entity_id": "caregiver_status",
         "type": "native_radio",
         "label": "Is Caregiver HIV Positive?",
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ]
       },
@@ -847,10 +853,10 @@
         }
       },
       {
-        "key": "question",
+        "key": "case_plan_question",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "question",
+        "openmrs_entity_id": "case_plan_question",
         "type": "native_radio",
         "label": "Is this an Initial or Updated Case Plan?",
         "options": [
@@ -1217,7 +1223,7 @@
           {
             "key": "safe_vulnerabilities",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "concept",
             "openmrs_entity_id": "safe_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
