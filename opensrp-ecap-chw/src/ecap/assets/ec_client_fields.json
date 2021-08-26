@@ -331,61 +331,124 @@
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "first_name_mother_index",
           "type": "Client",
           "json_mapping": {
-            "field": "first_name"
+            "field": "attributes.first_name_mother_index"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "last_name_mother_index",
           "type": "Client",
           "json_mapping": {
-            "field": "last_name"
+            "field": "attributes.last_name_mother_index"
           }
         },
         {
-          "column_name": "ovc_date",
+          "column_name": "ovc_date_mother_index",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "ovc_date"
+            "concept": "ovc_date_mother_index"
           }
         },
         {
-          "column_name": "children",
+          "column_name": "repeat_first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.children"
+            "field": "attributes.repeat_first_name"
           }
         },
         {
-          "column_name": "art_number",
+          "column_name": "repeat_last_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_number"
+            "field": "attributes.repeat_last_name"
           }
         },
         {
-          "column_name": "village_compound",
+          "column_name": "repeat_sex",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.village_compound"
+            "field": "attributes.repeat_sex"
           }
         },
         {
-          "column_name": "mothers_number",
+          "column_name": "repeat_birthdate",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mothers_number"
+            "field": "attributes.repeat_birthdate"
           }
         },
         {
-          "column_name": "comment",
+          "column_name": "repeat_user_select_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_user_select_test"
+          }
+        },
+        {
+          "column_name": "repeat_user_select_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_user_select_hiv"
+          }
+        },
+        {
+          "column_name": "repeat_hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_hiv_status"
+          }
+        },
+        {
+          "column_name": "repeat_user_select_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_user_select_art"
+          }
+        },
+        {
+          "column_name": "repeat_user_select_enrollment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_user_select_enrollment"
+          }
+        },
+        {
+          "column_name": "repeat_user_select_ovc_program",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_user_select_ovc_program"
+          }
+        },
+        {
+          "column_name": "art_number_mother_index",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number_mother_index"
+          }
+        },
+        {
+          "column_name": "village_compound_mother_index",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.village_compound_mother_index"
+          }
+        },
+        {
+          "column_name": "mothers_number_mother_index",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mothers_number_mother_index"
+          }
+        },
+        {
+          "column_name": "comment_mother_index",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "comment"
+            "concept": "comment_mother_index"
           }
         }
       ]
