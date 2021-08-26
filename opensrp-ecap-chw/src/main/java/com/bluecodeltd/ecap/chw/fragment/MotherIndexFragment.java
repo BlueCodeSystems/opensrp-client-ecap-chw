@@ -115,7 +115,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
-        String firstname = client.getColumnmaps().get("first_name");
+       /* String firstname = client.getColumnmaps().get("first_name");
         String lastname = client.getColumnmaps().get("last_name");
         String facility = client.getColumnmaps().get("health_facility");
 
@@ -124,7 +124,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
         intent.putExtra("client", fullname);
         intent.putExtra("mfacility", facility);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override
