@@ -184,8 +184,12 @@
             "type": "spinner",
             "hint": "Sex",
             "values": [
-              "M",
-              "F"
+              "Male",
+              "Female"
+            ],
+            "keys": [
+              "Male",
+              "Female"
             ],
             "v_required": {
               "value": false,
@@ -224,17 +228,13 @@
             "options": [
               {
                 "key": "yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "no",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "no",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ]
           },
@@ -250,17 +250,13 @@
             "options": [
               {
                 "key": "yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "no",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ]
           },
@@ -274,7 +270,14 @@
             "values": [
               "HIV+",
               "HIV-",
-              "Unknown"
+              "Unknown",
+              "Status not required based\n on risk assessment"
+            ],
+            "keys": [
+              "HIV positive",
+              "HIV negative",
+              "Unknown",
+              "Status not required based on risk assessment"
             ]
           },
           {
@@ -289,19 +292,22 @@
             "options": [
               {
                 "key": "Yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "No",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
-            ]
+            ],
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "mother_index_relevance.yml"
+                }
+              }
+            }
           },
           {
             "key": "user_select_enrollment",
@@ -315,17 +321,13 @@
             "options": [
               {
                 "key": "Yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "No",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ],
             "v_required": {
@@ -345,17 +347,13 @@
             "options": [
               {
                 "key": "Yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "No",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ],
             "v_required": {
@@ -363,13 +361,7 @@
               "err": "You need to make a selection"
             }
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-            }
-          }
-        }
+        ]
       },
       {
         "key": "village_compound",
