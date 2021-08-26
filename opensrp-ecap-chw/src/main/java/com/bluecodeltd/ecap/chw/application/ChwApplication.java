@@ -21,6 +21,7 @@ import com.bluecodeltd.ecap.chw.activity.FpRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.IdentificationRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.LoginActivity;
+import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
 import com.bluecodeltd.ecap.chw.configs.AllClientsRegisterRowOptions;
@@ -350,6 +351,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     public Map<String, Class> getRegisteredActivities() {
         Map<String, Class> registeredActivities = new HashMap<>();
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.FAMILY_REGISTER_ACTIVITY, FamilyRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MOTHER_REGISTER_ACTIVITY, MotherIndexActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.CASE_PLAN_REGISTER_ACTIVITY, CasePlanRegisterActivity.class );
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.INDEX_REGISTER_ACTIVITY, IndexRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.BENEFICIARIES_REGISTER_ACTIVITY, BeneficiariesRegisterActivity.class);

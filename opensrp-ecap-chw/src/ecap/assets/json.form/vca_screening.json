@@ -953,7 +953,6 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "9",
         "type": "native_radio",
-        "read_only": "true",
         "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
         "options": [
           {
@@ -965,7 +964,6 @@
             "text": "No"
           }
         ],
-        "value": "No",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1172,6 +1170,21 @@
             "ex-rules": {
               "rules-file": "vca_screening_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "hiv_or_pregnancy_prevention_method_used_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Mothers' ART Number",
+        "edit_type": "name",
+        "relevance": {
+          "step1:hiv_or_pregnancy_prevention_method_used": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
           }
         }
       },
@@ -1572,6 +1585,21 @@
         }
       },
       {
+        "key": "child_clinical_care_services_received_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Other Clinical Care Services",
+        "edit_type": "name",
+        "relevance": {
+          "step1:child_clinical_care_services_received": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
         "key": "other_child_clinical_care_services_received",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -1707,18 +1735,6 @@
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
         }
-      },
-      {
-        "key": "date_approved",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_approved",
-        "type": "date_picker",
-        "hint": "Date of screening",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today"
       }
     ]
   },
