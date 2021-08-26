@@ -27,15 +27,17 @@
         <item>Female Sex Worker Screening</item>
     </string-array>
     <!--Ecap Strings -->
-    <string name="all_households"> All households</string>
+    <string name="all_households"> Family Register</string>
     <string name="all_Vcas"> VCAs</string>
     <string name="all_benefeciaries"> Case Plans</string>
-    <string name="all_positive"> Facility OVC Register</string>
+    <string name="facility_ovc_register"> Facility OVC Register</string>
+    <string name="mother_index_register">Mother Index Register</string>
     <string name="all_indexes"> Indexes</string>
     <string name="all_case_plans"> Case plans</string>
     <string name="return_to_household">Return to household</string>
     <string name="add_index">Add Index</string>
     <string name="saving_index">Saving Index Person</string>
     <string name="all_index_title">All indexes</string>
+    <string name="referrals">Referrals</string>
 
 </resources>

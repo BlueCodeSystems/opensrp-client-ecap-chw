@@ -170,7 +170,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 // I have changed something from here
     private void startHome(boolean remote) {
         Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
-                ChildRegisterActivity.class : MotherIndexActivity.class);
+                ChildRegisterActivity.class : IndexRegisterActivity.class);
         intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);
         startActivity(intent);
     }
@@ -192,7 +192,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         } else {
           // Changed something here
             Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
-                    ChildRegisterActivity.class : MotherIndexActivity.class);
+                    ChildRegisterActivity.class : IndexRegisterActivity.class);
             intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);
             startActivity(intent);
         }
