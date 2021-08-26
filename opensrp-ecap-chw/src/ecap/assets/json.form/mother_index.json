@@ -1,6 +1,7 @@
 {
   "count": "1",
   "encounter_type": "mother_index",
+  "hide_blank_spaces": true,
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,10 +52,10 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "mothers_first_name",
+        "key": "first_name_mother_index",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "mothers_first_name",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name_mother_index",
         "entity_id": "",
         "type": "edit_text",
         "hint": "Mothers first name ",
@@ -70,10 +71,10 @@
         }
       },
       {
-        "key": "mother_surname",
+        "key": "last_name_mother_index",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "mother_surname",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name_mother_index",
         "entity_id": "",
         "type": "edit_text",
         "hint": "Mothers surname",
@@ -89,10 +90,10 @@
         }
       },
       {
-        "key": "ovc_date",
+        "key": "ovc_date_mother_index",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ovc_date",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "ovc_date_mother_index",
         "type": "date_picker",
         "hint": "Date referred to OVC \nprogram for tracing",
         "expanded": false,
@@ -107,10 +108,10 @@
         }
       },
       {
-        "key": "art_number",
+        "key": "art_number_mother_index",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_number",
+        "openmrs_entity_id": "art_number_mother_index",
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "number",
@@ -130,18 +131,18 @@
         "reference_edit_text_hint": "Number of children",
         "repeating_group_label": "Child",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children",
         "v_required": {
           "value": false,
           "err": "Please specify the number of children"
         },
         "value": [
           {
-            "key": "first_name",
+            "key": "repeat_first_name",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "first_name",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "repeat_first_name",
             "entity": "child",
             "type": "edit_text",
             "hint": "Child`s first name ",
@@ -149,7 +150,7 @@
             "look_up": "true",
             "v_required": {
               "value": false,
-              "err": "Please enter childs first name"
+              "err": "Please enter child`s first name"
             },
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
@@ -157,13 +158,13 @@
             }
           },
           {
-            "key": "last_name",
+            "key": "repeat_last_name",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "last_name",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "repeat_last_name",
             "entity": "child",
             "type": "edit_text",
-            "hint": "Child's last name ",
+            "hint": "Child's last name",
             "edit_type": "name",
             "look_up": "true",
             "v_required": {
@@ -176,16 +177,20 @@
             }
           },
           {
-            "key": "sex",
+            "key": "repeat_sex",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "sex",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "repeat_sex",
             "entity": "child",
             "type": "spinner",
             "hint": "Sex",
             "values": [
-              "M",
-              "F"
+              "Male",
+              "Female"
+            ],
+            "keys": [
+              "Male",
+              "Female"
             ],
             "v_required": {
               "value": false,
@@ -193,10 +198,10 @@
             }
           },
           {
-            "key": "birthdate",
+            "key": "repeat_birthdate",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "birthdate",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "repeat_birthdate",
             "entity": "child",
             "type": "date_picker",
             "hint": "Child's DOB",
@@ -213,10 +218,10 @@
             }
           },
           {
-            "key": "user_select_test",
+            "key": "repeat_user_select_test",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "user_select_test",
+            "openmrs_entity_id": "repeat_user_select_test",
             "type": "native_radio",
             "label_text_style": "bold",
             "text_color": "#000000",
@@ -224,25 +229,21 @@
             "options": [
               {
                 "key": "yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "no",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "no",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ]
           },
           {
-            "key": "user_select_hiv",
+            "key": "repeat_user_select_hiv",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "user_select_hiv",
+            "openmrs_entity_id": "repeat_user_select_hiv",
             "type": "native_radio",
             "label_text_style": "bold",
             "text_color": "#000000",
@@ -250,38 +251,41 @@
             "options": [
               {
                 "key": "yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "no",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ]
           },
           {
-            "key": "hiv_status",
+            "key": "repeat_hiv_status",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "hiv_status",
+            "openmrs_entity_id": "repeat_hiv_status",
             "type": "spinner",
             "hint": "HIV Status  ",
             "values": [
               "HIV+",
               "HIV-",
-              "Unknown"
+              "Unknown",
+              "Status not required based on risk assessment"
+            ],
+            "keys": [
+              "HIV+",
+              "HIV-",
+              "Unknown",
+              "Status not required based on risk assessment"
             ]
           },
           {
-            "key": "user_select_art",
+            "key": "repeat_user_select_art",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "user_select_art",
+            "openmrs_entity_id": "repeat_user_select_art",
             "type": "native_radio",
             "label_text_style": "bold",
             "text_color": "#000000",
@@ -289,25 +293,28 @@
             "options": [
               {
                 "key": "Yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "No",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
-            ]
+            ],
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": ""
+                }
+              }
+            }
           },
           {
-            "key": "user_select_enrollment",
+            "key": "repeat_user_select_enrollment",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "user_select_enrollment",
+            "openmrs_entity_id": "repeat_user_select_enrollment",
             "type": "native_radio",
             "label_text_style": "bold",
             "text_color": "#000000",
@@ -315,17 +322,13 @@
             "options": [
               {
                 "key": "Yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "No",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ],
             "v_required": {
@@ -334,10 +337,10 @@
             }
           },
           {
-            "key": "user_select_ovc_program",
+            "key": "repeat_user_select_ovc_program",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "user_select_ovc_program",
+            "openmrs_entity_id": "repeat_user_select_ovc_program",
             "type": "native_radio",
             "label_text_style": "bold",
             "text_color": "#000000",
@@ -345,17 +348,13 @@
             "options": [
               {
                 "key": "Yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "Yes",
-                "text": "Yes"
+                "text": "Yes",
+                "value": false
               },
               {
                 "key": "No",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "No",
-                "text": "No"
+                "text": "No",
+                "value": false
               }
             ],
             "v_required": {
@@ -363,19 +362,13 @@
               "err": "You need to make a selection"
             }
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-            }
-          }
-        }
+        ]
       },
       {
-        "key": "village_compound",
-        "openmrs_entity_parent": "usual_residence",
+        "key": "village_compound_mother_index",
+        "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "village_compound",
+        "openmrs_entity_id": "village_compound_mother_index",
         "openmrs_data_type": "text",
         "type": "edit_text",
         "hint": "Mothers Village or Compound",
@@ -387,10 +380,10 @@
         }
       },
       {
-        "key": "mothers_number",
+        "key": "mothers_number_mother_index",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mothers_number",
+        "openmrs_entity_id": "mothers_number_mother_index",
         "type": "edit_text",
         "hint": "Mothers phone number",
         "v_numeric": {
@@ -407,12 +400,16 @@
         }
       },
       {
-        "key": "comment",
-        "type": "edit_text",
+        "key": "comment_mother_index",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "comment",
-        "hint": "Add a comment"
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "comment_mother_index",
+        "type": "edit_text",
+        "hint": "Add a comment",
+        "v_required": {
+          "value": false,
+          "err": "Comment"
+        }
       }
     ]
   }
