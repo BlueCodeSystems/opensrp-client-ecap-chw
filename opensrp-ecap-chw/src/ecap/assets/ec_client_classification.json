@@ -305,6 +305,14 @@
               "ec_sub_population",
               "ec_client_index"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Register",
+            "creates_case": [
+              "ec_mother_index",
+              "ec_client_index"
+            ]
           }
         ]
       }
