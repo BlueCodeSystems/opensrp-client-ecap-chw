@@ -278,7 +278,13 @@
               "HIV-",
               "Unknown",
               "Status not required based on risk assessment"
-            ]
+            ],
+            "relevance": {
+              "step1:user_select_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "user_select_art",
@@ -304,7 +310,13 @@
                 "openmrs_entity_id": "No",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:hiv_status": {
+                "type": "string",
+                "ex": "equalTo(., \"HIV+\")"
+              }
+            }
           },
           {
             "key": "user_select_enrollment",
