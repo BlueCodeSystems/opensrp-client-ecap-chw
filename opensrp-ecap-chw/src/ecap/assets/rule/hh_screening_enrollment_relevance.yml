@@ -587,6 +587,20 @@ priority: 1
 condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step2_other_entry_type
+description: other_entry_type relevance
+priority: 1
+condition: "step2_entry_type.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_highest_grade
+description: highest_grade relevance
+priority: 1
+condition: "step2_caregiver_education.contains('highest_grade')"
+actions:
+  - "isRelevant = true"
 
 
 

@@ -2617,7 +2617,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "enrollment_date",
         "type": "date_picker",
-        "hint": "Enrollment date",
+        "hint": "Date of HH Enrollment",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -2711,7 +2711,7 @@
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
         "entity_id": "mother",
-        "hint": "Caregiver`s D.O.B",
+        "hint": "Caregiver Date of Birth",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -2735,18 +2735,50 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "entry_type",
-        "type": "spinner",
-        "hint": "Type of Entry",
-        "values": [
-          "Transfer from ZAMFAM",
-          "Referral From Facility",
-          "Other"
+        "type": "native_radio",
+        "label": "Type of Entry into Program",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
         ],
-        "keys": [
-          "transferzamfam",
-          "referalfacility",
-          "other"
+        "options": [
+          {
+            "key": "transfer_from_zamfam",
+            "text": "Transfer from ZAMFAM",
+            "value": false
+          },
+          {
+            "key": "referral_from_facility",
+            "text": "Referral from Facility",
+            "value": false
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "value": false
+          }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "test",
+        "openmrs_entity_id": "other_entry_type",
+        "type": "edit_text",
+        "hint": "Other type of Entry",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  test name"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2761,7 +2793,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiver’s education leve",
+        "label": "Caregiver’s education level",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2788,6 +2820,108 @@
           "value": false,
           "err": "You`re to select the level of education"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "highest_grade",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "highest_grade",
+        "type": "edit_text",
+        "hint": "Highest Grade",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "monthly_expenses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "monthly_expenses",
+        "type": "native_radio",
+        "label": "Estimated household expenses per month",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "Less than K500",
+            "text": "Less than K500",
+            "value": false
+          },
+          {
+            "key": "K500 -K999",
+            "text": "K500 -K999",
+            "value": false
+          },
+          {
+            "key": "K1,000 –K1,999",
+            "text": "K1,000 –K1,999",
+            "value": false
+          },
+          {
+            "key": "K2,000 –K4,999",
+            "text": "K2,000 –K4,999",
+            "value": false
+          },
+          {
+            "key": "Greater than K5,000",
+            "text": "Greater than K5,000",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re required to select income source"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "marital_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "marital_status",
+        "type": "spinner",
+        "hint": "Marital Status",
+        "values": [
+          "Single",
+          "Married",
+          "Divorced",
+          "Widowed",
+          "Not Married",
+          "In a Relationship"
+        ],
+        "keys": [
+          "single",
+          "married",
+          "divorced",
+          "widowed",
+          "not_married",
+          "in_relationship"
+        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2949,84 +3083,6 @@
           "Financial institutions",
           "Communication, social and personal services",
           "Other"
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "monthly_expenses",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "monthly_expenses",
-        "type": "native_radio",
-        "label": "Estimated household expenses per month",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "Less than K500",
-            "text": "Less than K500",
-            "value": false
-          },
-          {
-            "key": "K500 -K999",
-            "text": "K500 -K999",
-            "value": false
-          },
-          {
-            "key": "K1,000 –K1,999",
-            "text": "K1,000 –K1,999",
-            "value": false
-          },
-          {
-            "key": "K2,000 –K4,999",
-            "text": "K2,000 –K4,999",
-            "value": false
-          },
-          {
-            "key": "Greater than K5,000",
-            "text": "Greater than K5,000",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You`re required to select income source"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "marital_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "marital_status",
-        "type": "spinner",
-        "hint": "Marital Status",
-        "values": [
-          "Never Married",
-          "Married",
-          "Widowed/Divorced",
-          "Not Married, in relationship"
-        ],
-        "keys": [
-          "never_married",
-          "married",
-          "widowed",
-          "not_married"
         ],
         "relevance": {
           "rules-engine": {
