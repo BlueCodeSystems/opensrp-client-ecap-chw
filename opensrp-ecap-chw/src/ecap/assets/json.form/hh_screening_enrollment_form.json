@@ -2176,15 +2176,19 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "knows_hiv_status",
         "type": "native_radio",
-        "label": "Do you know your HIV status?",
+        "label": "What is your HIV Status?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes"
+            "key": "hiv_negative",
+            "text": "HIV Negative"
           },
           {
-            "key": "no",
-            "text": "No"
+            "key": "hiv_positive",
+            "text": "HIV Positive"
+          },
+          {
+            "key": "unknown_status",
+            "text": "Unknown HIV Status"
           }
         ]
       },
@@ -2194,7 +2198,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If HIV positive/WLHIV, are you active on treatment?",
+        "label": "Are you active on treatment?",
         "options": [
           {
             "key": "yes",
