@@ -183,7 +183,7 @@
             "openmrs_entity_id": "repeat_sex",
             "entity": "child",
             "type": "spinner",
-            "hint": "Sex",
+            "hint": "Gender",
             "values": [
               "Male",
               "Female"
@@ -395,7 +395,7 @@
           "err": "Number cannot be empty"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
+          "value": "(09||07[5-7][0-9]{7})|s*",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
