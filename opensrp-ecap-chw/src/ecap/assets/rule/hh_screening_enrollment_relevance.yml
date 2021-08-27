@@ -252,6 +252,13 @@ condition: "step1_have_all_the_male_hiv_negative_vca_in_the_household_15years_an
 actions:
   - "isRelevant = true"
 ---
+name: step1_hiv_positive_agyw
+description: hiv_positive_agyw relevance
+priority: 1
+condition: "step1_did_the_agyw_test_positive_for_hiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_health_facility
 description: health_facility relevance
 priority: 1

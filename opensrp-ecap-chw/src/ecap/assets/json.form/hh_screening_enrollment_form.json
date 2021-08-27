@@ -146,7 +146,8 @@
             "key": "survivor_of_sexual_violence",
             "text": "Survivor of Sexual Violence"
           }
-        ]},
+        ]
+      },
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
@@ -1757,18 +1758,32 @@
       {
         "key": "for_adolescent_girls_and_young_women_10_17years",
         "type": "repeating_group",
+        "reference_edit_text_hint": "Number of AGYW 10-17years",
         "repeating_group_label": " For questions in this section, ask EACH OF THE AGYW 10–17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
         "value": [
           {
-            "key": "name_of_adolescent",
+            "key": "first_name_of_adolescent",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person",
             "openmrs_entity_id": "name",
             "type": "edit_text",
-            "hint": "Name of Adolescent",
+            "hint": "First Name of Adolescent",
+            "edit_type": "name",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Name of Adolescent can only contain letters"
+            }
+          },
+          {
+            "key": "last_name_of_adolescent",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "name",
+            "type": "edit_text",
+            "hint": "Last Name of Adolescent",
             "edit_type": "name",
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
@@ -1866,24 +1881,6 @@
             ]
           },
           {
-            "key": "is_the_agyw_engaged_in_sex_work",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "is_the_agyw_engaged_in_sex_work",
-            "type": "native_radio",
-            "label": "Is the AGYW engaged in sex work?",
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes"
-              },
-              {
-                "key": "no",
-                "text": "No"
-              }
-            ]
-          },
-          {
             "key": "is_the_agyw_food_or_economically_secure",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1925,7 +1922,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "did_the_agyw_give_birth_before_age_of_18",
             "type": "native_radio",
-            "label": "Did the AGYW give birth before the age of 18?",
+            "label": "Did the AGYW give birth before the age of 18(teen mom)?",
             "options": [
               {
                 "key": "yes",
@@ -1938,7 +1935,7 @@
             ]
           },
           {
-            "key": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
+            "key": "does_the_agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
@@ -1956,12 +1953,12 @@
             ]
           },
           {
-            "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
+            "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_illness",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
             "type": "native_radio",
-            "label": "Has the AGYW ever been diagnosed with a sexually transmitted disease?",
+            "label": "Has the AGYW ever been diagnosed with a sexually transmitted illness(STI)?",
             "options": [
               {
                 "key": "yes",
@@ -1979,7 +1976,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
             "type": "native_radio",
-            "label": "Has the AGYW been tested for hiv?",
+            "label": "Has the AGYW been tested for HIV?",
             "options": [
               {
                 "key": "yes",
@@ -1992,12 +1989,12 @@
             ]
           },
           {
-            "key": "did_the_agyw_been_tested_for_hiv",
+            "key": "did_the_agyw_test_positive_for_hiv",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
             "type": "native_radio",
-            "label": "Has the AGYW been tested for hiv?",
+            "label": "Did the AGYW test positive for HIV?",
             "options": [
               {
                 "key": "yes",
@@ -2008,123 +2005,122 @@
                 "text": "No"
               }
             ]
-          }
-        ]
-      },
-      {
-        "key": "did_the_agyw_test_positive",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "did_the_agyw_test_positive",
-        "type": "native_radio",
-        "label": "Did the AGYW test HIV+? (if yes, the AGYW should be categorized as CLHIV) and refer to appropriate treatment and care services at enrollment ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "is_the_agyw_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "is_the_agyw_in_school",
-        "type": "native_radio",
-        "label": "Is the AGYW in school? If not, refer to education support services at enrollment  ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
+            "key": "hiv_positive_agyw",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Categorize AGYW as CLHIV and refer to appropriate treatment and care services at enrollment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
           },
           {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "agyw_receiving_an_economic_strengthening_intervention",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
-        "type": "native_radio",
-        "label": "Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
+            "key": "is_the_agyw_in_school",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_in_school",
+            "type": "native_radio",
+            "label": "Is the AGYW in school? If not, refer to education support services at enrollment  ",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
           },
           {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "pregnancy_prevention_methods_use_by_agyw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
-        "type": "native_radio",
-        "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
-        "options": [
-          {
-            "key": "prep",
-            "text": "PrEP"
+            "key": "agyw_receiving_an_economic_strengthening_intervention",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
+            "type": "native_radio",
+            "label": "Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
           },
           {
-            "key": "pep",
-            "text": "PEP"
+            "key": "pregnancy_prevention_methods_use_by_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
+            "type": "native_radio",
+            "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
+            "options": [
+              {
+                "key": "prep",
+                "text": "PrEP"
+              },
+              {
+                "key": "pep",
+                "text": "PEP"
+              },
+              {
+                "key": "family_Planning_method",
+                "text": "Family planning method"
+              },
+              {
+                "key": "condoms",
+                "text": "Condoms"
+              },
+              {
+                "key": "other",
+                "text": "Other"
+              }
+            ]
           },
           {
-            "key": "family_Planning_method",
-            "text": "Family planning method"
-          },
-          {
-            "key": "condoms",
-            "text": "Condoms"
-          },
-          {
-            "key": "other",
-            "text": "Other"
-          }
-        ]
-      },
-      {
-        "key": "other_pregnancy_prevention_method_used_by_agyw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
-        "type": "edit_text",
-        "hint": "Other pregnancy prevention methods",
-        "relevance": {
-          "step6:pregnancy_prevention_methods_used_by_agyw": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
-          }
-        }
+            "key": "other_pregnancy_prevention_method_used_by_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
+            "type": "edit_text",
+            "hint": "Other pregnancy prevention methods",
+            "relevance": {
+              "step6:pregnancy_prevention_methods_used_by_agyw": {
+                "type": "string",
+                "ex": "equalTo(., \"other\")"
+              }
+            }
 
-      },
-      {
-        "key": "did_agyw_answer_to_any",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "did_agyw_answer_to_any",
-        "type": "native_radio",
-        "label": "Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No"
+            "key": "did_agyw_answer_to_any",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "did_agyw_answer_to_any",
+            "type": "native_radio",
+            "label": "Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
           }
         ]
       },
@@ -2198,7 +2194,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If HIV positive/WLHIV, are you active on treatment? (If not, refer to appropriate treatment and care services as part of enrolment)",
+        "label": "If HIV positive/WLHIV, are you active on treatment?",
         "options": [
           {
             "key": "yes",
@@ -2234,7 +2230,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
-        "hint": "Result of most recent viral load test. (If not virally suppressed, refer and provide appropriate care and support services",
+        "hint": "Result of most recent viral load test.",
         "v_numeric": {
           "value": "true",
           "err": "Viral load can only contain numbers"
@@ -2288,7 +2284,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "enrolled_in_the_pmtct_program",
         "type": "native_radio",
-        "label": "If yes, are you and your biological children enrolled in the PMTCT program? (If not, refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register)",
+        "label": "Are you and your biological children enrolled in the PMTCT program?",
         "options": [
           {
             "key": "yes",
@@ -2306,7 +2302,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "are_there_any_reasons_you may_be_at_risk for_hiv",
         "type": "native_radio",
-        "label": "If HIV negative, are there any reasons you may be at risk for HIV? \n(If Yes, state reason: ………………………………………………………………………………. And provide appropriate preventive services as part of enrollment)",
+        "label": "Are there any reasons you may be at risk for HIV? \n(If Yes, state reason: ………………………………………………………………………………. And provide appropriate preventive services as part of enrollment)",
         "options": [
           {
             "key": "yes",
