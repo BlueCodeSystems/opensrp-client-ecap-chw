@@ -259,6 +259,13 @@ condition: "step1_did_the_agyw_test_positive_for_hiv.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_active_on_treatment
+description: active_on_treatment relevance
+priority: 1
+condition: "step1_knows_hiv_status.contains('hiv_positive')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_health_facility
 description: health_facility relevance
 priority: 1
