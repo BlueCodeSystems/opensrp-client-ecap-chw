@@ -2,14 +2,35 @@
 name: step1_offer_HIV_index_testing
 description: offer_HIV_index_testing relevance
 priority: 1
-condition: "step1_all_other_household_members_0_17years_know_their_hiv_status.contains('yes')"
+condition: "step1_all_other_household_members_0_17years_know_their_hiv_status.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_approved_by
+description: approved_by relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_approved
+description: date_approved relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_categorize_as_index_c_alhiv_vca
+description: categorize_as_index_c_alhiv_vca relevance
+priority: 1
+condition: "step1_hiv_positive_children_adolescents_and_on_active_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_refer_to_treatment_and_care
 description: refer_to_treatment_and_care relevance
 priority: 1
-condition: "step1_are_there_children_who_are_hiv_positive_and_on_active_treatment.contains('yes')"
+condition: "step1_hiv_positive_children_adolescents_and_not_on_active_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -19,4 +40,292 @@ priority: 1
 condition: "step1_is_the_female_caregiver_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step1_refer_to_treatment_and_care_caregiver_children_with_unknown_status
+description: refer_to_treatment_and_care_caregiver_children_with_unknown_status relevance
+priority: 1
+condition: "step1_if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_health_facility
+description: health_facility relevance
+priority: 1
+condition: "step1_sub_population.contains('c_alhiv')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_household_enrollment_part1
+description: household_enrollment_part1 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_household_enrollment_unapproved
+description: household_enrollment_unapproved relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_enrollment_date
+description: enrollment_date relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_household_id
+description: household_id relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_caregiver_id
+description: caregiver_id relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_gender
+description: gender relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_birthdate
+description: birthdate relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_entry_type
+description: entry_type relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_caregiver_education
+description: caregiver_education relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_children_less_5
+description: children_less_5 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_males_less_5
+description: males_less_5 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_females_less_5
+description: females_less_5 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_children_10_17
+description: children_10_17 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_males_10_17
+description: males_10_17 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_case_worker_name
+description: case_worker_name relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_case_worker_nrc
+description: case_worker_nrc relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_date_signed
+description: date_signed relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_signature
+description: signatutre relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_nutrition_assessment
+description: nutrition_assessment relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_household_member_had_malaria
+description: household_member_had_malaria relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_malaria_itns
+description: malaria_itns relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_malaria_beds
+description: malaria_beds relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_
+description:  relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
