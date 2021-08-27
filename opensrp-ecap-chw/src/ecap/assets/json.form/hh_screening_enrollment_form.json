@@ -108,7 +108,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "sex",
         "type": "spinner",
-        "hint": "Sex of VCA",
+        "hint": "Gender of VCA",
         "values": [
           "Male",
           "Female"
@@ -168,33 +168,98 @@
         }
       },
       {
-        "key": "Province",
+        "key": "part_a_province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "province",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_a_province",
         "type": "spinner",
         "hint": "Province",
         "values": [
-          "Lusaka",
           "Central",
           "Southern"
-        ]
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the Province"
+        }
       },
       {
-        "key": "district",
+        "key": "part_a_district_central",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
+        "openmrs_entity_id": "part_a_district_central",
         "type": "spinner",
-        "hint": "District",
+        "hint": "District in Central Province",
         "values": [
-          "Choma",
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "part_a_district_southern",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_a_district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
           "Chikankata",
-          "Pemba",
-          "Monze",
+          "Choma",
           "Mazabuka",
-          "Kalomo"
-        ]
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "ward",
@@ -260,39 +325,98 @@
         }
       },
       {
-        "key": "Province",
+        "key": "part_b_province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "province",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_b_province",
         "type": "spinner",
         "hint": "Province",
         "values": [
-          "Lusaka",
           "Central",
-          "Western",
-          "Southern",
-          "Eastern",
-          "Munchinga",
-          "Luapula",
-          "North Western",
-          "Copperbelt",
-          "Northen"
-        ]
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the Province"
+        }
       },
       {
-        "key": "district",
+        "key": "district_central",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "district",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_central",
         "type": "spinner",
-        "hint": "District",
+        "hint": "District in Central Province",
         "values": [
-          "Chongwe",
-          "Monze",
-          "Kapiri",
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "district_southern",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
+          "Chikankata",
           "Choma",
-          "Kafue"
-        ]
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "ward",
@@ -321,17 +445,514 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "chibombo_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "chibombo_health_facility",
         "type": "spinner",
-        "hint": "Name of Health Facility HH Accesses Health Services",
+        "hint": "Health Facility",
         "values": [
-          "UTH",
-          "Levy Mwanawasa",
-          "Chelstone Clinic"
-        ]
+          "Chitanda Rural Health Centre",
+          "Kayosha Rural Health Centre",
+          "Mwachisompola Demo Zone Rural Health Centre",
+          "Chibombo Rural Health Centre",
+          "Shimukuni Rural Health Centre",
+          "Chikobo Rural Health Centre",
+          "Mwanjuni Health Post",
+          "Twalumba Rural Health Centre"
+        ],
+        "keys": [
+          "Chitanda Rural Health Centre",
+          "Kayosha Rural Health Centre",
+          "Mwachisompola Demo Zone Rural Health Centre",
+          "Chibombo Rural Health Centre",
+          "Shimukuni Rural Health Centre",
+          "Chikobo Rural Health Centre",
+          "Mwanjuni Health Post",
+          "Twalumba Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "chisamba_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "chisamba_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Liteta District Hospital",
+          "Chisamba Rural Health Centre",
+          "Chisamba Rural Health Centre",
+          "Chipembi Rural Health Centre"
+        ],
+        "keys": [
+          "Liteta District Hospital",
+          "Chisamba Rural Health Centre",
+          "Chisamba Rural Health Centre",
+          "Chipembi Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mkushi_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mkushi_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Chibefwe Rural Health Centre",
+          "Nkumbi Rural Health Centre",
+          "Chalata Rural Health Centre"
+        ],
+        "keys": [
+          "Chibefwe Rural Health Centre",
+          "Nkumbi Rural Health Centre",
+          "Chalata Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mumbwa_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mumbwa_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Mumbwa District hospital",
+          "Nangoma Hospital Affiliated Health Centre",
+          "Bulungu (mumbwa) Urban Health Center",
+          "Lungobe Rural Health Centre",
+          "Chiwena Rural Health Center",
+          "Nalubanda Rural Health Centre",
+          "Nambala Rural Health Centre"
+        ],
+        "keys": [
+          "Mumbwa District hospital",
+          "Nangoma Hospital Affiliated Health Centre",
+          "Bulungu (mumbwa) Urban Health Center",
+          "Lungobe Rural Health Centre",
+          "Chiwena Rural Health Center",
+          "Nalubanda Rural Health Centre",
+          "Nambala Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kabwe_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "kabwe_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Kabwe General Hospital",
+          "Kabwe Mine Hospital",
+          "Kasanda Urban Health Centre",
+          "Katondo Urban Health Centre",
+          "Mahatma Gandhi Memorial Urban Health Centre",
+          "Nakoli Urban Health Centre",
+          "Kawama Urban Health Center",
+          "Bwacha Urban Health Centre",
+          "Natuseko Urban Health Centre",
+          "Ngungu Urban Health Centre",
+          "Makululu Urban Health Centre"
+        ],
+        "keys": [
+          "Kabwe General Hospital",
+          "Kabwe Mine Hospital",
+          "Kasanda Urban Health Centre",
+          "Katondo Urban Health Centre",
+          "Mahatma Gandhi Memorial Urban Health Centre",
+          "Nakoli Urban Health Centre",
+          "Kawama Urban Health Center",
+          "Bwacha Urban Health Centre",
+          "Natuseko Urban Health Centre",
+          "Ngungu Urban Health Centre",
+          "Makululu Urban Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kapiri_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "kapiri_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Kapiri Mposhi Urban Clinic",
+          "Kawama Health Center",
+          "Waya Rural Health Center",
+          "Mukonchi Rural Health Center",
+          "Matilyo Health Post",
+          "Mpunde Rural Health Centre",
+          "Chankomo Rural Health Centre"
+        ],
+        "keys": [
+          "Kapiri Mposhi Urban Clinic",
+          "Kawama Health Center",
+          "Waya Rural Health Center",
+          "Mukonchi Rural Health Center",
+          "Matilyo Health Post",
+          "Mpunde Rural Health Centre",
+          "Chankomo Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "chikankata_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "chikankata_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Chikankata Mission Hospital",
+          "Mubuyu Rural Health Post",
+          "Nansenga Health Center",
+          "Nameembo Rural Health Center"
+        ],
+        "keys": [
+          "Chikankata Mission Hospital",
+          "Mubuyu Rural Health Post",
+          "Nansenga Health Center",
+          "Nameembo Rural Health Center"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mazabuka_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mazabuka_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Hillside Rural HC",
+          "Kaonga Urban HC",
+          "Mazabuka General Hospital",
+          "Nakambala Urban HC",
+          "Kaleya RHC",
+          "Chivuna RHC",
+          "Lubombo Rural Health Centre",
+          "Nega Nega Rural Health Centre",
+          "Mbayamusuma Rural Health Centre",
+          "Magoye Rural Health Centre",
+          "Nanga Rural Health Centre"
+        ],
+        "keys": [
+          "Hillside Rural HC",
+          "Kaonga Urban HC",
+          "Mazabuka General Hospital",
+          "Nakambala Urban HC",
+          "Kaleya RHC",
+          "Chivuna RHC",
+          "Lubombo Rural Health Centre",
+          "Nega Nega Rural Health Centre",
+          "Mbayamusuma Rural Health Centre",
+          "Magoye Rural Health Centre",
+          "Nanga Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "monze_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "monze_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Manungu Urban Health Centre",
+          "Chikuni OPD Mission Hospital",
+          "Monze Mission Hospital",
+          "Hakunkula Rural Health Centre",
+          "Keemba Rural Health Centre",
+          "Monze Urban Health Centre"
+        ],
+        "keys": [
+          "Manungu Urban Health Centre",
+          "Chikuni OPD Mission Hospital",
+          "Monze Mission Hospital",
+          "Hakunkula Rural Health Centre",
+          "Keemba Rural Health Centre",
+          "Monze Urban Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "choma_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "choma_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Njase Rural Health Centre",
+          "Mapanza Rural Health Center",
+          "Mangunza Rural Health Center",
+          "Harmony Health Post",
+          "Choma General Hospital",
+          "Batoka Rural Health Centre",
+          "Macha Mission Hospital",
+          "Railway Surgery Urban HC",
+          "Shampande Urban HC"
+        ],
+        "keys": [
+          "Njase Rural Health Centre",
+          "Mapanza Rural Health Center",
+          "Mangunza Rural Health Center",
+          "Harmony Health Post",
+          "Choma General Hospital",
+          "Batoka Rural Health Centre",
+          "Macha Mission Hospital",
+          "Railway Surgery Urban HC",
+          "Shampande Urban HC"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kalomo_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "kalomo_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban"
+        ],
+        "keys": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "namwala_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "namwala_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban",
+          "Chitongo RHC",
+          "Kabulamwanda Rural Health Centre",
+          "Maala Rural Health Centre",
+          "Moboola Rural Health Centre",
+          "Moomba Health Post",
+          "Muchila Rural Health Centre",
+          "Namwala District Hospital"
+        ],
+        "keys": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban",
+          "Chitongo RHC",
+          "Kabulamwanda Rural Health Centre",
+          "Maala Rural Health Centre",
+          "Moboola Rural Health Centre",
+          "Moomba Health Post",
+          "Muchila Rural Health Centre",
+          "Namwala District Hospital"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "sinazongwe_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sinazongwe_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Maamba Hospital",
+          "Sinazeze RHC"
+        ],
+        "keys": [
+          "Maamba Hospital",
+          "Sinazeze RHC"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "livingstone_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "livingstone_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Centre Of Excellence HC",
+          "Chreso Ministries Urban HC",
+          "Linda Urban HC",
+          "Libuyu Urban Clinic",
+          "St Joseph's Hospice",
+          "Mahatma Ghandi",
+          "Police Urban",
+          "Maramba Urban HC",
+          "Mosi-oa-Tunya HC"
+        ],
+        "keys": [
+          "Centre Of Excellence HC",
+          "Chreso Ministries Urban HC",
+          "Linda Urban HC",
+          "Libuyu Urban Clinic",
+          "St Joseph's Hospice",
+          "Mahatma Ghandi",
+          "Police Urban",
+          "Maramba Urban HC",
+          "Mosi-oa-Tunya HC"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "partners",
@@ -347,19 +968,6 @@
           "YWCA",
           "ZEC"
         ]
-      },
-      {
-        "key": "name_of_adolescent",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "name",
-        "type": "edit_text",
-        "hint": "Name of Adolescent",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of adolescent only take letters"
-        }
       },
       {
         "key": "date_of_screening",
@@ -436,8 +1044,8 @@
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|\\s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "(09[5-7][0-9]{7})|(07[6-7][0-9]{7})|\\s*",
+          "err": "Number must begin with 095, 096, 097, 077 or 076 and must be a total of 10 digits in length"
         }
       },
       {
@@ -453,7 +1061,7 @@
       {
         "key": "household_summary_information",
         "type": "repeating_group",
-        "reference_edit_text_hint": "Number of Households",
+        "reference_edit_text_hint": "Number of Household Members",
         "repeating_group_label": "Household summary information ",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -545,19 +1153,27 @@
               }
             ]
           },
-
           {
             "key": "relationship_to_primary_caregiver",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "relationship_to_primary_caregiver",
-            "type": "edit_text",
+            "type": "spinner",
             "hint": "Relationship to Primary Caregiver",
-            "edit_type": "name",
-            "v_regex": {
-              "value": "[A-Za-z\\s\\.\\-]*",
-              "err": "relationship_to_primary_caregiver can only contain letters"
-            }
+            "values": [
+              "Self",
+              "Mother",
+              "Father",
+              "Sister",
+              "Brother",
+              "Niece",
+              "Nephew",
+              "Aunt",
+              "Uncle",
+              "Grandfather",
+              "Grandmother",
+              "Cousin"
+            ]
           },
           {
             "key": "dob",
@@ -580,7 +1196,7 @@
             "openmrs_entity": "person",
             "openmrs_entity_id": "gender",
             "type": "spinner",
-            "hint": "Sex",
+            "hint": "Gender",
             "values": [
               "Male",
               "Female"
@@ -609,6 +1225,10 @@
               {
                 "key": "status_unknown",
                 "text": "Status Unknown"
+              },
+              {
+                "key": "status_not_required",
+                "text": "Status Not Required Based On Risk Assessment"
               }
             ]
           }
@@ -716,7 +1336,7 @@
         "key": "hiv_positive_children_adolescents_and_not_on_active_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_on_active_treatment",
+        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_not_on_active_treatment",
         "type": "native_radio",
         "label": "Are there children/adolescents who are HIV+ and NOT active on treatment?",
         "options": [
@@ -748,10 +1368,10 @@
         }
       },
       {
-        "key": "is_the_female_caregiver_hiv_positive",
+        "key": "is_female_caregiver_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "is_female_caregiver_hiv_positive",
         "type": "native_radio",
         "label": "Is the female caregiver HIV-positive (WLHIV)?",
         "options": [
@@ -766,10 +1386,10 @@
         ]
       },
       {
-        "key": "if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status",
+        "key": "if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status",
+        "openmrs_entity_id": "if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status",
         "type": "native_radio",
         "label": "Do all the biological children 0-17 years of the Caregiver know their HIV status?",
         "options": [
@@ -797,7 +1417,7 @@
         "text": "Offer index testing as part of enrollment for all biological children 0-17 years and DBS for all HEIs",
         "text_color": "#d20000",
         "v_required": {
-          "value": true
+          "value": false
         },
         "relevance": {
           "rules-engine": {
@@ -813,7 +1433,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If other household member 0-2 years is HEI, are they receiving breastfeeding? (Categorize as HEI VCA)",
+        "label": "If other household member 0-2 years is HEI, are they receiving breastfeeding?",
         "options": [
           {
             "key": "yes",
@@ -824,6 +1444,23 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "categorize_as_HEI_VCA",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Categorize as HEI VCA",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "if_there_are_children_in_the_household_aged_0_5years_are_they_enrolled_in_an_early_childhood_development_program",
@@ -831,7 +1468,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If there are children in the household aged 0-5 years, are the enrolled in an Early Childhood Development Program and are their developmental milestones tracked? (If not, refer to ECD services at enrollment)",
+        "label": "If there are children in the household aged 0-5 years, are they enrolled in an Early Childhood Development Program and are their developmental milestones tracked?",
         "options": [
           {
             "key": "yes",
@@ -843,6 +1480,23 @@
           }
         ]
 
+      },
+      {
+        "key": "refer_to_ecd_services_at_enrollment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to ECD Services at Enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
@@ -850,7 +1504,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
         "type": "native_radio",
-        "label": "Have all children and adolescents in the household been screened for malnutrition? (If not, refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling)",
+        "label": "Have all children and adolescents in the household been screened for malnutrition?",
         "options": [
           {
             "key": "yes",
@@ -862,6 +1516,23 @@
           }
         ]
 
+      },
+      {
+        "key": "refer_malnutrition_screening",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines",
@@ -869,7 +1540,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
         "type": "native_radio",
-        "label": "If HEI receiving breastfeeding, are they receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines (If not refer and provide preventive care and support services as part of enrollment) ",
+        "label": "If HEI receiving breastfeeding, are they receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines",
         "options": [
           {
             "key": "yes",
@@ -883,46 +1554,29 @@
 
       },
       {
-        "key": "if_other_household_member_0_17years_is_a_victim_of_sexual_violence_have_they_received clinical care ",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "if_other_household_member_0_17years_is_a_victim_of_sexual_violence_have_they_received clinical care ",
-        "type": "native_radio",
-        "label": "If other household member 0-17 years is a victim of sexual violence, have they received clinical care (PEP, HIV testing, emergency contraceptive, STI testing, psychosocial counseling) or non-clinical care (legal services). (Categorize as victim of Sexual Violence VCA. If not all care and support services were received, refer to appropriate clinical and non-clinical services as part of enrolment)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          },
-          {
-            "key": "clinical_care_yes",
-            "text": "Received clinical care"
-          },
-          {
-            "key": "clinical_care_no",
-            "text": "Did not receive clinical care"
-          },
-          {
-            "key": "non_clinical_care_yes",
-            "text": "Received  non clinical care"
-          },
-          {
-            "key": "non_clinical_care_no",
-            "text": "Did not receive  non clinical care"
+        "key": "provide_preventive_care",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "If not refer and provide preventive care and support services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
           }
-        ]
+        }
       },
       {
-        "key": "have_all_the male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
+        "key": "other_household_member_victim_of_sexual_violence",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "have_all_the male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
+        "openmrs_entity_id": "other_household_member_victim_of_sexual_violence",
         "type": "native_radio",
-        "label": "Have all the male HIV-negative VCA in the household 15 years and above received voluntary medical male circumcision (VMMC)? (If not refer to VMMC services at enrollment)",
+        "label": "Are there household members 0-17years that are victims of Sexual Violence",
         "options": [
           {
             "key": "yes",
@@ -936,12 +1590,131 @@
 
       },
       {
-        "key": "child_been_screened_for_malnutrition",
+        "key": "victim_of_sexual_violence_yes_clinical",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "victim_of_sexual_violence_yes_clinical",
         "type": "native_radio",
-        "label": "Has the child (6 months and above) been screened for malnutrition?",
+        "label": "Have the victims of Sexual Violence received clinical care(PEP, HIV testing, emergency contraceptive, STI testing, psychosocial counseling)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "sexual_violence_care_clinical",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate clinical services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "victim_of_sexual_violence_yes_nonclinical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "victim_of_sexual_violence_yes_clinical",
+        "type": "native_radio",
+        "label": "Have the victims of Sexual Violence received non-clinical care (legal services)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "sexual_violence_care",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate non-clinical services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_vca_receiving_age_appropriate_interventions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "household_vca_receiving_age_appropriate_interventions",
+        "type": "native_radio",
+        "label": "Are the VCAs in the household receiving age-appropriate HIV and sexual violence preventive interventions",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "age_appropriate_interventions",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer household to age-appropriate interventions at enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
+        "type": "native_radio",
+        "label": "Have all the male HIV-negative VCA in the household 15 years and above received voluntary medical male circumcision (VMMC)?",
         "options": [
           {
             "key": "yes",
@@ -955,28 +1728,36 @@
 
       },
       {
-        "key": "child_gets_drugs_to_prevent_tb",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
+        "key": "vmmc",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to VMMC services at enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
           }
-        ]
-
+        }
+      },
+      {
+        "key": "part_d2_other_vca_sub_pop_screening_in_household",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part D.2: For Adolescent Girls & Young Women (AGYW) 10-17 Years",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
       },
       {
         "key": "for_adolescent_girls_and_young_women_10_17years",
         "type": "repeating_group",
-        "repeating_group_label": " For questions DII.1 – DII.16, ask EACH OF THE AGYW 10–17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed. If there are no AGYW 10-17 years in the household, proceed to section E ",
+        "repeating_group_label": " For questions in this section, ask EACH OF THE AGYW 10–17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",

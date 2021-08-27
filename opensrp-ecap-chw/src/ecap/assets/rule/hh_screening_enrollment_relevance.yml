@@ -1,22 +1,135 @@
 ---
+name: step1_part_a_district_central
+description: part_a_district_central relevance
+priority: 1
+condition: "step1_part_a_province.contains('central')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_part_a_district_southern
+description: part_a_district_southern relevance
+priority: 1
+condition: "step1_part_a_province.contains('southern')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_district_central
+description: district_central relevance
+priority: 1
+condition: "step1_part_b_province.contains('central')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_district_southern
+description: district_southern relevance
+priority: 1
+condition: "step1_part_b_province.contains('southern')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chibombo_health_facility
+description: chibombo_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('chibombo')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chisamba_health_facility
+description: chisamba_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('chisamba')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mkushi_health_facility
+description: mkushi_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('mkushi')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mumbwa_health_facility
+description: mumbwa_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('mumbwa')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kabwe_health_facility
+description: kabwe_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('kabwe')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kapiri_health_facility
+description: kapiri_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('kapiri')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chikankata_health_facility
+description: chikankata_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('chikankata')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mazabuka_health_facility
+description: mazabuka_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('mazabuka')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_monze_health_facility
+description: monze_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('monze')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_choma_health_facility
+description: choma_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('choma')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kalomo_health_facility
+description: kalomo_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('kalomo')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_namwala_health_facility
+description: namwala_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('namwala')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sinazongwe_health_facility
+description: sinazongwe_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('sinazongwe')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_livingstone_health_facility
+description: livingstone_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('livingstone')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_offer_HIV_index_testing
 description: offer_HIV_index_testing relevance
 priority: 1
 condition: "step1_all_other_household_members_0_17years_know_their_hiv_status.contains('no')"
-actions:
-  - "isRelevant = true"
----
-name: step1_approved_by
-description: approved_by relevance
-priority: 1
-condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step1_date_approved
-description: date_approved relevance
-priority: 1
-condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -34,17 +147,108 @@ condition: "step1_hiv_positive_children_adolescents_and_not_on_active_treatment.
 actions:
   - "isRelevant = true"
 ---
-name: step1_if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status
-description: if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status relevance
+name: step1_if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status
+description: if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status relevance
 priority: 1
-condition: "step1_is_the_female_caregiver_hiv_positive.contains('yes')"
+condition: "step1_is_female_caregiver_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_refer_to_treatment_and_care_caregiver_children_with_unknown_status
 description: refer_to_treatment_and_care_caregiver_children_with_unknown_status relevance
 priority: 1
-condition: "step1_if_female_caregiver_is_hiv_positive_do_all_the biological_children_0_17years_know_their_hiv_status.contains('no')"
+condition: "step1_if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_categorize_as_HEI_VCA
+description: categorize_as_HEI_VCA relevance
+priority: 1
+condition: "step1_if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_refer_malnutrition_screening
+description: refer_malnutrition_screening relevance
+priority: 1
+condition: "step1_have_children_and_adolescents_in_the_household_been_screened_for_malnutrition.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_refer_to_ecd_services_at_enrollment
+description: refer_to_ecd_services_at_enrollment relevance
+priority: 1
+condition: "step1_if_there_are_children_in_the_household_aged_0_5years_are_they_enrolled_in_an_early_childhood_development_program.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hei_receiving_breastfeeding
+description: hei_receiving_breastfeeding relevance
+priority: 1
+condition: "step1_hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_refer_malnutrition_screening
+description: refer_malnutrition_screening relevance
+priority: 1
+condition: "step1_have_children_and_adolescents_in_the_household_been_screened_for_malnutrition.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_provide_preventive_care
+description: provide_preventive_care relevance
+priority: 1
+condition: "step1_hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_victim_of_sexual_violence_yes_clinical
+description: victim_of_sexual_violence_yes_clinical relevance
+priority: 1
+condition: "step1_other_household_member_victim_of_sexual_violence.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_victim_of_sexual_violence_yes_nonclinical
+description: victim_of_sexual_violence_yes_nonclinical relevance
+priority: 1
+condition: "step1_other_household_member_victim_of_sexual_violence.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sexual_violence_care
+description: sexual_violence_care relevance
+priority: 1
+condition: "step1_victim_of_sexual_violence_yes_nonclinical.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sexual_violence_care
+description: sexual_violence_care relevance
+priority: 1
+condition: "step1_victim_of_sexual_violence_yes_clinical.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sexual_violence_care_clinical
+description: sexual_violence_care_clinical relevance
+priority: 1
+condition: "step1_victim_of_sexual_violence_yes_clinical.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_age_appropriate_interventions
+description: age_appropriate_interventions relevance
+priority: 1
+condition: "step1_household_vca_receiving_age_appropriate_interventions.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vmmc
+description: vmmc relevance
+priority: 1
+condition: "step1_have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -52,6 +256,20 @@ name: step1_health_facility
 description: health_facility relevance
 priority: 1
 condition: "step1_sub_population.contains('c_alhiv')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_approved_by
+description: approved_by relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_approved
+description: date_approved relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
