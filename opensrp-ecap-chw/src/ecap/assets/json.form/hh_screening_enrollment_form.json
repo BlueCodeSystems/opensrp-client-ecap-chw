@@ -2451,7 +2451,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
         "type": "native_radio",
-        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.). If not, refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
         "options": [
           {
             "key": "yes",
@@ -2462,6 +2462,23 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "economic_service",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "screening_carried_out_by",

@@ -329,6 +329,13 @@ condition: "step1_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes
 actions:
   - "isRelevant = true"
 ---
+name: step1_economic_service
+description: economic_service relevance
+priority: 1
+condition: "step1_household_food_socially_and_economically_secure.contains('no')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_reason_for_hiv_risk_service
 description: reason_for_hiv_risk_service relevance
 priority: 1
