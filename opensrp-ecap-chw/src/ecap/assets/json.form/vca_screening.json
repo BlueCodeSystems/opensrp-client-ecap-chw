@@ -2166,16 +2166,20 @@
         "key": "date_of_screening",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_of_screening",
+        "openmrs_entity_id": "date_referred",
         "type": "date_picker",
-        "hint": "Date of screening",
-        "look_up": "true",
+        "hint": "Date of Screening",
+        "label_info_title": "Date of Screening",
         "expanded": false,
         "duration": {
-          "label": "Age"
+          "label": ""
         },
-        "min_date": "01-01-1900",
-        "max_date": "today",
+        "min_date": "today-19y",
+        "max_date": "",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Date of Screening"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2183,7 +2187,6 @@
             }
           }
         }
-
       },
       {
         "key": "screening_location",
@@ -2329,12 +2332,12 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_hiv_known",
-        "type": "edit_text",
-        "hint": "Date HIV was known",
-        "v_required": {
-          "value": false,
-          "err": "Please enter year"
-        },
+        "type": "date_picker",
+        "hint": "Date HIV Was known",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
