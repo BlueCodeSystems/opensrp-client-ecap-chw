@@ -2218,6 +2218,42 @@
         }
       },
       {
+        "key": "hiv_appropriate_treatment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Indicate ART Number",
+        "v_numeric": {
+          "value": "true",
+          "err": "ART number should only contain numbers"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "virally_suppressed",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -2243,6 +2279,23 @@
         }
       },
       {
+        "key": "hiv_appropriate_treatment_virally_suppressed",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -2252,7 +2305,15 @@
         "v_numeric": {
           "value": "true",
           "err": "Viral load can only contain numbers"
-        }},
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
       {
         "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
@@ -2263,28 +2324,22 @@
         "label_info_title": "Date of last viral load",
         "expanded": false,
         "min_date": "today-50y",
-        "max_date": "today"
-      },
-      {
-        "key": "test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "test",
-        "openmrs_entity_id": "test",
-        "type": "edit_text",
-        "hint": "Test",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  test name"
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
         }
       },
       {
         "key": "if_hiv_positive_have_biological_children",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
+        "openmrs_entity_id": "if_hiv_positive_have_biological_children",
         "type": "native_radio",
-        "label": "If HIV+, do you have biological children 0-2 years?",
+        "label": "Do you have biological children 0-2 years?",
         "options": [
           {
             "key": "yes",
@@ -2294,7 +2349,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "enrolled_in_the_pmtct_program",
@@ -2312,15 +2374,22 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
-        "key": "are_there_any_reasons_you may_be_at_risk for_hiv",
+        "key": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "are_there_any_reasons_you may_be_at_risk for_hiv",
+        "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV? \n(If Yes, state reason: ………………………………………………………………………………. And provide appropriate preventive services as part of enrollment)",
+        "label": "Are there any reasons you may be at risk for HIV?)",
         "options": [
           {
             "key": "yes",
@@ -2329,21 +2398,52 @@
           {
             "key": "no",
             "text": "No"
-          }, {
-            "key": "reasons_might_be_at_risk_of_hiv",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "reasons_might_be_at_risk_of_hiv",
-            "type": "edit_text",
-            "hint": "State reasons might be at risk of hiv",
-            "relevance": {
-              "step6: are_there_any_reasons_you may_be_at_risk for_hiv": {
-                "type": "string",
-                "ex": "equalTo(., \"yes\")"
-              }
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
             }
           }
-        ]
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "reason_for_hiv_risk",
+        "type": "edit_text",
+        "hint": "State reason...",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  test name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk_service",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Provide appropriate preventive services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "household_food_socially_and_economically_secure",
