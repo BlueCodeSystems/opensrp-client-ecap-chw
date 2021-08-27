@@ -476,6 +476,13 @@ condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step2_females_10_17
+description: females_10_17 relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step2_case_worker_name
 description: case_worker_name relevance
 priority: 1
@@ -527,6 +534,27 @@ actions:
 ---
 name: step2_malaria_beds
 description: malaria_beds relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_fam_source_income
+description: fam_source_income relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_monthly_expenses
+description: monthly_expenses relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_marital_status
+description: marital_status relevance
 priority: 1
 condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
