@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Caregiver Household Case Plan",
+  "encounter_type": "Case_Plan_Index",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -53,8 +53,7 @@
     }
   },
   "step1": {
-    "title": "HIV Status, and Vulnerability and HIV Risk Assessment",
-    "next": "step2",
+    "title": "Caregiver Household Case Plan",
     "fields": [
       {
         "key": "province",
@@ -809,12 +808,25 @@
         }
       },
       {
-        "key": "case_worker_name",
+        "key": "case_worker_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_name",
+        "openmrs_entity_id": "case_worker_first_name",
         "type": "edit_text",
         "hint": "Case Worker Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Please Case Worker Name"
+        }
+      },
+      {
+        "key": "case_worker_surname_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_worker_surname_name",
+        "type": "edit_text",
+        "hint": "Case Worker Surname",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -887,7 +899,7 @@
           {
             "key": "hiv_management_vulnerabilities",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
@@ -900,7 +912,7 @@
           {
             "key": "hiv_management_goal",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_goal",
             "type": "edit_text",
             "hint": "Goal",
@@ -913,7 +925,7 @@
           {
             "key": "hiv_management_services",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
@@ -926,7 +938,7 @@
           {
             "key": "hiv_management_referred_institution",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
@@ -939,7 +951,7 @@
           {
             "key": "hiv_management_date_due",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_date_due",
             "type": "date_picker",
             "hint": "Due Date",
@@ -957,7 +969,7 @@
           {
             "key": "hiv_management_follow_up",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_follow_up",
             "type": "edit_text",
             "hint": "Status at Follow-up",
@@ -970,7 +982,7 @@
           {
             "key": "hiv_management_comment",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_comment",
             "type": "edit_text",
             "hint": "Comment",
@@ -999,7 +1011,7 @@
           {
             "key": "health_vulnerabilities",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
@@ -1012,7 +1024,7 @@
           {
             "key": "health_goal",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_goal",
             "type": "edit_text",
             "hint": "Goal",
@@ -1025,7 +1037,7 @@
           {
             "key": "health_services",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
@@ -1038,7 +1050,7 @@
           {
             "key": "health_referred_institution",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
@@ -1051,7 +1063,7 @@
           {
             "key": "health_date_due",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_date_due",
             "type": "date_picker",
             "hint": "Due Date",
@@ -1069,7 +1081,7 @@
           {
             "key": "health_follow_up",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_follow_up",
             "type": "edit_text",
             "hint": "Status at Follow-up",
@@ -1082,7 +1094,7 @@
           {
             "key": "health_comment",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_comment",
             "type": "edit_text",
             "hint": "Comment",
@@ -1111,7 +1123,7 @@
           {
             "key": "stable_vulnerabilities",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
@@ -1124,7 +1136,7 @@
           {
             "key": "stable_management_goal",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_management_goal",
             "type": "edit_text",
             "hint": "Goal",
@@ -1137,7 +1149,7 @@
           {
             "key": "stable_services",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
@@ -1150,7 +1162,7 @@
           {
             "key": "stable_referred_institution",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
@@ -1163,7 +1175,7 @@
           {
             "key": "stable_date_due",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_date_due",
             "type": "date_picker",
             "hint": "Due Date",
@@ -1181,7 +1193,7 @@
           {
             "key": "stable_follow_up",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_follow_up",
             "type": "edit_text",
             "hint": "Status at Follow-up",
@@ -1194,7 +1206,7 @@
           {
             "key": "stable_comment",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "stable_comment",
             "type": "edit_text",
             "hint": "Comment",
@@ -1223,7 +1235,7 @@
           {
             "key": "safe_vulnerabilities",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
@@ -1236,7 +1248,7 @@
           {
             "key": "safe_goal",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_goal",
             "type": "edit_text",
             "hint": "Goal",
@@ -1249,7 +1261,7 @@
           {
             "key": "safe_services",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
@@ -1262,7 +1274,7 @@
           {
             "key": "safe_referred_institution",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_address",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
@@ -1275,7 +1287,7 @@
           {
             "key": "safe_date_due",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_date_due",
             "type": "date_picker",
             "hint": "Due Date",
@@ -1293,7 +1305,7 @@
           {
             "key": "safe_follow_up",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_follow_up",
             "type": "edit_text",
             "hint": "Status at Follow-up",
@@ -1306,7 +1318,7 @@
           {
             "key": "safe_comment",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "safe_comment",
             "type": "edit_text",
             "hint": "Comment",
