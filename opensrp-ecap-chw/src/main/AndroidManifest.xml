@@ -107,6 +107,11 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.IndexRegisterActivity"
+            android:label="@string/facility_ovc_register"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MotherIndexActivity"
+            android:label="@string/mother_index_register"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.BeneficiariesRegisterActivity"

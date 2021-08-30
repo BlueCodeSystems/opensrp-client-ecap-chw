@@ -1,24 +1,23 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
+import com.bluecodeltd.ecap.chw.contract.MotherIndexFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
+import com.bluecodeltd.ecap.chw.presenter.MotherIndexFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
+import com.bluecodeltd.ecap.chw.provider.MotherRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
-import org.smartregister.family.util.DBConstants;
-import org.smartregister.util.Utils;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
@@ -27,19 +26,19 @@ import java.util.HashMap;
 
 import androidx.appcompat.widget.Toolbar;
 
-public class IndexFragmentRegister extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
+public class MotherIndexFragment extends BaseRegisterFragment implements MotherIndexFragmentContract.View {
 
     @Override
     protected void initializePresenter() {
-        this.presenter = new IndexRegisterFragmentPresenter();
-        ((IndexRegisterFragmentPresenter)this.presenter).initView(this);
+        this.presenter = new MotherIndexFragmentPresenter();
+        ((MotherIndexFragmentPresenter)this.presenter).initView(this);
     }
 
 
     @Override
     public void setupViews(View view) {
         super.setupViews(view);
-       Toolbar toolbar = view.findViewById(R.id.register_toolbar);
+        Toolbar toolbar = view.findViewById(R.id.register_toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
         toolbar.setContentInsetsRelative(0, 0);
         toolbar.setContentInsetStartWithNavigation(0);
@@ -52,7 +51,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         searchBarLayout.setBackgroundResource(R.color.primary);
         searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) org.smartregister.chw.core.utils.Utils.convertDpToPixel(10, getActivity()));
 
-         ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
+        ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
         if (logo != null) {
             logo.setVisibility(View.GONE);
         }
@@ -107,25 +106,25 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     protected void onViewClicked(View view) {
 
-      //  Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
+        //  Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
 
-       // startActivity(intent);
+        // startActivity(intent);
         goToIndexDetailActivity((CommonPersonObjectClient) view.getTag());
 
     }
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
-        String firstname = client.getColumnmaps().get("first_name");
+       /* String firstname = client.getColumnmaps().get("first_name");
         String lastname = client.getColumnmaps().get("last_name");
         String facility = client.getColumnmaps().get("health_facility");
 
         String fullname = firstname + " " + lastname;
-       // Log.i(getClass().getName(), "facility : " + firstname.toString());
+        // Log.i(getClass().getName(), "facility : " + firstname.toString());
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
         intent.putExtra("client", fullname);
         intent.putExtra("mfacility", facility);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override
@@ -135,9 +134,10 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
+        MotherRegisterProvider registerProvider = new MotherRegisterProvider(requireContext(), registerActionHandler);
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_MOTHER_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }
+
 }
