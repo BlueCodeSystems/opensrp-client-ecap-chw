@@ -1,0 +1,113 @@
+---
+name: step1_district_central_child_household_case_plan
+description: district central relevance
+priority: 1
+condition: "step1_province_child_household_case_plan.contains('central')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_district_southern_child_household_case_plan
+description: district southern relevance
+priority: 1
+condition: "step1_province_child_household_case_plan.contains('southern')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chibombo_health_facility_child_household_case_plan
+description: chibombo_health_facility relevance
+priority: 1
+condition: "step1_district_central_child_household_case_plan.contains('chibombo')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chisamba_health_facility_child_household_case_plan
+description: chisamba_health_facility relevance
+priority: 1
+condition: "step1_district_central_child_household_case_plan.contains('chisamba')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mkushi_health_facility
+description: mkushi_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('mkushi')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mumbwa_health_facility_child_household_case_plan
+description: mumbwa_health_facility relevance
+priority: 1
+condition: "step1_district_central_child_household_case_plan.contains('mumbwa')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kabwe_health_facility_child_household_case_plan
+description: kabwe_health_facility relevance
+priority: 1
+condition: "step1_district_central_child_household_case_plan.contains('kabwe')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kapiri_health_facility_child_household_case_plan
+description: kapiri_health_facility relevance
+priority: 1
+condition: "step1_district_central_child_household_case_plan.contains('kapiri')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chikankata_health_facility_child_household_case_plan
+description: chikankata_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('chikankata')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mazabuka_health_facility_child_household_case_plan
+description: mazabuka_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('mazabuka')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_monze_health_facility_child_household_case_plan
+description: monze_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('monze')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_choma_health_facility_child_household_case_plan
+description: choma_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('choma')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kalomo_health_facility_child_household_case_plan
+description: kalomo_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('kalomo')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_namwala_health_facility_child_household_case_plan
+description: namwala_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('namwala')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sinazongwe_health_facility_child_household_case_plan
+description: sinazongwe_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('sinazongwe')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_livingstone_health_facility_child_household_case_plan
+description: livingstone_health_facility relevance
+priority: 1
+condition: "step1_district_southern_child_household_case_plan.contains('livingstone')"
+actions:
+  - "isRelevant = true"
