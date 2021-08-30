@@ -1,4 +1,11 @@
 ---
+name: step1_subpop_health_facility
+description: subpop_health_facility relevance
+priority: 1
+condition: "step1_sub_population.contains('c_alhiv')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_part_a_district_central
 description: part_a_district_central relevance
 priority: 1
@@ -117,7 +124,6 @@ priority: 1
 condition: "step1_district_southern.contains('sinazongwe')"
 actions:
   - "isRelevant = true"
-
 ---
 name: step1_livingstone_health_facility
 description: livingstone_health_facility relevance
@@ -354,13 +360,6 @@ name: step1_enrolled_in_the_pmtct_program
 description: enrolled_in_the_pmtct_program relevance
 priority: 1
 condition: "step1_if_hiv_positive_have_biological_children.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step1_health_facility
-description: health_facility relevance
-priority: 1
-condition: "step1_sub_population.contains('c_alhiv')"
 actions:
   - "isRelevant = true"
 ---

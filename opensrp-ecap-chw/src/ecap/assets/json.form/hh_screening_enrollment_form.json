@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": " Household Screening",
+    "title": "Household Screening",
     "next": "step2",
     "fields": [
       {
@@ -66,49 +66,54 @@
         }
       },
       {
-        "key": "vca_first_name",
+        "key": "subpop_vca_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "name_of_vca",
+        "openmrs_entity_id": "subpop_vca_first_name",
         "type": "edit_text",
-        "hint": "VCA's First Name",
+        "hint": "VCA First Name",
         "edit_type": "name",
+        "value": "Maimbo",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
         }
       },
       {
-        "key": "vca_last_name",
+        "key": "subpop_vca_last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "name_of_vca",
+        "openmrs_entity_id": "subpop_vca_last_name",
         "type": "edit_text",
-        "hint": "VCA's Last Name",
+        "hint": "VCA Last Name",
         "edit_type": "name",
+        "value": "Tembo",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
         }
       },
       {
-        "key": "age",
+        "key": "subpop_age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
+        "openmrs_entity_id": "subpop_age",
         "type": "edit_text",
         "hint": "Age of VCA",
+        "value": "13",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
-        }},
+        }
+      },
       {
-        "key": "sex",
+        "key": "subpop_sex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "sex",
+        "openmrs_entity_id": "subpop_sex",
         "type": "spinner",
         "hint": "Gender of VCA",
+        "value": "Male",
         "values": [
           "Male",
           "Female"
@@ -149,10 +154,10 @@
         ]
       },
       {
-        "key": "health_facility",
+        "key": "subpop_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "subpop_health_facility",
         "type": "edit_text",
         "hint": "Name of Health Facility",
         "edit_type": "name",
@@ -175,6 +180,7 @@
         "openmrs_entity_id": "part_a_province",
         "type": "spinner",
         "hint": "Province",
+        "value": "Southern",
         "values": [
           "Central",
           "Southern"
