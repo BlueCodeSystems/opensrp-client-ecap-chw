@@ -14,9 +14,10 @@
           },
           {
             "field": "eventType",
-            "field_value": "Caregiver Household Case Plan",
+            "field_value": "Case_Plan_Index",
             "creates_case": [
-              "ec_case_plan"
+              "ec_child_household_case_plan",
+              "ec_caregiver_household_case_plan"
             ]
           },
           {
