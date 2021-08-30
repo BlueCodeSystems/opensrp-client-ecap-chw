@@ -1268,7 +1268,7 @@
       ]
     },
     {
-      "name": "ec_case_plan",
+      "name": "ec_caregiver_household_case_plan",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -1467,10 +1467,17 @@
           }
         },
         {
-          "column_name": "case_worker_name",
+          "column_name": "case_worker_first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_worker_name"
+            "field": "attributes.case_worker_first_name"
+          }
+        },
+        {
+          "column_name": "case_worker_surname_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_surname_name"
           }
         },
         {
@@ -1497,43 +1504,206 @@
           }
         },
         {
-          "column_name": "hiv_management",
-          "type": "Event",
+          "column_name": "nrc_caregiver",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "hiv_management"
+            "field": "attributes.nrc_caregiver"
           }
         },
         {
-          "column_name": "healthy",
-          "type": "Event",
+          "column_name": "hiv_management_vulnerabilities",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "healthy"
+            "field": "attributes.hiv_management_vulnerabilities"
           }
         },
         {
-          "column_name": "stable",
-          "type": "Event",
+          "column_name": "hiv_management_goal",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "stable"
+            "field": "attributes.hiv_management_goal"
           }
         },
         {
-          "column_name": "safe",
-          "type": "Event",
+          "column_name": "hiv_management_goal",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "safe"
+            "field": "attributes.hiv_management_goal"
+          }
+        },
+        {
+          "column_name": "hiv_management_referred_institution",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_referred_institution"
+          }
+        },
+        {
+          "column_name": "hiv_management_date_due",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_date_due"
+          }
+        },
+        {
+          "column_name": "hiv_management_follow_up",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_follow_up"
+          }
+        },
+        {
+          "column_name": "hiv_management_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_comment"
+          }
+        },
+        {
+          "column_name": "health_vulnerabilities",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_vulnerabilities"
+          }
+        },
+        {
+          "column_name": "health_goal",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_goal"
+          }
+        },
+        {
+          "column_name": "health_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_services"
+          }
+        },
+        {
+          "column_name": "health_referred_institution",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_referred_institution"
+          }
+        },
+       {
+          "column_name": "health_date_due",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_date_due"
+          }
+        },
+        {
+          "column_name": "health_follow_up",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_follow_up"
+          }
+        },
+        {
+          "column_name": "health_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_comment"
+          }
+        },
+        {
+          "column_name": "stable_vulnerabilities",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_vulnerabilities"
+          }
+        },
+        {
+          "column_name": "stable_management_goal",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_management_goal"
+          }
+        },
+        {
+          "column_name": "stable_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_services"
+          }
+        },
+        {
+          "column_name": "stable_referred_institution",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_referred_institution"
+          }
+        },
+        {
+          "column_name": "stable_date_due",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_date_due"
+          }
+        },
+        {
+          "column_name": "stable_follow_up",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_follow_up"
+          }
+        },
+        {
+          "column_name": "stable_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_comment"
           }
         },
         {
           "column_name": "safe_vulnerabilities",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "safe_vulnerabilities"
+            "field": "attributes.safe_vulnerabilities"
+          }
+        },
+        {
+          "column_name": "safe_goal",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_goal"
+          }
+        },
+        {
+          "column_name": "safe_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_services"
+          }
+        },
+        {
+          "column_name": "safe_referred_institution",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_referred_institution"
+          }
+        },
+        {
+          "column_name": "safe_date_due",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_date_due"
+          }
+        },
+        {
+          "column_name": "safe_follow_up",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_follow_up"
+          }
+        },
+        {
+          "column_name": "safe_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_comment"
           }
         },
         {
@@ -1562,6 +1732,457 @@
         }
       ]
     },
+
+    {
+      "name": "ec_child_household_case_plan",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "province_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.province_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "district_central_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.district_central_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "district_southern_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.district_southern_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "ward_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.ward_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "village_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.village_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "chibombo_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chibombo_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "chisamba_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chisamba_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "mkushi_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mkushi_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "mumbwa_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mumbwa_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "kabwe_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kabwe_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "kapiri_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kapiri_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "chikankata_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chikankata_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "mazabuka_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mazabuka_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "monze_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.monze_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "choma_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.choma_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "kalomo_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kalomo_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "namwala_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.namwala_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "sinazongwe_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sinazongwe_health_facility_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "livingstone_health_facility_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.livingstone_health_facility_child_household_case_plan"
+          }
+        },
+
+        {
+          "column_name": "caregiver_first_name_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_first_name_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "caregiver_second_name_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_second_name_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "household_id_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id_child_household_case_plan"
+          }
+        },
+
+        {
+          "column_name": "telephone_mobile_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.telephone_mobile_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "addresses.physical_address_address_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.physical_address_address_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "case_worker_first_name_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_first_name_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "case_worker_surname_name_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_surname_name_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "nrc_caregiver_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nrc_caregiver_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "date_case_plan_child_household_case_plan",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_case_plan_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "case_plan_question_child_household_case_plan",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "case_plan_question_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_vulnerabilities_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_vulnerabilities_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_goal_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_goal_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_goal_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_goal_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_referred_institution_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_referred_institution_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_date_due_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_date_due_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_follow_up_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_follow_up_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "hiv_management_comment_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_management_comment_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_vulnerabilities_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_vulnerabilities_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_goal_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_goal_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_services_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_services_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_referred_institution_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_referred_institution_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_date_due_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_date_due_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_follow_up_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_follow_up_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "health_comment_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_comment_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_vulnerabilities_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_vulnerabilities_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_management_goal_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_management_goal_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_services_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_services_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_referred_institution_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_referred_institution_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_date_due_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_date_due_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_follow_up_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_follow_up_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "stable_comment_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_comment_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_vulnerabilities_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_vulnerabilities_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_goal_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_goal_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_services_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_services_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_referred_institution_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_referred_institution_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_date_due_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_date_due_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_follow_up_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_follow_up_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "safe_comment_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_comment_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "remarks_child_household_case_plan",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "remarks_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "date_signed_child_household_case_plan",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_signed_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "signature_check_box_child_household_case_plan",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "signature_check_box_child_household_case_plan"
+          }
+        }
+      ]
+    },
+
+
+
+
 
     {
       "name": "ec_vca_assessment",
