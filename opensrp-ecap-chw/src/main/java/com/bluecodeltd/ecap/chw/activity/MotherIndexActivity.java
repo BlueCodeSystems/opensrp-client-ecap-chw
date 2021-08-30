@@ -3,15 +3,12 @@ package com.bluecodeltd.ecap.chw.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
+import com.bluecodeltd.ecap.chw.fragment.MotherIndexFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
@@ -22,7 +19,6 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
-import org.smartregister.chw.referral.R.id;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
@@ -32,9 +28,10 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 import java.util.List;
 import java.util.Map;
 
+import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
-public class IndexRegisterActivity extends BaseRegisterActivity implements IndexRegisterContract.View {
+public class MotherIndexActivity extends BaseRegisterActivity implements MotherIndexContract.View {
 
     public String action = null;
 
@@ -46,16 +43,16 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     @Override
     protected void initializePresenter() {
-        this.presenter = new IndexRegisterPresenter(this);
+        this.presenter = new MotherIndexPresenter(this);
     }
 
-    private IndexRegisterContract.Presenter indexRegisterPresenter(){
-        return (IndexRegisterPresenter) this.presenter;
+    private MotherIndexContract.Presenter motherIndexPresenter(){
+        return (MotherIndexPresenter) this.presenter;
     }
 
     @Override
     protected BaseRegisterFragment getRegisterFragment() {
-        return new IndexFragmentRegister();
+        return new MotherIndexFragment();
     }
 
     @Override
@@ -94,13 +91,13 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){
             String json = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
-
-                    if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
+                    if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
-                        indexRegisterPresenter().saveForm(json, false);
+                        motherIndexPresenter().saveForm(json, false);
                     }
                 }
 

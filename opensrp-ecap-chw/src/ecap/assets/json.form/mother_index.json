@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "mother_index",
+  "encounter_type": "Mother Register",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,10 +51,28 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "mothers_first_name",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "mothers_first_name",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "value": "Choma Central Hospital",
+        "hint": "Health facility",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Health Facility only takes letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please enter Health Facility"
+        }
+      },
+      {
+        "key": "mother_first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_first_name",
         "entity_id": "",
         "type": "edit_text",
         "hint": "Mothers first name ",
@@ -72,7 +90,7 @@
       {
         "key": "mother_surname",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_surname",
         "entity_id": "",
         "type": "edit_text",
@@ -130,7 +148,7 @@
         "reference_edit_text_hint": "Number of children",
         "repeating_group_label": "Child",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "",
         "v_required": {
           "value": false,
@@ -142,33 +160,23 @@
             "openmrs_entity_parent": "",
             "openmrs_entity": "person",
             "openmrs_entity_id": "first_name",
-            "entity": "child",
             "type": "edit_text",
-            "hint": "Child`s first name ",
+            "hint": "Child's first name ",
             "edit_type": "name",
-            "look_up": "true",
-            "v_required": {
-              "value": false,
-              "err": "Please enter childs first name"
-            },
-            "v_regex": {
-              "value": "[A-Za-z\\s\\.\\-]*",
-              "err": "Please enter a valid name"
-            }
+            "look_up": "true"
           },
           {
             "key": "last_name",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person",
             "openmrs_entity_id": "last_name",
-            "entity": "child",
             "type": "edit_text",
             "hint": "Child's last name ",
             "edit_type": "name",
             "look_up": "true",
             "v_required": {
               "value": false,
-              "err": "Please enter childs last name"
+              "err": "Please enter VCA last name"
             },
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
@@ -176,28 +184,28 @@
             }
           },
           {
-            "key": "sex",
+            "key": "gender",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "sex",
-            "entity": "child",
-            "type": "spinner",
-            "hint": "Sex",
-            "values": [
-              "M",
-              "F"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Specify sex"
-            }
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "gender",
+            "type": "native_radio",
+            "label": "VCA Gender",
+            "options": [
+              {
+                "key": "male",
+                "text": "Male"
+              },
+              {
+                "key": "female",
+                "text": "Female"
+              }
+            ]
           },
           {
             "key": "birthdate",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "birthdate",
-            "entity": "child",
             "type": "date_picker",
             "hint": "Child's DOB",
             "label_info_title": "Child's Date of Birth",
@@ -224,16 +232,10 @@
             "options": [
               {
                 "key": "yes",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "yes",
                 "text": "Yes"
               },
               {
                 "key": "no",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "person_attribute",
-                "openmrs_entity_id": "no",
                 "text": "No"
               }
             ]
@@ -274,8 +276,15 @@
             "values": [
               "HIV+",
               "HIV-",
-              "Unknown"
-            ]
+              "Unknown",
+              "Status not required based on risk assessment"
+            ],
+            "relevance": {
+              "step1:user_select_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "user_select_art",
@@ -301,7 +310,13 @@
                 "openmrs_entity_id": "No",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:hiv_status": {
+                "type": "string",
+                "ex": "equalTo(., \"HIV+\")"
+              }
+            }
           },
           {
             "key": "user_select_enrollment",
@@ -363,13 +378,7 @@
               "err": "You need to make a selection"
             }
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-            }
-          }
-        }
+        ]
       },
       {
         "key": "village_compound",

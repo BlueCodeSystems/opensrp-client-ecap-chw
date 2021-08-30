@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,34 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/customAppThemeBlue">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/family_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/customAppThemeBlue"
-            android:contentInsetEnd="0dp"
-            android:contentInsetLeft="0dp"
-            android:contentInsetRight="0dp"
-            android:contentInsetStart="0dp"
-            android:theme="@style/FamilyTheme.AppBarOverlay"
-            app:contentInsetEnd="0dp"
-            app:contentInsetLeft="0dp"
-            app:contentInsetRight="0dp"
-            app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/toolbar_title"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp"
-                android:paddingStart="0dp"
-                android:text="Child Index"
-                android:textColor="@color/white"
-                android:textSize="@dimen/register_member_title_size" />
-
-        </androidx.appcompat.widget.Toolbar>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/family_two_toolbar"
@@ -63,10 +37,10 @@
                     android:layout_marginEnd="@dimen/register_member_toolbar_margin"
                     android:layout_marginRight="@dimen/register_member_toolbar_margin"
                     app:civ_border_color="#FFFFFFFF"
+                    android:visibility="gone"
                     app:civ_border_width="0dp" />
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/myname"
                     style="@style/CustomFontTextViewStyle.ClientList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,7 +50,7 @@
                     android:layout_toRightOf="@+id/imageview_profile"
                     android:paddingLeft="0dp"
                     android:paddingStart="0dp"
-                    android:text="Chobela Kakumbi"
+                    android:text="Vulnerable Child/Adolescent"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/register_member_name_size" />
 
