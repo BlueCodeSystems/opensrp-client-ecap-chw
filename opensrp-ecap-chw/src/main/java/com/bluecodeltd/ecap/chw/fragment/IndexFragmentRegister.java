@@ -135,7 +135,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
+        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);

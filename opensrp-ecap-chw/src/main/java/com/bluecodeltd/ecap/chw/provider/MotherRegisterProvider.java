@@ -31,10 +31,13 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
 
     private final Context context;
     private View.OnClickListener onClickListener;
+    private View.OnClickListener paginationViewHandler;
 
-    public MotherRegisterProvider(Context context, View.OnClickListener onClickListener) {
+
+    public MotherRegisterProvider(Context context, View.OnClickListener onClickListener, View.OnClickListener paginationViewHandler) {
         this.context = context;
         this.onClickListener = onClickListener;
+        this.paginationViewHandler = paginationViewHandler;
     }
 
     @Override
@@ -58,8 +61,8 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         footerViewHolder.nextPageView.setVisibility(hasNextPage ? View.VISIBLE : View.INVISIBLE);
         footerViewHolder.previousPageView.setVisibility(hasPreviousPage ? View.VISIBLE : View.INVISIBLE);
 
-        footerViewHolder.nextPageView.setOnClickListener(this);
-        footerViewHolder.previousPageView.setOnClickListener(this);
+        footerViewHolder.nextPageView.setOnClickListener(paginationViewHandler);
+        footerViewHolder.previousPageView.setOnClickListener(paginationViewHandler);
     }
 
     @Override

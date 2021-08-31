@@ -58,7 +58,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
         CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(View.VISIBLE);
-            titleView.setText(getString(R.string.all_index_title));
+            titleView.setText(getString(R.string.all_mother_title));
             titleView.setFontVariant(FontVariant.REGULAR);
             titleView.setClickable(false);
 
@@ -134,7 +134,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
 
     @Override
     public void initializeAdapter() {
-        MotherRegisterProvider registerProvider = new MotherRegisterProvider(requireContext(), registerActionHandler);
+        MotherRegisterProvider registerProvider = new MotherRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_MOTHER_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
