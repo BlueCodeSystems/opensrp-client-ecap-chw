@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": " Household Screening",
+    "title": "Household Screening",
     "next": "step2",
     "fields": [
       {
@@ -66,49 +66,54 @@
         }
       },
       {
-        "key": "vca_first_name",
+        "key": "subpop_vca_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "name_of_vca",
+        "openmrs_entity_id": "subpop_vca_first_name",
         "type": "edit_text",
-        "hint": "VCA's First Name",
+        "hint": "VCA First Name",
         "edit_type": "name",
+        "value": "Maimbo",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
         }
       },
       {
-        "key": "vca_last_name",
+        "key": "subpop_vca_last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "name_of_vca",
+        "openmrs_entity_id": "subpop_vca_last_name",
         "type": "edit_text",
-        "hint": "VCA's Last Name",
+        "hint": "VCA Last Name",
         "edit_type": "name",
+        "value": "Tembo",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
         }
       },
       {
-        "key": "age",
+        "key": "subpop_age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
+        "openmrs_entity_id": "subpop_age",
         "type": "edit_text",
         "hint": "Age of VCA",
+        "value": "13",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
-        }},
+        }
+      },
       {
-        "key": "sex",
+        "key": "subpop_sex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "sex",
+        "openmrs_entity_id": "subpop_sex",
         "type": "spinner",
         "hint": "Gender of VCA",
+        "value": "Male",
         "values": [
           "Male",
           "Female"
@@ -146,12 +151,13 @@
             "key": "survivor_of_sexual_violence",
             "text": "Survivor of Sexual Violence"
           }
-        ]},
+        ]
+      },
       {
-        "key": "health_facility",
+        "key": "subpop_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "subpop_health_facility",
         "type": "edit_text",
         "hint": "Name of Health Facility",
         "edit_type": "name",
@@ -174,6 +180,7 @@
         "openmrs_entity_id": "part_a_province",
         "type": "spinner",
         "hint": "Province",
+        "value": "Southern",
         "values": [
           "Central",
           "Southern"
@@ -1757,18 +1764,32 @@
       {
         "key": "for_adolescent_girls_and_young_women_10_17years",
         "type": "repeating_group",
+        "reference_edit_text_hint": "Number of AGYW 10-17years",
         "repeating_group_label": " For questions in this section, ask EACH OF THE AGYW 10–17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
         "value": [
           {
-            "key": "name_of_adolescent",
+            "key": "first_name_of_adolescent",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person",
             "openmrs_entity_id": "name",
             "type": "edit_text",
-            "hint": "Name of Adolescent",
+            "hint": "First Name of Adolescent",
+            "edit_type": "name",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Name of Adolescent can only contain letters"
+            }
+          },
+          {
+            "key": "last_name_of_adolescent",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "name",
+            "type": "edit_text",
+            "hint": "Last Name of Adolescent",
             "edit_type": "name",
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
@@ -1866,24 +1887,6 @@
             ]
           },
           {
-            "key": "is_the_agyw_engaged_in_sex_work",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "is_the_agyw_engaged_in_sex_work",
-            "type": "native_radio",
-            "label": "Is the AGYW engaged in sex work?",
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes"
-              },
-              {
-                "key": "no",
-                "text": "No"
-              }
-            ]
-          },
-          {
             "key": "is_the_agyw_food_or_economically_secure",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1925,7 +1928,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "did_the_agyw_give_birth_before_age_of_18",
             "type": "native_radio",
-            "label": "Did the AGYW give birth before the age of 18?",
+            "label": "Did the AGYW give birth before the age of 18(teen mom)?",
             "options": [
               {
                 "key": "yes",
@@ -1938,7 +1941,7 @@
             ]
           },
           {
-            "key": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
+            "key": "does_the_agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
@@ -1956,12 +1959,12 @@
             ]
           },
           {
-            "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
+            "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_illness",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
             "type": "native_radio",
-            "label": "Has the AGYW ever been diagnosed with a sexually transmitted disease?",
+            "label": "Has the AGYW ever been diagnosed with a sexually transmitted illness(STI)?",
             "options": [
               {
                 "key": "yes",
@@ -1979,7 +1982,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
             "type": "native_radio",
-            "label": "Has the AGYW been tested for hiv?",
+            "label": "Has the AGYW been tested for HIV?",
             "options": [
               {
                 "key": "yes",
@@ -1992,12 +1995,12 @@
             ]
           },
           {
-            "key": "did_the_agyw_been_tested_for_hiv",
+            "key": "did_the_agyw_test_positive_for_hiv",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
             "type": "native_radio",
-            "label": "Has the AGYW been tested for hiv?",
+            "label": "Did the AGYW test positive for HIV?",
             "options": [
               {
                 "key": "yes",
@@ -2008,123 +2011,122 @@
                 "text": "No"
               }
             ]
-          }
-        ]
-      },
-      {
-        "key": "did_the_agyw_test_positive",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "did_the_agyw_test_positive",
-        "type": "native_radio",
-        "label": "Did the AGYW test HIV+? (if yes, the AGYW should be categorized as CLHIV) and refer to appropriate treatment and care services at enrollment ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "is_the_agyw_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "is_the_agyw_in_school",
-        "type": "native_radio",
-        "label": "Is the AGYW in school? If not, refer to education support services at enrollment  ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
+            "key": "hiv_positive_agyw",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Categorize AGYW as CLHIV and refer to appropriate treatment and care services at enrollment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
           },
           {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "agyw_receiving_an_economic_strengthening_intervention",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
-        "type": "native_radio",
-        "label": "Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
+            "key": "is_the_agyw_in_school",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "is_the_agyw_in_school",
+            "type": "native_radio",
+            "label": "Is the AGYW in school? If not, refer to education support services at enrollment  ",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
           },
           {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "pregnancy_prevention_methods_use_by_agyw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
-        "type": "native_radio",
-        "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
-        "options": [
-          {
-            "key": "prep",
-            "text": "PrEP"
+            "key": "agyw_receiving_an_economic_strengthening_intervention",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
+            "type": "native_radio",
+            "label": "Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
           },
           {
-            "key": "pep",
-            "text": "PEP"
+            "key": "pregnancy_prevention_methods_use_by_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
+            "type": "native_radio",
+            "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
+            "options": [
+              {
+                "key": "prep",
+                "text": "PrEP"
+              },
+              {
+                "key": "pep",
+                "text": "PEP"
+              },
+              {
+                "key": "family_Planning_method",
+                "text": "Family planning method"
+              },
+              {
+                "key": "condoms",
+                "text": "Condoms"
+              },
+              {
+                "key": "other",
+                "text": "Other"
+              }
+            ]
           },
           {
-            "key": "family_Planning_method",
-            "text": "Family planning method"
-          },
-          {
-            "key": "condoms",
-            "text": "Condoms"
-          },
-          {
-            "key": "other",
-            "text": "Other"
-          }
-        ]
-      },
-      {
-        "key": "other_pregnancy_prevention_method_used_by_agyw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
-        "type": "edit_text",
-        "hint": "Other pregnancy prevention methods",
-        "relevance": {
-          "step6:pregnancy_prevention_methods_used_by_agyw": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
-          }
-        }
+            "key": "other_pregnancy_prevention_method_used_by_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
+            "type": "edit_text",
+            "hint": "Other pregnancy prevention methods",
+            "relevance": {
+              "step6:pregnancy_prevention_methods_used_by_agyw": {
+                "type": "string",
+                "ex": "equalTo(., \"other\")"
+              }
+            }
 
-      },
-      {
-        "key": "did_agyw_answer_to_any",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "did_agyw_answer_to_any",
-        "type": "native_radio",
-        "label": "Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No"
+            "key": "did_agyw_answer_to_any",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "did_agyw_answer_to_any",
+            "type": "native_radio",
+            "label": "Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes"
+              },
+              {
+                "key": "no",
+                "text": "No"
+              }
+            ]
           }
         ]
       },
@@ -2180,15 +2182,19 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "knows_hiv_status",
         "type": "native_radio",
-        "label": "Do you know your HIV status?",
+        "label": "What is your HIV Status?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes"
+            "key": "hiv_negative",
+            "text": "HIV Negative"
           },
           {
-            "key": "no",
-            "text": "No"
+            "key": "hiv_positive",
+            "text": "HIV Positive"
+          },
+          {
+            "key": "unknown_status",
+            "text": "Unknown HIV Status"
           }
         ]
       },
@@ -2198,7 +2204,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If HIV positive/WLHIV, are you active on treatment? (If not, refer to appropriate treatment and care services as part of enrolment)",
+        "label": "Are you active on treatment?",
         "options": [
           {
             "key": "yes",
@@ -2208,7 +2214,50 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_appropriate_treatment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Indicate ART Number",
+        "v_numeric": {
+          "value": "true",
+          "err": "ART number should only contain numbers"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "virally_suppressed",
@@ -2226,7 +2275,31 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_appropriate_treatment_virally_suppressed",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "viral_load_results",
@@ -2234,11 +2307,19 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
-        "hint": "Result of most recent viral load test. (If not virally suppressed, refer and provide appropriate care and support services",
+        "hint": "Result of most recent viral load test.",
         "v_numeric": {
           "value": "true",
           "err": "Viral load can only contain numbers"
-        }},
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
       {
         "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
@@ -2249,28 +2330,22 @@
         "label_info_title": "Date of last viral load",
         "expanded": false,
         "min_date": "today-50y",
-        "max_date": "today"
-      },
-      {
-        "key": "test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "test",
-        "openmrs_entity_id": "test",
-        "type": "edit_text",
-        "hint": "Test",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  test name"
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
         }
       },
       {
         "key": "if_hiv_positive_have_biological_children",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
+        "openmrs_entity_id": "if_hiv_positive_have_biological_children",
         "type": "native_radio",
-        "label": "If HIV+, do you have biological children 0-2 years?",
+        "label": "Do you have biological children 0-2 years?",
         "options": [
           {
             "key": "yes",
@@ -2280,7 +2355,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "enrolled_in_the_pmtct_program",
@@ -2288,7 +2370,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "enrolled_in_the_pmtct_program",
         "type": "native_radio",
-        "label": "If yes, are you and your biological children enrolled in the PMTCT program? (If not, refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register)",
+        "label": "Are you and your biological children enrolled in the PMTCT program?",
         "options": [
           {
             "key": "yes",
@@ -2298,38 +2380,76 @@
             "key": "no",
             "text": "No"
           }
-        ]
-      },
-      {
-        "key": "are_there_any_reasons_you may_be_at_risk for_hiv",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "are_there_any_reasons_you may_be_at_risk for_hiv",
-        "type": "native_radio",
-        "label": "If HIV negative, are there any reasons you may be at risk for HIV? \n(If Yes, state reason: ………………………………………………………………………………. And provide appropriate preventive services as part of enrollment)",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }, {
-            "key": "reasons_might_be_at_risk_of_hiv",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "reasons_might_be_at_risk_of_hiv",
-            "type": "edit_text",
-            "hint": "State reasons might be at risk of hiv",
-            "relevance": {
-              "step6: are_there_any_reasons_you may_be_at_risk for_hiv": {
-                "type": "string",
-                "ex": "equalTo(., \"yes\")"
-              }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
             }
           }
-        ]
+        }
+      },
+      {
+        "key": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
+        "type": "native_radio",
+        "label": "Are there any reasons you may be at risk for HIV?)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "reason_for_hiv_risk",
+        "type": "edit_text",
+        "hint": "State reason...",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  test name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk_service",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Provide appropriate preventive services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "household_food_socially_and_economically_secure",
@@ -2337,7 +2457,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
         "type": "native_radio",
-        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.). If not, refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
         "options": [
           {
             "key": "yes",
@@ -2348,6 +2468,23 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "economic_service",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "screening_carried_out_by",
@@ -2450,7 +2587,7 @@
         "key": "household_enrollment_part1",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part 1: Household Enrollment",
+        "text": "Part 1 Of Household Enrollment",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -2486,7 +2623,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "enrollment_date",
         "type": "date_picker",
-        "hint": "Enrollment date",
+        "hint": "Date of HH Enrollment",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -2556,7 +2693,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "gender",
         "type": "spinner",
-        "hint": "Sex",
+        "hint": "Gender",
         "values": [
           "Male",
           "Female"
@@ -2580,7 +2717,7 @@
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
         "entity_id": "mother",
-        "hint": "Caregiver`s D.O.B",
+        "hint": "Caregiver Date of Birth",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -2604,18 +2741,50 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "entry_type",
-        "type": "spinner",
-        "hint": "Type of Entry",
-        "values": [
-          "Transfer from ZAMFAM",
-          "Referral From Facility",
-          "Other"
+        "type": "native_radio",
+        "label": "Type of Entry into Program",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
         ],
-        "keys": [
-          "transferzamfam",
-          "referalfacility",
-          "other"
+        "options": [
+          {
+            "key": "transfer_from_zamfam",
+            "text": "Transfer from ZAMFAM",
+            "value": false
+          },
+          {
+            "key": "referral_from_facility",
+            "text": "Referral from Facility",
+            "value": false
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "value": false
+          }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "other_entry_type",
+        "type": "edit_text",
+        "hint": "Other type of Entry",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  entry type"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2630,7 +2799,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiver’s education leve",
+        "label": "Caregiver’s education level",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2666,159 +2835,17 @@
         }
       },
       {
-        "key": "children_less_5",
+        "key": "highest_grade",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "children_less_5",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "highest_grade",
         "type": "edit_text",
-        "hint": "Number of Children < 5 in household",
+        "hint": "Highest Grade",
         "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
         },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "males_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "males_less_5",
-        "type": "edit_text",
-        "hint": "Number of Males < 5 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "females_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "females_less_5",
-        "type": "edit_text",
-        "hint": "Number of Females < 5 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "children_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "children_10_17",
-        "type": "edit_text",
-        "hint": "Number of Children 10-17 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "males_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "males_10_17",
-        "type": "edit_text",
-        "hint": "Number of Males 10-17 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "females_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "females_10_17",
-        "type": "edit_text",
-        "hint": "Number of Females 10-17 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "fam_source_income",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fam_source_income",
-        "hint": "Income Source",
-        "type": "spinner",
-        "openmrs_data_type": "",
-        "values": [
-          "Petty trade",
-          "Agriculture, hunting and fishing",
-          "Exploitation of mines and quarries",
-          "Manufacturing industry",
-          "Construction",
-          "Electricity, gas and water",
-          "Commercial, hotels and restaurants",
-          "Transport, storage and communications",
-          "Financial institutions",
-          "Communication, social and personal services",
-          "Other"
-        ],
-        "keys": [
-          "Petty trade",
-          "Agriculture, hunting and fishing",
-          "Exploitation of mines and quarries",
-          "Manufacturing industry",
-          "Construction",
-          "Electricity, gas and water",
-          "Commercial, hotels and restaurants",
-          "Transport, storage and communications",
-          "Financial institutions",
-          "Communication, social and personal services",
-          "Other"
-        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2886,17 +2913,159 @@
         "type": "spinner",
         "hint": "Marital Status",
         "values": [
-          "Never Married",
+          "Single",
           "Married",
-          "Widowed/Divorced",
-          "Not Married, in relationship"
+          "Divorced",
+          "Widowed",
+          "Not Married,in a Relationship"
         ],
         "keys": [
-          "never_married",
+          "single",
           "married",
+          "divorced",
           "widowed",
-          "not_married"
+          "in_relationship"
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "marriage_partner_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "marriage_partner_name",
+        "type": "edit_text",
+        "hint": "Name of Partner/Spouse",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  Partner/Spouse Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "relationship_partner_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "relationship_partner_name",
+        "type": "edit_text",
+        "hint": "Name of Relationship Partner",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  Relationship Partner Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "males_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_less_5",
+        "type": "edit_text",
+        "hint": "Number of Males < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "females_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_less_5",
+        "type": "edit_text",
+        "hint": "Number of Females < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "males_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_10_17",
+        "type": "edit_text",
+        "hint": "Number of Males 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "females_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_10_17",
+        "type": "edit_text",
+        "hint": "Number of Females 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "fam_source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "fam_source_income",
+        "type": "edit_text",
+        "hint": "Main Source Of Income",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter Correct Source Of Income"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2914,7 +3083,7 @@
         "hint": "No. of Women currently pregnant in household",
         "edit_type": "number",
         "v_required": {
-          "value": "true",
+          "value": "false",
           "err": "Required"
         },
         "relevance": {
@@ -2926,20 +3095,30 @@
         }
       },
       {
+        "key": "current_address",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Current Address",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
         "key": "current_phone_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "current_phone_number",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current phone number phone number",
+        "hint": "Telephone",
         "v_numeric": {
           "value": false,
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 095, 096, 097, 077 or 076 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "(09[5-7][0-9]{7})|(07[6-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, 097, 077 or 076 and must be a total of 10 digits in length"
         },
         "relevance": {
           "rules-engine": {
@@ -2956,7 +3135,7 @@
         "openmrs_entity_id": "current_plot_number",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current phone number phone number",
+        "hint": "House Number/Plot Number",
         "v_numeric": {
           "value": false,
           "err": "Plot number"
@@ -2980,7 +3159,7 @@
         "openmrs_entity_id": "current_street_name",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current plot number number",
+        "hint": "Street Name",
         "v_numeric": {
           "value": false,
           "err": "Current street name"
@@ -3004,7 +3183,7 @@
         "openmrs_entity_id": "current_township_compound",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Current Township/Compound",
+        "hint": "Township/Compound of Identified Potential Beneficiary",
         "v_numeric": {
           "value": false,
           "err": "Current Township/Compound"
@@ -3028,7 +3207,7 @@
         "openmrs_entity_id": "current_village",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Current village",
+        "hint": "Village where household is loacated",
         "v_numeric": {
           "value": false,
           "err": "Current village"
@@ -3046,27 +3225,13 @@
         }
       },
       {
-        "key": "permanent_phone_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "permanent_phone_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "permanent phone number phone number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
+        "key": "permanent_address",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Permanent Address",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
         }
       },
       {
@@ -3076,7 +3241,7 @@
         "openmrs_entity_id": "permanent_plot_number",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current phone number phone number",
+        "hint": "House number/plot number",
         "v_numeric": {
           "value": false,
           "err": "permanent number"
@@ -3100,7 +3265,7 @@
         "openmrs_entity_id": "permanent_street_name",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "current plot number number",
+        "hint": "Street Name",
         "v_numeric": {
           "value": false,
           "err": "Current street name"
@@ -3124,10 +3289,10 @@
         "openmrs_entity_id": "permanent_township_compound",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Current Township/Compound",
+        "hint": "Township/Compound where identified potential beneficiary resides",
         "v_numeric": {
           "value": false,
-          "err": "Current Township/Compound"
+          "err": "Township/Compound"
         },
         "v_regex": {
           "value": "",
@@ -3145,10 +3310,10 @@
         "key": "permanent_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "permanent_address",
+        "openmrs_entity_id": "permanent_village",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "permanent village",
+        "hint": "Village where identified potential beneficiary resides",
         "v_numeric": {
           "value": false,
           "err": "permanent village"
@@ -3172,32 +3337,7 @@
         "text": "Part 2 Of Household Enrollment",
         "text_color": "#000000",
         "v_required": {
-          "value": true
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "opensrp_id",
-        "type": "edit_text",
-        "hint": "{{family_register.step2.unique_id.hint}}",
-        "value": "0",
-        "read_only": "true",
-        "v_numeric": {
-          "value": "true",
-          "err": "{{family_register.step2.unique_id.v_numeric.err}}"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "{{family_register.step2.unique_id.v_required.err}}"
+          "value": false
         },
         "relevance": {
           "rules-engine": {
@@ -3211,7 +3351,7 @@
         "key": "children",
         "type": "repeating_group",
         "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of children<18",
+        "reference_edit_text_hint": "Number of children <18years in Household",
         "repeating_group_label": "Child",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -3222,13 +3362,45 @@
         },
         "value": [
           {
+            "key": "vca_firstname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "vca_firstname",
+            "type": "edit_text",
+            "hint": "First Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter VCA First Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter VCA First Name"
+            }
+          },
+          {
+            "key": "vca_lastname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "vca_lastname",
+            "type": "edit_text",
+            "hint": "Last Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter VCA Last Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter VCA Last Name"
+            }
+          },
+          {
             "key": "child_birthdate",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "child_birthdate",
             "entity": "child",
             "type": "date_picker",
-            "hint": "Child's DOB",
+            "hint": "Date Of Birth",
             "label_info_title": "Child's Date of Birth",
             "expanded": false,
             "duration": {
@@ -3248,7 +3420,7 @@
             "openmrs_entity_id": "child_gender",
             "entity": "child",
             "type": "spinner",
-            "hint": "Sex",
+            "hint": "Gender",
             "values": [
               "Male",
               "Female"
@@ -3288,19 +3460,19 @@
             }
           },
           {
-            "key": "school_name",
+            "key": "schools_name",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
-            "openmrs_entity_id": "school_name",
+            "openmrs_entity_id": "schools_name",
             "type": "edit_text",
-            "hint": "School name",
+            "hint": "School Name",
             "v_required": {
               "value": false,
-              "err": "Enter VL last results"
+              "err": "Please enter school name"
             },
             "v_regex": {
-              "value": "[0-9]*",
-              "err": "Last VL results must be an integer"
+              "value": "",
+              "err": "Please enter school name"
             }
           },
           {
@@ -3309,7 +3481,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tested",
             "type": "native_radio",
-            "label": "Was child test?",
+            "label": "Was child tested?",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -3317,12 +3489,12 @@
             ],
             "options": [
               {
-                "key": "Yes",
+                "key": "yes",
                 "text": "Yes",
                 "value": false
               },
               {
-                "key": "No",
+                "key": "no",
                 "text": "No",
                 "value": false
               }
@@ -3353,32 +3525,66 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
             }
           }
         }
       },
       {
-        "key": "other",
+        "key": "other_household_members",
         "type": "repeating_group",
         "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of Others Living in Household",
+        "reference_edit_text_hint": "Number of Other Members Living in Household",
         "repeating_group_label": "Others Living in Household",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "other",
+        "openmrs_entity_id": "other_household_members",
         "v_required": {
           "value": false,
-          "err": "Please specify the number of children"
+          "err": "Please specify the number of other members"
         },
         "value": [
           {
-            "key": "child_birthdate",
+            "key": "other_member_firstname",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
-            "openmrs_entity_id": "child_birthdate",
-            "entity": "",
+            "openmrs_entity_id": "other_member_firstname",
+            "type": "edit_text",
+            "hint": "First Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Member First Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Member First Name"
+            }
+          },
+          {
+            "key": "other_member_lastname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_lastname",
+            "type": "edit_text",
+            "hint": "Last Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Member Last Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Member Last Name"
+            }
+          },
+          {
+            "key": "other_member_birthdate",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_birthdate",
+            "entity": "child",
             "type": "date_picker",
-            "hint": "DOB",
+            "hint": "Date Of Birth",
+            "label_info_title": "Other Member Date of Birth",
             "expanded": false,
             "duration": {
               "label": "Age"
@@ -3391,10 +3597,10 @@
             }
           },
           {
-            "key": "tested",
+            "key": "other_member_tested",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
-            "openmrs_entity_id": "tested",
+            "openmrs_entity_id": "other_member_tested",
             "type": "native_radio",
             "label": "Test for HIV?",
             "label_text_style": "bold",
@@ -3404,12 +3610,12 @@
             ],
             "options": [
               {
-                "key": "Yes",
+                "key": "yes",
                 "text": "Yes",
                 "value": false
               },
               {
-                "key": "No",
+                "key": "no",
                 "text": "No",
                 "value": false
               }
@@ -3420,10 +3626,10 @@
             }
           },
           {
-            "key": "hiv_status",
+            "key": "other_member_hiv_status",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
-            "openmrs_entity_id": "hiv_status",
+            "openmrs_entity_id": "other_member_hiv_status",
             "type": "spinner",
             "hint": "HIV Status",
             "values": [
@@ -3440,6 +3646,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
             }
           }
         }
@@ -3579,7 +3786,7 @@
         "key": "immunization_group",
         "type": "repeating_group",
         "reference_edit_text": "",
-        "reference_edit_text_hint": "Immunization Status children<5",
+        "reference_edit_text_hint": "Under 5 Children in Household",
         "repeating_group_label": "Child",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -3590,8 +3797,50 @@
         },
         "value": [
           {
+            "key": "under_five_firstname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "under_five_firstname",
+            "type": "edit_text",
+            "hint": "First Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Under Five First Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Under Five First Name"
+            }
+          },
+          {
+            "key": "under_five_lastname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "under_five_lastname",
+            "type": "edit_text",
+            "hint": "Last Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Under Five Last Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Under Five Last Name"
+            }
+          },
+          {
+            "key": "immunization_label",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Immunization Status",
+            "text_color": "#000000",
+            "v_required": {
+              "value": false
+            }
+          },
+          {
             "key": "immunization",
-            "label": "Immunization Status –Has the child received the following vaccinations?",
+            "label": "Has the child received the following vaccinations?",
             "type": "check_box",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -3677,13 +3926,64 @@
               "value": false,
               "err": "This is a required field"
             }
+          },
+          {
+            "key": "child_nut_assessment",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Child Nutrition Assessment",
+            "text_color": "#000000",
+            "v_required": {
+              "value": false
+            }
+          },
+          {
+            "key": "nutrition_assessment",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "nutrition_assessment",
+            "type": "edit_text",
+            "read_only": "true",
+            "hint": "Child Nutrition Assessment (under 5)",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Nutrition assessment"
+            }
+          },
+          {
+            "key": "muac_score",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "muac_score",
+            "type": "edit_text",
+            "read_only": "true",
+            "hint": "MUAC Score",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_regex": {
+              "value": "[0-9]*",
+              "err": "Enter correct MUAC Score"
+            }
           }
         ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
             }
           }
+        }
+      },
+      {
+        "key": "malaria_prev_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Malaria Prevention",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
         }
       },
       {
@@ -3758,28 +4058,6 @@
         }
       },
       {
-        "key": "nutrition_assessment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "nutrition_assessment",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Child Nutrition Assessment (under 5)",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Nutrition assessment"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "case_worker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -3808,7 +4086,7 @@
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "guardian",
         "type": "edit_text",
-        "hint": "Case Worker Name  NRC number",
+        "hint": "Case Worker  NRC number",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"
