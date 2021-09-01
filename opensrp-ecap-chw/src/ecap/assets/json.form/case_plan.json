@@ -1,7 +1,7 @@
 {
-  "count": "6",
-  "skip_blank_steps": true,
-  "encounter_type": "Case Plan",
+  "count": "1",
+  "encounter_type": "Case_Plan_Index",
+  "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
   "metadata": {
@@ -53,1199 +53,704 @@
     }
   },
   "step1": {
-    "title": " ECAP II HOUSEHOLD CASE PLAN",
-    "next": "step2",
+    "title": "HIV Status, and Vulnerability and HIV Risk Assessment",
     "fields": [
-      {
-        "key": "hd1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "PLAN LEVEL:VCA CASE PLAN"
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
       {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
-        "hint": "Province",
-        "value": "Southern",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Province only takes letters"
-        }
+        "read_only": "true",
+        "hint": "Province"
       },
       {
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "countyDistrict",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
-        "hint": "District",
-        "value": "Choma",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "District only takes letters"
-        }
+        "read_only": "true",
+        "hint": "District"
       },
       {
-        "key": "ward",
+        "key": "village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "subTown",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
-        "hint": "Ward",
-        "value": "Choma Central",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
-      },
-      {
-        "key": "adolescent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
-        "type": "edit_text",
-        "value": "Test Village",
-        "hint": "Village/Compund",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village/Compound  only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Village is required"
-        }
+        "read_only": "true",
+        "hint": "Village"
       },
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "Client",
-        "openmrs_entity_id": "addressFields.health_facility",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "health_facility",
         "type": "edit_text",
         "read_only": "true",
-        "value": "Choma Central Hospital",
-        "hint": "Name of Health facility",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Health Facility only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Please enter Health Facility"
-        }
+        "hint": "Health Facility"
       },
       {
-        "key": "partners",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "partners",
-        "type": "spinner",
-        "hint": "Implementing Partners",
-        "values": [
-          "YWCA",
-          "BISO",
-          "ZEC",
-          "COH",
-          "PCZ"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please enter Partner"
-        }
-      },
-      {
-        "key": "adolescent_name_of_caregiver",
+        "key": "caregiver_firstname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_name_of_caregiver",
+        "openmrs_entity_id": "caregiver_firstname",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "Primary Caregiver Name",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Name of caregiver is required"
-        }
+        "hint": "First name of caregiver"
+      },
+      {
+        "key": "caregiver_lastname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_lastname",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Last name of caregiver"
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Household ID"
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Telephone"
       },
       {
         "key": "physical_address",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "addressFields.physical_address",
-        "type": "edit_text",
-        "hint": "Physical address",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Please enter the home address"
-        }
-      },
-      {
-        "key": "name_of_caseworker",
-        "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "name_of_caseworker",
+        "openmrs_entity_id": "physical_address",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "Name of Caseworker",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caseworker can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Name of caseworker is required"
-        }
+        "hint": "Physical Address"
       },
       {
-        "key": "caseworker_nrc",
+        "key": "caseworker_firstname",
         "openmrs_entity_parent": "",
+        "read_only": "true",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_nrc",
+        "openmrs_entity_id": "caseworker_firstname",
         "type": "edit_text",
-        "hint": "case worker NRC",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
-          "err": "Number must take the format of ######/##/#"
-        },
-        "v_required": {
-          "value": true,
-          "err": "NRC of caseworker is required"
-        }
+        "hint": "Case Worker First Name",
+        "edit_type": "name"
       },
       {
-        "key": "initial_or_updated",
+        "key": "caseworker_lastname",
+        "openmrs_entity_parent": "",
+        "read_only": "true",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
+        "type": "edit_text",
+        "hint": "Case Worker Last Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "caregiver_nrc",
+        "openmrs_entity_parent": "",
+        "read_only": "true",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_nrc",
+        "type": "edit_text",
+        "hint": "Caregiver NRC",
+        "edit_type": "name"
+      },
+      {
+        "key": "case_plan_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "initial_or_updated",
-        "type": "spinner",
-        "entity_id": "InitialorUpdated",
-        "hint": "is this an initial or updated case plan",
-        "values": [
-          "Initial",
-          "Updated"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please select an option"
-        }
-      },
-      {
-        "key": "vca_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_name",
-        "type": "edit_text",
-        "hint": "Name of VCA(Surname then Firstname)",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of VCA can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Name of VCA is required"
-        }
-      },
-      {
-        "key": "age_of_vca",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age_of_vca",
+        "openmrs_entity_id": "case_plan_date",
         "type": "date_picker",
-        "entity_id": "vca_age",
-        "hint": "Caregiver's D.O.B",
+        "hint": "Date Case Plan Created Signed",
         "expanded": false,
         "duration": {
-          "label": "age_of_vca"
+          "label": ""
         },
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "Enter caregivers date of birth"
+          "err": "Date Case Plan Created\nSigned"
         }
       },
       {
-        "key": "vca_gender",
+        "key": "case_plan_question_child_household_case_plan",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_gender",
-        "type": "spinner",
-        "hint": "Sex of VCA",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select gender"
-        }
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "case_plan_question_child_household_case_plan",
+        "type": "native_radio",
+        "label": "Is this an Initial or Updated Case Plan?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
       },
       {
-        "key": "vca_id",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_id",
+        "openmrs_entity_id": "first_name",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "ID number of VCA",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "ID of VCA is required"
-        }
+        "hint": "VCA First Name"
       },
       {
-        "key": "c_alhiv",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "c_alhiv",
-        "type": "spinner",
-        "hint": "C/AHIV?",
-        "values": [
-          "Yes",
-          "No"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select an Option"
-        }
-      },
-      {
-        "key": "safe",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "safe",
+        "openmrs_entity_id": "last_name",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "Is the child safe?",
-        "edit_type": "spinner",
-        "values": [
-          "Yes",
-          "No"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select an option"
-        }
+        "hint": "VCA Last Name"
       },
       {
-        "key": "schooled",
+        "key": "gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "schooled",
+        "openmrs_entity_id": "gender",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "Is the child currently being schooled?",
-        "edit_type": "spinner",
-        "values": [
-          "Yes",
-          "No"
-        ],
+        "hint": "VCA Gender"
+      },
+      {
+        "key": "case_plan_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_plan_status",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Case Plan Status",
+        "value": "Initial"
+      },
+      {
+        "key": "hiv_child_household_case_plan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_child_household_case_plan",
+        "type": "native_radio",
+        "label": "C/ALHIV?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "hiv_management",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of Vulnerability assessment under HIV Management of a positive caregiver",
+        "repeating_group_label": "HIV Management for an HIV+ Caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_management",
         "v_required": {
-          "value": true,
-          "err": "State whether the child is being schooled"
-        }
+          "value": false,
+          "err": "Please specify the number of HIV Management for an HIV+ Caregiver"
+        },
+        "value": [
+          {
+            "key": "hiv_management_vulnerabilities_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_vulnerabilities_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Vulnerabilities identified from Assessment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Vulnerabilities identified from Assessment"
+            }
+          },
+          {
+            "key": "hiv_management_goal_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_goal_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Goal",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "hiv_management_services_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_services_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be provided by CW",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Services to be provided by CW"
+            }
+          },
+          {
+            "key": "hiv_management_referred_institution_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_referred_institution_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be Referred and Institution",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please enter services and institution"
+            }
+          },
+          {
+            "key": "hiv_management_date_due_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_date_due_child_household_case_plan",
+            "type": "date_picker",
+            "hint": "Due Date",
+            "expanded": false,
+            "duration": {
+              "label": ""
+            },
+            "min_date": "today",
+            "max_date": "today + 100y",
+            "v_required": {
+              "value": false,
+              "err": "Due Date"
+            }
+          },
+          {
+            "key": "hiv_management_follow_up_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_follow_up_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Status at Follow-up",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "hiv_management_comment_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "hiv_management_comment_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Comment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          }
+        ]
+      },
+      {
+        "key": "healthy",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of Vulnerability assessment under health",
+        "repeating_group_label": "Healthy",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "healthy",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of HIV Management for an HIV+ Caregiver"
+        },
+        "value": [
+          {
+            "key": "health_vulnerabilities_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_vulnerabilities_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Vulnerabilities identified from Assessment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Vulnerabilities identified from Assessment"
+            }
+          },
+          {
+            "key": "health_goal_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_goal_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Goal",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "health_services_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_services_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be provided by CW",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Services to be provided by CW"
+            }
+          },
+          {
+            "key": "health_referred_institution_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_referred_institution_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be Referred and Institution",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please enter services and institution"
+            }
+          },
+          {
+            "key": "health_date_due_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_date_due_child_household_case_plan",
+            "type": "date_picker",
+            "hint": "Due Date",
+            "expanded": false,
+            "duration": {
+              "label": ""
+            },
+            "min_date": "today",
+            "max_date": "today + 100y",
+            "v_required": {
+              "value": false,
+              "err": "Due Date"
+            }
+          },
+          {
+            "key": "health_follow_up_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_follow_up_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Status at Follow-up",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "health_comment_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "health_comment_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Comment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          }
+        ]
       },
       {
         "key": "stable",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stable",
-        "type": "edit_text",
-        "hint": "Are the caretakers stable and able to provide basic needs",
-        "edit_type": "spinner",
-        "values": [
-          "Yes",
-          "No"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "please state whether care takers are stable"
-        }
-      },
-      {
-        "key": "spacer",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of Vulnerability assessment \nunder being stable",
+        "repeating_group_label": "Stable",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "if": {
-          "today": {
-            "$lt": "due_date"
-          }
+        "openmrs_entity_id": "stable",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of vulnerability assessment under being stable "
         },
-        "then": [
+        "value": [
           {
-            "key": "schedule_on_time",
+            "key": "stable_vulnerabilities_child_household_case_plan",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "schedule_on_time",
-            "type": "label",
-            "text": "The Status of this follow up: IN PROGRESS"
-          }
-        ],
-        "else": {
-          "if": {
-            "today": {
-              "$gt": "due_date"
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_vulnerabilities_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Vulnerabilities identified from Assessment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Vulnerabilities identified from Assessment"
             }
           },
-          "then": {
-            "key": "schedule_delayed",
+          {
+            "key": "stable_management_goal_child_household_case_plan",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "schedule_delayed",
-            "type": "label",
-            "text": "The Status of this follow up: DELAYED"
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_management_goal_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Goal",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "stable_services_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_services_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be provided by CW",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Services to be provided by CW"
+            }
+          },
+          {
+            "key": "stable_referred_institution_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_referred_institution_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be Referred and Institution",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please enter services and institution"
+            }
+          },
+          {
+            "key": "stable_date_due_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_date_due_child_household_case_plan",
+            "type": "date_picker",
+            "hint": "Due Date",
+            "expanded": false,
+            "duration": {
+              "label": ""
+            },
+            "min_date": "today",
+            "max_date": "today + 100y",
+            "v_required": {
+              "value": false,
+              "err": "Due Date"
+            }
+          },
+          {
+            "key": "stable_follow_up_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_follow_up_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Status at Follow-up",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "stable_comment_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "stable_comment_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Comment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
           }
+        ]
+      },
+      {
+        "key": "safe",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of vulnerability assessment \nunder  Safe",
+        "repeating_group_label": "Safe",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "safe",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of vulnerability assessment under  Safe"
         },
-        "else if": {
-          "key": "schedule_complete",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "concept",
-          "openmrs_entity_id": "schedule_complete",
-          "type": "label",
-          "text": "The Status of this follow up: COMPLETE"
+        "value": [
+          {
+            "key": "safe_vulnerabilities_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_vulnerabilities_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Vulnerabilities identified from Assessment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Vulnerabilities identified from Assessment"
+            }
+          },
+          {
+            "key": "safe_goal_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_goal_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Goal",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "safe_services_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_services_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be provided by CW",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Services to be provided by CW"
+            }
+          },
+          {
+            "key": "safe_referred_institution_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_referred_institution_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Services to be Referred and Institution",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please enter services and institution"
+            }
+          },
+          {
+            "key": "safe_date_due_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_date_due_child_household_case_plan",
+            "type": "date_picker",
+            "hint": "Due Date",
+            "expanded": false,
+            "duration": {
+              "label": ""
+            },
+            "min_date": "today",
+            "max_date": "today + 100y",
+            "v_required": {
+              "value": false,
+              "err": "Due Date"
+            }
+          },
+          {
+            "key": "safe_follow_up_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_follow_up_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Status at Follow-up",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          },
+          {
+            "key": "safe_comment_child_household_case_plan",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "safe_comment_child_household_case_plan",
+            "type": "edit_text",
+            "hint": "Comment",
+            "edit_type": "name",
+            "v_required": {
+              "value": false,
+              "err": "Please Case Worker Name"
+            }
+          }
+        ]
+      },
+      {
+        "key": "remarks_child_household_case_plan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "remarks_child_household_case_plan",
+        "type": "edit_text",
+        "hint": "Additional Remarks by Case Worker",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Additional remarks"
         }
       },
       {
-        "if": {
-          "c_alhiv": "Yes"
+        "key": "date_signed_child_household_case_plan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_signed_child_household_case_plan",
+        "type": "date_picker",
+        "hint": "Date Signed",
+        "expanded": false,
+        "duration": {
+          "label": ""
         },
-        "then": [
-          {
-            "key": "hd3",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "hd3",
-            "type": "label",
-            "text": "HIV Management of HIV+VCA's:HIV treatment literacy, adherence, viral load suppression, counselling/disclosure support, support group referral, etc."
-          },
-          {
-            "key": "vulnerabilities",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Vulnerabilities Identified from assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "goal",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "goal",
-            "type": "edit_text",
-            "hint": "Goal of the assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the goal of the assessment"
-            }
-          },
-          {
-            "key": "services",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "services",
-            "type": "edit_text",
-            "hint": "Services to be provided by CW",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the services that are going to be provided by the CW(if none, state none)"
-            }
-          },
-          {
-            "key": "referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Are services being referred elsewhere",
-            "edit_type": "spinner",
-            "values": [
-              "Yes",
-              "No"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Are services being referred"
-            }
-          },
-          {
-            "key": "service_referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "service_referred",
-            "type": "edit_text",
-            "hint": "State the service being offered by the referred institution",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the service"
-            }
-          },
-          {
-            "key": "institution",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "institution",
-            "type": "edit_text",
-            "hint": "State the institution being referred to",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the referred institution"
-            }
-          },
-          {
-            "key": "due_date",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "due_date",
-            "type": "edit_text",
-            "hint": "The due date of the assessment",
-            "edit_type": "name",
-            "v_regex": {
-              "value": "([0-9]{2}/[0-9]{2}/[0-9]4)|\\s*",
-              "err": "please follow format of dd/mm/yyyy"
-            },
-            "v_required": {
-              "value": false,
-              "err": "Please state the due date of assessment"
-            }
-          },
-          {
-            "key": "quarter",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "quarter",
-            "type": "edit_text",
-            "hint": "Choose current quarter",
-            "edit_type": "spinner",
-            "values": [
-              "Q1",
-              "Q2",
-              "Q3",
-              "Q4"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "status_followup",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "status_followup",
-            "type": "edit_text",
-            "hint": "Status at Follow up",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please indicate the status at follow up"
-            }
-          },
-          {
-            "key": "comments",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "comments",
-            "type": "edit_text",
-            "hint": "State Any Comments",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please fill in comment field"
-            }
-          }
-        ],
-        "else": [
-          {
-            "key": "hd4",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "hd4",
-            "type": "HEALTHY: HIV testing, prevention knowledge, improved development for children 5 years and below, nutrition, wash, routine healthcare, substance abuse support, perinatal care, etc.",
-            "text": ""
-          },
-          {
-            "key": "vulnerabilities",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Vulnerabilities Identified from assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "goal",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "goal",
-            "type": "edit_text",
-            "hint": "Goal of the assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the goal of the assessment"
-            }
-          },
-          {
-            "key": "services",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "services",
-            "type": "edit_text",
-            "hint": "Services to be provided by CW",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the services that are going to be provided by the CW(if none, state none)"
-            }
-          },
-          {
-            "key": "referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Are services being referred elsewhere",
-            "edit_type": "spinner",
-            "values": [
-              "Yes",
-              "No"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Are services being referred"
-            }
-          },
-          {
-            "key": "service_referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "service_referred",
-            "type": "edit_text",
-            "hint": "State the service being offered by the referred institution",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the service"
-            }
-          },
-          {
-            "key": "institution",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "institution",
-            "type": "edit_text",
-            "hint": "State the institution being referred to",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the referred institution"
-            }
-          },
-          {
-            "key": "due_date",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "due_date",
-            "type": "edit_text",
-            "hint": "The due date of the assessment",
-            "edit_type": "name",
-            "v_regex": {
-              "value": "([0-9]{2}/[0-9]{2}/[0-9]4)|\\s*",
-              "err": "please follow format of dd/mm/yyyy"
-            },
-            "v_required": {
-              "value": false,
-              "err": "Please state the due date of assessment"
-            }
-          },
-          {
-            "key": "quarter",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "quarter",
-            "type": "edit_text",
-            "hint": "Choose current quarter",
-            "edit_type": "spinner",
-            "values": [
-              "Q1",
-              "Q2",
-              "Q3",
-              "Q4"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "status_followup",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "status_followup",
-            "type": "edit_text",
-            "hint": "Status at Follow up",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please indicate the status at follow up"
-            }
-          },
-          {
-            "key": "comments",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "comments",
-            "type": "edit_text",
-            "hint": "State Any Comments",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please fill in comment field"
-            }
-          }
-        ]
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        }
       },
       {
-        "if": {
-          "safe": "Yes"
-        },
-        "then": [
+        "key": "signature_check_box_child_household_case_plan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "signature_check_box_child_household_case_plan",
+        "type": "check_box",
+        "label": "I hereby declare that the information provided is true and correct",
+        "label_text_style": "italic",
+        "options": [
           {
-            "key": "hd5",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "hd5",
-            "type": "label",
-            "text": "SAFE: Caregiver's ability to reduce the risk of physical/emotional violence or neglect. Positive parenting training, emergency shelter, referral for post violence care, etc."
-          },
-          {
-            "key": "vulnerabilities",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Vulnerabilities Identified from assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "goal",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "goal",
-            "type": "edit_text",
-            "hint": "Goal of the assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the goal of the assessment"
-            }
-          },
-          {
-            "key": "services",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "services",
-            "type": "edit_text",
-            "hint": "Services to be provided by CW",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the services that are going to be provided by the CW(if none, state none)"
-            }
-          },
-          {
-            "key": "referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Are services being referred elsewhere",
-            "edit_type": "spinner",
-            "values": [
-              "Yes",
-              "No"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Are services being referred"
-            }
-          },
-          {
-            "key": "service_referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "service_referred",
-            "type": "edit_text",
-            "hint": "State the service being offered by the referred institution",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the service"
-            }
-          },
-          {
-            "key": "institution",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "institution",
-            "type": "edit_text",
-            "hint": "State the institution being referred to",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the referred institution"
-            }
-          },
-          {
-            "key": "due_date",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "due_date",
-            "type": "edit_text",
-            "hint": "The due date of the assessment",
-            "edit_type": "name",
-            "v_regex": {
-              "value": "([0-9]{2}/[0-9]{2}/[0-9]4)|\\s*",
-              "err": "please follow format of dd/mm/yyyy"
-            },
-            "v_required": {
-              "value": false,
-              "err": "Please state the due date of assessment"
-            }
-          },
-          {
-            "key": "quarter",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "quarter",
-            "type": "edit_text",
-            "hint": "Choose current quarter",
-            "edit_type": "spinner",
-            "values": [
-              "Q1",
-              "Q2",
-              "Q3",
-              "Q4"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "status_followup",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "status_followup",
-            "type": "edit_text",
-            "hint": "Status at Follow up",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please indicate the status at follow up"
-            }
-          },
-          {
-            "key": "comments",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "comments",
-            "type": "edit_text",
-            "hint": "State Any Comments",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please fill in comment field"
-            }
-          }
-        ]
-      },
-      {
-        "if": {
-          "schooled": "Yes"
-        },
-        "then": [
-          {
-            "key": "hd6",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "hd6",
-            "type": "label",
-            "text": "SCHOOLED: Improved school attendance and progression. Assistance with homework, school materials, school fees, re-enrolment, etc."
-          },
-          {
-            "key": "vulnerabilities",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Vulnerabilities Identified from assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "goal",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "goal",
-            "type": "edit_text",
-            "hint": "Goal of the assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the goal of the assessment"
-            }
-          },
-          {
-            "key": "services",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "services",
-            "type": "edit_text",
-            "hint": "Services to be provided by CW",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the services that are going to be provided by the CW(if none, state none)"
-            }
-          },
-          {
-            "key": "referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Are services being referred elsewhere",
-            "edit_type": "spinner",
-            "values": [
-              "Yes",
-              "No"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Are services being referred"
-            }
-          },
-          {
-            "key": "service_referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "service_referred",
-            "type": "edit_text",
-            "hint": "State the service being offered by the referred institution",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the service"
-            }
-          },
-          {
-            "key": "institution",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "institution",
-            "type": "edit_text",
-            "hint": "State the institution being referred to",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the referred institution"
-            }
-          },
-          {
-            "key": "due_date",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "due_date",
-            "type": "edit_text",
-            "hint": "The due date of the assessment",
-            "edit_type": "name",
-            "v_regex": {
-              "value": "([0-9]{2}/[0-9]{2}/[0-9]4)|\\s*",
-              "err": "please follow format of dd/mm/yyyy"
-            },
-            "v_required": {
-              "value": false,
-              "err": "Please state the due date of assessment"
-            }
-          },
-          {
-            "key": "quarter",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "quarter",
-            "type": "edit_text",
-            "hint": "Choose current quarter",
-            "edit_type": "spinner",
-            "values": [
-              "Q1",
-              "Q2",
-              "Q3",
-              "Q4"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "status_followup",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "status_followup",
-            "type": "edit_text",
-            "hint": "Status at Follow up",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please indicate the status at follow up"
-            }
-          },
-          {
-            "key": "comments",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "comments",
-            "type": "edit_text",
-            "hint": "State Any Comments",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please fill in comment field"
-            }
-          }
-        ]
-      },
-      {
-        "if": {
-          "stable": "Yes"
-        },
-        "then": [
-          {
-            "key": "hd7",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "hd7",
-            "type": "label",
-            "text": "STABLE: ability to meet important family needs, Adolescent's participation in market-linked economic strengthening activity. "
-          },
-          {
-            "key": "vulnerabilities",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Vulnerabilities Identified from assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the vulnerabilities identified during assessment"
-            }
-          },
-          {
-            "key": "goal",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "goal",
-            "type": "edit_text",
-            "hint": "Goal of the assessment",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the goal of the assessment"
-            }
-          },
-          {
-            "key": "services",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "services",
-            "type": "edit_text",
-            "hint": "Services to be provided by CW",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the services that are going to be provided by the CW(if none, state none)"
-            }
-          },
-          {
-            "key": "referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vulnerabilities",
-            "type": "edit_text",
-            "hint": "Are services being referred elsewhere",
-            "edit_type": "spinner",
-            "values": [
-              "Yes",
-              "No"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Are services being referred"
-            }
-          },
-          {
-            "key": "service_referred",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "service_referred",
-            "type": "edit_text",
-            "hint": "State the service being offered by the referred institution",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the service"
-            }
-          },
-          {
-            "key": "institution",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "institution",
-            "type": "edit_text",
-            "hint": "State the institution being referred to",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please state the referred institution"
-            }
-          },
-          {
-            "key": "due_date",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "due_date",
-            "type": "edit_text",
-            "hint": "The due date of the assessment",
-            "edit_type": "name",
-            "v_regex": {
-              "value": "([0-9]{2}/[0-9]{2}/[0-9]4)|\\s*",
-              "err": "please follow format of dd/mm/yyyy"
-            },
-            "v_required": {
-              "value": false,
-              "err": "Please state the due date of assessment"
-            }
-          },
-          {
-            "key": "what_quarter_is_it",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "what_quarter_is_it",
-            "type": "native_radio",
-            "label": "Choose current quarter",
-            "options": [
-              {
-                "key": "Q1",
-                "text": "1st Quarter"
-              },
-              {
-                "key": "Q2",
-                "text": "2nd Quarter"
-              },
-              {
-                "key": "Q3",
-                "text": "3rd Quarter"
-              },
-              {
-                "key": "Q4",
-                "text": "4th Quarter"
-              }
-            ],
-            "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "case_plan_relevance.yml"
-                }
-              }
-
-            }
-          },
-          {
-            "key": "status_followup",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "status_followup",
-            "type": "edit_text",
-            "hint": "Status at Follow up",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please indicate the status at follow up"
-            }
-          },
-          {
-            "key": "comments",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "comments",
-            "type": "edit_text",
-            "hint": "State Any Comments",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "Please fill in comment field"
-            }
+            "key": "yes",
+            "text": "Yes",
+            "value": false
           }
         ]
       }
