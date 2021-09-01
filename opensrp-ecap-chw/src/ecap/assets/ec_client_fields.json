@@ -2435,6 +2435,9 @@
             "concept": "months_medication_vca_assessment"
           }
         },
+
+
+
         {
           "column_name": "viral_load_vca_assessment",
           "type": "Event",
@@ -2498,6 +2501,369 @@
             "concept": "attributes.biological_mother_vca_assessment"
           }
         },
+
+        {
+          "column_name": "parents_deceased_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.parents_deceased_vca_assessment"
+          }
+        },
+        {
+          "column_name": "siblings_deceased_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.siblings_deceased_vca_assessment"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_vca_assessment"
+          }
+        },
+        {
+          "column_name": "child_sick_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_sick_vca_assessment"
+          }
+        },
+
+        {
+          "column_name": "rashes_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.rashes_vca_assessment"
+          }
+        },
+        {
+          "column_name": "discharge_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.discharge_vca_assessment"
+          }
+        },
+        {
+          "column_name": "female_sex-worker_firstname_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.female_sex-worker_firstname_vca_assessment"
+          }
+        },
+        {
+          "column_name": "sexually_active_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "sexually_active_vca_assessment"
+          }
+        },
+        {
+          "column_name": "sex_positive_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "sex_positive_vca_assessment"
+          }
+        },
+        {
+          "column_name": "sexual_partner_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "sexual_partner_vca_assessment"
+          }
+        },
+        {
+          "column_name": "firstname_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "first_name"
+          }
+        },
+        {
+          "column_name": "surname_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "last_name"
+          }
+        },
+        {
+          "column_name": "birthdate_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdate"
+          }
+        },
+        {
+          "column_name": "gender_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "vca_id_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_id_vca_assessment"
+          }
+        },
+        {
+          "column_name": "caregiver_firstname_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_firstname_vca_assessment"
+          }
+        },
+        {
+          "column_name": "caregiver_surname_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_surname_vca_assessment"
+          }
+        },
+        {
+          "column_name": "phone_number_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone_number_vca_assessment"
+          }
+        },
+        {
+          "column_name": "house_number_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.house_number_vca_assessment"
+          }
+        },
+        {
+          "column_name": "province_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.province_vca_assessment"
+          }
+        },
+        {
+          "column_name": "district_central_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.district_central_vca_assessment"
+          }
+        },
+        {
+          "column_name": "chibombo_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chibombo_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "chisamba_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chisamba_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "mkushi_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mkushi_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "mumbwa_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mumbwa_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "kabwe_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kabwe_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "kapiri_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kapiri_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "chikankata_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chikankata_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "mazabuka_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mazabuka_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "monze_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.monze_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "choma_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.choma_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "kalomo_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kalomo_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "namwala_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.namwala_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "sinazongwe_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sinazongwe_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "livingstone_health_facility_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.livingstone_health_facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "hiv_status_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status_vca_assessment"
+          }
+        },
+        {
+          "column_name": "vca_art_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_art_vca_assessment"
+          }
+        },
+        {
+          "column_name": "date_initiated_art_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_initiated_art_vca_assessment"
+          }
+        },
+        {
+          "column_name": "appointments_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field":  "attributes.appointments_vca_assessment"
+          }
+        },
+        {
+          "column_name": "taking_art_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.taking_art_vca_assessment"
+          }
+        },
+        {
+          "column_name": "months_medication_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.months_medication_vca_assessment"
+          }
+        },
+
+
+
+
+        {
+          "column_name": "viral_load_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "viral_load_vca_assessment"
+          }
+        },
+        {
+          "column_name": "documented_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "documented_vca_assessment"
+          }
+        },
+        {
+          "column_name": "vl_result_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_result_vca_assessment"
+          }
+        },
+
+        {
+          "column_name": "facility_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "facility_vca_assessment"
+          }
+        },
+        {
+          "column_name": "art_no_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "art_no_vca_assessment"
+          }
+        },
+        {
+          "column_name": "hiv_test_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "hiv_test_vca_assessment"
+          }
+        },
+        {
+          "column_name": "exposed_vca_assessment",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "exposed_vca_assessment"
+          }
+        },
+        {
+          "column_name": "biological_mother_vca_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "concept": "attributes.biological_mother_vca_assessment"
+          }
+        },
+
+
         {
           "column_name": "parents_deceased_vca_assessment",
           "type": "Client",
@@ -2533,6 +2899,7 @@
             "field": "attributes.rashes_vca_assessment"
           }
         },
+
         {
           "column_name": "discharge_vca_assessment",
           "type": "Client",
@@ -2540,44 +2907,30 @@
             "field": "attributes.discharge_vca_assessment"
           }
         },
+
         {
-          "column_name": "female_sex-worker_vca_assessment",
+          "column_name": "female_sex_worker_vca_assessment",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.female_sex-worker_vca_assessment"
-          }
-        },
-        {
-          "column_name": "female_sex-worker_vca_assessment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.female_sex-worker_vca_assessment"
+            "field": "attributes.female_sex_worker_vca_assessment"
           }
         },
         {
           "column_name": "sexually_active_vca_assessment",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "sexually_active_vca_assessment"
-          }
-        },
-        {
-          "column_name": "sex_positive_vca_assessment",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "sex_positive_vca_assessment"
+            "field": "attributes.sexually_active_vca_assessment"
           }
         },
         {
           "column_name": "sexual_partner_vca_assessment",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "sexual_partner_vca_assessment"
+            "field": "attributes.sexual_partner_vca_assessment"
           }
         },
+
+
         {
           "column_name": "private_parts_vca_assessment",
           "type": "Event",
