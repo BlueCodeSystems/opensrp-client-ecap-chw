@@ -1587,7 +1587,7 @@
             "field": "attributes.health_referred_institution"
           }
         },
-       {
+        {
           "column_name": "health_date_due",
           "type": "Client",
           "json_mapping": {
@@ -1732,7 +1732,6 @@
         }
       ]
     },
-
     {
       "name": "ec_child_household_case_plan",
       "columns": [
@@ -1883,7 +1882,6 @@
             "field": "attributes.livingstone_health_facility_child_household_case_plan"
           }
         },
-
         {
           "column_name": "caregiver_first_name_child_household_case_plan",
           "type": "Client",
@@ -1905,19 +1903,11 @@
             "field": "identifiers.household_id_child_household_case_plan"
           }
         },
-
         {
           "column_name": "telephone_mobile_child_household_case_plan",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.telephone_mobile_child_household_case_plan"
-          }
-        },
-        {
-          "column_name": "addresses.physical_address_address_child_household_case_plan",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.physical_address_address_child_household_case_plan"
           }
         },
         {
@@ -1928,17 +1918,17 @@
           }
         },
         {
-          "column_name": "case_worker_surname_name_child_household_case_plan",
+          "column_name": "case_worker_surname_child_household_case_plan",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_worker_surname_name_child_household_case_plan"
+            "field": "attributes.case_worker_surname_child_household_case_plan"
           }
         },
         {
-          "column_name": "nrc_caregiver_child_household_case_plan",
+          "column_name": "caregiver_nrc_child_household_case_plan",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.nrc_caregiver_child_household_case_plan"
+            "field": "attributes.caregiver_nrc_child_household_case_plan"
           }
         },
         {
@@ -1955,6 +1945,27 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "case_plan_question_child_household_case_plan"
+          }
+        },
+        {
+          "column_name": "firstname__child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstname"
+          }
+        },
+        {
+          "column_name": "surname_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "surname"
+          }
+        },
+        {
+          "column_name": "gender_child_household_case_plan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
           }
         },
         {
@@ -2179,11 +2190,6 @@
         }
       ]
     },
-
-
-
-
-
     {
       "name": "ec_vca_assessment",
       "columns": [
@@ -2421,7 +2427,6 @@
             "concept": "taking_art_vca_assessment"
           }
         },
-
         {
           "column_name": "months_medication_vca_assessment",
           "type": "Event",
@@ -2486,8 +2491,6 @@
             "concept": "exposed_vca_assessment"
           }
         },
-
-
         {
           "column_name": "biological_mother_vca_assessment",
           "type": "Client",
@@ -2686,6 +2689,5 @@
         }
       ]
     }
-
   ]
 }

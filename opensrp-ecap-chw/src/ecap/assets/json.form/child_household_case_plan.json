@@ -744,7 +744,7 @@
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|\\s*",
+          "value": "((07||09)[5-7][0-9]{7})|\\s*",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
@@ -828,11 +828,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ]
       },
@@ -840,7 +842,7 @@
         "key": "firstname__child_household_case_plan",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "firstname",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
@@ -857,7 +859,7 @@
         "key": "surname_child_household_case_plan",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "surname",
+        "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "VCA Surname",
         "edit_type": "name",
