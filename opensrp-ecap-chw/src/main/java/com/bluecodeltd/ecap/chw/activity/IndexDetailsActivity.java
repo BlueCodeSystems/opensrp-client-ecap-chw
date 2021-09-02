@@ -60,7 +60,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         referral = (RelativeLayout)findViewById(R.id.referral);
 
         txtName = findViewById(R.id.myname);
-        txtAge = findViewById(R.id.age);
+        txtAge = findViewById(R.id.dob);
         txtProvince = findViewById(R.id.province);
         txtDistrict = findViewById(R.id.district);
         txtFacility = findViewById(R.id.mfacility);
@@ -71,7 +71,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         assert client != null;
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String birthdate = "DOB : " + client.getColumnmaps().get("birthdate");
+        String birthdate = "DOB : " + client.getColumnmaps().get("adolescent_birthdate");
         String province =  client.getColumnmaps().get("province");
         String district =  client.getColumnmaps().get("district");
         String facility =  client.getColumnmaps().get("health_facility");
@@ -196,10 +196,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     String uniqueId = UUID.randomUUID().toString();
                     String hID = uniqueId.substring(0,8);
 
-                   // JsonArray myjson = (JsonArray) indexRegisterForm.getJSONObject("step1").getJSONArray("fields");
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
                     String[] csw = caseworker.split("\\s+");
+
 
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("province"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("district"));
@@ -215,7 +215,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", client.getColumnmaps().get("caregiver_nrc"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(14).put("value", client.getColumnmaps().get("first_name"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(15).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value", client.getColumnmaps().get("gender"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value", client.getColumnmaps().get("adolescent_birthdate"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(18).put("value", client.getColumnmaps().get("gender"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", client.getColumnmaps().get("subpop1"));
+
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());

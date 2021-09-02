@@ -194,7 +194,8 @@ android {
 
         release {
             //debuggable true // Useful when debugging release builds
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
@@ -297,8 +298,8 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-    //implementation('org.smartregister:opensrp-ecap-chw-core:1.0.4-RELEASE@aar') {
-         implementation(project(":opensrp-ecap-chw-core")) {
+    implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
+       //  implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'androidx.legacy', module: 'legacy-support-v4'
