@@ -195,6 +195,7 @@ android {
         release {
             //debuggable true // Useful when debugging release builds
             minifyEnabled false
+            //shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
@@ -297,8 +298,8 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-    //implementation('org.smartregister:opensrp-ecap-chw-core:1.0.4-RELEASE@aar') {
-         implementation(project(":opensrp-ecap-chw-core")) {
+    implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
+       //  implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'androidx.legacy', module: 'legacy-support-v4'
@@ -323,6 +324,9 @@ dependencies {
     //For viewing PDFs in the app
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
     implementation 'androidx.wear:wear:1.0.0'
+
+    //Foe Sentry
+    implementation 'io.sentry:sentry-android:5.1.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

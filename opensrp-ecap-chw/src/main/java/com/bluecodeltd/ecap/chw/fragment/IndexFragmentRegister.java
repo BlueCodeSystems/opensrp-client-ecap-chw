@@ -121,10 +121,11 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         String facility = client.getColumnmaps().get("health_facility");
 
         String fullname = firstname + " " + lastname;
-       // Log.i(getClass().getName(), "facility : " + firstname.toString());
+
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-        intent.putExtra("client", fullname);
-        intent.putExtra("mfacility", facility);
+        //intent.putExtra("client", fullname);
+        //intent.putExtra("mfacility", facility);
+        intent.putExtra("clients",  client);
         startActivity(intent);
     }
 
