@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import io.sentry.Sentry;
 import timber.log.Timber;
 
 
@@ -47,6 +48,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Sentry.captureMessage("testing SDK setup");
     }
 
     @Override

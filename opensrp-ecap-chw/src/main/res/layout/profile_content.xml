@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/register_list_top_bottom_min_padding"
-                    android:text="HIV Status : "
+                    android:text="HIV Status : Positive"
                     android:textColor="@color/text_black"
                     android:textSize="16dp"
                     android:visibility="visible" />

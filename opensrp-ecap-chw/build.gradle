@@ -194,8 +194,8 @@ android {
 
         release {
             //debuggable true // Useful when debugging release builds
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            //shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
@@ -324,6 +324,9 @@ dependencies {
     //For viewing PDFs in the app
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
     implementation 'androidx.wear:wear:1.0.0'
+
+    //Foe Sentry
+    implementation 'io.sentry:sentry-android:5.1.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

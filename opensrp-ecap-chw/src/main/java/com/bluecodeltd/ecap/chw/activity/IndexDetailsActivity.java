@@ -150,7 +150,60 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("vca_assessment");
-                    startFormActivity(indexRegisterForm);
+
+                    //  startFormActivity(indexRegisterForm);
+                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+                    Form form = new Form();
+                    try {
+                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
+                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
+                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
+                            form.setWizard(true);
+                            form.setName("VCA Assessment");
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel(getString(R.string.next));
+                            form.setPreviousLabel(getString(R.string.previous));
+                            form.setSaveLabel(getString(R.string.submit));
+                            form.setNavigationBackground(R.color.primary);
+                        } else {
+                            form.setWizard(false);
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel("");
+                        }
+                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+                    } catch (JSONException e) {
+                        Timber.e(e);
+                    }
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0,8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("first_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("last_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_birthdate"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("gender"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", splitStr[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("adolescent_phone"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", client.getColumnmaps().get("adolescent_village"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("province"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(53).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).put("value", csw[1]);
+
+
+
+
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
+                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -235,7 +288,58 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("referral");
-                    startFormActivity(indexRegisterForm);
+
+                    //  startFormActivity(indexRegisterForm);
+                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+                    Form form = new Form();
+                    try {
+                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
+                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
+                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
+                            form.setWizard(true);
+                            form.setName("Referral Form");
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel(getString(R.string.next));
+                            form.setPreviousLabel(getString(R.string.previous));
+                            form.setSaveLabel(getString(R.string.submit));
+                            form.setNavigationBackground(R.color.primary);
+                        } else {
+                            form.setWizard(false);
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel("");
+                        }
+                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+                    } catch (JSONException e) {
+                        Timber.e(e);
+                    }
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0,8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("province"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("district"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_village"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("health_facility"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("first_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("last_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("adolescent_birthdate"));
+
+
+
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
+                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
                 } catch (Exception e) {
                     e.printStackTrace();
