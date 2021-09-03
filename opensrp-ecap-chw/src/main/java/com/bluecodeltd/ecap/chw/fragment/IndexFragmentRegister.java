@@ -121,10 +121,11 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         String facility = client.getColumnmaps().get("health_facility");
 
         String fullname = firstname + " " + lastname;
-       // Log.i(getClass().getName(), "facility : " + firstname.toString());
+
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-        intent.putExtra("client", fullname);
-        intent.putExtra("mfacility", facility);
+        //intent.putExtra("client", fullname);
+        //intent.putExtra("mfacility", facility);
+        intent.putExtra("clients",  client);
         startActivity(intent);
     }
 
@@ -135,7 +136,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
+        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
