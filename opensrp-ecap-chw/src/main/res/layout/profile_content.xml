@@ -79,12 +79,11 @@
 
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/textview_detail_one"
+                        android:id="@+id/province"
                         style="@style/CustomFontTextViewStyle.ClientList.Light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Southern Province"
                         android:paddingLeft="0dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/text_black" />
@@ -98,13 +97,12 @@
                         android:textColor="@color/text_black" />
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/textview_detail_two"
+                        android:id="@+id/district"
                         style="@style/CustomFontTextViewStyle.ClientList.Light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Choma"
                         android:paddingLeft="0dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/text_black"
@@ -121,7 +119,7 @@
                         android:visibility="visible" />
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/textview_detail_three"
+                        android:id="@+id/mfacility"
                         style="@style/CustomFontTextViewStyle.ClientList.Light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -147,13 +145,13 @@
                     android:visibility="visible" />
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/age"
+                    android:id="@+id/dob"
                     style="@style/CustomFontTextViewStyle.ClientList.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/register_list_top_bottom_min_padding"
-                    android:text="Age : 15"
+                    android:text=""
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/register_list_desc_size"
                     android:visibility="visible" />
@@ -165,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/register_list_top_bottom_min_padding"
-                    android:text="Status : HIV Positive"
+                    android:text="HIV Status : Positive"
                     android:textColor="@color/text_black"
                     android:textSize="16dp"
                     android:visibility="visible" />
@@ -457,7 +455,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_family"  />
+                    app:srcCompat="@mipmap/ic_add_family_active"  />
 
             </RelativeLayout>
 
