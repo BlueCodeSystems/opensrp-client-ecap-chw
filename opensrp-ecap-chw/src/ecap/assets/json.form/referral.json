@@ -54,72 +54,38 @@
       {
         "key": "province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_address",
         "openmrs_entity_id": "province",
-        "type": "spinner",
-        "hint": "Province",
-        "values": [
-          "Lusaka",
-          "Central",
-          "Southern"
-        ]
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Province"
       },
       {
         "key": "district",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "district",
-        "type": "spinner",
-        "hint": "District",
-        "values": [
-          "Choma",
-          "Chikankanta",
-          "Mazabuka",
-          "Kafue",
-          "Kalomo",
-          "Monze",
-          "Pemba",
-          "Zimba",
-          "Chisamba"
-        ]
-      },
-      {
-        "key": "ward",
-        "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "ward",
-        "entity_id": "",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
-        "hint": "Ward",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Ward cannot be empty"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid ward name"
-        }
+        "read_only": "true",
+        "hint": "District"
       },
       {
         "key": "village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "village",
-        "entity_id": "",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Village/Compound cannot be empty"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Residence"
-        }
+        "read_only": "true",
+        "hint": "Village"
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Health Facility"
       },
       {
         "key": "implementing_partner",
@@ -128,7 +94,6 @@
         "openmrs_entity_id": "implementing_partner",
         "type": "spinner",
         "hint": "Implementing Partner ",
-
         "values": [
           "Project Concern Zambia (PCZ)",
           "Young Women Christian Association (YWCA) ",
@@ -138,80 +103,42 @@
         ]
       },
       {
-        "key": "case_worker_last_name",
+        "key": "caseworker_firstname",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "case_worker_last_name",
-        "entity_id": "",
+        "read_only": "true",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_firstname",
+        "type": "edit_text",
+        "hint": "Case Worker First Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "caseworker_lastname",
+        "openmrs_entity_parent": "",
+        "read_only": "true",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
         "type": "edit_text",
         "hint": "Case Worker Last Name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter case worker last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
+        "edit_type": "name"
       },
       {
-        "key": "case_worker_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "case_worker_first_name",
-        "entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "Case worker First Name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter case worker first name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
+        "hint": "Beneficiary First Name"
       },
       {
-        "key": "beneficiary_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "beneficiary_last_name",
-        "entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "Beneficiary Last Name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter case beneficiary surname"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "beneficiary_first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "beneficiary_first_name",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Beneficiary First Name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter beneficiary first name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
+        "hint": "Beneficiary Last Name"
       },
       {
         "key": "referral_date",
@@ -233,23 +160,11 @@
         }
       },
       {
-        "key": "beneficiary_date_of_birth",
+        "key": "dob",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "beneficiary_date_of_birth",
-        "type": "date_picker",
-        "hint": "Beneficiary Date of Birth",
-
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-19y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Beneficiary Date of Birth "
-        }
+        "openmrs_entity_id": "",
+        "read_only": "true"
       },
       {
         "key": "receiving_organization",
@@ -264,17 +179,13 @@
         }
       },
       {
-        "key": "beneficiary_sex",
+        "key": "gender",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "beneficiary_sex",
-        "type": "spinner",
-        "hint": "Beneficiary Sex",
-        "values": [
-          "Male",
-          "Female"
-
-        ]
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Beneficiary Gender"
       },
       {
         "key": "beneficiary_code",

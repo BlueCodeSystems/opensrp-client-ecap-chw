@@ -110,7 +110,7 @@ public class IdentificationFragmentRegister extends BaseRegisterFragment impleme
 
     @Override
     public void initializeAdapter() {
-        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler);
+        IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_family"));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
