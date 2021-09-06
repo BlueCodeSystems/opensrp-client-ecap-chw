@@ -290,7 +290,7 @@ android {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
             versionCode 8
-            versionName "0.0.1"
+            versionName "v1.0.0-alpha2"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
@@ -311,7 +311,7 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-   // implementation('org.smartregister:opensrp-ecap-chw-core:1.0.4-RELEASE@aar') {
+    //implementation('org.smartregister:opensrp-ecap-chw-core:1.0.4-RELEASE@aar') {
         implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
@@ -323,6 +323,11 @@ dependencies {
         exclude group: 'io.ona.kujaku', module: 'library'
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
     }
+
+
+    //Foe Sentry
+    implementation 'io.sentry:sentry-android:5.1.2'
+
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
