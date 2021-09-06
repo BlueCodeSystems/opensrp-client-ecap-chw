@@ -53,48 +53,109 @@
     }
   },
   "step1": {
-    "title": "HIV Status, and Vulnerability and HIV Risk Assessment",
+    "title": "Caregiver Household Assessment",
     "next": "step2",
     "fields": [
+
       {
-        "key": "province",
+        "key": "province_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
-        "type": "edit_text",
+        "openmrs_entity_id": "province_caregiver",
+        "type": "spinner",
         "hint": "Province",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
         "v_required": {
           "value": false,
-          "err": "Error"
+          "err": "Please enter the Province"
         }
       },
       {
-        "key": "district",
+        "key": "district_central",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "hint": "District",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
+        "openmrs_entity_id": "district_central",
+        "type": "spinner",
+        "hint": "District in Central Province",
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
         "v_required": {
           "value": false,
-          "err": "Error"
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "district_southern",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
         }
       },
       {
         "key": "village_compound",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
+        "openmrs_entity_id": "village_compound",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
@@ -108,12 +169,29 @@
         }
       },
       {
-        "key": "name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "name",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Name of Primary Caregiver",
+        "hint": "Primary Caregiver First Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Error"
+        },
+        "v_required": {
+          "value": false,
+          "err": "Error"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Primary Caregiver Surname",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
@@ -165,17 +243,17 @@
         "openmrs_entity_id": "primary_caregiver_nrc",
         "entity_id": "",
         "type": "edit_text",
-        "hint": "Primary Caregiver",
+        "hint": "Primary Caregiver NRC",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"
         }
       },
       {
-        "key": "phone_number",
+        "key": "phone_number_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone_number",
+        "openmrs_entity_id": "phone_number_caregiver",
         "type": "edit_text",
         "entity_id": "mother",
         "hint": "Caregivers phone number",
@@ -191,7 +269,7 @@
       {
         "key": "caregiver_id",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "caregiver_id",
         "type": "edit_text",
         "hint": "USAID ECAPII Caregiver ID",
@@ -208,7 +286,7 @@
       {
         "key": "marital_status",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "marital_status",
         "type": "spinner",
         "hint": "Marital Status ",
@@ -238,10 +316,29 @@
         },
         "value": [
           {
-            "key": "name",
+            "key": "child_first_name",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "child_first_name",
+            "entity": "child",
+            "type": "edit_text",
+            "hint": "Name of Household",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_required": {
+              "value": false,
+              "err": "Please enter childs first name"
+            },
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Please enter a valid name"
+            }
+          },
+          {
+            "key": "child_last_name",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "child_last_name",
             "entity": "child",
             "type": "edit_text",
             "hint": "Name of Household",
@@ -340,10 +437,10 @@
         }
       },
       {
-        "key": "hiv_status",
+        "key": "hiv_status_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_mmd",
+        "openmrs_entity_id": "hiv_status_mmd",
         "type": "native_radio",
         "label": "Is the HIV Status known?",
         "label_text_style": "bold",
@@ -354,15 +451,18 @@
         "options": [
           {
             "key": "no",
-            "text": "No, Status not known"
+            "text": "No, Status not known",
+            "value": false
           },
           {
             "key": "yes",
-            "text": "Yes, Status POSITIVE"
+            "text": "Yes, Status POSITIVE",
+            "value": false
           },
           {
             "key": "negative",
-            "text": "Yes, status NEGATIVE "
+            "text": "Yes, status NEGATIVE ",
+            "value": false
           }
         ],
         "v_required": {
@@ -385,11 +485,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -419,11 +521,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -453,11 +557,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -487,11 +593,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -521,11 +629,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -543,7 +653,7 @@
       {
         "key": "hiv_result",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "hiv_result",
         "type": "spinner",
         "hint": "HIV Test Result",
@@ -603,11 +713,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -643,7 +755,7 @@
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
@@ -679,11 +791,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -731,11 +845,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -807,11 +923,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -890,11 +1008,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -942,11 +1062,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -994,11 +1116,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -1046,11 +1170,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -1098,11 +1224,13 @@
         "options": [
           {
             "key": "no",
-            "text": "No, more than 6 months"
+            "text": "No, more than 6 months",
+            "value": false
           },
           {
             "key": "yes",
-            "text": "Less than 6 months"
+            "text": "Less than 6 months",
+            "value": false
           }
         ],
         "v_required": {
@@ -1125,11 +1253,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -1170,11 +1300,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -1201,10 +1333,10 @@
         }
       },
       {
-        "key": "partner",
+        "key": "partner_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "partner",
+        "openmrs_entity_id": "partner_caregiver",
         "type": "native_radio",
         "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
         "label_text_style": "bold",
@@ -1215,11 +1347,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
@@ -1260,11 +1394,13 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ],
         "v_required": {
