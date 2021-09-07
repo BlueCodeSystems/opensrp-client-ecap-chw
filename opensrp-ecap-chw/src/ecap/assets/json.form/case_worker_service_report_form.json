@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Care Household Case Plan",
+  "encounter_type": "Case Worker Service Report",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "HIV Status, and Vulnerability and HIV Risk Assessment",
+    "title": "Case Worker Service Report",
     "fields": [
       {
         "key": "district_case_report",
@@ -90,7 +90,7 @@
           "mazabuka",
           "monze",
           "kalomo",
-          "kamwala",
+          "namwala",
           "sinazongwe",
           "livingstone"
         ],
@@ -103,7 +103,7 @@
         "key": "ward_case_report",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "ward_child_household_case_plan",
+        "openmrs_entity_id": "ward_case_report",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
@@ -115,7 +115,7 @@
       {
         "key": "village_case_report",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_address",
         "openmrs_entity_id": "village_case_report",
         "type": "edit_text",
         "hint": "Village",
@@ -638,7 +638,7 @@
       {
         "key": "partners_case_report",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partners_case_report",
         "type": "spinner",
         "hint": "Implementing Partner",
@@ -702,10 +702,10 @@
         }
       },
       {
-        "key": "case_worker_surname_name",
+        "key": "case_worker_code",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_surname_name",
+        "openmrs_entity_id": "case_worker_code",
         "type": "edit_text",
         "hint": "Case Worker Code",
         "edit_type": "number",
@@ -715,18 +715,32 @@
         }
       },
       {
-        "key": "household_name",
+        "key": "household_name_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_name",
+        "openmrs_entity_id": "household_name_first_name",
         "type": "edit_text",
-        "hint": "Name of Head of Household",
+        "hint": "First Name of Head of the Household",
         "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Name of Head of Household"
         }
       },
+      {
+        "key": "household_head_surname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_head_surname",
+        "type": "edit_text",
+        "hint": "Surname of Head of the Household",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Name of Head of Household"
+        }
+      },
+
       {
         "key": "household_id_case_report",
         "openmrs_entity_parent": "",
@@ -903,7 +917,7 @@
           {
             "key": "vca_services",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "vca_services",
             "label": "Type of Service/Services",
             "label_info_text": "Tick ( ) Services Provided for Children, Caregiver and Household",
@@ -1072,7 +1086,7 @@
                 "openmrs_entity_id": ""
               },
               {
-                "key": "otherSpecify",
+                "key": "other Specify",
                 "text": "Other Specify",
                 "text_size": "18px",
                 "value": "false",
@@ -1085,20 +1099,26 @@
           {
             "key": "other_service",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "",
+            "openmrs_entity": "concept",
             "openmrs_entity_id": "other_service",
             "type": "edit_text",
-            "hint": "Specif y other",
+            "hint": "Specify other",
             "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "VCA ID"
+            },
+            "relevance": {
+              "step1:vca_services": {
+                "type": "string",
+                "ex": "equalTo(., \"Other Specify\")"
+              }
             }
           },
           {
             "key": "children_adolescents_id",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
+            "openmrs_entity": "concept",
             "openmrs_entity_id": "children_adolescents_id",
             "type": "edit_text",
             "hint": "VCA ID",
@@ -1111,7 +1131,7 @@
           {
             "key": "caregiver_id",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
+            "openmrs_entity": "concept",
             "openmrs_entity_id": "caregiver_id",
             "type": "edit_text",
             "hint": "Caregiver ID",
@@ -1122,10 +1142,10 @@
             }
           },
           {
-            "key": "household_id",
+            "key": "household_id_repeat",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person_identifier",
-            "openmrs_entity_id": "household_id",
+            "openmrs_entity_id": "household_id_repeat",
             "type": "edit_text",
             "hint": "Household ID",
             "edit_type": "number",
