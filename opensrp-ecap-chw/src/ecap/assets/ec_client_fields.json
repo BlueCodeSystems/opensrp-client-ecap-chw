@@ -2651,6 +2651,345 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_case_worker_service_report",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "district_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.district_case_report"
+          }
+        },
+        {
+          "column_name": "ward_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.ward_case_report"
+          }
+        },
+        {
+          "column_name": "village_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.village_case_report"
+          }
+        },
+        {
+          "column_name": "chibombo_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chibombo_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "chisamba_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chisamba_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "mkushi_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mkushi_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "mumbwa_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mumbwa_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "kabwe_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kabwe_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "kapiri_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kapiri_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "chikankata_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.chikankata_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "mazabuka_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mazabuka_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "monze_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.monze_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "choma_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.choma_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "kalomo_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.kalomo_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "namwala_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.namwala_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "sinazongwe_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sinazongwe_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "livingstone_health_facility_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.livingstone_health_facility_case_report"
+          }
+        },
+        {
+          "column_name": "partners_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field":  "attributes.partners_case_report"
+          }
+        },
+        {
+          "column_name": "date_case_report",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_case_report"
+          }
+        },
+        {
+          "column_name": "case_worker_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_first_name"
+          }
+        },
+        {
+          "column_name": "case_worker_surname_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_surname_name"
+          }
+        },
+        {
+          "column_name": "case_worker_code",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_worker_code"
+          }
+        },
+        {
+          "column_name": "household_name_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_name_first_name"
+          }
+        },
+        {
+          "column_name": "household_head_surname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_head_surname"
+          }
+        },
+        {
+          "column_name": "household_id_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id_case_report"
+          }
+        },
+        {
+          "column_name": "household_id_case_report",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id_case_report"
+          }
+        },
+        {
+          "column_name": "child_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_first_name"
+          }
+        },
+        {
+          "column_name": "child_last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_last_name"
+          }
+        },
+        {
+          "column_name": "artNumber",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.artNumber"
+          }
+        },
+        {
+          "column_name": "artClinic",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.artClinic"
+          }
+        },
+        {
+          "column_name": "date_next_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_next_vl"
+          }
+        },
+        {
+          "column_name": "viralLoadResult",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "viralLoadResult"
+          }
+        },
+        {
+          "column_name": "vl_next_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_next_result"
+          }
+        },
+        {
+          "column_name": "level_mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.level_mmd"
+          }
+        },
+        {
+          "column_name": "date_next_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_next_vl"
+          }
+        },
+        {
+          "column_name": "vca_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_services"
+          }
+        },
+        {
+          "column_name": "other_service",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "other_service"
+          }
+        },
+        {
+          "column_name": "children_adolescents_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "children_adolescents_id"
+          }
+        },
+        {
+          "column_name": "caregiver_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "caregiver_id"
+          }
+        },
+        {
+          "column_name": "household_id_repeat",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id_repeat"
+          }
+        },
+        {
+          "column_name": "case_worker_date_signed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "case_worker_date_signed"
+          }
+        },
+        {
+          "column_name": "case_worker_signature",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "case_worker_signature"
+          }
+        },
+        {
+          "column_name": "primary_caregiver_date_signed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "primary_caregiver_date_signed"
+          }
+        },
+        {
+          "column_name": "primary_caregiver_signature",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "primary_caregiver_signature"
+          }
+        }
+      ]
     }
   ]
 }
