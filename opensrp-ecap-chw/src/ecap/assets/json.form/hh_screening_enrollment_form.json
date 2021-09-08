@@ -269,10 +269,10 @@
         }
       },
       {
-        "key": "ward",
+        "key": "subpop_ward",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "ward",
+        "openmrs_entity_id": "subpop_ward",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
@@ -282,10 +282,10 @@
         }
       },
       {
-        "key": "village",
+        "key": "subpop_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "village",
+        "openmrs_entity_id": "subpop_village",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
@@ -295,10 +295,10 @@
         }
       },
       {
-        "key": "assigned_community_case_worker",
+        "key": "subpop_assigned_community_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assigned_community_case_worker",
+        "openmrs_entity_id": "subpop_assigned_community_case_worker",
         "type": "edit_text",
         "hint": "Name of Assigned Community Case Worker",
         "edit_type": "name",
@@ -309,10 +309,10 @@
       },
       {
 
-        "key": "name_of_facility_based_case_worker",
+        "key": "subpop_name_of_facility_based_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "name_of_facility_based_case_worker",
+        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker",
         "type": "edit_text",
         "hint": "Name of Facility-Based Case Worker",
         "edit_type": "name",
@@ -2030,12 +2030,12 @@
             }
           },
           {
-            "key": "is_the_agyw_in_school",
+            "key": "is_agyw_in_school",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_in_school",
             "type": "native_radio",
-            "label": "Is the AGYW in school? If not, refer to education support services at enrollment  ",
+            "label": "Is the AGYW in school?",
             "options": [
               {
                 "key": "yes",
@@ -2046,6 +2046,23 @@
                 "text": "No"
               }
             ]
+          },
+          {
+            "key": "agyw_not_in_school",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "refer to education support services at enrollment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
           },
           {
             "key": "agyw_receiving_an_economic_strengthening_intervention",
@@ -2108,27 +2125,68 @@
                 "ex": "equalTo(., \"other\")"
               }
             }
-
-          },
-          {
-            "key": "did_agyw_answer_to_any",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "did_agyw_answer_to_any",
-            "type": "native_radio",
-            "label": "Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes"
-              },
-              {
-                "key": "no",
-                "text": "No"
-              }
-            ]
           }
         ]
+      },
+      {
+        "key": "did_agyw_answer_to_any",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "did_agyw_answer_to_any",
+        "type": "native_radio",
+        "label": "Did AGYW answer “Yes” to any of the questions from Part D.2 above?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "at_risk_agyw",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Categorize AGYW as At Risk by checking box below",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "agyw_at_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "agyw_at_risk",
+        "openmrs_data_type": "select one",
+        "type": "check_box",
+        "label": "AGYW is At Risk",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false,
+            "openmrs_choice_id": ""
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "primary_caregivers_only",
