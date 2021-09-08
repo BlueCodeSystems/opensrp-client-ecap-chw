@@ -1,4 +1,11 @@
 ---
+name: step1_pregnancy_prevention_methods_not_used_by_agyw
+description: pregnancy_prevention_methods_not_used_by_agyw relevance
+priority: 1
+condition: "step1_pregnancy_prevention_methods_use_by_agyw.contains('none')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_agyw_not_in_school
 description: agyw_not_in_school relevance
 priority: 1

@@ -2070,7 +2070,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
             "type": "native_radio",
-            "label": "Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "label": "Is the AGYW receiving an economic strengthening intervention?",
             "options": [
               {
                 "key": "yes",
@@ -2083,12 +2083,29 @@
             ]
           },
           {
+            "key": "agyw_not_receiving_economic_strengthening_intervention",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
+          },
+          {
             "key": "pregnancy_prevention_methods_use_by_agyw",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "",
+            "openmrs_entity": "concept",
             "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
-            "type": "native_radio",
-            "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
+            "type": "check_box",
+            "label": "Select any of the HIV/pregnancy prevention methods AGYW is using from list below",
             "options": [
               {
                 "key": "prep",
@@ -2109,8 +2126,43 @@
               {
                 "key": "other",
                 "text": "Other"
+              },
+              {
+                "key": "none",
+                "text": "None"
               }
             ]
+          },
+          {
+            "key": "option_none_pregnancy_prevention",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "option_none_pregnancy_prevention",
+            "type": "edit_text",
+            "hint": "Give details of Other Method used",
+            "edit_type": "name",
+            "value": "",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Give details of Other Method used"
+            }
+          },
+          {
+            "key": "pregnancy_prevention_methods_not_used_by_agyw",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Refer and/or provide appropriate preventive services/DREAMS program at enrolment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
           },
           {
             "key": "other_pregnancy_prevention_method_used_by_agyw",
