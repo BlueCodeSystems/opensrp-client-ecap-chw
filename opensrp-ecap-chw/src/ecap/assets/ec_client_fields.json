@@ -1855,6 +1855,53 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_vca_case_plan",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.village"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        }
+      ]
     }
-  ]
+    ]
 }
