@@ -336,6 +336,53 @@
           "json_mapping": {
             "field": "attributes.subpop_vca_first_name"
           }
+        },
+        {
+          "column_name": "subpop_vca_last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_vca_last_name"
+          }
+        },
+        {
+          "column_name": "subpop_age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_age"
+          }
+        },
+        {
+          "column_name": "subpop_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_sex"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_female_sex_worker",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "fsw_province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "address.fsw_province"
+          }
         }
       ]
     },

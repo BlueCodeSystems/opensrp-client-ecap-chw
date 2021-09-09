@@ -52,10 +52,10 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "Province",
+        "key": "fsw_province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "province",
+        "openmrs_entity_id": "fsw_province",
         "entity_id": "",
         "type": "edit_text",
         "hint": "Enter Province",
