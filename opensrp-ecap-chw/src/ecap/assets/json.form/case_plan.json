@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Case_Plan_Index",
+  "encounter_type": "VCA Case Plan",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -56,10 +56,24 @@
     "title": "VCA Case Plan",
     "fields": [
       {
+        "key": "base_entity_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "base_entity_id",
+        "type": "hidden"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "hidden"
+      },
+      {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "read_only": "true",
         "hint": "Province"
@@ -68,7 +82,7 @@
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "read_only": "true",
         "hint": "District"
@@ -76,8 +90,8 @@
       {
         "key": "village",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "village",
         "type": "edit_text",
         "read_only": "true",
         "hint": "Village"
@@ -85,7 +99,7 @@
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
         "read_only": "true",
@@ -1029,6 +1043,7 @@
           }
         ]
       }
+
     ]
   }
 }

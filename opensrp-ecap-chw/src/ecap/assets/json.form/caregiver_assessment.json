@@ -1,0 +1,2854 @@
+{
+  "count": "2",
+  "encounter_type": "Assessment Form",
+  "skip_blank_steps": true,
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Caregiver Household Assessment",
+    "next": "step2",
+    "fields": [
+
+      {
+        "key": "province_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "province_caregiver",
+        "type": "spinner",
+        "hint": "Province",
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the Province"
+        }
+      },
+      {
+        "key": "district_central",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_central",
+        "type": "spinner",
+        "hint": "District in Central Province",
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "district_southern",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "village_compound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "village_compound",
+        "type": "edit_text",
+        "hint": "Village/Compound",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Error"
+        },
+        "v_required": {
+          "value": false,
+          "err": "Error"
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Primary Caregiver First Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Error"
+        },
+        "v_required": {
+          "value": false,
+          "err": "Error"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Primary Caregiver Surname",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Error"
+        },
+        "v_required": {
+          "value": false,
+          "err": "Error"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "gender",
+        "type": "spinner",
+        "hint": "Sex",
+        "values": [
+          "Male",
+          "Female"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select gender"
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "Date of Birth",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the date of birth"
+        }
+      },
+      {
+        "key": "primary_caregiver_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "primary_caregiver_nrc",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Primary Caregiver NRC",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "phone_number_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone_number_caregiver",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Caregivers phone number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "caregiver_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "caregiver_id",
+        "type": "edit_text",
+        "hint": "USAID ECAPII Caregiver ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter USAID ECAPII Caregiver ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "USAID ECAPII\nCaregiver ID"
+        }
+      },
+      {
+        "key": "marital_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "marital_status",
+        "type": "spinner",
+        "hint": "Marital Status ",
+        "values": [
+          "Single",
+          "Married ",
+          "Widowed",
+          "Divorced"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select marital status"
+        }
+      },
+      {
+        "key": "vca_sub_population",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of VCA   Sub\nPopulations   in\nthe   household\nand   IDs",
+        "repeating_group_label": "Household and ID",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of household and ID`s"
+        },
+        "value": [
+          {
+            "key": "child_first_name",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "child_first_name",
+            "entity": "child",
+            "type": "edit_text",
+            "hint": "Name of Household",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_required": {
+              "value": false,
+              "err": "Please enter childs first name"
+            },
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Please enter a valid name"
+            }
+          },
+          {
+            "key": "child_last_name",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "child_last_name",
+            "entity": "child",
+            "type": "edit_text",
+            "hint": "Name of Household",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_required": {
+              "value": false,
+              "err": "Please enter childs first name"
+            },
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Please enter a valid name"
+            }
+          },
+          {
+            "key": "household_id",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "household_id",
+            "type": "edit_text",
+            "hint": "Household ID",
+            "edit_type": "number",
+            "v_required": {
+              "value": false,
+              "err": "Please enter house ID"
+            },
+            "v_regex": {
+              "value": "[0-9]*",
+              "err": "Household ID"
+            }
+          },
+          {
+            "key": "eyp_population",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "eyp_population",
+            "type": "check_box",
+            "label": "VCA   Sub Populations   in\nthe   household (Tick all that Apply",
+            "options": [
+              {
+                "key": "c/alhiv",
+                "text": "C/ALHIV",
+                "value": "false"
+              },
+              {
+                "key": "hei",
+                "text": "HEI",
+                "value": "false"
+              },
+              {
+                "key": "child_wlhiv",
+                "text": "Child of WLHIV ",
+                "value": "false"
+              },
+              {
+                "key": "agyw",
+                "text": "AGYW",
+                "value": "false"
+              },
+              {
+                "key": "gbv_survivor",
+                "text": "GBV Survivor",
+                "value": "false"
+              },
+              {
+                "key": "child_fws",
+                "text": "Child of FSW",
+                "value": "false"
+              },
+              {
+                "key": "sibling_index_vca",
+                "text": "Sibling of Index VCA",
+                "value": "false"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "household_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_type",
+        "type": "spinner",
+        "hint": "Household Type",
+        "values": [
+          "Child Headed Household",
+          "Male Headed Household",
+          "Female Headed Household",
+          "Aged Headed Household",
+          "Disabled Caregiver Headed Household"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Months of medications "
+        }
+      },
+      {
+        "key": "hiv_status_mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_status_mmd",
+        "type": "native_radio",
+        "label": "Is the HIV Status known?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "no",
+            "text": "No, Status not known",
+            "value": false
+          },
+          {
+            "key": "yes",
+            "text": "Yes, Status POSITIVE",
+            "value": false
+          },
+          {
+            "key": "negative",
+            "text": "Yes, status NEGATIVE ",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "symptoms",
+        "type": "native_radio",
+        "label": "Do you have any of the following symptoms?\n(A) Current cough, (B) Fever, (C) Weight loss,\n(D) Night sweats ",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "following",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "following",
+        "type": "native_radio",
+        "label": "Do you have any of the following on your\nprivate parts?\n(A) sores, (B) Blisters, (C) Unusual Discharge",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_6_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "last_6_months",
+        "type": "native_radio",
+        "label": "In the last 6 months, have you been exposed\nto HIV through a needle stick, an injection, or\na piercing?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_12_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "last_12_months",
+        "type": "native_radio",
+        "label": "In   the   last   12   months,   have   you   had\nunprotected sex without using a condom with\nsomeone whose HIV status you did not know\nor who was HIV- positive?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "pregnant_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pregnant_breastfeeding",
+        "type": "native_radio",
+        "label": "Are you pregnant or breastfeeding?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_result",
+        "type": "spinner",
+        "hint": "HIV Test Result",
+        "values": [
+          "HIV Negative",
+          "HIV Positive"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select gender"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "test_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "test_date",
+        "type": "date_picker",
+        "hint": "Date of HIV Test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "When was HIV was tested"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_caregiver",
+        "type": "native_radio",
+        "label": "Is the primary Caregiver on ART?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_caregiver_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer to Health Facility",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter childs ART number "
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "ART cannot be empty"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "primary_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "primary_caregiver",
+        "type": "native_radio",
+        "label": "Has   the   primary   caregiver   been\nregularly attending ART appointments\nand collecting drugs from the facility\non schedule?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_appointments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Because you have chosen `No`, provided ART adherence support and \ntreatment literacy, escort to facility-based \ntreatment and care services and/or MMD, \nand refer to support group",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "regularly_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "regularly_art",
+        "type": "native_radio",
+        "label": "In the past year, has the primary\ncaregiver been taking ART regularly\nas prescribed?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_provide",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Because you have chosen `No`, provide ART adherence support and \ntreatment literacy and refer to support \ngroup",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "months_medication",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "months_medication",
+        "type": "spinner",
+        "hint": "How many months of medications are typically received from the facility?",
+        "values": [
+          "0<3 months",
+          "3-5 months",
+          "6+ months"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Months of medications "
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_viral",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_viral",
+        "type": "native_radio",
+        "label": "Has the primary caregiver had a viral\nload test in the past 12 months?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "vl_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_result",
+        "type": "edit_text",
+        "hint": "Last VL results",
+        "input": "number",
+        "v_required": {
+          "value": false,
+          "err": "Enter VL results"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Last VL results must be an integer"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_vl",
+        "type": "date_picker",
+        "hint": "Date of last VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Please enter date Referred"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_documented",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_documented",
+        "type": "native_radio",
+        "label": "Was the primary caregiver documented as virally suppressed(less than 100 copies/mL) in the most recent viral load test?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_document",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Provide enhanced ART adherence\nsupport and treatment literacy.  Check if\nprimary   caregiver   has   been   attending\nenhanced   adherence   counselling   at   the health   facility.   If   not,  refer   to   health facility",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_enrolled",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_enrolled",
+        "type": "native_radio",
+        "label": "Has the primary caregiver enrolled in\nPMTCT (if pregnant or breastfeeding)",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Escort to health facility and support\nenrollment in the PMTCT program and if\nbreastfeeding link child to HIV testing and\nprophylaxis and provide cohort monitoring of\nthe   mother   infant   pair   as   part   of   case\nmanagement",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_cancer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_cancer",
+        "type": "native_radio",
+        "label": "Has   the   Primary   Caregiver   been\nscreened for cervical cancer?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_cancer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Escort to health facility for cervical\ncancer screening services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_malnutrition",
+        "type": "native_radio",
+        "label": "Has   the   Primary   Caregiver   been\nscreened for malnutrition?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Screen caregiver for malnutrition and\nescort to health facility if malnourished for\ntherapeutic feeding",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_test",
+        "type": "native_radio",
+        "label": "Was the HIV test done less than 6 months ago?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "no",
+            "text": "No, more than 6 months",
+            "value": false
+          },
+          {
+            "key": "yes",
+            "text": "Less than 6 months",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "last_year",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "last_year",
+        "type": "native_radio",
+        "label": "Within the last year, have you been hit,   slapped,   kicked   or   otherwise\nphysically hurt by your partner or\nsomeone important?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "last_year_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV programs and/or Victim Support Unit",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "relation",
+        "type": "native_radio",
+        "label": "Are you in a relationship in which you\nhave   been   physically   hurt   or\nthreatened by your partner?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "relation_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV\nprograms",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "partner_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "partner_caregiver",
+        "type": "native_radio",
+        "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "partner_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV \nprograms and to the health facility for PrEP \ninitiation",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "partner_prevented",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "partner_prevented",
+        "type": "native_radio",
+        "label": "Has your partner ever prevented you\nform   leaving   the   house,   seeing\nfriends, getting a job or continuing\nwith your education",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "partner_prevented_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Facilitate enrolment in a Women Empowerment Program and Savings Group \nprogram and refer and escort to STOP GBV \nprograms",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "step2": {
+    "title": "Economic Stability and Security, \n Food Security and Nutrition,\nand\nSubstance Abuse",
+    "next": "step3",
+    "fields": [
+      {
+        "key": "household_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_number",
+        "type": "edit_text",
+        "hint": "How many members does the household have?",
+        "edit_type": "number",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "highest_level_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "highest_level_education",
+        "type": "native_radio",
+        "label": "What is the highest level of formal education you have completed?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          },
+          {
+            "key": "primary",
+            "text": "Primary",
+            "value": false
+          },
+          {
+            "key": "college",
+            "text": "College",
+            "value": false
+          },
+          {
+            "key": "secondary",
+            "text": "Secondary",
+            "value": false
+          },
+          {
+            "key": "university",
+            "text": "University",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re to select the level of education"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_member",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_member",
+        "type": "native_radio",
+        "label": "In the last 6 months, has there been\nat least one member of the household\nwho has consistently had formal or\ninformal   employment   or   is   self-\nemployed or has a business or is\nengaged   in   an   economically\nproductive activity?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_household_member",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer   for   economic   strengthening interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "source_income",
+        "hint": "What   is   the   MAIN   SOURCE   of\nhousehold income?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Full-time or part-time job (salary or \nown business)",
+          "Farming",
+          "Livestock farming (chickens, cattle, pigs etc.)",
+          "None",
+          "Other"
+        ],
+        "keys": [
+          "Full-time or part-time job (salary or \nown business)",
+          "Farming",
+          "Livestock farming (chickens, cattle, pigs etc.)",
+          "None",
+          "Other"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer   for   economic   strengthening interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_source_main",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_source",
+        "type": "edit_text",
+        "hint": "Specify other income source",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "source_earner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "source_earner",
+        "hint": "Who is the MAIN household income earner?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Primary Caregiver (self)",
+          "Spouse",
+          "Other"
+        ],
+        "keys": [
+          "Primary Caregiver (self)",
+          "Spouse",
+          "Other"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_earner_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_earner",
+        "type": "edit_text",
+        "hint": "Specify other income earner",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_time",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "last_time",
+        "type": "native_radio",
+        "label": "The   last   time   there   was   an unexpected,   urgent   household\nexpense   (e.g.,   emergency   medical\nexpense   or   house   repair),   was\nsomeone in the household able to pay\nfor that expense?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_last_time",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer   for   economic   strengthening interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hh_head_spouse",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hh_head_spouse",
+        "type": "native_radio",
+        "label": "Does   the   HH   head,   spouse,   or\ncaregiver have any form of severe\ndisability   (e.g.,   hearing,   speech,\nphysical,   mental,   visual,   genetic\ndeficiencies (albinism)) that prevents\nhim/her   from   engaging   in\neconomically productive activities?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "any_adult",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "any_adult",
+        "type": "native_radio",
+        "label": "Does the household have ANY adult member who has been very sick for at\nleast three months during the past 12\nmonths?   (This   means   that   the\nhousehold head or any adult member\nwas too sick to work or do normal\nactivities around the house for at least\nthree of the past 12 months)",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_stable",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_stable",
+        "type": "native_radio",
+        "label": "Does   the   household   have   stable\nshelter that is adequate, safe, and\ndry? (Please observe)",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "every_member",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "every_member",
+        "type": "native_radio",
+        "label": "Does every member of your \nhousehold have at least one pair of \nshoes?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "material_construction",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "material_construction",
+        "hint": "What type of material is mainly used \nfor construction of the wall of the \ndwelling?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Un-burnt bricks with mud",
+          "mud and poles",
+          "Un-burnt bricks with cements",
+          "wood",
+          "tin/iron sheets",
+          "concrete/stones",
+          "Burnt stabilized bricks",
+          "cement blocks",
+          "Other"
+        ],
+        "keys": [
+          "Un-burnt bricks with mud",
+          "mud and poles",
+          "Un-burnt bricks with cements",
+          "wood",
+          "tin/iron sheets",
+          "concrete/stones",
+          "Burnt stabilized bricks",
+          "cement blocks",
+          "Other"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "material_construction_roof",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "material_construction_roof",
+        "hint": "What type of material is mainly used \nfor construction of the roof of the \ndwelling",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Thatch, or tins",
+          "Iron sheets",
+          "concrete",
+          "tiles",
+          "asbestos"
+        ],
+        "keys": [
+          "Thatch, or tins",
+          "Iron sheets",
+          "concrete",
+          "tiles",
+          "asbestos"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "early_childhood",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "early_childhood",
+        "type": "native_radio",
+        "label": "Are there any children aged 0-5 year\nin this household enrolled in Early\nChildhood Development and/or Early\nChildhood Education services?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_early_childhood",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort for enrollment in ECD/ECE services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "children_adolescent_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "children_aged_6-19",
+        "type": "native_radio",
+        "label": "Are   there   any   children/adolescents aged 6–19 years in this household\nwho are not enrolled in primary or secondary school? ",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_children_adolescent_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Discuss   barriers   with   primary\ncaregiver and refer to appropriate services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "children_adolescent_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "adolescents_aged_6-19",
+        "type": "native_radio",
+        "label": "Are   there   any   children/adolescents\naged 6–19 years in this household\nwho are enrolled in school and have\nmissed school for about 20 days in the\nlast school term?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_children_adolescent_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Discuss   barriers   with   primary caregiver and refer to appropriate services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "drinking_water",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "drinking_water",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "label": "What is the main source of drinking\nwater   for   members   of   your\nhousehold?",
+        "options": [
+          {
+            "key": "piped_water",
+            "text": "Piped water"
+          },
+          {
+            "key": "piped_yard",
+            "text": "piped to yard/plot"
+          },
+          {
+            "key": "public_taps",
+            "text": "public taps/standpipe"
+          },
+          {
+            "key": "borehole",
+            "text": "Borehole"
+          },
+          {
+            "key": "dug_well",
+            "text": "Dug well"
+          },
+          {
+            "key": "protected_well",
+            "text": "Protected well"
+          },
+          {
+            "key": "unprotected_well",
+            "text": "Unprotected well"
+          },
+          {
+            "key": "water_spring",
+            "text": "Water from spring"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_water_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_water",
+        "type": "edit_text",
+        "hint": "Specify other drinking water source",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toilet_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "toilet_facility",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "label": "What type of toilet facility does the \nhousehold mainly use?",
+        "options": [
+          {
+            "key": "flush_toilet",
+            "text": "Flush toilet"
+          },
+          {
+            "key": "ventilated",
+            "text": "Ventilated improved latrine (VIP)"
+          },
+          {
+            "key": "public_taps_with",
+            "text": "Pit latrine with a slab"
+          },
+          {
+            "key": "pit_latrine_without",
+            "text": "Pit latrine without a slab"
+          },
+          {
+            "key": "bucket_toilet",
+            "text": "Bucket toilet"
+          },
+          {
+            "key": "bush",
+            "text": "No facility/bush/field"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "sanitary_products",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sanitary_products",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "label": "Do AGYW in the household have access to sanitary products?",
+        "options": [
+          {
+            "key": "sanitary_pads",
+            "text": "Sanitary pads/tampons"
+          },
+          {
+            "key": "recycled_cloth",
+            "text": "Recycled cloth pads"
+          },
+          {
+            "key": "none",
+            "text": "None"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_sanitary_product",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer to sanitary products support services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_sanitary_product_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_sanitary_product",
+        "type": "edit_text",
+        "hint": "Specify other sanitary products",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "material_construction_roof",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "material_construction_roof",
+        "hint": "Over the past month, what has been\nthe MAIN source of food consumed by\nthe household?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Donated",
+          "Bought from Market/shop",
+          "Home grown",
+          "Given as payment for work done",
+          "Other"
+        ],
+        "keys": [
+          "donated",
+          "bought from Market/shop",
+          "home grown",
+          "given as payment for work done",
+          "Other"
+        ]
+      },
+      {
+        "key": "toaster_roof",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for economic strengthening\nand   Government   Livelihood   support\ninterventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_food_source_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_food_source",
+        "type": "edit_text",
+        "hint": "Specify other main food source",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_eaten",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_eaten",
+        "hint": "Has the household eaten at least 2\nmeals a day, every day, for the last\nmonth?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "No",
+          "Rarely (once or twice)",
+          "Sometimes (3 to 10 times)",
+          "Often (more than 10 times)"
+        ],
+        "keys": [
+          "No",
+          "Rarely (once or twice)",
+          "sometimes",
+          "often"
+        ]
+      },
+      {
+        "key": "toaster_eaten",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for economic strengthening\nand   Government   Livelihood   support\ninterventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_eaten_month",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_eaten_month",
+        "hint": "In the last  month, did any child/\nadolescent     in the household or\nyourself (if pregnant or HIV-positive)\ngo   a   whole   day   without   eating\nanything   because   there   was   not\nenough to eat?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "No",
+          "Rarely (once or twice)",
+          "Sometimes (3 to 10 times)",
+          "Often (more than 10 times)"
+        ],
+        "keys": [
+          "No",
+          "Rarely (once or twice)",
+          "sometimes",
+          "often"
+        ]
+      },
+      {
+        "key": "toaster_eaten_month",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "muac",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of children \nto determine the MUAC result\nand Pregnant caregiver?",
+        "repeating_group_label": "MUAC result for child",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "muac",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of children"
+        },
+        "value": [
+          {
+            "key": "child",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "type": "native_radio",
+            "label": "Child",
+            "options": [
+              {
+                "key": "red",
+                "text": "Red"
+              },
+              {
+                "key": "yellow",
+                "text": "Yellow"
+              },
+              {
+                "key": "green",
+                "text": "Green"
+              }
+            ]
+          },
+          {
+            "key": "toaster_red",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "type": "toaster_notes",
+            "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+                }
+              }
+            }
+          },
+          {
+            "key": "toaster_yellow",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "type": "toaster_notes",
+            "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+                }
+              }
+            }
+          },
+          {
+            "key": "pregnant_caregiver",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "type": "native_radio",
+            "label": "Pregnant Caregiver",
+            "options": [
+              {
+                "key": "red",
+                "text": "Red"
+              },
+              {
+                "key": "yellow",
+                "text": "Yellow"
+              },
+              {
+                "key": "green",
+                "text": "Green"
+              }
+            ]
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+            }
+          }
+        }
+      },
+      {
+        "key": "lack_resources",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lack_resources",
+        "hint": "In the last month, was there ever no\nfood of any kind to eat in your house\nbecause of lack of resources to get\nfood?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "No",
+          "Rarely (once or twice)",
+          "Sometimes (3 to 10 times)",
+          "Often (more than 10 times)"
+        ],
+        "keys": [
+          "No",
+          "Rarely (once or twice)",
+          "sometimes",
+          "often"
+        ]
+      },
+      {
+        "key": "toaster_lack_resources",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "limited_variety",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "limited_variety",
+        "hint": "In the past four weeks, did you or any\nhousehold member have to eat a\nlimited variety of foods due to a lack\nof resources?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "No",
+          "Rarely (once or twice)",
+          "Sometimes (3 to 10 times)",
+          "Often (more than 10 times)"
+        ],
+        "keys": [
+          "No",
+          "Rarely (once or twice)",
+          "sometimes",
+          "often"
+        ]
+      },
+      {
+        "key": "toaster_limited_variety",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "night_hungry",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "night_hungry",
+        "hint": "In the last month, did you or any\nmember of the household go to sleep\nat night hungry because there was\nnot enough food?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "No",
+          "Rarely (once or twice)",
+          "Sometimes (3 to 10 times)",
+          "Often (more than 10 times)"
+        ],
+        "keys": [
+          "No",
+          "Rarely (once or twice)",
+          "sometimes",
+          "often"
+        ]
+      },
+      {
+        "key": "toaster_night_hungry",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_household",
+        "hint": "In the past 6 months, have you or any\nchild   in   the   household   had   the\nfollowing happen to him/her, in or\noutside of the household?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Teenage Pregnancy",
+          "Neglect",
+          "Sexual Abuse",
+          "Physical abuse that causes body harm",
+          "Child marriage or teenage mother/father",
+          "Other obvious issues"
+        ],
+        "keys": [
+          "Teenage Pregnancy",
+          "Neglect",
+          "Sexual Abuse",
+          "Physical abuse that causes body harm",
+          "Child marriage or teenage mother/father",
+          "Other obvious issues"
+        ]
+      },
+      {
+        "key": "other_obvious_issues",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_obvious_issues",
+        "type": "edit_text",
+        "hint": "Record obvious issues here",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "not_registered",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "not_registered",
+        "type": "check_box",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Is there any child in this household:",
+        "options": [
+          {
+            "key": "birth",
+            "text": "Who has not been registered at birth?"
+          },
+          {
+            "key": "card",
+            "text": "Does not have a birth certificate or National Identification card?"
+          }
+        ]
+      },
+      {
+        "key": "toaster_not_registered",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Conduct   escorted   referral   to   the\nappropriate government department (e.g.,\nNational Registration Office, Department of\nSocial Welfare)",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "questions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "questions",
+        "type": "check_box",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label_info_text": "Indicate ‘Yes’ by ticking   the appropriate boxes",
+        "label_info_title": "Tip",
+        "label": "During the PAST 12 MONTHS, did you do any of the following:",
+        "options": [
+          {
+            "key": "drink",
+            "text": "Drink any alcohol (more than a few sips)?",
+            "label_info_text": "Do not count sips of alcohol taken during\nfamily or religious events.",
+            "label_info_title": "Tip"
+          },
+          {
+            "key": "smoke",
+            "text": "Smoke any marijuana or hashish?"
+          },
+          {
+            "key": "anything",
+            "text": "Use anything else to get high?",
+            "label_info_text": "'Anything else' includes illegal drugs, over\nthe   counter   and   prescription   drugs,   and\nthings that you sniff or “huff",
+            "label_info_title": "Tip"
+          }
+        ]
+      },
+      {
+        "key": "caregiver_question",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_question",
+        "type": "check_box",
+        "label_text_style": "bold",
+        "label_info_text": "Indicate ‘Yes’ by ticking the appropriate boxes",
+        "label_info_title": "Tip",
+        "label": "Since you responded ‘Yes’ to any of the questions above",
+        "options": [
+          {
+            "key": "q1",
+            "text": "Have you ever ridden in a CAR driven\nby someone (including yourself) who was\n“high” or had been using alcohol or drugs?",
+            "value": "false"
+          },
+          {
+            "key": "q2",
+            "text": "Do you ever use alcohol or drugs to\nRELAX, feel better about yourself, or fit in?",
+            "value": "false"
+          },
+          {
+            "key": "q3",
+            "text": "Do you ever FORGET things you did while\nusing alcohol or drugs?",
+            "value": "false"
+          },
+          {
+            "key": "q4",
+            "text": "Do your FAMILY or FRIENDS ever tell you\nthat you should cut down on your drinking or\ndrug use? ",
+            "value": "false"
+          },
+          {
+            "key": "q5",
+            "text": "Have you ever gotten into TROUBLE\nwhile you were using alcohol or drugs?",
+            "value": "false"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_question",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for Alcohol and/substance abuse\ncounselling.\n\n\n\nIf   Primary   Caregiver   HIV+,   provide\nalcohol and substance abuse counselling\nin relation to ART Adherence\n\n\n\n\nNB: ART Adherence must be assessed,\nand   ART   adherence   counselling\nprovided at every home visit",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "case_worker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "case_worker_name",
+        "type": "edit_text",
+        "hint": "Case work name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "case_worker_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_worker_nrc",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Case worker NRC number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date",
+        "type": "date_picker",
+        "hint": "Date",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "When was the VCA initiated on ART"
+        }
+      }
+    ]
+  }
+}
