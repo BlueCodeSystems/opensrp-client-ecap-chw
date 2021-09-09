@@ -314,6 +314,32 @@
       ]
     },
     {
+      "name": "ec_hh_screening_enrollment_form",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "subpop_vca_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_vca_first_name"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_mother_index",
       "columns": [
         {
