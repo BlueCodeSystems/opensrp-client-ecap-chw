@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity">
+    tools:context=".activity.MotherDetail">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_appbarlayout"
@@ -48,7 +48,7 @@
                     android:layout_toRightOf="@+id/imageview_profile"
                     android:paddingLeft="0dp"
                     android:paddingStart="0dp"
-                    android:text="Vulnerable Child/Adolescent"
+                    android:text="Caregiver"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/register_member_name_size" />
 
@@ -167,6 +167,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/profile_content" />
+    <include layout="@layout/mother_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
