@@ -2,3 +2,5 @@ include ':opensrp-ecap-chw'
 
 //include ':opensrp-ecap-chw-core'
 //project(":opensrp-ecap-chw-core").projectDir = new File("../opensrp-client-ecap-chw-core/opensrp-ecap-chw-core")
+//include ':household-core'
+//project(":household-core").projectDir = new File("../household_core/opensrp-household")

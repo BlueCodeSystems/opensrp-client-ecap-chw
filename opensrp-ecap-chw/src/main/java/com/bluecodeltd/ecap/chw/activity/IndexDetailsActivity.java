@@ -91,6 +91,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String province =  client.getColumnmaps().get("province");
         String district =  client.getColumnmaps().get("district");
         String facility =  client.getColumnmaps().get("health_facility");
+        String subpop1 =  client.getColumnmaps().get("subpo1");
+        String subpop2 =  client.getColumnmaps().get("subpo2");
+        String subpop3 =  client.getColumnmaps().get("subpo3");
+        String subpop4 =  client.getColumnmaps().get("subpo4");
 
         txtName.setText(full_name);
         txtAge.setText(birthdate);
@@ -402,15 +406,30 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            if (fields != null) {
-                FormTag formTag = getFormTag();
-                Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                        encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN);
-                tagSyncMetadata(event);
-                Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                return new ChildIndexEventClient(event, client);
-            }
+            switch (encounterType) {
+                case "VCA Case Plan":
 
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Family Registration":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_FAMILY);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+            }
         } catch (JSONException e) {
             Timber.e(e);
         }
