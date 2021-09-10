@@ -454,6 +454,27 @@ condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step2_first_name
+description: first_name relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_last_name
+description: last_name relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_village_town
+description: village_town relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step2_entry_type
 description: entry_type relevance
 priority: 1
