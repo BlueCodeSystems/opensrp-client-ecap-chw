@@ -73,7 +73,7 @@
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
-        "value": "",
+        "value": "Maimbo",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -87,7 +87,7 @@
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
-        "value": "",
+        "value": "Tembo",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -100,7 +100,7 @@
         "openmrs_entity_id": "subpop_age",
         "type": "edit_text",
         "hint": "Age of VCA",
-        "value": "",
+        "value": "13",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
@@ -113,7 +113,7 @@
         "openmrs_entity_id": "subpop_sex",
         "type": "spinner",
         "hint": "Gender of VCA",
-        "value": "",
+        "value": "Male",
         "values": [
           "Male",
           "Female"
@@ -2010,7 +2010,13 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:has_the_agyw_been_tested_for_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "hiv_positive_agyw",
