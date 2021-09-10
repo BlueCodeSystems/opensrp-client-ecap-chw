@@ -191,7 +191,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Primary Caregiver Surname",
+        "hint": "Primary Caregiver Last Name",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
@@ -229,7 +229,7 @@
         "duration": {
           "label": "Age"
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": false,
@@ -255,15 +255,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "phone_number_caregiver",
         "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Caregivers phone number",
+        "edit_type": "number",
+        "hint": "Caregivers Phone Number",
         "v_numeric": {
-          "value": false,
+          "value": "true",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
+        "v_required": {
+          "value": false,
+          "err": "Number cannot be empty"
+        },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -322,7 +326,7 @@
             "openmrs_entity_id": "child_first_name",
             "entity": "child",
             "type": "edit_text",
-            "hint": "Name of Household",
+            "hint": "Child First Name",
             "edit_type": "name",
             "look_up": "true",
             "v_required": {
@@ -341,7 +345,7 @@
             "openmrs_entity_id": "child_last_name",
             "entity": "child",
             "type": "edit_text",
-            "hint": "Name of Household",
+            "hint": "Child Last Name",
             "edit_type": "name",
             "look_up": "true",
             "v_required": {
@@ -2805,12 +2809,26 @@
         }
       },
       {
-        "key": "case_worker_name",
+        "key": "caseWorker_firstName",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "case_worker_name",
+        "openmrs_entity_id": "caseWorker_firstName",
         "type": "edit_text",
-        "hint": "Case work name ",
+        "hint": "Case Worker First Name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caseWorker_lastName",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "caseWorker_lastName",
+        "type": "edit_text",
+        "hint": "Case Work Last Name ",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
