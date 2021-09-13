@@ -1,4 +1,32 @@
 ---
+name: step1_pregnancy_prevention_methods_not_used_by_agyw
+description: pregnancy_prevention_methods_not_used_by_agyw relevance
+priority: 1
+condition: "step1_pregnancy_prevention_methods_use_by_agyw.contains('none')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_not_in_school
+description: agyw_not_in_school relevance
+priority: 1
+condition: "step1_is_agyw_in_school.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_at_risk_agyw
+description: at_risk_agyw relevance
+priority: 1
+condition: "step1_did_agyw_answer_to_any.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_at_risk
+description: agyw_at_risk relevance
+priority: 1
+condition: "step1_did_agyw_answer_to_any.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_subpop_health_facility
 description: subpop_health_facility relevance
 priority: 1
@@ -421,6 +449,27 @@ actions:
 ---
 name: step2_birthdate
 description: birthdate relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_first_name
+description: first_name relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_last_name
+description: last_name relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_village_town
+description: village_town relevance
 priority: 1
 condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:

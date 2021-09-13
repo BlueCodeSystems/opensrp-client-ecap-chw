@@ -1,12 +1,14 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.activity.MotherDetail;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
@@ -115,18 +117,10 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
-       /* String firstname = client.getColumnmaps().get("first_name");
-        String lastname = client.getColumnmaps().get("last_name");
-        String facility = client.getColumnmaps().get("health_facility");
-
-        String fullname = firstname + " " + lastname;
-        // Log.i(getClass().getName(), "facility : " + firstname.toString());
-        Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-        intent.putExtra("client", fullname);
-        intent.putExtra("mfacility", facility);
-        startActivity(intent);*/
+        Intent intent = new Intent(getActivity(), MotherDetail.class);
+        intent.putExtra("mothers",  client);
+        startActivity(intent);
     }
-
     @Override
     public void showNotFoundPopup(String s) {
 

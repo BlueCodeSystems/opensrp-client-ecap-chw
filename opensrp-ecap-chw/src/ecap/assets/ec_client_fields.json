@@ -374,24 +374,17 @@
           }
         },
         {
-          "column_name": "hiv_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_status"
-          }
-        },
-        {
           "column_name": "village_compound",
           "type": "Client",
           "json_mapping": {
-            "field": "addresss.village_compound"
+            "field": "addresses.village_compound"
           }
         },
         {
           "column_name": "mothers_number",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.mothers_number"
+            "field": "attributes.mothers_number"
           }
         },
         {
@@ -467,6 +460,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "lastName"
+          }
+        },
+        {
+          "column_name": "village_town",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.village_town"
           }
         },
         {
@@ -1855,6 +1855,53 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_vca_case_plan",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.village"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        }
+      ]
     }
-  ]
+    ]
 }

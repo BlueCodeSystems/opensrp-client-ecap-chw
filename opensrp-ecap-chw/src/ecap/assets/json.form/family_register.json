@@ -1,6 +1,6 @@
 {
   "count": 2,
-  "encounter_type": "household_screening",
+  "encounter_type": "Family Registration",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {
@@ -73,6 +73,7 @@
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
+        "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -86,6 +87,7 @@
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
+        "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -98,6 +100,7 @@
         "openmrs_entity_id": "subpop_age",
         "type": "edit_text",
         "hint": "Age of VCA",
+        "value": "",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
@@ -110,6 +113,7 @@
         "openmrs_entity_id": "subpop_sex",
         "type": "spinner",
         "hint": "Gender of VCA",
+        "value": "",
         "values": [
           "Male",
           "Female"
@@ -265,10 +269,10 @@
         }
       },
       {
-        "key": "ward",
+        "key": "subpop_ward",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "ward",
+        "openmrs_entity_id": "subpop_ward",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
@@ -278,10 +282,10 @@
         }
       },
       {
-        "key": "village",
+        "key": "subpop_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "village",
+        "openmrs_entity_id": "subpop_village",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
@@ -291,10 +295,10 @@
         }
       },
       {
-        "key": "assigned_community_case_worker",
+        "key": "subpop_assigned_community_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assigned_community_case_worker",
+        "openmrs_entity_id": "subpop_assigned_community_case_worker",
         "type": "edit_text",
         "hint": "Name of Assigned Community Case Worker",
         "edit_type": "name",
@@ -305,10 +309,10 @@
       },
       {
 
-        "key": "name_of_facility_based_case_worker",
+        "key": "subpop_name_of_facility_based_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "name_of_facility_based_case_worker",
+        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker",
         "type": "edit_text",
         "hint": "Name of Facility-Based Case Worker",
         "edit_type": "name",
@@ -2026,12 +2030,12 @@
             }
           },
           {
-            "key": "is_the_agyw_in_school",
+            "key": "is_agyw_in_school",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_in_school",
             "type": "native_radio",
-            "label": "Is the AGYW in school? If not, refer to education support services at enrollment  ",
+            "label": "Is the AGYW in school?",
             "options": [
               {
                 "key": "yes",
@@ -2042,6 +2046,23 @@
                 "text": "No"
               }
             ]
+          },
+          {
+            "key": "agyw_not_in_school",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "refer to education support services at enrollment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
           },
           {
             "key": "agyw_receiving_an_economic_strengthening_intervention",
@@ -2049,7 +2070,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
             "type": "native_radio",
-            "label": "Is the AGYW receiving an economic strengthening intervention? If not refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "label": "Is the AGYW receiving an economic strengthening intervention?",
             "options": [
               {
                 "key": "yes",
@@ -2062,12 +2083,29 @@
             ]
           },
           {
+            "key": "agyw_not_receiving_economic_strengthening_intervention",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
+          },
+          {
             "key": "pregnancy_prevention_methods_use_by_agyw",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "",
+            "openmrs_entity": "concept",
             "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
-            "type": "native_radio",
-            "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?If ‘None of the prevention methods’, Refer and/or provide appropriate preventive services/DREAMS program at enrolment  ",
+            "type": "check_box",
+            "label": "Select any of the HIV/pregnancy prevention methods AGYW is using from list below",
             "options": [
               {
                 "key": "prep",
@@ -2088,8 +2126,43 @@
               {
                 "key": "other",
                 "text": "Other"
+              },
+              {
+                "key": "none",
+                "text": "None"
               }
             ]
+          },
+          {
+            "key": "option_none_pregnancy_prevention",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "option_none_pregnancy_prevention",
+            "type": "edit_text",
+            "hint": "Give details of Other Method used",
+            "edit_type": "name",
+            "value": "",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Give details of Other Method used"
+            }
+          },
+          {
+            "key": "pregnancy_prevention_methods_not_used_by_agyw",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Refer and/or provide appropriate preventive services/DREAMS program at enrolment",
+            "text_color": "#d20000",
+            "v_required": {
+              "value": false
+            },
+            "relevance": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
           },
           {
             "key": "other_pregnancy_prevention_method_used_by_agyw",
@@ -2104,27 +2177,68 @@
                 "ex": "equalTo(., \"other\")"
               }
             }
-
-          },
-          {
-            "key": "did_agyw_answer_to_any",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "did_agyw_answer_to_any",
-            "type": "native_radio",
-            "label": "Did AGYW answer “yes” to any of the questions from DII.1 to DII.10 and is HIV-? (If yes, categorize as At risk AGYW)",
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes"
-              },
-              {
-                "key": "no",
-                "text": "No"
-              }
-            ]
           }
         ]
+      },
+      {
+        "key": "did_agyw_answer_to_any",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "did_agyw_answer_to_any",
+        "type": "native_radio",
+        "label": "Did AGYW answer “Yes” to any of the questions from Part D.2 above?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "at_risk_agyw",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Categorize AGYW as At Risk by checking box below",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "agyw_at_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "agyw_at_risk",
+        "openmrs_data_type": "select one",
+        "type": "check_box",
+        "label": "AGYW is At Risk",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false,
+            "openmrs_choice_id": ""
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "primary_caregivers_only",
@@ -2531,7 +2645,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "approved_by",
+        "hint": "Approved By",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2698,6 +2812,40 @@
           "value": false,
           "err": "Please select gender"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Caregiver First Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Caregiver Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -3173,20 +3321,17 @@
         }
       },
       {
-        "key": "current_township_compound",
+        "key": "village_town",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "current_township_compound",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "village_town",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Township/Compound of Identified Potential Beneficiary",
-        "v_numeric": {
-          "value": false,
-          "err": "Current Township/Compound"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
+        "value": "Choma Central Hospital",
+        "hint": "Facility",
+        "v_required": {
+          "value": true,
+          "err": "Facility is Required"
         },
         "relevance": {
           "rules-engine": {
@@ -3655,10 +3800,6 @@
         "type": "edit_text",
         "hint": "Emergency Contact Name",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Emergency Contact Name"
-        },
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Emergency Contact Name"
@@ -3679,10 +3820,6 @@
         "type": "edit_text",
         "hint": "Relation to Caregiver",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Relation to Caregiver"
-        },
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Relation to Caregiver"

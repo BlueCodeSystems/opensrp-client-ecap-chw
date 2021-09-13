@@ -404,7 +404,7 @@
         "hint": "Mothers phone number",
         "v_numeric": {
           "value": "true",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must must be a total of 10 digits in length"
         },
         "v_required": {
           "value": false,
@@ -412,7 +412,7 @@
         },
         "v_regex": {
           "value": "(09[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must must be a total of 10 digits in length"
         }
       },
       {
