@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
+
 import timber.log.Timber;
 
 import android.content.Intent;
@@ -78,6 +80,8 @@ public class MotherDetail extends AppCompatActivity {
         txtComment.setText(comment);
 
     }
+
+
 
     public void startFormActivity(JSONObject jsonObject) {
 

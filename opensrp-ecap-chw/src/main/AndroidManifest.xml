@@ -93,8 +93,7 @@
         </activity>
         <activity
             android:name=".activity.IndexDetailsActivity"
-            android:label="@string/title_family_detail"
-            android:theme="@style/FamilyTheme.NoActionBar"></activity>
+            android:theme="@style/FamilyTheme.NoActionBar"/>
         <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
             android:launchMode="singleTask"
