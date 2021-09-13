@@ -33,7 +33,7 @@ public class MotherDetail extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
-    private TextView txtName, txtAge, txtProvince, txtDistrict, txtFacility;
+    private TextView txtName, txtVillage, txtPhone, txtArt, txtFacility, txtOvc, txtComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,11 @@ public class MotherDetail extends AppCompatActivity {
 
         txtName = findViewById(R.id.mynamex);
         txtFacility = findViewById(R.id.mfacilityx);
+        txtVillage = findViewById(R.id.village);
+        txtPhone = findViewById(R.id.phone);
+        txtArt = findViewById(R.id.art);
+        txtOvc = findViewById(R.id.ovc_date);
+        txtComment = findViewById(R.id.comment);
 
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
 
@@ -58,9 +63,19 @@ public class MotherDetail extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String facility =  client.getColumnmaps().get("health_facility");
+        String village =  client.getColumnmaps().get("village_compound");
+        String phone =  client.getColumnmaps().get("mothers_number");
+        String art =  client.getColumnmaps().get("art_number");
+        String ovc_date =  client.getColumnmaps().get("ovc_date");
+        String comment =  client.getColumnmaps().get("comment");
 
         txtName.setText(full_name);
         txtFacility.setText(facility);
+        txtVillage.setText(village);
+        txtPhone.setText(phone);
+        txtArt.setText(art);
+        txtOvc.setText(ovc_date);
+        txtComment.setText(comment);
 
     }
 
@@ -180,7 +195,6 @@ public class MotherDetail extends AppCompatActivity {
                     } catch (JSONException e) {
                         Timber.e(e);
                     }
-
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());

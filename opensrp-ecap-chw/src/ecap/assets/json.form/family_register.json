@@ -1,6 +1,6 @@
 {
   "count": 2,
-  "encounter_type": "household_screening",
+  "encounter_type": "Family Registration",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {
@@ -73,7 +73,7 @@
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
-        "value": "Maimbo",
+        "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -87,7 +87,7 @@
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
-        "value": "Tembo",
+        "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -100,7 +100,7 @@
         "openmrs_entity_id": "subpop_age",
         "type": "edit_text",
         "hint": "Age of VCA",
-        "value": "13",
+        "value": "",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
@@ -113,7 +113,7 @@
         "openmrs_entity_id": "subpop_sex",
         "type": "spinner",
         "hint": "Gender of VCA",
-        "value": "Male",
+        "value": "",
         "values": [
           "Male",
           "Female"
@@ -2645,7 +2645,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "approved_by",
+        "hint": "Approved By",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2812,6 +2812,40 @@
           "value": false,
           "err": "Please select gender"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Caregiver First Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Caregiver Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -3287,20 +3321,17 @@
         }
       },
       {
-        "key": "current_township_compound",
+        "key": "village_town",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "current_township_compound",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "village_town",
         "type": "edit_text",
         "entity_id": "mother",
-        "hint": "Township/Compound of Identified Potential Beneficiary",
-        "v_numeric": {
-          "value": false,
-          "err": "Current Township/Compound"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
+        "value": "Choma Central Hospital",
+        "hint": "Facility",
+        "v_required": {
+          "value": true,
+          "err": "Facility is Required"
         },
         "relevance": {
           "rules-engine": {
@@ -3769,10 +3800,6 @@
         "type": "edit_text",
         "hint": "Emergency Contact Name",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Emergency Contact Name"
-        },
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Emergency Contact Name"
@@ -3793,10 +3820,6 @@
         "type": "edit_text",
         "hint": "Relation to Caregiver",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Relation to Caregiver"
-        },
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Relation to Caregiver"
