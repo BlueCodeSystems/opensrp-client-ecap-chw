@@ -9,6 +9,7 @@ import timber.log.Timber;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.JobAidsActivity;
@@ -33,11 +34,11 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_family) {
-            if (context instanceof FamilyRegisterActivity) {
+            if (context instanceof IndexRegisterActivity) {
                 BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
                 baseRegisterActivity.switchToBaseFragment();
             } else {
-                Intent intent = new Intent(context, FamilyRegisterActivity.class);
+                Intent intent = new Intent(context, IndexRegisterActivity.class);
                 context.startActivity(intent);
                 context.finish();
             }
@@ -80,6 +81,22 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 } catch (Exception e) {
                     Timber.e(e);
                 }
+            }else if(context instanceof HouseholdIndexActivity){
+
+                HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
+
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("family_register");
+
+                    householdIndexActivity.startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
             }
             return true;
         } else if (item.getItemId() == R.id.action_register) {
@@ -115,6 +132,22 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                     indexRegisterForm = formUtils.getFormJson("mother_index");
 
                     motherIndexActivity.startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            } else if(context instanceof HouseholdIndexActivity){
+
+                HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
+
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("family_register");
+
+                    householdIndexActivity.startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     Timber.e(e);
