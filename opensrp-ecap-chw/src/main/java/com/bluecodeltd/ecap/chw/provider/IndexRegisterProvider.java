@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.FamilyDao;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -40,12 +42,17 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     @Override
     public void getView(Cursor cursor, SmartRegisterClient smartRegisterClient, IndexRegisterViewHolder indexRegisterViewHolder) {
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
+        String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence);
+
+        boolean plan = CasePlanDao.checkCasePlan(BaseEntityId);
+
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence, plan);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
+
     }
 
 
