@@ -73,6 +73,7 @@
         "type": "edit_text",
         "hint": "VCA's First Name",
         "edit_type": "name",
+        "value" : "Joseph",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"

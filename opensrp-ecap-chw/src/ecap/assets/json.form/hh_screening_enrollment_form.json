@@ -73,7 +73,7 @@
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
-        "value": "Maimbo",
+        "value": "Jack",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -87,7 +87,7 @@
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
-        "value": "Tembo",
+        "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
@@ -100,7 +100,7 @@
         "openmrs_entity_id": "subpop_age",
         "type": "edit_text",
         "hint": "Age of VCA",
-        "value": "13",
+        "value": "",
         "v_numeric": {
           "value": "true",
           "err": "Age can only contain numbers"
@@ -113,7 +113,7 @@
         "openmrs_entity_id": "subpop_sex",
         "type": "spinner",
         "hint": "Gender of VCA",
-        "value": "Male",
+        "value": "",
         "values": [
           "Male",
           "Female"
@@ -2057,16 +2057,15 @@
             "key": "agyw_not_in_school",
             "type": "label",
             "label_text_style": "bold",
-            "text": "refer to education support services at enrollment",
+            "text": "Refer to education support services at enrollment",
             "text_color": "#d20000",
             "v_required": {
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:is_agyw_in_school": {
+                "type": "string",
+                "ex": "equalTo(., \"no\")"
               }
             }
           },
@@ -2098,10 +2097,9 @@
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:agyw_receiving_an_economic_strengthening_intervention": {
+                "type": "string",
+                "ex": "equalTo(., \"no\")"
               }
             }
           },
@@ -2140,7 +2138,7 @@
             ]
           },
           {
-            "key": "option_none_pregnancy_prevention",
+            "key": "option_other_pregnancy_prevention",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "option_none_pregnancy_prevention",
@@ -2151,6 +2149,12 @@
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
               "err": "Give details of Other Method used"
+            },
+            "relevance": {
+              "step1:pregnancy_prevention_methods_use_by_agyw": {
+                "type": "string",
+                "ex": "equalTo(., \"other\")"
+              }
             }
           },
           {
@@ -2163,24 +2167,9 @@
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
-              }
-            }
-          },
-          {
-            "key": "other_pregnancy_prevention_method_used_by_agyw",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
-            "type": "edit_text",
-            "hint": "Other pregnancy prevention methods",
-            "relevance": {
-              "step6:pregnancy_prevention_methods_used_by_agyw": {
+              "step1:pregnancy_prevention_methods_use_by_agyw": {
                 "type": "string",
-                "ex": "equalTo(., \"other\")"
+                "ex": "equalTo(., \"none\")"
               }
             }
           }
