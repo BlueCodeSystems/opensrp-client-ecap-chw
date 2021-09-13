@@ -13,6 +13,9 @@ import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.smartregister.domain.FetchStatus;
 
 import java.lang.ref.WeakReference;
@@ -60,9 +63,19 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
     }
 
     @Override
-    public void saveForm(String jsonString, boolean isEditMode) {
+    public void saveForm(String jsonString, boolean isEditMode) throws JSONException {
 
-        try {
+        JSONObject json = new JSONObject(jsonString);
+
+        String fields = json.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("value").toString();
+
+       // String myvalue = fields.getJSONObject(5).get("value").toString();
+
+
+        Log.e("mytag", "ck : " + fields);
+
+
+      /*  try {
 
             view.toggleDialogVisibility(true);
 
@@ -77,7 +90,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
 
         } catch (Exception e) {
             Timber.e(e);
-        }
+        }*/
     }
 
     @Override
