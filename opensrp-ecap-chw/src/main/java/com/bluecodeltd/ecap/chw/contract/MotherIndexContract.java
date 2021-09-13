@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
 
+import org.json.JSONException;
 import org.smartregister.view.contract.BaseRegisterContract;
 
 public interface MotherIndexContract {
@@ -13,7 +14,7 @@ public interface MotherIndexContract {
     }
 
     interface Presenter extends BaseRegisterContract.Presenter {
-        void saveForm(String json, boolean isEditMode);
+        void saveForm(String json, boolean isEditMode) throws JSONException;
 
         void onRegistrationSaved();
 

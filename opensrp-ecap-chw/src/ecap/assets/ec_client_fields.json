@@ -463,10 +463,10 @@
           }
         },
         {
-          "column_name": "village_town",
+          "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.village_town"
+            "field": "attributes.health_facility"
           }
         },
         {
@@ -608,13 +608,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "addresses.currentTownship"
-          }
-        },
-        {
-          "column_name": "village_town",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.cityVillage"
           }
         },
         {
