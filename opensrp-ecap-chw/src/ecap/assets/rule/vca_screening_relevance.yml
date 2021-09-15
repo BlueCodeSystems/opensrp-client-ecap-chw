@@ -9,21 +9,21 @@ actions:
 name: step3_first_name
 description: first_name relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_last_name
 description: last_name relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_firstname
 description: caregiver_firstname relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
@@ -44,21 +44,21 @@ actions:
 name: step3_gender
 description: gender relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_birthdate
 description: birthdate relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_index_check_box
 description: index_check_box relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
@@ -198,35 +198,35 @@ actions:
 name: step5_caregiver_last_name
 description: caregiver_last_name relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_sex
 description: caregiver_sex relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_birth_date
 description: caregiver_birth_date relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step5_caregiver_hiv_status
 description: caregiver_hiv_status relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
 name: step5_relation
 description: relation relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
@@ -237,10 +237,10 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
-name: step5_phone_number
-description: phone_number relevance
+name: step5_caregiver_phone
+description: caregiver_phone relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
+condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---

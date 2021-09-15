@@ -442,7 +442,7 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="fragment_overview">Overview</string>
-    <string name="fragment_contact">Contact</string>
-    <string name="fragment_visits">Contact</string>
+    <string name="fragment_contact">Caregiver</string>
+    <string name="fragment_visits">Case Plan</string>
 
 </resources>
