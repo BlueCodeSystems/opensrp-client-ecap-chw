@@ -456,13 +456,13 @@
         ],
         "options": [
           {
-            "key": "no",
-            "text": "No, Status not known",
+            "key": "yes",
+            "text": "Yes, Status POSITIVE",
             "value": false
           },
           {
-            "key": "yes",
-            "text": "Yes, Status POSITIVE",
+            "key": "no",
+            "text": "No, Status not known",
             "value": false
           },
           {
@@ -470,6 +470,36 @@
             "text": "Yes, status NEGATIVE ",
             "value": false
           }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test",
+        "type": "native_radio",
+        "label": "Was the HIV test done less than 6 months ago?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Less than 6 months",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No, more than 6 months",
+            "value": false
+          }
+
         ],
         "v_required": {
           "value": false,
@@ -669,7 +699,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Please select gender"
+          "err": "HIV Test Result"
         },
         "relevance": {
           "rules-engine": {
@@ -733,10 +763,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -751,10 +780,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:art_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -775,10 +803,9 @@
           "err": "ART cannot be empty"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:art_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -811,10 +838,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -824,15 +850,14 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Because you have chosen `No`, provided ART adherence support and \ntreatment literacy, escort to facility-based \ntreatment and care services and/or MMD, \nand refer to support group",
+        "text": "Because you have chosen `No`, provide ART adherence support and \ntreatment literacy, escort to facility-based \ntreatment and care services and/or MMD, \nand refer to support group",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:primary_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -865,10 +890,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -883,10 +907,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:regularly_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -907,10 +930,9 @@
           "err": "Months of medications "
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -943,10 +965,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -967,10 +988,9 @@
           "err": "Last VL results must be an integer"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_viral": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -992,10 +1012,9 @@
           "err": "Please enter date Referred"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_viral": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1028,10 +1047,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1046,10 +1064,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_documented": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1082,10 +1099,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1100,10 +1116,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_enrolled": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1136,10 +1151,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1154,10 +1168,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_enrolled": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1190,10 +1203,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_status_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1208,230 +1220,15 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_malnutrition": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
-      {
-        "key": "hiv_test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_test",
-        "type": "native_radio",
-        "label": "Was the HIV test done less than 6 months ago?",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "no",
-            "text": "No, more than 6 months",
-            "value": false
-          },
-          {
-            "key": "yes",
-            "text": "Less than 6 months",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "last_year",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_year",
-        "type": "native_radio",
-        "label": "Within the last year, have you been hit,   slapped,   kicked   or   otherwise\nphysically hurt by your partner or\nsomeone important?",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "last_year_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and escort to STOP GBV programs and/or Victim Support Unit",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "relation",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relation",
-        "type": "native_radio",
-        "label": "Are you in a relationship in which you\nhave   been   physically   hurt   or\nthreatened by your partner?",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "relation_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and escort to STOP GBV\nprograms",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "partner_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_caregiver",
-        "type": "native_radio",
-        "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "partner_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and escort to STOP GBV \nprograms and to the health facility for PrEP \ninitiation",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "partner_prevented",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_prevented",
-        "type": "native_radio",
-        "label": "Has your partner ever prevented you\nform   leaving   the   house,   seeing\nfriends, getting a job or continuing\nwith your education",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "partner_prevented_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Facilitate enrolment in a Women Empowerment Program and Savings Group \nprogram and refer and escort to STOP GBV \nprograms",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
+
+
+
       {
         "key": "household_number",
         "openmrs_entity_parent": "",
@@ -1446,10 +1243,9 @@
           "err": "Please enter a valid name"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1497,10 +1293,9 @@
           "err": "You`re to select the level of education"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1531,10 +1326,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1549,10 +1343,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:household_member": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1564,6 +1357,9 @@
         "hint": "What   is   the   MAIN   SOURCE   of\nhousehold income?",
         "type": "spinner",
         "openmrs_data_type": "",
+        "exclusive": [
+          "None"
+        ],
         "values": [
           "Full-time or part-time job (salary or \nown business)",
           "Farming",
@@ -1579,10 +1375,9 @@
           "Other"
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1597,10 +1392,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:source_income": {
+            "type": "string",
+            "ex": "equalTo(., \"None\")"
           }
         }
       },
@@ -1617,10 +1411,9 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:source_income": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
           }
         }
       },
@@ -1643,10 +1436,9 @@
           "Other"
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1663,10 +1455,9 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:source_earner": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
           }
         }
       },
@@ -1697,10 +1488,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1715,10 +1505,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:last_time": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1749,10 +1538,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1783,10 +1571,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1817,10 +1604,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1851,10 +1637,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1889,10 +1674,9 @@
           "Other"
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1919,10 +1703,9 @@
           "asbestos"
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1953,10 +1736,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1971,10 +1753,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:early_childhood": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -2005,10 +1786,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2023,10 +1803,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:children_adolescent_a": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2057,10 +1836,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2075,10 +1853,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:children_adolescent_b": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2129,10 +1906,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2149,10 +1925,9 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:drinking_water": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
           }
         }
       },
@@ -2191,10 +1966,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2206,6 +1980,9 @@
         "label_text_style": "bold",
         "type": "native_radio",
         "label": "Do AGYW in the household have access to sanitary products?",
+        "exclusive": [
+          "none"
+        ],
         "options": [
           {
             "key": "sanitary_pads",
@@ -2225,10 +2002,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2243,10 +2019,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:sanitary_products": {
+            "type": "string",
+            "ex": "equalTo(., \"none\")"
           }
         }
       },
@@ -2263,13 +2038,204 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:sanitary_products": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
           }
         }
       },
+
+
+
+
+      {
+        "key": "last_year",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_year",
+        "type": "native_radio",
+        "label": "Within the last year, have you been hit,   slapped,   kicked   or   otherwise\nphysically hurt by your partner or\nsomeone important?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "last_year_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV programs and/or Victim Support Unit",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:last_year": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relation",
+        "type": "native_radio",
+        "label": "Are you in a relationship in which you\nhave   been   physically   hurt   or\nthreatened by your partner?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "relation_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV\nprograms",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:relation": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "partner_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner_caregiver",
+        "type": "native_radio",
+        "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "partner_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV \nprograms and to the health facility for PrEP \ninitiation",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:partner_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "partner_prevented",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner_prevented",
+        "type": "native_radio",
+        "label": "Has your partner ever prevented you\nform   leaving   the   house,   seeing\nfriends, getting a job or continuing\nwith your education",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "partner_prevented_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Facilitate enrolment in a Women Empowerment Program and Savings Group \nprogram and refer and escort to STOP GBV \nprograms",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:partner_prevented": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+
+
+
       {
         "key": "material_construction_roof",
         "openmrs_entity_parent": "",
@@ -2304,10 +2270,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:material_construction_roof": {
+            "type": "string",
+            "ex": "equalTo(., \"donated\")"
           }
         }
       },
@@ -2324,12 +2289,12 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:material_construction_roof": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
           }
         }
+
       },
       {
         "key": "household_eaten",
@@ -2363,10 +2328,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:material_construction_roof": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
           }
         }
       },
