@@ -426,6 +426,27 @@
           "json_mapping": {
             "field": "attributes.subpop_vca_last_name"
           }
+        },
+        {
+          "column_name": "subpop_age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_age"
+          }
+        },
+        {
+          "column_name": "subpop_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_sex"
+          }
+        },
+        {
+          "column_name": "part_a_province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.part_a_province"
+          }
         }
       ]
     },
