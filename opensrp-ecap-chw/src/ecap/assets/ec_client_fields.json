@@ -397,6 +397,39 @@
       ]
     },
     {
+      "name": "ec_family_screening",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.opensrp_id"
+          }
+        },
+        {
+          "column_name": "subpop_vca_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_vca_first_name"
+          }
+        },
+        {
+          "column_name": "subpop_vca_last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_vca_last_name"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_family",
       "columns": [
         {

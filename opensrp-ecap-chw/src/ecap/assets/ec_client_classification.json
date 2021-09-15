@@ -9,7 +9,8 @@
             "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
-              "ec_family"
+              "ec_family",
+              "ec_family_screening"
             ]
           },
           {
