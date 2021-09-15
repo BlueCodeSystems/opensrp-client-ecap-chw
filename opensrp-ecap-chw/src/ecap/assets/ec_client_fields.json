@@ -438,28 +438,28 @@
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.householdId"
+            "field": "attributes.household_id"
           }
         },
         {
           "column_name": "caregiver_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attribute.caregiverId"
+            "field": "attribute.caregiver_id"
           }
         },
         {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "firstName"
+            "field": "attributes.first_name"
           }
         },
         {
           "column_name": "last_name",
           "type": "Client",
           "json_mapping": {
-            "field": "lastName"
+            "field": "attributes.last_name"
           }
         },
         {
@@ -473,14 +473,14 @@
           "column_name": "gender",
           "type": "Client",
           "json_mapping": {
-            "field": "gender"
+            "field": "attributes.gender"
           }
         },
         {
           "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
-            "field": "birthdate"
+            "field": "attributes.birthdate"
           }
         },
         {
@@ -489,6 +489,14 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "entry_type"
+          }
+        },
+        {
+          "column_name": "other_entry_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "other_entry_type"
           }
         },
         {
