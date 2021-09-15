@@ -28,7 +28,7 @@ public class HouseholdIndexFragmentPresenter implements HouseholdIndexFragmentCo
         String households = Constants.EcapClientTable.EC_FAMILY;
 
         String countSelect = "SELECT COUNT(*) FROM " + households;
-        String mainSelect = "SELECT *, id AS _id, first_name, last_name, health_facility AS residence FROM " + households;
+        String mainSelect = "SELECT id AS _id, first_name, last_name, health_facility AS residence FROM " + households;
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_FAMILY, countSelect, mainSelect);
         getView().initializeAdapter();
