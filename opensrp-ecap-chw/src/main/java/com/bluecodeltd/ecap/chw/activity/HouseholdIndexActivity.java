@@ -39,7 +39,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(this, null, null);
+        NavigationMenu.getInstance(HouseholdIndexActivity.this, null, null);
     }
 
     @Override

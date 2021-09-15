@@ -2057,10 +2057,9 @@
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:is_agyw_in_school": {
+                "type": "string",
+                "ex": "equalTo(., \"no\")"
               }
             }
           },
