@@ -1,5 +1,5 @@
 {
-  "count": "2",
+  "count": "1",
   "encounter_type": "Assessment Form",
   "skip_blank_steps": true,
   "entity_id": "",
@@ -54,7 +54,6 @@
   },
   "step1": {
     "title": "Caregiver Household Assessment",
-    "next": "step2",
     "fields": [
       {
         "key": "province_caregiver",
@@ -104,10 +103,9 @@
           "err": "Please enter the District"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:province_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"central\")"
           }
         }
       },
@@ -143,10 +141,9 @@
           "err": "Please enter the District"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:province_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"southern\")"
           }
         }
       },
@@ -1434,13 +1431,7 @@
             }
           }
         }
-      }
-    ]
-  },
-  "step2": {
-    "title": "Economic Stability and Security, \n Food Security and Nutrition,\nand\nSubstance Abuse",
-    "next": "step3",
-    "fields": [
+      },
       {
         "key": "household_number",
         "openmrs_entity_parent": "",
@@ -2465,10 +2456,9 @@
             "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
             "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-                }
+              "step1:child": {
+                "type": "string",
+                "ex": "equalTo(., \"red\")"
               }
             }
           },
@@ -2483,10 +2473,9 @@
             "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
             "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-                }
+              "step1:child": {
+                "type": "string",
+                "ex": "equalTo(., \"yellow\")"
               }
             }
           },
@@ -2512,11 +2501,39 @@
               }
             ]
           }
-        ],
+        ]
+      },
+      {
+        "key": "toaster_red2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-            }
+          "step1:pregnant_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"red\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_yellow2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:pregnant_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"yellow\")"
           }
         }
       },
