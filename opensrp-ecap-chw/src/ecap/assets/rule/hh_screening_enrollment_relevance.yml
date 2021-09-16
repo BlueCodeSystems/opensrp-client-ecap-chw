@@ -468,8 +468,8 @@ condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_village_town
-description: village_town relevance
+name: step2_health_facility
+description: health_facility relevance
 priority: 1
 condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:

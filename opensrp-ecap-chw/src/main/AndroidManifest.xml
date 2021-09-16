@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bluecodeltd.ecap.chw">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".application.ChwApplication"
         android:allowBackup="true"
@@ -91,8 +93,7 @@
         </activity>
         <activity
             android:name=".activity.IndexDetailsActivity"
-            android:label="@string/title_family_detail"
-            android:theme="@style/FamilyTheme.NoActionBar"></activity>
+            android:theme="@style/FamilyTheme.NoActionBar"/>
         <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
             android:launchMode="singleTask"
@@ -112,6 +113,10 @@
         <activity
             android:name=".activity.MotherIndexActivity"
             android:label="@string/mother_index_register"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HouseholdIndexActivity"
+            android:label="All Households"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.BeneficiariesRegisterActivity"

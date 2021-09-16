@@ -1,6 +1,6 @@
 {
   "count": 2,
-  "encounter_type": "household_screening",
+  "encounter_type": "Family Registration",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {
@@ -2010,13 +2010,7 @@
                 "key": "no",
                 "text": "No"
               }
-            ],
-            "relevance": {
-              "step1:has_the_agyw_been_tested_for_hiv": {
-                "type": "string",
-                "ex": "equalTo(., \"yes\")"
-              }
-            }
+            ]
           },
           {
             "key": "hiv_positive_agyw",
@@ -2057,7 +2051,7 @@
             "key": "agyw_not_in_school",
             "type": "label",
             "label_text_style": "bold",
-            "text": "Refer to education support services at enrollment",
+            "text": "refer to education support services at enrollment",
             "text_color": "#d20000",
             "v_required": {
               "value": false
@@ -2097,9 +2091,10 @@
               "value": false
             },
             "relevance": {
-              "step1:agyw_receiving_an_economic_strengthening_intervention": {
-                "type": "string",
-                "ex": "equalTo(., \"no\")"
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
               }
             }
           },
@@ -2138,7 +2133,7 @@
             ]
           },
           {
-            "key": "option_other_pregnancy_prevention",
+            "key": "option_none_pregnancy_prevention",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "option_none_pregnancy_prevention",
@@ -2149,12 +2144,6 @@
             "v_regex": {
               "value": "[A-Za-z\\s\\.\\-]*",
               "err": "Give details of Other Method used"
-            },
-            "relevance": {
-              "step1:pregnancy_prevention_methods_use_by_agyw": {
-                "type": "string",
-                "ex": "equalTo(., \"other\")"
-              }
             }
           },
           {
@@ -2167,9 +2156,24 @@
               "value": false
             },
             "relevance": {
-              "step1:pregnancy_prevention_methods_use_by_agyw": {
+              "rules-engine": {
+                "ex-rules": {
+                  "rules-file": "hh_screening_enrollment_relevance.yml"
+                }
+              }
+            }
+          },
+          {
+            "key": "other_pregnancy_prevention_method_used_by_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_pregnancy_prevention_method_used_by_agyw",
+            "type": "edit_text",
+            "hint": "Other pregnancy prevention methods",
+            "relevance": {
+              "step6:pregnancy_prevention_methods_used_by_agyw": {
                 "type": "string",
-                "ex": "equalTo(., \"none\")"
+                "ex": "equalTo(., \"other\")"
               }
             }
           }
@@ -2640,7 +2644,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "approved_by",
+        "hint": "Approved By",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2807,6 +2811,40 @@
           "value": false,
           "err": "Please select gender"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Caregiver First Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Caregiver Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -3282,20 +3320,16 @@
         }
       },
       {
-        "key": "current_township_compound",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "current_township_compound",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Township/Compound of Identified Potential Beneficiary",
-        "v_numeric": {
-          "value": false,
-          "err": "Current Township/Compound"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
+        "value": "Choma Central Hospital",
+        "hint": "Health Facility",
+        "v_required": {
+          "value": true,
+          "err": "Facility is Required"
         },
         "relevance": {
           "rules-engine": {
@@ -3575,6 +3609,12 @@
               "value": false,
               "err": "Please enter school name"
             },
+            "relevance": {
+              "step2:in_school": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            },
             "v_regex": {
               "value": "",
               "err": "Please enter school name"
@@ -3707,7 +3747,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "other_member_tested",
             "type": "native_radio",
-            "label": "Test for HIV?",
+            "label": "Tested  for HIV?",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -3739,8 +3779,7 @@
             "hint": "HIV Status",
             "values": [
               "HIV+",
-              "HIV-",
-              "HEI"
+              "HIV-"
             ],
             "v_required": {
               "value": false,
@@ -3749,10 +3788,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step2:other_member_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -3764,10 +3802,6 @@
         "type": "edit_text",
         "hint": "Emergency Contact Name",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Emergency Contact Name"
-        },
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Emergency Contact Name"
@@ -3788,10 +3822,6 @@
         "type": "edit_text",
         "hint": "Relation to Caregiver",
         "edit_type": "name",
-        "v_required": {
-          "value": "true",
-          "err": "Relation to Caregiver"
-        },
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Relation to Caregiver"

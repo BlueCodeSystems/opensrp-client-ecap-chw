@@ -320,6 +320,13 @@
         "openmrs_entity_id": "school",
         "type": "native_radio",
         "label": "Is the VCA in School?",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        },
         "options": [
           {
             "key": "pre_school",
@@ -2727,7 +2734,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "spinner",
-        "entity_id": "mother",
         "hint": "HIV Status",
         "values": [
           "HIV+",
@@ -2752,7 +2758,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relation",
         "type": "spinner",
-        "entity_id": "mother",
         "hint": "Relationship to Child",
         "values": [
           "Parent",
@@ -2771,34 +2776,10 @@
         }
       },
       {
-        "key": "village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "cityVillage",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "phone_number",
+        "key": "caregiver_phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone_number",
+        "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
         "read_only": "true",
         "hint": "Caregivers phone number",

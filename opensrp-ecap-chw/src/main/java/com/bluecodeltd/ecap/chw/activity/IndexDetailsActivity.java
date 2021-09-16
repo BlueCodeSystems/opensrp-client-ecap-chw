@@ -1,28 +1,41 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
+
 import timber.log.Timber;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
+import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
+import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
+import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -43,6 +56,7 @@ import org.smartregister.util.FormUtils;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,14 +69,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
-    private TextView txtName, txtAge, txtProvince, txtDistrict, txtFacility;
-    private IndexRegisterPresenter IndexRegisterPresenter;
+    private TextView txtName, txtGender, txtAge;
+    private TabLayout mTabLayout;
+    public ViewPager mViewPager;
+    public ProfileViewPagerAdapter mPagerAdapter;
+    private TextView visitTabCount;
+    private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.index_profile);
+        setContentView(R.layout.vca_content);
+
+        toolbar = findViewById(R.id.toolbarx);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         fab = findViewById(R.id.fab);
@@ -76,34 +98,97 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
 
-        txtName = findViewById(R.id.myname);
-        txtAge = findViewById(R.id.dob);
-        txtProvince = findViewById(R.id.province);
-        txtDistrict = findViewById(R.id.district);
-        txtFacility = findViewById(R.id.mfacility);
+        txtName = findViewById(R.id.vca_name);
+        txtGender = findViewById(R.id.vca_gender);
+        txtAge = findViewById(R.id.vca_age);
 
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-
-        assert client != null;
-
-        String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String birthdate = "DOB : " + client.getColumnmaps().get("adolescent_birthdate");
+        /*String art_number =  client.getColumnmaps().get("art_number");
         String province =  client.getColumnmaps().get("province");
         String district =  client.getColumnmaps().get("district");
         String facility =  client.getColumnmaps().get("health_facility");
         String subpop1 =  client.getColumnmaps().get("subpo1");
         String subpop2 =  client.getColumnmaps().get("subpo2");
         String subpop3 =  client.getColumnmaps().get("subpo3");
-        String subpop4 =  client.getColumnmaps().get("subpo4");
+        String subpop4 =  client.getColumnmaps().get("subpo4");*/
+
+
+        mTabLayout =  findViewById(R.id.tabs);
+        mViewPager  = findViewById(R.id.viewpager);
+
+        setupViewPager();
+        //updateTasksTabTitle();
+
+
+    }
+    
+
+    public HashMap<String, String> getData() {
+
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+
+        String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
+        String gender =  client.getColumnmaps().get("gender");
+        String birthdate = "DOB : " + client.getColumnmaps().get("birthdate");
 
         txtName.setText(full_name);
+        txtGender.setText(gender);
         txtAge.setText(birthdate);
-        txtProvince.setText(province);
-        txtDistrict.setText(district);
-        txtFacility.setText(facility);
+
+        HashMap<String, String> map = new HashMap<>();
+
+
+        map.put("subpop1", client.getColumnmaps().get("subpop1"));
+        map.put("subpop2", client.getColumnmaps().get("subpop2"));
+        map.put("subpop3", client.getColumnmaps().get("subpop3"));
+        map.put("subpop4", client.getColumnmaps().get("subpop4"));
+        map.put("subpop5", client.getColumnmaps().get("subpop5"));
+        map.put("subpop6", client.getColumnmaps().get("subpop6"));
+        map.put("date_referred", client.getColumnmaps().get("date_referred"));
+        map.put("date_enrolled", client.getColumnmaps().get("date_enrolled"));
+        map.put("art_check_box", client.getColumnmaps().get("art_check_box"));
+        map.put("art_number", client.getColumnmaps().get("art_number"));
+        map.put("date_started_art", client.getColumnmaps().get("date_started_art"));
+        map.put("date_last_vl", client.getColumnmaps().get("date_last_vl"));
+        map.put("date_next_vl", client.getColumnmaps().get("date_next_vl"));
+        map.put("vl_last_result", client.getColumnmaps().get("vl_last_result"));
+        map.put("vl_suppressed", client.getColumnmaps().get("vl_suppressed"));
+        map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
+        map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
+        map.put("caregiver_firstname", client.getColumnmaps().get("caregiver_firstname"));
+        map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
+        map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
+        map.put("relation", client.getColumnmaps().get("relation"));
+        map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
+
+
+        return map;
+
     }
 
+    private void setupViewPager(){
+        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
+        mPagerAdapter.addFragment(new ProfileOverviewFragment());
+        mPagerAdapter.addFragment(new ProfileContactFragment());
+        mPagerAdapter.addFragment(new ProfileVisitsFragment());
 
+
+        mViewPager.setAdapter(mPagerAdapter);
+        //mViewPager.setOffscreenPageLimit(1);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
+        mTabLayout.getTabAt(1).setText(getString(R.string.fragment_contact));
+        mTabLayout.getTabAt(2).setText(getString(R.string.fragment_visits));
+
+    }
+
+    private void updateTasksTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText(this.getString(R.string.visits));
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+    }
 
 
     public void startFormActivity(JSONObject jsonObject) {
@@ -428,6 +513,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
                     }
+
                     break;
             }
         } catch (JSONException e) {
@@ -469,6 +555,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+                    Toast.makeText(IndexDetailsActivity.this, "Form Data Saved", Toast.LENGTH_LONG).show();
+
+
                 } catch (Exception e) {
                     Timber.e(e);
                 }

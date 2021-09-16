@@ -64,6 +64,7 @@ public class Constants extends CoreConstants {
     public interface EcapEncounterType {
         String CHILD_INDEX = "Sub Population";
         String MOTHER_INDEX = "Mother Register";
+        String HOUSEHOLD = "Family Registration";
         String IDENTIFICATION = "identification";
     }
 
