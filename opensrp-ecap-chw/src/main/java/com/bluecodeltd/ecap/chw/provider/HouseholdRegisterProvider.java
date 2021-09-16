@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
         householdRegisterViewHolder.setupViews(firstName +" "+lastName + " " + "Household", residence);
+        Log.e("Tag", "taggg " + firstName);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }

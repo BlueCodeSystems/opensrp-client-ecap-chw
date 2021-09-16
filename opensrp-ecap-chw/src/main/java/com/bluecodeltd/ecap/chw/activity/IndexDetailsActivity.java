@@ -116,7 +116,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
-        updateTasksTabTitle();
+        //updateTasksTabTitle();
 
 
     }
@@ -128,7 +128,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = "AGE : " + client.getColumnmaps().get("birthdate");
+        String birthdate = "DOB : " + client.getColumnmaps().get("birthdate");
 
         txtName.setText(full_name);
         txtGender.setText(gender);
@@ -149,6 +149,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
         map.put("art_number", client.getColumnmaps().get("art_number"));
         map.put("date_started_art", client.getColumnmaps().get("date_started_art"));
         map.put("date_last_vl", client.getColumnmaps().get("date_last_vl"));
+        map.put("date_next_vl", client.getColumnmaps().get("date_next_vl"));
+        map.put("vl_last_result", client.getColumnmaps().get("vl_last_result"));
+        map.put("vl_suppressed", client.getColumnmaps().get("vl_suppressed"));
+        map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
+        map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
+        map.put("caregiver_firstname", client.getColumnmaps().get("caregiver_firstname"));
+        map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
+        map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
+        map.put("relation", client.getColumnmaps().get("relation"));
+        map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
+
 
         return map;
 

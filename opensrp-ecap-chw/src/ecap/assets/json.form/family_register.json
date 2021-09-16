@@ -3609,6 +3609,12 @@
               "value": false,
               "err": "Please enter school name"
             },
+            "relevance": {
+              "step2:in_school": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            },
             "v_regex": {
               "value": "",
               "err": "Please enter school name"
@@ -3741,7 +3747,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "other_member_tested",
             "type": "native_radio",
-            "label": "Test for HIV?",
+            "label": "Tested  for HIV?",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -3773,8 +3779,7 @@
             "hint": "HIV Status",
             "values": [
               "HIV+",
-              "HIV-",
-              "HEI"
+              "HIV-"
             ],
             "v_required": {
               "value": false,
@@ -3783,10 +3788,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step2:other_member_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
