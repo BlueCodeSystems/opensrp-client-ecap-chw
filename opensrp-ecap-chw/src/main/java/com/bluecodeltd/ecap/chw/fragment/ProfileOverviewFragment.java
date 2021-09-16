@@ -18,7 +18,7 @@ import java.util.Objects;
 public class ProfileOverviewFragment extends Fragment {
 
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred,
-    txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate;
+    txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult;
 
     @Nullable
     @Override
@@ -37,6 +37,12 @@ public class ProfileOverviewFragment extends Fragment {
         txtArtCheckbox = view.findViewById(R.id.is_art);
         txtDateStartedArt = view.findViewById(R.id.art_date);
         txtVlLastDate = view.findViewById(R.id.date_last_vl);
+
+        txtVlResult = view.findViewById(R.id.last_vl_result);
+        txtIsSuppressed = view.findViewById(R.id.vl_suppressed);
+        txtNextVl = view.findViewById(R.id.next_vl_test);
+        txtIsMMD = view.findViewById(R.id.on_mmd);
+        txtMMDResult = view.findViewById(R.id.mmd_level);
 
         HashMap<String, String> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
 
@@ -78,12 +84,18 @@ public class ProfileOverviewFragment extends Fragment {
             sub6.setVisibility(View.VISIBLE);
         }
 
+
         txtArtNumber.setText(mymap.get("art_number"));
         txtReferred.setText(mymap.get("date_referred"));
         txtEnrolled.setText(mymap.get("date_enrolled"));
         txtArtCheckbox.setText(mymap.get("art_check_box"));
         txtDateStartedArt.setText(mymap.get("date_started_art"));
         txtVlLastDate.setText(mymap.get("date_last_vl"));
+        txtVlResult.setText(mymap.get("vl_last_result"));
+        txtIsSuppressed.setText(mymap.get("vl_suppressed"));
+        txtNextVl.setText(mymap.get("date_next_vl"));
+        txtIsMMD.setText(mymap.get("child_mmd"));
+        txtMMDResult.setText(mymap.get("level_mmd"));
 
         return view;
 
