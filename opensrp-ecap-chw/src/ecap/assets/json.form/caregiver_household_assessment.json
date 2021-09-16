@@ -499,7 +499,6 @@
             "text": "No, more than 6 months",
             "value": false
           }
-
         ],
         "v_required": {
           "value": false,
@@ -1168,7 +1167,7 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:caregiver_enrolled": {
+          "step1:caregiver_cancer": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -1226,9 +1225,6 @@
           }
         }
       },
-
-
-
       {
         "key": "household_number",
         "openmrs_entity_parent": "",
@@ -1254,12 +1250,12 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "highest_level_education",
-        "type": "native_radio",
+        "type": "check_box",
         "label": "What is the highest level of formal education you have completed?",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
-          "Yes"
+          "none"
         ],
         "options": [
           {
@@ -1865,7 +1861,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "drinking_water",
         "label_text_style": "bold",
-        "type": "native_radio",
+        "type": "check_box",
         "label": "What is the main source of drinking\nwater   for   members   of   your\nhousehold?",
         "options": [
           {
@@ -1925,9 +1921,10 @@
           "err": "Required"
         },
         "relevance": {
-          "step1:drinking_water": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -1937,31 +1934,31 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "toilet_facility",
         "label_text_style": "bold",
-        "type": "native_radio",
+        "type": "check_box",
         "label": "What type of toilet facility does the \nhousehold mainly use?",
         "options": [
           {
-            "key": "flush_toilet",
+            "key": "Flush toilet",
             "text": "Flush toilet"
           },
           {
-            "key": "ventilated",
+            "key": "Ventilated improved latrine (VIP)",
             "text": "Ventilated improved latrine (VIP)"
           },
           {
-            "key": "public_taps_with",
+            "key": "Pit latrine with a slab",
             "text": "Pit latrine with a slab"
           },
           {
-            "key": "pit_latrine_without",
+            "key": "Pit latrine without a slab",
             "text": "Pit latrine without a slab"
           },
           {
-            "key": "bucket_toilet",
+            "key": "bucket toilet",
             "text": "Bucket toilet"
           },
           {
-            "key": "bush",
+            "key": "No facility/bush/field",
             "text": "No facility/bush/field"
           }
         ],
@@ -1978,18 +1975,18 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sanitary_products",
         "label_text_style": "bold",
-        "type": "native_radio",
+        "type": "check_box",
         "label": "Do AGYW in the household have access to sanitary products?",
         "exclusive": [
           "none"
         ],
         "options": [
           {
-            "key": "sanitary_pads",
+            "key": "Sanitary pads/tampons",
             "text": "Sanitary pads/tampons"
           },
           {
-            "key": "recycled_cloth",
+            "key": "Recycled cloth pads",
             "text": "Recycled cloth pads"
           },
           {
@@ -2019,9 +2016,10 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:sanitary_products": {
-            "type": "string",
-            "ex": "equalTo(., \"none\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -2038,16 +2036,13 @@
           "err": "Required"
         },
         "relevance": {
-          "step1:sanitary_products": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
-
-
-
-
       {
         "key": "last_year",
         "openmrs_entity_parent": "",
@@ -2232,15 +2227,11 @@
           }
         }
       },
-
-
-
-
       {
-        "key": "material_construction_roof",
+        "key": "material_construction_food",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "material_construction_roof",
+        "openmrs_entity_id": "material_construction_food",
         "hint": "Over the past month, what has been\nthe MAIN source of food consumed by\nthe household?",
         "type": "spinner",
         "openmrs_data_type": "",
@@ -2270,7 +2261,7 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:material_construction_roof": {
+          "step1:material_construction_food": {
             "type": "string",
             "ex": "equalTo(., \"donated\")"
           }
@@ -2289,12 +2280,11 @@
           "err": "Required"
         },
         "relevance": {
-          "step1:material_construction_roof": {
+          "step1:material_construction_food": {
             "type": "string",
             "ex": "equalTo(., \"Other\")"
           }
         }
-
       },
       {
         "key": "household_eaten",
@@ -2328,9 +2318,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:material_construction_roof": {
+          "step1:household_eaten": {
             "type": "string",
-            "ex": "equalTo(., \"Other\")"
+            "ex": "equalTo(., \"sometimes\")"
           }
         }
       },
@@ -2740,7 +2730,7 @@
         "label_text_style": "bold",
         "label_info_text": "Indicate ‘Yes’ by ticking the appropriate boxes",
         "label_info_title": "Tip",
-        "label": "Since you responded ‘Yes’ to any of the questions above",
+        "label": "Since you responded ‘Yes’ to the above question(s)",
         "options": [
           {
             "key": "q1",
@@ -2856,3 +2846,4 @@
     ]
   }
 }
+
