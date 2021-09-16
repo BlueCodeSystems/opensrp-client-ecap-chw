@@ -320,6 +320,13 @@
         "openmrs_entity_id": "school",
         "type": "native_radio",
         "label": "Is the VCA in School?",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        },
         "options": [
           {
             "key": "pre_school",
