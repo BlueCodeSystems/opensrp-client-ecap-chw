@@ -3422,10 +3422,10 @@
           }
         },
         {
-          "column_name": "material_construction_roof",
+          "column_name": "material_construction_food",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.material_construction_roof"
+            "field": "attributes.material_construction_food"
           }
         },
         {
