@@ -254,7 +254,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("ass");
+                    indexRegisterForm = formUtils.getFormJson("vca_assessment");
 
                     //  startFormActivity(indexRegisterForm);
                     Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
@@ -293,15 +293,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("first_name"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_birthdate"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("gender"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", splitStr[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("adolescent_phone"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", client.getColumnmaps().get("adolescent_village"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("age"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", client.getColumnmaps().get("gender"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("adolescent_phone"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(53).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", client.getColumnmaps().get("district"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", client.getColumnmaps().get("health_facility"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(56).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(57).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(58).put("value", client.getColumnmaps().get("caregiver_nrc"));
 
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
