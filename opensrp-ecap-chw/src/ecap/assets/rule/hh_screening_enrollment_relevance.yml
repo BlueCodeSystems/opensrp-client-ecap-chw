@@ -783,6 +783,13 @@ condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step2_nutrition_group
+description: nutrition_group relevance
+priority: 1
+condition: "step1_vca_sub_population_is_approved_for_enrollment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step2_malaria_beds
 description: malaria_beds relevance
 priority: 1
