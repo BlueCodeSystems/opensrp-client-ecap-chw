@@ -985,9 +985,6 @@
         "hint": "Date of Screening",
         "look_up": "true",
         "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
         "min_date": "01-01-1900",
         "max_date": "today"
       },
