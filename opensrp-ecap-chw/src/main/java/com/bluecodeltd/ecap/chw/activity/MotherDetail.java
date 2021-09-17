@@ -117,7 +117,7 @@ public class MotherDetail extends AppCompatActivity {
 
     public void onClick(View v) {
         int id = v.getId();
-       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
        // assert client != null;
         switch (id){
             case R.id.fabx:
