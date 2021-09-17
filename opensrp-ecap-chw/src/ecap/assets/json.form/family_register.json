@@ -989,19 +989,6 @@
         "max_date": "today"
       },
       {
-        "key": "screening_location",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "screening_location",
-        "type": "edit_text",
-        "hint": "Screening Location:",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Screening location  only take letters"
-        }
-      },
-      {
         "key": "name_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
