@@ -308,7 +308,6 @@
         }
       },
       {
-
         "key": "subpop_name_of_facility_based_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -998,7 +997,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of prrimary caregiver can only contain letters"
+          "err": "Name of primary caregiver can only contain letters"
         }
       },
       {
@@ -1152,6 +1151,7 @@
             "type": "spinner",
             "hint": "Relationship to Primary Caregiver",
             "values": [
+              "Son/Daughter",
               "Self",
               "Mother",
               "Father",
@@ -1179,7 +1179,7 @@
               "label": "Age"
             },
             "min_date": "01-01-1900",
-            "max_date": "today-1y"
+            "max_date": "today"
           },
           {
             "key": "Sex",
@@ -1199,7 +1199,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tick_applicable",
             "type": "native_radio",
-            "label": "Tick applicable ",
+            "label": "HIV Status (Tick where applicable)",
             "options": [
               {
                 "key": "hiv_pos",
