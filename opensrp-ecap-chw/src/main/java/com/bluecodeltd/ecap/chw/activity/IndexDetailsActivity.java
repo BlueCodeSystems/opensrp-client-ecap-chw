@@ -234,6 +234,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 animateFAB();
                 break;
+            case R.id.btn_profile_registration_info:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("service_report");
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
             case R.id.household:
 
                 try {
@@ -268,7 +281,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("ass");
+                    indexRegisterForm = formUtils.getFormJson("vca_assessment");
 
                     //  startFormActivity(indexRegisterForm);
                     Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);

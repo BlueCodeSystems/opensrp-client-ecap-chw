@@ -69,13 +69,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "stateProvince",
-        "type": "edit_text",
+        "type": "spinner",
         "hint": "Province",
-        "value" : "Southern",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Province only takes letters"
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select Province"
         }
       },
       {
@@ -85,7 +91,6 @@
         "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
-        "value": "Choma",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -99,7 +104,6 @@
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
-        "value": "Choma Central",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -112,7 +116,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
-        "value": "Test Village",
         "hint": "Village/Compund",
         "edit_type": "name",
         "v_regex": {
@@ -130,7 +133,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "value": "Choma Central Hospital",
         "hint": "Health facility",
         "edit_type": "name",
         "v_regex": {
@@ -1885,6 +1887,7 @@
           }
         }
       },
+
       {
         "key": "subpop6_toast",
         "openmrs_entity_parent": "",
@@ -2142,6 +2145,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "index_check_box",
         "type": "edit_text",
+        "value": "yes",
         "read_only": "true",
         "hint": "Was child identified through Index?",
         "edit_type": "name",
@@ -2635,7 +2639,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_firstname",
         "type": "edit_text",
-        "hint": "Caregiver first name ",
+        "hint": "Caregiver full name ",
         "read_only": "true",
         "edit_type": "name",
         "relevance": {
@@ -2654,39 +2658,13 @@
         }
       },
       {
-        "key": "caregiver_last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_last_name",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Caregiver last name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter a valid name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "caregiver_sex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
         "type": "spinner",
         "entity_id": "mother",
-        "hint": "Sex",
+        "hint": "Caregiver Gender",
         "values": [
           "Male",
           "Female"
@@ -2703,14 +2681,15 @@
           }
         }
       },
+
       {
         "key": "caregiver_birth_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
-        "entity_id": "mother",
-        "hint": "Caregiver's D.O.B",
+        "hint": "VCA Date of birth",
+        "look_up": "true",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -2719,7 +2698,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "Enter caregivers date of birth"
+          "err": "Please enter Birth Date"
         },
         "relevance": {
           "rules-engine": {
@@ -2782,7 +2761,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
-        "read_only": "true",
         "hint": "Caregivers phone number",
         "v_numeric": {
           "value": false,
