@@ -258,6 +258,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     String[] caregiverNAmes = fullCaregiverName.split("\\s+");
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("last_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("age"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", client.getColumnmaps().get("gender"));
+
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(4).put("value", "add41");
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("caregiver_id"));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", client.getColumnmaps().get("gender"));

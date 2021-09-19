@@ -111,13 +111,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_sex",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Gender of VCA",
         "value": "",
-        "values": [
-          "Male",
-          "Female"
-        ]
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        }
       },
       {
         "key": "sub_population",
