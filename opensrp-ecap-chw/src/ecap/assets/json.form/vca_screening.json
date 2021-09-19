@@ -116,7 +116,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
-        "hint": "Village/Compund",
+        "hint": "Village/Compound",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
