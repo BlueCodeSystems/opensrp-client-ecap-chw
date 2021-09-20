@@ -86,7 +86,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
-        "read_only": "false",
         "type": "edit_text",
         "hint": "VCA Age",
         "calculation": {
@@ -212,38 +211,22 @@
         "hint": "Nearest Health Facility"
       },
       {
-        "key": "hiv_status_vca_assessment",
+        "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_status_vca_assessment",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
-        "label": "VCA HIV Status",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
+        "label": "Is the VCA HIV Positive",
         "options": [
           {
-            "key": "negative",
-            "text": "Negative",
-            "value": false
+            "key": "yes",
+            "text": "Yes"
           },
           {
-            "key": "Positive",
-            "text": "Positive",
-            "value": false
-          },
-          {
-            "key": "Unknown",
-            "text": "Unknown",
-            "value": false
+            "key": "no",
+            "text": "No"
           }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
+        ]
       },
       {
         "key": "vca_art_vca_assessment",
@@ -717,10 +700,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -744,10 +726,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -771,10 +752,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -798,10 +778,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -825,10 +804,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -852,10 +830,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -880,10 +857,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -907,10 +883,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -934,10 +909,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -961,10 +935,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -988,10 +961,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1015,10 +987,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1042,10 +1013,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1069,10 +1039,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1096,10 +1065,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1123,10 +1091,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1150,10 +1117,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1177,10 +1143,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
       },
@@ -1205,10 +1170,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"10\")"
           }
         }
 
@@ -1344,4 +1308,3 @@
     ]
   }
 }
-
