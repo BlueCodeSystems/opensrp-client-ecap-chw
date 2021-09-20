@@ -117,7 +117,7 @@ public class MotherDetail extends AppCompatActivity {
 
     public void onClick(View v) {
         int id = v.getId();
-       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
        // assert client != null;
         switch (id){
             case R.id.fabx:
@@ -157,6 +157,8 @@ public class MotherDetail extends AppCompatActivity {
                     } catch (JSONException e) {
                         Timber.e(e);
                     }
+
+                    //TODO Pre populate fields here
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
