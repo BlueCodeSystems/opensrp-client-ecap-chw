@@ -205,7 +205,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "VCA Date of birth",
+        "hint": "Caregiver Date of birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -2663,7 +2663,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
         "type": "spinner",
-        "entity_id": "mother",
         "hint": "Caregiver Gender",
         "values": [
           "Male",
@@ -2681,7 +2680,6 @@
           }
         }
       },
-
       {
         "key": "caregiver_birth_date",
         "openmrs_entity_parent": "",
