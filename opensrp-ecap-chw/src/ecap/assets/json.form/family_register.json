@@ -120,6 +120,64 @@
         }
       },
       {
+        "key": "part_a_province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_a_province",
+        "type": "edit_text",
+        "hint": "Province",
+        "value": "",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the Province"
+        }
+      },
+      {
+        "key": "part_a_district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_a_district_central",
+        "type": "edit_text",
+        "hint": "District in Central Province",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop_ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "subpop_ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of ward only take letters"
+        }
+      },
+      {
+        "key": "subpop_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "subpop_village",
+        "type": "edit_text",
+        "hint": "Village/Compound",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Village/Compound only take letters"
+        }
+      },
+      {
         "key": "sub_population",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -174,133 +232,12 @@
         }
       },
       {
-        "key": "part_a_province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_a_province",
-        "type": "spinner",
-        "hint": "Province",
-        "value": "Southern",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the Province"
-        }
-      },
-      {
-        "key": "part_a_district_central",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_a_district_central",
-        "type": "spinner",
-        "hint": "District in Central Province",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "part_a_district_southern",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_a_district_southern",
-        "type": "spinner",
-        "hint": "District in Southern Province",
-        "values": [
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop_ward",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "subpop_ward",
-        "type": "edit_text",
-        "hint": "Ward",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of ward only take letters"
-        }
-      },
-      {
-        "key": "subpop_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "subpop_village",
-        "type": "edit_text",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Village/Compound only take letters"
-        }
-      },
-      {
-        "key": "subpop_assigned_community_case_worker",
+        "key": "subpop_assigned_community_case_worker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_assigned_community_case_worker",
         "type": "edit_text",
-        "hint": "Name of Assigned Community Case Worker",
+        "hint": "Assigned Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -308,17 +245,16 @@
         }
       },
       {
-
         "key": "subpop_name_of_facility_based_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_name_of_facility_based_case_worker",
         "type": "edit_text",
-        "hint": "Name of Facility-Based Case Worker",
+        "hint": "Facility-Based Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of facility based case worker only take letters"
+          "err": "First Name of facility based case worker only take letters"
         }
       },
       {
@@ -1002,7 +938,20 @@
         }
       },
       {
-        "key": "name_of_caregiver",
+        "key": "fname_of_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "Name of Primary Caregiver",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of prrimary caregiver can only contain letters"
+        }
+      },
+      {
+        "key": "lname_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
