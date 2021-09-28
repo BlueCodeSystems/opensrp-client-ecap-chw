@@ -170,6 +170,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
+        "read_only": "true",
         "hint": "Primary Caregiver First Name",
         "edit_type": "name",
         "v_regex": {
@@ -188,6 +189,7 @@
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "Primary Caregiver Surname",
+        "read_only": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
@@ -238,6 +240,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "primary_caregiver_nrc",
         "entity_id": "",
+        "read_only": "true",
         "type": "edit_text",
         "hint": "Primary Caregiver NRC",
         "v_regex": {
@@ -2791,6 +2794,7 @@
         "openmrs_entity_id": "caseWorker_firstName",
         "type": "edit_text",
         "hint": "Case Worker First Name",
+        "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
@@ -2805,6 +2809,7 @@
         "openmrs_entity_id": "caseWorker_lastName",
         "type": "edit_text",
         "hint": "Case Work Last Name ",
+        "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
@@ -2818,6 +2823,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "",
+        "read_only": "true",
         "type": "edit_text",
         "hint": "Case worker NRC number",
         "v_regex": {
