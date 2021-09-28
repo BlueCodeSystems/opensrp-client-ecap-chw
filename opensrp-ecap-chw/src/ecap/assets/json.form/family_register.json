@@ -70,6 +70,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_vca_first_name",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
@@ -84,6 +86,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_vca_last_name",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
@@ -94,16 +98,36 @@
         }
       },
       {
+        "key": "subpop_dob",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_dob",
+        "read_only": "true",
+        "type": "date_picker",
+        "hint": "VCA Date Of Birth",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "01-01-1995",
+        "max_date": "today"
+      },
+      {
         "key": "subpop_age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_age",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Age of VCA",
-        "value": "",
-        "v_numeric": {
-          "value": "true",
-          "err": "Age can only contain numbers"
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_calculation.yml"
+            }
+          }
         }
       },
       {
@@ -111,6 +135,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_sex",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Gender of VCA",
         "value": "",
@@ -158,6 +184,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop_health_facility",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Name of Health Facility",
         "edit_type": "name",
@@ -178,94 +206,28 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "part_a_province",
-        "type": "spinner",
+        "read_only": "true",
+        "font": "bald",
+        "type": "edit_text",
         "hint": "Province",
-        "value": "Southern",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
+        "value": "",
         "v_required": {
           "value": false,
           "err": "Please enter the Province"
         }
       },
       {
-        "key": "part_a_district_central",
+        "key": "part_a_district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_a_district_central",
-        "type": "spinner",
-        "hint": "District in Central Province",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri"
-        ],
+        "openmrs_entity_id": "part_a_district",
+        "read_only": "true",
+        "font": "bald",
+        "type": "text_edit",
+        "hint": "District",
         "v_required": {
           "value": false,
           "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "part_a_district_southern",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_a_district_southern",
-        "type": "spinner",
-        "hint": "District in Southern Province",
-        "values": [
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
         }
       },
       {
@@ -273,6 +235,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "subpop_ward",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
@@ -286,6 +250,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "subpop_village",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
@@ -295,26 +261,59 @@
         }
       },
       {
-        "key": "subpop_assigned_community_case_worker",
+        "key": "subpop_assigned_community_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_assigned_community_case_worker",
+        "openmrs_entity_id": "subpop_assigned_community_case_worker_fname",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
-        "hint": "Name of Assigned Community Case Worker",
+        "hint": "First Name of Assigned Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of assigned community case worker only take letters"
+          "err": "First Name of assigned community case worker only take letters"
         }
       },
       {
-
-        "key": "subpop_name_of_facility_based_case_worker",
+        "key": "subpop_assigned_community_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker",
+        "openmrs_entity_id": "subpop_assigned_community_case_worker_lname",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
-        "hint": "Name of Facility-Based Case Worker",
+        "hint": "Last Name of Assigned Community Case Worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Last Name of assigned community case worker only take letters"
+        }
+      },
+      {
+        "key": "subpop_name_of_facility_based_case_worker_fname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_fname",
+        "read_only": "true",
+        "font": "bald",
+        "type": "edit_text",
+        "hint": "First Name of Facility-Based Case Worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of facility based case worker only take letters"
+        }
+      },
+      {
+        "key": "subpop_name_of_facility_based_case_worker_lname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_lname",
+        "read_only": "true",
+        "font": "bald",
+        "type": "edit_text",
+        "hint": "Last Name of Facility-Based Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -336,629 +335,72 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "part_b_province",
-        "type": "spinner",
-        "hint": "Province",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the Province"
-        }
-      },
-      {
-        "key": "district_central",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district_central",
-        "type": "spinner",
-        "hint": "District in Central Province",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri"
-        ],
+        "read_only": "true",
+        "font": "bald",
+        "type": "text_edit",
+        "hint": "District",
         "v_required": {
           "value": false,
           "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
         }
       },
       {
-        "key": "district_southern",
+        "key": "part_b_district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district_southern",
-        "type": "spinner",
-        "hint": "District in Southern Province",
-        "values": [
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
+        "openmrs_entity_id": "part_b_district",
+        "read_only": "true",
+        "font": "bald",
+        "type": "text_edit",
+        "hint": "District",
         "v_required": {
           "value": false,
           "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
         }
       },
       {
-        "key": "ward",
+        "key": "part_b_ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_b_ward",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward  only takes letters"
+          "err": "Name of ward only take letters"
         }
       },
       {
-        "key": "village",
+        "key": "part_b_village",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_b_village",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village/Compound  only takes letters"
+          "err": "Name of Village/Compound only take letters"
         }
       },
       {
-        "key": "chibombo_health_facility",
+        "key": "part_b_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chibombo_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chitanda Rural Health Centre",
-          "Kayosha Rural Health Centre",
-          "Mwachisompola Demo Zone Rural Health Centre",
-          "Chibombo Rural Health Centre",
-          "Shimukuni Rural Health Centre",
-          "Chikobo Rural Health Centre",
-          "Mwanjuni Health Post",
-          "Twalumba Rural Health Centre"
-        ],
-        "keys": [
-          "Chitanda Rural Health Centre",
-          "Kayosha Rural Health Centre",
-          "Mwachisompola Demo Zone Rural Health Centre",
-          "Chibombo Rural Health Centre",
-          "Shimukuni Rural Health Centre",
-          "Chikobo Rural Health Centre",
-          "Mwanjuni Health Post",
-          "Twalumba Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "chisamba_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chisamba_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Liteta District Hospital",
-          "Chisamba Rural Health Centre",
-          "Chisamba Rural Health Centre",
-          "Chipembi Rural Health Centre"
-        ],
-        "keys": [
-          "Liteta District Hospital",
-          "Chisamba Rural Health Centre",
-          "Chisamba Rural Health Centre",
-          "Chipembi Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mkushi_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mkushi_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chibefwe Rural Health Centre",
-          "Nkumbi Rural Health Centre",
-          "Chalata Rural Health Centre"
-        ],
-        "keys": [
-          "Chibefwe Rural Health Centre",
-          "Nkumbi Rural Health Centre",
-          "Chalata Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mumbwa_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mumbwa_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mumbwa District hospital",
-          "Nangoma Hospital Affiliated Health Centre",
-          "Bulungu (mumbwa) Urban Health Center",
-          "Lungobe Rural Health Centre",
-          "Chiwena Rural Health Center",
-          "Nalubanda Rural Health Centre",
-          "Nambala Rural Health Centre"
-        ],
-        "keys": [
-          "Mumbwa District hospital",
-          "Nangoma Hospital Affiliated Health Centre",
-          "Bulungu (mumbwa) Urban Health Center",
-          "Lungobe Rural Health Centre",
-          "Chiwena Rural Health Center",
-          "Nalubanda Rural Health Centre",
-          "Nambala Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kabwe_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kabwe_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Kabwe General Hospital",
-          "Kabwe Mine Hospital",
-          "Kasanda Urban Health Centre",
-          "Katondo Urban Health Centre",
-          "Mahatma Gandhi Memorial Urban Health Centre",
-          "Nakoli Urban Health Centre",
-          "Kawama Urban Health Center",
-          "Bwacha Urban Health Centre",
-          "Natuseko Urban Health Centre",
-          "Ngungu Urban Health Centre",
-          "Makululu Urban Health Centre"
-        ],
-        "keys": [
-          "Kabwe General Hospital",
-          "Kabwe Mine Hospital",
-          "Kasanda Urban Health Centre",
-          "Katondo Urban Health Centre",
-          "Mahatma Gandhi Memorial Urban Health Centre",
-          "Nakoli Urban Health Centre",
-          "Kawama Urban Health Center",
-          "Bwacha Urban Health Centre",
-          "Natuseko Urban Health Centre",
-          "Ngungu Urban Health Centre",
-          "Makululu Urban Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kapiri_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kapiri_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Kapiri Mposhi Urban Clinic",
-          "Kawama Health Center",
-          "Waya Rural Health Center",
-          "Mukonchi Rural Health Center",
-          "Matilyo Health Post",
-          "Mpunde Rural Health Centre",
-          "Chankomo Rural Health Centre"
-        ],
-        "keys": [
-          "Kapiri Mposhi Urban Clinic",
-          "Kawama Health Center",
-          "Waya Rural Health Center",
-          "Mukonchi Rural Health Center",
-          "Matilyo Health Post",
-          "Mpunde Rural Health Centre",
-          "Chankomo Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "chikankata_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chikankata_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chikankata Mission Hospital",
-          "Mubuyu Rural Health Post",
-          "Nansenga Health Center",
-          "Nameembo Rural Health Center"
-        ],
-        "keys": [
-          "Chikankata Mission Hospital",
-          "Mubuyu Rural Health Post",
-          "Nansenga Health Center",
-          "Nameembo Rural Health Center"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mazabuka_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mazabuka_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Hillside Rural HC",
-          "Kaonga Urban HC",
-          "Mazabuka General Hospital",
-          "Nakambala Urban HC",
-          "Kaleya RHC",
-          "Chivuna RHC",
-          "Lubombo Rural Health Centre",
-          "Nega Nega Rural Health Centre",
-          "Mbayamusuma Rural Health Centre",
-          "Magoye Rural Health Centre",
-          "Nanga Rural Health Centre"
-        ],
-        "keys": [
-          "Hillside Rural HC",
-          "Kaonga Urban HC",
-          "Mazabuka General Hospital",
-          "Nakambala Urban HC",
-          "Kaleya RHC",
-          "Chivuna RHC",
-          "Lubombo Rural Health Centre",
-          "Nega Nega Rural Health Centre",
-          "Mbayamusuma Rural Health Centre",
-          "Magoye Rural Health Centre",
-          "Nanga Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "monze_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "monze_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Manungu Urban Health Centre",
-          "Chikuni OPD Mission Hospital",
-          "Monze Mission Hospital",
-          "Hakunkula Rural Health Centre",
-          "Keemba Rural Health Centre",
-          "Monze Urban Health Centre"
-        ],
-        "keys": [
-          "Manungu Urban Health Centre",
-          "Chikuni OPD Mission Hospital",
-          "Monze Mission Hospital",
-          "Hakunkula Rural Health Centre",
-          "Keemba Rural Health Centre",
-          "Monze Urban Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "choma_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "choma_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Njase Rural Health Centre",
-          "Mapanza Rural Health Center",
-          "Mangunza Rural Health Center",
-          "Harmony Health Post",
-          "Choma General Hospital",
-          "Batoka Rural Health Centre",
-          "Macha Mission Hospital",
-          "Railway Surgery Urban HC",
-          "Shampande Urban HC"
-        ],
-        "keys": [
-          "Njase Rural Health Centre",
-          "Mapanza Rural Health Center",
-          "Mangunza Rural Health Center",
-          "Harmony Health Post",
-          "Choma General Hospital",
-          "Batoka Rural Health Centre",
-          "Macha Mission Hospital",
-          "Railway Surgery Urban HC",
-          "Shampande Urban HC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kalomo_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kalomo_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban"
-        ],
-        "keys": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "namwala_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "namwala_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban",
-          "Chitongo RHC",
-          "Kabulamwanda Rural Health Centre",
-          "Maala Rural Health Centre",
-          "Moboola Rural Health Centre",
-          "Moomba Health Post",
-          "Muchila Rural Health Centre",
-          "Namwala District Hospital"
-        ],
-        "keys": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban",
-          "Chitongo RHC",
-          "Kabulamwanda Rural Health Centre",
-          "Maala Rural Health Centre",
-          "Moboola Rural Health Centre",
-          "Moomba Health Post",
-          "Muchila Rural Health Centre",
-          "Namwala District Hospital"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "sinazongwe_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sinazongwe_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Maamba Hospital",
-          "Sinazeze RHC"
-        ],
-        "keys": [
-          "Maamba Hospital",
-          "Sinazeze RHC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "livingstone_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "livingstone_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Centre Of Excellence HC",
-          "Chreso Ministries Urban HC",
-          "Linda Urban HC",
-          "Libuyu Urban Clinic",
-          "St Joseph's Hospice",
-          "Mahatma Ghandi",
-          "Police Urban",
-          "Maramba Urban HC",
-          "Mosi-oa-Tunya HC"
-        ],
-        "keys": [
-          "Centre Of Excellence HC",
-          "Chreso Ministries Urban HC",
-          "Linda Urban HC",
-          "Libuyu Urban Clinic",
-          "St Joseph's Hospice",
-          "Mahatma Ghandi",
-          "Police Urban",
-          "Maramba Urban HC",
-          "Mosi-oa-Tunya HC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "part_b_health_facility",
+        "read_only": "true",
+        "font": "bald",
+        "type": "edit_text",
+        "hint": "Name of Health Facility",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
         }
       },
       {
@@ -1002,32 +444,53 @@
         }
       },
       {
-        "key": "name_of_caregiver",
+        "key": "fname_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "name",
+        "openmrs_entity_id": "fname_of_caregiver",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
-        "hint": "Name of Primary Caregiver",
+        "hint": "First Name of Primary Caregiver",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of prrimary caregiver can only contain letters"
+          "err": "Name of primary caregiver can only contain letters"
         }
       },
       {
-        "key": "Residential_Address",
+        "key": "lname_of_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "lname_of_caregiver",
+        "read_only": "true",
+        "font": "bald",
+        "type": "edit_text",
+        "hint": "Last Name of Primary Caregiver",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of primary caregiver can only contain letters"
+        }
+      },
+      {
+        "key": "residential_Address",
         "openmrs_entity_parent": "usual_residence",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "address2",
+        "openmrs_entity_id": "residential_Address",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Physical  Address ",
         "edit_type": "name"
       },
       {
-        "key": "Guardian_NRC",
+        "key": "guardian_NRC",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "NRC_Number",
+        "openmrs_entity_id": "guardian_NRC",
+        "read_only": "true",
+        "font": "bald",
         "entity_id": "guardian",
         "type": "edit_text",
         "hint": "Guardian NRC Number",
@@ -1037,10 +500,12 @@
         }
       },
       {
-        "key": "Guardian_Number",
+        "key": "guardian_Number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "guardian_Number",
+        "read_only": "true",
+        "font": "bald",
         "type": "edit_text",
         "hint": "Guardian Telephone Number",
         "v_numeric": {
