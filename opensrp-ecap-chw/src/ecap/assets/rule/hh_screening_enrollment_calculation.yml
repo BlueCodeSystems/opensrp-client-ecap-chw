@@ -1,0 +1,7 @@
+---
+name: step1_subpop_age
+description: step1_subpop_age
+priority: 1
+condition: "step1_subpop_age == ''"
+actions:
+  - "calculation = helper.getDifferenceDays(step1_subpop_dob) / 365.25"
