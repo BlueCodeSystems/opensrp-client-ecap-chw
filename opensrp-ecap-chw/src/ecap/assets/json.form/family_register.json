@@ -66,7 +66,7 @@
         }
       },
       {
-        "key": "subpop_vca_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_vca_first_name",
@@ -80,7 +80,7 @@
         }
       },
       {
-        "key": "subpop_vca_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_vca_last_name",
@@ -107,17 +107,17 @@
         }
       },
       {
-        "key": "subpop_sex",
+        "key": "gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_sex",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Gender of VCA",
         "value": "",
-        "values": [
-          "Male",
-          "Female"
-        ]
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        }
       },
       {
         "key": "sub_population",
@@ -985,9 +985,6 @@
         "hint": "Date of Screening",
         "look_up": "true",
         "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
         "min_date": "01-01-1900",
         "max_date": "today"
       },

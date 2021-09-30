@@ -65,17 +65,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
     @Override
     public void saveForm(String jsonString, boolean isEditMode) throws JSONException {
 
-        JSONObject json = new JSONObject(jsonString);
-
-        String fields = json.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("value").toString();
-
-       // String myvalue = fields.getJSONObject(5).get("value").toString();
-
-
-        Log.e("mytag", "ck : " + fields);
-
-
-      /*  try {
+       try {
 
             view.toggleDialogVisibility(true);
 
@@ -90,7 +80,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
 
         } catch (Exception e) {
             Timber.e(e);
-        }*/
+        }
     }
 
     @Override

@@ -120,7 +120,8 @@
                         </LinearLayout>
 
                         <Button
-                            android:id="@+id/btn_profile_registration_info"
+                            android:onClick="onClick"
+                            android:id="@+id/myservice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15dp"
@@ -129,9 +130,9 @@
                             android:paddingTop="0dp"
                             android:paddingEnd="@dimen/profile_btn_registration_info_padding"
                             android:paddingBottom="0dp"
-                            android:text="@string/registration_info"
+                            android:text="Service Report"
                             android:textAllCaps="false"
-                            tools:text="Registration info" />
+                            tools:text="Service Report" />
                     </LinearLayout>
 
 
