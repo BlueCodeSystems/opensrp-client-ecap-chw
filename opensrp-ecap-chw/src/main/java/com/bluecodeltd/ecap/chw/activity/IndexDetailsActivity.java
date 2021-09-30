@@ -160,7 +160,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
         map.put("relation", client.getColumnmaps().get("relation"));
         map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
-
+        map.put("caseworker_firstname", client.getColumnmaps().get("caseworker_firstname"));
+        map.put("caseworker_lastname", client.getColumnmaps().get("caseworker_lastname"));
+        map.put("is_hiv_positive", client.getColumnmaps().get("is_hiv_positive"));
 
         return map;
 
@@ -242,6 +244,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
