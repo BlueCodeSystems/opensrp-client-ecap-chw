@@ -320,6 +320,13 @@
             "creates_case": [
               "ec_vca_case_plan"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Update VCA Case Plan",
+            "creates_case": [
+              "ec_vca_case_plan"
+            ]
           }
         ]
       }
