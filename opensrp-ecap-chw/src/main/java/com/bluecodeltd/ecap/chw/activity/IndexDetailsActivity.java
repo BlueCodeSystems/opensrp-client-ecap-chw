@@ -41,6 +41,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -245,7 +246,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     String[] caregiverNAmes = fullCaregiverName.split("\\s+");
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
+                  /*  indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("last_name"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("age"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", client.getColumnmaps().get("gender"));
@@ -270,7 +271,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(45).put("read_only", "true");
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(46).put("value", client.getColumnmaps().get("case_worker_nrc"));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(46).put("read_only", "true");
+                   */
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
