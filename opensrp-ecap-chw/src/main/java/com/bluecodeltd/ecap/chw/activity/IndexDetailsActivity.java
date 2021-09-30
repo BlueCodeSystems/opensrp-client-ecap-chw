@@ -241,12 +241,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
-                    indexRegisterForm = formUtils.getFormJson("family_register");
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+
                     indexRegisterForm = formUtils.getFormJson("service_report");
-
                     startFormActivity(indexRegisterForm);
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -579,5 +576,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             referral.setVisibility(View.VISIBLE);
         }
     }
+    public String getCareGiverFullname(CommonPersonObjectClient client){
 
+        return client.getColumnmaps().get("caregiver_firstname");
+    }
 }
