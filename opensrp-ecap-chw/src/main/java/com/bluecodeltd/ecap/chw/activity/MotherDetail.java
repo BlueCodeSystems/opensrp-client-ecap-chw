@@ -22,6 +22,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.JsonFormUtils;
@@ -36,7 +37,7 @@ public class MotherDetail extends AppCompatActivity {
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
     private TextView txtName, txtVillage, txtPhone, txtArt, txtFacility, txtOvc, txtComment;
-
+    private  CommonPersonObjectClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MotherDetail extends AppCompatActivity {
         txtOvc = findViewById(R.id.ovc_date);
         txtComment = findViewById(R.id.comment);
 
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
+         client= (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
 
         assert client != null;
 
@@ -117,7 +118,7 @@ public class MotherDetail extends AppCompatActivity {
 
     public void onClick(View v) {
         int id = v.getId();
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
+       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
        // assert client != null;
         switch (id){
             case R.id.fabx:
@@ -158,8 +159,7 @@ public class MotherDetail extends AppCompatActivity {
                         Timber.e(e);
                     }
 
-                    //TODO Pre populate fields here
-
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
                     startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
