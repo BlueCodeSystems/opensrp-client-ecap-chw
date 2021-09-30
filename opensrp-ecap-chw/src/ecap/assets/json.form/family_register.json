@@ -2753,10 +2753,7 @@
         "type": "edit_text",
         "hint": "Household ID",
         "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter household ID"
-        },
+        "read_only": "true",
         "v_regex": {
           "value": "[0-9]*",
           "err": "Household ID cannot be empty"
@@ -2798,16 +2795,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "gender",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Gender",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please select gender"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -3238,8 +3227,9 @@
         "key": "current_address",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Current Address",
+        "text": "Address",
         "text_color": "#000000",
+        "read_only": true,
         "v_required": {
           "value": false
         }
@@ -3322,7 +3312,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "value": "Choma Central Hospital",
         "hint": "Health Facility",
         "v_required": {
           "value": true,
@@ -3347,112 +3336,6 @@
         "v_numeric": {
           "value": false,
           "err": "Current village"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_address",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Permanent Address",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "permanent_plot_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "permanent_plot_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "House number/plot number",
-        "v_numeric": {
-          "value": false,
-          "err": "permanent number"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_street_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "permanent_street_name",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Street Name",
-        "v_numeric": {
-          "value": false,
-          "err": "Current street name"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_township_compound",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "permanent_township_compound",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Township/Compound where identified potential beneficiary resides",
-        "v_numeric": {
-          "value": false,
-          "err": "Township/Compound"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "permanent_village",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Village where identified potential beneficiary resides",
-        "v_numeric": {
-          "value": false,
-          "err": "permanent village"
         },
         "v_regex": {
           "value": "",
@@ -4058,17 +3941,28 @@
               "value": false,
               "err": "This is a required field"
             }
-          },
-          {
-            "key": "child_nut_assessment",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "Child Nutrition Assessment",
-            "text_color": "#000000",
-            "v_required": {
-              "value": false
+          }],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
             }
-          },
+          }
+        }},
+      {
+        "key": "nutrition_group",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Child Nutrition Assessment (under 5)",
+        "repeating_group_label": "Child",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "nutrition_group",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of children under 5"
+        },
+        "value": [
           {
             "key": "nutrition_assessment",
             "openmrs_entity_parent": "",

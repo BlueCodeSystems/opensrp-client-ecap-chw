@@ -445,6 +445,10 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+        },
         "edit_type": "name",
         "relevance": {
           "step1:is_on_hiv_treatment": {
