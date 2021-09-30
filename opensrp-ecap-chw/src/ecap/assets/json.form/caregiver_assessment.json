@@ -56,12 +56,120 @@
     "title": "Caregiver Household Assessment",
     "fields": [
       {
+        "key": "province_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "province_caregiver",
+        "type": "spinner",
+        "hint": "Province",
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the Province"
+        }
+      },
+      {
+        "key": "district_central",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_central",
+        "type": "spinner",
+        "hint": "District in Central Province",
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "step1:province_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"central\")"
+          }
+        }
+      },
+      {
+        "key": "district_southern",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "step1:province_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"southern\")"
+          }
+        }
+      },
+      {
+        "key": "villageCompound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "villageCompound",
+        "type": "edit_text",
+        "hint": "Village/Compound",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Error"
+        },
+        "v_required": {
+          "value": false,
+          "err": "Error"
+        }
+      },
+      {
         "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "read_only": "true",
         "hint": "Primary Caregiver First Name",
         "edit_type": "name",
         "v_regex": {
@@ -80,7 +188,6 @@
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "Primary Caregiver Surname",
-        "read_only": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
@@ -92,12 +199,45 @@
         }
       },
       {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "gender",
+        "type": "spinner",
+        "hint": "Sex",
+        "values": [
+          "Male",
+          "Female"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select gender"
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "Date of Birth",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the date of birth"
+        }
+      },
+      {
         "key": "primary_caregiver_nrc",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "primary_caregiver_nrc",
         "entity_id": "",
-        "read_only": "true",
         "type": "edit_text",
         "hint": "Primary Caregiver NRC",
         "v_regex": {
@@ -658,8 +798,8 @@
           "err": "Please enter childs ART number "
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "[0-9]*",
+          "err": "ART cannot be empty"
         },
         "relevance": {
           "step1:art_caregiver": {
@@ -2651,7 +2791,6 @@
         "openmrs_entity_id": "caseWorker_firstName",
         "type": "edit_text",
         "hint": "Case Worker First Name",
-        "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
@@ -2666,7 +2805,6 @@
         "openmrs_entity_id": "caseWorker_lastName",
         "type": "edit_text",
         "hint": "Case Work Last Name ",
-        "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
@@ -2680,7 +2818,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "",
-        "read_only": "true",
         "type": "edit_text",
         "hint": "Case worker NRC number",
         "v_regex": {
