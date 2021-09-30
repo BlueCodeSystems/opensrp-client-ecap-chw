@@ -1,98 +1,21 @@
 ---
-name: step1_chibombo_health_facility_case_report
-description: chibombo_health_facility_case_report relevance
+name: step1_other_service_children
+description: other_service_children relevance
 priority: 1
-condition: "step1_district_case_report.contains('chibombo')"
+condition: "step1_vca_services_children.contains('Other')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_chisamba_health_facility_case_report
-description: chibombo_health_facility_case_report relevance
+name: step1_other_service_caregiver
+description: other_service_caregiver relevance
 priority: 1
-condition: "step1_district_case_report.contains('chisamba')"
+condition: "step1_services_caregiver.contains('Other')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_mkushi_health_facility_case_report
-description: mkushi_health_facility_case_report relevance
+name: step1_other_service_household
+description: vca_services_household relevance
 priority: 1
-condition: "step1_district_case_report.contains('mkushi')"
-actions:
-  - "isRelevant = true"
----
-name: step1_mumbwa_health_facility_case_report
-description: mumbwa_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('mumbwa')"
-actions:
-  - "isRelevant = true"
----
-name: step1_kabwe_health_facility_case_report
-description: kabwe_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('kabwe')"
-actions:
-  - "isRelevant = true"
----
-name: step1_kapiri_health_facility_case_report
-description: kapiri_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('kapiri')"
-actions:
-  - "isRelevant = true"
----
-name: step1_chikankata_health_facility_case_report
-description: chikankata_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('chikankata')"
-actions:
-  - "isRelevant = true"
----
-name: step1_mazabuka_health_facility_case_report
-description: mazabuka_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('mazabuka')"
-actions:
-  - "isRelevant = true"
----
-name: step1_monze_health_facility_case_report
-description: monze_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('monze')"
-actions:
-  - "isRelevant = true"
----
-name: step1_choma_health_facility_case_report
-description: choma_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('choma')"
-actions:
-  - "isRelevant = true"
----
-name: step1_kalomo_health_facility_case_report
-description: kalomo_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('kalomo')"
-actions:
-  - "isRelevant = true"
----
-name: step1_namwala_health_facility_case_report
-description: namwala_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('namwala')"
-actions:
-  - "isRelevant = true"
----
-name: step1_sinazongwe_health_facility_case_report
-description: sinazongwe_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('sinazongwe')"
-actions:
-  - "isRelevant = true"
----
-name: step1_livingstone_health_facility_case_report
-description: livingstone_health_facility_case_report relevance
-priority: 1
-condition: "step1_district_case_report.contains('livingstone')"
+condition: "step1_vca_services_household.contains('Other')"
 actions:
   - "isRelevant = true"

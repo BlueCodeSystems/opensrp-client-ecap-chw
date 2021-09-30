@@ -56,584 +56,40 @@
     "title": "Case Worker Service Report",
     "fields": [
       {
-        "key": "district_case_report",
+        "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district_case_report",
-        "type": "spinner",
-        "hint": "Select District",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri",
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri",
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the District"
-        }
-      },
-      {
-        "key": "ward_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "ward_case_report",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
-        "hint": "Ward",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward  only takes letters"
-        }
+        "read_only": "true",
+        "hint": "Province"
       },
       {
-        "key": "village_case_report",
+        "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "village_case_report",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
-        "hint": "Village",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village only takes letters"
-        }
+        "read_only": "true",
+        "hint": "District"
       },
       {
-        "key": "chibombo_health_facility_case_report",
+        "key": "village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chibombo_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chitanda Rural Health Centre",
-          "Kayosha Rural Health Centre",
-          "Mwachisompola Demo Zone Rural Health Centre",
-          "Chibombo Rural Health Centre",
-          "Shimukuni Rural Health Centre",
-          "Chikobo Rural Health Centre",
-          "Mwanjuni Health Post",
-          "Twalumba Rural Health Centre"
-        ],
-        "keys": [
-          "Chitanda Rural Health Centre",
-          "Kayosha Rural Health Centre",
-          "Mwachisompola Demo Zone Rural Health Centre",
-          "Chibombo Rural Health Centre",
-          "Shimukuni Rural Health Centre",
-          "Chikobo Rural Health Centre",
-          "Mwanjuni Health Post",
-          "Twalumba Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
+        "openmrs_entity_id": "village",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Village"
       },
       {
-        "key": "chisamba_health_facility_case_report",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chisamba_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Liteta District Hospital",
-          "Chisamba Rural Health Centre",
-          "Chisamba Rural Health Centre",
-          "Chipembi Rural Health Centre"
-        ],
-        "keys": [
-          "Liteta District Hospital",
-          "Chisamba Rural Health Centre",
-          "Chisamba Rural Health Centre",
-          "Chipembi Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mkushi_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mkushi_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chibefwe Rural Health Centre",
-          "Nkumbi Rural Health Centre",
-          "Chalata Rural Health Centre"
-        ],
-        "keys": [
-          "Chibefwe Rural Health Centre",
-          "Nkumbi Rural Health Centre",
-          "Chalata Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mumbwa_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mumbwa_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mumbwa District hospital",
-          "Nangoma Hospital Affiliated Health Centre",
-          "Bulungu (mumbwa) Urban Health Center",
-          "Lungobe Rural Health Centre",
-          "Chiwena Rural Health Center",
-          "Nalubanda Rural Health Centre",
-          "Nambala Rural Health Centre"
-        ],
-        "keys": [
-          "Mumbwa District hospital",
-          "Nangoma Hospital Affiliated Health Centre",
-          "Bulungu (mumbwa) Urban Health Center",
-          "Lungobe Rural Health Centre",
-          "Chiwena Rural Health Center",
-          "Nalubanda Rural Health Centre",
-          "Nambala Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kabwe_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kabwe_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Kabwe General Hospital",
-          "Kabwe Mine Hospital",
-          "Kasanda Urban Health Centre",
-          "Katondo Urban Health Centre",
-          "Mahatma Gandhi Memorial Urban Health Centre",
-          "Nakoli Urban Health Centre",
-          "Kawama Urban Health Center",
-          "Bwacha Urban Health Centre",
-          "Natuseko Urban Health Centre",
-          "Ngungu Urban Health Centre",
-          "Makululu Urban Health Centre"
-        ],
-        "keys": [
-          "Kabwe General Hospital",
-          "Kabwe Mine Hospital",
-          "Kasanda Urban Health Centre",
-          "Katondo Urban Health Centre",
-          "Mahatma Gandhi Memorial Urban Health Centre",
-          "Nakoli Urban Health Centre",
-          "Kawama Urban Health Center",
-          "Bwacha Urban Health Centre",
-          "Natuseko Urban Health Centre",
-          "Ngungu Urban Health Centre",
-          "Makululu Urban Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kapiri_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kapiri_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Kapiri Mposhi Urban Clinic",
-          "Kawama Health Center",
-          "Waya Rural Health Center",
-          "Mukonchi Rural Health Center",
-          "Matilyo Health Post",
-          "Mpunde Rural Health Centre",
-          "Chankomo Rural Health Centre"
-        ],
-        "keys": [
-          "Kapiri Mposhi Urban Clinic",
-          "Kawama Health Center",
-          "Waya Rural Health Center",
-          "Mukonchi Rural Health Center",
-          "Matilyo Health Post",
-          "Mpunde Rural Health Centre",
-          "Chankomo Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "chikankata_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chikankata_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chikankata Mission Hospital",
-          "Mubuyu Rural Health Post",
-          "Nansenga Health Center",
-          "Nameembo Rural Health Center"
-        ],
-        "keys": [
-          "Chikankata Mission Hospital",
-          "Mubuyu Rural Health Post",
-          "Nansenga Health Center",
-          "Nameembo Rural Health Center"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mazabuka_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mazabuka_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Hillside Rural HC",
-          "Kaonga Urban HC",
-          "Mazabuka General Hospital",
-          "Nakambala Urban HC",
-          "Kaleya RHC",
-          "Chivuna RHC",
-          "Lubombo Rural Health Centre",
-          "Nega Nega Rural Health Centre",
-          "Mbayamusuma Rural Health Centre",
-          "Magoye Rural Health Centre",
-          "Nanga Rural Health Centre"
-        ],
-        "keys": [
-          "Hillside Rural HC",
-          "Kaonga Urban HC",
-          "Mazabuka General Hospital",
-          "Nakambala Urban HC",
-          "Kaleya RHC",
-          "Chivuna RHC",
-          "Lubombo Rural Health Centre",
-          "Nega Nega Rural Health Centre",
-          "Mbayamusuma Rural Health Centre",
-          "Magoye Rural Health Centre",
-          "Nanga Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "monze_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "monze_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Manungu Urban Health Centre",
-          "Chikuni OPD Mission Hospital",
-          "Monze Mission Hospital",
-          "Hakunkula Rural Health Centre",
-          "Keemba Rural Health Centre",
-          "Monze Urban Health Centre"
-        ],
-        "keys": [
-          "Manungu Urban Health Centre",
-          "Chikuni OPD Mission Hospital",
-          "Monze Mission Hospital",
-          "Hakunkula Rural Health Centre",
-          "Keemba Rural Health Centre",
-          "Monze Urban Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "choma_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "choma_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Njase Rural Health Centre",
-          "Mapanza Rural Health Center",
-          "Mangunza Rural Health Center",
-          "Harmony Health Post",
-          "Choma General Hospital",
-          "Batoka Rural Health Centre",
-          "Macha Mission Hospital",
-          "Railway Surgery Urban HC",
-          "Shampande Urban HC"
-        ],
-        "keys": [
-          "Njase Rural Health Centre",
-          "Mapanza Rural Health Center",
-          "Mangunza Rural Health Center",
-          "Harmony Health Post",
-          "Choma General Hospital",
-          "Batoka Rural Health Centre",
-          "Macha Mission Hospital",
-          "Railway Surgery Urban HC",
-          "Shampande Urban HC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kalomo_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kalomo_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban"
-        ],
-        "keys": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "namwala_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "namwala_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban",
-          "Chitongo RHC",
-          "Kabulamwanda Rural Health Centre",
-          "Maala Rural Health Centre",
-          "Moboola Rural Health Centre",
-          "Moomba Health Post",
-          "Muchila Rural Health Centre",
-          "Namwala District Hospital"
-        ],
-        "keys": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban",
-          "Chitongo RHC",
-          "Kabulamwanda Rural Health Centre",
-          "Maala Rural Health Centre",
-          "Moboola Rural Health Centre",
-          "Moomba Health Post",
-          "Muchila Rural Health Centre",
-          "Namwala District Hospital"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "sinazongwe_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sinazongwe_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Maamba Hospital",
-          "Sinazeze RHC"
-        ],
-        "keys": [
-          "Maamba Hospital",
-          "Sinazeze RHC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "livingstone_health_facility_case_report",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "livingstone_health_facility_case_report",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Centre Of Excellence HC",
-          "Chreso Ministries Urban HC",
-          "Linda Urban HC",
-          "Libuyu Urban Clinic",
-          "St Joseph's Hospice",
-          "Mahatma Ghandi",
-          "Police Urban",
-          "Maramba Urban HC",
-          "Mosi-oa-Tunya HC"
-        ],
-        "keys": [
-          "Centre Of Excellence HC",
-          "Chreso Ministries Urban HC",
-          "Linda Urban HC",
-          "Libuyu Urban Clinic",
-          "St Joseph's Hospice",
-          "Mahatma Ghandi",
-          "Police Urban",
-          "Maramba Urban HC",
-          "Mosi-oa-Tunya HC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "case_worker_service_report.yml"
-            }
-          }
-        }
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Health Facility"
       },
       {
         "key": "partners_case_report",
@@ -676,29 +132,33 @@
         }
       },
       {
-        "key": "case_worker_first_name",
+        "key": "caseworker_firstname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_first_name",
+        "openmrs_entity_id": "caseworker_firstname",
         "type": "edit_text",
-        "hint": "Case Worker Name",
+        "hint": "Case Worker First Name",
         "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Please Case Worker Name"
+        "read_only": "true",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
         }
       },
       {
-        "key": "case_worker_surname_name",
+        "key": "caseworker_lastname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_surname_name",
+        "openmrs_entity_id": "caseworker_lastname",
         "type": "edit_text",
-        "hint": "Case Worker Surname",
+        "hint": "Case Work Last Name ",
         "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Please Case Worker Name"
+        "look_up": "true",
+        "read_only": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
         }
       },
       {
@@ -740,7 +200,6 @@
           "err": "Name of Head of Household"
         }
       },
-
       {
         "key": "household_id_case_report",
         "openmrs_entity_parent": "",
@@ -755,10 +214,10 @@
         }
       },
       {
-        "key": "child_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_first_name",
+        "openmrs_entity_id": "first_name",
         "entity": "child",
         "type": "edit_text",
         "hint": "Beneficiary First Name",
@@ -774,10 +233,10 @@
         }
       },
       {
-        "key": "child_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_last_name",
+        "openmrs_entity_id": "last_name",
         "entity": "child",
         "type": "edit_text",
         "hint": "Beneficiary Last Name",
@@ -793,10 +252,10 @@
         }
       },
       {
-        "key": "artNumber",
+        "key": "art_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "artNumber",
+        "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "number",
@@ -806,23 +265,19 @@
         }
       },
       {
-        "key": "artClinic",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "artClinic",
+        "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "Name of ART Clinic",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Name of ART Clinic"
-        }
+        "read_only": "true",
+        "hint": "Health Facility"
       },
       {
-        "key": "date_next_vl",
+        "key": "date_last_vl",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_next_vl",
+        "openmrs_entity_id": "date_last_vl",
         "type": "date_picker",
         "hint": "Date of next VL test",
         "expanded": false,
@@ -837,10 +292,10 @@
         }
       },
       {
-        "key": "viralLoadResult",
+        "key": "vl_last_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "viralLoadResult",
+        "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
         "hint": "Viral Load Result ",
         "edit_type": "name",
@@ -866,10 +321,10 @@
         }
       },
       {
-        "key": "level_mmd",
+        "key": "child_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "level_mmd",
+        "openmrs_entity_id": "child_mmd",
         "type": "spinner",
         "hint": "Level of MMD for child ",
         "values": [
@@ -901,261 +356,426 @@
         }
       },
       {
-        "key": "repeating",
-        "type": "repeating_group",
-        "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of Children and Adolescents",
-        "repeating_group_label": "VCA",
+        "key": "vca_services_children",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "v_required": {
-          "value": false,
-          "err": "Specify number"
-        },
-        "value": [
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_services_children",
+        "label": "Tick ( ) Services Provided for Children",
+        "label_info_text": "Tick ( ) Services Provided for Children",
+        "type": "check_box",
+        "exclusive": [
+          "no_one"
+        ],
+        "options": [
           {
-            "key": "vca_services",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "vca_services",
-            "label": "Type of Service/Services",
-            "label_info_text": "Tick ( ) Services Provided for Children, Caregiver and Household",
-            "type": "check_box",
-            "exclusive": [
-              "no_one"
-            ],
-            "options": [
-              {
-                "key": "Age-appropriate HIV treatment Literacy for child/adolescent",
-                "text": "Age-appropriate HIV treatment Literacy for child/adolescent",
-                "text_size": "18px",
-                "value": "false"
-              },
-              {
-                "key": "Age-appropriate counselling/HIV disclosure support ",
-                "text": "Age-appropriate counselling/HIV disclosure support ",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "HIV adherence support",
-                "text": "HIV adherence support}",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Tracked developmental milestones in HIV infected/exposed infants ",
-                "text": "Tracked developmental milestones in HIV infected/exposed infants ",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Provided age-appropriate HIV prevention support, incl. Condoms ",
-                "text": "Provided age-appropriate HIV prevention support, incl. Condoms ",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Conducted HIV testing/accompanied to Health Facility for HIV test",
-                "text": "Conducted HIV testing/accompanied to Health Facility for HIV test",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Household hygiene counselling and WASH messaging",
-                "text": "Household hygiene counselling and WASH messaging",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Safety plan developed for the child",
-                "text": "Safety plan developed for the child",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Family/case conferencing to prevent occurrence of child abuse/ neglect",
-                "text": "Family/case conferencing to prevent occurrence of child abuse/ neglect",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Family psycho-social support for family conflict mitigation ",
-                "text": "Family psycho-social support for family conflict mitigation ",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Child received school uniform, books or other materials",
-                "text": "Child received school uniform, books or other materials",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Child received bursary, tuition, school fees or fee exemption ",
-                "text": "Child received bursary, tuition, school fees or fee exemption ",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Child received assistance for re-enrolment",
-                "text": "Child received assistance for re-enrolment",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Child/caregiver receive post-violence child/trauma counselling",
-                "text": "Child/caregiver receive post-violence child/trauma counselling",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Project-filed report of suspected abuse to child protection office, police or other local authority",
-                "text": "Project-filed report of suspected abuse to child protection office, police or other \nlocal authority",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Family received cash support ",
-                "text": "Family received cash support ",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Family received material support",
-                "text": "Family received material support",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "Child or caregiver referred to health legal or other services",
-                "text": "Child or caregiver referred to health, legal or other services",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              },
-              {
-                "key": "other Specify",
-                "text": "Other Specify",
-                "text_size": "18px",
-                "value": "false",
-                "openmrs_entity_parent": "",
-                "openmrs_entity": "",
-                "openmrs_entity_id": ""
-              }
-            ]
+            "key": "Age-appropriate HIV treatment Literacy for child/adolescent",
+            "text": "Age-appropriate HIV treatment Literacy for child/adolescent",
+            "text_size": "18px",
+            "value": "false"
           },
           {
-            "key": "other_service",
+            "key": "Age-appropriate counselling/HIV disclosure support ",
+            "text": "Age-appropriate counselling/HIV disclosure support ",
+            "text_size": "18px",
+            "value": "false",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "other_service",
-            "type": "edit_text",
-            "hint": "Specify other",
-            "edit_type": "name",
-            "v_required": {
-              "value": false,
-              "err": "VCA ID"
-            },
-            "relevance": {
-              "step1:vca_services": {
-                "type": "string",
-                "ex": "equalTo(., \"Other Specify\")"
-              }
-            }
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "children_adolescents_id",
+            "key": "HIV adherence support",
+            "text": "HIV adherence support}",
+            "text_size": "18px",
+            "value": "false",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "children_adolescents_id",
-            "type": "edit_text",
-            "hint": "VCA ID",
-            "edit_type": "number",
-            "v_required": {
-              "value": false,
-              "err": "VCA ID"
-            }
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "caregiver_id",
+            "key": "Tracked developmental milestones in HIV infected/exposed infants ",
+            "text": "Tracked developmental milestones in HIV infected/exposed infants ",
+            "text_size": "18px",
+            "value": "false",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "caregiver_id",
-            "type": "edit_text",
-            "hint": "Caregiver ID",
-            "edit_type": "number",
-            "v_required": {
-              "value": false,
-              "err": "Caregiver ID"
-            }
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "household_id_repeat",
+            "key": "Provided age-appropriate HIV prevention support, incl. Condoms ",
+            "text": "Provided age-appropriate HIV prevention support, incl. Condoms ",
+            "text_size": "18px",
+            "value": "false",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "person_identifier",
-            "openmrs_entity_id": "household_id_repeat",
-            "type": "edit_text",
-            "hint": "Household ID",
-            "edit_type": "number",
-            "v_required": {
-              "value": false,
-              "err": "Please enter the home address"
-            }
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Conducted HIV testing/accompanied to Health Facility for HIV test",
+            "text": "Conducted HIV testing/accompanied to Health Facility for HIV test",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Safety plan developed for the child",
+            "text": "Safety plan developed for the child",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Family/case conferencing to prevent occurrence of child abuse/ neglect",
+            "text": "Family/case conferencing to prevent occurrence of child abuse/ neglect",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Child received school uniform, books or other materials",
+            "text": "Child received school uniform, books or other materials",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Child received bursary, tuition, school fees or fee exemption ",
+            "text": "Child received bursary, tuition, school fees or fee exemption ",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Child received assistance for re-enrolment",
+            "text": "Child received assistance for re-enrolment",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Child/caregiver receive post-violence child/trauma counselling",
+            "text": "Child/caregiver receive post-violence child/trauma counselling",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Project-filed report of suspected abuse to child protection office, police or other local authority",
+            "text": "Project-filed report of suspected abuse to child protection office, police or other \nlocal authority",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Family received cash support ",
+            "text": "Family received cash support ",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Family received material support",
+            "text": "Family received material support",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Child or caregiver referred to health legal or other services",
+            "text": "Child or caregiver referred to health, legal or other services",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "other Specify",
+            "text": "Other Specify",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           }
         ]
       },
+      {
+        "key": "other_service_children",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_service_children",
+        "type": "edit_text",
+        "hint": "Specify other",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "VCA ID"
+        },
+        "relevance": {
+          "step1:vca_services_children": {
+            "type": "string",
+            "ex": "equalTo(., \"Other Specify\")"
+          }
+        }
+      },
+      {
+        "key": "adolescents_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "adolescents_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "VCA ID"
+        }
+      },
+
+      {
+        "key": "services_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "services_caregiver",
+        "label": "Type of Service/Services",
+        "label_info_text": "Tick ( ) Services Provided for Caregivers",
+        "type": "check_box",
+        "exclusive": [
+          "no_one"
+        ],
+        "options": [
+
+          {
+            "key": "HIV adherence support",
+            "text": "HIV adherence support}",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+          {
+            "key": "Conducted HIV testing/accompanied to Health Facility for HIV test",
+            "text": "Conducted HIV testing/accompanied to Health Facility for HIV test",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+
+
+          {
+            "key": "Child/caregiver receive post-violence child/trauma counselling",
+            "text": "Child/caregiver receive post-violence child/trauma counselling",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Project-filed report of suspected abuse to child protection office, police or other local authority",
+            "text": "Project-filed report of suspected abuse to child protection office, police or other \nlocal authority",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Family received cash support ",
+            "text": "Family received cash support ",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Family received material support",
+            "text": "Family received material support",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Child or caregiver referred to health legal or other services",
+            "text": "Child or caregiver referred to health, legal or other services",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "other Specify",
+            "text": "Other Specify",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+        ]
+      },
+      {
+        "key": "other_service_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_service_caregiver",
+        "type": "edit_text",
+        "hint": "Specify other",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "VCA ID"
+        },
+        "relevance": {
+          "step1:vca_services": {
+            "type": "string",
+            "ex": "equalTo(., \"Other Specify\")"
+          }
+        }
+      },
+      {
+        "key": "caregiver_id_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "caregiver_id_caregiver",
+        "type": "edit_text",
+        "hint": "Caregiver ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Caregiver ID"
+        }
+      },
+
+      {
+        "key": "vca_services_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_services_household",
+        "label": "Type of Service/Services",
+        "label_info_text": "Tick ( ) Services Provided for a Household",
+        "type": "check_box",
+        "exclusive": [
+          "no_one"
+        ],
+        "options": [
+
+          {
+            "key": "Household hygiene counselling and WASH messaging",
+            "text": "Household hygiene counselling and WASH messaging",
+            "text_size": "18px",
+            "value": "false"
+
+          },
+
+          {
+            "key": "Family psycho-social support for family conflict mitigation ",
+            "text": "Family psycho-social support for family conflict mitigation ",
+            "text_size": "18px",
+            "value": "false"
+          },
+
+          {
+            "key": "Family received cash support ",
+            "text": "Family received cash support ",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Family received material support",
+            "text": "Family received material support",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "Child or caregiver referred to health legal or other services",
+            "text": "Child or caregiver referred to health, legal or other services",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "other Specify",
+            "text": "Other Specify",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+        ]
+      },
+      {
+        "key": "other_service_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_service_household",
+        "type": "edit_text",
+        "hint": "Specify other",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "VCA ID"
+        },
+        "relevance": {
+          "step1:vca_services": {
+            "type": "string",
+            "ex": "equalTo(., \"Other Specify\")"
+          }
+        }
+      },
+      {
+        "key": "household_id_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "household_id_household",
+        "type": "edit_text",
+        "hint": "Household ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the home address"
+        }
+      },
+
       {
         "key": "case_worker_date_signed",
         "openmrs_entity_parent": "",
