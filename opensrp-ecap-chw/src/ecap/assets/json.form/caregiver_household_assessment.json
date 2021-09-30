@@ -57,57 +57,6 @@
     "next": "step2",
     "fields": [
       {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
-        "type": "edit_text",
-        "hint": "Province",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
-        "v_required": {
-          "value": false,
-          "err": "Error"
-        }
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "hint": "District",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
-        "v_required": {
-          "value": false,
-          "err": "Error"
-        }
-      },
-      {
-        "key": "village_compound",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
-        "v_required": {
-          "value": false,
-          "err": "Error"
-        }
-      },
-      {
         "key": "name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -129,16 +78,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "gender",
-        "type": "spinner",
-        "hint": "Sex",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please select gender"
-        }
+        "type": "edit_text",
+        "read_only": "true"
       },
       {
         "key": "birthdate",

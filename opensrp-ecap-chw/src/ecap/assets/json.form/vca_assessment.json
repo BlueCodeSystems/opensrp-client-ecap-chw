@@ -514,8 +514,8 @@
         "hint": "ART Number",
         "edit_type": "number",
         "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         },
         "relevance": {
           "rules-engine": {
