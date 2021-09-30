@@ -414,6 +414,20 @@
           }
         },
         {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
+          }
+        },
+        {
           "column_name": "enrollment_date",
           "type": "Client",
           "json_mapping": {
@@ -446,20 +460,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attribute.caregiverId"
-          }
-        },
-        {
-          "column_name": "first_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "firstName"
-          }
-        },
-        {
-          "column_name": "last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "lastName"
           }
         },
         {

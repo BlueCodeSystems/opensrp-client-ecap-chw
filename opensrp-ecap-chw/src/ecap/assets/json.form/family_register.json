@@ -66,10 +66,10 @@
         }
       },
       {
-        "key": "subpop_vca_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "subpop_vca_first_name",
+        "openmrs_entity_id": "first_name",
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
@@ -82,10 +82,10 @@
         }
       },
       {
-        "key": "subpop_vca_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "subpop_vca_last_name",
+        "openmrs_entity_id": "last_name",
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
@@ -407,16 +407,11 @@
         "key": "partners",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Implementing Partner:",
-        "values": [
-          "BISO",
-          "COH",
-          "PCZ",
-          "YWCA",
-          "ZEC"
-        ]
+        "openmrs_entity_id": "partners",
+        "read_only": "true",
+        "font": "bald",
+        "type": "edit_text",
+        "hint": "Implementing Partner:"
       },
       {
         "key": "date_of_screening",
