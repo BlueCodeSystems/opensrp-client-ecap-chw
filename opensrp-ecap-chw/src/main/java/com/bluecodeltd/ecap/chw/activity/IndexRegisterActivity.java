@@ -102,6 +102,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                         indexRegisterPresenter().saveForm(json, false);
                     }
+                    //TODO Update child index encounter Type. isEditmode should be true.
                 }
 
             } catch (JSONException e) {
