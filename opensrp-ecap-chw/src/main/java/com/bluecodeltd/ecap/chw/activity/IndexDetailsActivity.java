@@ -41,6 +41,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -97,6 +98,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
+
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -254,26 +256,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("family_register");
-                    String fullCaregiverName = getCareGiverFullname(client);
-                    String[] caregiverNAmes = fullCaregiverName.split("\\s+");
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("age"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", client.getColumnmaps().get("gender"));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
 
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(4).put("value", "add41");
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("caregiver_id"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", client.getColumnmaps().get("gender"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(7).put("value", caregiverNAmes[0]);
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(8).put("value", caregiverNAmes[1]);
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).put("value", client.getColumnmaps().get("caregiver_birth_date"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(25).put("value", client.getColumnmaps().get("caregiver_phone"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(28).put("value", client.getColumnmaps().get("health_facility"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(45).put("value", caseworker);
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(46).put("value", client.getColumnmaps().get("case_worker_nrc"));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -283,63 +268,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.assessment:
 
+
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("vca_assessment");
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
 
-                    //  startFormActivity(indexRegisterForm);
-                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
-                    Form form = new Form();
-                    try {
-                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
-                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                            form.setWizard(true);
-                            form.setName("VCA Vulnerability Assessment");
-                            form.setHideSaveLabel(true);
-                            form.setNextLabel(getString(R.string.next));
-                            form.setPreviousLabel(getString(R.string.previous));
-                            form.setSaveLabel(getString(R.string.submit));
-                            form.setNavigationBackground(R.color.primary);
-                        } else {
-                            form.setWizard(false);
-                            form.setHideSaveLabel(true);
-                            form.setNextLabel("");
-                        }
-                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-                    } catch (JSONException e) {
-                        Timber.e(e);
-                    }
-
-                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
-                    String[] splitStr = caregiver_name.split("\\s+");
-
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0,8);
-
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
-                    String[] csw = caseworker.split("\\s+");
-
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("first_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_birthdate"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", client.getColumnmaps().get("gender"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("adolescent_phone"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", client.getColumnmaps().get("adolescent_village"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(53).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).put("value", csw[1]);
-
-
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
-                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -352,7 +289,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("case_plan");
+                    indexRegisterForm = formUtils.getFormJson("vca_case_plan");
 
                     //  startFormActivity(indexRegisterForm);
                     Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
@@ -379,36 +316,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Timber.e(e);
                     }
 
-                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
-                    String[] splitStr = caregiver_name.split("\\s+");
-
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0,8);
-
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
-                    String[] csw = caseworker.split("\\s+");
-
-
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("base_entity_id"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("base_entity_id"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("district"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", client.getColumnmaps().get("adolescent_village"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("health_facility"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", hID);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", client.getColumnmaps().get("adolescent_phone"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("physical_address"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", csw[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", client.getColumnmaps().get("caregiver_nrc"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value", client.getColumnmaps().get("first_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(17).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(18).put("value", client.getColumnmaps().get("adolescent_birthdate"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(20).put("value", client.getColumnmaps().get("gender"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", client.getColumnmaps().get("subpop1"));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
 
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -481,6 +389,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+
+            case R.id.myservice:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("service_report");
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 break;
         }
     }
