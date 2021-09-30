@@ -11,11 +11,7 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.4'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
     }
-}
-plugins {
-    id "org.sonarqube" version "3.3"
 }
 
 apply plugin: 'com.android.application'
@@ -23,16 +19,6 @@ apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
-
-sonarqube {
-    properties {
-        property "sonar.projectKey", "BlueCodeSystems_opensrp-client-ecap-chw"
-        property "sonar.organization", "bluecodesystems"
-        property "sonar.host.url", "https://sonarcloud.io"
-    }
-}
 
 jacoco {
     toolVersion = "0.8.5"
@@ -107,14 +93,14 @@ allprojects {
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
-        maven {
+        /*maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-household")
             credentials {
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
-        }
+        }*/
     }
 }
 
@@ -209,6 +195,7 @@ android {
         release {
             //debuggable true // Useful when debugging release builds
             minifyEnabled false
+            //shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
@@ -290,11 +277,11 @@ android {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
             versionCode 8
-            versionName "v1.0.0-alpha2"
+            versionName "0.0.1"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
-            buildConfigField "String[]", "LOCATION_HIERACHY", '{"Country","Province","Dist rict","Ward","Health Facility"}'
+            buildConfigField "String[]", "LOCATION_HIERACHY", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS", '{"District" , "Ward", "Health Facility"}'
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"District" , "Ward", "Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
@@ -311,8 +298,8 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-    //implementation('org.smartregister:opensrp-ecap-chw-core:1.0.4-RELEASE@aar') {
-        implementation(project(":opensrp-ecap-chw-core")) {
+  //  implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
+         implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'androidx.legacy', module: 'legacy-support-v4'
@@ -324,11 +311,6 @@ dependencies {
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
     }
 
-
-    //Foe Sentry
-    implementation 'io.sentry:sentry-android:5.1.2'
-
-    implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:5.1.0'
@@ -342,6 +324,9 @@ dependencies {
     //For viewing PDFs in the app
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
     implementation 'androidx.wear:wear:1.0.0'
+
+    //Foe Sentry
+    implementation 'io.sentry:sentry-android:5.1.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
