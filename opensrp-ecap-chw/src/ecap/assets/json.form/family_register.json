@@ -563,7 +563,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_group",
             "type": "native_radio",
-            "label": "Tick as Appropriate (Relation of Family Member to Index VCA)",
+            "label": "Relationship of Family Member to Index VCA (Tick as Appropriate)",
             "options": [
               {
                 "key": "index_vca",
@@ -589,7 +589,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_population_for_children_0_17years_in_household",
             "type": "check_box",
-            "label": "Tick as Appropriate (Indication of Subpopulation for Children 0-17Years in Household)",
+            "label": "Indication of Subpopulation for Children 0-17Years in Household (Tick as Appropriate)",
             "options": [
               {
                 "key": "1",
@@ -623,7 +623,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "relationship_to_primary_caregiver",
             "type": "spinner",
-            "hint": "Relationship to Primary Caregiver",
+            "hint": "Relationship Of Household Member to Primary Caregiver",
             "values": [
               "Self",
               "Mother",
@@ -636,7 +636,9 @@
               "Uncle",
               "Grandfather",
               "Grandmother",
-              "Cousin"
+              "Cousin",
+              "Son",
+              "Daughter"
             ]
           },
           {
@@ -655,7 +657,7 @@
             "max_date": "today-1y"
           },
           {
-            "key": "Sex",
+            "key": "gender",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person",
             "openmrs_entity_id": "gender",
@@ -672,7 +674,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tick_applicable",
             "type": "native_radio",
-            "label": "Tick applicable ",
+            "label": "HIV Status of Household Member (Tick where applicable)",
             "options": [
               {
                 "key": "hiv_pos",
@@ -746,13 +748,14 @@
       },
       {
         "key": "offer_HIV_index_testing",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "offer_HIV_index_testing",
+        "type": "toaster_notes",
         "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": true
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
