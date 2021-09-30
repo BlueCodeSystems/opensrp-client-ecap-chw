@@ -1752,7 +1752,6 @@
         "openmrs_entity_id": "caregiver_id",
         "type": "edit_text",
         "hint": "Caregiver ID",
-        "read_only": "true",
         "edit_type": "number",
         "v_required": {
           "value": false,
@@ -3029,7 +3028,6 @@
         "type": "edit_text",
         "hint": "Case Worker Name",
         "edit_type": "name",
-        "read_only": "true",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -3050,7 +3048,6 @@
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "guardian",
         "type": "edit_text",
-        "read_only": "true",
         "hint": "Case Worker Name  NRC number",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
