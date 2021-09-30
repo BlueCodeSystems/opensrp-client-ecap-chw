@@ -84,18 +84,72 @@ public class ProfileOverviewFragment extends Fragment {
             sub6.setVisibility(View.VISIBLE);
         }
 
+        if (mymap.get("art_number") != null){
+            txtArtNumber.setText(mymap.get("art_number"));
+        } else {
+            txtArtNumber.setText("N/A");
+        }
 
-        txtArtNumber.setText(mymap.get("art_number"));
-        txtReferred.setText(mymap.get("date_referred"));
-        txtEnrolled.setText(mymap.get("date_enrolled"));
-        txtArtCheckbox.setText(mymap.get("art_check_box"));
-        txtDateStartedArt.setText(mymap.get("date_started_art"));
-        txtVlLastDate.setText(mymap.get("date_last_vl"));
-        txtVlResult.setText(mymap.get("vl_last_result"));
-        txtIsSuppressed.setText(mymap.get("vl_suppressed"));
-        txtNextVl.setText(mymap.get("date_next_vl"));
-        txtIsMMD.setText(mymap.get("child_mmd"));
-        txtMMDResult.setText(mymap.get("level_mmd"));
+        if (mymap.get("date_referred") != null){
+            txtReferred.setText(mymap.get("date_referred"));
+        } else {
+            txtReferred.setText("N/A");
+        }
+
+        if (mymap.get("date_enrolled") != null){
+            txtEnrolled.setText(mymap.get("date_enrolled"));
+        } else {
+            txtEnrolled.setText("N/A");
+        }
+
+        if (mymap.get("art_check_box") != null){
+            txtArtCheckbox.setText(mymap.get("art_check_box"));
+        } else {
+            txtArtCheckbox.setText("N/A");
+        }
+
+        if (mymap.get("date_started_art") != null){
+            txtDateStartedArt.setText(mymap.get("date_started_art"));
+        } else {
+            txtDateStartedArt.setText("N/A");
+        }
+
+        if (mymap.get("date_last_vl") != null){
+            txtVlLastDate.setText(mymap.get("date_last_vl"));
+        } else {
+            txtVlLastDate.setText("N/A");
+        }
+
+        if (mymap.get("vl_last_result") != null){
+            txtVlResult.setText(mymap.get("vl_last_result"));
+        } else {
+            txtVlResult.setText("N/A");
+        }
+
+        if (mymap.get("vl_suppressed") != null){
+            txtIsSuppressed.setText(mymap.get("vl_suppressed"));
+        } else {
+            txtIsSuppressed.setText("N/A");
+        }
+
+        if (mymap.get("date_next_vl") != null){
+            txtNextVl.setText(mymap.get("date_next_vl"));
+        } else {
+            txtNextVl.setText("N/A");
+        }
+
+        if (mymap.get("child_mmd") != null){
+            txtIsMMD.setText(mymap.get("child_mmd"));
+        } else {
+            txtIsMMD.setText("N/A");
+        }
+
+        if (mymap.get("level_mmd") != null){
+            txtMMDResult.setText(mymap.get("level_mmd"));
+        } else {
+            txtMMDResult.setText("N/A");
+        }
+
 
         return view;
 
