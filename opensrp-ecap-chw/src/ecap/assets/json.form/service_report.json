@@ -74,10 +74,10 @@
         "hint": "District"
       },
       {
-        "key": "village",
+        "key": "adolescent_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "village",
+        "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
         "read_only": "true",
         "hint": "Village"
@@ -92,10 +92,10 @@
         "hint": "Health Facility"
       },
       {
-        "key": "partners_case_report",
+        "key": "partners",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners_case_report",
+        "openmrs_entity_id": "partners",
         "type": "spinner",
         "hint": "Implementing Partner",
         "values": [
@@ -114,10 +114,10 @@
         ]
       },
       {
-        "key": "date_case_report",
+        "key": "art_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_case_report",
+        "openmrs_entity_id": "art_date",
         "type": "date_picker",
         "hint": "Date of Visit",
         "expanded": false,
@@ -162,10 +162,10 @@
         }
       },
       {
-        "key": "case_worker_code",
+        "key": "caseworker_code",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_code",
+        "openmrs_entity_id": "caseworker_code",
         "type": "edit_text",
         "hint": "Case Worker Code",
         "edit_type": "number",
@@ -175,12 +175,12 @@
         }
       },
       {
-        "key": "household_name_first_name",
+        "key": "household_firstname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_name_first_name",
+        "openmrs_entity_id": "household_firstname",
         "type": "edit_text",
-        "hint": "First Name of Head of the Household",
+        "hint": "Household First Name",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -188,12 +188,12 @@
         }
       },
       {
-        "key": "household_head_surname",
+        "key": "household_surname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_head_surname",
+        "openmrs_entity_id": "household_surname",
         "type": "edit_text",
-        "hint": "Surname of Head of the Household",
+        "hint": "Household Surname",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -201,11 +201,12 @@
         }
       },
       {
-        "key": "household_id_case_report",
+        "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "household_id_case_report",
+        "openmrs_entity_id": "household_id",
         "type": "edit_text",
+        "read_only": true,
         "hint": "Household ID",
         "edit_type": "number",
         "v_required": {
@@ -258,7 +259,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
-        "read_only": "true",
+        "read_only": "",
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "number",
@@ -268,10 +269,10 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "art_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
         "read_only": "false",
         "hint": "ART Health Facility"
@@ -316,6 +317,7 @@
         "openmrs_entity_id": "vl_next_result",
         "type": "edit_text",
         "hint": "VL next results",
+        "read_only": true,
         "v_required": {
           "value": false,
           "err": "Enter VL next results"
@@ -365,7 +367,7 @@
         "key": "repeating",
         "type": "repeating_group",
         "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of Children and Adolescents to receive services",
+        "reference_edit_text_hint": "Number of Children and Adolescents \n to receive services",
         "repeating_group_label": "",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -542,27 +544,20 @@
           {
             "key": "other_service_children",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "other_service_children",
             "type": "edit_text",
             "hint": "Specify other",
             "edit_type": "name",
             "v_required": {
               "value": false,
-              "err": "VCA ID"
-            },
-            "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "case_worker_service_report.yml"
-                }
-              }
+              "err": "Error"
             }
           },
           {
             "key": "adolescents_id",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_identifier",
             "openmrs_entity_id": "adolescents_id",
             "type": "edit_text",
             "hint": "VCA ID",
@@ -578,7 +573,7 @@
         "key": "repeating",
         "type": "repeating_group",
         "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of Caregivers to receive services",
+        "reference_edit_text_hint": "Number of Caregivers \n to receive services",
         "repeating_group_label": "",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -664,7 +659,7 @@
                 "openmrs_entity_id": ""
               },
               {
-                "key": "Other",
+                "key": "other",
                 "text": "Other Specify",
                 "text_size": "18px",
                 "value": "false",
@@ -677,28 +672,22 @@
           {
             "key": "other_service_caregiver",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "other_service_caregiver",
             "type": "edit_text",
             "hint": "Specify other",
             "edit_type": "name",
             "v_required": {
               "value": false,
-              "err": "VCA ID"
-            },
-            "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "case_worker_service_report.yml"
-                }
-              }
+              "err": "Error"
             }
+
           },
           {
-            "key": "caregiver_id_caregiver",
+            "key": "caregiver_id",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "caregiver_id_caregiver",
+            "openmrs_entity": "person_identifier",
+            "openmrs_entity_id": "caregiver_id",
             "type": "edit_text",
             "hint": "Caregiver ID",
             "edit_type": "number",
@@ -713,7 +702,7 @@
         "key": "repeating",
         "type": "repeating_group",
         "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of Households to receive services",
+        "reference_edit_text_hint": "Number of Households \n to receive services",
         "repeating_group_label": "",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -796,13 +785,6 @@
             "v_required": {
               "value": false,
               "err": "ID"
-            },
-            "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "case_worker_service_report.yml"
-                }
-              }
             }
           },
           {
@@ -821,10 +803,10 @@
         ]
       },
       {
-        "key": "case_worker_date_signed",
+        "key": "caseworker_date_signed",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "case_worker_date_signed",
+        "openmrs_entity_id": "caseworker_date_signed",
         "type": "date_picker",
         "hint": "Date Case Worker Signs",
         "expanded": false,
