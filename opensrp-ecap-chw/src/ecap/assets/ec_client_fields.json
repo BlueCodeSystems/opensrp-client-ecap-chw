@@ -468,7 +468,7 @@
           "column_name": "symptoms",
           "type": "Client",
           "json_mapping": {
-            "field":"attributes.symptoms"
+            "field": "attributes.symptoms"
           }
         },
         {
@@ -482,21 +482,21 @@
           "column_name": "last_6_months",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.last_6_months"
+            "field": "attributes.last_6_months"
           }
         },
         {
           "column_name": "last_12_months",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.last_12_months"
+            "field": "attributes.last_12_months"
           }
         },
         {
           "column_name": "pregnant_breastfeeding",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.pregnant_breastfeeding"
+            "field": "attributes.pregnant_breastfeeding"
           }
         },
         {
@@ -524,14 +524,14 @@
           "column_name": "art_caregiver",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.art_caregiver"
+            "field": "attributes.art_caregiver"
           }
         },
         {
           "column_name": "art_number",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.art_number"
+            "field": "attributes.art_number"
           }
         },
         {
@@ -552,14 +552,14 @@
           "column_name": "months_medication",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.months_medication"
+            "field": "attributes.months_medication"
           }
         },
         {
           "column_name": "caregiver_viral",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.caregiver_viral"
+            "field": "attributes.caregiver_viral"
           }
         },
         {
@@ -573,7 +573,7 @@
           "column_name": "date_vl",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.date_vl"
+            "field": "attributes.date_vl"
           }
         },
         {
@@ -594,7 +594,7 @@
           "column_name": "caregiver_cancer",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.caregiver_cancer"
+            "field": "attributes.caregiver_cancer"
           }
         },
         {
@@ -608,14 +608,14 @@
           "column_name": "hiv_test",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.hiv_test"
+            "field": "attributes.hiv_test"
           }
         },
         {
           "column_name": "last_year",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.last_year"
+            "field": "attributes.last_year"
           }
         },
         {
@@ -629,21 +629,21 @@
           "column_name": "partner_caregiver",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.partner_caregiver"
+            "field": "attributes.partner_caregiver"
           }
         },
         {
           "column_name": "partner_caregiver",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.partner_caregiver"
+            "field": "attributes.partner_caregiver"
           }
         },
         {
           "column_name": "partner_prevented",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.partner_prevented"
+            "field": "attributes.partner_prevented"
           }
         },
         {
@@ -657,7 +657,7 @@
           "column_name": "household_number",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.household_number"
+            "field": "attributes.household_number"
           }
         },
         {
@@ -671,14 +671,14 @@
           "column_name": "household_member",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.household_member"
+            "field": "attributes.household_member"
           }
         },
         {
           "column_name": "source_income",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.source_income"
+            "field": "attributes.source_income"
           }
         },
         {
@@ -706,7 +706,7 @@
           "column_name": "last_time",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.last_time"
+            "field": "attributes.last_time"
           }
         },
         {
@@ -720,7 +720,7 @@
           "column_name": "any_adult",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.any_adult"
+            "field": "attributes.any_adult"
           }
         },
         {
@@ -741,7 +741,7 @@
           "column_name": "material_construction",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.material_construction"
+            "field": "attributes.material_construction"
           }
         },
         {
@@ -755,15 +755,14 @@
           "column_name": "early_childhood",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.early_childhood"
+            "field": "attributes.early_childhood"
           }
         },
-
         {
           "column_name": "children_adolescent_a",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.children_adolescent_a"
+            "field": "attributes.children_adolescent_a"
           }
         },
         {
@@ -777,21 +776,21 @@
           "column_name": "drinking_water",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.drinking_water"
+            "field": "attributes.drinking_water"
           }
         },
         {
           "column_name": "other_water_other",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.other_water_other"
+            "field": "attributes.other_water_other"
           }
         },
         {
           "column_name": "toilet_facility",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.toilet_facility"
+            "field": "attributes.toilet_facility"
           }
         },
         {
@@ -805,31 +804,30 @@
           "column_name": "other_sanitary_product_other",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.other_sanitary_product_other"
+            "field": "attributes.other_sanitary_product_other"
           }
         },
         {
           "column_name": "material_construction_roof",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.material_construction_roof"
+            "field": "attributes.material_construction_roof"
           }
         },
         {
           "column_name": "other_food_source_other",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.other_food_source_other"
+            "field": "attributes.other_food_source_other"
           }
         },
         {
           "column_name": "household_eaten_month",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.household_eaten_month"
+            "field": "attributes.household_eaten_month"
           }
         },
-
         {
           "column_name": "child",
           "type": "Client",
@@ -876,7 +874,7 @@
           "column_name": "other_obvious_issues",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.other_obvious_issues"
+            "field": "attributes.other_obvious_issues"
           }
         },
         {
@@ -898,7 +896,7 @@
           "column_name": "caregiver_question",
           "type": "Client",
           "json_mapping": {
-            "field":  "attributes.caregiver_question"
+            "field": "attributes.caregiver_question"
           }
         },
         {
@@ -923,7 +921,6 @@
             "field": "attributes.case_worker_nrc"
           }
         },
-
         {
           "column_name": "date",
           "type": "Event",
@@ -932,10 +929,6 @@
             "concept": "date"
           }
         },
-
-
-
-
         {
           "column_name": "health_facility",
           "type": "Client",
@@ -2012,7 +2005,7 @@
       ]
     },
     {
-      "name": "ec_vca_assessment",
+      "name": "ec_assessment",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -2586,6 +2579,272 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_service_report",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "partners",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partners"
+          }
+        },
+        {
+          "column_name": "art_date",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "art_date"
+          }
+        },
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
+          }
+        },
+        {
+          "column_name": "caseworker_code",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_code"
+          }
+        },
+        {
+          "column_name": "household_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_firstname"
+          }
+        },
+        {
+          "column_name": "household_surname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_surname"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "art_health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_health_facility"
+          }
+        },
+        {
+          "column_name": "date_last_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_last_vl"
+          }
+        },
+        {
+          "column_name": "vl_last_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_last_result"
+          }
+        },
+        {
+          "column_name": "vl_next_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_next_result"
+          }
+        },
+        {
+          "column_name": "child_mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_mmd"
+          }
+        },
+        {
+          "column_name": "date_next_vl",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "date_next_vl"
+          }
+        },
+        {
+          "column_name": "vca_services_children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_services_children"
+          }
+        },
+        {
+          "column_name": "other_service_children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_service_children"
+          }
+        },
+        {
+          "column_name": "adolescents_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.adolescents_id"
+          }
+        },
+        {
+          "column_name": "services_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services_caregiver"
+          }
+        },
+        {
+          "column_name": "other_service_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_service_caregiver"
+          }
+        },
+        {
+          "column_name": "caregiver_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.caregiver_id"
+          }
+        },
+        {
+          "column_name": "vca_services_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_services_household"
+          }
+        },
+        {
+          "column_name": "other_service_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_service_household"
+          }
+        },
+        {
+          "column_name": "household_id_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id_household"
+          }
+        },
+        {
+          "column_name": "caseworker_date_signed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "caseworker_date_signed"
+          }
+        },
+        {
+          "column_name": "case_worker_signature",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "case_worker_signature"
+          }
+        },
+        {
+          "column_name": "primary_caregiver_date_signed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "primary_caregiver_date_signed"
+          }
+        },
+        {
+          "column_name": "primary_caregiver_signature",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "primary_caregiver_signature"
           }
         }
       ]
