@@ -451,6 +451,10 @@
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         }
       },
       {
@@ -684,6 +688,10 @@
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         }
       },
       {
@@ -1019,6 +1027,10 @@
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         }
       },
       {
@@ -2360,8 +2372,8 @@
           "err": "Please enter VCA ART number "
         },
         "v_regex": {
-          "value": "[0-9]*",
-          "err": "ART cannot be empty"
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         },
         "relevance": {
           "rules-engine": {
@@ -2528,7 +2540,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-100y",
+        "min_date": "today",
         "max_date": "today + 100y",
         "v_required": {
           "value": false,
@@ -2686,7 +2698,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
-        "hint": "Caregiver Date of birth",
+        "hint": "VCA Date of birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -2760,7 +2772,6 @@
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
         "hint": "Caregivers phone number",
-        "edit_type": "name",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
