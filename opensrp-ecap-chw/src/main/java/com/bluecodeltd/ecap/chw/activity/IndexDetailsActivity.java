@@ -1,12 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-
-import timber.log.Timber;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,22 +10,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
-import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
-import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
-import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -61,19 +53,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON;
+import timber.log.Timber;
+
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
+    public ViewPager mViewPager;
+    public ProfileViewPagerAdapter mPagerAdapter;
     private FloatingActionButton fab;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
-    public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
     private Toolbar toolbar;
 
@@ -90,9 +83,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
 
         rhousehold = findViewById(R.id.household);
         rassessment = findViewById(R.id.assessment);
@@ -113,8 +106,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String subpop4 =  client.getColumnmaps().get("subpo4");*/
 
 
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
+        mTabLayout = findViewById(R.id.tabs);
+        mViewPager = findViewById(R.id.viewpager);
 
         setupViewPager();
         //updateTasksTabTitle();
@@ -128,7 +121,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String gender =  client.getColumnmaps().get("gender");
+        String gender = client.getColumnmaps().get("gender");
         String birthdate = "DOB : " + client.getColumnmaps().get("birthdate");
 
         txtName.setText(full_name);
@@ -168,7 +161,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void setupViewPager(){
+    private void setupViewPager() {
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
         mPagerAdapter.addFragment(new ProfileContactFragment());
@@ -227,12 +220,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
 
-
     public void onClick(View v) {
         int id = v.getId();
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         assert client != null;
-        switch (id){
+        switch (id) {
             case R.id.fab:
 
                 animateFAB();
@@ -244,7 +236,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", hID);
+
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", csw[1]);
+
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -287,12 +296,28 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.assessment:
 
+
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
+
                     indexRegisterForm = formUtils.getFormJson("vca_assessment");
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", csw[1]);
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -337,7 +362,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     String[] splitStr = caregiver_name.split("\\s+");
 
                     String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0,8);
+                    String hID = uniqueId.substring(0, 8);
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
@@ -410,7 +435,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     String[] splitStr = caregiver_name.split("\\s+");
 
                     String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0,8);
+                    String hID = uniqueId.substring(0, 8);
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
@@ -440,7 +465,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -467,11 +491,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public ChildIndexEventClient processRegistration(String jsonString){
+    public ChildIndexEventClient processRegistration(String jsonString) {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            String entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
@@ -486,7 +510,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN);
                         tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
@@ -497,11 +521,35 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_FAMILY);
                         tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
 
                     break;
+                case "Case Worker Service Report":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_SERVICE_REPORT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Assessment Form":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -576,7 +624,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return formTag;
     }
 
-    public AllSharedPreferences getAllSharedPreferences () {
+    public AllSharedPreferences getAllSharedPreferences() {
         return ChwApplication.getInstance().getContext().allSharedPreferences();
     }
 
@@ -584,10 +632,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
-    public void animateFAB(){
+    public void animateFAB() {
 
 
-        if (isFabOpen){
+        if (isFabOpen) {
 
             fab.startAnimation(rotate_backward);
             isFabOpen = false;
@@ -606,7 +654,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             referral.setVisibility(View.VISIBLE);
         }
     }
-    public String getCareGiverFullname(CommonPersonObjectClient client){
+
+    public String getCareGiverFullname(CommonPersonObjectClient client) {
 
         return client.getColumnmaps().get("caregiver_firstname");
     }
