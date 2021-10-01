@@ -1242,14 +1242,14 @@
         "edit_type": "name"
       },
       {
-        "key": "caregiver_nrc",
+        "key": "caseworker_nrc",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_nrc",
+        "openmrs_entity_id": "caseworker_nrc",
         "entity_id": "",
-        "read_only": "true",
+        "read_only": "false",
         "type": "edit_text",
-        "hint": "Caregiver NRC number",
+        "hint": "Case Worker NRC number",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"
