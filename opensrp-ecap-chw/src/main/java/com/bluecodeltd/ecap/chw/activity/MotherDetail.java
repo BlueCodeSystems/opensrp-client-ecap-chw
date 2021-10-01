@@ -22,6 +22,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.JsonFormUtils;
@@ -159,7 +160,7 @@ public class MotherDetail extends AppCompatActivity {
                     }
 
                     //TODO Pre populate fields here
-
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
                     startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
