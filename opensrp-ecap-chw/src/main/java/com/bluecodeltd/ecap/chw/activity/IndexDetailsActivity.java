@@ -471,7 +471,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", hID);
+
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", csw[1]);
+
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
