@@ -55,6 +55,7 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -130,11 +131,28 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = "DOB : " + client.getColumnmaps().get("birthdate");
+        String birthdate = client.getColumnmaps().get("birthdate");
+
+        if(birthdate != null){
+
+            String[] items1 = birthdate.split("-");
+            String date1 = items1[0];
+            String month = items1[1];
+            String year = items1[2];
+
+            String myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
+
+            txtAge.setText("AGE : " + myAge);
+
+        } else {
+
+            txtAge.setText("AGE : Not Set");
+
+        }
 
         txtName.setText(full_name);
         txtGender.setText(gender);
-        txtAge.setText(birthdate);
+
 
         HashMap<String, String> map = new HashMap<>();
 
@@ -165,6 +183,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         return map;
 
+    }
+
+    private String getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
     }
 
     private void setupViewPager(){
@@ -435,7 +471,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", hID);
+
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", csw[1]);
+
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
