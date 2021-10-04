@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
 
+    LinearLayout myview;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult;
 
@@ -32,6 +34,7 @@ public class ProfileOverviewFragment extends Fragment {
         sub4 = view.findViewById(R.id.subpop4);
         sub5 = view.findViewById(R.id.subpop5);
         sub6 = view.findViewById(R.id.subpop6);
+        myview = view.findViewById(R.id.myview);
         txtReferred = view.findViewById(R.id.referred);
         txtEnrolled = view.findViewById(R.id.enrolled);
         txtArtCheckbox = view.findViewById(R.id.is_art);
@@ -59,6 +62,12 @@ public class ProfileOverviewFragment extends Fragment {
         assert subpop4 != null;
         assert subpop5 != null;
         assert subpop6 != null;
+
+        if(mymap.get("date_started_art") != null){
+            myview.setVisibility(View.VISIBLE);
+        } else {
+            myview.setVisibility(View.GONE);
+        }
 
         if(Objects.equals(subpop1, "true")){
             sub1.setVisibility(View.VISIBLE);

@@ -89,12 +89,43 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "countyDistrict",
-        "type": "edit_text",
+        "type": "spinner",
         "hint": "District",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "District only takes letters"
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri",
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri",
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select District"
         }
       },
       {
@@ -205,7 +236,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "Caregiver Date of birth",
+        "hint": "VCA Date of birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
