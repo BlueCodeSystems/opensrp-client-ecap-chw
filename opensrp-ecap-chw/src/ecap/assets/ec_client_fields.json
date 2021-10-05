@@ -132,10 +132,9 @@
         },
         {
           "column_name": "is_hiv_positive",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "is_hiv_positive"
+            "field":  "attributes.is_hiv_positive"
           }
         },
         {
@@ -2064,6 +2063,13 @@
           }
         },
         {
+          "column_name": "caregiver_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_lastname"
+          }
+        },
+        {
           "column_name": "adolescent_phone",
           "type": "Client",
           "json_mapping": {
@@ -2163,10 +2169,10 @@
           }
         },
         {
-          "column_name": "vl_result",
+          "column_name": "vl_last_result",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.vl_result"
+            "field": "attributes.vl_last_result"
           }
         },
         {
