@@ -356,11 +356,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
                     String[] csw = caseworker.split("\\s+");
-
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("base_entity_id"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", txtAge.getText().toString());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(55).put("value", csw[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", "yes");
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(55).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(56).put("value", csw[1]);
+
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
