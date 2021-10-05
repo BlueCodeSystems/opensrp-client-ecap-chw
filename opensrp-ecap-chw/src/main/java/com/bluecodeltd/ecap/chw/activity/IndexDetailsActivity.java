@@ -306,6 +306,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(4).put("value", "subpop5");
                     //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(5).put("value", "subpop6");
 
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", txtAge.getText().toString());
+
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
@@ -415,6 +417,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     }
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", txtAge.getText().toString());
+
+                    if(client.getColumnmaps().get("subpop1") != null){
+
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", client.getColumnmaps().get("subpop1"));
+
+                    } else {
+
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", "false");
+                    }
+
+
 
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);

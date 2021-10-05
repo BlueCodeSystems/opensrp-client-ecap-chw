@@ -213,19 +213,18 @@
         </LinearLayout>
 
 
-
-    <LinearLayout
+    <RelativeLayout
+        android:visibility="visible"
         android:id="@+id/myview"
-        android:visibility="gone"
-        android:orientation="vertical"
+        android:background="@color/overview_header_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/myart"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/overview_header_bg"
+            android:layout_marginRight="40dp"
             android:gravity="left"
             android:paddingLeft="@dimen/contact_drawable_padding"
             android:paddingTop="@dimen/contact_drawable_padding"
@@ -236,6 +235,27 @@
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/arrow_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@color/overview_header_bg"
+            android:gravity="center_vertical"
+            android:onClick="mClick"
+            android:src="@drawable/ic_down" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/mylayout"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -258,18 +278,17 @@
 
 
             <TextView
-                android:layout_weight="1"
                 android:id="@+id/is_art"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="start"
                 android:paddingLeft="@dimen/contact_drawable_padding"
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:text="Yes"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                />
+                android:textColor="@color/black_text_color" />
 
         </LinearLayout>
 
@@ -561,7 +580,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
     </LinearLayout>
 
 
