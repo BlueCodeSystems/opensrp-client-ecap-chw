@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -18,7 +22,9 @@ import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
 
-    LinearLayout myview;
+    RelativeLayout myview;
+    LinearLayout myview2;
+    ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult;
 
@@ -28,6 +34,8 @@ public class ProfileOverviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
 
         txtArtNumber = view.findViewById(R.id.art_number);
+        myview2 = view.findViewById(R.id.mylayout);
+        imgBtn = view.findViewById(R.id.arrow_button);
         sub1 = view.findViewById(R.id.subpop1);
         sub2 = view.findViewById(R.id.subpop2);
         sub3 = view.findViewById(R.id.subpop3);
@@ -159,9 +167,16 @@ public class ProfileOverviewFragment extends Fragment {
             txtMMDResult.setText("N/A");
         }
 
+        imgBtn.setOnClickListener(v -> {
+
+            TransitionManager.beginDelayedTransition(myview2, new AutoTransition());
+            myview2.setVisibility(View.VISIBLE);
+            // imgBtn.setImageResource(R.drawable.goto_arrow);
+
+        });
+
 
         return view;
 
     }
-
 }
