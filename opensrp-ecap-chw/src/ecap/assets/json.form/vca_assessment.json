@@ -86,6 +86,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
+        "read_only": "true",
         "type": "edit_text",
         "hint": "VCA Age",
         "calculation": {
@@ -1195,37 +1196,32 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "eyp_population_vca_assessment",
         "type": "check_box",
-        "label": "EYP Population Category based on assessment (Tick all that Apply)",
+        "read_only":"true",
+        "label": "EYP Population Category based on assessment",
         "options": [
           {
-            "key": "Child/Adolescent Living with HIV (C/ALHIV) ART Number",
-            "text": "Child/Adolescent Living with HIV (C/ALHIV) ART Number",
-            "value": "false"
+            "key": "subpop1",
+            "text": "Child/Adolescent Living with HIV (C/ALHIV) ART Number"
           },
           {
-            "key": "HIV-Exposed Infant (HEI), (for child 0-2 years old)",
-            "text": "HIV-Exposed Infant (HEI), (for child 0-2 years old)",
-            "value": "false"
+            "key": "subpop2",
+            "text": "HIV-Exposed Infant (HEI), (for child 0-2 years old)"
           },
           {
-            "key": "Children of People Living with HIV",
-            "text": "Children of People Living with HIV",
-            "value": "false"
+            "key": "subpop3",
+            "text": "Children of People Living with HIV"
           },
           {
-            "key": "Children of Female Sex Worker",
-            "text": "Children of Female Sex Worker",
-            "value": "false"
+            "key": "subpop4",
+            "text": "Children of Female Sex Worker"
           },
           {
-            "key": "Girls at risk of HIV infection (at-risk AGYW)",
-            "text": "Girls at risk of HIV infection (at-risk AGYW)",
-            "value": "false"
+            "key": "subpop5",
+            "text": "Girls at risk of HIV infection (at-risk AGYW)"
           },
           {
-            "key": "Children/adolescent who has experienced sexual violence/gender-based violence",
-            "text": "Children/adolescent who has experienced sexual violence/gender-based violence",
-            "value": "false"
+            "key": "subpop6",
+            "text": "Children/adolescent who has experienced sexual violence/gender-based violence"
           }
         ]
       },
