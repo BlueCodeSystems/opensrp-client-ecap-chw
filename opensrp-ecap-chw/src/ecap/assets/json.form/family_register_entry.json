@@ -151,7 +151,6 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only":"true",
         "label": "Subpopulation (tick as appropriate):",
         "options": [
           {

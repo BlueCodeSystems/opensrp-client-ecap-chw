@@ -138,8 +138,8 @@
         "calculation": {
           "actions":
           "calculation = 'try again'"
-          }
-        },
+        }
+      },
       {
         "key": "Residential_Address",
         "openmrs_entity_parent": "usual_residence",
@@ -189,6 +189,10 @@
         "v_numeric": {
           "value": "true",
           "err": "art numbers can only contain numbers "
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         }
       },
       {
