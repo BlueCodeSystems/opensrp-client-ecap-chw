@@ -25,6 +25,7 @@ public class IndexRegisterModel implements IndexRegisterContract.Model {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
+            //TODO Set Entity ID from json property called entity_id or generate new uuid
             String entityId  = JsonFormUtils.generateRandomUUIDString();
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);

@@ -75,5 +75,8 @@ public class Constants extends CoreConstants {
         String EC_MOTHER_INDEX = "ec_mother_index";
         String EC_POPULATION = "ec_sub_population";
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
+        String EC_SERVICE_REPORT = "ec_service_report";
+        String EC_ASSESSMENT = "ec_assessment";
+
     }
 }

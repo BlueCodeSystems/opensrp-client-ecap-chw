@@ -530,16 +530,17 @@
         }
       },
       {
-        "key": "art_no_vca_assessment",
+        "key": "art_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_no_vca_assessment",
+        "openmrs_entity_id": "art_number",
         "type": "edit_text",
+        "read_only": "true",
         "hint": "ART Number",
         "edit_type": "number",
         "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
         },
         "relevance": {
           "rules-engine": {
@@ -617,31 +618,6 @@
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "vca_skip_question",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Choose HIV Risk Assessment Questions Category",
-        "values": [
-          "Assessment for all VCA",
-          "Assessment for VCA 10-17 years old",
-          "Both"
-        ],
-        "keys": [
-          "Assessment for all VCA",
-          "Assessment for VCA 10-17 years old",
-          "Both"
-        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
