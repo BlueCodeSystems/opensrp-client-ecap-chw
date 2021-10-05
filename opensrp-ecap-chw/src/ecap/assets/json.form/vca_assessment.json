@@ -58,7 +58,7 @@
       {
         "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "read_only": "true",
         "type": "edit_text",
@@ -87,6 +87,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
         "type": "edit_text",
+        "read_only": true,
         "hint": "VCA Age",
         "calculation": {
           "rules-engine": {
@@ -99,7 +100,7 @@
       {
         "key": "gender",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person",
         "openmrs_entity_id": "gender",
         "read_only": "true",
         "type": "edit_text",
@@ -108,7 +109,7 @@
       {
         "key": "vca_id",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "vca_id",
         "type": "edit_text",
         "hint": "VCA ID",
@@ -169,7 +170,7 @@
       {
         "key": "district",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "district",
         "type": "edit_text",
         "read_only": "true",
@@ -204,11 +205,11 @@
       {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the VCA HIV Positive",
-        "read_only": true,
+        "read_only": false,
         "options": [
           {
             "key": "yes",
@@ -221,10 +222,10 @@
         ]
       },
       {
-        "key": "vca_art_vca_assessment",
+        "key": "vca_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_art_vca_assessment",
+        "openmrs_entity_id": "vca_art",
         "type": "native_radio",
         "label": "Is the VCA on ART?",
         "options": [
@@ -266,10 +267,10 @@
         }
       },
       {
-        "key": "date_initiated_art_vca_assessment",
+        "key": "date_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_initiated_art_vca_assessment",
+        "openmrs_entity_id": "date_art",
         "type": "date_picker",
         "hint": "When was the VCA initiated on ART?",
         "expanded": false,
@@ -291,10 +292,10 @@
         }
       },
       {
-        "key": "appointments_vca_assessment",
+        "key": "appointment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "appointments_vca_assessment",
+        "openmrs_entity_id": "appointment",
         "type": "native_radio",
         "label": "Has the VCA been regularly \nattending ART appointments \nand collecting drugs from the \nfacility on schedule?",
         "options": [
@@ -336,10 +337,10 @@
         }
       },
       {
-        "key": "taking_art_vca_assessment",
+        "key": "taking_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "taking_art_vca_assessment",
+        "openmrs_entity_id": "taking_art",
         "type": "native_radio",
         "label": "In the past year, has the VCA been taking ART regularly as prescribed?",
         "options": [
@@ -381,10 +382,10 @@
         }
       },
       {
-        "key": "months_medication_vca_assessment",
+        "key": "months_medication",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "months_medication_vca_assessment",
+        "openmrs_entity_id": "months_medication",
         "type": "spinner",
         "hint": "How many months of medications are typically received from the facility?",
         "values": [
@@ -410,10 +411,10 @@
         }
       },
       {
-        "key": "viral_load_vca_assessment",
+        "key": "viral_load",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "viral_load_vca_assessment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load",
         "type": "native_radio",
         "label": "Has the VCA had a viral load test in the past 12 months?",
         "options": [
@@ -455,10 +456,10 @@
         }
       },
       {
-        "key": "documented_vca_assessment",
+        "key": "documented",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "documented_vca_assessment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "documented",
         "type": "native_radio",
         "label": "Was the VCA documented as virally suppressed (1000 copies/mL) in the most recent viral load test?",
         "options": [
@@ -482,17 +483,13 @@
         }
       },
       {
-        "key": "vl_result_vca_assessment",
+        "key": "vl_result",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "vl_result_vca_assessment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_result",
         "type": "edit_text",
         "hint": "VL Result",
         "edit_type": "number",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -502,10 +499,10 @@
         }
       },
       {
-        "key": "facility_vca_assessment",
+        "key": "art_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "facility_vca_assessment",
+        "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
         "hint": "Name of Facility where VCA receives ART",
         "edit_type": "name",
@@ -524,7 +521,7 @@
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "read_only": "true",
@@ -543,10 +540,10 @@
         }
       },
       {
-        "key": "hiv_test_vca_assessment",
+        "key": "hiv_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hiv_test_vca_assessment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test",
         "type": "native_radio",
         "label": "Was the HIV test done less than 6 months ago?",
         "label_text_style": "bold",
@@ -572,10 +569,10 @@
         }
       },
       {
-        "key": "exposed_vca_assessment",
+        "key": "vca_exposed",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "exposed_vca_assessment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_exposed",
         "type": "native_radio",
         "label": "Since the last HIV test, has the VCA been exposed to: Breastfeeding, \nSexual   abuse   or Rape,\n Tattoos/piercings",
         "label_text_style": "bold",
@@ -619,10 +616,10 @@
         }
       },
       {
-        "key": "biological_mother_vca_assessment",
+        "key": "biological_mother",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "biological_mother_vca_assessment",
+        "openmrs_entity_id": "biological_mother",
         "type": "native_radio",
         "label": "Is the biological mother HIV positive?",
         "options": [
@@ -649,10 +646,10 @@
         }
       },
       {
-        "key": "parents_deceased_vca_assessment",
+        "key": "parents_deceased",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "parents_deceased_vca_assessment",
+        "openmrs_entity_id": "parents_deceased",
         "type": "native_radio",
         "label": "Are one or both biological parents deceased due to chronic illness or HIV?",
         "options": [
@@ -675,10 +672,10 @@
         }
       },
       {
-        "key": "siblings_deceased_vca_assessment",
+        "key": "siblings_deceased",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "siblings_deceased_vca_assessment",
+        "openmrs_entity_id": "siblings_deceased",
         "type": "native_radio",
         "label": "Are any biological siblings deceased due to chronic illness or HIV?",
         "options": [
@@ -701,10 +698,10 @@
         }
       },
       {
-        "key": "tb_symptoms_vca_assessment",
+        "key": "tb_symptoms",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tb_symptoms_vca_assessment",
+        "openmrs_entity_id": "tb_symptoms",
         "type": "native_radio",
         "label": "Does the child have any TB symptoms including cough, fever, weight loss/poor weight gain, or night sweats?",
         "options": [
@@ -727,10 +724,10 @@
         }
       },
       {
-        "key": "child_sick_vca_assessment",
+        "key": "child_sick",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_sick_vca_assessment",
+        "openmrs_entity_id": "child_sick",
         "type": "native_radio",
         "label": "In the last 6 months, has the child been sick more than other children or been admitted to hospital?",
         "options": [
@@ -753,10 +750,10 @@
         }
       },
       {
-        "key": "rashes_vca_assessment",
+        "key": "rashes",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "rashes_vca_assessment",
+        "openmrs_entity_id": "rashes",
         "type": "native_radio",
         "label": "Has the child had frequent rashes or other skin problems?",
         "options": [
@@ -779,10 +776,10 @@
         }
       },
       {
-        "key": "discharge_vca_assessment",
+        "key": "discharge",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "discharge_vca_assessment",
+        "openmrs_entity_id": "discharge",
         "type": "native_radio",
         "label": "Has the child had discharge from his or her ear?",
         "options": [
@@ -805,10 +802,10 @@
         }
       },
       {
-        "key": "female_sex_worker_vca_assessment",
+        "key": "female_sex_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "female_sex_worker_vca_assessment",
+        "openmrs_entity_id": "female_sex_worker",
         "type": "native_radio",
         "label_text_style": "bold",
         "label": "Is the primary caregiver a female sex worker? (Do not ask question directly. Probe)",
@@ -832,10 +829,10 @@
         }
       },
       {
-        "key": "sexually_active_vca_assessment",
+        "key": "sexually_active",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sexually_active_vca_assessment",
+        "openmrs_entity_id": "sexually_active",
         "type": "native_radio",
         "label": "Have you ever been sexually active?",
         "options": [
@@ -858,10 +855,10 @@
         }
       },
       {
-        "key": "sex_positive_vca_assessment",
+        "key": "sex_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sex_positive_vca_assessment",
+        "openmrs_entity_id": "sex_positive",
         "type": "native_radio",
         "label": "Have you had sex with someone whose HIV status you did not know, or who was HIV-positive?",
         "options": [
@@ -884,10 +881,10 @@
         }
       },
       {
-        "key": "sexual_partner_vca_assessment",
+        "key": "sexual_partner",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sexual_partner_vca_assessment",
+        "openmrs_entity_id": "sexual_partner",
         "type": "native_radio",
         "label": "Have you ever had more than one sexual partner in the same month?",
         "options": [
@@ -910,10 +907,10 @@
         }
       },
       {
-        "key": "private_parts_vca_assessment",
+        "key": "private_parts",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "private_parts_vca_assessment",
+        "openmrs_entity_id": "private_parts",
         "type": "native_radio",
         "label": "Do you have any of the following on your private parts: sores, blisters, or unusual discharge?",
         "options": [
@@ -936,10 +933,10 @@
         }
       },
       {
-        "key": "transactional_sex_vca_assessment",
+        "key": "transactional_sex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "transactional_sex_vca_assessment",
+        "openmrs_entity_id": "transactional_sex",
         "type": "native_radio",
         "label": "Have you ever had transactional sex?",
         "options": [
@@ -962,10 +959,10 @@
         }
       },
       {
-        "key": "sexually_abused_vca_assessment",
+        "key": "sexually_abused",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sexually_abused_vca_assessment",
+        "openmrs_entity_id": "sexually_abused",
         "type": "native_radio",
         "label": "Have you ever been sexually abused/raped?",
         "options": [
@@ -988,10 +985,10 @@
         }
       },
       {
-        "key": "past_year_vca_assessment",
+        "key": "past_year",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "past_year_vca_assessment",
+        "openmrs_entity_id": "past_year",
         "type": "native_radio",
         "label": "Have you been tested for HIV in the past year because you were concerned you may be positive?",
         "options": [
@@ -1014,10 +1011,10 @@
         }
       },
       {
-        "key": "substance_abuse_vca_assessment",
+        "key": "substance_abuse",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "substance_abuse_vca_assessment",
+        "openmrs_entity_id": "substance_abuse",
         "type": "native_radio",
         "label": "Have you ever had an issue with substance abuse that led to risky sexual behaviors?",
         "options": [
@@ -1040,10 +1037,10 @@
         }
       },
       {
-        "key": "been_married_vca_assessment",
+        "key": "been_married",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "been_married_vca_assessment",
+        "openmrs_entity_id": "been_married",
         "type": "native_radio",
         "label": "Have you ever been married?",
         "options": [
@@ -1066,10 +1063,10 @@
         }
       },
       {
-        "key": "given_birth_vca_assessment",
+        "key": "given_birth",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "given_birth_vca_assessment",
+        "openmrs_entity_id": "given_birth",
         "type": "native_radio",
         "label": "Have you ever given birth or been pregnant?",
         "options": [
@@ -1092,10 +1089,10 @@
         }
       },
       {
-        "key": "currently_pregnant_vca_assessment",
+        "key": "currently_pregnant",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "currently_pregnant_vca_assessment",
+        "openmrs_entity_id": "currently_pregnant",
         "type": "native_radio",
         "label": "Are you currently pregnant or breastfeeding?",
         "options": [
@@ -1118,16 +1115,16 @@
         }
       },
       {
-        "key": "vca_vca_assessment",
+        "key": "vca_response",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_vca_assessment",
+        "openmrs_entity_id": "vca_response",
         "type": "native_radio",
         "label_text_style": "bold",
         "label": "Did the VCA have a YES to at least one of the above questions?",
         "options": [
           {
-            "key": "no, ",
+            "key": "no",
             "text": "NO",
             "value": false
           },
@@ -1182,12 +1179,16 @@
         }
       },
       {
-        "key": "eyp_population_vca_assessment",
+        "key": "eyp_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "eyp_population_vca_assessment",
-        "type": "check_box",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "eyp_population",
         "label": "EYP Population Category based on assessment (Tick all that Apply)",
+        "label_info_text": "",
+        "type": "check_box",
+        "exclusive": [
+          "no_one"
+        ],
         "options": [
           {
             "key": "Child/Adolescent Living with HIV (C/ALHIV) ART Number",
@@ -1256,10 +1257,10 @@
         }
       },
       {
-        "key": "date_vca_assessment",
+        "key": "date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_vca_assessment",
+        "openmrs_entity_id": "date",
         "type": "date_picker",
         "hint": "Date",
         "expanded": false,
