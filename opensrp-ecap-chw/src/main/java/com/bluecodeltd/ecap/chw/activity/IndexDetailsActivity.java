@@ -1,5 +1,12 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
+
+import timber.log.Timber;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,21 +17,22 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
+import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
+import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
+import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
+import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -47,26 +55,26 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import timber.log.Timber;
-
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    public ViewPager mViewPager;
-    public ProfileViewPagerAdapter mPagerAdapter;
     private FloatingActionButton fab;
-    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
+    public ViewPager mViewPager;
+    public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
     private Toolbar toolbar;
 
@@ -83,14 +91,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         rhousehold = findViewById(R.id.household);
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
+
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -106,8 +115,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String subpop4 =  client.getColumnmaps().get("subpo4");*/
 
 
-        mTabLayout = findViewById(R.id.tabs);
-        mViewPager = findViewById(R.id.viewpager);
+        mTabLayout =  findViewById(R.id.tabs);
+        mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
         //updateTasksTabTitle();
@@ -121,12 +130,29 @@ public class IndexDetailsActivity extends AppCompatActivity {
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String gender = client.getColumnmaps().get("gender");
-        String birthdate = "DOB : " + client.getColumnmaps().get("birthdate");
+        String gender =  client.getColumnmaps().get("gender");
+        String birthdate = client.getColumnmaps().get("birthdate");
+
+        if(birthdate != null){
+
+            String[] items1 = birthdate.split("-");
+            String date1 = items1[0];
+            String month = items1[1];
+            String year = items1[2];
+
+            String myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
+
+            txtAge.setText(myAge);
+
+        } else {
+
+            txtAge.setText("0");
+
+        }
 
         txtName.setText(full_name);
         txtGender.setText(gender);
-        txtAge.setText(birthdate);
+
 
         HashMap<String, String> map = new HashMap<>();
 
@@ -153,13 +179,30 @@ public class IndexDetailsActivity extends AppCompatActivity {
         map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
         map.put("relation", client.getColumnmaps().get("relation"));
         map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
-        map.put("caseworker_firstname", client.getColumnmaps().get("caseworker_firstname"));
-        map.put("caseworker_lastname", client.getColumnmaps().get("caseworker_lastname"));
-        map.put("is_hiv_positive", client.getColumnmaps().get("is_hiv_positive"));
+
 
         return map;
 
     }
+
+    private String getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
+    }
+
 
     private void setupViewPager() {
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
@@ -314,9 +357,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     String caseworker = prefs.getString("ecap", "");
                     String[] csw = caseworker.split("\\s+");
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", csw[1]);
-
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", txtAge.getText().toString());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(55).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", "yes");
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
