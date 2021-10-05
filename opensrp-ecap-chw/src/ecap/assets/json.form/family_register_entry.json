@@ -151,7 +151,6 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only":"true",
         "label": "Subpopulation (tick as appropriate):",
         "options": [
           {
@@ -1821,10 +1820,6 @@
           "value": "true",
           "err": "ART number should only contain numbers"
         },
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should contain numbers  in the format of ^XXXX-XXX-XXXXX-X"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2221,7 +2216,6 @@
         "type": "edit_text",
         "hint": "Household ID",
         "edit_type": "number",
-        "read_only" : "true",
         "v_required": {
           "value": false,
           "err": "Please enter household ID"
@@ -2245,7 +2239,6 @@
         "openmrs_entity_id": "caregiver_id",
         "type": "edit_text",
         "hint": "Caregiver ID",
-        "read_only" : "true",
         "edit_type": "number",
         "v_required": {
           "value": false,
@@ -2293,7 +2286,6 @@
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "Caregiver First Name ",
-        "read_only" : "true",
         "edit_type": "name",
         "look_up": "true",
         "relevance": {
@@ -2310,7 +2302,6 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "read_only" : "true",
         "hint": "Caregiver Last Name ",
         "edit_type": "name",
         "look_up": "true",
@@ -2710,7 +2701,7 @@
         "key": "current_address",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Address",
+        "text": "Current Address",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -2819,6 +2810,112 @@
         "v_numeric": {
           "value": false,
           "err": "Current village"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "permanent_address",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Permanent Address",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "permanent_plot_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "permanent_plot_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "House number/plot number",
+        "v_numeric": {
+          "value": false,
+          "err": "permanent number"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "permanent_street_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "permanent_street_name",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Street Name",
+        "v_numeric": {
+          "value": false,
+          "err": "Current street name"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "permanent_township_compound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "permanent_township_compound",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Township/Compound where identified potential beneficiary resides",
+        "v_numeric": {
+          "value": false,
+          "err": "Township/Compound"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "permanent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "permanent_village",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Village where identified potential beneficiary resides",
+        "v_numeric": {
+          "value": false,
+          "err": "permanent village"
         },
         "v_regex": {
           "value": "",
@@ -3424,17 +3521,7 @@
               "value": false,
               "err": "This is a required field"
             }
-
-
-          }
-          ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-
-      }}},
+          },
           {
             "key": "child_nut_assessment",
             "type": "label",
@@ -3450,17 +3537,23 @@
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "nutrition_assessment",
-            "type": "repeating_group",
-            "reference_edit_text": "",
-            "reference_edit_text_hint": "Under 5 Children in Household",
-            "repeating_group_label": "Child",
-            "value": [
-              {
+            "type": "edit_text",
+            "read_only": "true",
+            "hint": "Child Nutrition Assessment (under 5)",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_regex": {
+              "value": "[A-Za-z\\s\\.\\-]*",
+              "err": "Nutrition assessment"
+            }
+          },
+          {
             "key": "muac_score",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "muac_score",
             "type": "edit_text",
+            "read_only": "true",
             "hint": "MUAC Score",
             "edit_type": "name",
             "look_up": "true",
