@@ -124,13 +124,22 @@
         }
       },
       {
-        "key": "caregiver_firstname",
+        "key": "caregiverFirstName",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_firstname",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "Name of caregiver"
+        "hint": "Caregiver First Name"
+      },
+      {
+        "key": "caregiverLastName",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_lastname",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Caregiver Second Name"
       },
       {
         "key": "adolescent_phone",
@@ -209,15 +218,17 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the VCA HIV Positive",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": false
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "No",
+            "value": false
           }
         ]
       },
@@ -259,10 +270,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -448,12 +458,11 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:viral_load": {
+            "type": "string",
+            "ex": "greaterThan(., \"no\")"
           }
-        }
+      }
       },
       {
         "key": "documented",
@@ -483,13 +492,14 @@
         }
       },
       {
-        "key": "vl_result",
+        "key": "vl_last_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_result",
+        "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
         "hint": "VL Result",
         "edit_type": "number",
+        "read_only": true,
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -608,10 +618,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_exposed": {
+            "type": "string",
+            "ex": "greaterThan(., \"yes\")"
           }
         }
       },
@@ -1124,13 +1133,13 @@
         "label": "Did the VCA have a YES to at least one of the above questions?",
         "options": [
           {
-            "key": "no",
-            "text": "NO",
+            "key": "yes",
+            "text": "Yes",
             "value": false
           },
           {
-            "key": "yes",
-            "text": "Yes",
+            "key": "no",
+            "text": "NO",
             "value": false
           }
         ],
@@ -1153,10 +1162,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_response": {
+            "type": "string",
+            "ex": "greaterThan(., \"yes\")"
           }
         }
       },
@@ -1171,10 +1179,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_response": {
+            "type": "string",
+            "ex": "greaterThan(., \"no\")"
           }
         }
       },
@@ -1183,42 +1190,34 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eyp_population",
-        "label": "EYP Population Category based on assessment (Tick all that Apply)",
-        "label_info_text": "",
         "type": "check_box",
-        "exclusive": [
-          "no_one"
-        ],
+        "read_only":"true",
+        "label_text_style": "bold",
+        "label": "EYP Population Category based on assessment",
         "options": [
           {
-            "key": "Child/Adolescent Living with HIV (C/ALHIV) ART Number",
-            "text": "Child/Adolescent Living with HIV (C/ALHIV) ART Number",
-            "value": "false"
+            "key": "subpop1",
+            "text": "Child/Adolescent Living with HIV (C/ALHIV) ART Number"
           },
           {
-            "key": "HIV-Exposed Infant (HEI), (for child 0-2 years old)",
-            "text": "HIV-Exposed Infant (HEI), (for child 0-2 years old)",
-            "value": "false"
+            "key": "subpop2",
+            "text": "HIV-Exposed Infant (HEI), (for child 0-2 years old)"
           },
           {
-            "key": "Children of People Living with HIV",
-            "text": "Children of People Living with HIV",
-            "value": "false"
+            "key": "subpop3",
+            "text": "Children of People Living with HIV"
           },
           {
-            "key": "Children of Female Sex Worker",
-            "text": "Children of Female Sex Worker",
-            "value": "false"
+            "key": "subpop4",
+            "text": "Children of Female Sex Worker"
           },
           {
-            "key": "Girls at risk of HIV infection (at-risk AGYW)",
-            "text": "Girls at risk of HIV infection (at-risk AGYW)",
-            "value": "false"
+            "key": "subpop5",
+            "text": "Girls at risk of HIV infection (at-risk AGYW)"
           },
           {
-            "key": "Children/adolescent who has experienced sexual violence/gender-based violence",
-            "text": "Children/adolescent who has experienced sexual violence/gender-based violence",
-            "value": "false"
+            "key": "subpop6",
+            "text": "Children/adolescent who has experienced sexual violence/gender-based violence"
           }
         ]
       },
