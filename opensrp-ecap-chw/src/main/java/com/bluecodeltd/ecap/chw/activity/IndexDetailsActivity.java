@@ -10,6 +10,7 @@ import timber.log.Timber;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -142,11 +143,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             String myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
 
-            txtAge.setText("AGE : " + myAge);
+            txtAge.setText(myAge);
 
         } else {
 
-            txtAge.setText("AGE : Not Set");
+            txtAge.setText("Not Set");
 
         }
 
@@ -294,6 +295,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("family_register");
                     String fullCaregiverName = getCareGiverFullname(client);
                     String[] caregiverNAmes = fullCaregiverName.split("\\s+");
+
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworker = prefs.getString("ecap", "");
 
@@ -321,7 +323,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(27).put("value", client.getColumnmaps().get("physical_address"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(28).put("value", client.getColumnmaps().get("caregiver_nrc"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(29).put("value", client.getColumnmaps().get("phone"));
-
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(4).put("value", "add41");
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("caregiver_id"));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", client.getColumnmaps().get("gender"));
@@ -347,6 +348,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("vca_assessment");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", txtAge.getText().toString());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
+
+
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
@@ -509,6 +520,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
 
             try {
 
