@@ -16,17 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.util.FormUtils;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class MotherDetail extends AppCompatActivity {
@@ -159,7 +163,9 @@ public class MotherDetail extends AppCompatActivity {
                     }
 
                     //TODO Pre populate fields here
+                    ObjectMapper oMapper = new ObjectMapper();
 
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(MotherDao.getMotherByBaseEntityId(client.entityId()), Map.class));
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
                     startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
