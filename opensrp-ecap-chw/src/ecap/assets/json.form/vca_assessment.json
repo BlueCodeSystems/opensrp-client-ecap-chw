@@ -107,13 +107,14 @@
         "hint": "Beneficiary Gender"
       },
       {
-        "key": "vca_id",
+        "key": "base_entity_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "vca_id",
+        "openmrs_entity_id": "base_entity_id",
         "type": "edit_text",
         "hint": "VCA ID",
-        "edit_type": "number",
+        "edit_type": "name",
+        "read_only": true,
         "v_required": {
           "value": false,
           "err": "Please enter VCA ID"
