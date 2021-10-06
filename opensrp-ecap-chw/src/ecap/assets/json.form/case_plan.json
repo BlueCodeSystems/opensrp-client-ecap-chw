@@ -126,7 +126,7 @@
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
+        "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "household_id",
         "read_only": "true",
         "type": "edit_text",
@@ -264,9 +264,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "calhiv",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "C/ALHIV?"
+        "type": "native_radio",
+        "label": "C/ALHIV?",
+        "read_only": true,
+        "options": [
+          {
+            "key": "true",
+            "text": "Yes"
+          },
+          {
+            "key": "false",
+            "text": "No"
+          }
+        ]
       },
       {
         "key": "hiv_management",
@@ -997,10 +1007,10 @@
         ]
       },
       {
-        "key": "remarks_child_household_case_plan",
+        "key": "remarks",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "remarks_child_household_case_plan",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "remarks",
         "type": "edit_text",
         "hint": "Additional Remarks by Case Worker",
         "edit_type": "name",
@@ -1010,10 +1020,10 @@
         }
       },
       {
-        "key": "date_signed_child_household_case_plan",
+        "key": "date_signed",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_signed_child_household_case_plan",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_signed",
         "type": "date_picker",
         "hint": "Date Signed",
         "expanded": false,
@@ -1028,10 +1038,10 @@
         }
       },
       {
-        "key": "signature_check_box_child_household_case_plan",
+        "key": "signature_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "signature_check_box_child_household_case_plan",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature_check_box",
         "type": "check_box",
         "label": "I hereby declare that the information provided is true and correct",
         "label_text_style": "italic",
