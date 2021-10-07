@@ -333,6 +333,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "spinner",
+        "read_only": false,
         "hint": "Level of MMD for child ",
         "values": [
           "Less than 3 month",
@@ -777,7 +778,7 @@
           {
             "key": "other_service_household",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
+            "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "other_service_household",
             "type": "edit_text",
             "hint": "Specify other",
