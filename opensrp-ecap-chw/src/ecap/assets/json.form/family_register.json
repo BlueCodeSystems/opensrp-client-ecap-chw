@@ -1817,10 +1817,6 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Indicate ART Number",
-        "v_numeric": {
-          "value": "true",
-          "err": "ART number should only contain numbers"
-        },
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
           "err": "ART should contain numbers  in the format of ^XXXX-XXX-XXXXX-X"
@@ -3182,13 +3178,24 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "relationship",
         "openmrs_entity_id": "contact_relation",
-        "type": "edit_text",
-        "hint": "Relation to Caregiver",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Relation to Caregiver"
-        },
+        "type": "spinner",
+        "hint": "Relationship to Caregiver",
+        "values": [
+          "Self",
+          "Mother",
+          "Father",
+          "Sister",
+          "Brother",
+          "Niece",
+          "Nephew",
+          "Aunt",
+          "Uncle",
+          "Grandfather",
+          "Grandmother",
+          "Cousin",
+          "Son",
+          "Daughter"
+        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
