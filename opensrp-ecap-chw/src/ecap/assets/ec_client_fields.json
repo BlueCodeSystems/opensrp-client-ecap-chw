@@ -1944,10 +1944,10 @@
           }
         },
         {
-          "column_name": "village",
+          "column_name": "adolescent_village",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.village"
+            "field": "attributes.adolescent_village"
           }
         },
         {
@@ -1955,6 +1955,504 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "caregiver_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_firstname"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id"
+          }
+        },
+        {
+          "column_name": "adolescent_phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_phone"
+          }
+        },
+        {
+          "column_name": "physical_address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.physical_address"
+          }
+        },
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
+          }
+        },
+        {
+          "column_name": "caregiver_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_nrc"
+          }
+        },
+        {
+          "column_name": "case_plan_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_date"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.age"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
+          "column_name": "calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.calhiv"
+          }
+        },
+        {
+          "column_name": "vulnerability_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vulnerability_hiv"
+          }
+        },
+        {
+          "column_name": "goal_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal_hiv"
+          }
+        },
+        {
+          "column_name": "service_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_hiv"
+          }
+        },
+        {
+          "column_name": "service_referred_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_hiv"
+          }
+        },
+        {
+          "column_name": "service_referred_institution_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_institution_hiv"
+          }
+        },
+        {
+          "column_name": "due_date_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date_hiv"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q1_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q1_hiv"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q2_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q2_hiv"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q3_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q3_hiv"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q4_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q4_hiv"
+          }
+        },
+        {
+          "column_name": "comments_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_hiv"
+          }
+        },
+        {
+          "column_name": "vulnerability_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vulnerability_healthy"
+          }
+        },
+        {
+          "column_name": "goal_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal_healthy"
+          }
+        },
+        {
+          "column_name": "service_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_healthy"
+          }
+        },
+        {
+          "column_name": "service_referred_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_healthy"
+          }
+        },
+        {
+          "column_name": "due_date_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date_healthy"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q1_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q1_healthy"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q2_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q2_healthy"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q3_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q3_healthy"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q4_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q4_healthy"
+          }
+        },
+        {
+          "column_name": "comments_healthy",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_healthy"
+          }
+        },
+        {
+          "column_name": "vulnerability_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vulnerability_safe"
+          }
+        },
+        {
+          "column_name": "goal_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal_safe"
+          }
+        },
+        {
+          "column_name": "goal_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal_safe"
+          }
+        },
+        {
+          "column_name": "service_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_safe"
+          }
+        },
+        {
+          "column_name": "service_referred_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_safe"
+          }
+        },
+        {
+          "column_name": "service_referred_institution_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_institution_safe"
+          }
+        },
+        {
+          "column_name": "due_date_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date_safe"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q1_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q1_safe"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q2_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q2_safe"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q3_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q3_safe"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q4_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q4_safe"
+          }
+        },
+        {
+          "column_name": "comments_safe",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_safe"
+          }
+        },
+        {
+          "column_name": "vulnerability_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vulnerability_schooled"
+          }
+        },
+        {
+          "column_name": "goal_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal_schooled"
+          }
+        },
+        {
+          "column_name": "service_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_schooled"
+          }
+        },
+        {
+          "column_name": "service_referred_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_schooled"
+          }
+        },
+        {
+          "column_name": "service_referred_institution_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_institution_schooled"
+          }
+        },
+        {
+          "column_name": "due_date_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date_schooled"
+          }
+        },
+        {
+          "column_name": "due_date_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date_schooled"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q1_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q1_schooled"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q2_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q2_schooled"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q3_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q3_schooled"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q4_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q4_schooled"
+          }
+        },
+        {
+          "column_name": "comments_schooled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_schooled"
+          }
+        },
+        {
+          "column_name": "vulnerability_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vulnerability_stable"
+          }
+        },
+
+        {
+          "column_name": "goal_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal_stable"
+          }
+        },
+        {
+          "column_name": "service_referred_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_stable"
+          }
+        },
+        {
+          "column_name": "service_referred_institution_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred_institution_stable"
+          }
+        },
+        {
+          "column_name": "due_date_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date_stable"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q1_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q1_stable"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q2_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q2_stable"
+          }
+        },
+        {
+          "column_name": "status_follow_up_q4_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status_follow_up_q4_stable"
+          }
+        },
+        {
+          "column_name": "comments_stable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_stable"
+          }
+        },
+        {
+          "column_name": "remarks",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.remarks"
+          }
+        },
+        {
+          "column_name": "date_signed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_signed"
+          }
+        },
+        {
+          "column_name": "signature_check_box",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.signature_check_box"
           }
         }
       ]
