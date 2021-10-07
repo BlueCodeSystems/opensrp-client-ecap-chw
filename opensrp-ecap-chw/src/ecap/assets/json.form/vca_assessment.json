@@ -629,6 +629,7 @@
           }
         }
       },
+
       {
         "key": "biological_mother",
         "openmrs_entity_parent": "",
@@ -653,9 +654,10 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
