@@ -132,7 +132,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("birthdate");
+        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
 
         if(birthdate != null){
 
@@ -389,7 +389,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("vca_case_plan");
+                    indexRegisterForm = formUtils.getFormJson("case_plan");
 
                     //  startFormActivity(indexRegisterForm);
                     Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
@@ -416,8 +416,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Timber.e(e);
                     }
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
 
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("base_entity_id"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("base_entity_id"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", hID);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", csw[1]);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", txtAge.getText().toString());
 
                     if(client.getColumnmaps().get("subpop1") != null){
@@ -429,12 +445,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", "false");
                     }
 
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
 
-
-
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
-                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
                 } catch (Exception e) {
                     e.printStackTrace();

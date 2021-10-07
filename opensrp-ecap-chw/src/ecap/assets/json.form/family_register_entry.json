@@ -1,5 +1,5 @@
 {
-  "count": 2,
+  "count": 1,
   "encounter_type": "Family Registration",
   "entity_id": "",
   "show_errors_on_submit": true,
@@ -53,7 +53,6 @@
   },
   "step1": {
     "title": "Household Screening",
-    "next": "step2",
     "fields": [
       {
         "key": "index_vca_sub_pop_part1",
@@ -66,68 +65,44 @@
         }
       },
       {
-        "key": "first_name",
+        "key": "subpop_vca_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "subpop_vca_first_name",
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of VCA only take letters"
+          "value": "[A-Za-z]*",
+          "err": "first name of VCA only accepts letters"
         }
       },
       {
-        "key": "last_name",
+        "key": "subpop_vca_last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "subpop_vca_last_name",
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of VCA only take letters"
+          "value": "[A-Za-z]*",
+          "err": "Last name of VCA only accepts letters"
         }
-      },
-      {
-        "key": "subpop_dob",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_dob",
-        "read_only": "true",
-        "type": "date_picker",
-        "hint": "VCA Date Of Birth",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "01-01-1995",
-        "max_date": "today"
       },
       {
         "key": "subpop_age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_age",
-        "read_only": "true",
-        "font": "bald",
         "type": "edit_text",
         "hint": "Age of VCA",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_calculation.yml"
-            }
-          }
+        "value": "",
+        "v_numeric": {
+          "value": "true",
+          "err": "Age can only contain numbers"
         }
       },
       {
@@ -135,15 +110,18 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "subpop_sex",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
-        "hint": "Gender of VCA",
-        "value": "",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of VCA only take letters"
-        }
+        "type": "native_radio",
+        "label": "Gender of VCA",
+        "options": [
+          {
+            "key": "male",
+            "text":"Male"
+          },
+          {
+            "key": "female",
+            "text":"Female"
+          }
+        ]
       },
       {
         "key": "sub_population",
@@ -184,8 +162,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop_health_facility",
-        "read_only": "true",
-        "font": "bald",
         "type": "edit_text",
         "hint": "Name of Health Facility",
         "edit_type": "name",
@@ -206,28 +182,94 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "part_a_province",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
+        "type": "spinner",
         "hint": "Province",
         "value": "",
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
         "v_required": {
           "value": false,
           "err": "Please enter the Province"
         }
       },
       {
-        "key": "part_a_district",
+        "key": "part_a_district_central",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_a_district",
-        "read_only": "true",
-        "font": "bald",
-        "type": "text_edit",
-        "hint": "District",
+        "openmrs_entity_id": "part_a_district_central",
+        "type": "spinner",
+        "hint": "District in Central Province",
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
         "v_required": {
           "value": false,
           "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "part_a_district_southern",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "part_a_district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -235,8 +277,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "subpop_ward",
-        "read_only": "true",
-        "font": "bald",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
@@ -250,8 +290,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "subpop_village",
-        "read_only": "true",
-        "font": "bald",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
@@ -261,63 +299,55 @@
         }
       },
       {
-        "key": "subpop_assigned_community_case_worker_fname",
+        "key": "assigned_community_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_assigned_community_case_worker_fname",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "assigned_community_case_worker_fname",
         "type": "edit_text",
         "hint": "First Name of Assigned Community Case Worker",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z]*",
           "err": "First Name of assigned community case worker only take letters"
         }
       },
       {
-        "key": "subpop_assigned_community_case_worker_lname",
+        "key": "assigned_community_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_assigned_community_case_worker_lname",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "assigned_community_case_worker_lname",
         "type": "edit_text",
         "hint": "Last Name of Assigned Community Case Worker",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z]*",
           "err": "Last Name of assigned community case worker only take letters"
         }
       },
       {
-        "key": "subpop_name_of_facility_based_case_worker_fname",
+        "key": "fname_of_facility_based_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_fname",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "fname_of_facility_based_case_worker",
         "type": "edit_text",
         "hint": "First Name of Facility-Based Case Worker",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of facility based case worker only take letters"
+          "value": "[A-Za-z]*",
+          "err": "First Name of facility based case worker only take letters"
         }
       },
       {
-        "key": "subpop_name_of_facility_based_case_worker_lname",
+        "key": "lname_of_facility_based_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_lname",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "lname_of_facility_based_case_worker",
         "type": "edit_text",
         "hint": "Last Name of Facility-Based Case Worker",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of facility based case worker only take letters"
+          "value": "[A-Za-z]*",
+          "err": "Last Name of facility based case worker only take letters"
         }
       },
       {
@@ -335,83 +365,645 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "part_b_province",
-        "read_only": "true",
-        "font": "bald",
-        "type": "text_edit",
-        "hint": "District",
+        "type": "spinner",
+        "hint": "Province",
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
         "v_required": {
           "value": false,
-          "err": "Please enter the District"
+          "err": "Please enter the Province"
         }
       },
       {
-        "key": "part_b_district",
+        "key": "district_central",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_b_district",
-        "read_only": "true",
-        "font": "bald",
-        "type": "text_edit",
-        "hint": "District",
+        "openmrs_entity_id": "district_central",
+        "type": "spinner",
+        "hint": "District in Central Province",
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri"
+        ],
         "v_required": {
           "value": false,
           "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
         }
       },
       {
-        "key": "part_b_ward",
+        "key": "district_southern",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_b_ward",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "district_southern",
+        "type": "spinner",
+        "hint": "District in Southern Province",
+        "values": [
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter the District"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of ward only take letters"
+          "err": "Ward  only takes letters"
         }
       },
       {
-        "key": "part_b_village",
+        "key": "village",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "part_b_village",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Village/Compound only take letters"
+          "err": "Village/Compound  only takes letters"
         }
       },
       {
-        "key": "part_b_health_facility",
+        "key": "chibombo_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "part_b_health_facility",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
-        "hint": "Name of Health Facility",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of VCA only take letters"
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "chibombo_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Chitanda Rural Health Centre",
+          "Kayosha Rural Health Centre",
+          "Mwachisompola Demo Zone Rural Health Centre",
+          "Chibombo Rural Health Centre",
+          "Shimukuni Rural Health Centre",
+          "Chikobo Rural Health Centre",
+          "Mwanjuni Health Post",
+          "Twalumba Rural Health Centre"
+        ],
+        "keys": [
+          "Chitanda Rural Health Centre",
+          "Kayosha Rural Health Centre",
+          "Mwachisompola Demo Zone Rural Health Centre",
+          "Chibombo Rural Health Centre",
+          "Shimukuni Rural Health Centre",
+          "Chikobo Rural Health Centre",
+          "Mwanjuni Health Post",
+          "Twalumba Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "chisamba_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "chisamba_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Liteta District Hospital",
+          "Chisamba Rural Health Centre",
+          "Chisamba Rural Health Centre",
+          "Chipembi Rural Health Centre"
+        ],
+        "keys": [
+          "Liteta District Hospital",
+          "Chisamba Rural Health Centre",
+          "Chisamba Rural Health Centre",
+          "Chipembi Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mkushi_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mkushi_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Chibefwe Rural Health Centre",
+          "Nkumbi Rural Health Centre",
+          "Chalata Rural Health Centre"
+        ],
+        "keys": [
+          "Chibefwe Rural Health Centre",
+          "Nkumbi Rural Health Centre",
+          "Chalata Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mumbwa_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mumbwa_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Mumbwa District hospital",
+          "Nangoma Hospital Affiliated Health Centre",
+          "Bulungu (mumbwa) Urban Health Center",
+          "Lungobe Rural Health Centre",
+          "Chiwena Rural Health Center",
+          "Nalubanda Rural Health Centre",
+          "Nambala Rural Health Centre"
+        ],
+        "keys": [
+          "Mumbwa District hospital",
+          "Nangoma Hospital Affiliated Health Centre",
+          "Bulungu (mumbwa) Urban Health Center",
+          "Lungobe Rural Health Centre",
+          "Chiwena Rural Health Center",
+          "Nalubanda Rural Health Centre",
+          "Nambala Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kabwe_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "kabwe_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Kabwe General Hospital",
+          "Kabwe Mine Hospital",
+          "Kasanda Urban Health Centre",
+          "Katondo Urban Health Centre",
+          "Mahatma Gandhi Memorial Urban Health Centre",
+          "Nakoli Urban Health Centre",
+          "Kawama Urban Health Center",
+          "Bwacha Urban Health Centre",
+          "Natuseko Urban Health Centre",
+          "Ngungu Urban Health Centre",
+          "Makululu Urban Health Centre"
+        ],
+        "keys": [
+          "Kabwe General Hospital",
+          "Kabwe Mine Hospital",
+          "Kasanda Urban Health Centre",
+          "Katondo Urban Health Centre",
+          "Mahatma Gandhi Memorial Urban Health Centre",
+          "Nakoli Urban Health Centre",
+          "Kawama Urban Health Center",
+          "Bwacha Urban Health Centre",
+          "Natuseko Urban Health Centre",
+          "Ngungu Urban Health Centre",
+          "Makululu Urban Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kapiri_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "kapiri_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Kapiri Mposhi Urban Clinic",
+          "Kawama Health Center",
+          "Waya Rural Health Center",
+          "Mukonchi Rural Health Center",
+          "Matilyo Health Post",
+          "Mpunde Rural Health Centre",
+          "Chankomo Rural Health Centre"
+        ],
+        "keys": [
+          "Kapiri Mposhi Urban Clinic",
+          "Kawama Health Center",
+          "Waya Rural Health Center",
+          "Mukonchi Rural Health Center",
+          "Matilyo Health Post",
+          "Mpunde Rural Health Centre",
+          "Chankomo Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "chikankata_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "chikankata_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Chikankata Mission Hospital",
+          "Mubuyu Rural Health Post",
+          "Nansenga Health Center",
+          "Nameembo Rural Health Center"
+        ],
+        "keys": [
+          "Chikankata Mission Hospital",
+          "Mubuyu Rural Health Post",
+          "Nansenga Health Center",
+          "Nameembo Rural Health Center"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mazabuka_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mazabuka_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Hillside Rural HC",
+          "Kaonga Urban HC",
+          "Mazabuka General Hospital",
+          "Nakambala Urban HC",
+          "Kaleya RHC",
+          "Chivuna RHC",
+          "Lubombo Rural Health Centre",
+          "Nega Nega Rural Health Centre",
+          "Mbayamusuma Rural Health Centre",
+          "Magoye Rural Health Centre",
+          "Nanga Rural Health Centre"
+        ],
+        "keys": [
+          "Hillside Rural HC",
+          "Kaonga Urban HC",
+          "Mazabuka General Hospital",
+          "Nakambala Urban HC",
+          "Kaleya RHC",
+          "Chivuna RHC",
+          "Lubombo Rural Health Centre",
+          "Nega Nega Rural Health Centre",
+          "Mbayamusuma Rural Health Centre",
+          "Magoye Rural Health Centre",
+          "Nanga Rural Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "monze_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "monze_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Manungu Urban Health Centre",
+          "Chikuni OPD Mission Hospital",
+          "Monze Mission Hospital",
+          "Hakunkula Rural Health Centre",
+          "Keemba Rural Health Centre",
+          "Monze Urban Health Centre"
+        ],
+        "keys": [
+          "Manungu Urban Health Centre",
+          "Chikuni OPD Mission Hospital",
+          "Monze Mission Hospital",
+          "Hakunkula Rural Health Centre",
+          "Keemba Rural Health Centre",
+          "Monze Urban Health Centre"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "choma_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "choma_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Njase Rural Health Centre",
+          "Mapanza Rural Health Center",
+          "Mangunza Rural Health Center",
+          "Harmony Health Post",
+          "Choma General Hospital",
+          "Batoka Rural Health Centre",
+          "Macha Mission Hospital",
+          "Railway Surgery Urban HC",
+          "Shampande Urban HC"
+        ],
+        "keys": [
+          "Njase Rural Health Centre",
+          "Mapanza Rural Health Center",
+          "Mangunza Rural Health Center",
+          "Harmony Health Post",
+          "Choma General Hospital",
+          "Batoka Rural Health Centre",
+          "Macha Mission Hospital",
+          "Railway Surgery Urban HC",
+          "Shampande Urban HC"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kalomo_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "kalomo_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban"
+        ],
+        "keys": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "namwala_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "namwala_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban",
+          "Chitongo RHC",
+          "Kabulamwanda Rural Health Centre",
+          "Maala Rural Health Centre",
+          "Moboola Rural Health Centre",
+          "Moomba Health Post",
+          "Muchila Rural Health Centre",
+          "Namwala District Hospital"
+        ],
+        "keys": [
+          "Mawaya Urban Clinic",
+          "Kalomo Urban Clinic",
+          "Namwianga Zonal Mission Urban",
+          "Chitongo RHC",
+          "Kabulamwanda Rural Health Centre",
+          "Maala Rural Health Centre",
+          "Moboola Rural Health Centre",
+          "Moomba Health Post",
+          "Muchila Rural Health Centre",
+          "Namwala District Hospital"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "sinazongwe_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sinazongwe_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Maamba Hospital",
+          "Sinazeze RHC"
+        ],
+        "keys": [
+          "Maamba Hospital",
+          "Sinazeze RHC"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "livingstone_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "livingstone_health_facility",
+        "type": "spinner",
+        "hint": "Health Facility",
+        "values": [
+          "Centre Of Excellence HC",
+          "Chreso Ministries Urban HC",
+          "Linda Urban HC",
+          "Libuyu Urban Clinic",
+          "St Joseph's Hospice",
+          "Mahatma Ghandi",
+          "Police Urban",
+          "Maramba Urban HC",
+          "Mosi-oa-Tunya HC"
+        ],
+        "keys": [
+          "Centre Of Excellence HC",
+          "Chreso Ministries Urban HC",
+          "Linda Urban HC",
+          "Libuyu Urban Clinic",
+          "St Joseph's Hospice",
+          "Mahatma Ghandi",
+          "Police Urban",
+          "Maramba Urban HC",
+          "Mosi-oa-Tunya HC"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please enter health facility"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
         }
       },
       {
         "key": "partners",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "partners",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
-        "hint": "Implementing Partner:"
+        "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Implementing Partner:",
+        "values": [
+          "BISO",
+          "COH",
+          "PCZ",
+          "YWCA",
+          "ZEC"
+        ]
       },
       {
         "key": "date_of_screening",
@@ -422,6 +1014,9 @@
         "hint": "Date of Screening",
         "look_up": "true",
         "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
         "min_date": "01-01-1900",
         "max_date": "today"
       },
@@ -439,53 +1034,32 @@
         }
       },
       {
-        "key": "fname_of_caregiver",
+        "key": "name_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
-        "openmrs_entity_id": "fname_of_caregiver",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "First Name of Primary Caregiver",
+        "hint": "Name of Primary Caregiver",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of primary caregiver can only contain letters"
+          "err": "Name of prrimary caregiver can only contain letters"
         }
       },
       {
-        "key": "lname_of_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "lname_of_caregiver",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
-        "hint": "Last Name of Primary Caregiver",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of primary caregiver can only contain letters"
-        }
-      },
-      {
-        "key": "residential_Address",
+        "key": "Residential_Address",
         "openmrs_entity_parent": "usual_residence",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "residential_Address",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "address2",
         "type": "edit_text",
         "hint": "Physical  Address ",
         "edit_type": "name"
       },
       {
-        "key": "guardian_NRC",
+        "key": "Guardian_NRC",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "guardian_NRC",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "NRC_Number",
         "entity_id": "guardian",
         "type": "edit_text",
         "hint": "Guardian NRC Number",
@@ -495,12 +1069,10 @@
         }
       },
       {
-        "key": "guardian_Number",
+        "key": "Guardian_Number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "guardian_Number",
-        "read_only": "true",
-        "font": "bald",
+        "openmrs_entity_id": "",
         "type": "edit_text",
         "hint": "Guardian Telephone Number",
         "v_numeric": {
@@ -563,7 +1135,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_group",
             "type": "native_radio",
-            "label": "Relationship of Family Member to Index VCA (Tick as Appropriate)",
+            "label": "Tick as Appropriate (Relation of Family Member to Index VCA)",
             "options": [
               {
                 "key": "index_vca",
@@ -589,7 +1161,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_population_for_children_0_17years_in_household",
             "type": "check_box",
-            "label": "Indication of Subpopulation for Children 0-17Years in Household (Tick as Appropriate)",
+            "label": "Tick as Appropriate (Indication of Subpopulation for Children 0-17Years in Household)",
             "options": [
               {
                 "key": "1",
@@ -623,7 +1195,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "relationship_to_primary_caregiver",
             "type": "spinner",
-            "hint": "Relationship Of Household Member to Primary Caregiver",
+            "hint": "Relationship to Primary Caregiver",
             "values": [
               "Self",
               "Mother",
@@ -636,9 +1208,7 @@
               "Uncle",
               "Grandfather",
               "Grandmother",
-              "Cousin",
-              "Son",
-              "Daughter"
+              "Cousin"
             ]
           },
           {
@@ -657,7 +1227,7 @@
             "max_date": "today-1y"
           },
           {
-            "key": "gender",
+            "key": "Sex",
             "openmrs_entity_parent": "",
             "openmrs_entity": "person",
             "openmrs_entity_id": "gender",
@@ -674,7 +1244,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tick_applicable",
             "type": "native_radio",
-            "label": "HIV Status of Household Member (Tick where applicable)",
+            "label": "Tick applicable ",
             "options": [
               {
                 "key": "hiv_pos",
@@ -748,14 +1318,13 @@
       },
       {
         "key": "offer_HIV_index_testing",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "offer_HIV_index_testing",
-        "type": "toaster_notes",
+        "type": "label",
+        "label_text_style": "bold",
         "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": true
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2129,1613 +2698,6 @@
         "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      }
-    ]
-  },
-  "step2":{
-    "title":"Household Enrollment",
-    "fields":[
-      {
-        "key": "household_enrollment_header",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Household Enrollment Form (Fields below will only be visible when Household Screening is completed and approved.)",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "household_enrollment_part1",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Part 1 Of Household Enrollment",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "household_enrollment_unapproved",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Please Note: Household Enrollment Is NOT Available Because Household Screening was not Approved.",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "enrollment_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "enrollment_date",
-        "type": "date_picker",
-        "hint": "Date of HH Enrollment",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "hint": "Household ID",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter household ID"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Household ID cannot be empty"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "caregiver_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "caregiver_id",
-        "type": "edit_text",
-        "hint": "Caregiver ID",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter Caregiver ID"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Caregiver ID cannot be empty"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "gender",
-        "type": "spinner",
-        "hint": "Gender",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please select gender"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "Caregiver First Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "hint": "Caregiver Last Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "birthdate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdate",
-        "type": "date_picker",
-        "entity_id": "mother",
-        "hint": "Caregiver Date of Birth",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Enter caregivers date of birth"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "entry_type",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "entry_type",
-        "type": "native_radio",
-        "label": "Type of Entry into Program",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "transfer_from_zamfam",
-            "text": "Transfer from ZAMFAM",
-            "value": false
-          },
-          {
-            "key": "referral_from_facility",
-            "text": "Referral from Facility",
-            "value": false
-          },
-          {
-            "key": "other",
-            "text": "Other",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "other_entry_type",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "other_entry_type",
-        "type": "edit_text",
-        "hint": "Other type of Entry",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  entry type"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "caregiver_education",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_education",
-        "type": "native_radio",
-        "label": "Caregiver’s education level",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "none",
-            "text": "None",
-            "value": false
-          },
-          {
-            "key": "highest_grade",
-            "text": "Highest grade",
-            "value": false
-          },
-          {
-            "key": "college_university",
-            "text": "College/University",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You`re to select the level of education"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "highest_grade",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "highest_grade",
-        "type": "edit_text",
-        "hint": "Highest Grade",
-        "edit_type": "number",
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Please enter a valid number"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "monthly_expenses",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "monthly_expenses",
-        "type": "native_radio",
-        "label": "Estimated household expenses per month",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "Less than K500",
-            "text": "Less than K500",
-            "value": false
-          },
-          {
-            "key": "K500 -K999",
-            "text": "K500 -K999",
-            "value": false
-          },
-          {
-            "key": "K1,000 –K1,999",
-            "text": "K1,000 –K1,999",
-            "value": false
-          },
-          {
-            "key": "K2,000 –K4,999",
-            "text": "K2,000 –K4,999",
-            "value": false
-          },
-          {
-            "key": "Greater than K5,000",
-            "text": "Greater than K5,000",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You`re required to select income source"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "marital_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "marital_status",
-        "type": "spinner",
-        "hint": "Marital Status",
-        "values": [
-          "Single",
-          "Married",
-          "Divorced",
-          "Widowed",
-          "Not Married,in a Relationship"
-        ],
-        "keys": [
-          "single",
-          "married",
-          "divorced",
-          "widowed",
-          "in_relationship"
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "marriage_partner_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "marriage_partner_name",
-        "type": "edit_text",
-        "hint": "Name of Partner/Spouse",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Partner/Spouse Name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "relationship_partner_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "relationship_partner_name",
-        "type": "edit_text",
-        "hint": "Name of Relationship Partner",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Relationship Partner Name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "males_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "males_less_5",
-        "type": "edit_text",
-        "hint": "Number of Males < 5 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "false",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "females_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "females_less_5",
-        "type": "edit_text",
-        "hint": "Number of Females < 5 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "false",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "males_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "males_10_17",
-        "type": "edit_text",
-        "hint": "Number of Males 10-17 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "false",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "females_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "females_10_17",
-        "type": "edit_text",
-        "hint": "Number of Females 10-17 in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "false",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "fam_source_income",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "fam_source_income",
-        "type": "edit_text",
-        "hint": "Main Source Of Income",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter Correct Source Of Income"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "pregnant_women",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "pregnant_women",
-        "type": "edit_text",
-        "hint": "No. of Women currently pregnant in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": "false",
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "current_address",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Current Address",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "current_phone_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "current_phone_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Telephone",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 095, 096, 097, 077 or 076 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "(09[5-7][0-9]{7})|(07[6-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, 097, 077 or 076 and must be a total of 10 digits in length"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "current_plot_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "current_plot_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "House Number/Plot Number",
-        "v_numeric": {
-          "value": false,
-          "err": "Plot number"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "current_street_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "current_street_name",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Street Name",
-        "v_numeric": {
-          "value": false,
-          "err": "Current street name"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "value": "Choma Central Hospital",
-        "hint": "Health Facility",
-        "v_required": {
-          "value": true,
-          "err": "Facility is Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "current_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "current_village",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Village where household is loacated",
-        "v_numeric": {
-          "value": false,
-          "err": "Current village"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_address",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Permanent Address",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "permanent_plot_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "permanent_plot_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "House number/plot number",
-        "v_numeric": {
-          "value": false,
-          "err": "permanent number"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_street_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "permanent_street_name",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Street Name",
-        "v_numeric": {
-          "value": false,
-          "err": "Current street name"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_township_compound",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "permanent_township_compound",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Township/Compound where identified potential beneficiary resides",
-        "v_numeric": {
-          "value": false,
-          "err": "Township/Compound"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "permanent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "permanent_village",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Village where identified potential beneficiary resides",
-        "v_numeric": {
-          "value": false,
-          "err": "permanent village"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "household_enrollment_part2",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Part 2 Of Household Enrollment",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "children",
-        "type": "repeating_group",
-        "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of children <18years in Household",
-        "repeating_group_label": "Child",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "children",
-        "v_required": {
-          "value": false,
-          "err": "Please specify the number of children"
-        },
-        "value": [
-          {
-            "key": "vca_firstname",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "vca_firstname",
-            "type": "edit_text",
-            "hint": "First Name",
-            "v_required": {
-              "value": false,
-              "err": "Enter VCA First Name"
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Enter VCA First Name"
-            }
-          },
-          {
-            "key": "vca_lastname",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "vca_lastname",
-            "type": "edit_text",
-            "hint": "Last Name",
-            "v_required": {
-              "value": false,
-              "err": "Enter VCA Last Name"
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Enter VCA Last Name"
-            }
-          },
-          {
-            "key": "child_birthdate",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "child_birthdate",
-            "entity": "child",
-            "type": "date_picker",
-            "hint": "Date Of Birth",
-            "label_info_title": "Child's Date of Birth",
-            "expanded": false,
-            "duration": {
-              "label": "Age"
-            },
-            "min_date": "today-19y",
-            "max_date": "today",
-            "v_required": {
-              "value": false,
-              "err": "Please enter the date of birth"
-            }
-          },
-          {
-            "key": "child_gender",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "child_gender",
-            "entity": "child",
-            "type": "spinner",
-            "hint": "Gender",
-            "values": [
-              "Male",
-              "Female"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Specify sex"
-            }
-          },
-          {
-            "key": "in_school",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "in_school",
-            "type": "native_radio",
-            "label": "Is the child in school",
-            "label_text_style": "bold",
-            "text_color": "#000000",
-            "exclusive": [
-              "Yes"
-            ],
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes",
-                "value": false
-              },
-              {
-                "key": "no",
-                "text": "No",
-                "value": false
-              }
-            ],
-            "v_required": {
-              "value": false,
-              "err": "You`re required to check the box"
-            }
-          },
-          {
-            "key": "schools_name",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "schools_name",
-            "type": "edit_text",
-            "hint": "School Name",
-            "v_required": {
-              "value": false,
-              "err": "Please enter school name"
-            },
-            "relevance": {
-              "step2:in_school": {
-                "type": "string",
-                "ex": "equalTo(., \"yes\")"
-              }
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Please enter school name"
-            }
-          },
-          {
-            "key": "tested",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "tested",
-            "type": "native_radio",
-            "label": "Was child tested?",
-            "label_text_style": "bold",
-            "text_color": "#000000",
-            "exclusive": [
-              "Yes"
-            ],
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes",
-                "value": false
-              },
-              {
-                "key": "no",
-                "text": "No",
-                "value": false
-              }
-            ],
-            "v_required": {
-              "value": false,
-              "err": "You're required to check box"
-            }
-          },
-          {
-            "key": "hiv_status",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "hiv_status",
-            "type": "spinner",
-            "hint": "HIV Status",
-            "values": [
-              "HIV+",
-              "HIV-",
-              "HEI"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Select HIV status"
-            }
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "other_household_members",
-        "type": "repeating_group",
-        "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of Other Members Living in Household",
-        "repeating_group_label": "Others Living in Household",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "other_household_members",
-        "v_required": {
-          "value": false,
-          "err": "Please specify the number of other members"
-        },
-        "value": [
-          {
-            "key": "other_member_firstname",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "other_member_firstname",
-            "type": "edit_text",
-            "hint": "First Name",
-            "v_required": {
-              "value": false,
-              "err": "Enter Member First Name"
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Enter Member First Name"
-            }
-          },
-          {
-            "key": "other_member_lastname",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "other_member_lastname",
-            "type": "edit_text",
-            "hint": "Last Name",
-            "v_required": {
-              "value": false,
-              "err": "Enter Member Last Name"
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Enter Member Last Name"
-            }
-          },
-          {
-            "key": "other_member_birthdate",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "other_member_birthdate",
-            "entity": "child",
-            "type": "date_picker",
-            "hint": "Date Of Birth",
-            "label_info_title": "Other Member Date of Birth",
-            "expanded": false,
-            "duration": {
-              "label": "Age"
-            },
-            "min_date": "today-19y",
-            "max_date": "today",
-            "v_required": {
-              "value": false,
-              "err": "Please enter the date of birth"
-            }
-          },
-          {
-            "key": "other_member_tested",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "other_member_tested",
-            "type": "native_radio",
-            "label": "Tested  for HIV?",
-            "label_text_style": "bold",
-            "text_color": "#000000",
-            "exclusive": [
-              "Yes"
-            ],
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes",
-                "value": false
-              },
-              {
-                "key": "no",
-                "text": "No",
-                "value": false
-              }
-            ],
-            "v_required": {
-              "value": false,
-              "err": "You're required to check box"
-            }
-          },
-          {
-            "key": "other_member_hiv_status",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "other_member_hiv_status",
-            "type": "spinner",
-            "hint": "HIV Status",
-            "values": [
-              "HIV+",
-              "HIV-"
-            ],
-            "v_required": {
-              "value": false,
-              "err": "Select HIV status"
-            }
-          }
-        ],
-        "relevance": {
-          "step2:other_member_tested": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "emergency_contact_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "emergency_contact_name",
-        "type": "edit_text",
-        "hint": "Emergency Contact Name",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Emergency Contact Name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "contact_relation",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "relationship",
-        "openmrs_entity_id": "contact_relation",
-        "type": "edit_text",
-        "hint": "Relation to Caregiver",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Relation to Caregiver"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "contact_street_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "contact_street_name",
-        "type": "edit_text",
-        "hint": "Contact House No/Street Name",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Street Name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "contact_township_compound",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "current_plot_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "Contact Township/Compound",
-        "v_numeric": {
-          "value": false,
-          "err": "Contact Township/Compound"
-        },
-        "v_regex": {
-          "value": "",
-          "err": ""
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "contact_telephone_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "contact_telephone_number",
-        "type": "edit_text",
-        "entity_id": "mother",
-        "hint": "contact telephone number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "gps",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "gps",
-        "openmrs_data_type": "text",
-        "type": "gps",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "immunization_group",
-        "type": "repeating_group",
-        "reference_edit_text": "",
-        "reference_edit_text_hint": "Under 5 Children in Household",
-        "repeating_group_label": "Child",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "immunization_group",
-        "v_required": {
-          "value": false,
-          "err": "Please specify the number of children"
-        },
-        "value": [
-          {
-            "key": "under_five_firstname",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "under_five_firstname",
-            "type": "edit_text",
-            "hint": "First Name",
-            "v_required": {
-              "value": false,
-              "err": "Enter Under Five First Name"
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Enter Under Five First Name"
-            }
-          },
-          {
-            "key": "under_five_lastname",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "under_five_lastname",
-            "type": "edit_text",
-            "hint": "Last Name",
-            "v_required": {
-              "value": false,
-              "err": "Enter Under Five Last Name"
-            },
-            "v_regex": {
-              "value": "",
-              "err": "Enter Under Five Last Name"
-            }
-          },
-          {
-            "key": "immunization_label",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "Immunization Status",
-            "text_color": "#000000",
-            "v_required": {
-              "value": false
-            }
-          },
-          {
-            "key": "immunization",
-            "label": "Has the child received the following vaccinations?",
-            "type": "check_box",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
-            "options": [
-              {
-                "key": "bcg",
-                "text": "BIRTH-BCG",
-                "value": false
-              },
-              {
-                "key": "opv0",
-                "text": "BIRTH-OPV0",
-                "value": false
-              },
-              {
-                "key": "dtp1",
-                "text": "6 WEEKS-DTP1",
-                "value": false
-              },
-              {
-                "key": "OPV1",
-                "text": "6 WEEKS-OPV1",
-                "value": false
-              },
-              {
-                "key": "PCV1",
-                "text": "6 WEEKS-PCV1",
-                "value": false
-              },
-              {
-                "key": "ROT1",
-                "text": "6 WEEKS-ROT1",
-                "value": false
-              },
-              {
-                "key": "DTP2",
-                "text": "10 WEEKS-DTP2",
-                "value": false
-              },
-              {
-                "key": "OPV2",
-                "text": "10 WEEKS-OPV2",
-                "value": false
-              },
-              {
-                "key": "PCV2",
-                "text": "10 WEEKS-PCV2",
-                "value": false
-              },
-              {
-                "key": "ROT2",
-                "text": "10 WEEKS-ROT2",
-                "value": false
-              },
-              {
-                "key": "DTP3",
-                "text": "14 WEEKS-DTP3",
-                "value": false
-              },
-              {
-                "key": "OPV3",
-                "text": "14 WEEKS-OPV3",
-                "value": false
-              },
-              {
-                "key": "PCV3",
-                "text": "14 WEEKS-PCV3",
-                "value": false
-              },
-              {
-                "key": "MEASL R1",
-                "text": "9 MNTHS-MEASL R1",
-                "value": false
-              },
-              {
-                "key": "MEASL R1",
-                "text": "18MNTHS-MEASL R1",
-                "value": false
-              }
-            ],
-            "v_required": {
-              "value": false,
-              "err": "This is a required field"
-            }
-          },
-          {
-            "key": "child_nut_assessment",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "Child Nutrition Assessment",
-            "text_color": "#000000",
-            "v_required": {
-              "value": false
-            }
-          },
-          {
-            "key": "nutrition_assessment",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "nutrition_assessment",
-            "type": "edit_text",
-            "read_only": "true",
-            "hint": "Child Nutrition Assessment (under 5)",
-            "edit_type": "name",
-            "look_up": "true",
-            "v_regex": {
-              "value": "[A-Za-z\\s\\.\\-]*",
-              "err": "Nutrition assessment"
-            }
-          },
-          {
-            "key": "muac_score",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "muac_score",
-            "type": "edit_text",
-            "read_only": "true",
-            "hint": "MUAC Score",
-            "edit_type": "name",
-            "look_up": "true",
-            "v_regex": {
-              "value": "[0-9]*",
-              "err": "Enter correct MUAC Score"
-            }
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "malaria_prev_label",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Malaria Prevention",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "malaria_beds",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "malaria_beds",
-        "openmrs_data_type": "text",
-        "type": "edit_text",
-        "edit_text": "number",
-        "hint": "Number of malaria beds in household",
-        "tree": [
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Number of beds in household"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "malaria_itns",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "malaria_itns",
-        "openmrs_data_type": "text",
-        "type": "edit_text",
-        "edit_text": "number",
-        "hint": "Number of malaria ITNs in use",
-        "tree": [
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Number of ITNs  in use"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "household_member_had_malaria",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "household_member_had_malaria",
-        "type": "date_picker",
-        "hint": "Last time household member had malaria",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Last time household member had malaria"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "case_worker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_name",
-        "entity_id": "mother",
-        "type": "edit_text",
-        "hint": "Case Worker Name",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Case Worker Name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "case_worker_nrc",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker_nrc",
-        "entity_id": "guardian",
-        "type": "edit_text",
-        "hint": "Case Worker  NRC number",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
-          "err": "Number must take the format of ######/##/#"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "date_signed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_signed",
-        "type": "date_picker",
-        "hint": "Date signed",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date signed"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "signature",
-        "openmrs_data_type": "select one",
-        "type": "check_box",
-        "label": "I have read and understood the information regarding on the household enrollment",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false,
-            "openmrs_choice_id": ""
-          }
-        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
