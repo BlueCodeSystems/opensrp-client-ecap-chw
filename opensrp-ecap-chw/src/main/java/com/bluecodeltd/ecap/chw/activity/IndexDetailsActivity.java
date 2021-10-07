@@ -132,7 +132,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("birthdate");
+        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
 
         if(birthdate != null){
 
