@@ -88,10 +88,10 @@
         "hint": "District"
       },
       {
-        "key": "village",
+        "key": "adolescent_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "village",
+        "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
         "read_only": "true",
         "hint": "Village"
@@ -133,10 +133,10 @@
         "hint": "Household ID"
       },
       {
-        "key": "phone",
+        "key": "adolescent_phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone",
+        "openmrs_entity_id": "adolescent_phone",
         "read_only": "true",
         "type": "edit_text",
         "hint": "Telephone"
@@ -146,7 +146,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "physical_address",
-        "read_only": "true",
+        "read_only": "false",
         "type": "edit_text",
         "hint": "Physical Address"
       },
@@ -183,7 +183,7 @@
       {
         "key": "case_plan_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_plan_date",
         "type": "date_picker",
         "hint": "Date Case Plan Created Signed",
