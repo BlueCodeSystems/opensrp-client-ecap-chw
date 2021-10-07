@@ -2416,10 +2416,10 @@
           }
         },
         {
-          "column_name": "village",
+          "column_name": "adolescent_village",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.village"
+            "field": "attributes.adolescent_village"
           }
         },
         {
@@ -2451,10 +2451,10 @@
           }
         },
         {
-          "column_name": "phone",
+          "column_name": "adolescent_phone",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.phone"
+            "field": "attributes.adolescent_phone"
           }
         },
         {
