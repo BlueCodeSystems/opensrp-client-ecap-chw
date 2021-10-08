@@ -223,7 +223,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the VCA HIV Positive",
-        "read_only": true,
+        "read_only": false,
         "options": [
           {
             "key": "yes",
@@ -630,17 +630,14 @@
         }
       },
       {
-        "key": "tobacco_cessation_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "ghdgjkk",
+        "key": "label1",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Ask the following questions directly to the VCA",
         "text_color": "#000000",
-        "toaster_info_text": "",
-        "toaster_info_title": "Elly's Family!",
-        "toaster_type": "problem"
-
+        "v_required": {
+          "value": false
+        }
       },
       {
         "key": "biological_mother",
@@ -693,9 +690,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -719,9 +717,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -745,9 +744,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -771,9 +771,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -797,9 +798,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -823,9 +825,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -850,9 +853,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"10\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
