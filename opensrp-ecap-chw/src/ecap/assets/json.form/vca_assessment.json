@@ -223,7 +223,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the VCA HIV Positive",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -629,16 +629,7 @@
           }
         }
       },
-      {
-        "key": "label1",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Ask the following questions directly to the VCA",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
+
       {
         "key": "biological_mother",
         "openmrs_entity_parent": "",

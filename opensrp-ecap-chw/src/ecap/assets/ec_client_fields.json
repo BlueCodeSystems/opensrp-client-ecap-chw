@@ -132,10 +132,9 @@
         },
         {
           "column_name": "is_hiv_positive",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "is_hiv_positive"
+            "field": "attributes.is_hiv_positive"
           }
         },
         {

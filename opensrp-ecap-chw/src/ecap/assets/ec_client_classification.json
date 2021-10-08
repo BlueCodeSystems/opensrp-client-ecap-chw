@@ -327,6 +327,20 @@
             "creates_case": [
               "ec_vca_case_plan"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Assessment Form",
+            "creates_case": [
+              "ec_assessment"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Case Worker Service Report",
+            "creates_case": [
+              "ec_service_report"
+            ]
           }
         ]
       }
