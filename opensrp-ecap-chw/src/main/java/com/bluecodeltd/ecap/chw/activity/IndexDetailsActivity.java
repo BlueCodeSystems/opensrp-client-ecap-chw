@@ -280,6 +280,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", hID);
+
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", csw[1]);
+
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -363,9 +381,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
+
                     indexRegisterForm = formUtils.getFormJson("vca_assessment");
 
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+                    //  indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("base_entity_id"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", txtAge.getText().toString());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
@@ -373,10 +404,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
 
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(55).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(56).put("value", csw[1]);
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
