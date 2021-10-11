@@ -10,6 +10,7 @@ import timber.log.Timber;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,10 +24,16 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
+import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.ViewSubmittedFormsFragment;
+import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
+import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
+import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
+import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -56,6 +63,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
@@ -200,7 +208,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
         mPagerAdapter.addFragment(new ProfileContactFragment());
-        mPagerAdapter.addFragment(new ViewSubmittedFormsFragment());
+        mPagerAdapter.addFragment(new ProfileVisitsFragment());
 
 
         mViewPager.setAdapter(mPagerAdapter);
@@ -208,7 +216,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_contact));
-        mTabLayout.getTabAt(2).setText(getString(R.string.fragment_view_submitted));
+        mTabLayout.getTabAt(2).setText(getString(R.string.fragment_visits));
 
     }
 
