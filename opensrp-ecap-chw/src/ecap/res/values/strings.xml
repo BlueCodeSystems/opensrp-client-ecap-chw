@@ -26,14 +26,6 @@
         <item>Index Mother Register</item>
         <item>Female Sex Worker Screening</item>
     </string-array>
-
-    <string-array name="vca_submitted_forms_options">
-        <item>Household screening</item>
-        <item>Vulnerability Assessment</item>
-        <item>Case plan</item>
-        <item>Referral</item>
-    </string-array>
-
     <!--Ecap Strings -->
     <string name="all_households"> Household Register</string>
     <string name="all_Vcas"> VCAs</string>
