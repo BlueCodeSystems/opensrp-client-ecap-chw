@@ -15,8 +15,6 @@ public class CasePlanDao extends AbstractDao {
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        Log.d(CasePlanDao.class.getName(), "xxx : "+ baseEntityID + " : " +  values.toString());
-
         return Integer.valueOf(values.get(0)) != 0;
 
     }

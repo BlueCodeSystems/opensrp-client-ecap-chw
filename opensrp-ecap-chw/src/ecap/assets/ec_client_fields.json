@@ -1243,6 +1243,13 @@
           }
         },
         {
+          "column_name": "index_check_box",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.index_check_box"
+          }
+        },
+        {
           "column_name": "date_removed",
           "type": "Client",
           "json_mapping": {
