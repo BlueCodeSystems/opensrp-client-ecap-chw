@@ -54,9 +54,9 @@
         },
         {
           "column_name": "partners",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
+            "field": "attributes.partners",
             "concept": "partners"
           }
         },
