@@ -51,9 +51,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
+        android:orientation="horizontal"
         android:id="@+id/case_plan_wrapper"
-        android:layout_width="@dimen/register_list_item_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/register_list_item_height"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -66,7 +66,19 @@
         android:paddingStart="@dimen/register_list_item_padding"
         android:paddingTop="@dimen/register_list_top_bottom_padding">
 
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/index_icon"
+            android:src="@mipmap/sidemenu_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="2dp"
+            >
+        </ImageView>
+
         <Button
+            android:visibility="gone"
             android:id="@+id/due_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
