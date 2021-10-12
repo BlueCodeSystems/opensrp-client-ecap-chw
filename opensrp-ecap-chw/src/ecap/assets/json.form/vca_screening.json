@@ -298,10 +298,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_phone",
         "type": "edit_text",
+        "edit_type": "number",
         "hint": "Telephone/Mobile",
         "v_required": {
           "value": true,
           "err": "Please enter Phone Number"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must must be a total of 10 digits in length"
         }
       },
       {
@@ -1199,6 +1208,10 @@
           {
             "key": "prep",
             "text": "PrEP"
+          },
+          {
+            "key": "condoms",
+            "text": "Condoms"
           },
           {
             "key": "pep",
@@ -2803,12 +2816,13 @@
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
         "hint": "Caregivers phone number",
+        "edit_type": "number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
+          "value": "(09[5-7][0-9]{7})|\s*",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {

@@ -28,7 +28,7 @@
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.stateProvince"
+            "field": "addresses.countyDistrict"
           }
         },
         {
@@ -2611,8 +2611,6 @@
         }
       ]
     },
-
-
     {
       "name": "ec_referral",
       "columns": [

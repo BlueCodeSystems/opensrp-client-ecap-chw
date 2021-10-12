@@ -9,9 +9,13 @@ import timber.log.Timber;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -176,6 +180,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
         map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
         map.put("caregiver_firstname", client.getColumnmaps().get("caregiver_firstname"));
+        map.put("caregiver_birth_date", client.getColumnmaps().get("caregiver_birth_date"));
         map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
         map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
         map.put("relation", client.getColumnmaps().get("relation"));
@@ -747,5 +752,29 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public String getCareGiverFullname(CommonPersonObjectClient client){
 
         return client.getColumnmaps().get("caregiver_firstname");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.call:
+                CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+                Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
+
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + client.getColumnmaps().get("caregiver_phone")));
+                startActivity(callIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
