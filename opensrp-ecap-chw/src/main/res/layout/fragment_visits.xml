@@ -1,6 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/family_has_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_background_selctor"
+            android:padding="20dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/family_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/baseline_folder_open_black_24" />
+
+            <ImageView
+                android:id="@+id/family_arrow_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/outline_close_24" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/textview_family_has"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image"
+                android:gravity="center_horizontal"
+                android:text="Household Profile"
+                android:textColor="@android:color/black" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/text_view_family_profile"
+                android:visibility="gone"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview_family_has"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image"
+                android:text="@string/go_to_family_s_profile"
+                android:textColor="@android:color/darker_gray" />
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="#a9a9a9"
+            android:layout_height="1dp">
+
+        </View>
+        <RelativeLayout
+            android:id="@+id/family_has_row2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_background_selctor"
+            android:padding="20dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/family_image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/baseline_folder_open_black_24"  />
+
+            <ImageView
+                android:id="@+id/family_arrow_image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/outline_close_24" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/textview_v_has"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image2"
+                android:gravity="center_horizontal"
+                android:text="VCA Vulnerability Assessment"
+                android:textColor="@android:color/black" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:visibility="gone"
+                android:id="@+id/text_view_family_profile2"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview_v_has"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image2"
+                android:text="Go to Assessment Profile"
+                android:textColor="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="#a9a9a9"
+            android:layout_height="1dp">
+
+        </View>
+        <RelativeLayout
+            android:id="@+id/family_has_row3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_background_selctor"
+            android:padding="20dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/family_image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/baseline_folder_open_black_24"  />
+
+            <ImageView
+                android:id="@+id/family_arrow_image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_done_24" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/textview_c_has"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image3"
+                android:gravity="center_horizontal"
+                android:text="VCA Case Plan"
+                android:textColor="@android:color/black" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:visibility="gone"
+                android:id="@+id/text_view_family_profile3"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview_c_has"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image3"
+                android:text="Go to Case Plan Profile"
+                android:textColor="@android:color/darker_gray" />
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="#a9a9a9"
+            android:layout_height="1dp">
+
+        </View>
+        <RelativeLayout
+            android:id="@+id/family_has_row4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_background_selctor"
+            android:padding="20dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/family_image4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/baseline_folder_open_black_24"  />
+
+            <ImageView
+                android:id="@+id/family_arrow_image4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/outline_close_24" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/textview_r_has"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image4"
+                android:gravity="center_horizontal"
+                android:text="Referal"
+                android:textColor="@android:color/black" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:visibility="gone"
+                android:id="@+id/text_view_family_profile4"
+                style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview_r_has"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/family_image4"
+                android:text="Go to Referal Profile"
+                android:textColor="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

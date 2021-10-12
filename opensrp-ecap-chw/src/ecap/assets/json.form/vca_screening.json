@@ -298,10 +298,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_phone",
         "type": "edit_text",
+        "edit_type": "number",
         "hint": "Telephone/Mobile",
         "v_required": {
           "value": true,
           "err": "Please enter Phone Number"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -429,7 +438,7 @@
       {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the Child/Adolescent HIV Positive",
@@ -1199,6 +1208,10 @@
           {
             "key": "prep",
             "text": "PrEP"
+          },
+          {
+            "key": "condoms",
+            "text": "Condoms"
           },
           {
             "key": "pep",
@@ -2185,7 +2198,7 @@
       {
         "key": "index_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "index_check_box",
         "type": "edit_text",
         "value": "yes",
@@ -2803,13 +2816,14 @@
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
         "hint": "Caregivers phone number",
+        "edit_type": "number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
           "rules-engine": {

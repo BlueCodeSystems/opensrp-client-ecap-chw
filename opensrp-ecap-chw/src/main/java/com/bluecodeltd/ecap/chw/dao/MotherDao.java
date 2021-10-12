@@ -5,6 +5,7 @@ import com.bluecodeltd.ecap.chw.domain.PncBaby;
 import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.smartregister.chw.core.domain.Child;
 import org.smartregister.dao.AbstractDao;
 
 import java.text.ParseException;
@@ -35,6 +36,12 @@ public class MotherDao  extends AbstractDao {
             return null;
         }
         return mother.get(0);
+    }
+
+    public  List<Child> getMotherChildren(String baseId)
+    {
+
+        return null;
     }
 
 }

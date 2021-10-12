@@ -1,6 +1,9 @@
 package com.bluecodeltd.ecap.chw.view_holder;
 
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -9,24 +12,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 
+import org.smartregister.view.contract.Village;
+
 public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private TextView familyNameTextView;
 
     private TextView villageTextView;
 
-    private LinearLayout caseplan_layout;
+    private Button caseplan_layout;
+
+    private final ImageView index_icon_layout;
 
     public IndexRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
         familyNameTextView = itemView.findViewById(R.id.familyNameTextView);
         villageTextView = itemView.findViewById(R.id.villageTextView);
-        caseplan_layout = itemView.findViewById(R.id.case_plan_wrapper);
+        caseplan_layout = itemView.findViewById(R.id.due_button);
+        index_icon_layout = itemView.findViewById(R.id.index_icon);
     }
 
-    public void setupViews(String family, String village, boolean plan){
+    public void setupViews(String family, String village, boolean plan, String is_index){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
+
+        if (is_index != null){
+
+            index_icon_layout.setVisibility(View.VISIBLE);
+        } else {
+
+            index_icon_layout.setVisibility(View.GONE);
+        }
+
 
         if(plan){
             caseplan_layout.setVisibility(View.VISIBLE);

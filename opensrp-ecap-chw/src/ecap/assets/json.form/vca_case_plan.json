@@ -112,7 +112,7 @@
         "openmrs_entity_id": "caregiver_firstname",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "First name of caregiver"
+        "hint": "Full name of caregiver"
       },
       {
         "key": "caregiver_lastname",

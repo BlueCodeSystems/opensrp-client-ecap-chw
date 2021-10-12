@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -49,7 +50,9 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         boolean plan = CasePlanDao.checkCasePlan(BaseEntityId);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence, plan);
+        String is_index = IndexPersonDao.checkIndexPerson(BaseEntityId);
+
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence, plan, is_index);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 
