@@ -581,6 +581,13 @@
         "v_required": {
           "value": false,
           "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
+          }
         }
       },
 
@@ -832,6 +839,13 @@
         "v_required": {
           "value": false,
           "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
+          }
         }
       },
       {
