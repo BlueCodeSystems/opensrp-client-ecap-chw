@@ -1560,7 +1560,7 @@
             }
           },
           {
-            "key": "pregnancy_prevention_methods_use_by_agyw",
+            "key": "pregnancy_prevention_methods_used_by_agyw",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
@@ -1594,20 +1594,6 @@
             ]
           },
           {
-            "key": "option_none_pregnancy_prevention",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "option_none_pregnancy_prevention",
-            "type": "edit_text",
-            "hint": "Give details of Other Method used",
-            "edit_type": "name",
-            "value": "",
-            "v_regex": {
-              "value": "[A-Za-z\\s\\.\\-]*",
-              "err": "Give details of Other Method used"
-            }
-          },
-          {
             "key": "pregnancy_prevention_methods_not_used_by_agyw",
             "type": "label",
             "label_text_style": "bold",
@@ -1617,10 +1603,9 @@
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:pregnancy_prevention_methods_used_by_agyw": {
+                "type": "string",
+                "ex": "equalTo(., \"none\")"
               }
             }
           },
