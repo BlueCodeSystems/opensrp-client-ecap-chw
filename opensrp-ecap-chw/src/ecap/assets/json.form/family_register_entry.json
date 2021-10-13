@@ -1055,19 +1055,7 @@
         "hint": "Physical  Address ",
         "edit_type": "name"
       },
-      {
-        "key": "Guardian_NRC",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "NRC_Number",
-        "entity_id": "guardian",
-        "type": "edit_text",
-        "hint": "Guardian NRC Number",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
-          "err": "Number must take the format of ######/##/#"
-        }
-      },
+
       {
         "key": "Guardian_Number",
         "openmrs_entity_parent": "",
