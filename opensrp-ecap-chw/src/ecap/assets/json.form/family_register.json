@@ -266,7 +266,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_assigned_community_case_worker_fname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "First Name of Assigned Community Case Worker",
@@ -281,7 +281,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_assigned_community_case_worker_lname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "Last Name of Assigned Community Case Worker",
@@ -296,7 +296,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_fname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "First Name of Facility-Based Case Worker",
@@ -311,7 +311,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_lname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "Last Name of Facility-Based Case Worker",
@@ -407,12 +407,17 @@
       {
         "key": "partners",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "",
         "openmrs_entity_id": "partners",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
-        "hint": "Implementing Partner:"
+        "type": "spinner",
+        "hint": "Implementing Partner ",
+        "values": [
+          "Project Concern Zambia (PCZ)",
+          "Young Women Christian Association (YWCA) ",
+          "Bwafwano Integrated Services Organization (BISO)",
+          "Circle of Hope (COH)",
+          "Zambia Episcopal Conference (ZEC)"
+        ]
       },
       {
         "key": "date_of_screening",
@@ -420,6 +425,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_of_screening",
         "type": "date_picker",
+        "value": "today",
         "hint": "Date of Screening",
         "look_up": "true",
         "expanded": false,
@@ -615,7 +621,42 @@
             ]
           },
           {
-            "key": "relationship_to_primary_caregiver",
+            "key": "gender",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "gender",
+            "type": "spinner",
+            "hint": "Gender",
+            "values": [
+              "Male",
+              "Female"
+            ]
+          },
+          {
+            "key": "male_relationship_to_primary_caregiver",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "relationship_to_primary_caregiver",
+            "type": "spinner",
+            "hint": "Relationship Of Household Member to Primary Caregiver",
+            "values": [
+              "Father",
+              "Brother",
+              "Nephew",
+              "Uncle",
+              "Grandfather",
+              "Cousin",
+              "Son"
+            ],
+            "relevance": {
+              "step1:gender": {
+                "type": "string",
+                "ex": "equalTo(., \"Male\")"
+              }
+            }
+          },
+          {
+            "key": "female_relationship_to_primary_caregiver",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "relationship_to_primary_caregiver",
@@ -623,19 +664,19 @@
             "hint": "Relationship Of Household Member to Primary Caregiver",
             "values": [
               "Mother",
-              "Father",
               "Sister",
-              "Brother",
               "Niece",
-              "Nephew",
               "Aunt",
-              "Uncle",
-              "Grandfather",
               "Grandmother",
               "Cousin",
-              "Son",
               "Daughter"
-            ]
+            ],
+            "relevance": {
+              "step1:gender": {
+                "type": "string",
+                "ex": "equalTo(., \"Female\")"
+              }
+            }
           },
           {
             "key": "dob",
@@ -651,18 +692,6 @@
             },
             "min_date": "01-01-1900",
             "max_date": "today-1y"
-          },
-          {
-            "key": "gender",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "gender",
-            "type": "spinner",
-            "hint": "Gender",
-            "values": [
-              "Male",
-              "Female"
-            ]
           },
           {
             "key": "hiv_status",
