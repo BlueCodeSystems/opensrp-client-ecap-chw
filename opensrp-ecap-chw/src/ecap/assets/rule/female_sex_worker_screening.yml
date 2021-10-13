@@ -1,0 +1,126 @@
+---
+name: step1_district_central
+description: district_central relevance
+priority: 1
+condition: "step1_province.contains('central')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_district_southern
+description: district_southern relevance
+priority: 1
+condition: "step1_province.contains('southern')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_district_central
+description: district_central relevance
+priority: 1
+condition: "step1_province.contains('central')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_district_southern
+description: district_southern relevance
+priority: 1
+condition: "step1_province.contains('southern')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chibombo_health_facility
+description: chibombo_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('chibombo')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chisamba_health_facility
+description: chisamba_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('chisamba')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mkushi_health_facility
+description: mkushi_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('mkushi')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mumbwa_health_facility
+description: mumbwa_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('mumbwa')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kabwe_health_facility
+description: kabwe_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('kabwe')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kapiri_health_facility
+description: kapiri_health_facility relevance
+priority: 1
+condition: "step1_district_central.contains('kapiri')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_chikankata_health_facility
+description: chikankata_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('chikankata')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mazabuka_health_facility
+description: mazabuka_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('mazabuka')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_monze_health_facility
+description: monze_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('monze')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_choma_health_facility
+description: choma_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('choma')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_kalomo_health_facility
+description: kalomo_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('kalomo')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_namwala_health_facility
+description: namwala_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('namwala')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sinazongwe_health_facility
+description: sinazongwe_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('sinazongwe')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_livingstone_health_facility
+description: livingstone_health_facility relevance
+priority: 1
+condition: "step1_district_southern.contains('livingstone')"
+actions:
+  - "isRelevant = true"
