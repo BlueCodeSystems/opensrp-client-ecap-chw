@@ -567,10 +567,6 @@
             "label": "Relationship of Family Member to Index VCA (Tick as Appropriate)",
             "options": [
               {
-                "key": "index_vca",
-                "text": "Index VCA (As in Part A above)"
-              },
-              {
                 "key": "sibling_of_index",
                 "text": "Sibling of index"
               },
@@ -626,7 +622,6 @@
             "type": "spinner",
             "hint": "Relationship Of Household Member to Primary Caregiver",
             "values": [
-              "Self",
               "Mother",
               "Father",
               "Sister",
