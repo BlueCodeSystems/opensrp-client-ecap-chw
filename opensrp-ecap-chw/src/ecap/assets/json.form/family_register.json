@@ -266,7 +266,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_assigned_community_case_worker_fname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "First Name of Assigned Community Case Worker",
@@ -281,7 +281,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_assigned_community_case_worker_lname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "Last Name of Assigned Community Case Worker",
@@ -296,7 +296,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_fname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "First Name of Facility-Based Case Worker",
@@ -311,7 +311,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_lname",
-        "read_only": "true",
+        "read_only": "false",
         "font": "bald",
         "type": "edit_text",
         "hint": "Last Name of Facility-Based Case Worker",
@@ -407,12 +407,17 @@
       {
         "key": "partners",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "",
         "openmrs_entity_id": "partners",
-        "read_only": "true",
-        "font": "bald",
-        "type": "edit_text",
-        "hint": "Implementing Partner:"
+        "type": "spinner",
+        "hint": "Implementing Partner ",
+        "values": [
+          "Project Concern Zambia (PCZ)",
+          "Young Women Christian Association (YWCA) ",
+          "Bwafwano Integrated Services Organization (BISO)",
+          "Circle of Hope (COH)",
+          "Zambia Episcopal Conference (ZEC)"
+        ]
       },
       {
         "key": "date_of_screening",
@@ -420,6 +425,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_of_screening",
         "type": "date_picker",
+        "value": "today",
         "hint": "Date of Screening",
         "look_up": "true",
         "expanded": false,
@@ -567,10 +573,6 @@
             "label": "Relationship of Family Member to Index VCA (Tick as Appropriate)",
             "options": [
               {
-                "key": "index_vca",
-                "text": "Index VCA (As in Part A above)"
-              },
-              {
                 "key": "sibling_of_index",
                 "text": "Sibling of index"
               },
@@ -619,28 +621,62 @@
             ]
           },
           {
-            "key": "relationship_to_primary_caregiver",
+            "key": "gender",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person",
+            "openmrs_entity_id": "gender",
+            "type": "spinner",
+            "hint": "Gender",
+            "values": [
+              "Male",
+              "Female"
+            ]
+          },
+          {
+            "key": "male_relationship_to_primary_caregiver",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "relationship_to_primary_caregiver",
             "type": "spinner",
             "hint": "Relationship Of Household Member to Primary Caregiver",
             "values": [
-              "Self",
-              "Mother",
               "Father",
-              "Sister",
               "Brother",
-              "Niece",
               "Nephew",
-              "Aunt",
               "Uncle",
               "Grandfather",
+              "Cousin",
+              "Son"
+            ],
+            "relevance": {
+              "step1:gender": {
+                "type": "string",
+                "ex": "equalTo(., \"Male\")"
+              }
+            }
+          },
+          {
+            "key": "female_relationship_to_primary_caregiver",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "relationship_to_primary_caregiver",
+            "type": "spinner",
+            "hint": "Relationship Of Household Member to Primary Caregiver",
+            "values": [
+              "Mother",
+              "Sister",
+              "Niece",
+              "Aunt",
               "Grandmother",
               "Cousin",
-              "Son",
               "Daughter"
-            ]
+            ],
+            "relevance": {
+              "step1:gender": {
+                "type": "string",
+                "ex": "equalTo(., \"Female\")"
+              }
+            }
           },
           {
             "key": "dob",
@@ -656,18 +692,6 @@
             },
             "min_date": "01-01-1900",
             "max_date": "today-1y"
-          },
-          {
-            "key": "gender",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person",
-            "openmrs_entity_id": "gender",
-            "type": "spinner",
-            "hint": "Gender",
-            "values": [
-              "Male",
-              "Female"
-            ]
           },
           {
             "key": "hiv_status",
@@ -1471,7 +1495,13 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:has_the_agyw_been_tested_for_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "hiv_positive_agyw",
@@ -1483,10 +1513,9 @@
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:did_the_agyw_test_positive_for_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
               }
             }
           },
@@ -1560,7 +1589,7 @@
             }
           },
           {
-            "key": "pregnancy_prevention_methods_use_by_agyw",
+            "key": "pregnancy_prevention_methods_used_by_agyw",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
@@ -1594,20 +1623,6 @@
             ]
           },
           {
-            "key": "option_none_pregnancy_prevention",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "option_none_pregnancy_prevention",
-            "type": "edit_text",
-            "hint": "Give details of Other Method used",
-            "edit_type": "name",
-            "value": "",
-            "v_regex": {
-              "value": "[A-Za-z\\s\\.\\-]*",
-              "err": "Give details of Other Method used"
-            }
-          },
-          {
             "key": "pregnancy_prevention_methods_not_used_by_agyw",
             "type": "label",
             "label_text_style": "bold",
@@ -1617,10 +1632,9 @@
               "value": false
             },
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:pregnancy_prevention_methods_used_by_agyw": {
+                "type": "string",
+                "ex": "equalTo(., \"none\")"
               }
             }
           },
@@ -1632,7 +1646,7 @@
             "type": "edit_text",
             "hint": "Other pregnancy prevention methods",
             "relevance": {
-              "step6:pregnancy_prevention_methods_used_by_agyw": {
+              "step1:pregnancy_prevention_methods_used_by_agyw": {
                 "type": "string",
                 "ex": "equalTo(., \"other\")"
               }
