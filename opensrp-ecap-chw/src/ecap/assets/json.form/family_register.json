@@ -782,20 +782,19 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:all_other_household_members_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
       {
-        "key": "hiv_positive_children_adolescents_and_on_active_treatment",
+        "key": "hiv_positive_children_adolescents",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_on_active_treatment",
+        "openmrs_entity_id": "hiv_positive_children_adolescents",
         "type": "native_radio",
-        "label": "Are there children/adolescents who are HIV+ and active on treatment?",
+        "label": "Are there children/Adolescents in the Household who are HIV Positive?",
         "options": [
           {
             "key": "yes",
@@ -809,28 +808,28 @@
       },
       {
         "key": "categorize_as_index_c_alhiv_vca",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "If HIV+ and active on treatment,categorize as an index C/ALHIV VCA",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_index_c_alhiv_vca",
+        "type": "toaster_notes",
+        "text": "Categorize as an index C/ALHIV VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:hiv_positive_children_adolescents": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
       {
-        "key": "hiv_positive_children_adolescents_and_not_on_active_treatment",
+        "key": "hiv_positive_children_adolescents_not_on_active_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_not_on_active_treatment",
+        "openmrs_entity_id": "hiv_positive_children_adolescents_not_on_active_treatment",
         "type": "native_radio",
-        "label": "Are there children/adolescents who are HIV+ and NOT active on treatment?",
+        "label": "Are the HIV Positive Children/Adolescents in the Household Active on Treatment?",
         "options": [
           {
             "key": "yes",
@@ -840,22 +839,28 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:hiv_positive_children_adolescents": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
-        "key": "refer_to_treatment_and_care",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "If HIV+ and NOT active on treatment, refer to treatment and care as part if enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "key": "refer_to_care_at enrollment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_care_at enrollment",
+        "type": "toaster_notes",
+        "text": "Refer to treatment and care as part if enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:hiv_positive_children_adolescents_not_on_active_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1298,6 +1303,23 @@
                 "text": "No"
               }
             ]
+          },
+          {
+            "key": "categorise_agyw_as_at_risk",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalsTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_sexually_active",
@@ -2149,6 +2171,67 @@
             "ex-rules": {
               "rules-file": "hh_screening_enrollment_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "referral_list",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "List Of Referred Services:",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "offer_HIV_index_testing_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "offer_HIV_index_testing_list",
+        "type": "toaster_notes",
+        "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:all_other_household_members_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "categorize_as_index_c_alhiv_vca_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_index_c_alhiv_vca_list",
+        "type": "toaster_notes",
+        "text": "Categorize as an index C/ALHIV VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hiv_positive_children_adolescents": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "refer_to_care_at enrollment_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_care_at enrollment_list",
+        "type": "toaster_notes",
+        "text": "Refer to treatment and care as part if enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hiv_positive_children_adolescents_not_on_active_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       }
