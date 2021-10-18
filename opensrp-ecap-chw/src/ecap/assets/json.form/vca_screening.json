@@ -484,8 +484,8 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
+        "edit_type": "number",
         "hint": "ART Number",
-        "edit_type": "name",
         "relevance": {
           "step1:is_on_hiv_treatment": {
             "type": "string",
