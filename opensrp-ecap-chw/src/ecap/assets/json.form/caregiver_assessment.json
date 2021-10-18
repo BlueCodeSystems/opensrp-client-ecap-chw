@@ -618,8 +618,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "hint": "ART Number",
         "edit_type": "number",
+        "hint": "ART Number",
         "v_required": {
           "value": false,
           "err": "Please enter childs ART number "

@@ -186,10 +186,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Art number",
-        "v_numeric": {
-          "value": "true",
-          "err": "art numbers can only contain numbers "
-        },
+        "edit_type": "number",
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
           "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
