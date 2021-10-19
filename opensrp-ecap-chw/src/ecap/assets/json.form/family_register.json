@@ -262,63 +262,63 @@
         }
       },
       {
-        "key": "subpop_assigned_community_case_worker_fname",
+        "key": "subpop_community_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_assigned_community_case_worker_fname",
+        "openmrs_entity_id": "subpop_community_case_worker_fname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "First Name of Assigned Community Case Worker",
+        "hint": "First Name of Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "First Name of assigned community case worker only take letters"
+          "err": "First Name of community case worker only take letters"
         }
       },
       {
-        "key": "subpop_assigned_community_case_worker_lname",
+        "key": "subpop_community_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_assigned_community_case_worker_lname",
+        "openmrs_entity_id": "subpop_community_case_worker_lname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Last Name of Assigned Community Case Worker",
+        "hint": "Last Name of Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Last Name of assigned community case worker only take letters"
+          "err": "Last Name of community case worker only take letters"
         }
       },
       {
-        "key": "subpop_name_of_facility_based_case_worker_fname",
+        "key": "subpop_name_of_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_fname",
+        "openmrs_entity_id": "subpop_name_of_case_worker_fname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "First Name of Facility-Based Case Worker",
+        "hint": "First Name of Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of facility based case worker only take letters"
+          "err": "Name of case worker only take letters"
         }
       },
       {
-        "key": "subpop_name_of_facility_based_case_worker_lname",
+        "key": "subpop_name_of_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_lname",
+        "openmrs_entity_id": "subpop_name_of_case_worker_lname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Last Name of Facility-Based Case Worker",
+        "hint": "Last Name of Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of facility based case worker only take letters"
+          "err": "Name of case worker only take letters"
         }
       },
       {
