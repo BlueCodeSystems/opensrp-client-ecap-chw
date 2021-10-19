@@ -1852,6 +1852,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
+        "edit_type": "number",
         "hint": "Indicate ART Number",
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
