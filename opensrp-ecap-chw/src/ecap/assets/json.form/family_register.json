@@ -412,11 +412,11 @@
         "type": "spinner",
         "hint": "Implementing Partner ",
         "values": [
-          "Project Concern Zambia (PCZ)",
-          "Young Women Christian Association (YWCA) ",
-          "Bwafwano Integrated Services Organization (BISO)",
-          "Circle of Hope (COH)",
-          "Zambia Episcopal Conference (ZEC)"
+          "PCZ",
+          "YWCA",
+          "BISO",
+          "COH",
+          "ZEC"
         ]
       },
       {
