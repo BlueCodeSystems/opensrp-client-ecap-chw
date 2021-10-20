@@ -570,7 +570,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_group",
             "type": "native_radio",
-            "label": "Relationship of Family Member to Index VCA (Tick as Appropriate)",
+            "label": "Relationship of Family Member to Index VCA",
             "options": [
               {
                 "key": "sibling_of_index",
