@@ -1203,7 +1203,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
         "type": "check_box",
-        "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?",
+        "label": "Is AGYW using any of these HIV/pregnancy prevention methods?",
         "options": [
           {
             "key": "prep",
