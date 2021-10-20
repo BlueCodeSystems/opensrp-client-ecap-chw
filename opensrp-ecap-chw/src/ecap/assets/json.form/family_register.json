@@ -729,7 +729,7 @@
         "key": "other_vca_sub_pop_screening_in_household",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part D.1: Other Housesehold Member VCA Sub Populations 0-17Years",
+        "text": "Part D.1: Other Housesehold Member VCA Sub Populations 0-17 years",
         "text_color": "#000000",
         "v_required": {
           "value": false
