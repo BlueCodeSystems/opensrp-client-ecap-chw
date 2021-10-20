@@ -1933,7 +1933,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "date_of_last_viral_load",
         "type": "date_picker",
-        "hint": "Viral load",
+        "hint": "Date of last VL test",
         "label_info_title": "Date of last viral load",
         "expanded": false,
         "min_date": "today-50y",
@@ -2002,7 +2002,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV?)",
+        "label": "Are there any reasons you may be at risk of HIV?",
         "options": [
           {
             "key": "yes",
