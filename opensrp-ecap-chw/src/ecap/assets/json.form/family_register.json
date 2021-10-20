@@ -592,7 +592,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_population_for_children_0_17years_in_household",
             "type": "check_box",
-            "label": "Indication of Subpopulation for Children 0-17Years in Household (Tick as Appropriate)",
+            "label": "Indication of Subpopulation for Children 0-17 years in Household",
             "options": [
               {
                 "key": "1",
@@ -617,6 +617,10 @@
               {
                 "key": "6",
                 "text": "Children of Female Sex Workers (FSWs)"
+              },
+              {
+                "key": "7",
+                "text": "None"
               }
             ]
           },
@@ -2107,18 +2111,6 @@
         }
       },
       {
-        "key": "date_screening_carried_out",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "date_screening_carried_out",
-        "type": "date_picker",
-        "hint": "Date of screening",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today"
-      },
-      {
         "key": "vca_sub_population_is_approved_for_enrollment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -2162,7 +2154,8 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "date_approved",
         "type": "date_picker",
-        "hint": "Date of screening",
+        "hint": "Date of Approval",
+        "value": "today",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
