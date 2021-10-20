@@ -1,6 +1,6 @@
 {
   "count": "6",
-  "skip_blank_steps" : true,
+  "skip_blank_steps" : false,
   "encounter_type": "Sub Population",
   "entity_id": "",
   "relational_id": "",
@@ -1202,7 +1202,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
-        "type": "native_radio",
+        "type": "check_box",
         "label": "Is the AGYW using any of these HIV/pregnancy prevention methods?",
         "options": [
           {
@@ -1247,9 +1247,10 @@
         "hint": "Method Used",
         "edit_type": "name",
         "relevance": {
-          "step1:hiv_or_pregnancy_prevention_method_used": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1924,7 +1925,6 @@
           }
         }
       },
-
       {
         "key": "subpop5_toast",
         "openmrs_entity_parent": "",
@@ -1943,7 +1943,6 @@
           }
         }
       },
-
       {
         "key": "subpop6_toast",
         "openmrs_entity_parent": "",
