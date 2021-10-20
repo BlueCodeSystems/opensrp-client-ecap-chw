@@ -222,22 +222,17 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
-        "label": "Is the HIV status known?",
-        "read_only": false,
+        "label": "Is the VCA HIV Positive",
+        "read_only": true,
         "options": [
           {
             "key": "yes",
-            "text": "Yes, status POSITIVE",
+            "text": "Yes",
             "value": false
           },
           {
             "key": "no",
-            "text": "No, status not known",
-            "value": false
-          },
-          {
-            "key": "negative",
-            "text": "Yes, status NEGATIVE",
+            "text": "No",
             "value": false
           }
         ]
@@ -470,7 +465,7 @@
         "relevance": {
           "step1:viral_load": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "greaterThan(., \"no\")"
           }
         }
       },
@@ -566,7 +561,7 @@
         "openmrs_entity_id": "hiv_test",
         "type": "native_radio",
         "label": "Was the HIV test done less than 6 months ago?",
-        "label_text_style": "",
+        "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -594,61 +589,8 @@
             }
           }
         }
+      },
 
-      },
-      {
-        "key": "vca_exposed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_exposed",
-        "type": "native_radio",
-        "label": "Since the last HIV test, has the VCA been exposed to: Breastfeeding, \nSexual   abuse   or Rape,\n Tattoos/piercings",
-        "label_text_style": "",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "toaster_a",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Because you selected YES to the question above, you will need to refer for HIV testing",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:vca_exposed": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
       {
         "key": "biological_mother",
         "openmrs_entity_parent": "",
@@ -848,7 +790,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "female_sex_worker",
         "type": "native_radio",
-        "label_text_style": "",
+        "label_text_style": "bold",
         "label": "Is the primary caregiver a female sex worker? (Do not ask question directly. Probe)",
         "options": [
           {
@@ -870,6 +812,60 @@
           }
         }
       },
+      {
+        "key": "vca_exposed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_exposed",
+        "type": "native_radio",
+        "label": "Since the last HIV test, has the VCA been exposed to: Breastfeeding, \nSexual   abuse   or Rape,\n Tattoos/piercings",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Because you selected YES to the question above, you will need to refer for HIV testing",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:vca_exposed": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
       {
         "key": "sexually_active",
         "openmrs_entity_parent": "",
@@ -1173,7 +1169,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_response",
         "type": "native_radio",
-        "label_text_style": "",
+        "label_text_style": "bold",
         "label": "Did the VCA have a YES to at least one of the above questions?",
         "options": [
           {
@@ -1201,7 +1197,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for HIV testing",
+        "text": "REFER FOR HIV TESTING",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1218,9 +1214,9 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "HIV test not required",
+        "text": "HIV TEST NOT REQUIRED",
         "toaster_type": "info",
-        "toaster_info_text": "",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "step1:vca_response": {
@@ -1236,8 +1232,8 @@
         "openmrs_entity_id": "eyp_population",
         "type": "check_box",
         "read_only": "false",
-        "label_text_style": "",
-        "label": "ECAP Sub-population based on assessment",
+        "label_text_style": "bold",
+        "label": "EYP Population Category based on assessment",
         "options": [
           {
             "key": "subpop1",
@@ -1352,7 +1348,6 @@
           }
         }
       }
-
     ]
   }
 }
