@@ -699,7 +699,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tick_applicable",
             "type": "native_radio",
-            "label": "HIV Status of Household Member (Tick where applicable)",
+            "label": "HIV Status of Household Member",
             "options": [
               {
                 "key": "hiv_pos",
