@@ -307,7 +307,7 @@ condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step5_subpop5_toast
+name: step3_subpop5_toast
 description: subpop5_toast relevance
 priority: 1
 condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
@@ -321,7 +321,7 @@ condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step5_subpop6_toast
+name: step3_subpop6_toast
 description: subpop6_toast relevance
 priority: 1
 condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
@@ -528,6 +528,13 @@ name: step1_hiv_or_pregnancy_prevention_method_used
 description: hiv_or_pregnancy_prevention_method_used
 priority: 1
 condition: "step1_agyw_sexually_active.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_or_pregnancy_prevention_method_used_other
+description: hiv_or_pregnancy_prevention_method_used_other
+priority: 1
+condition: "step1_hiv_or_pregnancy_prevention_method_used.contains('other')"
 actions:
   - "isRelevant = true"
 ---
