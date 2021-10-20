@@ -90,7 +90,7 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("family_register");
+                    indexRegisterForm = formUtils.getFormJson("family_register_entry");
 
                     householdIndexActivity.startFormActivity(indexRegisterForm);
 
@@ -145,7 +145,7 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("family_register");
+                    indexRegisterForm = formUtils.getFormJson("family_register_entry");
 
                     householdIndexActivity.startFormActivity(indexRegisterForm);
 
