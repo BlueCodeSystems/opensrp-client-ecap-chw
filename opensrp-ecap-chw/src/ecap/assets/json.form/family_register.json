@@ -262,63 +262,63 @@
         }
       },
       {
-        "key": "subpop_community_case_worker_fname",
+        "key": "subpop_assigned_community_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_community_case_worker_fname",
+        "openmrs_entity_id": "subpop_assigned_community_case_worker_fname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "First Name of Community Case Worker",
+        "hint": "First Name of Assigned Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "First Name of community case worker only take letters"
+          "err": "First Name of assigned community case worker only take letters"
         }
       },
       {
-        "key": "subpop_community_case_worker_lname",
+        "key": "subpop_assigned_community_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_community_case_worker_lname",
+        "openmrs_entity_id": "subpop_assigned_community_case_worker_lname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Last Name of Community Case Worker",
+        "hint": "Last Name of Assigned Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Last Name of community case worker only take letters"
+          "err": "Last Name of assigned community case worker only take letters"
         }
       },
       {
-        "key": "subpop_name_of_case_worker_fname",
+        "key": "subpop_name_of_facility_based_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_case_worker_fname",
+        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_fname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "First Name of Case Worker",
+        "hint": "First Name of Facility-Based Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of case worker only take letters"
+          "err": "Name of facility based case worker only take letters"
         }
       },
       {
-        "key": "subpop_name_of_case_worker_lname",
+        "key": "subpop_name_of_facility_based_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop_name_of_case_worker_lname",
+        "openmrs_entity_id": "subpop_name_of_facility_based_case_worker_lname",
         "read_only": "false",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Last Name of Case Worker",
+        "hint": "Last Name of Facility-Based Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of case worker only take letters"
+          "err": "Name of facility based case worker only take letters"
         }
       },
       {
@@ -412,11 +412,11 @@
         "type": "spinner",
         "hint": "Implementing Partner ",
         "values": [
-          "PCZ",
-          "YWCA",
-          "BISO",
-          "COH",
-          "ZEC"
+          "Project Concern Zambia (PCZ)",
+          "Young Women Christian Association (YWCA) ",
+          "Bwafwano Integrated Services Organization (BISO)",
+          "Circle of Hope (COH)",
+          "Zambia Episcopal Conference (ZEC)"
         ]
       },
       {
@@ -570,7 +570,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_group",
             "type": "native_radio",
-            "label": "Relationship of Family Member to Index VCA",
+            "label": "Relationship of Family Member to Index VCA (Tick as Appropriate)",
             "options": [
               {
                 "key": "sibling_of_index",
@@ -592,7 +592,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_population_for_children_0_17years_in_household",
             "type": "check_box",
-            "label": "Indication of Subpopulation for Children 0-17 years in Household",
+            "label": "Indication of Subpopulation for Children 0-17Years in Household (Tick as Appropriate)",
             "options": [
               {
                 "key": "1",
@@ -617,10 +617,6 @@
               {
                 "key": "6",
                 "text": "Children of Female Sex Workers (FSWs)"
-              },
-              {
-                "key": "7",
-                "text": "None"
               }
             ]
           },
@@ -703,7 +699,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tick_applicable",
             "type": "native_radio",
-            "label": "HIV Status of Household Member",
+            "label": "HIV Status of Household Member (Tick where applicable)",
             "options": [
               {
                 "key": "hiv_pos",
@@ -733,7 +729,7 @@
         "key": "other_vca_sub_pop_screening_in_household",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part D.1: Other Housesehold Member VCA Sub Populations 0-17 years",
+        "text": "Part D.1: Other Housesehold Member VCA Sub Populations 0-17Years",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -786,19 +782,20 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:all_other_household_members_0_17years_know_their_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
           }
         }
       },
       {
-        "key": "hiv_positive_children_adolescents",
+        "key": "hiv_positive_children_adolescents_and_on_active_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "hiv_positive_children_adolescents",
+        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_on_active_treatment",
         "type": "native_radio",
-        "label": "Are there children/Adolescents in the Household who are HIV Positive?",
+        "label": "Are there children/adolescents who are HIV+ and active on treatment?",
         "options": [
           {
             "key": "yes",
@@ -812,28 +809,28 @@
       },
       {
         "key": "categorize_as_index_c_alhiv_vca",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "categorize_as_index_c_alhiv_vca",
-        "type": "toaster_notes",
-        "text": "Categorize as an index C/ALHIV VCA",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "If HIV+ and active on treatment,categorize as an index C/ALHIV VCA",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
         "relevance": {
-          "step1:hiv_positive_children_adolescents": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
           }
         }
       },
       {
-        "key": "hiv_positive_children_adolescents_not_on_active_treatment",
+        "key": "hiv_positive_children_adolescents_and_not_on_active_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "hiv_positive_children_adolescents_not_on_active_treatment",
+        "openmrs_entity_id": "are_there_children_who_are_hiv_positive_and_not_on_active_treatment",
         "type": "native_radio",
-        "label": "Are the HIV Positive Children/Adolescents in the Household Active on Treatment?",
+        "label": "Are there children/adolescents who are HIV+ and NOT active on treatment?",
         "options": [
           {
             "key": "yes",
@@ -843,28 +840,22 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "step1:hiv_positive_children_adolescents": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
+        ]
       },
       {
-        "key": "refer_to_care_at enrollment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "refer_to_care_at enrollment",
-        "type": "toaster_notes",
-        "text": "Refer to treatment and care as part of enrollment",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
+        "key": "refer_to_treatment_and_care",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "If HIV+ and NOT active on treatment, refer to treatment and care as part if enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
         "relevance": {
-          "step1:hiv_positive_children_adolescents_not_on_active_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
           }
         }
       },
@@ -913,18 +904,18 @@
       },
       {
         "key": "refer_to_treatment_and_care_caregiver_children_with_unknown_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "refer_to_treatment_and_care_caregiver_children_with_unknown_status",
-        "type": "toaster_notes",
+        "type": "label",
+        "label_text_style": "bold",
         "text": "Offer index testing as part of enrollment for all biological children 0-17 years and DBS for all HEIs",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
         "relevance": {
-          "step1:if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
           }
         }
       },
@@ -1307,23 +1298,6 @@
                 "text": "No"
               }
             ]
-          },
-          {
-            "key": "categorise_agyw_as_at_risk",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "categorise_agyw_as_at_risk",
-            "type": "toaster_notes",
-            "text": "Categorize AGYW as At-Risk",
-            "toaster_type": "info",
-            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-            "toaster_info_title": "Information Toaster Info Title",
-            "relevance": {
-              "step1:is_the_agyw_10_17years": {
-                "type": "string",
-                "ex": "equalsTo(., \"yes\")"
-              }
-            }
           },
           {
             "key": "is_the_agyw_sexually_active",
@@ -1937,7 +1911,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "date_of_last_viral_load",
         "type": "date_picker",
-        "hint": "Date of last VL test",
+        "hint": "Viral load",
         "label_info_title": "Date of last viral load",
         "expanded": false,
         "min_date": "today-50y",
@@ -2006,7 +1980,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk of HIV?",
+        "label": "Are there any reasons you may be at risk for HIV?)",
         "options": [
           {
             "key": "yes",
@@ -2103,13 +2077,24 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "read_only" : "true",
         "hint": "Carried out by",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
         }
+      },
+      {
+        "key": "date_screening_carried_out",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "date_screening_carried_out",
+        "type": "date_picker",
+        "hint": "Date of screening",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today"
       },
       {
         "key": "vca_sub_population_is_approved_for_enrollment",
@@ -2152,12 +2137,10 @@
       {
         "key": "date_approved",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "",
         "openmrs_entity_id": "date_approved",
         "type": "date_picker",
-        "value": "today",
-        "read_only" : "true",
-        "hint": "Date of Approval",
+        "hint": "Date of screening",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
@@ -2167,84 +2150,6 @@
             "ex-rules": {
               "rules-file": "hh_screening_enrollment_relevance.yml"
             }
-          }
-        }
-      },
-      {
-        "key": "referral_list",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "List Of Referred Services:",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "offer_HIV_index_testing_list",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "offer_HIV_index_testing_list",
-        "type": "toaster_notes",
-        "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:all_other_household_members_0_17years_know_their_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "categorize_as_index_c_alhiv_vca_list",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "categorize_as_index_c_alhiv_vca_list",
-        "type": "toaster_notes",
-        "text": "Categorize as an index C/ALHIV VCA",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:hiv_positive_children_adolescents": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "refer_to_care_at enrollment_list",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "refer_to_care_at enrollment_list",
-        "type": "toaster_notes",
-        "text": "Refer to treatment and care as part of enrollment",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:hiv_positive_children_adolescents_not_on_active_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
-        "type": "toaster_notes",
-        "text": "Offer index testing as part of enrollment for all biological children 0-17 years and DBS for all HEIs",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
           }
         }
       }
