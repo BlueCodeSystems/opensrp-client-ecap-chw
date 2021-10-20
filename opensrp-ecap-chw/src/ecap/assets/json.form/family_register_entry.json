@@ -129,7 +129,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "label": "Subpopulation (tick as appropriate):",
+        "label": "Subpopulation:",
         "options": [
           {
             "key": "c_alhiv",
@@ -154,6 +154,10 @@
           {
             "key": "survivor_of_sexual_violence",
             "text": "Survivor of Sexual Violence"
+          },
+          {
+            "key": "none",
+            "text": "None"
           }
         ]
       },
@@ -299,55 +303,55 @@
         }
       },
       {
-        "key": "assigned_community_case_worker_fname",
+        "key": "community_case_worker_fname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assigned_community_case_worker_fname",
+        "openmrs_entity_id": "community_case_worker_fname",
         "type": "edit_text",
-        "hint": "First Name of Assigned Community Case Worker",
+        "hint": "First Name of Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z]*",
-          "err": "First Name of assigned community case worker only take letters"
+          "err": "First Name of community case worker only take letters"
         }
       },
       {
-        "key": "assigned_community_case_worker_lname",
+        "key": "community_case_worker_lname",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assigned_community_case_worker_lname",
+        "openmrs_entity_id": "community_case_worker_lname",
         "type": "edit_text",
-        "hint": "Last Name of Assigned Community Case Worker",
+        "hint": "Last Name of Community Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z]*",
-          "err": "Last Name of assigned community case worker only take letters"
+          "err": "Last Name of community case worker only take letters"
         }
       },
       {
-        "key": "fname_of_facility_based_case_worker",
+        "key": "fname_of_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_of_facility_based_case_worker",
+        "openmrs_entity_id": "fname_of_case_worker",
         "type": "edit_text",
-        "hint": "First Name of Facility-Based Case Worker",
+        "hint": "First Name of Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z]*",
-          "err": "First Name of facility based case worker only take letters"
+          "err": "First Name of case worker only take letters"
         }
       },
       {
-        "key": "lname_of_facility_based_case_worker",
+        "key": "lname_of_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_of_facility_based_case_worker",
+        "openmrs_entity_id": "lname_of_case_worker",
         "type": "edit_text",
-        "hint": "Last Name of Facility-Based Case Worker",
+        "hint": "Last Name of Case Worker",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z]*",
-          "err": "Last Name of facility based case worker only take letters"
+          "err": "Last Name of case worker only take letters"
         }
       },
       {
@@ -2625,18 +2629,6 @@
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
         }
-      },
-      {
-        "key": "date_screening_carried_out",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "date_screening_carried_out",
-        "type": "date_picker",
-        "hint": "Date of screening",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today"
       },
       {
         "key": "vca_sub_population_is_approved_for_enrollment",
