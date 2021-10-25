@@ -409,15 +409,14 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "partners",
-        "type": "spinner",
+        "read_only": "true",
+        "type": "edit_text",
         "hint": "Implementing Partner ",
-        "values": [
-          "PCZ",
-          "YWCA",
-          "BISO",
-          "COH",
-          "ZEC"
-        ]
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        }
       },
       {
         "key": "date_of_screening",
@@ -948,18 +947,18 @@
       },
       {
         "key": "categorize_as_HEI_VCA",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_HEI_VCA",
+        "type": "toaster_notes",
         "text": "Categorize as HEI VCA",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2178,6 +2177,159 @@
         "text_color": "#000000",
         "v_required": {
           "value": false
+        }
+      },
+      {
+        "key": "offer_HIV_index_testing_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "offer_HIV_index_testing_list",
+        "type": "toaster_notes",
+        "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:all_other_household_members_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "categorize_as_index_c_alhiv_vca_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_index_c_alhiv_vca_list",
+        "type": "toaster_notes",
+        "text": "Categorize as an index C/ALHIV VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hiv_positive_children_adolescents": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "refer_to_care_at enrollment_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_care_at enrollment_list",
+        "type": "toaster_notes",
+        "text": "Refer to treatment and care as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hiv_positive_children_adolescents_not_on_active_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "categorize_as_HEI_VCA_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_HEI_VCA_list",
+        "type": "toaster_notes",
+        "text": "Categorize as HEI VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
+        "type": "toaster_notes",
+        "text": "Offer index testing as part of enrollment for all biological children 0-17 years and DBS for all HEIs",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "offer_HIV_index_testing_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "offer_HIV_index_testing_list",
+        "type": "toaster_notes",
+        "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:all_other_household_members_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "categorize_as_index_c_alhiv_vca_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_index_c_alhiv_vca_list",
+        "type": "toaster_notes",
+        "text": "Categorize as an index C/ALHIV VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hiv_positive_children_adolescents": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "refer_to_care_at enrollment_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_care_at enrollment_list",
+        "type": "toaster_notes",
+        "text": "Refer to treatment and care as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hiv_positive_children_adolescents_not_on_active_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
+        "type": "toaster_notes",
+        "text": "Offer index testing as part of enrollment for all biological children 0-17 years and DBS for all HEIs",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
         }
       },
       {
