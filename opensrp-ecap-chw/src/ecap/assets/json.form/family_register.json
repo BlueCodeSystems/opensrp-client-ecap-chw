@@ -1019,18 +1019,18 @@
       },
       {
         "key": "refer_malnutrition_screening",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_malnutrition_screening",
+        "type": "toaster_notes",
         "text": "Refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:have_children_and_adolescents_in_the_household_been_screened_for_malnutrition": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1051,22 +1051,21 @@
             "text": "No"
           }
         ]
-
       },
       {
         "key": "provide_preventive_care",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "If not refer and provide preventive care and support services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "provide_preventive_care",
+        "type": "toaster_notes",
+        "text": "Refer and provide preventive care and support services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -2276,6 +2275,40 @@
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "step1:if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "refer_malnutrition_screening_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_malnutrition_screening_list",
+        "type": "toaster_notes",
+        "text": "Refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:have_children_and_adolescents_in_the_household_been_screened_for_malnutrition": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "provide_preventive_care_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "provide_preventive_care_list",
+        "type": "toaster_notes",
+        "text": "Refer and provide preventive care and support services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
