@@ -1529,13 +1529,14 @@
           },
           {
             "key": "hiv_positive_agyw",
-            "type": "label",
-            "label_text_style": "bold",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "hiv_positive_agyw",
+            "type": "toaster_notes",
             "text": "Categorize AGYW as CLHIV and refer to appropriate treatment and care services at enrollment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
               "step1:did_the_agyw_test_positive_for_hiv": {
                 "type": "string",
@@ -2045,18 +2046,18 @@
       },
       {
         "key": "reason_for_hiv_risk_service",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "reason_for_hiv_risk_service",
+        "type": "toaster_notes",
         "text": "Provide appropriate preventive services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:are_there_any_reasons_you_may_be_at_risk_for_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2383,6 +2384,23 @@
         }
       },
       {
+        "key": "reason_for_hiv_risk_service_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "reason_for_hiv_risk_service_list",
+        "type": "toaster_notes",
+        "text": "Provide appropriate preventive services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:are_there_any_reasons_you_may_be_at_risk_for_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "economic_service_list",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -2396,6 +2414,23 @@
           "step1:household_food_socially_and_economically_secure": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_positive_agyw_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_positive_agyw_list",
+        "type": "toaster_notes",
+        "text": "Categorize AGYW as CLHIV and refer to appropriate treatment and care services at enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:did_the_agyw_test_positive_for_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       }
