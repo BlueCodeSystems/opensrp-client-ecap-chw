@@ -1,21 +1,12 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
-import android.util.Log;
-
-import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
-import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.interactor.MotherIndexInteractor;
-import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
-import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.EventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.smartregister.domain.FetchStatus;
 
 import java.lang.ref.WeakReference;
@@ -70,13 +61,13 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
             view.toggleDialogVisibility(true);
 
 
-            MotherIndexEventClient motherIndexEventClient = model.processRegistration(jsonString);
+            List<EventClient> eventClients = model.processRegistration(jsonString);
 
-            if (motherIndexEventClient == null) {
+            if (eventClients == null) {
                 return;
             }
 
-            interactor.saveRegistration(motherIndexEventClient, isEditMode);
+            interactor.saveRegistration(eventClients, isEditMode);
 
         } catch (Exception e) {
             Timber.e(e);

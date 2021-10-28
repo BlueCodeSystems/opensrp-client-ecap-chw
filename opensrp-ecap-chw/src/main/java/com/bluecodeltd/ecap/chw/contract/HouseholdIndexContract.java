@@ -1,7 +1,6 @@
 package com.bluecodeltd.ecap.chw.contract;
 
 import com.bluecodeltd.ecap.chw.model.HouseholdIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
 
 import org.smartregister.view.contract.BaseRegisterContract;
 
