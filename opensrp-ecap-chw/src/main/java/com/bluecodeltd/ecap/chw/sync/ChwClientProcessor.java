@@ -30,15 +30,8 @@ public class ChwClientProcessor extends CoreClientProcessor {
     public void processEvents(ClientClassification clientClassification, Table vaccineTable, Table serviceTable, EventClient eventClient, Event event, String eventType) throws Exception {
         try {
             if (eventClient != null && eventClient.getEvent() != null) {
-                switch (eventType) {
-                    case Constants.EcapEncounterType.CHILD_INDEX:
-                    case Constants.EcapEncounterType.MOTHER_INDEX:
-                        processEvent(eventClient.getEvent(), eventClient.getClient(), clientClassification);
-                        break;
-                    default:
-                        super.processEvents(clientClassification, vaccineTable, serviceTable, eventClient, event, eventType);
-                        break;
-                }
+                //super.processEvents(clientClassification, vaccineTable, serviceTable, eventClient, event, eventType);
+                processEvent(eventClient.getEvent(), eventClient.getClient(), clientClassification);
             }
         } catch (Exception exception) {
             Timber.e(exception);

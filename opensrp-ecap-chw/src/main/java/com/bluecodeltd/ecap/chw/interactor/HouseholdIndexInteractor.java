@@ -2,9 +2,7 @@ package com.bluecodeltd.ecap.chw.interactor;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
-import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.model.HouseholdIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
 
 import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Client;

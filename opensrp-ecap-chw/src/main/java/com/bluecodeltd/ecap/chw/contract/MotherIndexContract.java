@@ -1,11 +1,11 @@
 package com.bluecodeltd.ecap.chw.contract;
 
-import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
+import com.bluecodeltd.ecap.chw.model.EventClient;
 
 import org.json.JSONException;
 import org.smartregister.view.contract.BaseRegisterContract;
+
+import java.util.List;
 
 public interface MotherIndexContract {
 
@@ -22,10 +22,10 @@ public interface MotherIndexContract {
     }
 
     interface Interactor {
-        boolean saveRegistration(final MotherIndexEventClient motherIndexEventClient, final boolean isEditMode);
+        boolean saveRegistration(final List<EventClient> eventClients, final boolean isEditMode);
     }
 
     interface Model {
-        MotherIndexEventClient processRegistration(String jsonString);
+       List<EventClient> processRegistration(String jsonString);
     }
 }

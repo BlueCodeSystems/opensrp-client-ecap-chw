@@ -41,6 +41,13 @@ condition: "step5_phone_number == ''"
 actions:
   - "calculation = step1_adolescent_phone"
 ---
+name: step1_disrict
+description: District
+priority: 1
+condition: "step1_province == 'southern'"
+actions:
+  - "calculation = step1_southern"
+---
 name: step3_gender
 description: Adolescent Gender
 priority: 1

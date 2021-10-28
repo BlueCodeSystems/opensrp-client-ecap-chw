@@ -53,13 +53,8 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 
                 try {
-                    FormUtils formUtils = new FormUtils(context);
 
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("vca_screening");
-
-                    idRegisterActivity.startFormActivity(indexRegisterForm);
+                    idRegisterActivity.startFormActivity("vca_screening",null,"");
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -108,13 +103,8 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 
                 try {
-                    FormUtils formUtils = new FormUtils(context);
 
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("vca_screening");
-
-                    idRegisterActivity.startFormActivity(indexRegisterForm);
+                    idRegisterActivity.startFormActivity("vca_screening",null,"");
 
                 } catch (Exception e) {
                     Timber.e(e);
