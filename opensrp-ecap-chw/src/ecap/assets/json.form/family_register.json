@@ -1314,23 +1314,6 @@
             ]
           },
           {
-            "key": "categorise_agyw_as_at_risk",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "categorise_agyw_as_at_risk",
-            "type": "toaster_notes",
-            "text": "Categorize AGYW as At-Risk",
-            "toaster_type": "info",
-            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-            "toaster_info_title": "Information Toaster Info Title",
-            "relevance": {
-              "step1:is_the_agyw_10_17years": {
-                "type": "string",
-                "ex": "equalsTo(., \"yes\")"
-              }
-            }
-          },
-          {
             "key": "is_the_agyw_sexually_active",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1346,7 +1329,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk1",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk1",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_sexually_active": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_having_sex_with_older_men",
@@ -1364,7 +1370,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk2",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk2",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_having_sex_with_older_men": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_engaged_in_transactional_sex",
@@ -1382,7 +1411,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk3",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk3",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_engaged_in_transactional_sex": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_engaged_in_sex_work",
@@ -1400,7 +1452,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk4",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk4",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_engaged_in_sex_work": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_food_or_economically_secure",
@@ -1418,7 +1493,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk5",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk5",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_food_or_economically_secure": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "did_the_agyw_marry_early",
@@ -1436,7 +1534,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk6",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk6",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:did_the_agyw_marry_early": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "did_the_agyw_give_birth_before_age_of_18",
@@ -1454,7 +1575,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk7",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk7",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:did_the_agyw_give_birth_before_age_of_18": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "does_the_agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
@@ -1472,7 +1616,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk8",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk8",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:does_the_agyw_have_a_partner_who_is_violent_or_has_experienced_violence": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_illness",
@@ -1490,7 +1657,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk9",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk9",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_illness": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "has_the_agyw_been_tested_for_hiv",
@@ -1508,7 +1698,13 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "did_the_agyw_test_positive_for_hiv",
@@ -1569,30 +1765,6 @@
             }
           },
           {
-            "key": "agyw_at_risk",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "agyw_at_risk",
-            "openmrs_data_type": "select one",
-            "type": "check_box",
-            "label": "AGYW is At Risk",
-            "label_text_style": "italic",
-            "options": [
-              {
-                "key": "yes",
-                "text": "Yes",
-                "value": true,
-                "openmrs_choice_id": ""
-              }
-            ],
-            "relevance": {
-              "step1:hiv_positive_agyw": {
-                "type": "string",
-                "ex": "equalTo(., \"yes\")"
-              }
-            }
-          },
-          {
             "key": "is_agyw_in_school",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1608,17 +1780,24 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "agyw_not_in_school",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "refer to education support services at enrollment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "agyw_not_in_school",
+            "type": "toaster_notes",
+            "text": "Refer to Education Support Services at enrollment",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
               "step1:is_agyw_in_school": {
                 "type": "string",
@@ -1642,22 +1821,28 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "agyw_not_receiving_economic_strengthening_intervention",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "agyw_not_receiving_economic_strengthening_intervention",
+            "type": "toaster_notes",
+            "text": "Refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:agyw_receiving_an_economic_strengthening_intervention": {
+                "type": "string",
+                "ex": "equalTo(., \"no\")"
               }
             }
           },
@@ -1693,7 +1878,13 @@
                 "key": "none",
                 "text": "None"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "pregnancy_prevention_methods_not_used_by_agyw",
