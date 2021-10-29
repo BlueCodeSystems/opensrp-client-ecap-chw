@@ -416,6 +416,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of VCA only take letters"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1545,6 +1552,47 @@
             }
           },
           {
+            "key": "at_risk_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "at_risk_agyw",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:did_the_agyw_test_positive_for_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "agyw_at_risk",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "agyw_at_risk",
+            "openmrs_data_type": "select one",
+            "type": "check_box",
+            "label": "AGYW is At Risk",
+            "label_text_style": "italic",
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes",
+                "value": true,
+                "openmrs_choice_id": ""
+              }
+            ],
+            "relevance": {
+              "step1:hiv_positive_agyw": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
             "key": "is_agyw_in_school",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1618,7 +1666,7 @@
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
-            "type": "check_box",
+            "type": "native_radio",
             "label": "Select any of the HIV/pregnancy prevention methods AGYW is using from list below",
             "options": [
               {
@@ -1649,13 +1697,14 @@
           },
           {
             "key": "pregnancy_prevention_methods_not_used_by_agyw",
-            "type": "label",
-            "label_text_style": "bold",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "pregnancy_prevention_methods_not_used_by_agyw",
+            "type": "toaster_notes",
             "text": "Refer and/or provide appropriate preventive services/DREAMS program at enrolment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
               "step1:pregnancy_prevention_methods_used_by_agyw": {
                 "type": "string",
@@ -1678,66 +1727,6 @@
             }
           }
         ]
-      },
-      {
-        "key": "did_agyw_answer_to_any",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "did_agyw_answer_to_any",
-        "type": "native_radio",
-        "label": "Did AGYW answer “Yes” to any of the questions from Part D.2 above?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "at_risk_agyw",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Categorize AGYW as At Risk by checking box below",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "agyw_at_risk",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "agyw_at_risk",
-        "openmrs_data_type": "select one",
-        "type": "check_box",
-        "label": "AGYW is At Risk",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false,
-            "openmrs_choice_id": ""
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
       },
       {
         "key": "primary_caregivers_only",
@@ -2155,7 +2144,6 @@
         "openmrs_entity_id": "date_approved",
         "type": "date_picker",
         "value": "today",
-        "read_only" : "true",
         "hint": "Date of Approval",
         "look_up": "true",
         "expanded": false,
@@ -2431,6 +2419,23 @@
           "step1:did_the_agyw_test_positive_for_hiv": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "pregnancy_prevention_methods_not_used_by_agyw_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pregnancy_prevention_methods_not_used_by_agyw_list",
+        "type": "toaster_notes",
+        "text": "Refer and/or provide appropriate preventive services/DREAMS program at enrolment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:pregnancy_prevention_methods_used_by_agyw": {
+            "type": "string",
+            "ex": "equalTo(., \"none\")"
           }
         }
       }
