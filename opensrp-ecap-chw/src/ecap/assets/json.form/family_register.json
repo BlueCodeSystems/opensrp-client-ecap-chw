@@ -953,6 +953,47 @@
         ]
       },
       {
+        "key": "hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
+        "type": "native_radio",
+        "label": "Is breastfeeding HEI receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "provide_preventive_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "provide_preventive_care",
+        "type": "toaster_notes",
+        "text": "Refer and provide preventive care and support services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
         "key": "categorize_as_HEI_VCA",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -1036,41 +1077,6 @@
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "step1:have_children_and_adolescents_in_the_household_been_screened_for_malnutrition": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
-        "type": "native_radio",
-        "label": "If HEI receiving breastfeeding, are they receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "provide_preventive_care",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "provide_preventive_care",
-        "type": "toaster_notes",
-        "text": "Refer and provide preventive care and support services as part of enrollment",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
