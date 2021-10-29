@@ -329,8 +329,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(22).put("value", client.getColumnmaps().get("partners"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(25).put("value", caregiverNAmes[0]);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(26).put("value", caregiverNAmes[1]);
-                    //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(25).put("value", client.getColumnmaps().get("caregiver_firstname"));
-                    //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(26).put("value", client.getColumnmaps().get("caregiver_lastname"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(27).put("value", client.getColumnmaps().get("physical_address"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(28).put("value", client.getColumnmaps().get("caregiver_nrc"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(29).put("value", client.getColumnmaps().get("caregiver_phone"));
