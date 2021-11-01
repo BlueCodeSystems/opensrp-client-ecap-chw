@@ -2612,6 +2612,492 @@
       ]
     },
 
+    {
+      "name": "ec_household_visitation_assessment",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
+          }
+        },
+        {
+          "column_name": "caseworker_code",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_code"
+          }
+        },
+        {
+          "column_name": "affiliated_health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affiliated_health_facility"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id"
+          }
+        },
+        {
+          "column_name": "primary_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.primary_firstname"
+          }
+        },
+        {
+          "column_name": "primary_surname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.primary_surname"
+          }
+        },
+        {
+          "column_name": "dob",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dob"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "caregiver_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_art"
+          }
+        },
+        {
+          "column_name": "clinical_care",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.clinical_care"
+          }
+        },
+        {
+          "column_name": "date_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_art"
+          }
+        },
+        {
+          "column_name": "date_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_art"
+          }
+        },
+        {
+          "column_name": "art_appointment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_appointment"
+          }
+        },
+        {
+          "column_name": "counselling",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.counselling"
+          }
+        },
+        {
+          "column_name": "art_medication",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_medication"
+          }
+        },
+        {
+          "column_name": "mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mmd"
+          }
+        },
+        {
+          "column_name": "mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mmd"
+          }
+        },
+        {
+          "column_name": "mmd_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mmd_months"
+          }
+        },
+        {
+          "column_name": "six_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.six_months"
+          }
+        },
+        {
+          "column_name": "six_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.six_months"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "vl_last_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_last_result"
+          }
+        },
+        {
+          "column_name": "date_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_hiv"
+          }
+        },
+        {
+          "column_name": "visit_hiv_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.visit_hiv_test"
+          }
+        },
+        {
+          "column_name": "referred_for_testing",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_for_testing"
+          }
+        },
+        {
+          "column_name": "referred_for_testing",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_for_testing"
+          }
+        },
+        {
+          "column_name": "hiv_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_risk"
+          }
+        },
+        {
+          "column_name": "hiv_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_assessment"
+          }
+        },
+        {
+          "column_name": "prevention_support",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prevention_support"
+          }
+        },
+        {
+          "column_name": "referred_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_facility"
+          }
+        },
+        {
+          "column_name": "number_children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_children"
+          }
+        },
+        {
+          "column_name": "hiv_awareness_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_awareness_status"
+          }
+        },
+        {
+          "column_name": "caregiver_not_aware",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_not_aware"
+          }
+        },
+        {
+          "column_name": "hiv_test_referral",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test_referral"
+          }
+        },
+        {
+          "column_name": "school_fees",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_fees"
+          }
+        },
+        {
+          "column_name": "unpaid_school_fees",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unpaid_school_fees"
+          }
+        },
+        {
+          "column_name": "linked_economic",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.linked_economic"
+          }
+        },
+        {
+          "column_name": "referred_mcdss",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_mcdss"
+          }
+        },
+        {
+          "column_name": "income_source",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.income_source"
+          }
+        },
+        {
+          "column_name": "list_source",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.list_source"
+          }
+        },
+        {
+          "column_name": "bills_associated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.bills_associated"
+          }
+        },
+        {
+          "column_name": "barriers_challenges",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.barriers_challenges"
+          }
+        },
+        {
+          "column_name": "economic_strengthening",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.economic_strengthening"
+          }
+        },
+        {
+          "column_name": "social_cash",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.social_cash"
+          }
+        },
+        {
+          "column_name": "income_source_medical",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.income_source_medical"
+          }
+        },
+        {
+          "column_name": "list_source_medical",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.list_source_medical"
+          }
+        },
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
+          }
+        },
+        {
+          "column_name": "caseworker_date_signed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_date_signed"
+          }
+        },
+        {
+          "column_name": "caseworker_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_signature"
+          }
+        },
+        {
+          "column_name": "caseworker_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_signature"
+          }
+        },
+        {
+          "column_name": "manager_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_firstname"
+          }
+        },
+        {
+          "column_name": "manager_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_lastname"
+          }
+        },
+        {
+          "column_name": "manager_date_signed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_date_signed"
+          }
+        },
+        {
+          "column_name": "manager_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_signature"
+          }
+        },
+        {
+          "column_name": "manager_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_signature"
+          }
+        },
+        {
+          "column_name": "school_administration_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_firstname"
+          }
+        },
+        {
+          "column_name": "school_administration_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_lastname"
+          }
+        },
+        {
+          "column_name": "school_administration_date_signed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_date_signed"
+          }
+        },
+        {
+          "column_name": "school_administration_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_signature"
+          }
+        }
+      ]
+    },
+
+
+
 
     {
       "name": "ec_referral",

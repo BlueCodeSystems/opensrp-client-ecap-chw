@@ -1,0 +1,70 @@
+---
+name: step1_caregiver_art
+description: caregiver_art relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_clinical_care
+description: clinical_care relevance
+priority: 1
+condition: "step1_caregiver_art('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_art
+description: date_art relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_appointment
+description: art_appointment relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_counselling
+description: counselling relevance
+priority: 1
+condition: "step1_art_appointment('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mmd
+description: mmd relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mmd_months
+description: mmd_months relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_six_months
+description: six_months relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_health_facility
+description: health_facility relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vl_last_result
+description: vl_last_result relevance
+priority: 1
+condition: "step1_hiv_status('positive')"
+actions:
+  - "isRelevant = true"

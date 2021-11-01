@@ -10,6 +10,7 @@ import timber.log.Timber;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,8 +56,11 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.DateUtil;
 import org.smartregister.util.FormUtils;
+import org.smartregister.util.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -78,6 +83,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
     private Toolbar toolbar;
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
 
     @Override
@@ -131,8 +137,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String gender =  client.getColumnmaps().get("gender");
+        String gender = client.getColumnmaps().get("gender");
         String birthdate = client.getColumnmaps().get("adolescent_birthdate");
+
 
         if(birthdate != null){
 
@@ -150,6 +157,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             txtAge.setText("Not Set");
 
         }
+
+
 
         txtName.setText(full_name);
         txtGender.setText(gender);
