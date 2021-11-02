@@ -3,13 +3,12 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'org.apache.commons:commons-lang3:3.10'
-        classpath 'com.android.tools.build:gradle:4.0.2'
+        classpath 'com.android.tools.build:gradle:7.0.2'
         classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -40,7 +39,7 @@ allprojects {
         mavenCentral()
         maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
+        maven { url "https://dl.bintray.com/ona/kujaku" }
         maven { url 'https://maven.fabric.io/public' }
         /** GitHub packages **/
         maven {
@@ -142,7 +141,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                includeCompileClasspath = true
+               includeCompileClasspath = true
             }
         }
 
@@ -298,7 +297,7 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-  //  implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
+  //implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
          implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
