@@ -538,6 +538,13 @@ condition: "step1_hiv_or_pregnancy_prevention_method_used.contains('other')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_child_clinical_care_services_received_other
+description: child_clinical_care_services_received_other
+priority: 1
+condition: "step1_child_clinical_care_services_received.contains('other')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_agyw_having_sex_with_older_men
 description: agyw_having_sex_with_older_men
 priority: 1

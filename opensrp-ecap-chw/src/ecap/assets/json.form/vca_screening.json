@@ -1621,7 +1621,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_clinical_care_services_received",
-        "type": "native_radio",
+        "type": "check_box",
         "label": "Did the child/adolescent receive any of these clinical care services? ",
         "options": [
           {
@@ -1670,9 +1670,10 @@
         "hint": "Other Clinical Care Services",
         "edit_type": "name",
         "relevance": {
-          "step1:child_clinical_care_services_received": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },

@@ -75,7 +75,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, visit;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -104,6 +104,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
+        visit = findViewById(R.id.visit);
 
 
         txtName = findViewById(R.id.vca_name);
@@ -549,6 +550,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 break;
+
+            case R.id.visit:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
         }
     }
 
@@ -731,6 +749,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
             referral.setVisibility(View.GONE);
+            visit.setVisibility(View.GONE);
 
         } else {
 
@@ -740,6 +759,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
+            visit.setVisibility(View.VISIBLE);
         }
     }
     public String getCareGiverFullname(CommonPersonObjectClient client){
