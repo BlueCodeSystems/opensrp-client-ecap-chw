@@ -152,6 +152,16 @@
                             android:text="Service Report"
                             android:textAllCaps="false"
                             tools:text="Service Report" />
+
+                        <TextView
+                            android:id="@+id/case_status_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@android:color/holo_green_light"
+                            android:text="active" />
                     </LinearLayout>
 
 
@@ -175,14 +185,12 @@
             </com.google.android.material.appbar.AppBarLayout>
 
 
-
         <androidx.viewpager.widget.ViewPager
-            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/viewpager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </androidx.viewpager.widget.ViewPager>
+            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
 
 
 
