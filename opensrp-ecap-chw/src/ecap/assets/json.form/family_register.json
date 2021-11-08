@@ -1111,18 +1111,18 @@
       },
       {
         "key": "hiv_appropriate_treatment",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_appropriate_treatment",
+        "type": "toaster_notes",
         "text": "Refer to appropriate treatment and care services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1173,18 +1173,18 @@
       },
       {
         "key": "hiv_appropriate_treatment_virally_suppressed",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_appropriate_treatment_virally_suppressed",
+        "type": "toaster_notes",
         "text": "Refer to appropriate treatment and care services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:virally_suppressed": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1273,6 +1273,23 @@
             "ex-rules": {
               "rules-file": "hh_screening_enrollment_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "pmtct_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pmtct_services",
+        "type": "toaster_notes",
+        "text": "Refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:enrolled_in_the_pmtct_program": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1559,7 +1576,7 @@
         }
       },
       {
-        "key": "refer_malnutrition_screening",
+        "key": "refer_malnutrition_screening_list",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "refer_malnutrition_screening",
@@ -1725,6 +1742,57 @@
           "step1:pregnancy_prevention_methods_used_by_agyw": {
             "type": "string",
             "ex": "equalTo(., \"none\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_appropriate_treatment_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_appropriate_treatment_list",
+        "type": "toaster_notes",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "pmtct_services_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pmtct_services_list",
+        "type": "toaster_notes",
+        "text": "Refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:enrolled_in_the_pmtct_program": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_appropriate_treatment_virally_suppressed_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_appropriate_treatment_virally_suppressed_list",
+        "type": "toaster_notes",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:virally_suppressed": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       }
