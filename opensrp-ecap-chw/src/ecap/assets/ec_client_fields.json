@@ -92,7 +92,7 @@
           "column_name": "physical_address",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.addressFields.physical_address"
+            "field": "attributes.physical_address"
           }
         },
         {

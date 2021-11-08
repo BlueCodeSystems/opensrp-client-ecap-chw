@@ -178,7 +178,7 @@
       {
         "key": "partners",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partners",
         "type": "spinner",
         "hint": "Partners",
@@ -270,8 +270,8 @@
       {
         "key": "physical_address",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "addressFields.physical_address",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "physical_address",
         "type": "edit_text",
         "hint": "Physical address",
         "edit_type": "name",
