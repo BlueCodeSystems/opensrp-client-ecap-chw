@@ -8,5 +8,14 @@
         android:icon="@drawable/ic_baseline_call_24"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/case_status"
+        android:title="Case status"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/close_case"
+        android:title="Close Case Record"
+        app:showAsAction="never"/>
 
 </menu>

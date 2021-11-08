@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import timber.log.Timber;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -92,6 +93,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
 
         fab = findViewById(R.id.fab);
@@ -786,8 +788,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 callIntent.setData(Uri.parse("tel:" + client.getColumnmaps().get("caregiver_phone")));
                 startActivity(callIntent);
                 return true;
+            case R.id.close_case:
+                openFormUsingFormUtils(IndexDetailsActivity.this,"close_case_record");
+                return true;
+            case R.id.case_status:
+                openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void openFormUsingFormUtils(Context context, String formName)
+    {
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject formToBeOpened;
+
+        formToBeOpened = formUtils.getFormJson(formName);
+        startFormActivity(formToBeOpened);
     }
 }
