@@ -107,11 +107,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     protected void onViewClicked(View view) {
 
-      //  Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-
-       // startActivity(intent);
         goToIndexDetailActivity((CommonPersonObjectClient) view.getTag());
-
     }
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {

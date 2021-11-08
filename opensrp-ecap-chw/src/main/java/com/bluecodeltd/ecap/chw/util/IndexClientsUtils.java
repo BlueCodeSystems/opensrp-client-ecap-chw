@@ -44,57 +44,18 @@ public class IndexClientsUtils {
 
 
             JSONArray fields = JsonFormUtils.fields(formJsonObject);
-            JSONArray clientFields = new JSONArray();
-
-            //Collection<JSONArray> childrenArray = extractRepeatingGroupsFields(fields);
-
-            //Remove Repeat Group from Parent Data
-
-            for (int i = 0; i < fields.length(); i++) {
-
-                JSONObject field = fields.getJSONObject(i);
-                if (field.has(JsonFormConstants.TYPE) &&
-                        !REPEATING_GROUP.equalsIgnoreCase(field.getString(JsonFormConstants.TYPE))) {
-                    clientFields.put(field);
-                }
-            }
-
-            //Process
 
             FormTag formTag = getFormTag();
 
-            Event childEvent = JsonFormUtils.createEvent(clientFields, metadata, formTag, entityId,
+            Event childEvent = JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                     encounterType, Constants.EcapClientTable.EC_MOTHER_INDEX);
             tagSyncMetadata(childEvent);
 
-            Client childClient = JsonFormUtils.createBaseClient(clientFields, formTag, entityId);
+            Client childClient = JsonFormUtils.createBaseClient(fields, formTag, entityId);
 
             eventClients.add(new EventClient(childEvent, childClient));
 
-            //Process Children (Each Child)
-
-          /*  for (JSONArray childFields : childrenArray) {
-
-                FormTag formTag = getFormTag();
-
-                RegisterParams registerParam = new RegisterParams();
-                registerParam.setEditMode(false);
-                registerParam.setFormTag(formTag);
-
-                Event childEvent = JsonFormUtils.createEvent(childFields, metadata, formTag, entityId,
-                        encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
-                tagSyncMetadata(childEvent);
-
-                Client childClient = JsonFormUtils.createBaseClient(childFields, formTag, entityId);
-
-                eventClients.add(new EventClient(childEvent, childClient));
-
-                updateOpenSRPId(jsonString, registerParam, childClient);
-            }*/
-
-
             return eventClients;
-
 
         } catch (JSONException e) {
             Timber.e(e);

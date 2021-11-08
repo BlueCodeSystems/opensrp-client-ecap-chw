@@ -443,6 +443,8 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="fragment_overview">Overview</string>
     <string name="fragment_contact">Caregiver</string>
+    <string name="fragment_children">Children</string>
+    <string name="fragment_housevisits">Visits</string>
     <string name="fragment_visits">Submitted Forms</string>
 
 </resources>

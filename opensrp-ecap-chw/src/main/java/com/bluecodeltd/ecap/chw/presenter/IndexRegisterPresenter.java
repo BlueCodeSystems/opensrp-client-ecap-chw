@@ -69,26 +69,6 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
         //Overridden
     }
 
-   /* @Override
-    public void saveForm(String jsonString, boolean isEditMode) {
-
-        try {
-
-            view.toggleDialogVisibility(true);
-
-
-            ChildIndexEventClient childIndexEventClient = model.processRegistration(jsonString);
-
-            if (childIndexEventClient == null) {
-                return;
-            }
-
-            interactor.saveRegistration(childIndexEventClient, isEditMode);
-
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-    }*/
 
     @Override
     public void saveForm(String jsonString, @NonNull RegisterParams registerParams) {

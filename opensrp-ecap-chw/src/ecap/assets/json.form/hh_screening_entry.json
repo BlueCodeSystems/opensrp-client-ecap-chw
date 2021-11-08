@@ -1,0 +1,958 @@
+{
+  "count": 1,
+  "encounter_type": "Family Registration",
+  "entity_id": "",
+  "show_errors_on_submit": true,
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Household Screening",
+    "fields": [
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "type": "label",
+        "text": "A. Index VCA Sub Population"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "adolescent_first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_first_name",
+        "type": "edit_text",
+        "hint": "VCA First Name",
+        "edit_type": "name",
+        "value": "",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "First name of VCA only accepts letters"
+        }
+      },
+      {
+        "key": "adolescent_last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_last_name",
+        "type": "edit_text",
+        "hint": "VCA Last Name",
+        "edit_type": "name",
+        "value": "",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "Last name of VCA only accepts letters"
+        }
+      },
+      {
+        "key": "adolescent_birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_birthdate",
+        "type": "date_picker",
+        "hint": "VCA Date of birth",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter Birth Date"
+        }
+      },
+      {
+        "key": "adolescent_gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_gender",
+        "type": "native_radio",
+        "label": "VCA Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ]
+      },
+      {
+        "key": "sub_population",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sub_population",
+        "type": "check_box",
+        "label": "Sub Population:",
+        "options": [
+          {
+            "key": "c_alhiv",
+            "text": "C/ALHIV"
+          },
+          {
+            "key": "hei",
+            "text": "HEI"
+          },
+          {
+            "key": "children_of_wlhiv",
+            "text": "Children of WLHIV"
+          },
+          {
+            "key": "agyw",
+            "text": "AGYW"
+          },
+          {
+            "key": "children_of_fsw",
+            "text": "Children of FSW"
+          },
+          {
+            "key": "survivor_of_sexual_violence",
+            "text": "Survivor of Sexual Violence"
+          },
+          {
+            "key": "none",
+            "text": "None"
+          }
+        ]
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health facility",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Health Facility only takes letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please enter Health Facility"
+        }
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "stateProvince",
+        "type": "spinner",
+        "hint": "Province",
+        "values": [
+          "Central",
+          "Southern"
+        ],
+        "keys": [
+          "central",
+          "southern"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select Province"
+        }
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "countyDistrict",
+        "type": "spinner",
+        "hint": "District",
+        "values": [
+          "Chibombo",
+          "Chisamba",
+          "Mumbwa",
+          "Mkushi",
+          "Kabwe",
+          "Kapiri",
+          "Chikankata",
+          "Choma",
+          "Mazabuka",
+          "Monze",
+          "Kalomo",
+          "Namwala",
+          "Sinazongwe",
+          "Livingstone"
+        ],
+        "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri",
+          "chikankata",
+          "choma",
+          "mazabuka",
+          "monze",
+          "kalomo",
+          "namwala",
+          "sinazongwe",
+          "livingstone"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select District"
+        }
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "subTown",
+        "type": "edit_text",
+        "hint": "Ward",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward only takes letters"
+        }
+      },
+      {
+        "key": "adolescent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_village",
+        "type": "edit_text",
+        "hint": "Village/Compound",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Village/Compound  only takes letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Village is required"
+        }
+      },
+      {
+        "key": "community_case_worker_fname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "community_case_worker_fname",
+        "type": "edit_text",
+        "hint": "First Name of Community Case Worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "First Name of community case worker only take letters"
+        }
+      },
+      {
+        "key": "community_case_worker_lname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "community_case_worker_lname",
+        "type": "edit_text",
+        "hint": "Last Name of Community Case Worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "Last Name of community case worker only take letters"
+        }
+      },
+      {
+        "key": "fname_of_case_worker",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "fname_of_case_worker",
+        "type": "edit_text",
+        "hint": "First Name of Facility Based Case Worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "First Name of case worker only take letters"
+        }
+      },
+      {
+        "key": "lname_of_case_worker",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lname_of_case_worker",
+        "type": "edit_text",
+        "hint": "Last Name of Facility Based Case Worker",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "Last Name of case worker only take letters"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "type": "label",
+        "text": "B. Household Information"
+      },
+      {
+        "key": "partners",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "partners",
+        "type": "spinner",
+        "hint": "Partners",
+        "values": [
+          "YWCA",
+          "BISO",
+          "ZEC",
+          "COH",
+          "PCZ"
+        ]
+      },
+      {
+        "key": "date_screening_carried_out",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_screening_carried_out",
+        "type": "date_picker",
+        "hint": "Date of screening",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+      {
+        "key": "screening_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "screening_location",
+        "type": "edit_text",
+        "hint": "Screening Location:",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Screening location  only take letters"
+        }
+      },
+      {
+        "key": "adolescent_name_of_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_name_of_caregiver",
+        "type": "edit_text",
+        "hint": "Name of caregiver",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of caregiver can only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Name of caregiver is required"
+        }
+      },
+      {
+        "key": "physical_address",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "addressFields.physical_address",
+        "type": "edit_text",
+        "hint": "Residential address",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the home address"
+        }
+      },
+      {
+        "key": "caregiver_phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_phone",
+        "type": "edit_text",
+        "hint": "Caregivers phone number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          },
+          "calculation": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "vca_screening_calculation.yml"
+              }
+            }
+          }
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd3",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "type": "label",
+        "text": "C. Household Summary Information"
+      },
+      {
+        "key": "refer_to_vca_screening_form",
+        "type": "label",
+        "label_text_style": "italic",
+        "text": "* Please Use Household Member Form for Household Summary Information",
+        "text_color": "#051204255",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "blank_space",
+        "type": "label",
+        "text": " "
+      },
+      {
+        "key": "other_vca_sub_pop_screening_in_household",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "D. Screening for other VCA Sub Populations and other vulnerable children/adolescents in the Household",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "refer_to_vca_screening_form",
+        "type": "label",
+        "label_text_style": "italic",
+        "text": "* Please Use Household Member Form to Screen for other VCA Sub Populations and VCAs in Household.",
+        "text_color": "#051204255",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "blank_space",
+        "type": "label",
+        "text": " "
+      },
+      {
+        "key": "primary_caregivers_only",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "E: For Primary Caregivers Only",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "violence_six_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "violence_six_months",
+        "type": "native_radio",
+        "label": "Have you experienced violence in the home in the last six months?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "children_violence_six_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Have the children experienced violence in the home in the last six months?? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "caregiver_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_hiv_status",
+        "type": "spinner",
+        "hint": "HIV Status",
+        "values": [
+          "HIV+",
+          "HIV-",
+          "Unknown"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Select HIV status"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "active_on_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Are you active on treatment?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_appropriate_treatment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Caregivers' ART Number",
+        "edit_type": "name",
+        "relevance": {
+          "step1:is_mother_currently_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+        }
+      },
+      {
+        "key": "is_caregiver_virally_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "is_caregiver_virally_suppressed",
+        "type": "native_radio",
+        "label": "Is the caregiver virally suppressed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_appropriate_treatment_virally_suppressed",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate treatment and care services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "viral_load_results",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "viral_load_results",
+        "type": "edit_text",
+        "hint": "Result of most recent viral load test.",
+        "v_numeric": {
+          "value": "true",
+          "err": "Viral load can only contain numbers"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_of_last_viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "date_picker",
+        "hint": "Viral load",
+        "label_info_title": "Date of last viral load",
+        "expanded": false,
+        "min_date": "today-50y",
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "if_hiv_positive_have_biological_children",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "if_hiv_positive_have_biological_children",
+        "type": "native_radio",
+        "label": "Do you have biological children 0-2 years?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "enrolled_in_the_pmtct_program",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "enrolled_in_the_pmtct_program",
+        "type": "native_radio",
+        "label": "Are you and your biological children enrolled in the PMTCT program?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
+        "type": "native_radio",
+        "label": "Are there any reasons you may be at risk for HIV?)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "reason_for_hiv_risk",
+        "type": "edit_text",
+        "hint": "State reason...",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  test name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk_service",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Provide appropriate preventive services as part of enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_food_socially_and_economically_secure",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
+        "type": "native_radio",
+        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "economic_service",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "screening_carried_out_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "Carried out by",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "vca_sub_population_is_approved_for_enrollment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "vca_sub_population_is_approved_for_enrollment",
+        "type": "native_radio",
+        "label": "THIS FAMILY IS APPROVED FOR ENROLLMENT",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "approved_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "Approved By",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_approved",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "date_approved",
+        "type": "date_picker",
+        "hint": "Date of screening",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
