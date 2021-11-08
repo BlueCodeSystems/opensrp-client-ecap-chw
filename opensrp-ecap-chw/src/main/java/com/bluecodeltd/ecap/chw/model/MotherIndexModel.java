@@ -43,11 +43,10 @@ import timber.log.Timber;
 
 public class MotherIndexModel implements MotherIndexContract.Model {
 
-
     @Override
-    public List<EventClient> processRegistration(String jsonString) {
+    public ArrayList<EventClient> processRegistration(String jsonString) {
 
-        List<EventClient> eventClients = new ArrayList<>();
+        ArrayList<EventClient> eventClients = new ArrayList<>();
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
@@ -75,7 +74,7 @@ public class MotherIndexModel implements MotherIndexContract.Model {
 
             //Process Mother
 
-           /* FormTag formTag = getFormTag();
+            FormTag formTag = getFormTag();
 
             Event motherEvent = JsonFormUtils.createEvent(motherFields, metadata, formTag, entityId,
                     encounterType, Constants.EcapClientTable.EC_MOTHER_INDEX);
@@ -83,27 +82,24 @@ public class MotherIndexModel implements MotherIndexContract.Model {
 
             Client motherClient = JsonFormUtils.createBaseClient(motherFields, formTag, entityId);
 
-            eventClients.add(new EventClient(motherEvent, motherClient));*/
+            eventClients.add(new EventClient(motherEvent, motherClient));
 
             //Process Children (Each Child)
 
             for (JSONArray childFields : childrenArray) {
 
-                FormTag formTag = getFormTag();
-
                 RegisterParams registerParam = new RegisterParams();
                 registerParam.setEditMode(false);
                 registerParam.setFormTag(formTag);
 
-                Event childEvent = JsonFormUtils.createEvent(childFields, metadata, formTag, entityId,
+                Event childEvent = JsonFormUtils.createEvent(childFields, metadata, formTag, JsonFormUtils.generateRandomUUIDString(),
                         encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
                 tagSyncMetadata(childEvent);
 
-                Client childClient = JsonFormUtils.createBaseClient(childFields, formTag, entityId);
+                Client childClient = JsonFormUtils.createBaseClient(childFields, formTag, JsonFormUtils.generateRandomUUIDString());
 
-                eventClients.add(new EventClient(childEvent, childClient));
+                eventClients.add(new EventClient(null, childClient));
 
-                updateOpenSRPId(jsonString, registerParam, childClient);
             }
 
 
@@ -115,32 +111,6 @@ public class MotherIndexModel implements MotherIndexContract.Model {
         }
 
         return null;
-    }
-
-    private void updateOpenSRPId(String jsonString, RegisterParams params, Client baseClient) {
-
-        UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-
-        if (params.isEditMode()) {
-            // UnAssign current OpenSRP ID
-            if (baseClient != null) {
-                String newOpenSrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey).replace("-", "");
-                String currentOpenSrpId = org.smartregister.family.util.JsonFormUtils.getString(jsonString, org.smartregister.family.util.JsonFormUtils.CURRENT_OPENSRP_ID).replace("-", "");
-                if (!newOpenSrpId.equals(currentOpenSrpId)) {
-                    //OpenSRP ID was changed
-                    getUniqueIdRepository().open(currentOpenSrpId);
-                }
-            }
-
-        } else {
-            if (baseClient != null) {
-                String openSrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey);
-                if (StringUtils.isNotBlank(openSrpId) && !openSrpId.contains(org.smartregister.family.util.Constants.IDENTIFIER.FAMILY_SUFFIX)) {
-                    //Mark OpenSRP ID as used
-                    getUniqueIdRepository().close(openSrpId);
-                }
-            }
-        }
     }
 
     @NonNull

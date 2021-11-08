@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.MotherDetail;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexFragmentContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexFragmentContract;
@@ -106,18 +107,15 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
     @Override
     protected void onViewClicked(View view) {
 
-        //  Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-
-        // startActivity(intent);
         goToIndexDetailActivity((CommonPersonObjectClient) view.getTag());
 
     }
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
-        /*Intent intent = new Intent(getActivity(), MotherDetail.class);
-        intent.putExtra("mothers",  client);
-        startActivity(intent);*/
+        Intent intent = new Intent(getActivity(), HouseholdDetails.class);
+        intent.putExtra("household",  client);
+        startActivity(intent);
     }
     @Override
     public void showNotFoundPopup(String s) {

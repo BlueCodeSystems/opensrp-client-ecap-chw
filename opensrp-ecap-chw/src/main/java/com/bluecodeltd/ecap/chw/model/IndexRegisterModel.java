@@ -46,13 +46,6 @@ public class IndexRegisterModel implements IndexRegisterContract.Model {
                 stepOneUniqueId.put(org.smartregister.family.util.JsonFormUtils.VALUE, newEntityId);
             }
 
-          /*  JSONObject stepTwoUniqueId = getFieldJSONObject(fields(form, STEP2), Constants.JSON_FORM_KEY.UNIQUE_ID);
-            if (stepTwoUniqueId != null) {
-                stepTwoUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
-                stepTwoUniqueId.put(org.smartregister.family.util.JsonFormUtils.VALUE, newEntityId);
-            }*/
-
-            //org.smartregister.family.util.JsonFormUtils.addLocHierarchyQuestions(form);
             return form;
 
         } catch (Exception e) {

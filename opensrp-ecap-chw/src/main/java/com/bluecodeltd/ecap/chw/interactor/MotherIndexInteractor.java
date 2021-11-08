@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.interactor;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
@@ -15,6 +16,7 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.JsonFormUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -23,40 +25,36 @@ import timber.log.Timber;
 
 public class MotherIndexInteractor implements MotherIndexContract.Interactor {
 
-    private final MotherIndexContract.Presenter presenter;
-
     public AppExecutors appExecutors;
 
     public MotherIndexInteractor(MotherIndexContract.Presenter presenter) {
-        this.presenter = presenter;
         this.appExecutors = new AppExecutors();
     }
 
    // final Handler handler = new Handler();
 
     @Override
-    public boolean saveRegistration(List<EventClient> eventClients, boolean isEditMode) {
+    public boolean saveRegistration(ArrayList<EventClient> eventClients, boolean isEditMode) {
 
+        final Handler handler = new Handler();
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
 
-            for (EventClient eventClient : eventClients) {
+                try {
 
-                Event event = eventClient.getEvent();
-                Client client = eventClient.getClient();
+                    for (int i = 0; i < eventClients.size(); i++) {
 
-                if (event != null && client != null) {
-                    try {
+                        Log.e("xh", "EventClient At : " + eventClients.get(i));
+
+                        Event event = eventClients.get(i).getEvent();
+                        Client client = eventClients.get(i).getClient();
+
                         ECSyncHelper ecSyncHelper = getECSyncHelper();
 
                         JSONObject newClientJsonObject = new JSONObject(JsonFormUtils.gson.toJson(client));
-                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                        if (isEditMode) {
-                            JSONObject mergedClientJsonObject =
-                                    JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
-                        } else {
-                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
-                        }
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
 
                         JSONObject eventJsonObject = new JSONObject(JsonFormUtils.gson.toJson(event));
                         ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
@@ -68,15 +66,20 @@ public class MotherIndexInteractor implements MotherIndexContract.Interactor {
                         List<org.smartregister.domain.db.EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                         getClientProcessorForJava().processClient(savedEvents);
                         allSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-                    } catch (Exception e) {
-                        Timber.e(e);
                     }
-                }
 
-                appExecutors.mainThread().execute(presenter::onRegistrationSaved);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                handler.postDelayed(this, 3000);
+
 
             }
+        };
+
+        handler.post(task);
         return true;
+
         }
 
 

@@ -81,13 +81,8 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
 
                 try {
-                    FormUtils formUtils = new FormUtils(context);
 
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("family_register_entry");
-
-                    householdIndexActivity.startFormActivity(indexRegisterForm);
+                    householdIndexActivity.startFormActivity("hh_screening_entry",null,"");
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -126,24 +121,18 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-            } else if(context instanceof HouseholdIndexActivity){
+            } else if(context instanceof HouseholdIndexActivity) {
 
                 HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
 
                 try {
-                    FormUtils formUtils = new FormUtils(context);
 
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("family_register_entry");
-
-                    householdIndexActivity.startFormActivity(indexRegisterForm);
+                    householdIndexActivity.startFormActivity("hh_screening_entry",null,"");
 
                 } catch (Exception e) {
                     Timber.e(e);
                 }
             }
-            return true;
         } else if (item.getItemId() == R.id.action_report) {
             Intent intent = new Intent(context, ReportsActivity.class);
             context.startActivity(intent);

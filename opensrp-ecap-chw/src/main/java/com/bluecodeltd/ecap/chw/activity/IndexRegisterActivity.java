@@ -74,7 +74,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     }
 
-
     @Override
     public void startFormActivity(String formName, String entityId, String metaData) {
         try {
@@ -118,22 +117,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             } catch (JSONException e) {
                 Timber.e(e);
             }
-            /*String json = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
-            try {
-                if (json != null) {
-                    JSONObject jsonFormObject = new JSONObject(json);
-
-                    if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
-                            jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
-                       // indexRegisterPresenter().saveForm(json, false);
-                    }
-                    //TODO Update child index encounter Type. isEditmode should be true.
-                }
-
-            } catch (JSONException e) {
-                Timber.e(e);
-            }*/
-
         }
     }
 
