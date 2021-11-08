@@ -13,6 +13,7 @@ import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
+import com.bluecodeltd.ecap.chw.presenter.ChwAllClientRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -21,11 +22,16 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.referral.R.id;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
+import org.smartregister.opd.pojo.RegisterParams;
+import org.smartregister.opd.utils.OpdConstants;
+import org.smartregister.opd.utils.OpdJsonFormUtils;
+import org.smartregister.opd.utils.OpdUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
@@ -65,17 +71,24 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     @Override
     public void startFormActivity(String s, String s1, Map<String, String> map) {
-        //Overridden
+
+    }
+
+
+    @Override
+    public void startFormActivity(String formName, String entityId, String metaData) {
+        try {
+            String locationId = Utils.context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
+            ((IndexRegisterPresenter) this.presenter).startForm(formName, entityId, metaData, locationId);
+
+        } catch (Exception e) {
+            Timber.e(e);
+            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+        }
     }
 
     @Override
     public void startFormActivity(JSONObject jsonObject) {
-
-        try {
-
-            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("x","My Ward X");
-
-            Log.d("jjson", "myjson : " + jsonObject.toString());
 
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
@@ -83,31 +96,43 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     @Override
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){
-            String json = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
+            String jsonString = data.getStringExtra(OpdConstants.JSON_FORM_EXTRA.JSON);
+            try {
+
+                JSONObject jsonFormObject = new JSONObject(jsonString);
+
+                if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
+                        jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+                    RegisterParams registerParam = new RegisterParams();
+                    registerParam.setEditMode(false);
+                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
+                    showProgressDialog(R.string.saving_dialog_title);
+                    indexRegisterPresenter().saveForm(jsonString, registerParam);
+                }
+            } catch (JSONException e) {
+                Timber.e(e);
+            }
+            /*String json = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
 
                     if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
-                        indexRegisterPresenter().saveForm(json, false);
+                       // indexRegisterPresenter().saveForm(json, false);
                     }
                     //TODO Update child index encounter Type. isEditmode should be true.
                 }
 
             } catch (JSONException e) {
                 Timber.e(e);
-            }
+            }*/
 
         }
     }

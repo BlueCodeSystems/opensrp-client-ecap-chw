@@ -152,6 +152,16 @@
                             android:text="Service Report"
                             android:textAllCaps="false"
                             tools:text="Service Report" />
+
+                        <TextView
+                            android:id="@+id/case_status_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@android:color/holo_green_light"
+                            android:text="active" />
                     </LinearLayout>
 
 
@@ -175,14 +185,12 @@
             </com.google.android.material.appbar.AppBarLayout>
 
 
-
         <androidx.viewpager.widget.ViewPager
-            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/viewpager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </androidx.viewpager.widget.ViewPager>
+            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
 
 
 
@@ -355,6 +363,43 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/refer_to_facility_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@mipmap/ic_boy_child" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/visit"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/visit_fab"
+                    android:background="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp"
+                    android:text="Household Visitation"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/visit_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

@@ -409,15 +409,21 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "partners",
-        "type": "spinner",
+        "read_only": "true",
+        "type": "edit_text",
         "hint": "Implementing Partner ",
-        "values": [
-          "PCZ",
-          "YWCA",
-          "BISO",
-          "COH",
-          "ZEC"
-        ]
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "date_of_screening",
@@ -947,19 +953,60 @@
         ]
       },
       {
-        "key": "categorize_as_HEI_VCA",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Categorize as HEI VCA",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "key": "hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
+        "type": "native_radio",
+        "label": "Is breastfeeding HEI receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "provide_preventive_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "provide_preventive_care",
+        "type": "toaster_notes",
+        "text": "Refer and provide preventive care and support services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "categorize_as_HEI_VCA",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_HEI_VCA",
+        "type": "toaster_notes",
+        "text": "Categorize as HEI VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -984,18 +1031,18 @@
       },
       {
         "key": "refer_to_ecd_services_at_enrollment",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_ecd_services_at_enrollment",
+        "type": "toaster_notes",
         "text": "Refer to ECD Services at Enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:if_there_are_children_in_the_household_aged_0_5years_are_they_enrolled_in_an_early_childhood_development_program": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1020,54 +1067,18 @@
       },
       {
         "key": "refer_malnutrition_screening",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
-        "type": "native_radio",
-        "label": "If HEI receiving breastfeeding, are they receiving HIV testing and drugs to prevent HIV transmission and other infections in line with guidelines",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-
-      },
-      {
-        "key": "provide_preventive_care",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "If not refer and provide preventive care and support services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_malnutrition_screening",
+        "type": "toaster_notes",
+        "text": "Refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:have_children_and_adolescents_in_the_household_been_screened_for_malnutrition": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1117,18 +1128,18 @@
       },
       {
         "key": "sexual_violence_care_clinical",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sexual_violence_care_clinical",
+        "type": "toaster_notes",
         "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate clinical services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:victim_of_sexual_violence_yes_clinical": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1159,18 +1170,18 @@
       },
       {
         "key": "sexual_violence_care",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sexual_violence_care",
+        "type": "toaster_notes",
         "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate non-clinical services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:victim_of_sexual_violence_yes_nonclinical": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1194,18 +1205,18 @@
       },
       {
         "key": "age_appropriate_interventions",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "age_appropriate_interventions",
+        "type": "toaster_notes",
         "text": "Refer household to age-appropriate interventions at enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:household_vca_receiving_age_appropriate_interventions": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1230,18 +1241,18 @@
       },
       {
         "key": "vmmc",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "vmmc",
+        "type": "toaster_notes",
         "text": "Refer to VMMC services at enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1309,23 +1320,6 @@
             ]
           },
           {
-            "key": "categorise_agyw_as_at_risk",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "categorise_agyw_as_at_risk",
-            "type": "toaster_notes",
-            "text": "Categorize AGYW as At-Risk",
-            "toaster_type": "info",
-            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-            "toaster_info_title": "Information Toaster Info Title",
-            "relevance": {
-              "step1:is_the_agyw_10_17years": {
-                "type": "string",
-                "ex": "equalsTo(., \"yes\")"
-              }
-            }
-          },
-          {
             "key": "is_the_agyw_sexually_active",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1341,7 +1335,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk1",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk1",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_sexually_active": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_having_sex_with_older_men",
@@ -1359,7 +1376,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk2",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk2",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_having_sex_with_older_men": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_engaged_in_transactional_sex",
@@ -1377,7 +1417,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk3",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk3",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_engaged_in_transactional_sex": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_engaged_in_sex_work",
@@ -1395,7 +1458,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk4",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk4",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_engaged_in_sex_work": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "is_the_agyw_food_or_economically_secure",
@@ -1413,7 +1499,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk5",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk5",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:is_the_agyw_food_or_economically_secure": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "did_the_agyw_marry_early",
@@ -1431,7 +1540,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk6",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk6",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:did_the_agyw_marry_early": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "did_the_agyw_give_birth_before_age_of_18",
@@ -1449,7 +1581,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk7",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk7",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:did_the_agyw_give_birth_before_age_of_18": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "does_the_agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
@@ -1467,7 +1622,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk8",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk8",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:does_the_agyw_have_a_partner_who_is_violent_or_has_experienced_violence": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_illness",
@@ -1485,7 +1663,30 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "categorise_agyw_as_at_risk9",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "categorise_agyw_as_at_risk9",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At-Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_illness": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "has_the_agyw_been_tested_for_hiv",
@@ -1503,7 +1704,13 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "did_the_agyw_test_positive_for_hiv",
@@ -1531,13 +1738,31 @@
           },
           {
             "key": "hiv_positive_agyw",
-            "type": "label",
-            "label_text_style": "bold",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "hiv_positive_agyw",
+            "type": "toaster_notes",
             "text": "Categorize AGYW as CLHIV and refer to appropriate treatment and care services at enrollment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
+            "relevance": {
+              "step1:did_the_agyw_test_positive_for_hiv": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
+          },
+          {
+            "key": "at_risk_agyw",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "at_risk_agyw",
+            "type": "toaster_notes",
+            "text": "Categorize AGYW as At Risk",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
               "step1:did_the_agyw_test_positive_for_hiv": {
                 "type": "string",
@@ -1561,17 +1786,24 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "agyw_not_in_school",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "refer to education support services at enrollment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "agyw_not_in_school",
+            "type": "toaster_notes",
+            "text": "Refer to Education Support Services at enrollment",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
               "step1:is_agyw_in_school": {
                 "type": "string",
@@ -1595,22 +1827,28 @@
                 "key": "no",
                 "text": "No"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "agyw_not_receiving_economic_strengthening_intervention",
-            "type": "label",
-            "label_text_style": "bold",
-            "text": "refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "agyw_not_receiving_economic_strengthening_intervention",
+            "type": "toaster_notes",
+            "text": "Refer to age-appropriate economic strengthening services/DREAMS program at enrollment",
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
-              "rules-engine": {
-                "ex-rules": {
-                  "rules-file": "hh_screening_enrollment_relevance.yml"
-                }
+              "step1:agyw_receiving_an_economic_strengthening_intervention": {
+                "type": "string",
+                "ex": "equalTo(., \"no\")"
               }
             }
           },
@@ -1619,7 +1857,7 @@
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "pregnancy_prevention_methods_used_by_agyw",
-            "type": "check_box",
+            "type": "native_radio",
             "label": "Select any of the HIV/pregnancy prevention methods AGYW is using from list below",
             "options": [
               {
@@ -1646,17 +1884,24 @@
                 "key": "none",
                 "text": "None"
               }
-            ]
+            ],
+            "relevance": {
+              "step1:is_the_agyw_10_17years": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            }
           },
           {
             "key": "pregnancy_prevention_methods_not_used_by_agyw",
-            "type": "label",
-            "label_text_style": "bold",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "pregnancy_prevention_methods_not_used_by_agyw",
+            "type": "toaster_notes",
             "text": "Refer and/or provide appropriate preventive services/DREAMS program at enrolment",
-            "text_color": "#d20000",
-            "v_required": {
-              "value": false
-            },
+            "toaster_type": "info",
+            "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+            "toaster_info_title": "Information Toaster Info Title",
             "relevance": {
               "step1:pregnancy_prevention_methods_used_by_agyw": {
                 "type": "string",
@@ -1679,66 +1924,6 @@
             }
           }
         ]
-      },
-      {
-        "key": "did_agyw_answer_to_any",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "did_agyw_answer_to_any",
-        "type": "native_radio",
-        "label": "Did AGYW answer “Yes” to any of the questions from Part D.2 above?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "at_risk_agyw",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Categorize AGYW as At Risk by checking box below",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "agyw_at_risk",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "agyw_at_risk",
-        "openmrs_data_type": "select one",
-        "type": "check_box",
-        "label": "AGYW is At Risk",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false,
-            "openmrs_choice_id": ""
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
-          }
-        }
       },
       {
         "key": "primary_caregivers_only",
@@ -2047,18 +2232,18 @@
       },
       {
         "key": "reason_for_hiv_risk_service",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "reason_for_hiv_risk_service",
+        "type": "toaster_notes",
         "text": "Provide appropriate preventive services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:are_there_any_reasons_you_may_be_at_risk_for_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2066,7 +2251,7 @@
         "key": "household_food_socially_and_economically_secure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
+        "openmrs_entity_id": "household_food_socially_and_economically_secure",
         "type": "native_radio",
         "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
         "options": [
@@ -2082,18 +2267,18 @@
       },
       {
         "key": "economic_service",
-        "type": "label",
-        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "economic_service",
+        "type": "toaster_notes",
         "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": false
-        },
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
-            }
+          "step1:household_food_socially_and_economically_secure": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -2156,7 +2341,6 @@
         "openmrs_entity_id": "date_approved",
         "type": "date_picker",
         "value": "today",
-        "read_only" : "true",
         "hint": "Date of Approval",
         "look_up": "true",
         "expanded": false,
@@ -2215,6 +2399,23 @@
         }
       },
       {
+        "key": "refer_to_ecd_services_at_enrollment_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_to_ecd_services_at_enrollment_list",
+        "type": "toaster_notes",
+        "text": "Refer to ECD Services at Enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:if_there_are_children_in_the_household_aged_0_5years_are_they_enrolled_in_an_early_childhood_development_program": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
         "key": "refer_to_care_at enrollment_list",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -2232,6 +2433,23 @@
         }
       },
       {
+        "key": "categorize_as_HEI_VCA_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "categorize_as_HEI_VCA_list",
+        "type": "toaster_notes",
+        "text": "Categorize as HEI VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:if_other_household_member_0_2years_is_hei_are_they_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "refer_to_treatment_and_care_caregiver_children_with_unknown_status_list",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -2245,6 +2463,176 @@
           "step1:if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "refer_malnutrition_screening_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "refer_malnutrition_screening_list",
+        "type": "toaster_notes",
+        "text": "Refer children and adolescents for nutrition screening or screen using mid upper arm circumference and refer malnourished children to therapeutic and supplementary feeding and offer the household nutrition counseling",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:have_children_and_adolescents_in_the_household_been_screened_for_malnutrition": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "provide_preventive_care_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "provide_preventive_care_list",
+        "type": "toaster_notes",
+        "text": "Refer and provide preventive care and support services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:hei_receiving_breastfeeding_are_they_receiving_HIV_testing_and_drugs_to_prevent_hiv_transmission_and_other_infections_in_line_with_guidelines": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "sexual_violence_care_clinical_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sexual_violence_care_clinical_list",
+        "type": "toaster_notes",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate clinical services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:victim_of_sexual_violence_yes_clinical": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "sexual_violence_care_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "sexual_violence_care_list",
+        "type": "toaster_notes",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate non-clinical services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:victim_of_sexual_violence_yes_nonclinical": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "age_appropriate_interventions_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "age_appropriate_interventions_list",
+        "type": "toaster_notes",
+        "text": "Refer household to age-appropriate interventions at enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:household_vca_receiving_age_appropriate_interventions": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "vmmc_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "vmmc_list",
+        "type": "toaster_notes",
+        "text": "Refer to VMMC services at enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "reason_for_hiv_risk_service_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "reason_for_hiv_risk_service_list",
+        "type": "toaster_notes",
+        "text": "Provide appropriate preventive services as part of enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:are_there_any_reasons_you_may_be_at_risk_for_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "economic_service_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "economic_service_list",
+        "type": "toaster_notes",
+        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:household_food_socially_and_economically_secure": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_positive_agyw_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hiv_positive_agyw_list",
+        "type": "toaster_notes",
+        "text": "Categorize AGYW as CLHIV and refer to appropriate treatment and care services at enrollment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:did_the_agyw_test_positive_for_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "pregnancy_prevention_methods_not_used_by_agyw_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pregnancy_prevention_methods_not_used_by_agyw_list",
+        "type": "toaster_notes",
+        "text": "Refer and/or provide appropriate preventive services/DREAMS program at enrolment",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:pregnancy_prevention_methods_used_by_agyw": {
+            "type": "string",
+            "ex": "equalTo(., \"none\")"
           }
         }
       }

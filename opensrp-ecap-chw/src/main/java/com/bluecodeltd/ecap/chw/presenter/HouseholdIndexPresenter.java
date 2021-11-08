@@ -1,15 +1,10 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
-import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
-import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.interactor.HouseholdIndexInteractor;
-import com.bluecodeltd.ecap.chw.interactor.MotherIndexInteractor;
 import com.bluecodeltd.ecap.chw.model.HouseholdIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.HouseholdIndexModel;
-import com.bluecodeltd.ecap.chw.model.MotherIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
 
 import org.smartregister.domain.FetchStatus;
 
