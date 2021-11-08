@@ -1,15 +1,15 @@
-package com.bluecodeltd.ecap.chw.domain;
+package com.bluecodeltd.ecap.chw.model;
 
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 
-public class ChildIndexEventClient {
+public class EventClient {
 
     private final Event event;
 
     private final Client client;
 
-    public ChildIndexEventClient(Event event, Client client) {
+    public EventClient(Event event, Client client) {
         this.event = event;
         this.client = client;
     }
@@ -21,5 +21,4 @@ public class ChildIndexEventClient {
     public Client getClient() {
         return client;
     }
-
 }

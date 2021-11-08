@@ -22,6 +22,9 @@ import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
+import org.smartregister.opd.pojo.RegisterParams;
+import org.smartregister.opd.utils.OpdJsonFormUtils;
+import org.smartregister.opd.utils.OpdUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
@@ -97,6 +100,11 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                     JSONObject jsonFormObject = new JSONObject(json);
                     if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+
+                        RegisterParams registerParam = new RegisterParams();
+                        registerParam.setEditMode(false);
+                        registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
+
                         motherIndexPresenter().saveForm(json, false);
                     }
                 }

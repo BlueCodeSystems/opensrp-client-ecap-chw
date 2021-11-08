@@ -29,6 +29,22 @@ public class Constants extends CoreConstants {
 
     }
 
+    public static class JSON_FORM_KEY {
+        public static final String ENTITY_ID = "entity_id";
+        public static final String OPTIONS = "options";
+        public static final String ENCOUNTER_LOCATION = "encounter_location";
+        public static final String ATTRIBUTES = "attributes";
+        public static final String DEATH_DATE = "deathdate";
+        public static final String DEATH_DATE_APPROX = "deathdateApprox";
+        public static final String UNIQUE_ID = "unique_id";
+        public static final String FAMILY_NAME = "fam_name";
+        public static final String LAST_INTERACTED_WITH = "last_interacted_with";
+        public static final String DOB = "dob";
+        public static final String DOB_UNKNOWN = "dob_unknown";
+        public static final String AGE = "age";
+
+    }
+
     public static class EncounterType {
         public static final String SICK_CHILD = "Sick Child Referral";
         public static final String PNC_REFERRAL = "PNC Referral";

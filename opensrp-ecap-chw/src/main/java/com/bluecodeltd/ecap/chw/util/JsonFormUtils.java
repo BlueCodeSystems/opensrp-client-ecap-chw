@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.util;
 import android.content.Context;
 import android.util.Pair;
 
+import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -27,6 +28,7 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.Photo;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.FamilyLibrary;
+import org.smartregister.family.domain.FamilyEventClient;
 import org.smartregister.family.util.Constants;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.immunization.domain.ServiceRecord;
@@ -80,6 +82,7 @@ public class JsonFormUtils extends CoreJsonFormUtils {
 
         return event;
     }
+
 
     public static Pair<Client, Event> processChildRegistrationForm(AllSharedPreferences allSharedPreferences, String jsonString) {
 
