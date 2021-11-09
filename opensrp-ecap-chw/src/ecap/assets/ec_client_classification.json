@@ -317,6 +317,14 @@
           },
           {
             "field": "eventType",
+            "field_value": "Household Screening",
+            "creates_case": [
+              "ec_family",
+              "ec_client_index"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "VCA Case Plan",
             "creates_case": [
               "ec_vca_case_plan"

@@ -1,0 +1,42 @@
+---
+name: step1_subpop1
+description: subpop1 relevance
+priority: 1
+condition: "step1_sub_population.contains('subpop1')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_subpop2
+description: subpop2 relevance
+priority: 1
+condition: "step1_sub_population.contains('subpop2')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_subpop3
+description: subpop3 relevance
+priority: 1
+condition: "step1_sub_population.contains('subpop3')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_subpop4
+description: subpop4 relevance
+priority: 1
+condition: "step1_sub_population.contains('subpop4')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_subpop5
+description: subpop5 relevance
+priority: 1
+condition: "step1_sub_population.contains('subpop5')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_subpop6
+description: subpop6 relevance
+priority: 1
+condition: "step1_sub_population.contains('subpop6')"
+actions:
+  - "isRelevant = true"
