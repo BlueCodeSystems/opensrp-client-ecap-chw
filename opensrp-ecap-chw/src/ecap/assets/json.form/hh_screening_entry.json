@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "Family Registration",
+  "encounter_type": "Household Screening",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {
@@ -142,33 +142,33 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
         "label": "Sub Population:",
         "options": [
           {
-            "key": "c_alhiv",
+            "key": "subpop1",
             "text": "C/ALHIV"
           },
           {
-            "key": "hei",
+            "key": "subpop2",
             "text": "HEI"
           },
           {
-            "key": "children_of_wlhiv",
+            "key": "subpop3",
             "text": "Children of WLHIV"
           },
           {
-            "key": "agyw",
+            "key": "subpop4",
             "text": "AGYW"
           },
           {
-            "key": "children_of_fsw",
+            "key": "subpop5",
             "text": "Children of FSW"
           },
           {
-            "key": "survivor_of_sexual_violence",
+            "key": "subpop6",
             "text": "Survivor of Sexual Violence"
           },
           {
@@ -176,6 +176,108 @@
             "text": "None"
           }
         ]
+      },
+      {
+        "key": "subpop1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop2",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop6",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop6",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "health_facility",
@@ -289,10 +391,10 @@
         }
       },
       {
-        "key": "community_case_worker_fname",
+        "key": "fname_community_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "community_case_worker_fname",
+        "openmrs_entity_id": "fname_community_case_worker",
         "type": "edit_text",
         "hint": "First Name of Community Case Worker",
         "edit_type": "name",
@@ -302,10 +404,10 @@
         }
       },
       {
-        "key": "community_case_worker_lname",
+        "key": "lname_community_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "community_case_worker_lname",
+        "openmrs_entity_id": "lname_community_case_worker",
         "type": "edit_text",
         "hint": "Last Name of Community Case Worker",
         "edit_type": "name",
@@ -315,10 +417,10 @@
         }
       },
       {
-        "key": "fname_of_case_worker",
+        "key": "fname_facility_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_of_case_worker",
+        "openmrs_entity_id": "fname_facility_case_worker",
         "type": "edit_text",
         "hint": "First Name of Facility Based Case Worker",
         "edit_type": "name",
@@ -328,10 +430,10 @@
         }
       },
       {
-        "key": "lname_of_case_worker",
+        "key": "lname_facility_case_worker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_of_case_worker",
+        "openmrs_entity_id": "lname_facility_case_worker",
         "type": "edit_text",
         "hint": "Last Name of Facility Based Case Worker",
         "edit_type": "name",
@@ -361,7 +463,7 @@
       {
         "key": "partners",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partners",
         "type": "spinner",
         "hint": "Partners",
@@ -374,10 +476,10 @@
         ]
       },
       {
-        "key": "date_screening_carried_out",
+        "key": "screening_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_screening_carried_out",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "screening_date",
         "type": "date_picker",
         "hint": "Date of screening",
         "look_up": "true",
@@ -388,7 +490,7 @@
       {
         "key": "screening_location",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
         "hint": "Screening Location:",
@@ -399,10 +501,10 @@
         }
       },
       {
-        "key": "adolescent_name_of_caregiver",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_name_of_caregiver",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Name of caregiver",
         "look_up": "true",
