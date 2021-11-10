@@ -1,0 +1,1448 @@
+{
+  "count": 1,
+  "encounter_type": "Family Registration",
+  "entity_id": "",
+  "show_errors_on_submit": true,
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1":{
+    "title":"Household Enrollment",
+    "fields":[
+      {
+        "key": "household_enrollment_header",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Household Enrollment Form (Fields below will only be visible when Household Screening is completed and approved.)",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "household_enrollment_part1",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part 1 Of Household Enrollment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_enrollment_unapproved",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Please Note: Household Enrollment Is NOT Available Because Household Screening was not Approved.",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "enrollment_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "enrollment_date",
+        "type": "date_picker",
+        "hint": "Date of HH Enrollment",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "hint": "Household ID",
+        "edit_type": "number",
+        "read_only" : "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter household ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Household ID cannot be empty"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "caregiver_id",
+        "type": "edit_text",
+        "hint": "Caregiver ID",
+        "read_only" : "true",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Caregiver ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Caregiver ID cannot be empty"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "gender",
+        "type": "spinner",
+        "hint": "Gender",
+        "values": [
+          "Male",
+          "Female"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select gender"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Caregiver First Name ",
+        "read_only" : "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "read_only" : "true",
+        "hint": "Caregiver Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "entity_id": "mother",
+        "hint": "Caregiver Date of Birth",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Enter caregivers date of birth"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "entry_type",
+        "type": "native_radio",
+        "label": "Type of Entry into Program",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "transfer_from_zamfam",
+            "text": "Transfer from ZAMFAM",
+            "value": false
+          },
+          {
+            "key": "referral_from_facility",
+            "text": "Referral from Facility",
+            "value": false
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "other_entry_type",
+        "type": "edit_text",
+        "hint": "Other type of Entry",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  entry type"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_education",
+        "type": "native_radio",
+        "label": "Caregiver’s education level",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          },
+          {
+            "key": "highest_grade",
+            "text": "Highest grade",
+            "value": false
+          },
+          {
+            "key": "college_university",
+            "text": "College/University",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re to select the level of education"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "highest_grade",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "highest_grade",
+        "type": "edit_text",
+        "hint": "Highest Grade",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "monthly_expenses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "monthly_expenses",
+        "type": "native_radio",
+        "label": "Estimated household expenses per month",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "Less than K500",
+            "text": "Less than K500",
+            "value": false
+          },
+          {
+            "key": "K500 -K999",
+            "text": "K500 -K999",
+            "value": false
+          },
+          {
+            "key": "K1,000 –K1,999",
+            "text": "K1,000 –K1,999",
+            "value": false
+          },
+          {
+            "key": "K2,000 –K4,999",
+            "text": "K2,000 –K4,999",
+            "value": false
+          },
+          {
+            "key": "Greater than K5,000",
+            "text": "Greater than K5,000",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re required to select income source"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "marital_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "marital_status",
+        "type": "spinner",
+        "hint": "Marital Status",
+        "values": [
+          "Single",
+          "Married",
+          "Divorced",
+          "Widowed",
+          "Not Married,in a Relationship"
+        ],
+        "keys": [
+          "single",
+          "married",
+          "divorced",
+          "widowed",
+          "in_relationship"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "marriage_partner_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "marriage_partner_name",
+        "type": "edit_text",
+        "hint": "Name of Partner/Spouse",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  Partner/Spouse Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "relationship_partner_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "relationship_partner_name",
+        "type": "edit_text",
+        "hint": "Name of Relationship Partner",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  Relationship Partner Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "males_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_less_5",
+        "type": "edit_text",
+        "hint": "Number of Males < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "females_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_less_5",
+        "type": "edit_text",
+        "hint": "Number of Females < 5 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "males_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_10_17",
+        "type": "edit_text",
+        "hint": "Number of Males 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "females_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_10_17",
+        "type": "edit_text",
+        "hint": "Number of Females 10-17 in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "fam_source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "fam_source_income",
+        "type": "edit_text",
+        "hint": "Main Source Of Income",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter Correct Source Of Income"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "pregnant_women",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pregnant_women",
+        "type": "edit_text",
+        "hint": "No. of Women currently pregnant in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_enrollment_part2",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Part 2 Of Household Enrollment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "children",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of children <18years in Household",
+        "repeating_group_label": "Child",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of children"
+        },
+        "value": [
+          {
+            "key": "vca_firstname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "vca_firstname",
+            "type": "edit_text",
+            "hint": "First Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter VCA First Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter VCA First Name"
+            }
+          },
+          {
+            "key": "vca_lastname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "vca_lastname",
+            "type": "edit_text",
+            "hint": "Last Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter VCA Last Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter VCA Last Name"
+            }
+          },
+          {
+            "key": "child_birthdate",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "child_birthdate",
+            "entity": "child",
+            "type": "date_picker",
+            "hint": "Date Of Birth",
+            "label_info_title": "Child's Date of Birth",
+            "expanded": false,
+            "duration": {
+              "label": "Age"
+            },
+            "min_date": "today-19y",
+            "max_date": "today",
+            "v_required": {
+              "value": false,
+              "err": "Please enter the date of birth"
+            }
+          },
+          {
+            "key": "child_gender",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "child_gender",
+            "entity": "child",
+            "type": "spinner",
+            "hint": "Gender",
+            "values": [
+              "Male",
+              "Female"
+            ],
+            "v_required": {
+              "value": false,
+              "err": "Specify sex"
+            }
+          },
+          {
+            "key": "in_school",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "in_school",
+            "type": "native_radio",
+            "label": "Is the child in school",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "exclusive": [
+              "Yes"
+            ],
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes",
+                "value": false
+              },
+              {
+                "key": "no",
+                "text": "No",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You`re required to check the box"
+            }
+          },
+          {
+            "key": "schools_name",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "schools_name",
+            "type": "edit_text",
+            "hint": "School Name",
+            "v_required": {
+              "value": false,
+              "err": "Please enter school name"
+            },
+            "relevance": {
+              "step2:in_school": {
+                "type": "string",
+                "ex": "equalTo(., \"yes\")"
+              }
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Please enter school name"
+            }
+          },
+          {
+            "key": "tested",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "tested",
+            "type": "native_radio",
+            "label": "Was child tested?",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "exclusive": [
+              "Yes"
+            ],
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes",
+                "value": false
+              },
+              {
+                "key": "no",
+                "text": "No",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You're required to check box"
+            }
+          },
+          {
+            "key": "hiv_status",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "hiv_status",
+            "type": "spinner",
+            "hint": "HIV Status",
+            "values": [
+              "HIV+",
+              "HIV-",
+              "HEI"
+            ],
+            "v_required": {
+              "value": false,
+              "err": "Select HIV status"
+            }
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_household_members",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Number of Other Members Living in Household",
+        "repeating_group_label": "Others Living in Household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_household_members",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of other members"
+        },
+        "value": [
+          {
+            "key": "other_member_firstname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_firstname",
+            "type": "edit_text",
+            "hint": "First Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Member First Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Member First Name"
+            }
+          },
+          {
+            "key": "other_member_lastname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_lastname",
+            "type": "edit_text",
+            "hint": "Last Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Member Last Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Member Last Name"
+            }
+          },
+          {
+            "key": "other_member_birthdate",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_birthdate",
+            "entity": "child",
+            "type": "date_picker",
+            "hint": "Date Of Birth",
+            "label_info_title": "Other Member Date of Birth",
+            "expanded": false,
+            "duration": {
+              "label": "Age"
+            },
+            "min_date": "today-19y",
+            "max_date": "today",
+            "v_required": {
+              "value": false,
+              "err": "Please enter the date of birth"
+            }
+          },
+          {
+            "key": "other_member_tested",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_tested",
+            "type": "native_radio",
+            "label": "Tested  for HIV?",
+            "label_text_style": "bold",
+            "text_color": "#000000",
+            "exclusive": [
+              "Yes"
+            ],
+            "options": [
+              {
+                "key": "yes",
+                "text": "Yes",
+                "value": false
+              },
+              {
+                "key": "no",
+                "text": "No",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "You're required to check box"
+            }
+          },
+          {
+            "key": "other_member_hiv_status",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "other_member_hiv_status",
+            "type": "spinner",
+            "hint": "HIV Status",
+            "values": [
+              "HIV+",
+              "HIV-"
+            ],
+            "v_required": {
+              "value": false,
+              "err": "Select HIV status"
+            }
+          }
+        ],
+        "relevance": {
+          "step2:other_member_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "emergency_contact_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "emergency_contact_name",
+        "type": "edit_text",
+        "hint": "Emergency Contact Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Emergency Contact Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "contact_relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "relationship",
+        "openmrs_entity_id": "contact_relation",
+        "type": "spinner",
+        "hint": "Relationship to Caregiver",
+        "values": [
+          "Self",
+          "Mother",
+          "Father",
+          "Sister",
+          "Brother",
+          "Niece",
+          "Nephew",
+          "Aunt",
+          "Uncle",
+          "Grandfather",
+          "Grandmother",
+          "Cousin",
+          "Son",
+          "Daughter"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "contact_street_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "contact_street_name",
+        "type": "edit_text",
+        "hint": "Contact House No/Street Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
+          "err": "Street Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "contact_township_compound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "current_plot_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "Contact Township/Compound",
+        "v_numeric": {
+          "value": false,
+          "err": "Contact Township/Compound"
+        },
+        "v_regex": {
+          "value": "",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "contact_telephone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_telephone_number",
+        "type": "edit_text",
+        "entity_id": "mother",
+        "hint": "contact telephone number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "(09[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "gps",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "gps",
+        "openmrs_data_type": "text",
+        "type": "gps",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "immunization_group",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Under 5 Children in Household",
+        "repeating_group_label": "Child",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "immunization_group",
+        "v_required": {
+          "value": false,
+          "err": "Please specify the number of children"
+        },
+        "value": [
+          {
+            "key": "under_five_firstname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "under_five_firstname",
+            "type": "edit_text",
+            "hint": "First Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Under Five First Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Under Five First Name"
+            }
+          },
+          {
+            "key": "under_five_lastname",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "under_five_lastname",
+            "type": "edit_text",
+            "hint": "Last Name",
+            "v_required": {
+              "value": false,
+              "err": "Enter Under Five Last Name"
+            },
+            "v_regex": {
+              "value": "",
+              "err": "Enter Under Five Last Name"
+            }
+          },
+          {
+            "key": "immunization_label",
+            "type": "label",
+            "label_text_style": "bold",
+            "text": "Immunization Status",
+            "text_color": "#000000",
+            "v_required": {
+              "value": false
+            }
+          },
+          {
+            "key": "immunization",
+            "label": "Has the child received the following vaccinations?",
+            "type": "check_box",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "options": [
+              {
+                "key": "bcg",
+                "text": "BIRTH-BCG",
+                "value": false
+              },
+              {
+                "key": "opv0",
+                "text": "BIRTH-OPV0",
+                "value": false
+              },
+              {
+                "key": "dtp1",
+                "text": "6 WEEKS-DTP1",
+                "value": false
+              },
+              {
+                "key": "OPV1",
+                "text": "6 WEEKS-OPV1",
+                "value": false
+              },
+              {
+                "key": "PCV1",
+                "text": "6 WEEKS-PCV1",
+                "value": false
+              },
+              {
+                "key": "ROT1",
+                "text": "6 WEEKS-ROT1",
+                "value": false
+              },
+              {
+                "key": "DTP2",
+                "text": "10 WEEKS-DTP2",
+                "value": false
+              },
+              {
+                "key": "OPV2",
+                "text": "10 WEEKS-OPV2",
+                "value": false
+              },
+              {
+                "key": "PCV2",
+                "text": "10 WEEKS-PCV2",
+                "value": false
+              },
+              {
+                "key": "ROT2",
+                "text": "10 WEEKS-ROT2",
+                "value": false
+              },
+              {
+                "key": "DTP3",
+                "text": "14 WEEKS-DTP3",
+                "value": false
+              },
+              {
+                "key": "OPV3",
+                "text": "14 WEEKS-OPV3",
+                "value": false
+              },
+              {
+                "key": "PCV3",
+                "text": "14 WEEKS-PCV3",
+                "value": false
+              },
+              {
+                "key": "MEASL R1",
+                "text": "9 MNTHS-MEASL R1",
+                "value": false
+              },
+              {
+                "key": "MEASL R1",
+                "text": "18MNTHS-MEASL R1",
+                "value": false
+              }
+            ],
+            "v_required": {
+              "value": false,
+              "err": "This is a required field"
+            }
+
+
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+
+          }}},
+      {
+        "key": "child_nut_assessment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Child Nutrition Assessment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "nutrition_assessment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "nutrition_assessment",
+        "type": "repeating_group",
+        "reference_edit_text": "",
+        "reference_edit_text_hint": "Under 5 Children in Household",
+        "repeating_group_label": "Child",
+        "value": [
+          {
+            "key": "muac_score",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "muac_score",
+            "type": "edit_text",
+            "hint": "MUAC Score",
+            "edit_type": "name",
+            "look_up": "true",
+            "v_regex": {
+              "value": "[0-9]*",
+              "err": "Enter correct MUAC Score"
+            }
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "malaria_prev_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Malaria Prevention",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "malaria_beds",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "malaria_beds",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "edit_text": "number",
+        "hint": "Number of malaria beds in household",
+        "tree": [
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Number of beds in household"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "malaria_itns",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "malaria_itns",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "edit_text": "number",
+        "hint": "Number of malaria ITNs in use",
+        "tree": [
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Number of ITNs  in use"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "household_member_had_malaria",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_member_had_malaria",
+        "type": "date_picker",
+        "hint": "Last time household member had malaria",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Last time household member had malaria"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "case_worker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_worker_name",
+        "entity_id": "mother",
+        "type": "edit_text",
+        "hint": "Case Worker Name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Case Worker Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "case_worker_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_worker_nrc",
+        "entity_id": "guardian",
+        "type": "edit_text",
+        "hint": "Case Worker  NRC number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
+          "err": "Number must take the format of ######/##/#"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_signed",
+        "type": "date_picker",
+        "hint": "Date signed",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date signed"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "signature",
+        "openmrs_data_type": "select one",
+        "type": "check_box",
+        "label": "I have read and understood the information regarding on the household enrollment",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false,
+            "openmrs_choice_id": ""
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_enrollment_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -290,7 +290,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("family_register");
+                    indexRegisterForm = formUtils.getFormJson("hh_screening");
                     String fullCaregiverName = getCareGiverFullname(client);
                     String[] caregiverNAmes = fullCaregiverName.split("\\s+");
 
