@@ -272,7 +272,7 @@
       {
         "key": "gender",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
         "label": "Caregiver gender",
@@ -290,22 +290,19 @@
         ]
       },
       {
-        "key": "dob",
+        "key": "age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "dob",
-        "read_only": "false",
-        "type": "date_picker",
-        "hint": "VCA Date of Birth",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "VCA Date of Birth cannot be empty"
+        "openmrs_entity_id": "age",
+        "type": "edit_text",
+        "read_only": false,
+        "hint": "VCA Age",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_calculation.yml"
+            }
+          }
         }
       },
 
@@ -765,6 +762,35 @@
           }
         }
       },
+
+      {
+        "key": "hiv_muac",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_muac",
+        "type": "native_radio",
+        "label": "Was child referred to age appropriate HIV prevention support \n(e.g. VMMC, Condoms etc)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+
       {
         "key": "hiv_assessment",
         "openmrs_entity_parent": "",
@@ -788,32 +814,6 @@
           "step1:hiv_risk": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "prevention_support",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "prevention_support",
-        "type": "native_radio",
-        "label": "Was child referred to age appropriate HIV prevention support \n(e.g. VMMC, Condoms etc",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:hiv_risk": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -886,7 +886,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "eid_test",
         "type": "date_picker",
-        "hint": "Check child’s under-five clinic card. When was the last EID test done?",
+        "hint": "Check child’s under-five clinic card\n When was the last EID test done?",
         "expanded": false,
         "duration": {
           "label": ""
@@ -896,6 +896,13 @@
         "v_required": {
           "value": false,
           "err": "Date Signed"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
         }
       },
 
@@ -917,7 +924,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "not_appropriate_age",
@@ -963,7 +977,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "not_breastfeeding",
@@ -1044,7 +1065,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
 
       {
@@ -1091,31 +1119,12 @@
             "text": "No",
             "value": false
           }
-        ]
-      },
-      {
-        "key": "referred_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "referred_health_facility",
-        "type": "native_radio",
-        "label": "Has child been referred to health facility for HIV testing if test is required?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
         ],
         "relevance": {
-          "step1:against_hiv_risk": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1145,6 +1154,7 @@
           }
         }
       },
+
       {
         "key": "prevention_support",
         "openmrs_entity_parent": "",
@@ -1163,14 +1173,20 @@
             "text": "No",
             "value": false
           }
-        ]
-
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
-        "key": "prevention_support",
+        "key": "substance_support",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "prevention_support",
+        "openmrs_entity_id": "substance_support",
         "type": "native_radio",
         "label": "If applicable, has the child/adolescent been referred for substance abuse support?",
         "options": [
@@ -1220,7 +1236,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "attending_under_five_clinic",
@@ -1266,7 +1289,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "all_appropriate_vaccinations",
@@ -1295,20 +1325,28 @@
         }
       },
       {
-        "key": "muac_measurement",
+        "key": "muac_measure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_measurement",
+        "openmrs_entity_id": "muac_measure",
         "type": "edit_text",
         "hint": "What is the child’s MUAC measurement?",
         "edit_type": "number",
-        "read_only": false
+        "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
+
       {
-        "key": "nutrition_counselling",
+        "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "nutrition_counselling",
+        "openmrs_entity_id": "nutrition_counselling_a",
         "type": "native_radio",
         "label": "Was the primary caregiver of the child provided with nutrition counselling?",
         "options": [
@@ -1324,17 +1362,19 @@
           }
         ],
         "relevance": {
-          "step1:muac_measurement": {
-            "type": "string",
-            "ex": "lessThan(., \"12.5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
+
       {
-        "key": "heps",
+        "key": "heps_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "heps",
+        "openmrs_entity_id": "heps_a",
         "type": "native_radio",
         "label": "Was the child referred to the health facility to access HEPS",
         "options": [
@@ -1350,26 +1390,28 @@
           }
         ],
         "relevance": {
-          "step1:muac_measurement": {
-            "type": "string",
-            "ex": "lessThan(., \"12.5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
 
       {
-        "key": "muac_other",
+        "key": "muac_other_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_other",
+        "openmrs_entity_id": "muac_other_a",
         "type": "edit_text",
         "hint": "Other",
         "edit_type": "name",
         "read_only": false,
         "relevance": {
-          "step1:muac_measurement": {
-            "type": "string",
-            "ex": "lessThan(., \"12.5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1382,20 +1424,27 @@
         "text": "Nutrition (ALL VCA except Under-Five Children) Section"
       },
       {
-        "key": "all_vca_muac_measurement",
+        "key": "muac_measurement_b",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "all_vca_muac_measurement",
+        "openmrs_entity_id": "muac_measurement_b",
         "type": "edit_text",
         "hint": "What is the child’s MUAC measurement?",
         "edit_type": "number",
-        "read_only": false
+        "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
-        "key": "all_vca_nutrition_counselling",
+        "key": "nutrition_counselling_b",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "all_vca_nutrition_counselling",
+        "openmrs_entity_id": "nutrition_counselling_b",
         "type": "native_radio",
         "label": "Was the primary caregiver of the child provided with nutrition counselling?",
         "options": [
@@ -1411,17 +1460,18 @@
           }
         ],
         "relevance": {
-          "step1:all_vca_muac_measurement": {
-            "type": "string",
-            "ex": "lessThan(., \"14.5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
       {
-        "key": "all_vca_heps",
+        "key": "heps_b",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "all_vca_heps",
+        "openmrs_entity_id": "heps_b",
         "type": "native_radio",
         "label": "Was the child referred to the health facility to access HEPS",
         "options": [
@@ -1437,26 +1487,28 @@
           }
         ],
         "relevance": {
-          "step1:all_vca_muac_measurement": {
-            "type": "string",
-            "ex": "lessThan(., \"14.5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
 
       {
-        "key": "all_vca_muac_other",
+        "key": "muac_other_b",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "all_vca_muac_other",
+        "openmrs_entity_id": "muac_other_b",
         "type": "edit_text",
         "hint": "Other",
         "edit_type": "name",
         "read_only": false,
         "relevance": {
-          "step1:all_vca_muac_measurement": {
-            "type": "string",
-            "ex": "lessThan(., \"14.5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1479,7 +1531,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "spacer",
@@ -1527,12 +1586,12 @@
       },
 
       {
-        "key": "being_neglected",
+        "key": "neglected_child_exploitation",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "being_neglected",
+        "openmrs_entity_id": "neglected_child_exploitation",
         "type": "native_radio",
-        "label": "If child is being neglected/exploited, has the child and caregiver \nparticipated in a structured family group conferencing to \nprevent occurrence/ reoccurrence of child exploitation or \nneglect",
+        "label": "If child is being neglected/exploited, has the child and caregiver participated in a structured family group conferencing to prevent occurrence/ reoccurrence of child exploitation or neglect?",
         "options": [
           {
             "key": "yes",
@@ -1548,15 +1607,16 @@
         "relevance": {
           "step1:neglected": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+
       {
-        "key": "relationships_neglected",
+        "key": "neglected_child_relationships",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relationships_neglected",
+        "openmrs_entity_id": "neglected_child_relationships",
         "type": "native_radio",
         "label": "If child is being neglected/exploited, has the family participated \nin a structured psycho-social support related to family conflict \nmitigation and family relationships?",
         "options": [
@@ -1574,15 +1634,15 @@
         "relevance": {
           "step1:neglected": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
       {
-        "key": "experiencing_neglected",
+        "key": "child_above_12_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "experiencing_neglected",
+        "openmrs_entity_id": "child_above_12_a",
         "type": "native_radio",
         "label": "If child is 12 years and above, has s/he reported experiencing neglect or exploitation?",
         "options": [
@@ -1596,7 +1656,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "type_of_neglect",
@@ -1613,9 +1680,10 @@
           "err": "Please enter a valid name"
         },
         "relevance": {
-          "step1:neglected": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1671,7 +1739,7 @@
         "relevance": {
           "step1:signs_of_violence": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1693,7 +1761,14 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "experiencing_neglected",
@@ -1717,7 +1792,7 @@
         "relevance": {
           "step1:physical_violence": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1736,9 +1811,10 @@
           "err": "Please enter a valid name"
         },
         "relevance": {
-          "step1:signs_of_violence": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1792,7 +1868,7 @@
         "relevance": {
           "step1:sexually_abused": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1819,7 +1895,33 @@
         "relevance": {
           "step1:sexually_abused": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "parenting_intervention",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "parenting_intervention",
+        "type": "native_radio",
+        "label": "Did the Caregiver participate in an evidence-based parenting \nintervention to prevent and reduce violence and/or sexual risk \nof their children?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:sexually_abused": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1841,28 +1943,38 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
-        "key": "parenting_intervention",
+        "key": "type_of_neglect_sexual",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "parenting_intervention",
-        "type": "native_radio",
-        "label": "Did the Caregiver participate in an evidence-based parenting \nintervention to prevent and reduce violence and/or sexual risk \nof their children?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
+        "openmrs_entity_id": "type_of_neglect_sexual",
+        "type": "edit_text",
+        "hint": "list the signs observed or type of violence reported",
+        "edit_type": "name",
+        "read_only": "true",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
-        ]
+        }
       },
+
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -1871,21 +1983,14 @@
         "type": "label",
         "text": "Psychosocial Protection"
       },
+
       {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Assess the child’s psychosocial needs Section"
-      },
-      {
-        "key": "parenting_intervention",
+        "key": "child_psychosocial",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "parenting_intervention",
+        "openmrs_entity_id": "child_psychosocial",
         "type": "native_radio",
-        "label": "Did the Caregiver participate in an evidence-based parenting \nintervention to prevent and reduce violence and/or sexual risk \nof their children?",
+        "label": "Was an assessment for the child`s psychosocial needs done?",
         "options": [
           {
             "key": "yes",
@@ -1906,16 +2011,28 @@
         "openmrs_entity_id": "psychosocial_needs",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "List psychosocial needs identified"
+        "hint": "List psychosocial needs identified",
+        "relevance": {
+          "step1:child_psychosocial": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
-        "key": "psychosocial_needs_services",
+        "key": "psychosocial_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "psychosocial_needs_services",
+        "openmrs_entity_id": "psychosocial_services",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "List the services"
+        "hint": "List the services",
+        "relevance": {
+          "step1:child_psychosocial": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
         "key": "child_other_services",
@@ -1935,7 +2052,13 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "step1:child_psychosocial": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
         "key": "referred_services",
@@ -2017,7 +2140,7 @@
         "relevance": {
           "step1:currently_in_school": {
             "type": "string",
-            "ex": "equalTo(., \"yes\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -2029,12 +2152,8 @@
         "type": "edit_text",
         "hint": "How many days of school has the child missed in the past 6 months?",
         "edit_type": "number",
-        "read_only": "true",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid number of days"
-        }
+        "read_only": "false",
+        "look_up": "true"
       },
       {
         "key": "challenges_barriers",
@@ -2054,7 +2173,61 @@
             "text": "No",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_household",
+        "type": "native_radio",
+        "label": "Was the child/household referred?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:currently_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "child_household_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_household_services",
+        "type": "edit_text",
+        "hint": "Indicate service for which the \nchild/household was \nreferred",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "error"
+        },
+        "relevance": {
+          "step1:child_household": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
 
       {
@@ -2074,14 +2247,14 @@
       },
 
       {
-        "key": "verified_by_school",
+        "key": "verified_by_school_days",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "verified_by_school",
+        "openmrs_entity_id": "verified_by_school_days",
         "type": "edit_text",
         "hint": "Days missed verified by the school",
         "edit_type": "number",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2103,52 +2276,104 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "verified_by_school",
         "type": "edit_text",
-        "hint": "What grade was the child doing in the last calendar year?",
+        "hint": "What grade was the child doing in the\n last calendar year?",
         "edit_type": "number",
-        "read_only": "true",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid number of days"
+        "read_only": "false",
+        "look_up": "true"
+      },
+      {
+        "key": "current_calendar",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "current_calendar",
+        "type": "edit_text",
+        "hint": "What grade is the child doing in the \ncurrent calendar year?",
+        "edit_type": "number",
+        "read_only": "false",
+        "look_up": "false"
+      },
+      {
+        "key": "did_not_progress",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "did_not_progress",
+        "type": "native_radio",
+        "label": "If child of school going age did not progress to the next grade \nat the start of this calendar year, were the barriers to \nprogression discussed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
         }
       },
       {
-        "key": "verified_by_school",
+        "key": "progression_child_household",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "verified_by_school",
-        "type": "edit_text",
-        "hint": "What grade is the child doing in the current calendar year?",
-        "edit_type": "number",
-        "read_only": "true",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid number of days"
+        "openmrs_entity_id": "progression_child_household",
+        "type": "native_radio",
+        "label": "Was the child/household referred?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
         }
       },
       {
-        "key": "caseworker_firstname",
+        "key": "progression_child_household_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
+        "openmrs_entity_id": "progression_child_household_services",
         "type": "edit_text",
-        "hint": "Case Worker First Name",
+        "hint": "Indicate service for which the \nchild/household was \nreferred",
         "edit_type": "name",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "err": "error"
+        },
+        "relevance": {
+          "step1:progression_child_household": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
-        "key": "caseworker_lastname",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
+        "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
-        "hint": "Case Work Last Name ",
+        "hint": "Case Work Name ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "true",
@@ -2193,28 +2418,14 @@
       },
 
 
+
       {
-        "key": "manager_firstname",
+        "key": "manager_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
+        "openmrs_entity_id": "manager_name",
         "type": "edit_text",
-        "hint": "Verified by Case Manager First Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "manager_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Verified by Case Manager Last Name ",
+        "hint": "Verified by Case Manager Name ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "true",
@@ -2258,28 +2469,14 @@
         ]
       },
 
+
       {
-        "key": "school_administration_firstname",
+        "key": "school_administration_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "school_administration_firstname",
+        "openmrs_entity_id": "school_administration_name",
         "type": "edit_text",
-        "hint": "Verified By School Administration First Name",
-        "edit_type": "name",
-        "read_only": "false",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "school_administration_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "school_administration_lastname",
-        "type": "edit_text",
-        "hint": "Verified By School Administration Last Name ",
+        "hint": "Verified By School Administration Name ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",
@@ -2309,7 +2506,7 @@
       {
         "key": "school_administration_signature",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_administration_signature",
         "type": "check_box",
         "label": "I hereby confirms that the information I have given is true",
