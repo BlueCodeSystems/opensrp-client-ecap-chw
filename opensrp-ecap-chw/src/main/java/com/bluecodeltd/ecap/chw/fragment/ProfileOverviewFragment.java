@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,13 @@ import androidx.transition.TransitionManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.CaseStatusDao;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
-
+    TextView caseStatus;
     RelativeLayout myview;
     LinearLayout myview2;
     ImageButton imgBtn;
@@ -34,6 +36,7 @@ public class ProfileOverviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
 
         txtArtNumber = view.findViewById(R.id.art_number);
+        caseStatus = view.findViewById(R.id.case_status_txt_overview);
         myview2 = view.findViewById(R.id.mylayout);
         imgBtn = view.findViewById(R.id.arrow_button);
         sub1 = view.findViewById(R.id.subpop1);
@@ -70,6 +73,8 @@ public class ProfileOverviewFragment extends Fragment {
         assert subpop4 != null;
         assert subpop5 != null;
         assert subpop6 != null;
+
+        setCaseStatus(mymap);
 
         if(mymap.get("date_started_art") != null){
             myview.setVisibility(View.VISIBLE);
@@ -179,4 +184,21 @@ public class ProfileOverviewFragment extends Fragment {
         return view;
 
     }
-}
+
+    public void setCaseStatus(HashMap<String, String> dataMap){
+        if (CaseStatusDao.getActiveStatus(dataMap.get("base_entity_id")) != null && CaseStatusDao.getActiveStatus(dataMap.get("base_entity_id")).equals("Active"))
+        {
+            caseStatus.setText("Active");
+            caseStatus.setTextColor(Color.GREEN);
+        } else if(CaseStatusDao.getActiveStatus(dataMap.get("base_entity_id")) != null && CaseStatusDao.getActiveStatus(dataMap.get("base_entity_id")).equals("Inactive"))
+        {
+            caseStatus.setText("Inactive");
+            caseStatus.setTextColor(Color.RED);
+        }
+        else if(CaseStatusDao.getActiveStatus(dataMap.get("base_entity_id")) == null)
+        {
+            caseStatus.setText("Active");
+            caseStatus.setTextColor(Color.GREEN);
+        }
+        }
+    }

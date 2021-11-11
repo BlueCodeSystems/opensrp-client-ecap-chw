@@ -76,10 +76,19 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 public class IndexDetailsActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private Animation fab_open;
+    private Animation fab_close;
+    private Animation rotate_forward;
+    private Animation rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, visit;
-    private TextView txtName, txtGender, txtAge;
+    private RelativeLayout rhousehold;
+    private RelativeLayout rassessment;
+    private RelativeLayout rcase_plan;
+    private RelativeLayout referral;
+    private RelativeLayout visit;
+    private TextView txtName;
+    private TextView txtGender;
+    private TextView txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     public ProfileViewPagerAdapter mPagerAdapter;
@@ -166,7 +175,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         HashMap<String, String> map = new HashMap<>();
 
-
+        map.put("base_entity_id",client.getColumnmaps().get("base_entity_id"));
         map.put("subpop1", client.getColumnmaps().get("subpop1"));
         map.put("subpop2", client.getColumnmaps().get("subpop2"));
         map.put("subpop3", client.getColumnmaps().get("subpop3"));
