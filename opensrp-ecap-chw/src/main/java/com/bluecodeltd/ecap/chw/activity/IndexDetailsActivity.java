@@ -316,21 +316,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("ward"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", client.getColumnmaps().get("adolescent_village"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", client.getColumnmaps().get("caseworker_firstname"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", client.getColumnmaps().get("caseworker_lastname"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(14).put("value", caseworker);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(15).put("value", caseworker);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(17).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(18).put("value", client.getColumnmaps().get("district"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", client.getColumnmaps().get("ward"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(20).put("value", client.getColumnmaps().get("adolescent_village"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", client.getColumnmaps().get("health_facility"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(22).put("value", client.getColumnmaps().get("partners"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(25).put("value", caregiverNAmes[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(26).put("value", caregiverNAmes[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(27).put("value", client.getColumnmaps().get("physical_address"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(28).put("value", client.getColumnmaps().get("caregiver_nrc"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(29).put("value", client.getColumnmaps().get("caregiver_phone"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(80).put("value", caseworker);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", caseworker);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(15).put("value", client.getColumnmaps().get("province"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value", client.getColumnmaps().get("district"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(17).put("value", client.getColumnmaps().get("ward"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(18).put("value", client.getColumnmaps().get("adolescent_village"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", client.getColumnmaps().get("health_facility"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(20).put("value", client.getColumnmaps().get("partners"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(23).put("value", client.getColumnmaps().get("caregiver_firstname"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(24).put("value", client.getColumnmaps().get("physical_address"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(25).put("value", client.getColumnmaps().get("caregiver_nrc"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(26).put("value", client.getColumnmaps().get("caregiver_phone"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(79).put("value", caseworker);
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
