@@ -1,5 +1,6 @@
 {
-  "count": 1,
+  "count": 2,
+  "skip_blank_steps": true,
   "encounter_type": "Household Screening",
   "entity_id": "",
   "show_errors_on_submit": true,
@@ -53,6 +54,7 @@
   },
   "step1": {
     "title": "Household Screening",
+    "next": "step2",
     "fields": [
       {
         "key": "hd1",
@@ -75,24 +77,23 @@
         "read_only": "true"
       },
       {
-        "key": "adolescent_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_first_name",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
-        "value": "",
         "v_regex": {
           "value": "[A-Za-z]*",
           "err": "First name of VCA only accepts letters"
         }
       },
       {
-        "key": "adolescent_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_last_name",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
@@ -103,10 +104,10 @@
         }
       },
       {
-        "key": "adolescent_birthdate",
+        "key": "birthdate",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_birthdate",
+        "openmrs_entity_id": "birthdate",
         "type": "date_picker",
         "hint": "VCA Date of birth",
         "look_up": "true",
@@ -122,10 +123,10 @@
         }
       },
       {
-        "key": "adolescent_gender",
+        "key": "gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_gender",
+        "openmrs_entity_id": "gender",
         "type": "native_radio",
         "label": "VCA Gender",
         "options": [
@@ -176,108 +177,6 @@
             "text": "None"
           }
         ]
-      },
-      {
-        "key": "subpop1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop2",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop2",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop3",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop3",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop4",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop5",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop6",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop6",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
       },
       {
         "key": "health_facility",
@@ -374,7 +273,7 @@
         }
       },
       {
-        "key": "adolescent_village",
+        "key": "village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_village",
@@ -501,10 +400,10 @@
         }
       },
       {
-        "key": "caregiver_name",
+        "key": "adolescent_name_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_name",
+        "openmrs_entity_id": "adolescent_name_of_caregiver",
         "type": "edit_text",
         "hint": "Name of caregiver",
         "look_up": "true",
@@ -640,7 +539,7 @@
       {
         "key": "violence_six_months",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "violence_six_months",
         "type": "native_radio",
         "label": "Have you experienced violence in the home in the last six months?",
@@ -658,8 +557,8 @@
       {
         "key": "children_violence_six_months",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
         "label": "Have the children experienced violence in the home in the last six months?? ",
         "options": [
@@ -678,30 +577,32 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
-        "type": "spinner",
-        "hint": "HIV Status",
-        "values": [
-          "HIV+",
-          "HIV-",
-          "Unknown"
+        "type": "native_radio",
+        "label": "HIV Status",
+        "options": [
+          {
+            "key": "HIV+",
+            "text": "HIV+"
+          },
+          {
+            "key": "HIV-",
+            "text": "HIV-"
+          },
+          {
+            "key": "Unknown",
+            "text": "Unknown"
+          }
         ],
         "v_required": {
           "value": false,
           "err": "Select HIV status"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
         }
       },
       {
         "key": "active_on_treatment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
         "label": "Are you active on treatment?",
         "options": [
@@ -717,7 +618,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -734,7 +635,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -742,15 +643,16 @@
       {
         "key": "caregiver_art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "art_number",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_art_number",
         "type": "edit_text",
         "hint": "Caregivers' ART Number",
         "edit_type": "name",
         "relevance": {
-          "step1:is_mother_currently_on_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
           }
         },
         "v_regex": {
@@ -761,7 +663,7 @@
       {
         "key": "is_caregiver_virally_suppressed",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_caregiver_virally_suppressed",
         "type": "native_radio",
         "label": "Is the caregiver virally suppressed?",
@@ -778,7 +680,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -795,7 +697,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -803,7 +705,7 @@
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
         "hint": "Result of most recent viral load test.",
@@ -814,7 +716,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -822,27 +724,27 @@
       {
         "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_of_last_viral_load",
         "type": "date_picker",
-        "hint": "Viral load",
-        "label_info_title": "Date of last viral load",
+        "hint": "Date of last viral load test",
+        "label_info_title": "Date of last viral load test",
         "expanded": false,
         "min_date": "today-50y",
         "max_date": "today",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
       },
       {
-        "key": "if_hiv_positive_have_biological_children",
+        "key": "biological_children",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "if_hiv_positive_have_biological_children",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "biological_children",
         "type": "native_radio",
         "label": "Do you have biological children 0-2 years?",
         "options": [
@@ -858,7 +760,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -883,7 +785,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -908,7 +810,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -928,7 +830,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -945,7 +847,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -980,7 +882,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -1031,7 +933,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -1050,7 +952,120 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_enrollment_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "step2": {
+    "title": "Sub Populations",
+    "fields": [
+      {
+        "key": "subpop1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop2",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "HIV Exposed Infant (HEI)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "hint": "Children of Women Living with HIV (WLHIV)",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
+        "read_only": "true",
+        "hint": "Children/Adolescents who are Survivors of Sexual Violence",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop6",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop6",
+        "read_only": "true",
+        "hint": "Children/Adolescents whose Primary Caregivers are HIV FSWs",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
