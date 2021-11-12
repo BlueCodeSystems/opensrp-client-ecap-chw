@@ -43,6 +43,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     @Override
     public void getView(Cursor cursor, SmartRegisterClient smartRegisterClient, IndexRegisterViewHolder indexRegisterViewHolder) {
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
+
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);

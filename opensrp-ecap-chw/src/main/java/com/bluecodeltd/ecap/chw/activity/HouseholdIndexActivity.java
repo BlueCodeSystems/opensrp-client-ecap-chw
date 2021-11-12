@@ -104,7 +104,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
                 JSONObject jsonFormObject = new JSONObject(jsonString);
 
-                if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
+                if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);

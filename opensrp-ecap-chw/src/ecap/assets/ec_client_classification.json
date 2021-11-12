@@ -319,8 +319,9 @@
             "field": "eventType",
             "field_value": "Household Screening",
             "creates_case": [
-              "ec_family",
-              "ec_client_index"
+              "ec_household",
+              "ec_client_index",
+              "ec_sub_population"
             ]
           },
           {

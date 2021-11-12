@@ -37,6 +37,7 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.util.FormUtils;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -80,6 +81,18 @@ public class HouseholdDetails extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
         setupViewPager();
         updateTasksTabTitle();
+    }
+
+    public HashMap<String, String> getData() {
+
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+
+        HashMap<String, String> map = new HashMap<>();
+
+        map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
+
+        return map;
+
     }
 
     private void setupViewPager(){
