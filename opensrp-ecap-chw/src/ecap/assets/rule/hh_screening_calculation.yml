@@ -1,0 +1,7 @@
+---
+name: step1_subpop1
+description: subpop1 calculation
+priority: 1
+condition: "step1_sub_population.contains('subpop1')"
+actions:
+  - "calculation = subpop1"

@@ -64,7 +64,6 @@
         "type": "label",
         "text": "A. Administrative Information"
       },
-
       {
         "key": "unique_id",
         "openmrs_entity_parent": "",
