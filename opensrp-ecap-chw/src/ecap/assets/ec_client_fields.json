@@ -1069,74 +1069,164 @@
           }
         },
         {
-          "column_name": "relational_id",
+          "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "relationships.family"
+            "field": "attributes.health_facility"
           }
         },
         {
-          "column_name": "mother_entity_id",
+          "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "relationships.mother"
+            "field": "addresses.stateProvince"
           }
         },
         {
-          "column_name": "entry_point",
-          "type": "Event",
+          "column_name": "district",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "entry_point"
+            "field": "addresses.countyDistrict"
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "firstName"
+            "field": "addresses.subTown"
           }
         },
         {
-          "column_name": "middle_name",
+          "column_name": "village",
           "type": "Client",
           "json_mapping": {
-            "field": "middleName"
+            "field": "attributes.village"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "fname_community_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "lastName"
+            "field": "attributes.fname_community_case_worker"
           }
         },
         {
-          "column_name": "dob",
+          "column_name": "lname_facility_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "birthdate"
+            "field": "attributes.lname_community_case_worker"
           }
         },
         {
-          "column_name": "dod",
+          "column_name": "fname_facility_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "deathdate"
+            "field": "attributes.fname_facility_case_worker"
           }
         },
         {
-          "column_name": "dob_unknown",
+          "column_name": "lname_facility_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "birthdateApprox"
+            "field": "attributes.lname_facility_case_worker"
           }
         },
         {
-          "column_name": "gender",
+          "column_name": "partners",
           "type": "Client",
           "json_mapping": {
-            "field": "gender"
+            "field": "attributes.partners"
+          }
+        },
+        {
+          "column_name": "screening_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screening_date"
+          }
+        },
+        {
+          "column_name": "screening_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screening_location"
+          }
+        },
+        {
+          "column_name": "adolescent_name_of_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_name_of_caregiver"
+          }
+        },
+        {
+          "column_name": "physical_address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.addressFields.physical_address"
+          }
+        },
+        {
+          "column_name": "caregiver_phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_phone"
+          }
+        },
+        {
+          "column_name": "violence_six_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.violence_six_months"
+          }
+        },
+        {
+          "column_name": "children_violence_six_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.children_violence_six_months"
+          }
+        },
+        {
+          "column_name": "caregiver_hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_hiv_status"
+          }
+        },
+        {
+          "column_name": "active_on_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.active_on_treatment"
+          }
+        },
+        {
+          "column_name": "caregiver_art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_art_number"
+          }
+        },
+        {
+          "column_name": "is_caregiver_virally_suppressed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_caregiver_virally_suppressed"
+          }
+        },
+        {
+          "column_name": "viral_load_results",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.viral_load_results"
+          }
+        },
+        {
+          "column_name": "date_of_last_viral_load",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_last_viral_load"
           }
         }
       ]
@@ -1163,6 +1253,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "case_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_status"
           }
         },
         {

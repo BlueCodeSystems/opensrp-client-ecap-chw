@@ -1,61 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:androi="http://schemas.android.com/tools"
+    android:id="@+id/cardview1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="#ffffff"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="2dp"
+    >
+
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/register_columns"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
         android:background="@color/white">
 
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/itemm"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="#05b714" />
+
         <LinearLayout
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:orientation="horizontal"
-            android:id="@+id/itemm"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="match_parent">
 
-            <View
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:background="#05b714" />
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/familyNameTextView"
+                style="@style/CustomFontTextViewStyle.ClientList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:text="Patient Name"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/familyNameTextView"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:layout_marginTop="10dp"
-                    android:singleLine="true"
-                    android:text="Patient Name"
-                    android:textColor="@color/text_black"
-                    android:textSize="18sp" />
-
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/villageTextView"
-                    style="@style/CustomFontTextViewStyle.ClientList.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="6dp"
-                    android:text="Lavington #445"
-                    android:textColor="@color/light_grey_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/villageTextView"
+                style="@style/CustomFontTextViewStyle.ClientList.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="6dp"
+                android:text="Lavington #445"
+                android:textColor="@color/light_grey_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
+
+    </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -76,7 +84,7 @@
             <ImageView
                 android:visibility="visible"
                 android:id="@+id/index_icon"
-                android:src="@mipmap/sidemenu_index"
+                android:src="@drawable/baseline_info_24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,3 +116,5 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
