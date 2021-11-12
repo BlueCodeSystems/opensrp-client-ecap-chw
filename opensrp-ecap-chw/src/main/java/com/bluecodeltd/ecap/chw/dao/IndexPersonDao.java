@@ -25,7 +25,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
-    public static int countChildren(String baseEntityID){
+    public static String countChildren(String baseEntityID){
 
         String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "'";
 
@@ -33,7 +33,7 @@ public class IndexPersonDao  extends AbstractDao {
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        return Integer.parseInt(values.get(0));
+        return values.get(0);
 
     }
     
