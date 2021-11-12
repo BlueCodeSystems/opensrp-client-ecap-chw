@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.view_holder.HouseholdRegisterViewHolder;
 import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
 
@@ -26,6 +28,8 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HouseholdRegisterProvider implements RecyclerViewProvider<HouseholdRegisterViewHolder>, View.OnClickListener{
 
@@ -40,14 +44,23 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         this.paginationViewHandler = paginationViewHandler;
     }
 
+
+
     @Override
     public void getView(Cursor cursor, SmartRegisterClient smartRegisterClient, HouseholdRegisterViewHolder householdRegisterViewHolder) {
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
-        String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
+
+        String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
+        String caregiver_Name = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
         String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
-        householdRegisterViewHolder.setupViews(firstName +" "+lastName + " " + "Household", residence);
-        Log.e("Tag", "taggg " + firstName);
+
+
+       // int childrenCount = IndexPersonDao.countChildren(BaseEntityId);
+
+        List<String> genderList = IndexPersonDao.getGenders(BaseEntityId);
+
+
+        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", residence, genderList, context);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
@@ -88,7 +101,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
     @Override
     public HouseholdRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.index_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.household_register_item_layout, null);
         return new HouseholdRegisterViewHolder(viewHolder);
     }
 

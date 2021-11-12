@@ -396,6 +396,228 @@
       ]
     },
     {
+      "name": "ec_family_member",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.opensrp_id"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "middle_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "middleName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
+          }
+        },
+        {
+          "column_name": "dob",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdate"
+          }
+        },
+        {
+          "column_name": "dod",
+          "type": "Client",
+          "json_mapping": {
+            "field": "deathdate"
+          }
+        },
+        {
+          "column_name": "dob_unknown",
+          "type": "Client",
+          "json_mapping": {
+            "field": "birthdateApprox"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "phone_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        {
+          "column_name": "other_phone_number",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        {
+          "column_name": "national_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.National_ID"
+          }
+        },
+        {
+          "column_name": "voter_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Voter_Registration_Number"
+          }
+        },
+        {
+          "column_name": "driver_license",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Driver_License_Number"
+          }
+        },
+        {
+          "column_name": "passport",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Passport_Number"
+          }
+        },
+        {
+          "column_name": "insurance_provider",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Health_Insurance_Type"
+          }
+        },
+        {
+          "column_name": "insurance_provider_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Other_Health_Insurance_Type"
+          }
+        },
+        {
+          "column_name": "insurance_provider_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Health_Insurance_Number"
+          }
+        },
+        {
+          "column_name": "type_of_disability",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        {
+          "column_name": "disabilities",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "162558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        {
+          "column_name": "service_provider",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "1542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        {
+          "column_name": "leader",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Community_Leader"
+          }
+        },
+        {
+          "column_name": "leader_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Other_Community_Leader_Type_Name"
+          }
+        },
+        {
+          "column_name": "reasons_for_registration",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Registration_Reason"
+          }
+        },
+        {
+          "column_name": "has_primary_caregiver",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "Has_Primary_Caregiver"
+          }
+        },
+        {
+          "column_name": "primary_caregiver_name",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "Primary_Caregiver_Name"
+          }
+        },
+        {
+          "column_name": "entity_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "entityType"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateRemoved"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_family",
       "columns": [
         {
@@ -830,7 +1052,7 @@
       ]
     },
     {
-      "name": "ec_family_member",
+      "name": "ec_household",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -847,296 +1069,164 @@
           }
         },
         {
-          "column_name": "relational_id",
+          "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "relationships.family"
+            "field": "attributes.health_facility"
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "firstName"
+            "field": "addresses.stateProvince"
           }
         },
         {
-          "column_name": "middle_name",
+          "column_name": "district",
           "type": "Client",
           "json_mapping": {
-            "field": "middleName"
+            "field": "addresses.countyDistrict"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "lastName"
+            "field": "addresses.subTown"
           }
         },
         {
-          "column_name": "dob",
+          "column_name": "village",
           "type": "Client",
           "json_mapping": {
-            "field": "birthdate"
+            "field": "attributes.village"
           }
         },
         {
-          "column_name": "dod",
+          "column_name": "fname_community_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "deathdate"
+            "field": "attributes.fname_community_case_worker"
           }
         },
         {
-          "column_name": "dob_unknown",
+          "column_name": "lname_facility_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "birthdateApprox"
+            "field": "attributes.lname_community_case_worker"
           }
         },
         {
-          "column_name": "gender",
+          "column_name": "fname_facility_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "gender"
+            "field": "attributes.fname_facility_case_worker"
           }
         },
         {
-          "column_name": "phone_number",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        },
-        {
-          "column_name": "other_phone_number",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        },
-        {
-          "column_name": "national_id",
+          "column_name": "lname_facility_case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.National_ID"
+            "field": "attributes.lname_facility_case_worker"
           }
         },
         {
-          "column_name": "voter_id",
+          "column_name": "partners",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Voter_Registration_Number"
+            "field": "attributes.partners"
           }
         },
         {
-          "column_name": "driver_license",
+          "column_name": "screening_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Driver_License_Number"
+            "field": "attributes.screening_date"
           }
         },
         {
-          "column_name": "passport",
+          "column_name": "screening_location",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Passport_Number"
+            "field": "attributes.screening_location"
           }
         },
         {
-          "column_name": "insurance_provider",
+          "column_name": "adolescent_name_of_caregiver",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Health_Insurance_Type"
+            "field": "attributes.adolescent_name_of_caregiver"
           }
         },
         {
-          "column_name": "insurance_provider_other",
+          "column_name": "physical_address",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Other_Health_Insurance_Type"
+            "field": "addresses.addressFields.physical_address"
           }
         },
         {
-          "column_name": "insurance_provider_number",
+          "column_name": "caregiver_phone",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Health_Insurance_Number"
+            "field": "attributes.caregiver_phone"
           }
         },
         {
-          "column_name": "type_of_disability",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        },
-        {
-          "column_name": "disabilities",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "162558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        },
-        {
-          "column_name": "service_provider",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "1542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        },
-        {
-          "column_name": "leader",
+          "column_name": "violence_six_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Community_Leader"
+            "field": "attributes.violence_six_months"
           }
         },
         {
-          "column_name": "leader_other",
+          "column_name": "children_violence_six_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Other_Community_Leader_Type_Name"
+            "field": "attributes.children_violence_six_months"
           }
         },
         {
-          "column_name": "reasons_for_registration",
+          "column_name": "caregiver_hiv_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.Registration_Reason"
+            "field": "attributes.caregiver_hiv_status"
           }
         },
         {
-          "column_name": "has_primary_caregiver",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "Has_Primary_Caregiver"
-          }
-        },
-        {
-          "column_name": "primary_caregiver_name",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "Primary_Caregiver_Name"
-          }
-        },
-        {
-          "column_name": "entity_type",
-          "type": "Event",
-          "json_mapping": {
-            "field": "entityType"
-          }
-        },
-        {
-          "column_name": "last_interacted_with",
-          "type": "Event",
-          "json_mapping": {
-            "field": "version"
-          }
-        },
-        {
-          "column_name": "date_removed",
+          "column_name": "active_on_treatment",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.dateRemoved"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ec_child",
-      "columns": [
-        {
-          "column_name": "base_entity_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "baseEntityId"
+            "field": "attributes.active_on_treatment"
           }
         },
         {
-          "column_name": "unique_id",
+          "column_name": "caregiver_art_number",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.opensrp_id"
+            "field": "attributes.caregiver_art_number"
           }
         },
         {
-          "column_name": "relational_id",
+          "column_name": "is_caregiver_virally_suppressed",
           "type": "Client",
           "json_mapping": {
-            "field": "relationships.family"
+            "field": "attributes.is_caregiver_virally_suppressed"
           }
         },
         {
-          "column_name": "mother_entity_id",
+          "column_name": "viral_load_results",
           "type": "Client",
           "json_mapping": {
-            "field": "relationships.mother"
+            "field": "attributes.viral_load_results"
           }
         },
         {
-          "column_name": "entry_point",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "entry_point"
-          }
-        },
-        {
-          "column_name": "first_name",
+          "column_name": "date_of_last_viral_load",
           "type": "Client",
           "json_mapping": {
-            "field": "firstName"
-          }
-        },
-        {
-          "column_name": "middle_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "middleName"
-          }
-        },
-        {
-          "column_name": "last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "lastName"
-          }
-        },
-        {
-          "column_name": "dob",
-          "type": "Client",
-          "json_mapping": {
-            "field": "birthdate"
-          }
-        },
-        {
-          "column_name": "dod",
-          "type": "Client",
-          "json_mapping": {
-            "field": "deathdate"
-          }
-        },
-        {
-          "column_name": "dob_unknown",
-          "type": "Client",
-          "json_mapping": {
-            "field": "birthdateApprox"
-          }
-        },
-        {
-          "column_name": "gender",
-          "type": "Client",
-          "json_mapping": {
-            "field": "gender"
+            "field": "attributes.date_of_last_viral_load"
           }
         }
       ]
@@ -1163,6 +1253,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "case_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_status"
           }
         },
         {

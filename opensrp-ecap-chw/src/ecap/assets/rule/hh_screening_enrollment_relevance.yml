@@ -338,28 +338,28 @@ actions:
 name: step1_active_on_treatment
 description: active_on_treatment relevance
 priority: 1
-condition: "step1_knows_hiv_status.contains('hiv_positive')"
+condition: "step1_knows_hiv_status.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_virally_suppressed
 description: virally_suppressed relevance
 priority: 1
-condition: "step1_knows_hiv_status.contains('hiv_positive')"
+condition: "step1_knows_hiv_status.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_if_hiv_positive_have_biological_children
 description: if_hiv_positive_have_biological_children relevance
 priority: 1
-condition: "step1_knows_hiv_status.contains('hiv_positive')"
+condition: "step1_knows_hiv_status.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_are_there_any_reasons_you_may_be_at_risk_for_hiv
 description: are_there_any_reasons_you_may_be_at_risk_for_hiv relevance
 priority: 1
-condition: "step1_knows_hiv_status.contains('hiv_negative')"
+condition: "step1_knows_hiv_status.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -387,7 +387,7 @@ actions:
 name: step1_are_there_any_reasons_you may_be_at_risk for_hiv
 description: are_there_any_reasons_you may_be_at_risk for_hiv relevance
 priority: 1
-condition: "step1_knows_hiv_status.contains('unknown_status')"
+condition: "step1_knows_hiv_status.contains('yes')"
 actions:
   - "isRelevant = true"
 ---

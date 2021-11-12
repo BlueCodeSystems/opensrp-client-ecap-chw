@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.smartregister.domain.FetchStatus;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
@@ -61,7 +62,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
             view.toggleDialogVisibility(true);
 
 
-            List<EventClient> eventClients = model.processRegistration(jsonString);
+            ArrayList<EventClient> eventClients = model.processRegistration(jsonString);
 
             if (eventClients == null) {
                 return;
