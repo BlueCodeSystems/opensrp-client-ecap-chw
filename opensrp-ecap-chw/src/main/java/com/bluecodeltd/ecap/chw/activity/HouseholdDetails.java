@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
@@ -49,6 +50,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public ViewPager mViewPager;
     private Toolbar toolbar;
     private TextView visitTabCount;
+    private TextView childTabCount;
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
@@ -81,6 +83,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
         setupViewPager();
         updateTasksTabTitle();
+        updateChildTabTitle();
     }
 
     public HashMap<String, String> getData() {
@@ -117,6 +120,20 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+    }
+
+    private void updateChildTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("CHILDREN");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+        String children = IndexPersonDao.countChildren(client.getColumnmaps().get("base_entity_id"));
+
+        childTabCount.setText(children);
+
+        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
     public void onClick(View v) {
