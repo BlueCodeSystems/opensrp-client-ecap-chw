@@ -48,7 +48,7 @@
 
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/vca_name"
+                        android:id="@+id/caregiver_name"
                         style="@style/CustomFontTextViewStyle.ClientList.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
