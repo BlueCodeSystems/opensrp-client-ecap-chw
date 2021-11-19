@@ -78,7 +78,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, visit;
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, visit, grad, grad17;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -109,20 +109,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
         visit = findViewById(R.id.visit);
+        grad = findViewById(R.id.grad);
+        grad17 = findViewById(R.id.grad17);
 
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
-
-        /*String art_number =  client.getColumnmaps().get("art_number");
-        String province =  client.getColumnmaps().get("province");
-        String district =  client.getColumnmaps().get("district");
-        String facility =  client.getColumnmaps().get("health_facility");
-        String subpop1 =  client.getColumnmaps().get("subpo1");
-        String subpop2 =  client.getColumnmaps().get("subpo2");
-        String subpop3 =  client.getColumnmaps().get("subpo3");
-        String subpop4 =  client.getColumnmaps().get("subpo4");*/
 
 
         mTabLayout =  findViewById(R.id.tabs);
@@ -153,6 +146,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             String myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
 
             txtAge.setText(myAge);
+
 
         } else {
 
@@ -571,6 +565,40 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 break;
+
+            case R.id.grad:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("graduation");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.grad17:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("graduation17");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
         }
     }
 
@@ -754,6 +782,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rcase_plan.setVisibility(View.GONE);
             referral.setVisibility(View.GONE);
             visit.setVisibility(View.GONE);
+            grad.setVisibility(View.GONE);
+            grad17.setVisibility(View.GONE);
 
         } else {
 
@@ -764,6 +794,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
             visit.setVisibility(View.VISIBLE);
+            grad.setVisibility(View.VISIBLE);
+            grad17.setVisibility(View.VISIBLE);
         }
     }
     public String getCareGiverFullname(CommonPersonObjectClient client){
