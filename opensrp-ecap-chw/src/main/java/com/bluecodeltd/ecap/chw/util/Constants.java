@@ -79,6 +79,7 @@ public class Constants extends CoreConstants {
         String EC_ASSESSMENT = "ec_assessment";
         String EC_HOUSEHOLD_ASSESSMENT_1 = "ec_household_visitation_assessment";
         String EC_HOUSEHOLD_ASSESSMENT_2 = "ec_household_visitation_form_0_20";
+        String EC_GRADUATION_ASSESSMENT = "ec_graduation_assessment";
 
     }
 }
