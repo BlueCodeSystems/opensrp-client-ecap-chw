@@ -1065,7 +1065,7 @@
           "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.opensrp_id"
+            "field": "attributes.opensrp_id"
           }
         },
         {
@@ -1100,7 +1100,7 @@
           "column_name": "village",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.village"
+            "field": "attributes.adolescent_village"
           }
         },
         {
