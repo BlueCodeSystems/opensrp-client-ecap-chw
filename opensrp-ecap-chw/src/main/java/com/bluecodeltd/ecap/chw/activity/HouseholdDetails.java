@@ -54,7 +54,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rchild, rvisit, rcase_plan, rassessment, rscreen;
+    private RelativeLayout rchild, rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
 
 
 
@@ -78,6 +78,8 @@ public class HouseholdDetails extends AppCompatActivity {
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
         rvisit = findViewById(R.id.hh_visit);
+        hvisit20 = findViewById(R.id.hh_visit20);
+        child_form = findViewById(R.id.child_form);
 
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
@@ -195,6 +197,40 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
 
+            case R.id.hh_visit20:
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("hh_visitation_20");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.child_form:
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("vca_screening");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
         }
     }
 
@@ -239,19 +275,23 @@ public class HouseholdDetails extends AppCompatActivity {
             isFabOpen = false;
             rvisit.setVisibility(View.GONE);
             rchild.setVisibility(View.GONE);
+            hvisit20.setVisibility(View.GONE);
             rscreen.setVisibility(View.GONE);
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
+            child_form.setVisibility(View.GONE);
 
         } else {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             rvisit.setVisibility(View.VISIBLE);
+            hvisit20.setVisibility(View.VISIBLE);
             rchild.setVisibility(View.VISIBLE);
             rscreen.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
+            child_form.setVisibility(View.VISIBLE);
 
         }
     }
