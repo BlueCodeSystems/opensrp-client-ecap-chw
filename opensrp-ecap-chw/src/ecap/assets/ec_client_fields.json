@@ -3859,7 +3859,7 @@
 
 
     {
-      "name": "ec_household_visitation_form_0_20",
+      "name": "ec_graduation_assessment",
       "columns": [
         {
           "column_name": "base_entity_id",

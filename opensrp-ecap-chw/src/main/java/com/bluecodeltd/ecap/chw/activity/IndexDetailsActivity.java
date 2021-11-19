@@ -76,7 +76,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral,household_visitation,household_visitation_0_20;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -106,6 +106,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
+        household_visitation = findViewById(R.id.household_visitation_1);
+        household_visitation_0_20 = findViewById(R.id.household_visitation_2);
 
 
         txtName = findViewById(R.id.vca_name);
@@ -558,6 +560,132 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
                 break;
 
+            case R.id.household_visitation_1:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
+
+                    //  startFormActivity(indexRegisterForm);
+                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+                    Form form = new Form();
+                    try {
+                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
+                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
+                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
+                            form.setWizard(true);
+                            form.setName("Household Visitation 0-18 Years");
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel(getString(R.string.next));
+                            form.setPreviousLabel(getString(R.string.previous));
+                            form.setSaveLabel(getString(R.string.submit));
+                            form.setNavigationBackground(R.color.primary);
+                        } else {
+                            form.setWizard(false);
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel("");
+                        }
+                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+                    } catch (JSONException e) {
+                        Timber.e(e);
+                    }
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0,8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+/*
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("province"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("district"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_village"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("health_facility"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("first_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("last_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("adolescent_birthdate"));
+
+*/
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
+                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.household_visitation_2:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment_0_20_years");
+
+                    //  startFormActivity(indexRegisterForm);
+                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+                    Form form = new Form();
+                    try {
+                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
+                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
+                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
+                            form.setWizard(true);
+                            form.setName("Household Visitation 0-20 Years");
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel(getString(R.string.next));
+                            form.setPreviousLabel(getString(R.string.previous));
+                            form.setSaveLabel(getString(R.string.submit));
+                            form.setNavigationBackground(R.color.primary);
+                        } else {
+                            form.setWizard(false);
+                            form.setHideSaveLabel(true);
+                            form.setNextLabel("");
+                        }
+                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+                    } catch (JSONException e) {
+                        Timber.e(e);
+                    }
+
+                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
+                    String[] splitStr = caregiver_name.split("\\s+");
+
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0,8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+/*
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("province"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("district"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_village"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("health_facility"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("first_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("last_name"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("adolescent_birthdate"));
+
+*/
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
+                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
             case R.id.myservice:
 
                 try {
@@ -663,6 +791,28 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_SERVICE_REPORT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Household Visitation Form":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_ASSESSMENT_1);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Household Visitation Form 0-20 years":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_ASSESSMENT_2);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

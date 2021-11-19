@@ -342,6 +342,20 @@
             "creates_case": [
               "ec_service_report"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Visitation Form",
+            "creates_case": [
+              "ec_household_visitation_assessment"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Visitation Form 0-20 years",
+            "creates_case": [
+              "ec_household_visitation_form_0_20"
+            ]
           }
         ]
       }
