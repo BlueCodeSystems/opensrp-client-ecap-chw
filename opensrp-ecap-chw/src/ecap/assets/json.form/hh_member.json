@@ -733,7 +733,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:is_mother_currently_on_treatment": {
             "type": "string",
@@ -1072,7 +1072,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:is_mother_currently_on_treatment_wlhiv": {
             "type": "string",

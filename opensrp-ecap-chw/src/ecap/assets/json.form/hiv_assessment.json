@@ -313,6 +313,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "What is the child’s ART Number",
+        "edit_type": "number",
         "v_numeric": {
           "value": "true",
           "err": "art numbers can only contain numbers "
@@ -322,7 +323,11 @@
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
-        }
+        },
+        "v_regex": {
+        "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+        "err": "ART should be in the format of XXXX-XXX-XXXXX-X"
+      }
       },
       {
         "key": "child_biological_mother_hiv",

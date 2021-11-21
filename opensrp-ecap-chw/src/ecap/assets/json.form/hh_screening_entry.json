@@ -647,7 +647,7 @@
         "openmrs_entity_id": "caregiver_art_number",
         "type": "edit_text",
         "hint": "Caregivers' ART Number",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "rules-engine": {
             "ex-rules": {

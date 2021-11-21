@@ -127,7 +127,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:is_on_hiv_treatment": {
             "type": "string",
