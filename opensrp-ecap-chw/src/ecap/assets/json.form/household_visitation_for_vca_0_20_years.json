@@ -1,0 +1,2530 @@
+{
+  "count": "1",
+  "encounter_type": "Household Visitation Form 0-20 years",
+  "hide_blank_spaces": true,
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Household Visitation Form",
+    "fields": [
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "stateProvince",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "District"
+      },
+      {
+        "key": "adolescent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_village",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Village"
+      },
+      {
+        "key": "caseworker_firstname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_firstname",
+        "type": "edit_text",
+        "hint": "Case Worker First Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "look_up": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caseworker_lastname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
+        "type": "edit_text",
+        "hint": "Case Work Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
+        "key": "caseworker_code",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_code",
+        "type": "edit_text",
+        "hint": "Case Worker Code",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please Case Worker Name"
+        }
+      },
+      {
+        "key": "affiliated_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affiliated_health_facility",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Health Facility to which HH is affiliated"
+      },
+      {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date",
+        "read_only": false,
+        "type": "date_picker",
+        "hint": "Date of Assessment (HH Visit)",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": false,
+          "err": "Date of Assessment (HH Visit) cannot be empty"
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": false,
+        "hint": "VCA Household ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Household ID"
+        }
+      },
+      {
+        "key": "primary_firstname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "primary_firstname",
+        "type": "edit_text",
+        "hint": "Primary Caregiver First Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "First Name of Primary Caregiver cannot be empty"
+        }
+      },
+      {
+        "key": "caregiver_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "primary_attribute",
+        "openmrs_entity_id": "caregiver_name",
+        "type": "edit_text",
+        "hint": "Primary Caregiver Last Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Surname Name of Primary Caregiver cannot be empty"
+        }
+      },
+      {
+        "key": "base_entity_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "base_entity_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": true,
+        "v_required": {
+          "value": false,
+          "err": "Please enter VCA ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "VCA ID"
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
+        "read_only": "false",
+        "type": "edit_text",
+        "hint": "VCA First Name"
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "read_only": "false",
+        "type": "edit_text",
+        "hint": "VCA Last Name"
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relation",
+        "type": "edit_text",
+        "hint": "Relationship to Primary Caregiver",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "relationship_to_primary_caregiver can only contain letters"
+        }
+      },
+      {
+        "key": "number_years",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_years",
+        "read_only": "false",
+        "type": "date_picker",
+        "hint": "Duration Child Has Lived with Primary Caregiver",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": false,
+          "err": "Caregiver Date of Birth cannot be empty"
+        }
+      },
+
+
+      {
+        "key":"caregiver_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_id",
+        "read_only": "",
+        "type": "edit_text",
+        "hint": "Primary Caregiver ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Primary Caregiver ID cannot be empty"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Caregiver gender",
+        "options": [
+          {
+            "key": "female",
+            "text": "Female",
+            "value": false
+          },
+          {
+            "key": "male",
+            "text": "Male",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "edit_text",
+        "read_only": false,
+        "hint": "VCA Age",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_calculation.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Health Section"
+      },
+      {
+        "key": "hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_status",
+        "type": "native_radio",
+        "label": "HIV Status",
+        "read_only": false,
+        "options": [
+          {
+            "key": "positive",
+            "text": "HIV Positive",
+            "value": false
+          },
+          {
+            "key": "negative",
+            "text": "HIV Negative",
+            "value": false
+          },
+          {
+            "key": "unknown",
+            "text": "Status Unknown",
+            "value": false
+          }
+        ]
+      },
+
+
+      {
+        "key": "child_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_art",
+        "type": "native_radio",
+        "label": "Is Child enrolled on ART?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "clinical_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "clinical_care",
+        "type": "native_radio",
+        "label": "If child is HIV+ but not on ART, has s/he been referred to Health \nFacility for enrollment into clinical care",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:child_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "art_appointment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_appointment",
+        "type": "native_radio",
+        "label": "Check the ART appointment card.  Did child meet the last clinical/pharmacy appointment? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:child_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "counselling",
+        "type": "native_radio",
+        "label": "If child missed last clinical/pharmacy appointment, not adhering \nto treatment or VL is greater than 1000, age appropriate \nadherence counselling was conducted during home visit?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:art_appointment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "art_medication",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_medication",
+        "type": "native_radio",
+        "label": "If child is on ART, is s/he adhering to medication? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:child_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_art",
+        "type": "edit_text",
+        "hint": "Indicate the number of months the child has been on ART ",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Indicate the number of months the child has been on ART "
+        },
+        "relevance": {
+          "step1:child_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "six_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "six_months",
+        "type": "native_radio",
+        "label": "If the child has been on ART for longer than six months, have they submitted a sample for VL?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_vca_0_20_years.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "toaster_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "If Primary Caregiver has not had a VL done, refer to facility for VL testing",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:six_months": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Health Facility",
+        "relevance": {
+          "step1:six_months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "hint": "VL Result",
+        "edit_type": "number",
+        "read_only": false,
+        "relevance": {
+          "step1:six_months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mmd",
+        "type": "native_radio",
+        "label": "Is the child on single or multi-month dispensation (MMD)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+
+
+      {
+        "key": "mmd_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mmd_months",
+        "type": "edit_text",
+        "hint": "Indicate the number of MMD months of drugs ",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Indicate the number of MMD months of drugs "
+        },
+        "relevance": {
+          "step1:mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "drug_regimen",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "drug_regimen",
+        "type": "edit_text",
+        "hint": "Indicate drug regimen",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Indicate drug regimen"
+        },
+        "relevance": {
+          "step1:mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+
+
+
+      {
+        "key": "date_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_hiv",
+        "type": "edit_text",
+        "hint": "How many months was the last HIV test done?",
+        "edit_type": "number",
+        "read_only": false,
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"negative\")"
+          }
+        }
+      },
+      {
+        "key": "visit_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "visit_hiv_test",
+        "type": "native_radio",
+        "label": "If first home visit and HIV test was conducted more than 3 months ago, has an HIV risk assessment been done?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_vca_0_20_years.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "referred_for_testing",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_for_testing",
+        "type": "native_radio",
+        "label": "Has child been referred for HIV testing at health facility if the HIV \nrisk assessment indicates an HIV test is required? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:visit_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_risk",
+        "type": "native_radio",
+        "label": "Has there been a change in the child’s HIV risky behavior since the last visit?",
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          },
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"negative\")"
+          }
+        }
+      },
+
+      {
+        "key": "hiv_muac",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_muac",
+        "type": "native_radio",
+        "label": "Was child referred to age appropriate HIV prevention support \n(e.g. VMMC, Condoms etc)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+
+      {
+        "key": "hiv_assessment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_assessment",
+        "type": "native_radio",
+        "label": "If there has been a change in the child’s HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "toaster_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "If HIV status unknown, conduct HIV risk reduction counselling and risk assessment",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"unknown\")"
+          }
+        }
+      },
+
+
+      {
+        "key": "referred_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_facility",
+        "type": "native_radio",
+        "label": "Has Primary Caregiver been referred to health facility for HIV testing if test is required?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"unknown\")"
+          }
+        }
+      },
+
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "HIV Exposed Infant (VCA aged 24 months and below)  Section"
+      },
+
+      {
+        "key": "eid_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "eid_test",
+        "type": "date_picker",
+        "hint": "Check child’s under-five clinic card\n When was the last EID test done?",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "age_appropriate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age_appropriate",
+        "type": "native_radio",
+        "label": "Is the duration from the last test appropriate for age of child? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "not_appropriate_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "not_appropriate_age",
+        "type": "native_radio",
+        "label": "If duration from last test not appropriate for age of child, has the \nchild been referred to health facility for EID? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:age_appropriate": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "breastfeeding",
+        "type": "native_radio",
+        "label": "Is infant still breastfeeding?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "not_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "not_breastfeeding",
+        "type": "native_radio",
+        "label": "If infant not breastfeeding, was a DBS done at least 6 weeks after cessation",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "not_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "not_tested",
+        "type": "native_radio",
+        "label": "If infant was not tested for HIV 6 weeks after cessation of \nbreastfeeding, has the child been referred for HIV testing?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:not_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Knowledge of HIV/AIDS (10-17 Years Old) Section"
+      },
+
+      {
+        "key": "hiv_infection",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_infection",
+        "type": "native_radio",
+        "label": "Is the child able to describe at least two HIV infection risks in their local community?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "prevention_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prevention_support",
+        "type": "native_radio",
+        "label": "Is the child able to correctly describe the location of at least one place where HIV prevention support is available?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_infection": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "against_hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "against_hiv_risk",
+        "type": "native_radio",
+        "label": "Is the child able to provide at least one example of how they can protect themselves against HIV risk?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_infection": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "substance_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "substance_support",
+        "type": "native_radio",
+        "label": "If applicable, has the child/adolescent been referred for substance abuse support?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:prevention_support": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "infection_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infection_risk",
+        "type": "native_radio",
+        "label": "If the child cannot describe at least two HIV infection risks in \ntheir local community or provide at least one example of how \nthey can protect themselves against HIV risk or correctly describe \nthe location of at least one place where HIV prevention support, \nhas the child been provided with HIV risk reduction counselling?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_infection": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+
+      {
+        "key": "referred_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_health_facility",
+        "type": "native_radio",
+        "label": "Has child been referred to health facility for HIV testing if test is required?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:against_hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+
+
+
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Under-Five Children (ALL)  Section"
+      },
+      {
+        "key": "under_five",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "under_five",
+        "type": "native_radio",
+        "label": "Has the child been attending under-five clinic regularly?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "attending_under_five_clinic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "attending_under_five_clinic",
+        "type": "native_radio",
+        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the child’s caregiver?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:under_five": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "appropriate_vaccinations",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "appropriate_vaccinations",
+        "type": "native_radio",
+        "label": "Has the child received all appropriate vaccinations?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:under_five": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "all_appropriate_vaccinations",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "all_appropriate_vaccinations",
+        "type": "native_radio",
+        "label": "If child has not received all appropriate vaccinations, has s/he \nbeen referred to the health facility? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:appropriate_vaccinations": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "muac_measure",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_measure",
+        "type": "edit_text",
+        "hint": "What is the child’s MUAC measurement?",
+        "edit_type": "number",
+        "read_only": false,
+        "relevance": {
+          "step1:appropriate_vaccinations": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "nutrition_counselling_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_counselling_a",
+        "type": "native_radio",
+        "label": "Was the primary caregiver of the child provided with nutrition counselling?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "heps_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "heps_a",
+        "type": "native_radio",
+        "label": "Was the child referred to the health facility to access HEPS",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "muac_other_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_other_a",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Nutrition (ALL VCA except Under-Five Children) Section"
+      },
+      {
+        "key": "muac_measurement_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_measurement_b",
+        "type": "edit_text",
+        "hint": "What is the child’s MUAC measurement?",
+        "edit_type": "number",
+        "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "nutrition_counselling_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_counselling_b",
+        "type": "native_radio",
+        "label": "Was the primary caregiver of the child provided with nutrition counselling?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "heps_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "heps_b",
+        "type": "native_radio",
+        "label": "Was the child referred to the health facility to access HEPS",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "muac_other_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_other_b",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "nutrition_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_status",
+        "type": "native_radio",
+        "label": "With reference to the age of the child, what is the nutrition status of the child?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Safe Section"
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Neglect/Exploitation Section"
+      },
+      {
+        "key": "neglected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "neglected",
+        "type": "native_radio",
+        "label": "Are there any signs that the child is being neglected or exploited?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+
+      {
+        "key": "neglected_child_exploitation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "neglected_child_exploitation",
+        "type": "native_radio",
+        "label": "If child is being neglected/exploited, has the child and caregiver participated in a structured family group conferencing to prevent occurrence/ reoccurrence of child exploitation or neglect?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:neglected": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "neglected_child_relationships",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "neglected_child_relationships",
+        "type": "native_radio",
+        "label": "If child is being neglected/exploited, has the family participated \nin a structured psycho-social support related to family conflict \nmitigation and family relationships?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:neglected": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "child_above_12_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_above_12_a",
+        "type": "native_radio",
+        "label": "If child is 12 years and above, has s/he reported experiencing neglect or exploitation?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "type_of_neglect",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "type_of_neglect",
+        "type": "edit_text",
+        "hint": " list the type of neglect/exploitation",
+        "edit_type": "name",
+        "read_only": "true",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Physical Violence Section"
+      },
+
+
+      {
+        "key": "signs_of_violence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signs_of_violence",
+        "type": "native_radio",
+        "label": "Are there any signs that the child is experiencing physical violence?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "relationships_neglected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relationships_neglected",
+        "type": "native_radio",
+        "label": "If child is experiencing physical violence, has the child received \nlegal assistance related to the case",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:signs_of_violence": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "physical_violence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "physical_violence",
+        "type": "native_radio",
+        "label": "If child is 12 years and above, has s/he reported experiencing physical violence?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "experiencing_neglected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "experiencing_neglected",
+        "type": "native_radio",
+        "label": "Was a report filed of suspected abuse to child protection office, \npolice or other local authority?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:relationships_neglected": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "type_of_neglect_physical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "type_of_neglect_physical",
+        "type": "edit_text",
+        "hint": " list the type of neglect/exploitation",
+        "edit_type": "name",
+        "read_only": "true",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Sexual and/or Gender Based Violence Section"
+      },
+      {
+        "key": "sexually_abused",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sexually_abused",
+        "type": "native_radio",
+        "label": "Are there any signs that the child is being sexually abused?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "post_gbv_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "post_gbv_care",
+        "type": "native_radio",
+        "label": "If child is being sexually abused, has s/he been referred to the \nhealth facility for post GBV care? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:sexually_abused": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "vsu_legal_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vsu_legal_support",
+        "type": "native_radio",
+        "label": "If child is/was being sexually abused, has s/he been referred to \nVSU for legal support?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:sexually_abused": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "parenting_intervention",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "parenting_intervention",
+        "type": "native_radio",
+        "label": "Did the Caregiver participate in an evidence-based parenting \nintervention to prevent and reduce violence and/or sexual risk \nof their children?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:sexually_abused": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "sexual_abuse",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sexual_abuse",
+        "type": "native_radio",
+        "label": "If child is 12 years and above, has s/he reported experiencing any form of sexual abuse?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "type_of_neglect_sexual",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "type_of_neglect_sexual",
+        "type": "edit_text",
+        "hint": "list the signs observed or type of violence reported",
+        "edit_type": "name",
+        "read_only": "true",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Psychosocial Protection"
+      },
+
+      {
+        "key": "child_psychosocial",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_psychosocial",
+        "type": "native_radio",
+        "label": "Was an assessment for the child`s psychosocial needs done?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "psychosocial_needs",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "psychosocial_needs",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "List psychosocial needs identified",
+        "relevance": {
+          "step1:child_psychosocial": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "psychosocial_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "psychosocial_services",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "List the services",
+        "relevance": {
+          "step1:child_psychosocial": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "child_other_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_other_services",
+        "type": "native_radio",
+        "label": "Was the child referred for other services?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:child_psychosocial": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "referred_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_services",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "List the services",
+        "relevance": {
+          "step1:child_other_services": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Schooled Section"
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "School Attendance Section"
+      },
+
+      {
+        "key": "currently_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "currently_in_school",
+        "type": "native_radio",
+        "label": "Is child currently in school (if child is of school going age)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          },
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "not_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "not_in_school",
+        "type": "native_radio",
+        "label": "If child is of school going age is not in school, were the barriers \nto being in school discussed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:currently_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "child_missed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_missed",
+        "type": "edit_text",
+        "hint": "How many days of school has the child missed in the past 6 months?",
+        "edit_type": "number",
+        "read_only": "false",
+        "look_up": "true",
+        "relevance": {
+          "step1:not_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "challenges_barriers",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "challenges_barriers",
+        "type": "native_radio",
+        "label": "If the number of school days missed were 20% or more, were \nthe challenges and/or barriers to school attendance discussed? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_household",
+        "type": "native_radio",
+        "label": "Was the child/household referred?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:challenges_barriers": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "child_household_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_household_services",
+        "type": "edit_text",
+        "hint": "Indicate service for which the \nchild/household was \nreferred",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "error"
+        },
+        "relevance": {
+          "step1:child_household": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "ovc_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ovc_caregiver",
+        "type": "edit_text",
+        "hint": "Days missed as reported by OVC/Caregiver",
+        "edit_type": "number",
+        "read_only": "true",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid number of days"
+        },
+        "relevance": {
+          "step1:not_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "verified_by_school_days",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "verified_by_school_days",
+        "type": "edit_text",
+        "hint": "Days missed verified by the school",
+        "edit_type": "number",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid number of days"
+        }
+      },
+
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Progression to the next Grade "
+      },
+      {
+        "key": "verified_by_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "verified_by_school",
+        "type": "edit_text",
+        "hint": "What grade was the child doing in the\n last calendar year?",
+        "edit_type": "number",
+        "read_only": "false",
+        "look_up": "true"
+      },
+      {
+        "key": "current_calendar",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "current_calendar",
+        "type": "edit_text",
+        "hint": "What grade is the child doing in the \ncurrent calendar year?",
+        "edit_type": "number",
+        "read_only": "false",
+        "look_up": "false"
+      },
+      {
+        "key": "did_not_progress",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "did_not_progress",
+        "type": "native_radio",
+        "label": "If child of school going age did not progress to the next grade \nat the start of this calendar year, were the barriers to \nprogression discussed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "progression_child_household",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "progression_child_household",
+        "type": "native_radio",
+        "label": "Was the child/household referred?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "progression_child_household_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "progression_child_household_services",
+        "type": "edit_text",
+        "hint": "Indicate service for which the \nchild/household was \nreferred",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "error"
+        },
+        "relevance": {
+          "step1:progression_child_household": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Case Work Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caseworker_date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_date_signed",
+        "type": "date_picker",
+        "hint": "Date Case Worker Signs",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        }
+      },
+      {
+        "key": "caseworker_signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ]
+      },
+
+
+
+      {
+        "key": "manager_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "manager_name",
+        "type": "edit_text",
+        "hint": "Verified by Case Manager Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "manager_date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "manager_date_signed",
+        "type": "date_picker",
+        "hint": "Verified by Case ManagerSigns",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        }
+      },
+      {
+        "key": "manager_signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "manager_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ]
+      },
+
+
+      {
+        "key": "school_administration_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_name",
+        "type": "edit_text",
+        "hint": "Verified By School Administration Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "school_administration_date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_date_signed",
+        "type": "date_picker",
+        "hint": "Date Verified By School Administration",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        }
+      },
+      {
+        "key": "school_administration_signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ]
+      }
+
+    ]
+  }
+}

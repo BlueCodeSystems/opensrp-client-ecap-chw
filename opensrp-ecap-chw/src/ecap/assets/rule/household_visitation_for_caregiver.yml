@@ -1,0 +1,84 @@
+---
+name: step1_six_months
+description: six_months
+priority: 1
+condition: "step1_date_art > 6"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_art
+description: date_art
+priority: 1
+condition: "step1_clinical_care.contains('yes') || step1_caregiver_art.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_appointment
+description: art_appointment
+priority: 1
+condition: "step1_clinical_care.contains('yes') || step1_caregiver_art.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_medication
+description: art_medication
+priority: 1
+condition: "step1_counselling.contains('yes') || step1_art_appointment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mmd
+description: mmd
+priority: 1
+condition: "step1_counselling.contains('yes') || step1_art_appointment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_mmd_months
+description: mmd_months
+priority: 1
+condition: "step1_counselling.contains('yes') || step1_art_appointment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_hiv_positive
+description: other_hiv_positive
+priority: 1
+condition: "step1_clinical_care.contains('no') || step1_counselling.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_visit_hiv_test
+description: visit_hiv_test
+priority: 1
+condition: "step1_date_hiv >= 3"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_risk
+description: hiv_risk
+priority: 1
+condition: "step1_referred_for_testing.contains('yes') || step1_visit_hiv_test.contains('yes') "
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_hiv_negative
+description: other_hiv_negative
+priority: 1
+condition: "step1_prevention_support.contains('no') || step1_referred_for_testing.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_school_fees
+description: other_school_fees
+priority: 1
+condition: "step1_unpaid_school_fees.contains('no') || step1_linked_economic.contains('no') || step1_referred_mcdss.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_medical
+description: other_medical
+priority: 1
+condition: "step1_social_cash.contains('no') || step1_economic_strengthening.contains('no') || step1_barriers_challenges.contains('no')"
+actions:
+  - "isRelevant = true"
