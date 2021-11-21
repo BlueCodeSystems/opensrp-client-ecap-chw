@@ -118,10 +118,10 @@
         }
       },
       {
-        "key": "affiliated_health_facility",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "affiliated_health_facility",
+        "openmrs_entity_id": "health_facility",
         "type": "edit_text",
         "read_only": "false",
         "hint": "Health Facility to which HH is affiliated"
@@ -339,24 +339,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_art",
-        "type": "date_picker",
-        "hint": "How long has the Primary Caregiver been on ART? ",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "ART date cannot empty"
-        },
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"positive\")"
-          }
-        }
+        "type": "number",
+        "hint": "How long has the Primary Caregiver been on ART? (Indicate Number of Months)"
       },
       {
         "key": "art_appointment",
