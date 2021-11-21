@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Household Visitation Form 0-20 years",
+  "encounter_type": "Graduation Assessment Form",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -306,7 +306,7 @@
         "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Caregiver Name",
         "edit_type": "name",
