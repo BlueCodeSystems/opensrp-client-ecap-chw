@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,10 +17,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
@@ -30,15 +36,27 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.clientandeventmodel.Client;
+import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.domain.db.EventClient;
+import org.smartregister.domain.tag.FormTag;
+import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
+import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.sync.ClientProcessorForJava;
+import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -142,7 +160,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public void onClick(View v) {
         int id = v.getId();
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
-        // assert client != null;
+
         switch (id) {
             case R.id.fabx:
 
@@ -220,9 +238,10 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("vca_screening");
+                    indexRegisterForm = formUtils.getFormJson("family_member");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    //indexRegisterForm.put("entity_id", client.getColumnmaps().get("base_entity_id"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("base_entity_id"));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -264,6 +283,142 @@ public class HouseholdDetails extends AppCompatActivity {
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
+
+            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
+
+            try {
+
+                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+
+                if (childIndexEventClient == null) {
+                    return;
+                }
+
+                saveRegistration(childIndexEventClient, false);
+
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+
+        }
+    }
+
+    public ChildIndexEventClient processRegistration(String jsonString){
+
+        try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
+            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+
+
+            JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+
+            switch (encounterType) {
+
+                case "Family Member":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        String base_entity_id = formJsonObject.getString("entity_id");
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+
+        return null;
+    }
+
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+
+        Runnable runnable = () -> {
+
+            Event event = childIndexEventClient.getEvent();
+            Client client = childIndexEventClient.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+
+                    if (isEditMode) {
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+                    Toast.makeText(HouseholdDetails.this, "Form Data Saved", Toast.LENGTH_LONG).show();
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+
+        };
+
+        try {
+            AppExecutors appExecutors = new AppExecutors();
+            appExecutors.diskIO().execute(runnable);
+            return true;
+        } catch (Exception exception) {
+            Timber.e(exception);
+            return false;
+        }
+    }
+
+    private ECSyncHelper getECSyncHelper() {
+        return ChwApplication.getInstance().getEcSyncHelper();
+    }
+
+    public FormTag getFormTag() {
+        FormTag formTag = new FormTag();
+        AllSharedPreferences allSharedPreferences = getAllSharedPreferences();
+        formTag.providerId = allSharedPreferences.fetchRegisteredANM();
+        formTag.appVersion = BuildConfig.VERSION_CODE;
+        formTag.databaseVersion = BuildConfig.DATABASE_VERSION;
+        return formTag;
+    }
+
+    public AllSharedPreferences getAllSharedPreferences () {
+        return ChwApplication.getInstance().getContext().allSharedPreferences();
+    }
+
+    private ClientProcessorForJava getClientProcessorForJava() {
+        return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
     public void animateFAB(){
