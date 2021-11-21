@@ -78,6 +78,7 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
             bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
             bottomNavigationView.getMenu().clear();
+
             bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu);
             bottomNavigationHelper.disableShiftMode(bottomNavigationView);
             bottomNavigationView.setOnNavigationItemSelectedListener(listener);

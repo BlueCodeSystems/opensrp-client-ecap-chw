@@ -681,7 +681,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
-        "label": "Was the child born from a mother who is HIV-positive?",
+        "label": "Was the child born from a mother who is HIV Positive?",
         "options": [
           {
             "key": "yes",
@@ -732,7 +732,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:is_mother_currently_on_treatment": {
             "type": "string",

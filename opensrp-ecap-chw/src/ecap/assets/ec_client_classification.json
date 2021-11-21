@@ -326,6 +326,14 @@
           },
           {
             "field": "eventType",
+            "field_value": "Family Member",
+            "creates_case": [
+              "ec_client_index",
+              "ec_sub_population"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "VCA Case Plan",
             "creates_case": [
               "ec_vca_case_plan"

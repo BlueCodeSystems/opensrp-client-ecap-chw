@@ -30,7 +30,7 @@ public class ChwSyncConfiguration extends SyncConfiguration {
 
     @Override
     public String getSyncFilterValue() {
-        String providerId = org.smartregister.Context.getInstance().allSharedPreferences().fetchRegisteredANM();
+       /* String providerId = org.smartregister.Context.getInstance().allSharedPreferences().fetchRegisteredANM();
         String userLocationId = org.smartregister.Context.getInstance().allSharedPreferences().fetchUserLocalityId(providerId);
         List<String> locationIds = LocationHelper.getInstance().locationsFromHierarchy(true, null);
         if (!isEmptyCollection(locationIds)) {
@@ -38,7 +38,10 @@ public class ChwSyncConfiguration extends SyncConfiguration {
             List<String> subLocationIds = locationIds.subList(index, locationIds.size());
             return StringUtils.join(subLocationIds, ",");
         }
-        return userLocationId;
+        return userLocationId;*/
+        if (LocationHelper.getInstance() != null && LocationHelper.getInstance().locationIdsFromHierarchy() != null)
+            return LocationHelper.getInstance().locationIdsFromHierarchy();
+        return "";
     }
 
     @Override
