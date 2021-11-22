@@ -308,7 +308,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
+                  /*  indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("last_name"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("adolescent_birthdate"));
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("gender"));
@@ -342,6 +342,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(8).put("value", caregiverNAmes[1]);
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(40).put("value", caseworker);
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(41).put("value", client.getColumnmaps().get("case_worker_nrc"));
+                   */ CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -590,6 +591,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 break;
+
 
             case R.id.grad17:
 
