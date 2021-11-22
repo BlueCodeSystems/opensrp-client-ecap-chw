@@ -15,6 +15,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
+import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -49,7 +51,9 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.contract.CoreChildProfileContract;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -59,6 +63,7 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.repository.BaseRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
@@ -71,6 +76,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON;
+import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
@@ -82,6 +88,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
+    private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
     private Toolbar toolbar;
@@ -706,6 +713,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+                case "Case Record Status":
+
+                    if(fields!= null)
+
+                        updateChildProfile(jsonString);
+
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -780,6 +795,69 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return formTag;
     }
 
+    public void updateChildProfile(String jsonString) {
+       // getView().showProgressDialog(R.string.updating);
+        Pair<Client, Event> pair = new ChildRegisterModel().processRegistration(jsonString);
+        if (pair == null) {
+            return;
+        }
+
+        updateRegistration(pair, jsonString, true);
+    }
+
+    public void updateRegistration(final Pair<Client, Event> pair, final String jsonString, final boolean isEditMode) {
+        Runnable runnable = () -> {
+            finishUpdate(pair, jsonString, isEditMode);
+            appExecutors.mainThread().execute(() -> {
+               Intent i = new Intent(IndexDetailsActivity.this, IndexRegisterActivity.class);
+               startActivity(i);
+            });
+        };
+
+        appExecutors.diskIO().execute(runnable);
+    }
+
+    public void finishUpdate(Pair<Client, Event> pair, String jsonString, boolean isEditMode) {
+
+        try {
+
+            Client baseClient = pair.first;
+            Event baseEvent = pair.second;
+
+            if (baseClient != null) {
+                JSONObject clientJson = new JSONObject(JsonFormUtils.gson.toJson(baseClient));
+                if (isEditMode) {
+                    JsonFormUtils.mergeAndSaveClient(getSyncHelper(), baseClient);
+                } else {
+                    getSyncHelper().addClient(baseClient.getBaseEntityId(), clientJson);
+                }
+            }
+
+            if (baseEvent != null) {
+                JSONObject eventJson = new JSONObject(JsonFormUtils.gson.toJson(baseEvent));
+                getSyncHelper().addEvent(baseEvent.getBaseEntityId(), eventJson);
+            }
+
+            if (!isEditMode && baseClient != null) {
+                String opensrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey);
+                //mark OPENSRP ID as used
+               // getUniqueIdRepository().close(opensrpId);
+            }
+
+            if (baseClient != null || baseEvent != null) {
+                String imageLocation = JsonFormUtils.getFieldValue(jsonString, org.smartregister.family.util.Constants.KEY.PHOTO);
+                JsonFormUtils.saveImage(baseEvent.getProviderId(), baseClient.getBaseEntityId(), imageLocation);
+            }
+
+            long lastSyncTimeStamp = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+            Date lastSyncDate = new Date(lastSyncTimeStamp);
+            getClientProcessorForJava().processClient(getSyncHelper().getEvents(lastSyncDate, BaseRepository.TYPE_Unprocessed));
+            getAllSharedPreferences().saveLastUpdatedAtDate(lastSyncDate.getTime());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+    }
+
     public AllSharedPreferences getAllSharedPreferences () {
         return ChwApplication.getInstance().getContext().allSharedPreferences();
     }
@@ -842,9 +920,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 callIntent.setData(Uri.parse("tel:" + client.getColumnmaps().get("caregiver_phone")));
                 startActivity(callIntent);
                 return true;
-            case R.id.close_case:
-                openFormUsingFormUtils(IndexDetailsActivity.this,"close_case_record");
-                return true;
             case R.id.case_status:
                 openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
             default:
@@ -852,7 +927,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
     }
     public void openFormUsingFormUtils(Context context, String formName)
+
     {
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -862,6 +939,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+
+        try {
+            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("base_entity_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         startFormActivity(formToBeOpened);
     }
 }

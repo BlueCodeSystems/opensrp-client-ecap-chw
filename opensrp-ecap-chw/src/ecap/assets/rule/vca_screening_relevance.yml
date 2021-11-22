@@ -650,8 +650,8 @@ condition: "step1_is_the_child_caregiver_an_fsw.contains('yes') && helper.format
 actions:
   - "isRelevant = true"
 ---
-name: step1_fsw_economic_strengthening_intervention
-description: fsw_economic_strengthening_intervention
+name: step1_children_under18
+description: children_under18
 priority: 1
 condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
 actions:

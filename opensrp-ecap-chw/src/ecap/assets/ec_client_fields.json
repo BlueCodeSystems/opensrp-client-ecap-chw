@@ -1263,13 +1263,6 @@
           }
         },
         {
-          "column_name": "case_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.case_status"
-          }
-        },
-        {
           "column_name": "subpop1",
           "type": "Client",
           "json_mapping": {
@@ -2827,6 +2820,39 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_case_status",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
+          "column_name": "vca_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_id"
+          }
+        },
+        {
+          "column_name": "reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason"
+          }
+        },
+        {
+          "column_name": "other_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_reason"
           }
         }
       ]

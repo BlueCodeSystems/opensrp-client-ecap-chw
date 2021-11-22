@@ -494,7 +494,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "edit_type": "number",
+        "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
           "step1:is_on_hiv_treatment": {
@@ -732,7 +732,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
-        "edit_type": "number",
+        "edit_type": "name",
         "relevance": {
           "step1:is_mother_currently_on_treatment": {
             "type": "string",
@@ -2420,7 +2420,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
-        "edit_type": "number",
+        "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Please enter VCA ART number "
