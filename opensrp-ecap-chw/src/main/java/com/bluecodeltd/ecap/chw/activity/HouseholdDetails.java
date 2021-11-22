@@ -67,7 +67,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private Toolbar toolbar;
-    private TextView visitTabCount;
+    private TextView visitTabCount, cname;
     private TextView childTabCount;
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -93,6 +93,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
         rchild = findViewById(R.id.child_form);
         rscreen = findViewById(R.id.hh_screening);
+        //caregiver_name
+        cname = findViewById(R.id.caregiver_name);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
         rvisit = findViewById(R.id.hh_visit);
@@ -114,6 +116,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
         //adolescent_name_of_caregiver
+        cname.setText(client.getColumnmaps().get("adolescent_name_of_caregiver"));
 
         return map;
 
