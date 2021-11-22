@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": " HIV ASSESSMENT FORM:  ADOLESCENTS AGED 15+ AND ADULT CAREGIVERS",
+    "title": " HIV ASSESSMENT FORM: ADOLESCENTS AGED 15+ AND ADULT CAREGIVERS",
     "next": "step2",
     "fields": [
       {
@@ -113,10 +113,10 @@
         }
       },
       {
-        "key": "base_entity_id",
+        "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "base_entity_id",
+        "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "hint": "VCA ID",
         "edit_type": "name",

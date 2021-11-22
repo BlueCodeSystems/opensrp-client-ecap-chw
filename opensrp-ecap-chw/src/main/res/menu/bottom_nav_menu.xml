@@ -26,15 +26,15 @@
         android:id="@+id/action_identifcation"
         android:enabled="true"
         android:icon="@mipmap/ic_add_family"
-        android:title="@string/Identify"
-        app:showAsAction="ifRoom" />
-
-
+        app:showAsAction="ifRoom"
+        android:title="" />
 
     <item
-        android:id="@+id/action_report"
+        android:id="@+id/action_fsw"
         android:enabled="true"
-        android:icon="@mipmap/ic_jobaids"
-        android:title="@string/reports"
-        app:showAsAction="ifRoom" />
+        android:icon="@mipmap/ic_add_family"
+        app:showAsAction="ifRoom"
+        android:title="Add FSW" />
+
+
 </menu>
