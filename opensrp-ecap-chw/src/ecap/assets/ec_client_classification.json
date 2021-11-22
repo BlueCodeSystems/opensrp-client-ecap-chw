@@ -9,7 +9,7 @@
             "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
-              "ec_family"
+              "ec_household"
             ]
           },
           {
@@ -303,7 +303,8 @@
             "field_value": "Sub Population",
             "creates_case": [
               "ec_sub_population",
-              "ec_client_index"
+              "ec_client_index",
+              "ec_case_status"
             ]
           },
           {
@@ -320,6 +321,14 @@
             "field_value": "Household Screening",
             "creates_case": [
               "ec_household",
+              "ec_client_index",
+              "ec_sub_population"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Family Member",
+            "creates_case": [
               "ec_client_index",
               "ec_sub_population"
             ]
@@ -350,6 +359,14 @@
             "field_value": "Case Worker Service Report",
             "creates_case": [
               "ec_service_report"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Case Record Status",
+            "creates_case": [
+              "ec_case_status",
+              "ec_client_index"
             ]
           }
         ]

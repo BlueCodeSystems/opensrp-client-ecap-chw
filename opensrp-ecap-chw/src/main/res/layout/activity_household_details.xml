@@ -55,7 +55,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="25dp"
                         android:paddingStart="0dp"
-                        android:text="Caregiver : Charity Otala"
+                        android:text="Caregiver : Bertha Mwansa"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/activity_title_size" />
 
@@ -201,7 +201,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_boy_child"  />
+                    app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
 
@@ -365,6 +365,43 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/case_plan_fab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@mipmap/ic_activity_visited" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/hh_visit20"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/case_plan_fab4"
+                    android:background="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp"
+                    android:text="HH Visitation 20Yrs"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/case_plan_fab4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

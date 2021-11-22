@@ -43,8 +43,7 @@ public class ReportsActivity extends SecuredActivity {
         bottomNavigationHelper = new BottomNavigationHelper();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         FamilyRegisterActivity.registerBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
-        if (bottomNavigationView != null)
-           bottomNavigationView.getMenu().findItem(R.id.action_report).setChecked(true);
+
     }
 
     @Override

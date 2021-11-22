@@ -1,6 +1,7 @@
 {
-  "count": "1",
-  "encounter_type": "female sex worker screening",
+  "count": "2",
+  "skip_blank_steps": true,
+  "encounter_type": "FSW",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -48,16 +49,32 @@
   },
   "step1": {
     "title": "Female Sex Worker Screening",
-    "display_back_button": "true",
+    "next": "step2",
     "fields": [
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health facility",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Health Facility only takes letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please enter Health Facility"
+        }
+      },
       {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
+        "openmrs_entity_id": "stateProvince",
         "type": "spinner",
         "hint": "Province",
-        "value": "",
         "values": [
           "Central",
           "Southern"
@@ -67,53 +84,24 @@
           "southern"
         ],
         "v_required": {
-          "value": false,
-          "err": "Please enter the Province"
+          "value": true,
+          "err": "Please select Province"
         }
       },
       {
-        "key": "district_central",
+        "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district_central",
+        "openmrs_entity_id": "countyDistrict",
         "type": "spinner",
-        "hint": "District in Central Province",
+        "hint": "District",
         "values": [
           "Chibombo",
           "Chisamba",
           "Mumbwa",
           "Mkushi",
           "Kabwe",
-          "Kapiri"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "district_southern",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district_southern",
-        "type": "spinner",
-        "hint": "District in Southern Province",
-        "values": [
+          "Kapiri",
           "Chikankata",
           "Choma",
           "Mazabuka",
@@ -124,6 +112,12 @@
           "Livingstone"
         ],
         "keys": [
+          "chibombo",
+          "chisamba",
+          "mumbwa",
+          "mkushi",
+          "kabwe",
+          "kapiri",
           "chikankata",
           "choma",
           "mazabuka",
@@ -134,525 +128,8 @@
           "livingstone"
         ],
         "v_required": {
-          "value": false,
-          "err": "Please enter the District"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "chibombo_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chibombo_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chitanda Rural Health Centre",
-          "Kayosha Rural Health Centre",
-          "Mwachisompola Demo Zone Rural Health Centre",
-          "Chibombo Rural Health Centre",
-          "Shimukuni Rural Health Centre",
-          "Chikobo Rural Health Centre",
-          "Mwanjuni Health Post",
-          "Twalumba Rural Health Centre"
-        ],
-        "keys": [
-          "Chitanda Rural Health Centre",
-          "Kayosha Rural Health Centre",
-          "Mwachisompola Demo Zone Rural Health Centre",
-          "Chibombo Rural Health Centre",
-          "Shimukuni Rural Health Centre",
-          "Chikobo Rural Health Centre",
-          "Mwanjuni Health Post",
-          "Twalumba Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "chisamba_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chisamba_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Liteta District Hospital",
-          "Chisamba Rural Health Centre",
-          "Chisamba Rural Health Centre",
-          "Chipembi Rural Health Centre"
-        ],
-        "keys": [
-          "Liteta District Hospital",
-          "Chisamba Rural Health Centre",
-          "Chisamba Rural Health Centre",
-          "Chipembi Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mkushi_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mkushi_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chibefwe Rural Health Centre",
-          "Nkumbi Rural Health Centre",
-          "Chalata Rural Health Centre"
-        ],
-        "keys": [
-          "Chibefwe Rural Health Centre",
-          "Nkumbi Rural Health Centre",
-          "Chalata Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mumbwa_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mumbwa_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mumbwa District hospital",
-          "Nangoma Hospital Affiliated Health Centre",
-          "Bulungu (mumbwa) Urban Health Center",
-          "Lungobe Rural Health Centre",
-          "Chiwena Rural Health Center",
-          "Nalubanda Rural Health Centre",
-          "Nambala Rural Health Centre"
-        ],
-        "keys": [
-          "Mumbwa District hospital",
-          "Nangoma Hospital Affiliated Health Centre",
-          "Bulungu (mumbwa) Urban Health Center",
-          "Lungobe Rural Health Centre",
-          "Chiwena Rural Health Center",
-          "Nalubanda Rural Health Centre",
-          "Nambala Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kabwe_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kabwe_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Kabwe General Hospital",
-          "Kabwe Mine Hospital",
-          "Kasanda Urban Health Centre",
-          "Katondo Urban Health Centre",
-          "Mahatma Gandhi Memorial Urban Health Centre",
-          "Nakoli Urban Health Centre",
-          "Kawama Urban Health Center",
-          "Bwacha Urban Health Centre",
-          "Natuseko Urban Health Centre",
-          "Ngungu Urban Health Centre",
-          "Makululu Urban Health Centre"
-        ],
-        "keys": [
-          "Kabwe General Hospital",
-          "Kabwe Mine Hospital",
-          "Kasanda Urban Health Centre",
-          "Katondo Urban Health Centre",
-          "Mahatma Gandhi Memorial Urban Health Centre",
-          "Nakoli Urban Health Centre",
-          "Kawama Urban Health Center",
-          "Bwacha Urban Health Centre",
-          "Natuseko Urban Health Centre",
-          "Ngungu Urban Health Centre",
-          "Makululu Urban Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kapiri_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kapiri_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Kapiri Mposhi Urban Clinic",
-          "Kawama Health Center",
-          "Waya Rural Health Center",
-          "Mukonchi Rural Health Center",
-          "Matilyo Health Post",
-          "Mpunde Rural Health Centre",
-          "Chankomo Rural Health Centre"
-        ],
-        "keys": [
-          "Kapiri Mposhi Urban Clinic",
-          "Kawama Health Center",
-          "Waya Rural Health Center",
-          "Mukonchi Rural Health Center",
-          "Matilyo Health Post",
-          "Mpunde Rural Health Centre",
-          "Chankomo Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "chikankata_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "chikankata_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Chikankata Mission Hospital",
-          "Mubuyu Rural Health Post",
-          "Nansenga Health Center",
-          "Nameembo Rural Health Center"
-        ],
-        "keys": [
-          "Chikankata Mission Hospital",
-          "Mubuyu Rural Health Post",
-          "Nansenga Health Center",
-          "Nameembo Rural Health Center"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "mazabuka_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mazabuka_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Hillside Rural HC",
-          "Kaonga Urban HC",
-          "Mazabuka General Hospital",
-          "Nakambala Urban HC",
-          "Kaleya RHC",
-          "Chivuna RHC",
-          "Lubombo Rural Health Centre",
-          "Nega Nega Rural Health Centre",
-          "Mbayamusuma Rural Health Centre",
-          "Magoye Rural Health Centre",
-          "Nanga Rural Health Centre"
-        ],
-        "keys": [
-          "Hillside Rural HC",
-          "Kaonga Urban HC",
-          "Mazabuka General Hospital",
-          "Nakambala Urban HC",
-          "Kaleya RHC",
-          "Chivuna RHC",
-          "Lubombo Rural Health Centre",
-          "Nega Nega Rural Health Centre",
-          "Mbayamusuma Rural Health Centre",
-          "Magoye Rural Health Centre",
-          "Nanga Rural Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "monze_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "monze_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Manungu Urban Health Centre",
-          "Chikuni OPD Mission Hospital",
-          "Monze Mission Hospital",
-          "Hakunkula Rural Health Centre",
-          "Keemba Rural Health Centre",
-          "Monze Urban Health Centre"
-        ],
-        "keys": [
-          "Manungu Urban Health Centre",
-          "Chikuni OPD Mission Hospital",
-          "Monze Mission Hospital",
-          "Hakunkula Rural Health Centre",
-          "Keemba Rural Health Centre",
-          "Monze Urban Health Centre"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "choma_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "choma_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Njase Rural Health Centre",
-          "Mapanza Rural Health Center",
-          "Mangunza Rural Health Center",
-          "Harmony Health Post",
-          "Choma General Hospital",
-          "Batoka Rural Health Centre",
-          "Macha Mission Hospital",
-          "Railway Surgery Urban HC",
-          "Shampande Urban HC"
-        ],
-        "keys": [
-          "Njase Rural Health Centre",
-          "Mapanza Rural Health Center",
-          "Mangunza Rural Health Center",
-          "Harmony Health Post",
-          "Choma General Hospital",
-          "Batoka Rural Health Centre",
-          "Macha Mission Hospital",
-          "Railway Surgery Urban HC",
-          "Shampande Urban HC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kalomo_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "kalomo_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban"
-        ],
-        "keys": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "namwala_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "namwala_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban",
-          "Chitongo RHC",
-          "Kabulamwanda Rural Health Centre",
-          "Maala Rural Health Centre",
-          "Moboola Rural Health Centre",
-          "Moomba Health Post",
-          "Muchila Rural Health Centre",
-          "Namwala District Hospital"
-        ],
-        "keys": [
-          "Mawaya Urban Clinic",
-          "Kalomo Urban Clinic",
-          "Namwianga Zonal Mission Urban",
-          "Chitongo RHC",
-          "Kabulamwanda Rural Health Centre",
-          "Maala Rural Health Centre",
-          "Moboola Rural Health Centre",
-          "Moomba Health Post",
-          "Muchila Rural Health Centre",
-          "Namwala District Hospital"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "sinazongwe_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sinazongwe_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Maamba Hospital",
-          "Sinazeze RHC"
-        ],
-        "keys": [
-          "Maamba Hospital",
-          "Sinazeze RHC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "livingstone_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "livingstone_health_facility",
-        "type": "spinner",
-        "hint": "Health Facility",
-        "values": [
-          "Centre Of Excellence HC",
-          "Chreso Ministries Urban HC",
-          "Linda Urban HC",
-          "Libuyu Urban Clinic",
-          "St Joseph's Hospice",
-          "Mahatma Ghandi",
-          "Police Urban",
-          "Maramba Urban HC",
-          "Mosi-oa-Tunya HC"
-        ],
-        "keys": [
-          "Centre Of Excellence HC",
-          "Chreso Ministries Urban HC",
-          "Linda Urban HC",
-          "Libuyu Urban Clinic",
-          "St Joseph's Hospice",
-          "Mahatma Ghandi",
-          "Police Urban",
-          "Maramba Urban HC",
-          "Mosi-oa-Tunya HC"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please enter health facility"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_screening.yml"
-            }
-          }
+          "value": true,
+          "err": "Please select District"
         }
       },
       {
@@ -830,9 +307,9 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
-        "read_only": "false",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA Age",
+        "hint": "FSW Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -842,86 +319,35 @@
         }
       },
       {
-        "key": "agyw_above18",
+        "key": "children_under18",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "agyw_above18",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children_under18",
         "type": "native_radio",
-        "value": "yes",
-        "label": "AGYW is above 18Years old?",
+        "label": "Does FSW Have Children/Dependent Aged 0-17yrs Old?",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"18\")"
+          }
+        },
         "options": [
           {
             "key": "yes",
             "text": "Yes"
-          }
-        ],
-        "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"17.99999\")"
-          }
-        }
-      },
-      {
-        "key": "agyw_below18",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "agyw_below18",
-        "type": "native_radio",
-        "value": "no",
-        "label": "AGYW is above 18Years old?",
-        "options": [
+          },
           {
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "lessThan(., \"18\")"
-          }
-        }
-      },
-      {
-        "key": "at_risk_agyw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "at_risk_agyw",
-        "type": "native_radio",
-        "value": "yes",
-        "label": "AGYW is At-Risk",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          }
-        ],
-        "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "lessThan(., \"18\")"
-          }
-        }
-      },
-      {
-        "key": "children_under18",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "children_under18",
-        "type": "spinner",
-        "hint": "Does FSW Have Children/Dependent Aged 0-17yrs Old?",
-        "values": [
-          "Yes",
-          "No"
-        ],
-        "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"17.99999\")"
-          }
-        }
-      },
+        ]
+      }
+    ]
+  },
+  "step2": {
+    "title": "Female Sex Worker Screening",
+    "display_back_button": "true",
+    "fields": [
       {
         "key": "offer_enrollment",
         "openmrs_entity_parent": "",
@@ -930,12 +356,65 @@
         "type": "toaster_notes",
         "text": "Please proceed to request for consent to offer enrollment",
         "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
+        "toaster_info_text": "This is an information note",
+        "toaster_info_title": "Request Consent",
         "relevance": {
           "step1:children_under18": {
             "type": "string",
-            "ex": "equalTo(., \"Yes\")"
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "dont_offer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "offer_enrollment",
+        "type": "toaster_notes",
+        "text": "DO NOT proceed with enrollment.",
+        "toaster_type": "problem",
+        "toaster_info_text": "DO NOT proceed with enrollment.",
+        "toaster_info_title": "DO NOT proceed with enrollment",
+        "relevance": {
+          "step1:children_under18": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "subpop4_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop4_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index FSW has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_type": "positive",
+        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "female_sex_worker_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "female_sex_worker_relevance.yml"
+            }
           }
         }
       }
