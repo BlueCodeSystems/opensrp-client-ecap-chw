@@ -365,7 +365,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/visit"
+                android:id="@+id/household_visitation_caregiver"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -379,19 +379,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/visit_fab"
+                    android:layout_toLeftOf="@+id/household_visitation_caregiver_fab"
                     android:background="@color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Household Visitation"
+                    android:text="Household Visitation For Caregiver"
                     android:textStyle="italic"
                     android:textColor="@android:color/black" />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/visit_fab"
+                    android:id="@+id/household_visitation_caregiver_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -400,6 +400,43 @@
                     app:srcCompat="@mipmap/ic_boy_child" />
 
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/household_visitation_for_vca"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/household_visitation_for_vca_fab"
+                    android:background="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp"
+                    android:text="Household Visitation For VCA 0-20 Years"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/household_visitation_for_vca_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@mipmap/ic_boy_child" />
+
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/grad"
@@ -440,7 +477,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/grad17"
+                android:id="@+id/grad_sub"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -460,7 +497,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Grad Assessment / 17yrs"
+                    android:text="Grad Assessment(Sub Form)"
                     android:textStyle="italic"
                     android:textColor="@android:color/black" />
 
