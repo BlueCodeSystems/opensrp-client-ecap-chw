@@ -78,6 +78,7 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
             bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
             bottomNavigationView.getMenu().clear();
+
             bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu);
             bottomNavigationHelper.disableShiftMode(bottomNavigationView);
             bottomNavigationView.setOnNavigationItemSelectedListener(listener);
@@ -89,8 +90,6 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
         if (bottomNavigationView != null && !ChwApplication.getApplicationFlavor().hasJobAids())
             bottomNavigationView.getMenu().removeItem(org.smartregister.family.R.id.action_job_aids);
 
-        if (bottomNavigationView != null && !ChwApplication.getApplicationFlavor().hasReports())
-            bottomNavigationView.getMenu().removeItem(R.id.action_report);
     }
 
     public static double getWFHZScore(String gender, String height, String weight) {

@@ -1,0 +1,238 @@
+---
+name: step1_all_vca_nutrition_counselling
+description: nutrition_counselling
+priority: 1
+condition: "step1_all_vca_muac_measurement < 14.5"
+actions:
+  - "isRelevant = true"
+---
+name: step1__all_vca_heps
+description: heps
+priority: 1
+condition: "step1_all_vca_muac_measurement < 14.5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_all_vca_muac_other
+description: muac_other
+priority: 1
+condition: "step1_all_vca_muac_measurement < 14.5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_type_of_neglect
+description: type_of_neglect
+priority: 1
+condition: "step1_neglected.contains('yes') || step1_experiencing_neglected.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_type_of_neglect_physical
+description: type_of_neglect_physical
+priority: 1
+condition: "step1_signs_of_violence.contains('yes') || step1_physical_violence.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_type_of_neglect_sexual
+description: type_of_neglect_sexual
+priority: 1
+condition: "step1_sexually_abused.contains('yes') || step1_sexual_abuse.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_prevention_support
+description: prevention_support
+priority: 1
+condition: "step1_hiv_risk.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_challenges_barriers
+description: challenges_barriers
+priority: 1
+condition: "step1_child_missed >= 13"
+actions:
+  - "isRelevant = true"
+---
+name: step1_challenges_barriers
+description: challenges_barriers
+priority: 1
+condition: "step1_child_missed >= 13"
+actions:
+  - "isRelevant = true"
+---
+name: step1_eid_test
+description: eid_test
+priority: 1
+condition: "step1_age <= 2"
+actions:
+  - "isRelevant = true"
+---
+name: step1_age_appropriate
+description: age_appropriate
+priority: 1
+condition: "step1_age <= 2"
+actions:
+  - "isRelevant = true"
+---
+name: step1_breastfeeding
+description: breastfeeding
+priority: 1
+condition: "step1_age <= 2"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_infection
+description: hiv_infection
+priority: 1
+condition: "step1_age >= 10"
+actions:
+  - "isRelevant = true"
+---
+name: step1_against_hiv_risk
+description: against_hiv_risk
+priority: 1
+condition: "step1_age >= 10"
+actions:
+  - "isRelevant = true"
+---
+name: step1_substance_support
+description: substance_support
+priority: 1
+condition: "step1_age >= 10"
+actions:
+  - "isRelevant = true"
+---
+name: step1_under_five
+description: under_five
+priority: 1
+condition: "step1_age <= 5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_appropriate_vaccinations
+description: appropriate_vaccinations
+priority: 1
+condition: "step1_age <= 5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_muac_measure
+description: muac_measure
+priority: 1
+condition: "step1_age <= 5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_nutrition_counselling_a
+description: nutrition_counselling_a
+priority: 1
+condition: "step1_muac_measure > 0 && step1_muac_measure < 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_heps_a
+description: heps_a
+priority: 1
+condition: "step1_muac_measure > 0 && step1_muac_measure < 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_muac_other_a
+description: muac_other_a
+priority: 1
+condition: "step1_muac_measure > 0 && step1_muac_measure < 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_muac_measurement_b
+description: muac_measurement_b
+priority: 1
+condition: "step1_age > 5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_nutrition_counselling_b
+description: nutrition_counselling_b
+priority: 1
+condition:  "step1_muac_measurement_b >= 14"
+actions:
+  - "isRelevant = true"
+---
+name: step1_heps_b
+description: heps_b
+priority: 1
+condition:  "step1_muac_measurement_b >= 14"
+actions:
+  - "isRelevant = true"
+---
+name: step1_muac_other_b
+description: muac_other_b
+priority: 1
+condition:  "step1_muac_measurement_b >= 14"
+actions:
+  - "isRelevant = true"
+---
+name: step1_nutrition_status
+description: nutrition_status
+priority: 1
+condition: "step1_age > 5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_experiencing_neglected
+description: experiencing_neglected
+priority: 1
+condition: "step1_age >= 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_physical_violence
+description: physical_violence
+priority: 1
+condition: "step1_age >= 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sexual_abuse
+description: sexual_abuse
+priority: 1
+condition: "step1_age >= 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_child_above_12_a
+description: child_above_12_a
+priority: 1
+condition: "step1_age >= 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_physical_violence
+description: physical_violence
+priority: 1
+condition: "step1_age >= 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sexual_abuse
+description: sexual_abuse
+priority: 1
+condition: "step1_age >= 12"
+actions:
+  - "isRelevant = true"
+---
+name: step1_progression_child_household
+description: progression_child_household
+priority: 1
+condition: "(step1_current_calendar == 1 && step1_verified_by_school == 1 || step1_current_calendar == 2 && step1_verified_by_school == 2 || step1_current_calendar == 3 && step1_verified_by_school == 3 || step1_current_calendar == 4 && step1_verified_by_school == 4 || step1_current_calendar == 5 && step1_verified_by_school == 5 || step1_current_calendar == 6 && step1_verified_by_school == 6 || step1_current_calendar == 7 && step1_verified_by_school == 7 || step1_current_calendar == 8 && step1_verified_by_school == 8 || step1_current_calendar == 9 && step1_verified_by_school == 9 || step1_current_calendar == 10 && step1_verified_by_school == 10 || step1_current_calendar == 11 && step1_verified_by_school == 11 || step1_current_calendar == 12 && step1_verified_by_school == 12) "
+actions:
+  - "isRelevant = true"
+---
+name: step1_did_not_progress
+description: did_not_progress
+priority: 1
+condition: "(step1_current_calendar == 1 && step1_verified_by_school == 1 || step1_current_calendar == 2 && step1_verified_by_school == 2 || step1_current_calendar == 3 && step1_verified_by_school == 3 || step1_current_calendar == 4 && step1_verified_by_school == 4 || step1_current_calendar == 5 && step1_verified_by_school == 5 || step1_current_calendar == 6 && step1_verified_by_school == 6 || step1_current_calendar == 7 && step1_verified_by_school == 7 || step1_current_calendar == 8 && step1_verified_by_school == 8 || step1_current_calendar == 9 && step1_verified_by_school == 9 || step1_current_calendar == 10 && step1_verified_by_school == 10 || step1_current_calendar == 11 && step1_verified_by_school == 11 || step1_current_calendar == 12 && step1_verified_by_school == 12) "
+actions:
+  - "isRelevant = true"

@@ -2,6 +2,6 @@
 name: step1_age
 description: step1_age
 priority: 1
-condition: "step1_age == ''"
+condition: "step1_dob == true"
 actions:
-  - "calculation = helper.getDifferenceDays(step1_dob) / 365.25"
+  - "calculation = helper.formatDate(step1_dob,'y')"

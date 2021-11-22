@@ -7,7 +7,7 @@
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "baseEntityId"
+            "field": "attributes.base_entity_id"
           }
         },
         {
@@ -1249,17 +1249,17 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "relational_id",
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
-          }
-        },
-        {
-          "column_name": "case_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.case_status"
           }
         },
         {
@@ -2820,6 +2820,39 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_case_status",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
+          "column_name": "vca_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_id"
+          }
+        },
+        {
+          "column_name": "reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason"
+          }
+        },
+        {
+          "column_name": "other_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_reason"
           }
         }
       ]
