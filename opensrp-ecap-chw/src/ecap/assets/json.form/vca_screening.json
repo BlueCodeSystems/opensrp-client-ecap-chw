@@ -494,7 +494,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "edit_type": "number",
+        "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
           "step1:is_on_hiv_treatment": {
@@ -681,7 +681,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
-        "label": "Was the child born from a mother who is HIV-positive?",
+        "label": "Was the child born from a mother who is HIV Positive?",
         "options": [
           {
             "key": "yes",
@@ -2420,7 +2420,7 @@
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "ART Number",
-        "edit_type": "number",
+        "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Please enter VCA ART number "

@@ -13,10 +13,4 @@
         android:title="Case status"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/close_case"
-        android:title="Close Case Record"
-        app:showAsAction="never"/>
-
-
 </menu>
