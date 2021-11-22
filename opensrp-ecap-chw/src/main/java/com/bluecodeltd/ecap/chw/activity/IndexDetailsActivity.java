@@ -84,7 +84,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, visit, grad, grad17, hiv_ass;
+
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub, hiv_ass;
+
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -115,12 +117,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
-        visit = findViewById(R.id.visit);
+        household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
+        household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
         grad = findViewById(R.id.grad);
-        grad17 = findViewById(R.id.grad17);
+
+        grad_sub = findViewById(R.id.grad_sub);
         hiv_ass = findViewById(R.id.hiv_assessment);
-
-
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
@@ -558,13 +560,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.visit:
+            case R.id.household_visitation_caregiver:
 
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
@@ -572,7 +574,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
 
+            case R.id.household_visitation_for_vca:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case R.id.grad:
@@ -592,14 +609,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
-
-            case R.id.grad17:
+            case R.id.grad_sub:
 
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("graduation17");
+                    indexRegisterForm = formUtils.getFormJson("graduation_assessment_sub_for_repeating_fields");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
@@ -879,9 +895,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
             referral.setVisibility(View.GONE);
-            visit.setVisibility(View.GONE);
+            household_visitation_caregiver.setVisibility(View.GONE);
+            household_visitation_for_vca.setVisibility(View.GONE);
             grad.setVisibility(View.GONE);
-            grad17.setVisibility(View.GONE);
+            grad_sub.setVisibility(View.GONE);
             hiv_ass.setVisibility(View.GONE);
 
         } else {
@@ -892,10 +909,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
-            visit.setVisibility(View.VISIBLE);
+            household_visitation_caregiver.setVisibility(View.VISIBLE);
+            household_visitation_for_vca.setVisibility(View.VISIBLE);
             grad.setVisibility(View.VISIBLE);
-            grad17.setVisibility(View.VISIBLE);
+            grad_sub.setVisibility(View.VISIBLE);
             hiv_ass.setVisibility(View.VISIBLE);
+
         }
     }
     public String getCareGiverFullname(CommonPersonObjectClient client){
