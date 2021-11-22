@@ -94,10 +94,6 @@ public class Constants extends CoreConstants {
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
         String EC_SERVICE_REPORT = "ec_service_report";
         String EC_ASSESSMENT = "ec_assessment";
-        String EC_HOUSEHOLD_CAREGIVER = "ec_household_visitation_for_caregiver";
-        String EC_HOUSEHOLD_VCA = "ec_household_visitation_for_vca_0_20_years";
-        String EC_GRADUATION = "ec_graduation_assessment";
-        String EC_GRADUATION_SUB = "ec_graduation_assessment_sub_form";
 
     }
 }
