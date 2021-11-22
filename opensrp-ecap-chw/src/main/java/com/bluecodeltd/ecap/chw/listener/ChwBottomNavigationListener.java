@@ -92,7 +92,29 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
         } else if (item.getItemId() == R.id.action_register) {
             FamilyRegisterActivity.startFamilyRegisterForm(context);
             return true;
-        } else if (item.getItemId() == R.id.action_identifcation) {
+        }
+        else if (item.getItemId() == R.id.action_fsw) {
+
+            if ( context instanceof MotherIndexActivity) {
+
+                MotherIndexActivity motherIndexActivity = (MotherIndexActivity) context;
+
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("female_sex_worker");
+
+                    motherIndexActivity.startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+        }
+
+        else if (item.getItemId() == R.id.action_identifcation) {
             if ( context instanceof IndexRegisterActivity ) {
 
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
@@ -133,10 +155,6 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                     Timber.e(e);
                 }
             }
-        } else if (item.getItemId() == R.id.action_report) {
-            Intent intent = new Intent(context, ReportsActivity.class);
-            context.startActivity(intent);
-            return false;
         }
 
         return true;

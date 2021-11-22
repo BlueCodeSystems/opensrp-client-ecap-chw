@@ -137,6 +137,8 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
                     new ChwBottomNavigationListener(this));
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
+            bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
+            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Household");
 
         }
     }
