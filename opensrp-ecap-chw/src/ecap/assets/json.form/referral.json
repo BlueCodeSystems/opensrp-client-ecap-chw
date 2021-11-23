@@ -88,41 +88,6 @@
         "hint": "Health Facility"
       },
       {
-        "key": "implementing_partner",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "implementing_partner",
-        "type": "spinner",
-        "hint": "Implementing Partner ",
-        "values": [
-          "Project Concern Zambia (PCZ)",
-          "Young Women Christian Association (YWCA) ",
-          "Bwafwano Integrated Services Organization (BISO)",
-          "Circle of Hope (COH)",
-          "Zambia Episcopal Conference (ZEC)"
-        ]
-      },
-      {
-        "key": "caseworker_firstname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
-        "type": "edit_text",
-        "hint": "Case Worker First Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Worker Last Name",
-        "edit_type": "name"
-      },
-      {
         "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
