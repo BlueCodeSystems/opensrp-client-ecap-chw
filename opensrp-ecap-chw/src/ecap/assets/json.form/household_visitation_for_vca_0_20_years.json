@@ -61,7 +61,8 @@
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
-        "read_only": "false",
+        "value":"Kabwe",
+        "read_only": "true",
         "hint": "District"
       },
       {
@@ -72,50 +73,6 @@
         "type": "edit_text",
         "read_only": "false",
         "hint": "Village"
-      },
-      {
-        "key": "caseworker_firstname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
-        "type": "edit_text",
-        "hint": "Case Worker First Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "look_up": "false",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Work Last Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": "false",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-
-      {
-        "key": "caseworker_code",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_code",
-        "type": "edit_text",
-        "hint": "Case Worker Code",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please Case Worker Name"
-        }
       },
       {
         "key": "health_facility",
@@ -160,31 +117,16 @@
         }
       },
       {
-        "key": "caregiver_firstname",
+        "key": "adolescent_name_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_firstname",
         "type": "edit_text",
-        "hint": "Primary Caregiver First Name",
+        "hint": "Primary Caregiver Name",
         "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "First Name of Primary Caregiver cannot be empty"
-        }
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Work Last Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": "false",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
         }
       },
       {

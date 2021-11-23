@@ -56,43 +56,13 @@
     "next": "step2",
     "fields": [
       {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
-        "type": "edit_text",
-        "hint": "Province",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Province"
-        }
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "District"
-      },
-
-      {
-        "key": "adolescent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Village"
-      },
-      {
         "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "name",
         "type": "edit_text",
         "hint": "First name",
+        "read_only": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -104,6 +74,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "name",
+        "read_only": "true",
         "type": "edit_text",
         "hint": "VCA's Last Name",
         "edit_type": "name",
@@ -131,22 +102,13 @@
         }
       },
       {
-        "key": "caregiverFirstName",
+        "key": "adolescent_name_of_caregiver",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_firstname",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "Caregiver First Name"
-      },
-      {
-        "key": "caregiverLastName",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_lastname",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Caregiver Second Name"
+        "hint": "Caregiver Name"
       },
       {
         "key": "adolescent_phone",
