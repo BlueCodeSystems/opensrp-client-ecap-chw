@@ -63,7 +63,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "A. Index VCA Sub Population"
+        "text": "Index VCA Sub Population"
       },
       {
         "key": "unique_id",
@@ -289,64 +289,12 @@
         }
       },
       {
-        "key": "fname_community_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_community_case_worker",
-        "type": "edit_text",
-        "hint": "First Name of Community Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First Name of community case worker only take letters"
-        }
-      },
-      {
-        "key": "lname_community_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_community_case_worker",
-        "type": "edit_text",
-        "hint": "Last Name of Community Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last Name of community case worker only take letters"
-        }
-      },
-      {
-        "key": "fname_facility_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_facility_case_worker",
-        "type": "edit_text",
-        "hint": "First Name of Facility Based Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First Name of case worker only take letters"
-        }
-      },
-      {
-        "key": "lname_facility_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_facility_case_worker",
-        "type": "edit_text",
-        "hint": "Last Name of Facility Based Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last Name of case worker only take letters"
-        }
-      },
-      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "1",
         "type": "spacer",
-        "spacer_height": "15dp"
+        "spacer_height": "30dp"
       },
       {
         "key": "hd2",
@@ -356,22 +304,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "B. Household Information"
-      },
-      {
-        "key": "partners",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners",
-        "type": "spinner",
-        "hint": "Partners",
-        "values": [
-          "YWCA",
-          "BISO",
-          "ZEC",
-          "COH",
-          "PCZ"
-        ]
+        "text": "Household Information"
       },
       {
         "key": "screening_date",
@@ -399,10 +332,10 @@
         }
       },
       {
-        "key": "adolescent_name_of_caregiver",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_name_of_caregiver",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Name of caregiver",
         "look_up": "true",
