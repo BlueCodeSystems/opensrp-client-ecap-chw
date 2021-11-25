@@ -103,7 +103,6 @@
           "err": "Please enter a valid name"
         }
       },
-
       {
         "key": "caseworker_code",
         "openmrs_entity_parent": "",
@@ -233,7 +232,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "relationship_to_primary_caregiver can only contain letters"
+          "err": "relationship to primary caregiver can only contain letters"
         }
       },
       {
@@ -255,8 +254,6 @@
           "err": "Caregiver Date of Birth cannot be empty"
         }
       },
-
-
       {
         "key":"caregiver_id",
         "openmrs_entity_parent": "",
@@ -347,10 +344,14 @@
             "key": "unknown",
             "text": "Status Unknown",
             "value": false
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
+            "value": false
           }
         ]
       },
-
 
       {
         "key": "child_art",
@@ -384,7 +385,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "clinical_care",
         "type": "native_radio",
-        "label": "If child is HIV+ but not on ART, has s/he been referred to Health \nFacility for enrollment into clinical care",
+        "label": "If child is HIV+ but not on ART, has s/he been referred to Health facility for enrollment into clinical care",
         "options": [
           {
             "key": "yes",
@@ -647,8 +648,6 @@
           }
         }
       },
-
-
 
 
       {
@@ -2107,8 +2106,8 @@
             "value": false
           },
           {
-            "key": "none",
-            "text": "None",
+            "key": "n/a",
+            "text": "N/A",
             "value": false
           }
         ]

@@ -244,6 +244,37 @@
         "text": "Health Section"
       },
       {
+        "key": "hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_status",
+        "type": "native_radio",
+        "label": "HIV Status",
+        "read_only": false,
+        "options": [
+          {
+            "key": "positive",
+            "text": "HIV Positive",
+            "value": false
+          },
+          {
+            "key": "negative",
+            "text": "HIV Negative",
+            "value": false
+          },
+          {
+            "key": "unknown",
+            "text": "Status Unknown",
+            "value": false
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
+            "value": false
+          }
+        ]
+      },
+      {
         "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -265,6 +296,11 @@
           {
             "key": "unknown",
             "text": "Status Unknown",
+            "value": false
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
             "value": false
           }
         ]
@@ -927,7 +963,6 @@
         }
       },
 
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1298,8 +1333,6 @@
           }
         ]
       },
-
-
       {
         "key": "manager_firstname",
         "openmrs_entity_parent": "",
