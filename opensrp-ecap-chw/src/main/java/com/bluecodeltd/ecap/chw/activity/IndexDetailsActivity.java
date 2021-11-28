@@ -85,7 +85,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
 
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub, hiv_ass;
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
 
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
@@ -122,7 +122,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         grad = findViewById(R.id.grad);
 
         grad_sub = findViewById(R.id.grad_sub);
-        hiv_ass = findViewById(R.id.hiv_assessment);
+        hiv_assessment = findViewById(R.id.hiv_assessment);
+
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
@@ -593,7 +594,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
 
-
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
@@ -628,6 +628,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", txtAge.getText().toString());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -697,7 +699,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
-
 
             try {
 
@@ -987,7 +988,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             household_visitation_for_vca.setVisibility(View.GONE);
             grad.setVisibility(View.GONE);
             grad_sub.setVisibility(View.GONE);
-            hiv_ass.setVisibility(View.GONE);
+            hiv_assessment.setVisibility(View.GONE);
+            //hiv_assessment_Above15.setVisibility(View.GONE);
+            // hiv_assessment_Below15.setVisibility(View.GONE);
 
         } else {
 
@@ -1001,7 +1004,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             household_visitation_for_vca.setVisibility(View.VISIBLE);
             grad.setVisibility(View.VISIBLE);
             grad_sub.setVisibility(View.VISIBLE);
-            hiv_ass.setVisibility(View.VISIBLE);
+            hiv_assessment.setVisibility(View.VISIBLE);
+           // hiv_assessment_Above15.setVisibility(View.VISIBLE);
+            //hiv_assessment_Below15.setVisibility(View.VISIBLE);
 
         }
     }
