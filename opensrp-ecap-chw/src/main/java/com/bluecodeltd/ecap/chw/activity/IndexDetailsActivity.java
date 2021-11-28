@@ -94,6 +94,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
     private Toolbar toolbar;
+    String myAge;
 
 
     @Override
@@ -153,7 +154,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             String month = items1[1];
             String year = items1[2];
 
-            String myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
+             myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
 
             txtAge.setText(myAge);
 
@@ -673,10 +674,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
+                    if(Integer.valueOf(myAge) >15)
+                    {
+                        indexRegisterForm = formUtils.getFormJson("hiv_assessment");
+                    }
+                    else {
+                        indexRegisterForm = formUtils.getFormJson("risk_assessment_under_15");
+                    }
 
-                    indexRegisterForm = formUtils.getFormJson("hiv_assessment");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                   CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {

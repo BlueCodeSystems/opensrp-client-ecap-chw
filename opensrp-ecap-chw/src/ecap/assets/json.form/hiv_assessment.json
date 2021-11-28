@@ -62,7 +62,6 @@
         "openmrs_entity_id": "name",
         "type": "edit_text",
         "hint": "First name",
-        "read_only": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -74,7 +73,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "name",
-        "read_only": "true",
         "type": "edit_text",
         "hint": "VCA's Last Name",
         "edit_type": "name",
@@ -102,15 +100,6 @@
         }
       },
       {
-        "key": "adolescent_name_of_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_firstname",
-        "read_only": "false",
-        "type": "edit_text",
-        "hint": "Caregiver Name"
-      },
-      {
         "key": "adolescent_phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -121,29 +110,6 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "dob",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdate",
-        "type": "date_picker",
-        "hint": "VCA's Date of birth",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today"
-      },
-      {
-        "key": "age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
-        "type": "edit_text",
-        "v_numeric": {
-          "value": "true",
-          "err": "Age can only contain numbers"
         }
       },
       {
@@ -187,7 +153,6 @@
   },
   "step3": {
     "title": "CURRENT HIV STATUS ",
-    "next": "step4",
     "fields": [
       {
         "key": "child_recent_hiv_test_results",
@@ -438,7 +403,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "exposed_to_hiv_risk",
         "type": "check_box",
-        "label": "Has the child been exposed to anyHIV risk after the last test? (tick all applicable)",
+        "label": "Has the child been exposed to any HIV risk after the last test? (tick all applicable)",
         "options": [
           {
             "key": "breast_feeding",
@@ -519,7 +484,7 @@
           },
           {
             "key": "hiv_positive",
-            "text": "hiv_positive"
+            "text": "hiv positive"
           }
         ]
       },
@@ -534,19 +499,6 @@
         "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today"
-      },
-      {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "approved_by",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
-        }
       },
       {
         "key": "date",
