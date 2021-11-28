@@ -9,7 +9,7 @@
             "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
-              "ec_household"
+              "ec_family"
             ]
           },
           {
@@ -303,8 +303,7 @@
             "field_value": "Sub Population",
             "creates_case": [
               "ec_sub_population",
-              "ec_client_index",
-              "ec_case_status"
+              "ec_client_index"
             ]
           },
           {
@@ -321,14 +320,6 @@
             "field_value": "Household Screening",
             "creates_case": [
               "ec_household",
-              "ec_client_index",
-              "ec_sub_population"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Family Member",
-            "creates_case": [
               "ec_client_index",
               "ec_sub_population"
             ]
@@ -363,10 +354,45 @@
           },
           {
             "field": "eventType",
-            "field_value": "Case Record Status",
+            "field_value": "Household Visitation For Caregiver",
             "creates_case": [
-              "ec_case_status",
-              "ec_client_index"
+              "ec_household_visitation_for_caregiver"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Visitation For VCA 0-20 years",
+            "creates_case": [
+              "ec_household_visitation_for_vca_0_20_years"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Graduation Assessment Form",
+            "creates_case": [
+              "ec_graduation_assessment"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Graduation Assessment Sub Form",
+            "creates_case": [
+              "ec_graduation_assessment_sub_form"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "HIV Risk Assessment Above 15",
+            "creates_case": [
+              "ec_hiv_assessment_above_15"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "HIV Risk Assessment Below 15",
+            "creates_case": [
+              "ec_hiv_assessment_below_15"
+
             ]
           }
         ]

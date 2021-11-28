@@ -55,239 +55,7 @@
   "step1": {
     "title": "Household Visitation For VCA 0-20 years",
     "fields": [
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "stateProvince",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "District"
-      },
-      {
-        "key": "adolescent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Village"
-      },
-      {
-        "key": "caseworker_firstname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
-        "type": "edit_text",
-        "hint": "Case Worker First Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "look_up": "false",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Work Last Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": "false",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "caseworker_code",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_code",
-        "type": "edit_text",
-        "hint": "Case Worker Code",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please Case Worker Name"
-        }
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Health Facility to which HH is affiliated"
-      },
-      {
-        "key": "date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date",
-        "read_only": false,
-        "type": "date_picker",
-        "hint": "Date of Assessment (HH Visit)",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Date of Assessment (HH Visit) cannot be empty"
-        }
-      },
-      {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "read_only": false,
-        "hint": "VCA Household ID",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter Household ID"
-        }
-      },
-      {
-        "key": "caregiver_firstname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_firstname",
-        "type": "edit_text",
-        "hint": "Primary Caregiver First Name",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "First Name of Primary Caregiver cannot be empty"
-        }
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Work Last Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": "false",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "base_entity_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "base_entity_id",
-        "type": "edit_text",
-        "hint": "VCA ID",
-        "edit_type": "name",
-        "read_only": true,
-        "v_required": {
-          "value": false,
-          "err": "Please enter VCA ID"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "VCA ID"
-        }
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "read_only": "false",
-        "type": "edit_text",
-        "hint": "VCA First Name"
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "read_only": "false",
-        "type": "edit_text",
-        "hint": "VCA Last Name"
-      },
-      {
-        "key": "relation",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relation",
-        "type": "edit_text",
-        "hint": "Relationship to Primary Caregiver",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "relationship to primary caregiver can only contain letters"
-        }
-      },
-      {
-        "key": "number_years",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "number_years",
-        "read_only": "false",
-        "type": "date_picker",
-        "hint": "Duration Child Has Lived with Primary Caregiver",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Caregiver Date of Birth cannot be empty"
-        }
-      },
-      {
-        "key":"caregiver_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_id",
-        "read_only": "",
-        "type": "edit_text",
-        "hint": "Primary Caregiver ID",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Primary Caregiver ID cannot be empty"
-        }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "label": "Caregiver gender",
-        "options": [
-          {
-            "key": "female",
-            "text": "Female",
-            "value": false
-          },
-          {
-            "key": "male",
-            "text": "Male",
-            "value": false
-          }
-        ]
-      },
+
       {
         "key": "age",
         "openmrs_entity_parent": "",
@@ -1667,7 +1435,7 @@
         "type": "edit_text",
         "hint": " list the type of neglect/exploitation",
         "edit_type": "name",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1798,7 +1566,7 @@
         "type": "edit_text",
         "hint": " list the type of neglect/exploitation",
         "edit_type": "name",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1954,7 +1722,7 @@
         "type": "edit_text",
         "hint": "list the signs observed or type of violence reported",
         "edit_type": "name",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2110,7 +1878,14 @@
             "text": "N/A",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "not_in_school",
@@ -2240,10 +2015,7 @@
         "edit_type": "number",
         "read_only": "true",
         "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid number of days"
-        },
+
         "relevance": {
           "step1:not_in_school": {
             "type": "string",
@@ -2261,11 +2033,7 @@
         "hint": "Days missed verified by the school",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid number of days"
-        }
+        "look_up": "true"
       },
 
       {
@@ -2274,7 +2042,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Progression to the next Grade "
+        "text": "Progression to the next Grade"
       },
       {
         "key": "verified_by_school",
@@ -2382,7 +2150,7 @@
         "hint": "Case Work Name ",
         "edit_type": "name",
         "look_up": "true",
-        "read_only": "true",
+        "read_only": false,
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
@@ -2434,7 +2202,7 @@
         "hint": "Verified by Case Manager Name ",
         "edit_type": "name",
         "look_up": "true",
-        "read_only": "true",
+        "read_only": false,
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
@@ -2482,7 +2250,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_administration_name",
         "type": "edit_text",
-        "hint": "Verified By School Administration Name ",
+        "hint": "Date Verified By School Administration Name ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",
