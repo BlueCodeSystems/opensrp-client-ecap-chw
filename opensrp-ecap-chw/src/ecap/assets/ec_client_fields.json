@@ -18,41 +18,6 @@
           }
         },
         {
-          "column_name": "province",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.countyDistrict"
-          }
-        },
-        {
-          "column_name": "ward",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.subTown"
-          }
-        },
-        {
-          "column_name": "adolescent_village",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.adolescent_village"
-          }
-        },
-        {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
-          }
-        },
-        {
           "column_name": "partners",
           "type": "Client",
           "json_mapping": {
@@ -86,27 +51,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.adolescent_name_of_caregiver"
-          }
-        },
-        {
-          "column_name": "physical_address",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.addressFields.physical_address"
-          }
-        },
-        {
-          "column_name": "caregiver_nrc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caregiver_nrc"
-          }
-        },
-        {
-          "column_name": "adolescent_phone",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.adolescent_phone"
           }
         },
         {
@@ -338,13 +282,6 @@
           }
         },
         {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
-          }
-        },
-        {
           "column_name": "mother_surname",
           "type": "Client",
           "json_mapping": {
@@ -370,13 +307,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.art_number"
-          }
-        },
-        {
-          "column_name": "village_compound",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.village_compound"
           }
         },
         {
@@ -656,20 +586,6 @@
           }
         },
         {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.district"
-          }
-        },
-        {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
-          }
-        },
-        {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
@@ -681,13 +597,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attribute.caregiverId"
-          }
-        },
-        {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
           }
         },
         {
@@ -974,20 +883,6 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "nutrition_assessment"
-          }
-        },
-        {
-          "column_name": "case_worker_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.case_worker_name"
-          }
-        },
-        {
-          "column_name": "case_worker_nrc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.case_worker_nrc"
           }
         },
         {

@@ -52,42 +52,6 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Province"
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "District"
-      },
-      {
-        "key": "village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Village"
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Health Facility"
-      },
-      {
         "key": "implementing_partner",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -110,16 +74,6 @@
         "openmrs_entity_id": "caseworker_firstname",
         "type": "edit_text",
         "hint": "Case Worker First Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Worker Last Name",
         "edit_type": "name"
       },
       {
