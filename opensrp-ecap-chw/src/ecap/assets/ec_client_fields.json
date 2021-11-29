@@ -4680,6 +4680,215 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_hiv_assessment_above_15",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.province"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.district"
+          }
+        },
+        {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "adolescent_phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_phone"
+          }
+        },
+        {
+          "column_name": "dob",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dob"
+          }
+        },
+        {
+          "column_name": "age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.age"
+          }
+        },
+        {
+          "column_name": "date_of_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_assessment"
+          }
+        },
+        {
+          "column_name": "child_recent_hiv_test_results",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_recent_hiv_test_results"
+          }
+        },
+        {
+          "column_name": "child_on_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_on_art"
+          }
+        },
+        {
+          "column_name": "child_start_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_start_date"
+          }
+        },
+        {
+          "column_name": "art_health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_health_facility"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "child_biological_mother_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_biological_mother_hiv"
+          }
+        },
+        {
+          "column_name": "biological_parents_deceased",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.biological_parents_deceased"
+          }
+        },
+        {
+          "column_name": "child_have_any_symptoms",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_have_any_symptoms"
+          }
+        },
+        {
+          "column_name": "child_been_sick_more_than_other_children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_been_sick_more_than_other_children"
+          }
+        },
+        {
+          "column_name": "had_frequent_rashes",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.had_frequent_rashes"
+          }
+        },
+        {
+          "column_name": "child_had_pus_coming_from_ear",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_had_pus_coming_from_ear"
+          }
+        },
+        {
+          "column_name": "exposed_to_hiv_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.exposed_to_hiv_risk"
+          }
+        },
+        {
+          "column_name": "hiv_test_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test_result"
+          }
+        },
+        {
+          "column_name": "date_of_hiv_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_hiv_test"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "checked_case_worker_supervisor",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.checked_case_worker_supervisor"
+          }
+        }
+
+      ]
     }
   ]
 }
