@@ -19,13 +19,13 @@ jobs:
 
       - name:  Add github user
         env:
-          GIT_USR: ${{ secrets.GIT_USR }}
-        run: echo gpr.usr=\"$GIT_USR\" > ./local.properties
+          GIT_USER: ${{ secrets.GIT_USER }}
+        run: echo gpr.usr=\"$GIT_USER\" > ./local.properties
 
       - name: Add github access token
         env:
-          GIT_TKN: ${{ secrets.GIT_TKN }}
-        run: echo gpr.key=\$GIT_TKN\ > local.properties
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: echo gpr.key=\$ACCESS_TOKEN\ > local.properties
 
       - name:  Add oauth id
         run: echo "oauth.client.id=${{secrets.OAUTH_CLIENT_ID}}\n">> local.properties
