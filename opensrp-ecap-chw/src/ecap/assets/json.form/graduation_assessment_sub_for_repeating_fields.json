@@ -57,19 +57,19 @@
     "title":"Graduation Assessment Sub",
     "fields": [
       {
-        "key": "name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "name",
+        "openmrs_entity_id": "first_name",
         "read_only": "false",
         "type": "edit_text",
         "hint": "VCA First Name"
       },
       {
-        "key": "surname",
+        "key": "last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "surname",
+        "openmrs_entity_id": "last_name",
         "read_only": "false",
         "type": "edit_text",
         "hint": "VCA Last Name"
@@ -94,10 +94,10 @@
         }
       },
       {
-        "key": "child_gender",
+        "key": "gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person attribute",
-        "openmrs_entity_id": "child_gender",
+        "openmrs_entity_id": "gender",
         "read_only": "false",
         "type": "edit_text",
         "hint": "Gender"
@@ -111,10 +111,6 @@
         "hint": "VCA ID",
         "edit_type": "name",
         "read_only": false,
-        "v_required": {
-          "value": false,
-          "err": "Please enter VCA ID"
-        }
       },
       {
         "key": "child_art",
@@ -141,8 +137,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "read_only": "false",
-        "hint": "Health Facility"
+        "read_only": "true",
+        "hint": "Happy Loving People"
       },
       {
         "key": "virally_suppressed",
