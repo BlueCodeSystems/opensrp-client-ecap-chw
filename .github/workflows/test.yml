@@ -18,16 +18,16 @@ jobs:
           java-version: 1.8
 
       - name:  Add github user
-        run: echo "gpr.usr=${{ secrets.GIT_USER }}\n">> local.properties
+        run: echo "gpr.usr=${{secrets.GIT_USR}}\n">> local.properties
 
       - name: Add github access token
-        run: echo "gpr.key=${{ secrets.ACCESS_TOKEN }}\n">> local.properties
+        run: echo "gpr.key=${{secrets.GIT_TKN}}\n">> local.properties
 
       - name:  Add oauth id
-        run: echo "oauth.client.id=${{ secrets.OAUTH_CLIENT_ID }}\n">> local.properties
+        run: echo "oauth.client.id=${{secrets.OAUTH_CLIENT_ID}}\n">> local.properties
 
       - name: Add oauth secret
-        run: echo "oauth.client.secret=${{ secrets.OAUTH_CLIENT_SECRET }}">> local.properties
+        run: echo "oauth.client.secret=${{secrets.OAUTH_CLIENT_SECRET}}">> local.properties
       - name: Build final apk
         run: ./gradlew assembleDebug --stacktrace
 
