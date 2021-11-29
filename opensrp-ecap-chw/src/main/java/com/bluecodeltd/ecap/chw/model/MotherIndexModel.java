@@ -2,7 +2,6 @@ package com.bluecodeltd.ecap.chw.model;
 
 import static org.smartregister.client.utils.constants.JsonFormConstants.TYPE;
 import static org.smartregister.util.JsonFormUtils.KEY;
-import static org.smartregister.util.JsonFormUtils.REPEATING_GROUP;
 import static org.smartregister.util.JsonFormUtils.VALUE;
 
 import androidx.annotation.NonNull;
@@ -65,8 +64,7 @@ public class MotherIndexModel implements MotherIndexContract.Model {
             for (int i = 0; i < fields.length(); i++) {
 
                 JSONObject field = fields.getJSONObject(i);
-                if (field.has(JsonFormConstants.TYPE) &&
-                        !REPEATING_GROUP.equalsIgnoreCase(field.getString(JsonFormConstants.TYPE))) {
+                if (field.has(JsonFormConstants.TYPE)) {
                     motherFields.put(field);
                 }
 
@@ -132,7 +130,7 @@ public class MotherIndexModel implements MotherIndexContract.Model {
                 e.printStackTrace();
             }
             try {
-                if (field.has(TYPE) && REPEATING_GROUP.equalsIgnoreCase(field.getString(TYPE))) {
+                if (field.has(TYPE)) {
                     JSONArray repeatingGroupValues = field.getJSONArray(VALUE);
                     for (int item = 0; item < repeatingGroupValues.length(); item++) {
                         keys.add(repeatingGroupValues.getJSONObject(item).getString(KEY));

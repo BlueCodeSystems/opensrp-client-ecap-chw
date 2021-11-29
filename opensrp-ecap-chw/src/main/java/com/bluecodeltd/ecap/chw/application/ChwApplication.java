@@ -351,9 +351,9 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     @NotNull
     public Map<String, Class> getRegisteredActivities() {
         Map<String, Class> registeredActivities = new HashMap<>();
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HOUSEHOLD_REGISTER_ACTIVITY, HouseholdIndexActivity.class);
+       // registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HOUSEHOLD_REGISTER_ACTIVITY, HouseholdIndexActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.FAMILY_REGISTER_ACTIVITY, FamilyRegisterActivity.class);
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MOTHER_REGISTER_ACTIVITY, MotherIndexActivity.class);
+       // registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MOTHER_REGISTER_ACTIVITY, MotherIndexActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.CASE_PLAN_REGISTER_ACTIVITY, CasePlanRegisterActivity.class );
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.INDEX_REGISTER_ACTIVITY, IndexRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.BENEFICIARIES_REGISTER_ACTIVITY, BeneficiariesRegisterActivity.class);
