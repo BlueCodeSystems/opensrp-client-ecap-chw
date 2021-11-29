@@ -55,24 +55,227 @@
   "step1": {
     "title": "Household Visitation For VCA 0-20 years",
     "fields": [
-
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "stateProvince",
+        "type": "edit_text",
+        "value": "Kabwe",
+        "read_only": "true",
+        "hint": "District"
+      },
+      {
+        "key": "adolescent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_village",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Village"
+      },
+      {
+        "key": "caseworker_firstname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_firstname",
+        "type": "edit_text",
+        "hint": "Case Worker First Name",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caseworker_lastname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
+        "type": "edit_text",
+        "hint": "Case Work Last Name ",
+        "edit_type": "name",
+        "look_up": "false",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "caseworker_code",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_code",
+        "type": "edit_text",
+        "read_only": false,
+        "hint": "VCA Household ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Household ID"
+        }
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Health Facility to which HH is affiliated"
+      },
+      {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date",
+        "read_only": false,
+        "type": "date_picker",
+        "hint": "Date of Assessment (HH Visit)",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": false,
+          "err": "Date of Assessment (HH Visit) cannot be empty"
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": false,
+        "hint": "VCA Household ID",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Household ID"
+        }
+      },
+      {
+        "key": "adolescent_name_of_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_firstname",
+        "type": "edit_text",
+        "hint": "Primary Caregiver Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_required": {
+          "value": false,
+          "err": "First Name of Primary Caregiver cannot be empty"
+        }
+      },
+      {
+        "key": "base_entity_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "base_entity_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": true,
+        "v_required": {
+          "value": false,
+          "err": "Please enter VCA ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "VCA ID"
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "VCA First Name"
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "VCA Last Name"
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relation",
+        "type": "edit_text",
+        "hint": "Relationship to Primary Caregiver",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Relationship to primary caregiver can only contain letters"
+        }
+      },
+      {
+        "key": "number_years",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_years",
+        "read_only": "false",
+        "type": "edit_text",
+        "hint": "Duration Child Has Lived \n with Primary Caregiver",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter number of years"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Child gender",
+        "read_only": "true",
+        "options": [
+          {
+            "key": "female",
+            "text": "Female",
+            "value": false
+          },
+          {
+            "key": "male",
+            "text": "Male",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "dob",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "read_only": "true",
+        "type": "hidden"
+      },
       {
         "key": "age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
         "type": "edit_text",
-        "read_only": false,
-        "hint": "VCA Age",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_calculation.yml"
-            }
-          }
-        }
+        "read_only": true,
+        "hint": "VCA Age"
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -120,7 +323,6 @@
           }
         ]
       },
-
       {
         "key": "child_art",
         "openmrs_entity_parent": "",
@@ -173,7 +375,6 @@
           }
         }
       },
-
       {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
@@ -271,7 +472,6 @@
           }
         }
       },
-
       {
         "key": "six_months",
         "openmrs_entity_parent": "",
@@ -299,7 +499,6 @@
           }
         }
       },
-
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -317,7 +516,6 @@
           }
         }
       },
-
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
@@ -349,7 +547,6 @@
           }
         }
       },
-
       {
         "key": "mmd",
         "openmrs_entity_parent": "",
@@ -376,8 +573,6 @@
           }
         }
       },
-
-
       {
         "key": "mmd_months",
         "openmrs_entity_parent": "",
@@ -416,8 +611,6 @@
           }
         }
       },
-
-
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -461,7 +654,6 @@
           }
         }
       },
-
       {
         "key": "referred_for_testing",
         "openmrs_entity_parent": "",
@@ -488,7 +680,6 @@
           }
         }
       },
-
       {
         "key": "hiv_risk",
         "openmrs_entity_parent": "",
@@ -523,7 +714,6 @@
           }
         }
       },
-
       {
         "key": "hiv_muac",
         "openmrs_entity_parent": "",
@@ -550,8 +740,6 @@
           }
         }
       },
-
-
       {
         "key": "hiv_assessment",
         "openmrs_entity_parent": "",
@@ -578,7 +766,6 @@
           }
         }
       },
-
       {
         "key": "toaster_b",
         "openmrs_entity_parent": "",
@@ -596,8 +783,6 @@
           }
         }
       },
-
-
       {
         "key": "referred_facility",
         "openmrs_entity_parent": "",
@@ -624,7 +809,6 @@
           }
         }
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -633,7 +817,6 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -642,7 +825,6 @@
         "type": "label",
         "text": "HIV Exposed Infant (VCA aged 24 months and below)  Section"
       },
-
       {
         "key": "eid_test",
         "openmrs_entity_parent": "",
@@ -668,7 +850,6 @@
           }
         }
       },
-
       {
         "key": "age_appropriate",
         "openmrs_entity_parent": "",
@@ -809,7 +990,6 @@
         "type": "label",
         "text": "Knowledge of HIV/AIDS (10-17 Years Old) Section"
       },
-
       {
         "key": "hiv_infection",
         "openmrs_entity_parent": "",
@@ -915,7 +1095,6 @@
           }
         }
       },
-
       {
         "key": "infection_risk",
         "openmrs_entity_parent": "",
@@ -942,8 +1121,6 @@
           }
         }
       },
-
-
       {
         "key": "referred_health_facility",
         "openmrs_entity_parent": "",
@@ -970,10 +1147,6 @@
           }
         }
       },
-
-
-
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1103,7 +1276,6 @@
           }
         }
       },
-
       {
         "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
@@ -1131,7 +1303,6 @@
           }
         }
       },
-
       {
         "key": "heps_a",
         "openmrs_entity_parent": "",
@@ -1159,7 +1330,6 @@
           }
         }
       },
-
       {
         "key": "muac_other_a",
         "openmrs_entity_parent": "",
@@ -1256,7 +1426,6 @@
           }
         }
       },
-
       {
         "key": "muac_other_b",
         "openmrs_entity_parent": "",
@@ -1274,7 +1443,6 @@
           }
         }
       },
-
       {
         "key": "nutrition_status",
         "openmrs_entity_parent": "",
@@ -1346,7 +1514,6 @@
           }
         ]
       },
-
       {
         "key": "neglected_child_exploitation",
         "openmrs_entity_parent": "",
@@ -1373,7 +1540,6 @@
           }
         }
       },
-
       {
         "key": "neglected_child_relationships",
         "openmrs_entity_parent": "",
@@ -1457,8 +1623,6 @@
         "type": "label",
         "text": "Physical Violence Section"
       },
-
-
       {
         "key": "signs_of_violence",
         "openmrs_entity_parent": "",
@@ -1634,7 +1798,6 @@
           }
         }
       },
-
       {
         "key": "vsu_legal_support",
         "openmrs_entity_parent": "",
@@ -1736,7 +1899,6 @@
           }
         }
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -1745,7 +1907,6 @@
         "type": "label",
         "text": "Psychosocial Protection"
       },
-
       {
         "key": "child_psychosocial",
         "openmrs_entity_parent": "",
@@ -1837,7 +1998,6 @@
           }
         }
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -1854,7 +2014,6 @@
         "type": "label",
         "text": "School Attendance Section"
       },
-
       {
         "key": "currently_in_school",
         "openmrs_entity_parent": "",
@@ -2004,7 +2163,6 @@
           }
         }
       },
-
       {
         "key": "ovc_caregiver",
         "openmrs_entity_parent": "",
@@ -2015,7 +2173,6 @@
         "edit_type": "number",
         "read_only": "true",
         "look_up": "true",
-
         "relevance": {
           "step1:not_in_school": {
             "type": "string",
@@ -2023,7 +2180,6 @@
           }
         }
       },
-
       {
         "key": "verified_by_school_days",
         "openmrs_entity_parent": "",
@@ -2035,7 +2191,6 @@
         "read_only": "false",
         "look_up": "true"
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -2190,9 +2345,6 @@
           }
         ]
       },
-
-
-
       {
         "key": "manager_name",
         "openmrs_entity_parent": "",
@@ -2242,8 +2394,6 @@
           }
         ]
       },
-
-
       {
         "key": "school_administration_name",
         "openmrs_entity_parent": "",
@@ -2293,7 +2443,6 @@
           }
         ]
       }
-
     ]
   }
 }

@@ -2827,9 +2827,6 @@
         }
       ]
     },
-
-
-
     {
       "name": "ec_household_visitation_for_caregiver",
       "columns": [
@@ -2847,12 +2844,103 @@
             "field": "relationships.family"
           }
         },
-
         {
-          "column_name": "caregiver_hiv_status",
+          "column_name": "district",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_hiv_status"
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
+          }
+        },
+        {
+          "column_name": "caseworker_code",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_code"
+          }
+        },
+        {
+          "column_name": "affiliated_health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affiliated_health_facility"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id"
+          }
+        },
+        {
+          "column_name": "primary_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.primary_firstname"
+          }
+        },
+        {
+          "column_name": "primary_surname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.primary_surname"
+          }
+        },
+        {
+          "column_name": "dob",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dob"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "gender"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
           }
         },
         {
@@ -3222,8 +3310,9 @@
       ]
     },
 
+
     {
-      "name": "ec_household_visitation_for_vca_0_20_years",
+      "name": "ec_household_visitation_form_0_20",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -3239,7 +3328,113 @@
             "field": "relationships.family"
           }
         },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "addresses.stateProvince"
+          }
+        },
+        {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
+          "column_name": "caseworker_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
+          }
+        },
+        {
+          "column_name": "caseworker_code",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_code"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.household_id"
+          }
+        },
+        {
+          "column_name": "adolescent_name_of_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_name_of_caregiver"
+          }
+        },
 
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.base_entity_id"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relation"
+          }
+        },
+        {
+          "column_name": "number_years",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_years"
+          }
+        },
+
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
         {
           "column_name": "age",
           "type": "Client",
@@ -3255,10 +3450,10 @@
           }
         },
         {
-          "column_name": "caregiver_art",
+          "column_name": "child_art",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_art"
+            "field": "attributes.child_art"
           }
         },
         {
@@ -3290,27 +3485,6 @@
           }
         },
         {
-          "column_name": "mmd",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mmd"
-          }
-        },
-        {
-          "column_name": "mmd_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mmd_months"
-          }
-        },
-        {
-          "column_name": "drug_regimen",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.drug_regimen"
-          }
-        },
-        {
           "column_name": "date_art",
           "type": "Client",
           "json_mapping": {
@@ -3336,6 +3510,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.vl_last_result"
+          }
+        },
+        {
+          "column_name": "mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mmd"
+          }
+        },
+        {
+          "column_name": "mmd_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mmd_months"
+          }
+        },
+        {
+          "column_name": "drug_regimen",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.drug_regimen"
           }
         },
         {
@@ -3994,10 +4189,10 @@
           }
         },
         {
-          "column_name": "caregiver_name",
+          "column_name": "adolescent_name_of_caregiver",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_name"
+            "field": "attributes.adolescent_name_of_caregiver"
           }
         },
         {
