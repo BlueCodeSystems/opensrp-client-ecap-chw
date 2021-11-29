@@ -6,7 +6,6 @@ on:
 
 jobs:
   package:
-    needs: [Upload-apk-to-App-Tester]
     name: Generate APK
     runs-on: ubuntu-latest
     steps:
