@@ -55,7 +55,6 @@
   "step1": {
     "title": "Household Visitation For VCA 0-20 years",
     "fields": [
-
       {
         "key": "age",
         "openmrs_entity_parent": "",
