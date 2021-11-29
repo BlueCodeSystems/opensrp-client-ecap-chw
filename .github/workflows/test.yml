@@ -20,7 +20,7 @@ jobs:
       - name:  Add github user
         env:
           ACCESS_TOKEN: ${{ secrets.GIT_USER }}
-        run: echo gpr.usr=\$GIT_USER\ > ./local.properties
+        run: echo gpr.usr=\"$GIT_USER\" > ./local.properties
 
       - name: Add github access token
         env:
