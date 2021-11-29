@@ -19,8 +19,13 @@ jobs:
 
       - name:  Add github user
         env:
-          ECAP_USER: ${{ secrets.ECAP_USER }}
-        run: echo gpr.usr=\"$ECAP_USER\" > ./local.properties
+          GIT_USR: ${{ secrets.GIT_USR }}
+        run: echo gpr.usr=\"$GIT_USR\" > ./local.properties
+
+      - name: Add github access token
+        env:
+          GIT_TKN: ${{ secrets.GIT_TKN }}
+        run: echo gpr.key=\$GIT_TKN\ > local.properties
 
       - name:  Add oauth id
         run: echo "oauth.client.id=${{secrets.OAUTH_CLIENT_ID}}\n">> local.properties
