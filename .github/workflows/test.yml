@@ -20,7 +20,7 @@ jobs:
       - name:  Add github user
         env:
           ECAP_USER: ${{ secrets.ECAP_USER }}
-        run: echo gpr.usr=\"$ECAP_USER\" > ./local.properties
+        run: echo ${#ECAP_USER}
 
       - name: Add github access token
         env:
