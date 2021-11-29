@@ -231,13 +231,18 @@
             "value": false
           },
           {
+            "key": "negative",
+            "text": "Yes, status NEGATIVE",
+            "value": false
+          },
+          {
             "key": "no",
             "text": "No, status not known",
             "value": false
           },
           {
-            "key": "negative",
-            "text": "Yes, status NEGATIVE",
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
             "value": false
           }
         ]

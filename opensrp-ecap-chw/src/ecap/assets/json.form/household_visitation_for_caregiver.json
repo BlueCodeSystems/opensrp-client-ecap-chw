@@ -56,136 +56,6 @@
     "title": "Household Visitation For Caregiver",
     "fields": [
       {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "stateProvince",
-        "type": "edit_text",
-        "value":"Kabwe",
-        "read_only": "true",
-        "hint": "District"
-      },
-      {
-        "key": "adolescent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Village"
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Health Facility to which HH is affiliated"
-      },
-      {
-        "key": "date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date",
-        "read_only": false,
-        "type": "date_picker",
-        "hint": "Date of Assessment (HH Visit)",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Date of Assessment (HH Visit) cannot be empty"
-        }
-      },
-      {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "read_only": false,
-        "hint": "VCA Household ID",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter Household ID"
-        }
-      },
-        "key": "adolescent_name_of_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_firstname",
-        "type": "edit_text",
-        "hint": "Primary Caregiver Name",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "First Name of Primary Caregiver cannot be empty"
-        }
-      },
-      {
-        "key":"caregiver_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_id",
-        "read_only": "",
-        "type": "edit_text",
-        "hint": "Primary Caregiver ID",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Primary Caregiver ID cannot be empty"
-        }
-      },
-      {
-        "key": "caregiver_birth_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_birth_date",
-        "type": "date_picker",
-        "hint": "Caregiver Date of birth",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Please enter Birth Date"
-        }
-      },
-      {
-        "key": "caregiver_sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_sex",
-        "type": "spinner",
-        "hint": "Caregiver Gender",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please select gender"
-        }
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "1",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
         "key": "health_label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -193,6 +63,7 @@
         "type": "label",
         "text": "Health Section"
       },
+
       {
         "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
@@ -215,6 +86,11 @@
           {
             "key": "unknown",
             "text": "Status Unknown",
+            "value": false
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
             "value": false
           }
         ]
@@ -877,7 +753,6 @@
         }
       },
 
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1183,7 +1058,6 @@
           }
         }
       },
-
       {
         "key": "caseworker_date_signed",
         "openmrs_entity_parent": "",
@@ -1217,6 +1091,36 @@
             "value": false
           }
         ]
+      },
+      {
+        "key": "manager_firstname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_firstname",
+        "type": "edit_text",
+        "hint": "Verified by Case Manager First Name",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "manager_lastname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
+        "type": "edit_text",
+        "hint": "Verified by Case Manager Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
       },
       {
         "key": "manager_date_signed",
