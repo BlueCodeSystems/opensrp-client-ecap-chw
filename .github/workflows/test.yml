@@ -25,7 +25,7 @@ jobs:
       - name: Add github access token
         env:
           GIT_TKN: ${{ secrets.ACCESS_TOKEN }}
-        run: echo gpr.key=\ "$ACCESS_TOKEN \" > local.properties
+        run: echo gpr.key=\"$ACCESS_TOKEN\" > local.properties
 
       - name:  Add oauth id
         run: echo "oauth.client.id=${{secrets.OAUTH_CLIENT_ID}}\n">> local.properties
