@@ -1,0 +1,40 @@
+name: CI
+on:
+  push:
+    branches: [ test ]
+  workflow_dispatch:
+
+jobs:
+  package:
+    needs: [Upload-apk-to-App-Tester]
+    name: Generate APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build debug APK
+      - name:  Add github user
+        run: echo "gpr.usr=${{ secrets.GIT_USER }}\n">> local.properties
+
+      - name: Add github access token
+        run: echo "gpr.key=${{ secrets.ACCESS_TOKEN }}\n">> local.properties
+
+      - name:  Add oauth id
+        run: echo "oauth.client.id=${{ secrets.OAUTH_CLIENT_ID }}\n">> local.properties
+
+      - name: Add oauth secret
+        run: echo "oauth.client.secret=${{ secrets.OAUTH_CLIENT_SECRET }}">> local.properties
+      - name: Build final apk
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: ecap-II-debug.apk
+          path: app/build/outputs/apk/debug/opensrp-ecap-chw-ecap-debug.apk
