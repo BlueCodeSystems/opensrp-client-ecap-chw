@@ -77,79 +77,38 @@
       {
         "key": "province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "stateProvince",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Province",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select Province"
-        }
+        "value": "Southern",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "district",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "countyDistrict",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "District",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri",
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri",
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select District"
-        }
+        "value": "Choma",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
+        "value": "Choma Central",
+        "read_only": "true",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
+        "look_up": "true"
       },
       {
         "key": "adolescent_village",
@@ -174,16 +133,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "Health facility",
+        "hint": "District",
+        "value": "Choma General Hospital",
+        "read_only": "true",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Health Facility only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Please enter Health Facility"
-        }
+        "look_up": "true"
       },
       {
         "key": "partners",
@@ -729,7 +683,7 @@
         "key": "mother_art_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "art_number",
+        "openmrs_entity_id": "mother_art_number",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
         "edit_type": "name",
@@ -1068,7 +1022,7 @@
         "key": "mother_art_number_wlhiv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "art_number",
+        "openmrs_entity_id": "mother_art_number_wlhiv",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
         "edit_type": "name",
@@ -1252,7 +1206,7 @@
         "key": "hiv_or_pregnancy_prevention_method_used_other",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "art_number",
+        "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used_other",
         "type": "edit_text",
         "hint": "Method Used",
         "edit_type": "name",
@@ -1664,7 +1618,7 @@
         "key": "child_clinical_care_services_received_other",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "art_number",
+        "openmrs_entity_id": "child_clinical_care_services_received_other",
         "type": "edit_text",
         "hint": "Other Clinical Care Services",
         "edit_type": "name",
@@ -2237,7 +2191,7 @@
     ]
   },
   "step4": {
-    "title": "Enrolment on OVC program",
+    "title": "Enrollment into OVC program - HIV positive",
     "next": "step5",
     "fields": [
       {
@@ -2339,7 +2293,7 @@
         "openmrs_entity_id": "date_enrolled",
         "type": "date_picker",
         "hint": "Date Enrolled ",
-        "label_info_title": "Date Referred",
+        "label_info_title": "Date Of Enrollment",
         "expanded": false,
         "duration": {
           "label": ""
@@ -2364,10 +2318,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_hiv_known",
         "type": "date_picker",
-        "hint": "Date HIV Was known",
+        "hint": "Date HIV Status Was known",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "today - 17y",
         "max_date": "today",
         "relevance": {
           "rules-engine": {
@@ -2414,37 +2368,13 @@
         }
       },
       {
-        "key": "art_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_number",
-        "type": "edit_text",
-        "hint": "ART Number",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Please enter VCA ART number "
-        },
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "date_started_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_started_art",
         "type": "date_picker",
-        "hint": "Date started ART ",
-        "label_info_title": "Date Referred",
+        "hint": "Date started ART",
+        "label_info_title": "Date when ART Started",
         "expanded": false,
         "duration": {
           "label": ""
@@ -2453,7 +2383,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "Please enter date Referred"
+          "err": "Please enter when ART Started"
         },
         "relevance": {
           "rules-engine": {
@@ -2778,11 +2708,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "spinner",
-        "hint": "HIV Status",
+        "hint": "Caregiver HIV Status",
         "values": [
           "HIV+",
           "HIV-",
-          "Unknown"
+          "Unknown",
+          "Status not required based on risk assessment"
         ],
         "v_required": {
           "value": false,

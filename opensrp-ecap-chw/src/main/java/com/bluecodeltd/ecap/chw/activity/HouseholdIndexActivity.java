@@ -111,6 +111,9 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
                     showProgressDialog(R.string.saving_dialog_title);
                     householdIndexPresenter().saveForm(jsonString, registerParam);
+
+                    Intent intent = new Intent(this, MemberActivity.class);
+                    startActivity(intent);
                 }
             } catch (JSONException e) {
                 Timber.e(e);

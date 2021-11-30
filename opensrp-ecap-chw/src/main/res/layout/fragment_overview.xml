@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Health Facility"
+                android:text="Sub Populations"
                 android:paddingLeft="@dimen/contact_drawable_padding"
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
@@ -225,10 +225,10 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Screening Location" />
+                android:text="Health Facility" />
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/case_status_txt_overview"
+                android:id="@+id/facility"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
@@ -236,7 +236,7 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="#009900"
+                android:textColor="@color/black_text_color"
                 />
 
         </LinearLayout>
