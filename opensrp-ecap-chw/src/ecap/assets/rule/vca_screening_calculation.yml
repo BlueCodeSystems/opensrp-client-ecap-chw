@@ -34,7 +34,7 @@ condition: "step5_village == ''"
 actions:
   - "calculation = step1_adolescent_village"
 ---
-name: step5_phone_number
+name: step5_caregiver_phone
 description: Caregiver Phone
 priority: 1
 condition: "step5_phone_number == ''"
@@ -68,5 +68,12 @@ priority: 1
 condition: "true"
 actions:
   - "calculation = helper.getDifferenceDays(step1_adolescent_birthdate) / 365.25"
+---
+name: step4_date_hiv_known
+description: date_hiv_known
+priority: 1
+condition: "true"
+actions:
+  - "calculation = step4_date_hiv_known < step1_adolescent_birthdate"
 
 
