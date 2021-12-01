@@ -1093,11 +1093,11 @@
           "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.subTown"
+            "field": "attributes.ward"
           }
         },
         {
-          "column_name": "village",
+          "column_name": "adolescent_village",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.adolescent_village"
@@ -1227,6 +1227,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_of_last_viral_load"
+          }
+        },
+        {
+          "column_name": "approved_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.approved_by"
+          }
+        },
+        {
+          "column_name": "date_approved",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_approved"
           }
         }
       ]
@@ -3203,6 +3217,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_lastname"
+          }
+        },
+        {
+          "column_name": "school_administration_telephone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_telephone"
           }
         },
         {

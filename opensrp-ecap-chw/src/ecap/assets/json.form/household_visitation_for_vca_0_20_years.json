@@ -55,7 +55,6 @@
   "step1": {
     "title": "Household Visitation For VCA 0-20 years",
     "fields": [
-
       {
         "key": "age",
         "openmrs_entity_parent": "",
@@ -72,7 +71,6 @@
           }
         }
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -120,7 +118,6 @@
           }
         ]
       },
-
       {
         "key": "child_art",
         "openmrs_entity_parent": "",
@@ -173,7 +170,6 @@
           }
         }
       },
-
       {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
@@ -271,7 +267,6 @@
           }
         }
       },
-
       {
         "key": "six_months",
         "openmrs_entity_parent": "",
@@ -299,7 +294,6 @@
           }
         }
       },
-
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -317,7 +311,6 @@
           }
         }
       },
-
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
@@ -349,7 +342,6 @@
           }
         }
       },
-
       {
         "key": "mmd",
         "openmrs_entity_parent": "",
@@ -376,8 +368,6 @@
           }
         }
       },
-
-
       {
         "key": "mmd_months",
         "openmrs_entity_parent": "",
@@ -416,8 +406,6 @@
           }
         }
       },
-
-
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -461,7 +449,6 @@
           }
         }
       },
-
       {
         "key": "referred_for_testing",
         "openmrs_entity_parent": "",
@@ -488,7 +475,6 @@
           }
         }
       },
-
       {
         "key": "hiv_risk",
         "openmrs_entity_parent": "",
@@ -523,7 +509,6 @@
           }
         }
       },
-
       {
         "key": "hiv_muac",
         "openmrs_entity_parent": "",
@@ -550,8 +535,6 @@
           }
         }
       },
-
-
       {
         "key": "hiv_assessment",
         "openmrs_entity_parent": "",
@@ -578,7 +561,6 @@
           }
         }
       },
-
       {
         "key": "toaster_b",
         "openmrs_entity_parent": "",
@@ -596,8 +578,6 @@
           }
         }
       },
-
-
       {
         "key": "referred_facility",
         "openmrs_entity_parent": "",
@@ -624,7 +604,6 @@
           }
         }
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -633,7 +612,6 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -642,7 +620,6 @@
         "type": "label",
         "text": "HIV Exposed Infant (VCA aged 24 months and below)  Section"
       },
-
       {
         "key": "eid_test",
         "openmrs_entity_parent": "",
@@ -668,7 +645,6 @@
           }
         }
       },
-
       {
         "key": "age_appropriate",
         "openmrs_entity_parent": "",
@@ -809,7 +785,6 @@
         "type": "label",
         "text": "Knowledge of HIV/AIDS (10-17 Years Old) Section"
       },
-
       {
         "key": "hiv_infection",
         "openmrs_entity_parent": "",
@@ -915,7 +890,6 @@
           }
         }
       },
-
       {
         "key": "infection_risk",
         "openmrs_entity_parent": "",
@@ -942,8 +916,6 @@
           }
         }
       },
-
-
       {
         "key": "referred_health_facility",
         "openmrs_entity_parent": "",
@@ -970,10 +942,6 @@
           }
         }
       },
-
-
-
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1103,7 +1071,6 @@
           }
         }
       },
-
       {
         "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
@@ -1131,7 +1098,6 @@
           }
         }
       },
-
       {
         "key": "heps_a",
         "openmrs_entity_parent": "",
@@ -1159,7 +1125,6 @@
           }
         }
       },
-
       {
         "key": "muac_other_a",
         "openmrs_entity_parent": "",
@@ -1256,7 +1221,6 @@
           }
         }
       },
-
       {
         "key": "muac_other_b",
         "openmrs_entity_parent": "",
@@ -1274,7 +1238,6 @@
           }
         }
       },
-
       {
         "key": "nutrition_status",
         "openmrs_entity_parent": "",
@@ -1346,7 +1309,6 @@
           }
         ]
       },
-
       {
         "key": "neglected_child_exploitation",
         "openmrs_entity_parent": "",
@@ -1373,7 +1335,6 @@
           }
         }
       },
-
       {
         "key": "neglected_child_relationships",
         "openmrs_entity_parent": "",
@@ -1457,8 +1418,6 @@
         "type": "label",
         "text": "Physical Violence Section"
       },
-
-
       {
         "key": "signs_of_violence",
         "openmrs_entity_parent": "",
@@ -1634,7 +1593,6 @@
           }
         }
       },
-
       {
         "key": "vsu_legal_support",
         "openmrs_entity_parent": "",
@@ -1736,7 +1694,6 @@
           }
         }
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -1745,7 +1702,6 @@
         "type": "label",
         "text": "Psychosocial Protection"
       },
-
       {
         "key": "child_psychosocial",
         "openmrs_entity_parent": "",
@@ -1837,7 +1793,6 @@
           }
         }
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -1854,7 +1809,6 @@
         "type": "label",
         "text": "School Attendance Section"
       },
-
       {
         "key": "currently_in_school",
         "openmrs_entity_parent": "",
@@ -2004,7 +1958,6 @@
           }
         }
       },
-
       {
         "key": "ovc_caregiver",
         "openmrs_entity_parent": "",
@@ -2015,7 +1968,6 @@
         "edit_type": "number",
         "read_only": "true",
         "look_up": "true",
-
         "relevance": {
           "step1:not_in_school": {
             "type": "string",
@@ -2023,7 +1975,6 @@
           }
         }
       },
-
       {
         "key": "verified_by_school_days",
         "openmrs_entity_parent": "",
@@ -2035,7 +1986,6 @@
         "read_only": "false",
         "look_up": "true"
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -2190,9 +2140,6 @@
           }
         ]
       },
-
-
-
       {
         "key": "manager_name",
         "openmrs_entity_parent": "",
@@ -2242,8 +2189,6 @@
           }
         ]
       },
-
-
       {
         "key": "school_administration_name",
         "openmrs_entity_parent": "",
@@ -2293,7 +2238,6 @@
           }
         ]
       }
-
     ]
   }
 }

@@ -143,7 +143,7 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
         "label": "Sub Population:",
@@ -262,8 +262,8 @@
       {
         "key": "ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "subTown",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
         "edit_type": "name",
@@ -656,8 +656,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of ^XXXX-XXXX-XXXXXX-X"
         }
       },
       {
@@ -921,8 +921,8 @@
       {
         "key": "approved_by",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "name",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "approved_by",
         "type": "edit_text",
         "hint": "Approved By",
         "edit_type": "name",
@@ -941,7 +941,7 @@
       {
         "key": "date_approved",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_approved",
         "type": "date_picker",
         "hint": "Date of screening",

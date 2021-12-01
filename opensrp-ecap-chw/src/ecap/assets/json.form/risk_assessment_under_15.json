@@ -1,0 +1,668 @@
+{
+
+  "count": "1",
+  "encounter_type": "HIV Risk Assessment Below 15",
+  "entity_id": "",
+  "relational_id": "",
+  "form_version": "0.0.1",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "HIV Risk Assessment For 15 Years And Below",
+    "fields": [
+      {
+        "key": "Province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "province",
+        "type": "edit_text",
+        "hint": "Province",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the Province"
+        }
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_address",
+        "openmrs_entity_id": "stateProvince",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "District"
+      },
+      {
+        "key": "adolescent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_village",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Village"
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "First name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "First name can only contain letters"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "name",
+        "type": "edit_text",
+        "hint": "VCA's Last Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "VCA's surname can only contain letters"
+        }
+      },
+      {
+        "key": "base_entity_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "base_entity_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": false,
+        "v_required": {
+          "value": false,
+          "err": "Please enter VCA ID"
+        },
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "VCA ID"
+        }
+      },
+      {
+        "key": "caregiverFirstName",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_firstname",
+        "read_only": "false",
+        "type": "edit_text",
+        "hint": "Caregiver First Name"
+      },
+      {
+        "key": "caregiverLastName",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_lastname",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Caregiver Second Name"
+      },
+      {
+        "key": "adolescent_phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_phone",
+        "read_only": "true",
+        "type": "edit_text",
+        "hint": "Telephone",
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "dob",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "VCA's Date of birth",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "edit_text",
+        "read_only": true,
+        "hint": "VCA Age"
+      },
+      {
+        "key": "date_of_assessment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_assessment",
+        "type": "date_picker",
+        "hint": "Date of assessment",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+
+      {
+        "key": "informed_consent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Talk with the person in privacy.  Mention that all information given is confidential.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes, Consent given proceed"
+          },
+          {
+            "key": "no",
+            "text": "No, Consent not given don't proceed"
+          }
+        ]
+      },
+      {
+        "key": "hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hiv_test",
+        "type": "native_radio",
+        "label": "What was your most recent HIV test result",
+        "options": [
+          {
+            "key": "positive",
+            "text": "Positive"
+          },
+          {
+            "key": "negative",
+            "text": "Negative"
+          },
+          {
+            "key": "never_tested",
+            "text": "Never tested"
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_assessment_under_15.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "on_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "on_art",
+        "type": "native_radio",
+        "label": "Are you on Art?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "start_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "start_date",
+        "type": "date_picker",
+        "hint": "Indicate start date ",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "step1:on_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Indicate name of health facility you receive ART from",
+        "relevance": {
+          "step1:on_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Art number",
+        "v_numeric": {
+          "value": "true",
+          "err": "art numbers can only contain numbers "
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
+          "err": "ART should contain numbers  in the format of ^XXXX-XXX-XXXXX-X"
+        },
+        "relevance": {
+          "step1:on_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "biological_mother",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "biological_mother",
+        "type": "native_radio",
+        "label": "Is the child’s biological mother HIV+ or is her HIV status unknown?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "deceased_parents",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "deceased_parents",
+        "type": "native_radio",
+        "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "tb_symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "tb_symptoms",
+        "type": "native_radio",
+        "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "child_been_sick",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "child_been_sick",
+        "type": "native_radio",
+        "label": "In the last 6 months, has this child been sick more than other children or been \nadmitted to hospital?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "frequent_rashes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "frequent_rashes",
+        "type": "native_radio",
+        "label": "Has the child had frequent rashes or other skin problems?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "child_had_pus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "child_had_pus",
+        "type": "native_radio",
+        "label": "Has the child had pus coming from his or her ear?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_risk",
+        "type": "check_box",
+        "read_only": "false",
+        "label_text_style": "",
+        "label": "Has the child been exposed to any HIV risk after the last test",
+        "options": [
+          {
+            "key": "Breast Feeding",
+            "text": "Breast Feeding"
+          },
+          {
+            "key": "Child Sexually abused/Raped",
+            "text": "Child Sexually abused/Raped"
+          },
+          {
+            "key": "Tattoos/Piercing",
+            "text": "Tattoos/Piercing"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_assessment_under_15.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for hiv and Tb",
+        "toaster_type": "info",
+        "toaster_info_text": "The VCA is eligible for HIV testing. \n\nAgree with the guardian, that the child needs to be tested for HIV and eventually TB",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_assessment_under_15.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_tb",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hiv_tb",
+        "type": "native_radio",
+        "label": "Was the test for HIV and TB conducted?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_assessment_under_15.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hiv_test_result",
+        "type": "native_radio",
+        "label": "Indicate HIV Test Result",
+        "options": [
+          {
+            "key": "hiv_negative",
+            "text": "HIV negative"
+          },
+          {
+            "key": "hiv_positive",
+            "text": "hiv_positive"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_tb": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "date_of_hiv_test",
+        "type": "date_picker",
+        "hint": "Date of  HIV test",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "step1:hiv_tb": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Approved by",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        },
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "case_signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date",
+        "type": "date_picker",
+        "hint": "Date",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "checked_case_worker_supervisor",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "checked_case_worker_supervisor",
+        "type": "edit_text",
+        "hint": "Checked caseworker supervisor",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        },
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      }
+    ]
+  }
+}

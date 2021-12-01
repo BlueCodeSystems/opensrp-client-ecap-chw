@@ -118,6 +118,32 @@ public class HouseholdDetails extends AppCompatActivity {
         //adolescent_name_of_caregiver
         cname.setText(client.getColumnmaps().get("adolescent_name_of_caregiver"));
 
+        map.put("subpop1", client.getColumnmaps().get("subpop1"));
+        map.put("subpop2", client.getColumnmaps().get("subpop2"));
+        map.put("subpop3", client.getColumnmaps().get("subpop3"));
+        map.put("subpop4", client.getColumnmaps().get("subpop4"));
+        map.put("subpop5", client.getColumnmaps().get("subpop5"));
+        map.put("subpop6", client.getColumnmaps().get("subpop6"));
+
+        map.put("province", client.getColumnmaps().get("province"));
+        map.put("district", client.getColumnmaps().get("district"));
+        map.put("ward", client.getColumnmaps().get("ward"));
+        map.put("adolescent_village", client.getColumnmaps().get("adolescent_village"));
+        map.put("health_facility", client.getColumnmaps().get("health_facility"));
+        map.put("partners", client.getColumnmaps().get("partners"));
+        map.put("screening_date", client.getColumnmaps().get("screening_date"));
+        map.put("screening_location", client.getColumnmaps().get("screening_location"));
+
+        map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
+        map.put("active_on_treatment", client.getColumnmaps().get("active_on_treatment"));
+        map.put("caregiver_art_number", client.getColumnmaps().get("caregiver_art_number"));
+        map.put("is_caregiver_virally_suppressed", client.getColumnmaps().get("is_caregiver_virally_suppressed"));
+        map.put("viral_load_results", client.getColumnmaps().get("viral_load_results"));
+        map.put("date_of_last_viral_load", client.getColumnmaps().get("date_of_last_viral_load"));
+
+
+        map.put("fname_community_case_worker", client.getColumnmaps().get("fname_community_case_worker"));
+        map.put("lname_community_case_worker", client.getColumnmaps().get("lname_community_case_worker"));
         return map;
 
     }

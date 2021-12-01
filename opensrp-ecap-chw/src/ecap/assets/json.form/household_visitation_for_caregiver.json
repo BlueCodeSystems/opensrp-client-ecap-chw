@@ -55,7 +55,6 @@
   "step1": {
     "title": "Household Visitation For Caregiver",
     "fields": [
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -64,7 +63,6 @@
         "type": "label",
         "text": "Health Section"
       },
-
       {
         "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
@@ -96,8 +94,6 @@
           }
         ]
       },
-
-
       {
         "key": "caregiver_art",
         "openmrs_entity_parent": "",
@@ -150,7 +146,6 @@
           }
         }
       },
-
       {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
@@ -177,7 +172,6 @@
           }
         }
       },
-
       {
         "key": "counselling",
         "openmrs_entity_parent": "",
@@ -204,7 +198,6 @@
           }
         }
       },
-
       {
         "key": "art_medication",
         "openmrs_entity_parent": "",
@@ -231,7 +224,6 @@
           }
         }
       },
-
       {
         "key": "mmd",
         "openmrs_entity_parent": "",
@@ -340,7 +332,6 @@
           }
         }
       },
-
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
@@ -389,7 +380,6 @@
           }
         }
       },
-
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -406,7 +396,6 @@
           }
         }
       },
-
       {
         "key": "visit_hiv_test",
         "openmrs_entity_parent": "",
@@ -434,7 +423,6 @@
           }
         }
       },
-
       {
         "key": "referred_for_testing",
         "openmrs_entity_parent": "",
@@ -461,7 +449,6 @@
           }
         }
       },
-
       {
         "key": "hiv_risk",
         "openmrs_entity_parent": "",
@@ -566,7 +553,6 @@
           }
         }
       },
-
       {
         "key": "toaster_b",
         "openmrs_entity_parent": "",
@@ -610,7 +596,6 @@
           }
         }
       },
-
       {
         "key": "referred_facility",
         "openmrs_entity_parent": "",
@@ -637,7 +622,6 @@
           }
         }
       },
-
       {
         "key": "other_hiv_unknown",
         "openmrs_entity_parent": "",
@@ -662,7 +646,6 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -753,7 +736,6 @@
           }
         }
       },
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -790,7 +772,6 @@
           }
         ]
       },
-
       {
         "key": "unpaid_school_fees",
         "openmrs_entity_parent": "",
@@ -869,7 +850,6 @@
           }
         }
       },
-
       {
         "key": "income_source",
         "openmrs_entity_parent": "",
@@ -902,8 +882,6 @@
           }
         }
       },
-
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1002,7 +980,6 @@
             "text": "No",
             "value": false
           }
-
         ],
         "relevance": {
           "step1:economic_strengthening": {
@@ -1059,7 +1036,6 @@
           }
         }
       },
-
       {
         "key": "caseworker_firstname",
         "openmrs_entity_parent": "",
@@ -1188,7 +1164,6 @@
           }
         ]
       },
-
       {
         "key": "school_administration_firstname",
         "openmrs_entity_parent": "",
@@ -1211,6 +1186,21 @@
         "openmrs_entity_id": "school_administration_lastname",
         "type": "edit_text",
         "hint": "Verified By School Administration Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "school_administration_telephone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_telephone",
+        "type": "edit_text",
+        "hint": "School Administration Telephone",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",
@@ -1253,7 +1243,6 @@
           }
         ]
       }
-
     ]
   }
 }

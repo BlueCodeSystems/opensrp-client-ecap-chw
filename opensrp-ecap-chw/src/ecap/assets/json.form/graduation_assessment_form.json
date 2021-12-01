@@ -55,7 +55,6 @@
   "step1": {
     "title": "Graduation Assessment Form",
     "fields": [
-
       {
         "key": "name_rcmc_dc",
         "openmrs_entity_parent": "",
@@ -69,7 +68,6 @@
           "err": "Name of RCMC/DC"
         }
       },
-
       {
         "key": "date_family_enrolled",
         "openmrs_entity_parent": "",
@@ -135,7 +133,6 @@
           }
         }
       },
-
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -221,7 +218,6 @@
         "type": "label",
         "text": "Virally suppressed"
       },
-
       {
         "key": "hiv_status",
         "openmrs_entity_parent": "",
@@ -316,7 +312,6 @@
           }
         ]
       },
-
       {
         "key": "most_common_hiv_infected_hiv_ways",
         "openmrs_entity_parent": "",
@@ -476,7 +471,6 @@
           }
         ]
       },
-
       {
         "key": "undernourished",
         "openmrs_entity_parent": "",
@@ -947,7 +941,6 @@
           "err": "Additional information"
         }
       },
-
       {
         "key": "caseworker_name",
         "openmrs_entity_parent": "",
@@ -979,7 +972,6 @@
           }
         ]
       },
-
       {
         "key": "caseworker_date_signed",
         "openmrs_entity_parent": "",
@@ -998,7 +990,6 @@
           "err": "Date Signed"
         }
       },
-
       {
         "key": "rcmc_name",
         "openmrs_entity_parent": "",
@@ -1014,7 +1005,6 @@
           "err": "Please enter a valid name"
         }
       },
-
       {
         "key": "rcmc_signature",
         "openmrs_entity_parent": "",
