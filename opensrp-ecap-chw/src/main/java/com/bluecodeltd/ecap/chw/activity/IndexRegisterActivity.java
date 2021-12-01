@@ -106,6 +106,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
                 JSONObject jsonFormObject = new JSONObject(jsonString);
 
+
                 if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
                     RegisterParams registerParam = new RegisterParams();

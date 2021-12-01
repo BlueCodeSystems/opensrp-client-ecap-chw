@@ -4,6 +4,13 @@
       "name": "ec_sub_population",
       "columns": [
         {
+          "column_name": "status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -1336,7 +1343,7 @@
           "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.birthdate"
+            "field": "attributes.adolescent_birthdate"
           }
         },
         {
@@ -1386,6 +1393,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.art_check_box"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
+          }
+        },
+        {
+          "column_name": "is_on_hiv_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_on_hiv_treatment"
           }
         },
         {
