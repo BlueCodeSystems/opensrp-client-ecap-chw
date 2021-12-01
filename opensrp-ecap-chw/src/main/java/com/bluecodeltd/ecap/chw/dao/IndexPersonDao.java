@@ -36,6 +36,18 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+
+    public static String getIndexStatus (String baseEntityID){
+
+        String sql = "SELECT case_status FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "case_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return values.get(0);
+
+    }
     
     public static List<String> getGenders(String baseEntityID){
 

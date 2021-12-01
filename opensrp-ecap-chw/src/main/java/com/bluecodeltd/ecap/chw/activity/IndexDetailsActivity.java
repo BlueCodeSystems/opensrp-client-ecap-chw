@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,7 @@ import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -93,6 +95,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
+    private AppBarLayout myAppbar;
     private Toolbar toolbar;
     String myAge;
 
@@ -107,6 +110,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
+        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+
+        String gender =  client.getColumnmaps().get("gender");
+
+        if(gender.equals("male")){
+
+            toolbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
+            myAppbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
+
+        } else {
+
+            toolbar.setBackgroundDrawable(new ColorDrawable(0xffe36b89));
+            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffe36b89));
+
+        }
+
+
+
 
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -129,7 +152,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
 
-
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
 
@@ -140,13 +162,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
 
+
+
     public HashMap<String, String> getData() {
 
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
+        String birthdate = client.getColumnmaps().get("birthdate");
 
         if(birthdate != null){
 
@@ -168,6 +192,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         txtName.setText(full_name);
         txtGender.setText(gender);
+
+
 
 
         HashMap<String, String> map = new HashMap<>();
@@ -462,6 +488,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.household_profile:
+
+
+            Intent intent = new Intent(this, HouseholdDetails.class);
+            intent.putExtra("household",  client);
+            startActivity(intent);
+
+
+                break;
+
             case R.id.household_visitation_caregiver:
 
                 try {
@@ -589,9 +625,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
 
             try {
 
@@ -601,7 +639,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, true);
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -614,7 +652,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            //String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            String entityId  = formJsonObject.getString("entity_id");
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
@@ -716,10 +755,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 case "Case Record Status":
 
-                    if(fields!= null)
-
-                        updateChildProfile(jsonString);
-
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
                     break;
             }
         } catch (JSONException e) {
@@ -928,14 +971,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 startActivity(callIntent);
                 return true;
             case R.id.case_status:
-                openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+
+                try {
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void openFormUsingFormUtils(Context context, String formName)
-
-    {
+    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         FormUtils formUtils = null;
         try {
@@ -947,11 +993,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        try {
-            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("base_entity_id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        formToBeOpened.put("entity_id", client.getColumnmaps().get("base_entity_id"));
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
+
         startFormActivity(formToBeOpened);
     }
 }

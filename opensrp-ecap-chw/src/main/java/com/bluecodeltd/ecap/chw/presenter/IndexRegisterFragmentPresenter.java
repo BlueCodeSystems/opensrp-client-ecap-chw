@@ -26,10 +26,9 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
     public void initializeQueries(String s) {
 
         String children = Constants.EcapClientTable.EC_CLIENT_INDEX;
-        String population = Constants.EcapClientTable.EC_POPULATION;
 
-        String countSelect = "SELECT COUNT(*) FROM " + children;
-        String mainSelect = "SELECT ec_sub_population.*, ec_client_index.*, ec_client_index.id as _id, ec_client_index.relationalid AS relational_id, ec_client_index.health_facility AS residence FROM ec_client_index JOIN ec_sub_population ON ec_client_index.base_entity_id = ec_sub_population.base_entity_id";
+        String countSelect = "SELECT COUNT(*) FROM " + children + "WHERE case_status IS NOT NULL";
+        String mainSelect = "SELECT ec_client_index.*, ec_client_index.id as _id, ec_client_index.relationalid AS relational_id, ec_client_index.health_facility AS residence FROM ec_client_index WHERE case_status IS NOT NULL";
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_CLIENT_INDEX, countSelect, mainSelect);
         getView().initializeAdapter();

@@ -117,7 +117,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
         //adolescent_name_of_caregiver
-        cname.setText(client.getColumnmaps().get("adolescent_name_of_caregiver"));
+        cname.setText(client.getColumnmaps().get("adolescent_name_of_caregiver") + " Household");
 
         return map;
 

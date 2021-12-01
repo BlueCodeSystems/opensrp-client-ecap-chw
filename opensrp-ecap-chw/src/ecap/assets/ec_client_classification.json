@@ -308,6 +308,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Case Record Status",
+            "creates_case": [
+              "ec_client_index"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Mother Register",
             "creates_case": [
               "ec_mother_index",

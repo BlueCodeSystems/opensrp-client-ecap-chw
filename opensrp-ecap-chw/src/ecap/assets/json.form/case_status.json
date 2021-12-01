@@ -55,23 +55,41 @@
       "title": "Case Record Status",
       "fields": [
         {
-          "key": "is_closed",
+          "key": "first_name",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "is_closed",
+          "openmrs_entity_id": "first_name",
+          "type": "edit_text",
+          "hint": "VCA first name ",
+          "edit_type": "name",
+          "look_up": "true",
+          "v_required": {
+            "value": true,
+            "err": "Please enter VCA first name"
+          },
+          "v_regex": {
+            "value": "[A-Za-z\\s\\.\\-]*",
+            "err": "Please enter a valid name"
+          }
+        },
+        {
+          "key": "case_status",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "case_status",
           "type": "native_radio",
           "label": "VCA Case record status",
           "options": [
             {
-              "key": "0",
-              "text": "active"
-            },
-            {
               "key": "1",
-              "text": "Inactive"
+              "text": "Active"
             },
             {
               "key": "2",
+              "text": "Inactive"
+            },
+            {
+              "key": "0",
               "text": "Closed"
             }
           ]

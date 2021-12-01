@@ -420,7 +420,7 @@
       {
         "key": "is_on_hiv_treatment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
         "label": "Is the Child/Adolescent currently on HIV treatment?",
@@ -445,7 +445,7 @@
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "edit_type": "name",
@@ -2786,6 +2786,21 @@
               "rules-file": "vca_screening_calculation.yml"
             }
           }
+        }
+      },
+      {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "edit_text",
+        "value": "1",
+        "read_only": "true",
+        "hint": "Case Status",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward only takes letters"
         }
       }
     ]
