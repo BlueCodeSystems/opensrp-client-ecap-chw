@@ -40,7 +40,17 @@ public class MotherDetail extends AppCompatActivity {
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
     private TextView txtName, txtVillage, txtPhone, txtArt, txtFacility, txtOvc, txtComment;
-
+    private TextView txtHivStatus;
+    private TextView txtPhysicallyHarmed;
+    private TextView txtTestDoneLassThanSixMonths;
+    private TextView txtCaregiverForcedSex;
+    private TextView txtMaritalStatus;
+    private TextView txtPreventedFromLeaving;
+    String hivStatus;
+    String testDoneLessThanSixMonthsAgo;
+    String physicallyHarmed;
+    String forcedSex;
+    String maritalStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +66,18 @@ public class MotherDetail extends AppCompatActivity {
         rcase_plan = findViewById(R.id.ccase_plan);
 
         txtName = findViewById(R.id.mynamex);
-        txtFacility = findViewById(R.id.mfacilityx);
+       txtFacility = findViewById(R.id.mfacilityx);
         txtVillage = findViewById(R.id.village);
         txtPhone = findViewById(R.id.phone);
         txtArt = findViewById(R.id.art);
         txtOvc = findViewById(R.id.ovc_date);
-        txtComment = findViewById(R.id.comment);
+        txtHivStatus = findViewById(R.id.caregiver_status);
+        txtTestDoneLassThanSixMonths = findViewById(R.id.hiv_tested_more_than_six);
+        txtPhysicallyHarmed = findViewById(R.id.caregive_been_physically_harmed);
+        txtCaregiverForcedSex = findViewById(R.id.caregiver_forced_sex);
+        txtMaritalStatus = findViewById(R.id.caregiver_marital_status);
+        txtPreventedFromLeaving = findViewById(R.id.caregiver_prevented_from_leaving);
+        //txtComment = findViewById(R.id.comment);
 
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
 
@@ -74,6 +90,11 @@ public class MotherDetail extends AppCompatActivity {
         String art =  client.getColumnmaps().get("art_number");
         String ovc_date =  client.getColumnmaps().get("ovc_date");
         String comment =  client.getColumnmaps().get("comment");
+        hivStatus = client.getColumnmaps().get("comment");
+        testDoneLessThanSixMonthsAgo = client.getColumnmaps().get("hiv_test");
+        physicallyHarmed = client.getColumnmaps().get("last_year");
+        forcedSex = client.getColumnmaps().get("partner_caregiver");
+        maritalStatus = client.getColumnmaps().get("marital_status");
 
         txtName.setText(full_name);
         txtFacility.setText(facility);
@@ -81,7 +102,8 @@ public class MotherDetail extends AppCompatActivity {
         txtPhone.setText(phone);
         txtArt.setText(art);
         txtOvc.setText(ovc_date);
-        txtComment.setText(comment);
+       // txtComment.setText(comment);
+        populateMotherOverview();
 
     }
 
@@ -218,6 +240,46 @@ public class MotherDetail extends AppCompatActivity {
                 break;
 
         }
+    }
+    public void populateMotherOverview(){
+
+        if(hivStatus == null){
+            txtHivStatus.setText("---");
+        }
+        else{
+            txtHivStatus.setText(hivStatus);
+        }
+
+        if(testDoneLessThanSixMonthsAgo == null){
+            txtTestDoneLassThanSixMonths.setText("---");
+        }
+        else{
+            txtTestDoneLassThanSixMonths.setText(testDoneLessThanSixMonthsAgo);
+        }
+
+        if(maritalStatus == null){
+            txtMaritalStatus.setText("---");
+        }
+        else{
+            txtMaritalStatus.setText(maritalStatus);
+        }
+
+        if(physicallyHarmed == null){
+            txtPhysicallyHarmed.setText("---");
+        }
+        else{
+            txtPhysicallyHarmed.setText(physicallyHarmed);
+        }
+
+        if(forcedSex == null){
+            txtCaregiverForcedSex.setText("---");
+        }
+        else{
+            txtCaregiverForcedSex.setText(forcedSex);
+        }
+
+
+
     }
     public void animateFAB(){
 
