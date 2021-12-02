@@ -183,7 +183,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             txtAge.setText(myAge);
 
-
         } else {
 
             txtAge.setText("Not Set");
@@ -216,7 +215,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         map.put("vl_suppressed", client.getColumnmaps().get("vl_suppressed"));
         map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
         map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
-        map.put("caregiver_firstname", client.getColumnmaps().get("caregiver_firstname"));
+        map.put("caregiver_name", client.getColumnmaps().get("caregiver_name"));
         map.put("caregiver_birth_date", client.getColumnmaps().get("caregiver_birth_date"));
         map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
         map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
@@ -625,11 +624,25 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
+
+            boolean is_edit_mode = false;
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
+            JSONObject jsonFormObject = null;
+            try {
+                jsonFormObject = new JSONObject(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
+                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+
+                is_edit_mode = true;
+            }
 
             try {
 
@@ -639,13 +652,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, true);
+                saveRegistration(childIndexEventClient, is_edit_mode);
 
             } catch (Exception e) {
                 Timber.e(e);
             }
 
         }
+        Intent i = new Intent(this, IndexRegisterActivity.class);
+        startActivity(i);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -994,6 +1009,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         formToBeOpened = formUtils.getFormJson(formName);
 
         formToBeOpened.put("entity_id", client.getColumnmaps().get("base_entity_id"));
+        formToBeOpened.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
 
         startFormActivity(formToBeOpened);

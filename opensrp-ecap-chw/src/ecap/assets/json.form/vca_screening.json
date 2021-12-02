@@ -133,7 +133,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "District",
+        "hint": "Health Facility",
         "value": "Choma General Hospital",
         "read_only": "true",
         "edit_type": "name",
@@ -214,10 +214,10 @@
         }
       },
       {
-        "key": "adolescent_name_of_caregiver",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_name_of_caregiver",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Name of caregiver",
         "look_up": "true",
@@ -655,10 +655,10 @@
         }
       },
       {
-        "key": "is_mother_currently_on_treatment",
+        "key": "active_on_treatment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "is_mother_currently_on_treatment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
         "label": "Is the mother currently on HIV treatment?",
         "options": [
@@ -680,10 +680,10 @@
         }
       },
       {
-        "key": "mother_art_number",
+        "key": "caregiver_art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "mother_art_number",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_art_number",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
         "edit_type": "name",
@@ -699,10 +699,10 @@
         }
       },
       {
-        "key": "is_mother_adhering_to_treatment",
+        "key": "active_on_treatment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "is_mother_adhering_to_treatment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
         "label": "Is the mother adhering to treatment?",
         "options": [
@@ -2629,30 +2629,6 @@
     "title": "Details of Caregiver (Parent/Guardian)",
     "next": "step6",
     "fields": [
-      {
-        "key": "caregiver_firstname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_firstname",
-        "type": "edit_text",
-        "hint": "Caregiver full name ",
-        "read_only": "true",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
       {
         "key": "caregiver_sex",
         "openmrs_entity_parent": "",

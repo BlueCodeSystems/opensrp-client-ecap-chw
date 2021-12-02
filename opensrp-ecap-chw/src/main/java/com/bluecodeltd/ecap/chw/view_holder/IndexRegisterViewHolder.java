@@ -33,26 +33,20 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         villageTextView = itemView.findViewById(R.id.villageTextView);
         caseplan_layout = itemView.findViewById(R.id.due_button);
         index_icon_layout = itemView.findViewById(R.id.index_icon);
-        myStatus = itemView.findViewById(R.id.mystatus);
+        myStatus = itemView.findViewById(R.id.mystatusx);
     }
 
     public void setupViews(String family, String village, boolean plan, String is_index, String status){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
-        if(status == "0"){
-
-            myStatus.setBackgroundDrawable(new ColorDrawable(0xffFF0000));
-
-        } else if (status == "2") {
-
-            myStatus.setBackgroundDrawable(new ColorDrawable(0xffFFA500));
-
-        } else if (status == "1") {
-
-            myStatus.setBackgroundDrawable(new ColorDrawable(0xff05b714));
+        if(status != null && status.equals("1")){
+            myStatus.setBackgroundColor(0xff05b714);
+        } else if (status != null && status.equals("0")) {
+            myStatus.setBackgroundColor(0xffff0000);
+        } else if(status != null && status.equals("2")){
+            myStatus.setBackgroundColor(0xffffa500);
         }
-
 
         if (is_index != null){
 

@@ -64,7 +64,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "A. Index VCA Sub Population"
+        "text": "Index VCA Sub Population Screening"
       },
       {
         "key": "unique_id",
@@ -104,10 +104,10 @@
         }
       },
       {
-        "key": "birthdate",
+        "key": "adolescent_birthdate",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "birthdate",
+        "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
         "hint": "VCA Date of birth",
         "look_up": "true",
@@ -184,80 +184,35 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "Health facility",
+        "hint": "District",
+        "value": "Choma General Hospital",
+        "read_only": "true",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Health Facility only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Please enter Health Facility"
-        }
+        "look_up": "true"
       },
       {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "stateProvince",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Province",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select Province"
-        }
+        "value": "Southern",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "district",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "countyDistrict",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "District",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri",
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri",
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select District"
-        }
+        "value": "Choma",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "ward",
@@ -266,11 +221,10 @@
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
+        "value": "Choma Central",
+        "read_only": "true",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
+        "look_up": "true"
       },
       {
         "key": "adolescent_village",
@@ -290,58 +244,6 @@
         }
       },
       {
-        "key": "fname_community_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_community_case_worker",
-        "type": "edit_text",
-        "hint": "First Name of Community Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First Name of community case worker only take letters"
-        }
-      },
-      {
-        "key": "lname_community_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_community_case_worker",
-        "type": "edit_text",
-        "hint": "Last Name of Community Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last Name of community case worker only take letters"
-        }
-      },
-      {
-        "key": "fname_facility_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_facility_case_worker",
-        "type": "edit_text",
-        "hint": "First Name of Facility Based Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First Name of case worker only take letters"
-        }
-      },
-      {
-        "key": "lname_facility_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_facility_case_worker",
-        "type": "edit_text",
-        "hint": "Last Name of Facility Based Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last Name of case worker only take letters"
-        }
-      },
-      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -357,7 +259,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "B. Household Information"
+        "text": "Household Information"
       },
       {
         "key": "partners",
@@ -400,10 +302,10 @@
         }
       },
       {
-        "key": "adolescent_name_of_caregiver",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_name_of_caregiver",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Name of caregiver",
         "look_up": "true",
@@ -484,42 +386,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "C. Household Summary Information"
-      },
-      {
-        "key": "refer_to_vca_screening_form",
-        "type": "label",
-        "label_text_style": "italic",
-        "text": "* Please Use Household Member Form for Household Summary Information",
-        "text_color": "#051204255",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "blank_space",
-        "type": "label",
-        "text": " "
-      },
-      {
-        "key": "other_vca_sub_pop_screening_in_household",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "D. Screening for other VCA Sub Populations and other vulnerable children/adolescents in the Household",
-        "text_color": "#000000",
-        "v_required": {
-          "value": false
-        }
-      },
-      {
-        "key": "refer_to_vca_screening_form",
-        "type": "label",
-        "label_text_style": "italic",
-        "text": "* Please Use Household Member Form to Screen for other VCA Sub Populations and VCAs in Household.",
-        "text_color": "#051204255",
-        "v_required": {
-          "value": false
-        }
+        "text": "Household Summary Information"
       },
       {
         "key": "blank_space",
@@ -530,7 +397,7 @@
         "key": "primary_caregivers_only",
         "type": "label",
         "label_text_style": "bold",
-        "text": "E: For Primary Caregivers Only",
+        "text": "For Primary Caregivers Only",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -591,6 +458,10 @@
           {
             "key": "Unknown",
             "text": "Unknown"
+          },
+          {
+            "key": "Status not required based on risk assessment",
+            "text": "Status not required based on risk assessment"
           }
         ],
         "v_required": {

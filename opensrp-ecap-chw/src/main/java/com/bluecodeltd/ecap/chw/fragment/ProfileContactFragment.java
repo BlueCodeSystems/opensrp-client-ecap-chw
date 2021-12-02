@@ -37,7 +37,7 @@ public class ProfileContactFragment extends Fragment {
         map.put("relation", client.getColumnmaps().get("relation"));
         map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));*/
 
-        txtCaregiverName.setText(mymap.get("caregiver_firstname"));
+        txtCaregiverName.setText(mymap.get("caregiver_name"));
         txtGender.setText(mymap.get("caregiver_sex"));
         txtDob.setText(mymap.get("caregiver_birth_date"));
         txtHiv.setText(mymap.get("caregiver_hiv_status"));

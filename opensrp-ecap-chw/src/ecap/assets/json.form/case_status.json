@@ -52,26 +52,8 @@
       }
     },
     "step1": {
-      "title": "Case Record Status",
+      "title": "",
       "fields": [
-        {
-          "key": "first_name",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "first_name",
-          "type": "edit_text",
-          "hint": "VCA first name ",
-          "edit_type": "name",
-          "look_up": "true",
-          "v_required": {
-            "value": true,
-            "err": "Please enter VCA first name"
-          },
-          "v_regex": {
-            "value": "[A-Za-z\\s\\.\\-]*",
-            "err": "Please enter a valid name"
-          }
-        },
         {
           "key": "case_status",
           "openmrs_entity_parent": "",
@@ -128,9 +110,9 @@
             }
           ],
           "relevance": {
-            "step1:is_closed": {
+            "step1:case_status": {
               "type": "string",
-              "ex": "equalTo(., \"2\")"
+              "ex": "equalTo(., \"0\")"
             }
           },
           "v_required": {

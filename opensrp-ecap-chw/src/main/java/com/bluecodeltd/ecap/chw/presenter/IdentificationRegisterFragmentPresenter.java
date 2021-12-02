@@ -25,7 +25,7 @@ public class IdentificationRegisterFragmentPresenter implements IdentificationRe
     @Override
     public void initializeQueries(String s) {
 
-        String countSelect = "SELECT COUNT(*) FROM ec_client_index";
+        String countSelect = "80";
         String mainSelect = "SELECT id as _id, relationalid, relationalid as relational_id, first_name, last_name, residence FROM ec_client_index";
 
         getView().initializeQueryParams("ec_client_index", countSelect, mainSelect);
