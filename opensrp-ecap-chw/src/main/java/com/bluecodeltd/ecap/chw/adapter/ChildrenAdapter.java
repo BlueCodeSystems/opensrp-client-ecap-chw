@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.Child;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHolder>{
@@ -21,6 +24,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     Context context;
 
     List<Child> children;
+    String myAge;
 
     public ChildrenAdapter(List<Child> children, Context context){
 
@@ -45,22 +49,59 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         final Child child = children.get(position);
 
-        holder.fullName.setText(child.getFirstname() + " " + child.getLastname());
+        holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
 
+        String dob = child.getAdolescent_birthdate();
+
+
+        if(dob != null){
+
+            String[] items1 = dob.split("-");
+            String date1 = items1[0];
+            String month = items1[1];
+            String year = items1[2];
+
+            myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
+
+            holder.age.setText("Age : " + myAge);
+
+        } else {
+
+            holder.age.setText("Not Set");
+
+        }
 
         holder.lview.setOnClickListener(v -> {
 
             switch (v.getId()) {
 
-                case (R.id.itemm):
+                case (R.id.register_columns):
 
-                   /* Intent intent = new Intent(context, SingleMother.class);
-                    intent.putExtra("mothers",  mothers.get(position));
+                  /*Intent intent = new Intent(context, IndexDetailsActivity.class);
+                    intent.putExtra("clients",  children.get(position));
                     context.startActivity(intent);*/
                     break;
             }
         });
 
+    }
+
+    private String getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
     }
 
     @Override
@@ -71,7 +112,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView fullName;
+        TextView fullName, age;
         RelativeLayout lview;
 
         public ViewHolder(View itemView) {
@@ -80,6 +121,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
             fullName  = (TextView) itemView.findViewById(R.id.familyNameTextView);
+            age  = (TextView) itemView.findViewById(R.id.child_age);
             lview = (RelativeLayout) itemView.findViewById(R.id.register_columns);
 
         }

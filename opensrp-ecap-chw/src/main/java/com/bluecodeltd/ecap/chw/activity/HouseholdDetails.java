@@ -25,6 +25,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
@@ -67,7 +68,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private Toolbar toolbar;
-    private TextView visitTabCount;
+    private TextView visitTabCount, cname;
     private TextView childTabCount;
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -93,6 +94,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
         rchild = findViewById(R.id.child_form);
         rscreen = findViewById(R.id.hh_screening);
+        //caregiver_name
+        cname = findViewById(R.id.caregiver_name);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
         rvisit = findViewById(R.id.hh_visit);
@@ -114,6 +117,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
         //adolescent_name_of_caregiver
+        cname.setText(client.getColumnmaps().get("caregiver_name") + " Household");
 
         return map;
 
@@ -398,6 +402,8 @@ public class HouseholdDetails extends AppCompatActivity {
             Timber.e(exception);
             return false;
         }
+
+
     }
 
     private ECSyncHelper getECSyncHelper() {

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,7 @@ import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -84,14 +86,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, visit, grad, grad17, hiv_ass;
+
+    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
+
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount;
+    private AppBarLayout myAppbar;
     private Toolbar toolbar;
+    String myAge;
 
 
     @Override
@@ -104,6 +110,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
+        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+
+        String gender =  client.getColumnmaps().get("gender");
+
+        if(gender.equals("male")){
+
+            toolbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
+            myAppbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
+
+        } else {
+
+            toolbar.setBackgroundDrawable(new ColorDrawable(0xffe36b89));
+            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffe36b89));
+
+        }
+
+
+
 
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -115,16 +141,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
-        visit = findViewById(R.id.visit);
+        household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
+        household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
         grad = findViewById(R.id.grad);
-        grad17 = findViewById(R.id.grad17);
-        hiv_ass = findViewById(R.id.hiv_assessment);
 
+        grad_sub = findViewById(R.id.grad_sub);
+        hiv_assessment = findViewById(R.id.hiv_assessment);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
-
 
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
@@ -136,13 +162,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
 
+
+
     public HashMap<String, String> getData() {
 
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
+        String birthdate = client.getColumnmaps().get("birthdate");
 
         if(birthdate != null){
 
@@ -151,10 +179,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             String month = items1[1];
             String year = items1[2];
 
-            String myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
+             myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
 
             txtAge.setText(myAge);
-
 
         } else {
 
@@ -164,6 +191,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         txtName.setText(full_name);
         txtGender.setText(gender);
+
+
 
 
         HashMap<String, String> map = new HashMap<>();
@@ -186,12 +215,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
         map.put("vl_suppressed", client.getColumnmaps().get("vl_suppressed"));
         map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
         map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
-        map.put("caregiver_firstname", client.getColumnmaps().get("caregiver_firstname"));
+        map.put("caregiver_name", client.getColumnmaps().get("caregiver_name"));
         map.put("caregiver_birth_date", client.getColumnmaps().get("caregiver_birth_date"));
         map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
         map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
         map.put("relation", client.getColumnmaps().get("relation"));
         map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
+        map.put("health_facility", client.getColumnmaps().get("health_facility"));
 
 
         return map;
@@ -292,57 +322,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
+
                     indexRegisterForm = formUtils.getFormJson("family_register");
-                    String fullCaregiverName = getCareGiverFullname(client);
-                    String[] caregiverNAmes = fullCaregiverName.split("\\s+");
 
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", txtAge.getText().toString());
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", txtAge.getText().toString());
-
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
-
-                  /*  indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("first_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("adolescent_birthdate"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("gender"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("health_facility"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", client.getColumnmaps().get("district"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("ward"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", client.getColumnmaps().get("adolescent_village"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", client.getColumnmaps().get("caseworker_firstname"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(13).put("value", client.getColumnmaps().get("caseworker_lastname"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(14).put("value", caseworker);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(15).put("value", caseworker);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(17).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(18).put("value", client.getColumnmaps().get("district"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", client.getColumnmaps().get("ward"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(20).put("value", client.getColumnmaps().get("adolescent_village"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", client.getColumnmaps().get("health_facility"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(22).put("value", client.getColumnmaps().get("partners"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(25).put("value", caregiverNAmes[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(26).put("value", caregiverNAmes[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(27).put("value", client.getColumnmaps().get("physical_address"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(28).put("value", client.getColumnmaps().get("caregiver_nrc"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(29).put("value", client.getColumnmaps().get("caregiver_phone"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(80).put("value", caseworker);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
 
 
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(4).put("value", "add41");
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("caregiver_id"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", client.getColumnmaps().get("gender"));
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(7).put("value", caregiverNAmes[0]);
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(8).put("value", caregiverNAmes[1]);
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(40).put("value", caseworker);
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(41).put("value", client.getColumnmaps().get("case_worker_nrc"));
-                   */ CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -360,30 +353,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("vca_assessment");
 
-                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
-                    String[] splitStr = caregiver_name.split("\\s+");
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
 
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0, 8);
 
-                    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    //String caseworker = prefs.getString("ecap", "");
-                    //String[] csw = caseworker.split("\\s+");
-                    //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", client.getColumnmaps().get("base_entity_id"));
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", txtAge.getText().toString());
-                    /*indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
-                   */ indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(54).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
-
-                    //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(55).put("value", csw[0]);
-                    //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(56).put("value", csw[1]);
-
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
 
                     startFormActivity(indexRegisterForm);
 
@@ -425,33 +403,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Timber.e(e);
                     }
 
-                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
-                    String[] splitStr = caregiver_name.split("\\s+");
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
 
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0, 8);
-
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
-                    String[] csw = caseworker.split("\\s+");
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-
-                    /*indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("base_entity_id"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("base_entity_id"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", splitStr[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", splitStr[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", hID);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(12).put("value", csw[1]);
-                    */indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(19).put("value", txtAge.getText().toString());
 
                    if(client.getColumnmaps().get("subpop1") != null){
 
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", client.getColumnmaps().get("subpop1"));
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("subpop1"));
 
                     } else {
 
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(21).put("value", "false");
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "false");
                     }
 
 
@@ -495,24 +456,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Timber.e(e);
                     }
 
-                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
-                    String[] splitStr = caregiver_name.split("\\s+");
-
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0,8);
-
-                   /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
-                    String[] csw = caseworker.split("\\s+");
-
-/*
-                   */ indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("province"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", client.getColumnmaps().get("district"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("adolescent_village"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("health_facility"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", client.getColumnmaps().get("first_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(8).put("value", client.getColumnmaps().get("last_name"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).put("value", client.getColumnmaps().get("adolescent_birthdate"));
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
 
 
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -533,23 +477,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
 
-                    String caregiver_name = client.getColumnmaps().get("adolescent_name_of_caregiver");
-                    String[] splitStr = caregiver_name.split("\\s+");
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
 
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0, 8);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(11).put("value", hID);
-
-
-                   /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
-                    String[] csw = caseworker.split("\\s+");
-
-                   /* indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(6).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", csw[1]);*/
-
-
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -558,21 +487,75 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.visit:
+            case R.id.household_profile:
+
+
+            Intent intent = new Intent(this, HouseholdDetails.class);
+            intent.putExtra("household",  client);
+            startActivity(intent);
+
+
+                break;
+
+            case R.id.household_visitation_caregiver:
 
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_caregiver");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
+
+
+                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+                    String uniqueId = UUID.randomUUID().toString();
+                    String hID = uniqueId.substring(0, 8);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    String caseworker = prefs.getString("ecap", "");
+                    String[] csw = caseworker.split("\\s+");
+
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", csw[0]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", csw[1]);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", hID);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case R.id.household_visitation_for_vca:
+
+                try {
+                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    startFormActivity(indexRegisterForm);
+
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", txtAge.getText().toString());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case R.id.grad:
@@ -582,7 +565,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("graduation");
-
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
@@ -592,14 +575,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
-
-            case R.id.grad17:
+            case R.id.grad_sub:
 
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("graduation17");
+                    indexRegisterForm = formUtils.getFormJson("graduation_assessment_sub_for_repeating_fields");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
@@ -615,10 +597,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 try {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
+                    if(Integer.valueOf(myAge) >15)
+                    {
+                        indexRegisterForm = formUtils.getFormJson("hiv_assessment");
+                    }
+                    else {
+                        indexRegisterForm = formUtils.getFormJson("risk_assessment_under_15");
+                    }
 
-                    indexRegisterForm = formUtils.getFormJson("hiv_assessment");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                   CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -638,8 +626,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
+            boolean is_edit_mode = false;
+
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
+            JSONObject jsonFormObject = null;
+            try {
+                jsonFormObject = new JSONObject(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
+                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+
+                is_edit_mode = true;
+            }
 
             try {
 
@@ -649,20 +652,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode);
 
             } catch (Exception e) {
                 Timber.e(e);
             }
 
         }
+        Intent i = new Intent(this, IndexRegisterActivity.class);
+        startActivity(i);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            //String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            String entityId  = formJsonObject.getString("entity_id");
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
@@ -716,12 +722,62 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     }
                     break;
 
+                case "Household Visitation For Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_CAREGIVER);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Household Visitation Form 0-20 years":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_VCA);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Graduation Assessment Form":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_GRADUATION);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Graduation Assessment 0-17 Years":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_GRADUATION_SUB);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+
                 case "Case Record Status":
 
-                    if(fields!= null)
-
-                        updateChildProfile(jsonString);
-
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
                     break;
             }
         } catch (JSONException e) {
@@ -879,10 +935,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
             referral.setVisibility(View.GONE);
-            visit.setVisibility(View.GONE);
+            household_visitation_caregiver.setVisibility(View.GONE);
+            household_visitation_for_vca.setVisibility(View.GONE);
             grad.setVisibility(View.GONE);
-            grad17.setVisibility(View.GONE);
-            hiv_ass.setVisibility(View.GONE);
+            grad_sub.setVisibility(View.GONE);
+            hiv_assessment.setVisibility(View.GONE);
+            //hiv_assessment_Above15.setVisibility(View.GONE);
+            // hiv_assessment_Below15.setVisibility(View.GONE);
 
         } else {
 
@@ -892,10 +951,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
-            visit.setVisibility(View.VISIBLE);
+            household_visitation_caregiver.setVisibility(View.VISIBLE);
+            household_visitation_for_vca.setVisibility(View.VISIBLE);
             grad.setVisibility(View.VISIBLE);
-            grad17.setVisibility(View.VISIBLE);
-            hiv_ass.setVisibility(View.VISIBLE);
+            grad_sub.setVisibility(View.VISIBLE);
+            hiv_assessment.setVisibility(View.VISIBLE);
+           // hiv_assessment_Above15.setVisibility(View.VISIBLE);
+            //hiv_assessment_Below15.setVisibility(View.VISIBLE);
+
         }
     }
     public String getCareGiverFullname(CommonPersonObjectClient client){
@@ -923,14 +986,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 startActivity(callIntent);
                 return true;
             case R.id.case_status:
-                openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+
+                try {
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void openFormUsingFormUtils(Context context, String formName)
-
-    {
+    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         FormUtils formUtils = null;
         try {
@@ -942,11 +1008,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        try {
-            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", client.getColumnmaps().get("base_entity_id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        formToBeOpened.put("entity_id", client.getColumnmaps().get("base_entity_id"));
+        formToBeOpened.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
+
         startFormActivity(formToBeOpened);
     }
 }

@@ -53,7 +53,9 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         String is_index = IndexPersonDao.checkIndexPerson(BaseEntityId);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence, plan, is_index);
+        String status = IndexPersonDao.getIndexStatus(BaseEntityId);
+
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence, plan, is_index, status);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 

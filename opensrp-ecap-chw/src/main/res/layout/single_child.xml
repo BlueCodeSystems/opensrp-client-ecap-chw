@@ -42,13 +42,13 @@
                 android:textSize="18sp" />
 
             <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/villageTextView"
+                android:id="@+id/child_age"
                 style="@style/CustomFontTextViewStyle.ClientList.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="6dp"
-                android:text="Lavington #445"
+                android:text="Age : 5"
                 android:textColor="@color/light_grey_text"
                 android:textSize="16sp"
                 android:textStyle="bold" />
