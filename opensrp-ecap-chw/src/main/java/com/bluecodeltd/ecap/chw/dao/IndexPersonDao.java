@@ -36,6 +36,18 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+
+    public static String getIndexStatus (String baseEntityID){
+
+        String sql = "SELECT case_status FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "case_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return values.get(0);
+
+    }
     
     public static List<String> getGenders(String baseEntityID){
 
@@ -50,9 +62,9 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String familyBaseEntityID) {
 
-        String sql = "SELECT base_entity_id, first_name, last_name FROM ec_client_index WHERE base_entity_id = '" + familyBaseEntityID + "'";
+        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE base_entity_id = '" + familyBaseEntityID + "'";
 
-        List<Child> values = AbstractDao.readData(sql, getChildDataMap());
+        List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
             return new ArrayList<>();
 
@@ -64,8 +76,9 @@ public class IndexPersonDao  extends AbstractDao {
         return c -> {
             Child record = new Child();
             record.setEntity_id(getCursorValue(c, "base_entity_id"));
-            record.setFirstname(getCursorValue(c, "first_name"));
-            record.setLastname(getCursorValue(c, "last_name"));
+            record.setFirst_name(getCursorValue(c, "first_name"));
+            record.setLast_name(getCursorValue(c, "last_name"));
+            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
             return record;
         };
     }

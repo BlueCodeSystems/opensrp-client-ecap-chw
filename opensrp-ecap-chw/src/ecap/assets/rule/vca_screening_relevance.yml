@@ -20,8 +20,8 @@ condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
   - "isRelevant = true"
 ---
-name: step5_caregiver_firstname
-description: caregiver_firstname relevance
+name: step5_caregiver_name
+description: caregiver_name relevance
 priority: 1
 condition: "step2_consent_check_box.contains('consent_check_box')"
 actions:
@@ -391,8 +391,8 @@ condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hi
 actions:
   - "isRelevant = true"
 ---
-name: step1_is_mother_currently_on_treatment
-description: is_mother_currently_on_treatment
+name: step1_active_on_treatment
+description: active_on_treatment
 priority: 1
 condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
 actions:
@@ -405,8 +405,8 @@ condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_ado
 actions:
   - "isRelevant = true"
 ---
-name: step1_is_mother_adhering_to_treatment
-description: is_mother_adhering_to_treatment
+name: step1_active_on_treatment
+description: active_on_treatment
 priority: 1
 condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:

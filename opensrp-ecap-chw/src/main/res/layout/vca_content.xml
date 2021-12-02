@@ -17,21 +17,19 @@
                 android:id="@+id/collapsing_toolbar_appbarlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/customAppThemeBlue">
+             >
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:contentScrim="@color/customAppThemeBlue"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbarx"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:background="@color/customAppThemeBlue"
                         app:theme="@style/ThemeOverlay.AppCompat.Light"
                         app:layout_collapseMode="pin" />
 
@@ -40,7 +38,6 @@
                         android:id="@+id/profile_name_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#218CC5"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         app:layout_collapseMode="parallax"
@@ -138,21 +135,43 @@
 
                         </LinearLayout>
 
-                        <Button
-                            android:onClick="onClick"
-                            android:id="@+id/myservice"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="15dp"
-                            android:background="@drawable/transparent_white_button"
-                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
-                            android:paddingTop="0dp"
-                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
-                            android:paddingBottom="0dp"
-                            android:text="Service Report"
-                            android:textAllCaps="false"
-                            tools:text="Service Report" />
+                            android:orientation="horizontal">
 
+                            <Button
+                                android:onClick="onClick"
+                                android:id="@+id/myservice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:background="@drawable/transparent_white_button"
+                                android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                                android:paddingTop="0dp"
+                                android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                                android:paddingBottom="0dp"
+                                android:text="Service Report"
+                                android:textAllCaps="false"
+                                tools:text="Service Report" />
+
+                            <Button
+                                android:layout_marginLeft="10dp"
+                                android:onClick="onClick"
+                                android:id="@+id/household_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:background="@drawable/transparent_white_button"
+                                android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                                android:paddingTop="0dp"
+                                android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                                android:paddingBottom="0dp"
+                                android:text="Household Profile"
+                                android:textAllCaps="false"
+                                tools:text="Service Report" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -365,7 +384,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/visit"
+                android:id="@+id/household_visitation_caregiver"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -379,19 +398,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/visit_fab"
+                    android:layout_toLeftOf="@+id/household_visitation_caregiver_fab"
                     android:background="@color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Household Visitation"
+                    android:text="Household Visitation For Caregiver"
                     android:textStyle="italic"
                     android:textColor="@android:color/black" />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/visit_fab"
+                    android:id="@+id/household_visitation_caregiver_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -400,6 +419,43 @@
                     app:srcCompat="@mipmap/ic_boy_child" />
 
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/household_visitation_for_vca"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/household_visitation_for_vca_fab"
+                    android:background="@color/white"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp"
+                    android:text="Household Visitation For VCA 0-20 Years"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/household_visitation_for_vca_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@mipmap/ic_boy_child" />
+
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/grad"
@@ -440,7 +496,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/grad17"
+                android:id="@+id/grad_sub"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -460,7 +516,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Grad Assessment / 17yrs"
+                    android:text="Grad Assessment(Sub Form)"
                     android:textStyle="italic"
                     android:textColor="@android:color/black" />
 

@@ -53,169 +53,8 @@
     }
   },
   "step1": {
-    "title": "VCA Assessment",
+    "title": "",
     "fields": [
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "VCA First Name"
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "VCA Last Name"
-      },
-      {
-        "key": "dob",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "read_only": "true",
-        "type": "hidden"
-      },
-      {
-        "key": "age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
-        "type": "edit_text",
-        "read_only": true,
-        "hint": "VCA Age",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "gender",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Beneficiary Gender"
-      },
-      {
-        "key": "base_entity_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "base_entity_id",
-        "type": "edit_text",
-        "hint": "VCA ID",
-        "edit_type": "name",
-        "read_only": true,
-        "v_required": {
-          "value": false,
-          "err": "Please enter VCA ID"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "VCA ID"
-        }
-      },
-      {
-        "key": "caregiverFirstName",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_firstname",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Caregiver First Name"
-      },
-      {
-        "key": "caregiverLastName",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_lastname",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Caregiver Second Name"
-      },
-      {
-        "key": "adolescent_phone",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_phone",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Telephone",
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "house_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "house_number",
-        "type": "edit_text",
-        "hint": "House Number/Street",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
-        "v_required": {
-          "value": false,
-          "err": "Error"
-        }
-      },
-      {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Province"
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "District"
-      },
-      {
-        "key": "township",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "township",
-        "type": "edit_text",
-        "hint": "Township/Compound",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
-          "err": "Error"
-        },
-        "v_required": {
-          "value": false,
-          "err": "Error"
-        }
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Nearest Health Facility"
-      },
       {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
@@ -231,13 +70,18 @@
             "value": false
           },
           {
+            "key": "negative",
+            "text": "Yes, status NEGATIVE",
+            "value": false
+          },
+          {
             "key": "no",
             "text": "No, status not known",
             "value": false
           },
           {
-            "key": "negative",
-            "text": "Yes, status NEGATIVE",
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
             "value": false
           }
         ]

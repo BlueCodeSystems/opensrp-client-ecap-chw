@@ -36,6 +36,9 @@
         android:theme="@style/ChwTheme"
         tools:replace="android:theme">
         <activity
+            android:name=".activity.MemberActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.MotherDetail"
             android:label="Caregiver Details"
             android:theme="@style/FamilyTheme.NoActionBar" />
@@ -115,10 +118,10 @@
         </activity>
         <activity
             android:name=".activity.IndexDetailsActivity"
-            android:theme="@style/FamilyTheme.NoActionBar"/>
+            android:theme="@style/FamilyTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdDetails"
-            android:theme="@style/FamilyTheme.NoActionBar"/>
+            android:theme="@style/FamilyTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
             android:launchMode="singleTask"

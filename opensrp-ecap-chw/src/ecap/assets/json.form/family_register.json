@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Household Screening",
+    "title": "",
     "next": "step2",
     "fields": [
       {
@@ -66,45 +66,6 @@
         "text": "A. Index VCA Sub Population"
       },
       {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "hint": "VCA ID",
-        "edit_type": "name",
-        "read_only": "true"
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "VCA First Name",
-        "read_only": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First name of VCA only accepts letters"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "VCA Last Name",
-        "edit_type": "name",
-        "value": "",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last name of VCA only accepts letters"
-        }
-      },
-      {
         "key": "vca_age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -116,30 +77,12 @@
         "value": ""
       },
       {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "label": "VCA Gender",
-        "read_only": "true",
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ]
-      },
-      {
         "key": "sub_population",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
+        "read_only":"true",
         "label": "Sub Population:",
         "options": [
           {
@@ -173,174 +116,6 @@
         ]
       },
       {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Health facility",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Health Facility only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Please enter Health Facility"
-        }
-      },
-      {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "stateProvince",
-        "type": "spinner",
-        "hint": "Province",
-        "read_only": "true",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select Province"
-        }
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "countyDistrict",
-        "type": "spinner",
-        "hint": "District",
-        "read_only": "true",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri",
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri",
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select District"
-        }
-      },
-      {
-        "key": "ward",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "subTown",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Ward",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
-      },
-      {
-        "key": "adolescent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
-        "type": "edit_text",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "read_only": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village/Compound  only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Village is required"
-        }
-      },
-      {
-        "key": "fname_community_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_community_case_worker",
-        "type": "edit_text",
-        "hint": "First Name of Community Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First Name of community case worker only take letters"
-        }
-      },
-      {
-        "key": "lname_community_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_community_case_worker",
-        "type": "edit_text",
-        "hint": "Last Name of Community Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last Name of community case worker only take letters"
-        }
-      },
-      {
-        "key": "fname_facility_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "fname_facility_case_worker",
-        "type": "edit_text",
-        "hint": "First Name of Facility Based Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First Name of case worker only take letters"
-        }
-      },
-      {
-        "key": "lname_facility_case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "lname_facility_case_worker",
-        "type": "edit_text",
-        "hint": "Last Name of Facility Based Case Worker",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last Name of case worker only take letters"
-        }
-      },
-      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -357,21 +132,6 @@
         "label_text_style": "bold",
         "type": "label",
         "text": "B. Household Information"
-      },
-      {
-        "key": "partners",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners",
-        "type": "spinner",
-        "hint": "Partners",
-        "values": [
-          "YWCA",
-          "BISO",
-          "ZEC",
-          "COH",
-          "PCZ"
-        ]
       },
       {
         "key": "screening_date",
@@ -396,75 +156,6 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Screening location  only take letters"
-        }
-      },
-      {
-        "key": "adolescent_name_of_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_name_of_caregiver",
-        "type": "edit_text",
-        "hint": "Name of caregiver",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Name of caregiver is required"
-        }
-      },
-      {
-        "key": "physical_address",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "physical_address",
-        "type": "edit_text",
-        "hint": "Residential address",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Please enter the home address"
-        }
-      },
-      {
-        "key": "caregiver_phone",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_phone",
-        "type": "edit_text",
-        "hint": "Caregivers phone number",
-        "edit_type": "number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          },
-          "calculation": {
-            "rules-engine": {
-              "ex-rules": {
-                "rules-file": "vca_screening_calculation.yml"
-              }
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
         }
       },
       {
@@ -1007,99 +698,6 @@
         "max_date": "today"
       },
       {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "hint": "Household ID",
-        "edit_type": "number",
-        "read_only" : "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter household ID"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Household ID cannot be empty"
-        }
-      },
-      {
-        "key": "caregiver_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "caregiver_id",
-        "type": "edit_text",
-        "hint": "Caregiver ID",
-        "read_only" : "true",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter Caregiver ID"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Caregiver ID cannot be empty"
-        }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "gender",
-        "type": "spinner",
-        "hint": "Gender",
-        "values": [
-          "Male",
-          "Female"
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please select gender"
-        }
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "Caregiver First Name ",
-        "read_only" : "true",
-        "edit_type": "name",
-        "look_up": "true"
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "read_only" : "true",
-        "hint": "Caregiver Last Name ",
-        "edit_type": "name",
-        "look_up": "true"
-      },
-      {
-        "key": "birthdate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdate",
-        "type": "date_picker",
-        "entity_id": "mother",
-        "hint": "Caregiver Date of Birth",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Enter caregivers date of birth"
-        }
-      },
-      {
         "key": "entry_type",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -1266,6 +864,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  Partner/Spouse Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_register_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1279,6 +884,13 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  Relationship Partner Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_register_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1287,7 +899,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "males_less_5",
         "type": "edit_text",
-        "hint": "Number of Males < 5 in household",
+        "hint": "Number of Males < 5 Yrs Old in household",
         "edit_type": "number",
         "v_required": {
           "value": "false",
@@ -1300,7 +912,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "females_less_5",
         "type": "edit_text",
-        "hint": "Number of Females < 5 in household",
+        "hint": "Number of Females < 5 Yrs Old in household",
         "edit_type": "number",
         "v_required": {
           "value": "false",
@@ -1313,7 +925,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "males_10_17",
         "type": "edit_text",
-        "hint": "Number of Males 10-17 in household",
+        "hint": "Number of Males 10-17 Yrs Old in household",
         "edit_type": "number",
         "v_required": {
           "value": "false",
@@ -1326,7 +938,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "females_10_17",
         "type": "edit_text",
-        "hint": "Number of Females 10-17 in household",
+        "hint": "Number of Females 10-17 Yrs Old in household",
         "edit_type": "number",
         "v_required": {
           "value": "false",
@@ -1971,7 +1583,7 @@
         "openmrs_data_type": "text",
         "type": "edit_text",
         "edit_text": "number",
-        "hint": "Number of malaria beds in household",
+        "hint": "Number of Beds in household",
         "tree": [
         ],
         "v_required": {

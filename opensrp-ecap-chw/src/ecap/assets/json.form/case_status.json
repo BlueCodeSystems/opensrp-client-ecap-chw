@@ -52,26 +52,26 @@
       }
     },
     "step1": {
-      "title": "Case Record Status",
+      "title": "",
       "fields": [
         {
-          "key": "is_closed",
+          "key": "case_status",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "is_closed",
+          "openmrs_entity_id": "case_status",
           "type": "native_radio",
           "label": "VCA Case record status",
           "options": [
             {
-              "key": "0",
-              "text": "active"
-            },
-            {
               "key": "1",
-              "text": "Inactive"
+              "text": "Active"
             },
             {
               "key": "2",
+              "text": "Inactive"
+            },
+            {
+              "key": "0",
               "text": "Closed"
             }
           ]
@@ -110,9 +110,9 @@
             }
           ],
           "relevance": {
-            "step1:is_closed": {
+            "step1:case_status": {
               "type": "string",
-              "ex": "equalTo(., \"2\")"
+              "ex": "equalTo(., \"0\")"
             }
           },
           "v_required": {

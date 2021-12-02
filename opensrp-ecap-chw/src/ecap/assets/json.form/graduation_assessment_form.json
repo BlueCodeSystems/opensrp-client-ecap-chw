@@ -53,46 +53,23 @@
     }
   },
   "step1": {
-    "title": "Graduation Assessment",
+    "title": "Graduation Assessment Form",
     "fields": [
+
       {
-        "key": "assessment_date_1",
+        "key": "name_rcmc_dc",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assessment_date_1",
-        "read_only": false,
-        "type": "date_picker",
-        "hint": "Date of First Assessment",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
+        "openmrs_entity_id": "name_rcmc_dc",
+        "type": "edit_text",
+        "hint": "Name of RCMC/DC",
+        "edit_type": "name",
         "v_required": {
           "value": false,
-          "err": "Date of Assessment  cannot be empty"
+          "err": "Name of RCMC/DC"
         }
       },
-      {
-        "key": "assessment_date_2",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assessment_date_2",
-        "read_only": false,
-        "type": "date_picker",
-        "hint": "Date of Second Assessment",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Date of Assessment  cannot be empty"
-        }
-      },
+
       {
         "key": "date_family_enrolled",
         "openmrs_entity_parent": "",
@@ -158,21 +135,7 @@
           }
         }
       },
-      {
-        "key": "adolescent_name_of_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_name",
-        "type": "edit_text",
-        "hint": "Caregiver Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
+
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -258,6 +221,28 @@
         "type": "label",
         "text": "Virally suppressed"
       },
+
+      {
+        "key": "hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_status",
+        "type": "native_radio",
+        "label": "Is there a member of the family enrolled in the Project living with HIV?",
+        "read_only": false,
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "n/a",
+            "text": "N/A",
+            "value": false
+          }
+        ]
+      },
       {
         "key": "virally_suppressed",
         "openmrs_entity_parent": "",
@@ -331,6 +316,7 @@
           }
         ]
       },
+
       {
         "key": "most_common_hiv_infected_hiv_ways",
         "openmrs_entity_parent": "",
@@ -490,6 +476,7 @@
           }
         ]
       },
+
       {
         "key": "undernourished",
         "openmrs_entity_parent": "",

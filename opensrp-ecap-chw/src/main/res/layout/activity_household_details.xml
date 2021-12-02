@@ -17,7 +17,7 @@
             android:id="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/customAppThemeBlue">
+            android:background="#696969">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar_layout"
@@ -31,7 +31,7 @@
                     android:id="@+id/toolbarx"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:background="@color/customAppThemeBlue"
+                    android:background="#696969"
                     app:theme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin" />
 
@@ -40,7 +40,7 @@
                     android:id="@+id/profile_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#218CC5"
+                    android:background="#696969"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     app:layout_collapseMode="parallax"
@@ -69,12 +69,12 @@
                         android:orientation="horizontal">
 
                         <org.smartregister.view.customcontrols.CustomFontTextView
-                            android:id="@+id/textview_detail_one"
+                            android:id="@+id/address1"
                             style="@style/CustomFontTextViewStyle.ClientList.Light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="ID : 3988760"
+                            android:text="Jack Bar, "
                             android:paddingStart="0dp"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:textColor="@color/white" />
@@ -85,12 +85,12 @@
                             android:orientation="horizontal">
 
                             <org.smartregister.view.customcontrols.CustomFontTextView
-                                android:id="@+id/vca_age"
+                                android:id="@+id/address2"
                                 style="@style/CustomFontTextViewStyle.ClientList.Light"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
-                                android:text="5"
+                                android:text="Test Village, Choma"
                                 android:paddingStart="0dp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/white" />
@@ -100,19 +100,45 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/myservice"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/transparent_white_button"
-                        android:paddingStart="@dimen/profile_btn_registration_info_padding"
-                        android:paddingTop="0dp"
-                        android:paddingEnd="@dimen/profile_btn_registration_info_padding"
-                        android:paddingBottom="0dp"
-                        android:text="Service Report"
-                        android:textAllCaps="false"
-                        tools:text="Service Report" />
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:onClick="onClick"
+                            android:id="@+id/myservice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:background="@drawable/transparent_white_button"
+                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                            android:paddingTop="0dp"
+                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                            android:paddingBottom="0dp"
+                            android:text="Service Report"
+                            android:textAllCaps="false"
+                            tools:text="Service Report" />
+
+                        <Button
+                            android:layout_marginLeft="10dp"
+                            android:onClick="onClick"
+                            android:id="@+id/household_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:background="@drawable/transparent_white_button"
+                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                            android:paddingTop="0dp"
+                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                            android:paddingBottom="0dp"
+                            android:text="Caregiver Profile"
+                            android:textAllCaps="false"
+                            tools:text="Service Report" />
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
 
@@ -136,14 +162,12 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-
         <androidx.viewpager.widget.ViewPager
-            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/viewpager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </androidx.viewpager.widget.ViewPager>
+            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
 
 
         <LinearLayout

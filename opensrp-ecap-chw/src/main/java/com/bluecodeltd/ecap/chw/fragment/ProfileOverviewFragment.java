@@ -25,7 +25,7 @@ public class ProfileOverviewFragment extends Fragment {
     RelativeLayout myview;
     LinearLayout myview2;
     ImageButton imgBtn;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred,
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult;
 
     @Nullable
@@ -53,6 +53,7 @@ public class ProfileOverviewFragment extends Fragment {
         txtIsSuppressed = view.findViewById(R.id.vl_suppressed);
         txtNextVl = view.findViewById(R.id.next_vl_test);
         txtIsMMD = view.findViewById(R.id.on_mmd);
+        txtFacility = view.findViewById(R.id.facility);
         txtMMDResult = view.findViewById(R.id.mmd_level);
 
         HashMap<String, String> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
@@ -105,6 +106,12 @@ public class ProfileOverviewFragment extends Fragment {
             txtArtNumber.setText(mymap.get("art_number"));
         } else {
             txtArtNumber.setText("N/A");
+        }
+
+        if (mymap.get("health_facility") != null){
+            txtFacility.setText(mymap.get("health_facility"));
+        } else {
+            txtFacility.setText("N/A");
         }
 
         if (mymap.get("date_referred") != null){

@@ -52,102 +52,12 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "province",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Province"
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "District"
-      },
-      {
-        "key": "village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "district",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Village"
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Health Facility"
-      },
-      {
-        "key": "implementing_partner",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "implementing_partner",
-        "type": "spinner",
-        "hint": "Implementing Partner ",
-        "values": [
-          "Project Concern Zambia (PCZ)",
-          "Young Women Christian Association (YWCA) ",
-          "Bwafwano Integrated Services Organization (BISO)",
-          "Circle of Hope (COH)",
-          "Zambia Episcopal Conference (ZEC)"
-        ]
-      },
-      {
-        "key": "caseworker_firstname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
-        "type": "edit_text",
-        "hint": "Case Worker First Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Worker Last Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Beneficiary First Name"
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Beneficiary Last Name"
-      },
-      {
         "key": "referral_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "event",
         "openmrs_entity_id": "referral_date",
         "type": "date_picker",
         "hint": " Referral Date",
-
         "expanded": false,
         "duration": {
           "label": ""
@@ -155,16 +65,9 @@
         "min_date": "today-19y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Referral date"
+          "value": true,
+          "err": "Referral date required"
         }
-      },
-      {
-        "key": "dob",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "read_only": "true"
       },
       {
         "key": "receiving_organization",
@@ -174,26 +77,9 @@
         "type": "edit_text",
         "hint": "Name of Receiving Organization",
         "v_required": {
-          "value": false,
+          "value": true,
           "err":  "Name of Receiving Organization is empty"
         }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Beneficiary Gender"
-      },
-      {
-        "key": "beneficiary_code",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "beneficiary_code",
-        "type": "edit_text",
-        "hint": "Beneficiary Code"
       }
     ]
   },
