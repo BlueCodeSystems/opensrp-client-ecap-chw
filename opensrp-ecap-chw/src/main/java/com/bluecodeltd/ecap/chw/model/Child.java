@@ -8,31 +8,35 @@ import java.io.Serializable;
 public class Child implements Serializable {
 
     public static final String ENTITY_ID = "entity_id";
-    public static final String FIRSTNAME = "firstname";
-    public static final String LASTNAME = "lastname";
+
 
     public Child() {
 
     }
 
-    public Child (String entity_id, String firstname, String lastname){
+    public Child (String entity_id, String first_name, String last_name, String adolescent_birthdate){
 
         this.entity_id = entity_id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.adolescent_birthdate = adolescent_birthdate;
     }
 
     @SerializedName("entity_id")
     @Expose
     private String entity_id;
 
-    @SerializedName("firstname")
+    @SerializedName("first_name")
     @Expose
-    private String firstname;
+    private String first_name;
 
-    @SerializedName("lastname")
+    @SerializedName("last_name")
     @Expose
-    private String lastname;
+    private String last_name;
+
+    @SerializedName("adolescent_birthdate")
+    @Expose
+    private String adolescent_birthdate;
 
     public String getEntity_id() {
         return entity_id;
@@ -42,19 +46,28 @@ public class Child implements Serializable {
         this.entity_id = entity_id;
     }
 
-    public String getFirstname() {
-        return firstname;
+
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public String getAdolescent_birthdate() {
+        return adolescent_birthdate;
+    }
+
+    public void setAdolescent_birthdate(String adolescent_birthdate) {
+        this.adolescent_birthdate = adolescent_birthdate;
     }
 }

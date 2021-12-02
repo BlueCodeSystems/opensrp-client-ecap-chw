@@ -1093,7 +1093,7 @@
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.countyDistrict"
+            "field": "attributes.countyDistrict"
           }
         },
         {
@@ -1108,34 +1108,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.adolescent_village"
-          }
-        },
-        {
-          "column_name": "fname_community_case_worker",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.fname_community_case_worker"
-          }
-        },
-        {
-          "column_name": "lname_facility_case_worker",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.lname_community_case_worker"
-          }
-        },
-        {
-          "column_name": "fname_facility_case_worker",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.fname_facility_case_worker"
-          }
-        },
-        {
-          "column_name": "lname_facility_case_worker",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.lname_facility_case_worker"
           }
         },
         {
@@ -1160,10 +1132,10 @@
           }
         },
         {
-          "column_name": "adolescent_name_of_caregiver",
+          "column_name": "caregiver_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.adolescent_name_of_caregiver"
+            "field": "attributes.caregiver_name"
           }
         },
         {
@@ -1340,7 +1312,7 @@
           }
         },
         {
-          "column_name": "birthdate",
+          "column_name": "adolescent_birthdate",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.adolescent_birthdate"
@@ -1480,17 +1452,10 @@
           }
         },
         {
-          "column_name": "caregiver_firstname",
+          "column_name": "caregiver_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_firstname"
-          }
-        },
-        {
-          "column_name": "caregiver_last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caregiver_last_name"
+            "field": "attributes.caregiver_name"
           }
         },
         {
@@ -2729,9 +2694,6 @@
         }
       ]
     },
-
-
-
     {
       "name": "ec_referral",
       "columns": [
@@ -2848,9 +2810,6 @@
         }
       ]
     },
-
-
-
     {
       "name": "ec_household_visitation_for_caregiver",
       "columns": [
@@ -3242,7 +3201,6 @@
         }
       ]
     },
-
     {
       "name": "ec_household_visitation_for_vca_0_20_years",
       "columns": [
@@ -3880,8 +3838,6 @@
         }
       ]
     },
-
-
     {
       "name": "ec_graduation_assessment",
       "columns": [
@@ -4247,7 +4203,6 @@
         }
       ]
     },
-
     {
       "name": "ec_graduation_assessment_sub_form",
       "columns": [

@@ -1583,7 +1583,7 @@
         "openmrs_data_type": "text",
         "type": "edit_text",
         "edit_text": "number",
-        "hint": "Number of malaria beds in household",
+        "hint": "Number of Beds in household",
         "tree": [
         ],
         "v_required": {

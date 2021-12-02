@@ -302,8 +302,8 @@
             "field": "eventType",
             "field_value": "Sub Population",
             "creates_case": [
-              "ec_sub_population",
-              "ec_client_index"
+              "ec_client_index",
+              "ec_household"
             ]
           },
           {
