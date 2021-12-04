@@ -329,6 +329,9 @@ dependencies {
 
     //Foe Sentry
     implementation 'io.sentry:sentry-android:5.1.2'
+    //Custom Toast
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
+    //implementation 'com.valdesekamdem.library:md-toast:0.8.0'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -55,11 +55,15 @@ public class MemberActivity extends AppCompatActivity {
                 form.setNextLabel(getString(R.string.next));
                 form.setPreviousLabel(getString(R.string.previous));
                 form.setSaveLabel(getString(R.string.submit));
+                form.isHideNextButton();
+                form.isHidePreviousButton();
                 form.setNavigationBackground(R.color.primary);
             } else {
                 form.setWizard(false);
                 form.setHideSaveLabel(true);
                 form.setNextLabel("");
+                form.isHideNextButton();
+                form.isHidePreviousButton();
             }
             intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         } catch (JSONException e) {

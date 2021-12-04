@@ -87,6 +87,10 @@
         "v_regex": {
           "value": "[A-Za-z]*",
           "err": "First name of VCA only accepts letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please Enter First Name"
         }
       },
       {
@@ -101,6 +105,10 @@
         "v_regex": {
           "value": "[A-Za-z]*",
           "err": "Last name of VCA only accepts letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please Enter Last Name"
         }
       },
       {
@@ -119,7 +127,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please enter Birth Date"
+          "err": "Please Enter Birth date"
         }
       },
       {
@@ -138,7 +146,11 @@
             "key": "female",
             "text": "Female"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please Select Gender"
+        }
       },
       {
         "key": "sub_population",
@@ -320,6 +332,41 @@
         }
       },
       {
+        "key": "caregiver_sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_sex",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver Gender"
+      },
+      {
+        "key": "caregiver_birth_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_birth_date",
+        "type": "date_picker",
+        "hint": "Caregiver Date of birth",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Please enter Birth Date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "physical_address",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_address",
@@ -465,7 +512,7 @@
           }
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Select HIV status"
         }
       },

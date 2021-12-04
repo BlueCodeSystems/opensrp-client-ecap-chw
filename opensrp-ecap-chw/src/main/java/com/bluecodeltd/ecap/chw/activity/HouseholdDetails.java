@@ -2,14 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +12,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -58,8 +52,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class HouseholdDetails extends AppCompatActivity {
@@ -236,23 +230,23 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
 
-            case R.id.child_form:
+    case R.id.child_form:
 
-                try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
+        try {
+            FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+            JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("family_member");
+            indexRegisterForm = formUtils.getFormJson("family_member");
 
-                    //indexRegisterForm.put("entity_id", client.getColumnmaps().get("base_entity_id"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", client.getColumnmaps().get("base_entity_id"));
-                    startFormActivity(indexRegisterForm);
+            CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            startFormActivity(indexRegisterForm);
 
-                break;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        break;
 
         }
     }
@@ -298,7 +292,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-
             try {
 
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
@@ -320,10 +313,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
-            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
+            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+            String entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();;
+
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
@@ -333,7 +327,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
-                        String base_entity_id = formJsonObject.getString("entity_id");
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
                         tagSyncMetadata(event);
@@ -384,8 +377,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    Toast.makeText(HouseholdDetails.this, "Form Data Saved", Toast.LENGTH_LONG).show();
-
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -393,6 +384,10 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
         };
+
+
+        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_SHORT, true).show();
+
 
         try {
             AppExecutors appExecutors = new AppExecutors();
