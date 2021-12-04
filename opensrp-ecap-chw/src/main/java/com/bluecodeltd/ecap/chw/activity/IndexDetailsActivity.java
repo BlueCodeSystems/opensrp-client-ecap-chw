@@ -170,7 +170,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("birthdate");
+        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
 
         if(birthdate != null){
 
@@ -667,9 +667,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            //String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-            String entityId  = formJsonObject.getString("entity_id");
+
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+            String entityId = "";
+
+            if(encounterType.equals("Case Record Status")){
+
+                entityId  = formJsonObject.getString("entity_id");
+            } else {
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
 

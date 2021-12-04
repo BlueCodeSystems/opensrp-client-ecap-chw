@@ -1139,6 +1139,20 @@
           }
         },
         {
+          "column_name": "caregiver_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_sex"
+          }
+        },
+        {
+          "column_name": "caregiver_birth_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_birth_date"
+          }
+        },
+        {
           "column_name": "physical_address",
           "type": "Client",
           "json_mapping": {
@@ -1211,6 +1225,74 @@
       ]
     },
     {
+      "name": "ec_household_member",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.opensrp_id"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "firstName"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "lastName"
+          }
+        },
+        {
+          "column_name": "member_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.member_type"
+          }
+        },
+        {
+          "column_name": "adolescent_birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_birthdate"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_client_index",
       "columns": [
         {
@@ -1224,7 +1306,7 @@
           "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.opensrp_id"
+            "field": "attributes.unique_id"
           }
         },
         {
