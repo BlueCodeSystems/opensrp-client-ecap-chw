@@ -70,6 +70,9 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -173,7 +176,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String birthdate = client.getColumnmaps().get("adolescent_birthdate");
 
         if(birthdate != null){
-
+/*
             String[] items1 = birthdate.split("-");
             String date1 = items1[0];
             String month = items1[1];
@@ -181,9 +184,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
              myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
 
-            txtAge.setText(myAge);
+*/
 
-        } else {
+           txtAge.setText(getAge(birthdate));
+
+        }else {
 
             txtAge.setText("Not Set");
 
@@ -228,22 +233,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     }
 
-    private String getAge(int year, int month, int day){
-        Calendar dob = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-
-        dob.set(year, month, day);
-
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
-            age--;
-        }
-
-        Integer ageInt = new Integer(age);
-        String ageS = ageInt.toString();
-
-        return ageS;
+    private String getAge(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+         if(periodBetweenDateOfBirthAndNow.getYears() >0)
+         {
+             return periodBetweenDateOfBirthAndNow.getYears() +" Years";
+         }
+         else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+                 return periodBetweenDateOfBirthAndNow.getMonths() +" Months ";
+             }
+         else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+             return periodBetweenDateOfBirthAndNow.getDays() +" Days ";
+         }
+         else return "Not Set";
     }
 
     private void setupViewPager(){
