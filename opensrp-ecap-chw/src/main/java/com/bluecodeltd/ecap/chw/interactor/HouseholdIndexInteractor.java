@@ -116,6 +116,8 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
             Date lastSyncDate = new Date(lastSyncTimeStamp);
             getClientProcessorForJava().processClient(getSyncHelper().getEvents(currentFormSubmissionIds));
             getAllSharedPreferences().saveLastUpdatedAtDate(lastSyncDate.getTime());
+
+
         } catch (Exception e) {
             Timber.e(e, "OpdRegisterInteractor --> saveRegistration");
         }
