@@ -19,7 +19,17 @@ public class IndexPersonDao  extends AbstractDao {
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-       // Log.d("mytagd", "jacob : " + values.get(0));
+        return values.get(0);
+
+    }
+
+    public static String checkIfScreened (String baseEntityID) {
+
+        String sql = "SELECT screened FROM ec_household WHERE base_entity_id = '" + baseEntityID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "screened");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
 
         return values.get(0);
 
@@ -27,7 +37,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countChildren(String baseEntityID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -51,7 +61,7 @@ public class IndexPersonDao  extends AbstractDao {
     
     public static List<String> getGenders(String baseEntityID){
 
-        String sql = "SELECT gender FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "'";
+        String sql = "SELECT gender FROM ec_client_index WHERE (base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"') AND gender IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "gender");
 
@@ -62,7 +72,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String familyBaseEntityID) {
 
-        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE base_entity_id = '" + familyBaseEntityID + "'";
+        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE base_entity_id = '" + familyBaseEntityID + "' OR unique_id = '"+ familyBaseEntityID +"'";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
@@ -71,6 +81,8 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
 
     }
+
+
 
     public static DataMap<Child> getChildDataMap() {
         return c -> {

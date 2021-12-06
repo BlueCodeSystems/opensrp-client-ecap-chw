@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 import android.content.Context;
@@ -170,7 +171,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
         String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("birthdate");
+        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
 
         if(birthdate != null){
 
@@ -659,17 +660,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         }
-        Intent i = new Intent(this, IndexRegisterActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(this, IndexRegisterActivity.class);
+        //startActivity(i);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
-            //String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-            String entityId  = formJsonObject.getString("entity_id");
+
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+            String entityId = "";
+
+            if(encounterType.equals("Case Record Status")){
+
+                entityId  = formJsonObject.getString("entity_id");
+            } else {
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
 
@@ -820,8 +830,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    Toast.makeText(IndexDetailsActivity.this, "Form Data Saved", Toast.LENGTH_LONG).show();
-
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -829,6 +837,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         };
+
+        Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
         try {
             AppExecutors appExecutors = new AppExecutors();

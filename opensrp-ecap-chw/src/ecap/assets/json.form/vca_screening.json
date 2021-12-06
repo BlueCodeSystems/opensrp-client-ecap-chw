@@ -180,7 +180,7 @@
         "key": "adolescent_last_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_last_namee",
+        "openmrs_entity_id": "adolescent_last_name",
         "type": "edit_text",
         "hint": "VCA last name ",
         "edit_type": "name",
@@ -317,7 +317,11 @@
             "key": "female",
             "text": "Female"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please Select Gender"
+        }
       },
       {
         "key": "school",
@@ -1934,7 +1938,7 @@
         "read_only": "true",
         "type": "edit_text",
         "value": "true",
-        "hint": "Children/Adolescents Living with HIV (C/ALHIV) ",
+        "hint": "Children/Adolescents Living with HIV (C/ALHIV)",
         "edit_type": "name",
         "relevance": {
           "rules-engine": {

@@ -125,7 +125,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
     @Override
     public void initializeAdapter() {
         HouseholdRegisterProvider registerProvider = new HouseholdRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_FAMILY));
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_HOUSEHOLD));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }

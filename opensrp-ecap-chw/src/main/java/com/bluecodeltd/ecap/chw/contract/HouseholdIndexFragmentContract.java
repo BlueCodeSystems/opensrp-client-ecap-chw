@@ -5,9 +5,9 @@ import org.smartregister.view.contract.BaseRegisterFragmentContract;
 public interface HouseholdIndexFragmentContract {
 
     interface Presenter extends BaseRegisterFragmentContract.Presenter {
-        void initView(HouseholdIndexFragmentContract.View view);
+        void initView(View view);
 
-        HouseholdIndexFragmentContract.View getView();
+        View getView();
     }
 
     interface View extends BaseRegisterFragmentContract.View {
