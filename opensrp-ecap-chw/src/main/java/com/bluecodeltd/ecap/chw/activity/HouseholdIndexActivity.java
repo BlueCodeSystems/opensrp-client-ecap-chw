@@ -100,9 +100,12 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){
 
             String jsonString = data.getStringExtra(OpdConstants.JSON_FORM_EXTRA.JSON);
+
+
             try {
 
                 JSONObject jsonFormObject = new JSONObject(jsonString);
+              //  String entityId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).
 
                 if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
