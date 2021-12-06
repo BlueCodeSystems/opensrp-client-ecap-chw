@@ -1933,18 +1933,13 @@
       {
         "key": "subpop1",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop1",
-        "type": "check_box",
         "read_only": "true",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": true
-          }
-        ],
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "edit_type": "name",
         "relevance": {
           "rules-engine": {
             "ex-rules": {

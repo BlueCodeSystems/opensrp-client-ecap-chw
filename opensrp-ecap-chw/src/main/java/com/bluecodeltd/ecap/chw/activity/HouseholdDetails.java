@@ -110,8 +110,12 @@ public class HouseholdDetails extends AppCompatActivity {
         HashMap<String, String> map = new HashMap<>();
 
         map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
+
+       // List<String> house = IndexPersonDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
+
         //adolescent_name_of_caregiver
         cname.setText(client.getColumnmaps().get("caregiver_name") + " Household");
+
 
         return map;
 

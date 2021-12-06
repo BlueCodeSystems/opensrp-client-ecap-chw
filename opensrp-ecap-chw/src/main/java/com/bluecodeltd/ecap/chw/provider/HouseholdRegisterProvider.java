@@ -58,9 +58,10 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
        // int childrenCount = IndexPersonDao.countChildren(BaseEntityId);
 
         List<String> genderList = IndexPersonDao.getGenders(BaseEntityId);
+        String is_screened = IndexPersonDao.checkIfScreened(BaseEntityId);
 
 
-        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", residence, genderList, context);
+        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", residence, genderList, is_screened, context);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }

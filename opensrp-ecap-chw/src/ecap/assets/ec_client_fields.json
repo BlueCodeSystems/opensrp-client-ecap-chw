@@ -1221,6 +1221,13 @@
           "json_mapping": {
             "field": "attributes.date_of_last_viral_load"
           }
+        },
+        {
+          "column_name": "screened",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screened"
+          }
         }
       ]
     },

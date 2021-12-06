@@ -20,6 +20,8 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
     private TextView villageTextView;
 
+    private ImageView homeIcon;
+
     LinearLayout hLayout;
 
     public HouseholdRegisterViewHolder(@NonNull View itemView) {
@@ -27,11 +29,21 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         familyNameTextView = itemView.findViewById(R.id.familyNameTextView);
         villageTextView = itemView.findViewById(R.id.villageTextView);
         hLayout = itemView.findViewById(R.id.child_wrapper);
+        homeIcon = itemView.findViewById(R.id.home_icon);
     }
 
-    public void setupViews(String family, String village, List<String> genderList, Context context){
+    public void setupViews(String family, String village, List<String> genderList, String screened, Context context){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
+
+
+        if (screened != null){
+
+            homeIcon.setImageResource(R.mipmap.ic_home_active);
+        } else {
+
+            homeIcon.setImageResource(R.mipmap.ic_home);
+        }
 
         for(int i=0; i < genderList.size(); i++) {
 

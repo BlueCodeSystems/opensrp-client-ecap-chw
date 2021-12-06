@@ -306,7 +306,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
-        "hint": "Screening Location:",
+        "hint": "Screening Location",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -336,9 +336,16 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Caregiver Gender"
+        "type": "spinner",
+        "hint": "Caregiver Gender",
+        "values": [
+          "Male",
+          "Female"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select gender"
+        }
       },
       {
         "key": "caregiver_birth_date",
@@ -424,21 +431,6 @@
         "openmrs_entity_id": "1",
         "type": "spacer",
         "spacer_height": "15dp"
-      },
-      {
-        "key": "hd3",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd3",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "type": "label",
-        "text": "Household Summary Information"
-      },
-      {
-        "key": "blank_space",
-        "type": "label",
-        "text": " "
       },
       {
         "key": "primary_caregivers_only",
@@ -987,6 +979,17 @@
             }
           }
         }
+      },
+      {
+        "key": "screened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "screened",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Is Screened",
+        "edit_type": "name"
       }
     ]
   }
