@@ -234,6 +234,12 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  entry type"
+        },
+        "relevance": {
+          "step1:entry_type": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
         }
       },
       {
@@ -800,7 +806,7 @@
           "Son",
           "Daughter"
         ]
-      }
+      },
       {
         "key": "contact_street_name",
         "openmrs_entity_parent": "",
