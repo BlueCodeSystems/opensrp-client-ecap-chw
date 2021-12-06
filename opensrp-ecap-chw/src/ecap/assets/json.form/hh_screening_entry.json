@@ -1,5 +1,5 @@
 {
-  "count": 2,
+  "count": 3,
   "skip_blank_steps": true,
   "encounter_type": "Household Screening",
   "entity_id": "",
@@ -67,10 +67,10 @@
         "text": "Index VCA Sub Population Screening"
       },
       {
-        "key": "unique_id",
+        "key": "vca_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
+        "openmrs_entity_id": "vca_id",
         "type": "edit_text",
         "hint": "VCA ID",
         "edit_type": "name",

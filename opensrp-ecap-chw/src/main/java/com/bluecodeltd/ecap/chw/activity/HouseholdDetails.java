@@ -111,7 +111,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
 
-       // List<String> house = IndexPersonDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
+        // List<String> house = IndexPersonDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
 
         //adolescent_name_of_caregiver
         cname.setText(client.getColumnmaps().get("caregiver_name") + " Household");
@@ -390,7 +390,7 @@ public class HouseholdDetails extends AppCompatActivity {
         };
 
 
-        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_SHORT, true).show();
+        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
 
 
         try {

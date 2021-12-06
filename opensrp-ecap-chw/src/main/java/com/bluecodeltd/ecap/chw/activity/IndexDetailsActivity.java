@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 import android.content.Context;
@@ -659,8 +660,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         }
-        Intent i = new Intent(this, IndexRegisterActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(this, IndexRegisterActivity.class);
+        //startActivity(i);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -829,8 +830,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    Toast.makeText(IndexDetailsActivity.this, "Form Data Saved", Toast.LENGTH_LONG).show();
-
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -838,6 +837,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         };
+
+        Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
         try {
             AppExecutors appExecutors = new AppExecutors();
