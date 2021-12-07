@@ -1,3 +1,4 @@
+---
 name: step2_subpop1_toast
 description: subpop1_toast relevance
 priority: 1
@@ -23,6 +24,27 @@ name: step2_subpop2
 description: subpop2 relevance
 priority: 1
 condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_immunization
+description: step3_immunization relevance
+priority: 1
+condition: "step1_myage == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step3_child_nut_assessment
+description: step3_child_nut_assessment relevance
+priority: 1
+condition: "step1_myage == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step3_muac_score
+description: step3_muac_score
+priority: 1
+condition: "step1_myage == 1"
 actions:
   - "isRelevant = true"
 ---

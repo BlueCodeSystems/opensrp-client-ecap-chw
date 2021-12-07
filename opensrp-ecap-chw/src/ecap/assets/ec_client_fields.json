@@ -1149,7 +1149,7 @@
           "column_name": "physical_address",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.addressFields.physical_address"
+            "field": "attributes.physical_address"
           }
         },
         {
@@ -1213,6 +1213,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_of_last_viral_load"
+          }
+        },
+        {
+          "column_name": "biological_children",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.biological_children"
+          }
+        },
+        {
+          "column_name": "enrolled_pmtct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.enrolled_pmtct"
           }
         },
         {
