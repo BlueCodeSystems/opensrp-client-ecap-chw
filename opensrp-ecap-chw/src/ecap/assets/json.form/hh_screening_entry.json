@@ -57,12 +57,31 @@
     "next": "step2",
     "fields": [
       {
+        "key": "subpop4_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "subpop4_toast",
+        "type": "toaster_notes",
+        "text": "HOUSEHOLD SCREENING",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "The Household Screening Form will be used to assess the index VCA Sub Population and his/her household to identify other household members who should be enrolled into the OVC Comprehensive program. The data collected on this tool are used to ensure that the criteria set for enrolling other household members is followed and that it is consistent to ensure other household members are enrolled based on set program criteria. The data will form the basis for enrolling other household members into the program and providing family-centered services.",
+        "toaster_info_title": "Introduction",
+        "toaster_type": ""
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
         "key": "hd1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
-        "text_color": "#000000",
-        "label_text_style": "bold",
         "type": "label",
         "text": "Index VCA Sub Population Screening"
       },
@@ -268,8 +287,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
-        "text_color": "#000000",
-        "label_text_style": "bold",
         "type": "label",
         "text": "Household Information"
       },
@@ -278,15 +295,12 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partners",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Partners",
-        "values": [
-          "YWCA",
-          "BISO",
-          "ZEC",
-          "COH",
-          "PCZ"
-        ]
+        "value": "ZEC",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "screening_date",
@@ -376,7 +390,7 @@
       {
         "key": "physical_address",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "physical_address",
         "type": "edit_text",
         "hint": "Residential address",
@@ -435,9 +449,7 @@
       {
         "key": "primary_caregivers_only",
         "type": "label",
-        "label_text_style": "bold",
         "text": "For Primary Caregivers Only",
-        "text_color": "#000000",
         "v_required": {
           "value": false
         }
@@ -566,8 +578,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9]{1})",
+          "err": "ART should be in the format of ^XXXX-XXXX-XXXXXX-X"
         }
       },
       {
@@ -666,20 +678,13 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
+        ]
       },
       {
-        "key": "enrolled_in_the_pmtct_program",
+        "key": "enrolled_pmtct",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "enrolled_in_the_pmtct_program",
+        "openmrs_entity_id": "enrolled_pmtct",
         "type": "native_radio",
         "label": "Are you and your biological children enrolled in the PMTCT program?",
         "options": [
@@ -731,7 +736,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "reason_for_hiv_risk",
         "type": "edit_text",
-        "hint": "State reason...",
+        "hint": "State reason for HIV Risk",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1355,7 +1360,7 @@
           "value": false,
           "err": "Last time household member had malaria"
         }
-      },
+      }
     ]
   }
 }

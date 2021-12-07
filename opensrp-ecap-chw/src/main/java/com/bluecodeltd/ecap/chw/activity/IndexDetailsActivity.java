@@ -127,8 +127,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         } else {
 
-            toolbar.setBackgroundDrawable(new ColorDrawable(0xffe36b89));
-            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffe36b89));
+            toolbar.setBackgroundDrawable(new ColorDrawable(0xffffc0cb));
+            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffffc0cb));
 
         }
 

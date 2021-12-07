@@ -104,15 +104,8 @@ condition: "step1_active_on_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_biological_children
-description: biological_children relevance
-priority: 1
-condition: "step1_knows_hiv_status.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step1_enrolled_in_the_pmtct_program
-description: enrolled_in_the_pmtct_program relevance
+name: step1_enrolled_pmtct
+description: enrolled_pmtct relevance
 priority: 1
 condition: "step1_biological_children.contains('yes')"
 actions:
@@ -122,5 +115,12 @@ name: step1_are_there_any_reasons_you_may_be_at_risk_for_hiv
 description: are_there_any_reasons_you_may_be_at_risk_for_hiv relevance
 priority: 1
 condition: "step1_caregiver_hiv_status.contains('HIV+')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_reason_for_hiv_risk
+description: reason_for_hiv_risk relevance
+priority: 1
+condition: "step1_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes')"
 actions:
   - "isRelevant = true"

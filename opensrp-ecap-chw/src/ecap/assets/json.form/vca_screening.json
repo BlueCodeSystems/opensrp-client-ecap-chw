@@ -1854,7 +1854,7 @@
         "openmrs_entity_id": "subpop2_toast",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
         "relevance": {
