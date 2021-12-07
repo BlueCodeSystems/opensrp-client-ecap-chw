@@ -1,5 +1,5 @@
 {
-  "count": "2",
+  "count": "3",
   "skip_blank_steps": true,
   "encounter_type": "Family Member",
   "relational_id": "",
@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Add Family Member",
+    "title": "Family Member",
     "next": "step2",
     "fields": [
       {
@@ -168,6 +168,62 @@
         "v_required": {
           "value": true,
           "err": "Please Select Gender"
+        }
+      },
+      {
+        "key": "school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school",
+        "type": "native_radio",
+        "label": "Is the VCA in School?",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        },
+        "options": [
+          {
+            "key": "pre_school",
+            "text": "Pre-school"
+          },
+          {
+            "key": "primary_school",
+            "text": "Primary school"
+          },
+          {
+            "key": "secondary_school",
+            "text": "Secondary school"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          },
+          {
+            "key": "not_in_school",
+            "text": "not in school"
+          }
+        ]
+      },
+      {
+        "key": "other_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_school",
+        "type": "edit_text",
+        "hint": "School",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "school  can only contain letters"
+        },
+        "relevance": {
+          "step1:school": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
         }
       },
       {
@@ -1635,15 +1691,8 @@
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
         "hint": "Caregivers phone number",
-        "edit_type": "number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
+        "read_only": "true",
+        "edit_type": "number"
       },
       {
         "key": "case_status",
@@ -1664,6 +1713,7 @@
   },
   "step2": {
     "title": "Sub Populations",
+    "next": "step3",
     "fields": [
       {
         "key": "subpop1_toast",
@@ -1879,6 +1929,134 @@
               "rules-file": "family_member_relevance.yml"
             }
           }
+        }
+      }
+    ]
+  },
+  "step3": {
+    "title": "Immunization Status",
+    "fields": [
+      {
+        "key": "immunization",
+        "label": "Has the child received the following vaccinations?",
+        "type": "check_box",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "options": [
+          {
+            "key": "bcg",
+            "text": "BIRTH-BCG",
+            "value": false
+          },
+          {
+            "key": "opv0",
+            "text": "BIRTH-OPV0",
+            "value": false
+          },
+          {
+            "key": "dtp1",
+            "text": "6 WEEKS-DTP1",
+            "value": false
+          },
+          {
+            "key": "OPV1",
+            "text": "6 WEEKS-OPV1",
+            "value": false
+          },
+          {
+            "key": "PCV1",
+            "text": "6 WEEKS-PCV1",
+            "value": false
+          },
+          {
+            "key": "ROT1",
+            "text": "6 WEEKS-ROT1",
+            "value": false
+          },
+          {
+            "key": "DTP2",
+            "text": "10 WEEKS-DTP2",
+            "value": false
+          },
+          {
+            "key": "OPV2",
+            "text": "10 WEEKS-OPV2",
+            "value": false
+          },
+          {
+            "key": "PCV2",
+            "text": "10 WEEKS-PCV2",
+            "value": false
+          },
+          {
+            "key": "ROT2",
+            "text": "10 WEEKS-ROT2",
+            "value": false
+          },
+          {
+            "key": "DTP3",
+            "text": "14 WEEKS-DTP3",
+            "value": false
+          },
+          {
+            "key": "OPV3",
+            "text": "14 WEEKS-OPV3",
+            "value": false
+          },
+          {
+            "key": "PCV3",
+            "text": "14 WEEKS-PCV3",
+            "value": false
+          },
+          {
+            "key": "MEASL R1",
+            "text": "9 MNTHS-MEASL R1",
+            "value": false
+          },
+          {
+            "key": "MEASL R1",
+            "text": "18MNTHS-MEASL R1",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This is a required field"
+        }
+
+
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "child_nut_assessment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Child Nutrition Assessment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "muac_score",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "muac_score",
+        "type": "edit_text",
+        "hint": "MUAC Score",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Enter correct MUAC Score"
         }
       }
     ]
