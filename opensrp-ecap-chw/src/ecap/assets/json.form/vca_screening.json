@@ -284,6 +284,13 @@
         "openmrs_entity_id": "1",
         "type": "spacer",
         "spacer_height": "15dp"
+      },     {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
       },
       {
         "key": "hd2",
@@ -1747,10 +1754,10 @@
         }
       },
       {
-        "key": "date_screening_carried_out",
+        "key": "date_screened",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_screening_carried_out",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_screened",
         "type": "date_picker",
         "hint": "Date of screening",
         "look_up": "true",

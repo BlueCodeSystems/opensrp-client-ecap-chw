@@ -1436,6 +1436,13 @@
           }
         },
         {
+          "column_name": "date_screened",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_screened"
+          }
+        },
+        {
           "column_name": "date_hiv_known",
           "type": "Client",
           "json_mapping": {
