@@ -21,6 +21,7 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
@@ -237,14 +238,27 @@ public class HouseholdDetails extends AppCompatActivity {
     case R.id.child_form:
 
         try {
-            FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-            JSONObject indexRegisterForm;
 
-            indexRegisterForm = formUtils.getFormJson("family_member");
+           String BaseEntityId = client.getColumnmaps().get("base_entity_id");
 
-            CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+           String is_screened = HouseholdDao.checkIfScreened(BaseEntityId);
 
-            startFormActivity(indexRegisterForm);
+            if (is_screened == null){
+
+                Toasty.warning(HouseholdDetails.this, "Household has not been screened", Toast.LENGTH_LONG, true).show();
+
+
+            } else {
+
+                FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                JSONObject indexRegisterForm;
+
+                indexRegisterForm = formUtils.getFormJson("family_member");
+
+                CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+
+                startFormActivity(indexRegisterForm);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
