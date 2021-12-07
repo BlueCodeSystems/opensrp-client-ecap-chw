@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.view_holder.HouseholdRegisterViewHolder;
 import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
@@ -58,7 +59,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
        // int childrenCount = IndexPersonDao.countChildren(BaseEntityId);
 
         List<String> genderList = IndexPersonDao.getGenders(BaseEntityId);
-        String is_screened = IndexPersonDao.checkIfScreened(BaseEntityId);
+        String is_screened = HouseholdDao.checkIfScreened(BaseEntityId);
 
 
         householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", residence, genderList, is_screened, context);

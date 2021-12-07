@@ -871,6 +871,7 @@
   },
   "step2": {
     "title": "Sub Populations",
+    "next": "step3",
     "fields": [
       {
         "key": "subpop1",
@@ -991,6 +992,370 @@
         "hint": "Is Screened",
         "edit_type": "name"
       }
+    ]
+  },
+  "step3":{
+    "title":"Household Enrollment",
+    "fields":[
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "type": "label",
+        "text": "Household Details"
+      },
+      {
+        "key": "enrollment_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "enrollment_date",
+        "type": "date_picker",
+        "hint": "Date of HH Enrollment",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "01-01-1900",
+        "max_date": "today"
+      },
+      {
+        "key": "entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "entry_type",
+        "type": "native_radio",
+        "label": "Type of Entry into Program",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "transfer_from_zamfam",
+            "text": "Transfer from ZAMFAM",
+            "value": false
+          },
+          {
+            "key": "referral_from_facility",
+            "text": "Referral from Facility",
+            "value": false
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "other_entry_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "other_entry_type",
+        "type": "edit_text",
+        "hint": "Other type of Entry",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  entry type"
+        }
+      },
+      {
+        "key": "caregiver_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_education",
+        "type": "native_radio",
+        "label": "Caregiver’s education level",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          },
+          {
+            "key": "highest_grade",
+            "text": "Highest grade",
+            "value": false
+          },
+          {
+            "key": "college_university",
+            "text": "College/University",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re to select the level of education"
+        }
+      },
+      {
+        "key": "highest_grade",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "highest_grade",
+        "type": "edit_text",
+        "hint": "Highest Grade",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
+        }
+      },
+      {
+        "key": "monthly_expenses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "monthly_expenses",
+        "type": "native_radio",
+        "label": "Estimated household expenses per month",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "Less than K500",
+            "text": "Less than K500",
+            "value": false
+          },
+          {
+            "key": "K500 -K999",
+            "text": "K500 -K999",
+            "value": false
+          },
+          {
+            "key": "K1,000 –K1,999",
+            "text": "K1,000 –K1,999",
+            "value": false
+          },
+          {
+            "key": "K2,000 –K4,999",
+            "text": "K2,000 –K4,999",
+            "value": false
+          },
+          {
+            "key": "Greater than K5,000",
+            "text": "Greater than K5,000",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re required to select income source"
+        }
+      },
+      {
+        "key": "marital_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "marital_status",
+        "type": "spinner",
+        "hint": "Marital Status",
+        "values": [
+          "Single",
+          "Married",
+          "Divorced",
+          "Widowed",
+          "Not Married,in a Relationship"
+        ],
+        "keys": [
+          "single",
+          "married",
+          "divorced",
+          "widowed",
+          "in_relationship"
+        ]
+      },
+      {
+        "key": "marriage_partner_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "marriage_partner_name",
+        "type": "edit_text",
+        "hint": "Name of Partner/Spouse",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  Partner/Spouse Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_register_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "relationship_partner_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "relationship_partner_name",
+        "type": "edit_text",
+        "hint": "Name of Relationship Partner",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid  Relationship Partner Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_register_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "males_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_less_5",
+        "type": "edit_text",
+        "hint": "Number of Males < 5 Yrs Old in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "females_less_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_less_5",
+        "type": "edit_text",
+        "hint": "Number of Females < 5 Yrs Old in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "males_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "males_10_17",
+        "type": "edit_text",
+        "hint": "Number of Males 10-17 Yrs Old in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "females_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "females_10_17",
+        "type": "edit_text",
+        "hint": "Number of Females 10-17 Yrs Old in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "fam_source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "fam_source_income",
+        "type": "edit_text",
+        "hint": "Main Source Of Income",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter Correct Source Of Income"
+        }
+      },
+      {
+        "key": "pregnant_women",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "pregnant_women",
+        "type": "edit_text",
+        "hint": "No. of Women currently pregnant in household",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        }
+      },
+      {
+        "key": "malaria_prev_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Malaria Prevention",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "malaria_beds",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "malaria_beds",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "edit_text": "number",
+        "hint": "Number of Beds in household",
+        "tree": [
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Number of beds in household"
+        }
+      },
+      {
+        "key": "malaria_itns",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "malaria_itns",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "edit_text": "number",
+        "hint": "Number of malaria ITNs in use",
+        "tree": [
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Number of ITNs  in use"
+        }
+      },
+      {
+        "key": "household_member_had_malaria",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "household_member_had_malaria",
+        "type": "date_picker",
+        "hint": "Last time household member had malaria",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Last time household member had malaria"
+        }
+      },
     ]
   }
 }

@@ -23,17 +23,6 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
-    public static String checkIfScreened (String baseEntityID) {
-
-        String sql = "SELECT screened FROM ec_household WHERE base_entity_id = '" + baseEntityID + "'";
-
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "screened");
-
-        List<String> values = AbstractDao.readData(sql, dataMap);
-
-        return values.get(0);
-
-    }
 
     public static String countChildren(String baseEntityID){
 
