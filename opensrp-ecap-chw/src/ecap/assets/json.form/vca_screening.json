@@ -2652,7 +2652,7 @@
           "Female"
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Please select gender"
         },
         "relevance": {
@@ -2671,7 +2671,7 @@
         "type": "date_picker",
         "hint": "Caregiver Date of birth",
         "look_up": "true",
-        "expanded": false,
+        "expanded": true,
         "duration": {
           "label": "Age"
         },
@@ -2703,7 +2703,7 @@
           "Status not required based on risk assessment"
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Select HIV status"
         },
         "relevance": {
@@ -2726,7 +2726,7 @@
           "Guardian"
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Select "
         },
         "relevance": {
