@@ -127,8 +127,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         } else {
 
-            toolbar.setBackgroundDrawable(new ColorDrawable(0xffffc0cb));
-            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffffc0cb));
+            toolbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
+            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
 
         }
 
@@ -196,7 +196,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
         txtName.setText(full_name);
-        txtGender.setText(gender);
+        txtGender.setText(gender.toUpperCase());
 
 
 
