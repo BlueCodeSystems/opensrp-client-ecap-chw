@@ -95,13 +95,11 @@
           }
         ]
       },
-
-
       {
-        "key": "caregiver_art",
+        "key": "caregiver_art_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_art",
+        "openmrs_entity_id": "caregiver_art_number",
         "type": "native_radio",
         "label": "Is Primary Caregiver enrolled on ART?",
         "options": [

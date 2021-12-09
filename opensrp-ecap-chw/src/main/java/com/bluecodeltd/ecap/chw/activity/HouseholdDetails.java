@@ -54,7 +54,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
+//import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class HouseholdDetails extends AppCompatActivity {
@@ -117,6 +117,13 @@ public class HouseholdDetails extends AppCompatActivity {
         //adolescent_name_of_caregiver
         cname.setText(client.getColumnmaps().get("caregiver_name") + " Household");
 
+
+        map.put("fam_source_income", client.getColumnmaps().get("fam_source_income"));
+        map.put("malaria_beds", client.getColumnmaps().get("malaria_beds"));
+        map.put("males_less_5", client.getColumnmaps().get("males_less_5"));
+        map.put("females_less_5", client.getColumnmaps().get("females_less_5"));
+        map.put("males_10_17", client.getColumnmaps().get("males_10_17"));
+        map.put("females_10_17", client.getColumnmaps().get("females_10_17"));
 
         return map;
 
@@ -207,7 +214,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
@@ -224,7 +231,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("hh_visitation_20");
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
@@ -245,7 +252,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
             if (is_screened == null){
 
-                Toasty.warning(HouseholdDetails.this, "Household has not been screened", Toast.LENGTH_LONG, true).show();
+               // Toasty.warning(HouseholdDetails.this, "Household has not been screened", Toast.LENGTH_LONG, true).show();
 
 
             } else {
@@ -353,6 +360,19 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     break;
+                case "Caregiver Household Assessment Form":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HOUSEHOLD_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
 
             }
         } catch (JSONException e) {
@@ -404,7 +424,7 @@ public class HouseholdDetails extends AppCompatActivity {
         };
 
 
-        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+      //  Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
 
 
         try {
