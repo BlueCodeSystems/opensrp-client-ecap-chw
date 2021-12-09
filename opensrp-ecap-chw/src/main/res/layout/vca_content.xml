@@ -217,7 +217,7 @@
             android:visibility="visible">
 
             <RelativeLayout
-                android:id="@+id/household"
+                android:id="@+id/vca_screening"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="Household Screening"
+                        android:text="VCA Screening"
                         android:textColor="@color/black"
                         android:textStyle="italic"
                         android:visibility="visible" />
@@ -258,7 +258,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_add_family_active"  />
+                    app:srcCompat="@mipmap/ic_boy_child" />
 
             </RelativeLayout>
 
