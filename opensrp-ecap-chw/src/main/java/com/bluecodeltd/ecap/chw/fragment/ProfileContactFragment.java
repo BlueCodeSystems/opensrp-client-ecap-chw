@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.model.Child;
 
 import java.util.HashMap;
 
@@ -30,19 +31,19 @@ public class ProfileContactFragment extends Fragment {
         txtRelation = view.findViewById(R.id.child_relation);
         txtPhone = view.findViewById(R.id.caregiver_phone);
 
-        HashMap<String, String> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
-
+        HashMap<String, Child> childHashMap = ( (IndexDetailsActivity) requireActivity()).getData();
+        Child child =childHashMap.get("Child");
         /* map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
         map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
         map.put("relation", client.getColumnmaps().get("relation"));
         map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));*/
 
-        txtCaregiverName.setText(mymap.get("caregiver_name"));
-        txtGender.setText(mymap.get("caregiver_sex"));
-        txtDob.setText(mymap.get("caregiver_birth_date"));
-        txtHiv.setText(mymap.get("caregiver_hiv_status"));
-        txtRelation.setText(mymap.get("relation"));
-        txtPhone.setText(mymap.get("caregiver_phone"));
+        txtCaregiverName.setText(child.getCaregiver_name());
+        txtGender.setText(child.getCaregiver_sex());
+        txtDob.setText(child.getCaregiver_birth_date());
+        txtHiv.setText(child.getCaregiver_hiv_status());
+        txtRelation.setText(child.getRelation());
+        txtPhone.setText(child.getCaregiver_phone());
 
 
         return view;
