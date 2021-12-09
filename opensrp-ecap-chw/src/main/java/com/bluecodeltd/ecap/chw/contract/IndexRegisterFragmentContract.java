@@ -8,6 +8,8 @@ public interface IndexRegisterFragmentContract {
         void initView(View view);
 
         View getView();
+
+        String getDefaultSortQuery();
     }
 
     interface View extends BaseRegisterFragmentContract.View {
