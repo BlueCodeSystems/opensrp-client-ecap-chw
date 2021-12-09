@@ -643,7 +643,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
                     jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 

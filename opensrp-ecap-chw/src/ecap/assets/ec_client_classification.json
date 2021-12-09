@@ -328,8 +328,7 @@
             "field_value": "Household Screening",
             "creates_case": [
               "ec_household",
-              "ec_client_index",
-              "ec_sub_population"
+              "ec_client_index"
             ]
           },
           {
