@@ -16,7 +16,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,17 +33,13 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
-import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
-import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,7 +49,6 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.core.contract.CoreChildProfileContract;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
@@ -74,14 +68,12 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
@@ -90,9 +82,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-
+    private String childId;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
-
+    private  Child indexChild;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -115,10 +107,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
-
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-
-        String gender =  client.getColumnmaps().get("gender");
+        childId = getIntent().getExtras().getString("Child");
+        indexChild = IndexPersonDao.getChildByBaseId(childId);
+        String gender = indexChild.getGender();
 
         if(gender.equals("male")){
 
@@ -168,67 +159,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
 
-    public HashMap<String, String> getData() {
-
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-
-        String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
+    public HashMap<String, Child> getData() {
+        String full_name = indexChild.getFirst_name() + " " + indexChild.getLast_name();
+        String gender =  indexChild.getGender();
+        String birthdate = indexChild.getAdolescent_birthdate();
 
         if(birthdate != null){
-/*
-            String[] items1 = birthdate.split("-");
-            String date1 = items1[0];
-            String month = items1[1];
-            String year = items1[2];
-
-             myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
-
-*/
-
            txtAge.setText(getAge(birthdate));
-
         }else {
-
             txtAge.setText("Not Set");
-
         }
 
         txtName.setText(full_name);
         txtGender.setText(gender.toUpperCase());
 
+        Child child = IndexPersonDao.getChildByBaseId(childId);
 
 
+        HashMap<String, Child> map = new HashMap<>();
 
-        HashMap<String, String> map = new HashMap<>();
-
-
-        map.put("subpop1", client.getColumnmaps().get("subpop1"));
-        map.put("subpop2", client.getColumnmaps().get("subpop2"));
-        map.put("subpop3", client.getColumnmaps().get("subpop3"));
-        map.put("subpop4", client.getColumnmaps().get("subpop4"));
-        map.put("subpop5", client.getColumnmaps().get("subpop5"));
-        map.put("subpop6", client.getColumnmaps().get("subpop6"));
-        map.put("date_referred", client.getColumnmaps().get("date_referred"));
-        map.put("date_enrolled", client.getColumnmaps().get("date_enrolled"));
-        map.put("art_check_box", client.getColumnmaps().get("art_check_box"));
-        map.put("art_number", client.getColumnmaps().get("art_number"));
-        map.put("date_started_art", client.getColumnmaps().get("date_started_art"));
-        map.put("date_last_vl", client.getColumnmaps().get("date_last_vl"));
-        map.put("date_next_vl", client.getColumnmaps().get("date_next_vl"));
-        map.put("vl_last_result", client.getColumnmaps().get("vl_last_result"));
-        map.put("vl_suppressed", client.getColumnmaps().get("vl_suppressed"));
-        map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
-        map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
-        map.put("caregiver_name", client.getColumnmaps().get("caregiver_name"));
-        map.put("caregiver_birth_date", client.getColumnmaps().get("caregiver_birth_date"));
-        map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
-        map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
-        map.put("relation", client.getColumnmaps().get("relation"));
-        map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
-        map.put("health_facility", client.getColumnmaps().get("health_facility"));
-
+        map.put("Child",child);
 
         return map;
 
@@ -513,8 +463,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
 
-
-                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -664,8 +612,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         }
-        //Intent i = new Intent(this, IndexRegisterActivity.class);
-        //startActivity(i);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
