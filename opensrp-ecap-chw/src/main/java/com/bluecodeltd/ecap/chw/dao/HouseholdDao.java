@@ -25,7 +25,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static Household getHousehold (String baseEntityID) {
 
-        String sql = "SELECT * FROM ec_household WHERE base_entity_id = '" + baseEntityID + "'";
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.base_entity_id = ec_client_index.base_entity_id WHERE ec_household.base_entity_id = '" + baseEntityID + "' ";
 
 
         List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
@@ -41,7 +41,7 @@ public class HouseholdDao extends AbstractDao {
 
             Household record = new Household();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
-            record.setVillage(getCursorValue(c, "village"));
+            record.setVillage(getCursorValue(c, "adolescent_village"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setScreening_date(getCursorValue(c, "screening_date"));
             record.setViolence_six_months(getCursorValue(c, "violence_six_months"));
@@ -56,6 +56,7 @@ public class HouseholdDao extends AbstractDao {
             record.setFemales_less_5(getCursorValue(c, "females_less_5"));
             record.setMales_10_17(getCursorValue(c, "males_10_17"));
             record.setFemales_10_17(getCursorValue(c, "females_10_17"));
+            record.setIncome(getCursorValue(c, "monthly_expenses"));
             record.setFam_source_income(getCursorValue(c, "fam_source_income"));
             record.setPregnant_women(getCursorValue(c, "pregnant_women"));
             record.setBeds(getCursorValue(c, "beds"));
