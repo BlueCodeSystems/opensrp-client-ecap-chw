@@ -16,6 +16,7 @@ import androidx.transition.TransitionManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.model.Child;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -56,14 +57,15 @@ public class ProfileOverviewFragment extends Fragment {
         txtFacility = view.findViewById(R.id.facility);
         txtMMDResult = view.findViewById(R.id.mmd_level);
 
-        HashMap<String, String> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
+        HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
+        Child childIndex =mymap.get("Child");
 
-        String subpop1 = mymap.get("subpop1");
-        String subpop2 = mymap.get("subpop2");
-        String subpop3 = mymap.get("subpop3");
-        String subpop4 = mymap.get("subpop4");
-        String subpop5 = mymap.get("subpop5");
-        String subpop6 = mymap.get("subpop6");
+        String subpop1 = childIndex.getSubpop1();
+        String subpop2 = childIndex.getSubpop2();
+        String subpop3 = childIndex.getSubpop3();
+        String subpop4 = childIndex.getSubpop4();
+        String subpop5 = childIndex.getSubpop5();
+        String subpop6 = childIndex.getSubpop6();
 
         assert subpop1 != null;
         assert subpop2 != null;
@@ -72,7 +74,7 @@ public class ProfileOverviewFragment extends Fragment {
         assert subpop5 != null;
         assert subpop6 != null;
 
-        if(mymap.get("date_started_art") != null){
+        if(childIndex.getDate_started_art() != null){
             myview.setVisibility(View.VISIBLE);
         } else {
             myview.setVisibility(View.GONE);
@@ -102,74 +104,74 @@ public class ProfileOverviewFragment extends Fragment {
             sub6.setVisibility(View.VISIBLE);
         }
 
-        if (mymap.get("art_number") != null){
-            txtArtNumber.setText(mymap.get("art_number"));
+        if (childIndex.getArt_number() != null){
+            txtArtNumber.setText(childIndex.getArt_number());
         } else {
             txtArtNumber.setText("N/A");
         }
 
-        if (mymap.get("health_facility") != null){
-            txtFacility.setText(mymap.get("health_facility"));
+        if (childIndex.getHealth_facility() != null){
+            txtFacility.setText(childIndex.getHealth_facility());
         } else {
             txtFacility.setText("N/A");
         }
 
-        if (mymap.get("date_referred") != null){
-            txtReferred.setText(mymap.get("date_referred"));
+        if (childIndex.getDate_referred() != null){
+            txtReferred.setText(childIndex.getDate_referred());
         } else {
             txtReferred.setText("N/A");
         }
 
-        if (mymap.get("date_enrolled") != null){
-            txtEnrolled.setText(mymap.get("date_enrolled"));
+        if (childIndex.getDate_enrolled()!= null){
+            txtEnrolled.setText(childIndex.getDate_enrolled());
         } else {
             txtEnrolled.setText("N/A");
         }
 
-        if (mymap.get("art_check_box") != null){
-            txtArtCheckbox.setText(mymap.get("art_check_box"));
+        if (childIndex.getArt_check_box() != null){
+            txtArtCheckbox.setText(childIndex.getArt_check_box());
         } else {
             txtArtCheckbox.setText("N/A");
         }
 
-        if (mymap.get("date_started_art") != null){
-            txtDateStartedArt.setText(mymap.get("date_started_art"));
+        if (childIndex.getDate_started_art() != null){
+            txtDateStartedArt.setText(childIndex.getDate_started_art());
         } else {
             txtDateStartedArt.setText("N/A");
         }
 
-        if (mymap.get("date_last_vl") != null){
-            txtVlLastDate.setText(mymap.get("date_last_vl"));
+        if (childIndex.getDate_last_vl() != null){
+            txtVlLastDate.setText(childIndex.getDate_last_vl());
         } else {
             txtVlLastDate.setText("N/A");
         }
 
-        if (mymap.get("vl_last_result") != null){
-            txtVlResult.setText(mymap.get("vl_last_result"));
+        if (childIndex.getVl_last_result() != null){
+            txtVlResult.setText(childIndex.getVl_last_result());
         } else {
             txtVlResult.setText("N/A");
         }
 
-        if (mymap.get("vl_suppressed") != null){
-            txtIsSuppressed.setText(mymap.get("vl_suppressed"));
+        if (childIndex.getVl_suppressed() != null){
+            txtIsSuppressed.setText(childIndex.getVl_suppressed());
         } else {
             txtIsSuppressed.setText("N/A");
         }
 
-        if (mymap.get("date_next_vl") != null){
-            txtNextVl.setText(mymap.get("date_next_vl"));
+        if (childIndex.getDate_next_vl() != null){
+            txtNextVl.setText(childIndex.getDate_next_vl());
         } else {
             txtNextVl.setText("N/A");
         }
 
-        if (mymap.get("child_mmd") != null){
-            txtIsMMD.setText(mymap.get("child_mmd"));
+        if (childIndex.getChild_mmd() != null){
+            txtIsMMD.setText(childIndex.getChild_mmd());
         } else {
             txtIsMMD.setText("N/A");
         }
 
-        if (mymap.get("level_mmd") != null){
-            txtMMDResult.setText(mymap.get("level_mmd"));
+        if (childIndex.getLevel_mmd() != null){
+            txtMMDResult.setText(childIndex.getLevel_mmd());
         } else {
             txtMMDResult.setText("N/A");
         }

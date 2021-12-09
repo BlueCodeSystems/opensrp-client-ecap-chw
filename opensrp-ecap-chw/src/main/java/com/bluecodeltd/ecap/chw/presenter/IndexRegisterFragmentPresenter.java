@@ -20,6 +20,11 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
     }
 
     @Override
+    public String getDefaultSortQuery() {
+        return null;
+    }
+
+    @Override
     public void processViewConfigurations() {
 
     }
@@ -38,10 +43,6 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
         getView().filterandSortInInitializeQueries();
     }
 
-    @Override
-    public String getDefaultSortQuery() {
-        return  " first_name ASC ";
-    }
 
     @Override
     public void startSync() {

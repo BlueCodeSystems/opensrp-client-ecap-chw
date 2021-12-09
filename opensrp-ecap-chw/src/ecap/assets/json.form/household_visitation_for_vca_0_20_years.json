@@ -2014,10 +2014,6 @@
         "edit_type": "number",
         "read_only": "true",
         "look_up": "true",
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         "relevance": {
           "step1:not_in_school": {
             "type": "string",

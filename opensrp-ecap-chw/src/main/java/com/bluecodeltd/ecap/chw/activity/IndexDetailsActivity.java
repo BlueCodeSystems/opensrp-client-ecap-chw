@@ -16,7 +16,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,18 +33,16 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
-import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
-import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -54,7 +51,6 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.core.contract.CoreChildProfileContract;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
@@ -74,14 +70,13 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
@@ -90,9 +85,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-
-    private RelativeLayout rhousehold, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
-
+    private String childId;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
+    private  Child indexChild;
     private TextView txtName, txtGender, txtAge;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -102,6 +97,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     String myAge;
+    ObjectMapper oMapper;
 
 
     @Override
@@ -115,10 +111,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        childId = getIntent().getExtras().getString("Child");
+        indexChild = IndexPersonDao.getChildByBaseId(childId);
+        String gender = indexChild.getGender();
 
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-
-        String gender =  client.getColumnmaps().get("gender");
+        oMapper = new ObjectMapper();
 
         if(gender.equals("male")){
 
@@ -141,7 +138,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        rhousehold = findViewById(R.id.household);
+        txtScreening = findViewById(R.id.vca_screening);
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
@@ -168,67 +165,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
 
-    public HashMap<String, String> getData() {
-
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-
-        String full_name = client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name");
-        String gender =  client.getColumnmaps().get("gender");
-        String birthdate = client.getColumnmaps().get("adolescent_birthdate");
+    public HashMap<String, Child> getData() {
+        String full_name = indexChild.getFirst_name() + " " + indexChild.getLast_name();
+        String gender =  indexChild.getGender();
+        String birthdate = indexChild.getAdolescent_birthdate();
 
         if(birthdate != null){
-/*
-            String[] items1 = birthdate.split("-");
-            String date1 = items1[0];
-            String month = items1[1];
-            String year = items1[2];
-
-             myAge = getAge(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1));
-
-*/
-
            txtAge.setText(getAge(birthdate));
-
         }else {
-
             txtAge.setText("Not Set");
-
         }
 
         txtName.setText(full_name);
         txtGender.setText(gender.toUpperCase());
 
+        Child child = IndexPersonDao.getChildByBaseId(childId);
 
 
+        HashMap<String, Child> map = new HashMap<>();
 
-        HashMap<String, String> map = new HashMap<>();
-
-
-        map.put("subpop1", client.getColumnmaps().get("subpop1"));
-        map.put("subpop2", client.getColumnmaps().get("subpop2"));
-        map.put("subpop3", client.getColumnmaps().get("subpop3"));
-        map.put("subpop4", client.getColumnmaps().get("subpop4"));
-        map.put("subpop5", client.getColumnmaps().get("subpop5"));
-        map.put("subpop6", client.getColumnmaps().get("subpop6"));
-        map.put("date_referred", client.getColumnmaps().get("date_referred"));
-        map.put("date_enrolled", client.getColumnmaps().get("date_enrolled"));
-        map.put("art_check_box", client.getColumnmaps().get("art_check_box"));
-        map.put("art_number", client.getColumnmaps().get("art_number"));
-        map.put("date_started_art", client.getColumnmaps().get("date_started_art"));
-        map.put("date_last_vl", client.getColumnmaps().get("date_last_vl"));
-        map.put("date_next_vl", client.getColumnmaps().get("date_next_vl"));
-        map.put("vl_last_result", client.getColumnmaps().get("vl_last_result"));
-        map.put("vl_suppressed", client.getColumnmaps().get("vl_suppressed"));
-        map.put("child_mmd", client.getColumnmaps().get("child_mmd"));
-        map.put("level_mmd", client.getColumnmaps().get("level_mmd"));
-        map.put("caregiver_name", client.getColumnmaps().get("caregiver_name"));
-        map.put("caregiver_birth_date", client.getColumnmaps().get("caregiver_birth_date"));
-        map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
-        map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
-        map.put("relation", client.getColumnmaps().get("relation"));
-        map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));
-        map.put("health_facility", client.getColumnmaps().get("health_facility"));
-
+        map.put("Child",child);
 
         return map;
 
@@ -312,7 +268,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
 
-    public void onClick(View v) {
+    public void onClick(View v) throws JSONException {
         int id = v.getId();
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         assert client != null;
@@ -322,33 +278,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 animateFAB();
                 break;
 
-            case R.id.household:
+                case R.id.vca_screening:
 
-                try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-
-
-                    indexRegisterForm = formUtils.getFormJson("family_register");
-
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", txtAge.getText().toString());
-
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
-
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    try {
+                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 break;
+
+
             case R.id.assessment:
 
 
@@ -509,12 +449,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_caregiver");
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
 
                     indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
 
-
-                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -644,6 +582,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
             if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
+                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                     jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
                 is_edit_mode = true;
@@ -664,8 +603,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         }
-        //Intent i = new Intent(this, IndexRegisterActivity.class);
-        //startActivity(i);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -676,7 +613,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             String entityId = "";
 
-            if(encounterType.equals("Case Record Status")){
+            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population")){
 
                 entityId  = formJsonObject.getString("entity_id");
             } else {
@@ -690,6 +627,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
+                case "Sub Population":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
                 case "VCA Case Plan":
 
                     if (fields != null) {
@@ -701,18 +649,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
-                case "Family Registration":
 
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_FAMILY);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-
-                    break;
                 case "Case Worker Service Report":
 
                     if (fields != null) {
@@ -813,6 +750,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     ECSyncHelper ecSyncHelper = getECSyncHelper();
 
                     JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
                     if (isEditMode) {
@@ -945,7 +883,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             fab.startAnimation(rotate_backward);
             isFabOpen = false;
-            rhousehold.setVisibility(View.GONE);
+            txtScreening.setVisibility(View.GONE);
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
             referral.setVisibility(View.GONE);
@@ -961,7 +899,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
-            rhousehold.setVisibility(View.VISIBLE);
+            txtScreening.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
@@ -1011,7 +949,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
     }
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -1022,9 +960,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        formToBeOpened.put("entity_id", client.getColumnmaps().get("base_entity_id"));
-        formToBeOpened.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
+
+        formToBeOpened.getJSONObject("step1").put("title", indexChild.getFirst_name()+ " " + indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
+
+        formToBeOpened.put("entity_id", indexChild.getEntity_id());
 
         startFormActivity(formToBeOpened);
     }
