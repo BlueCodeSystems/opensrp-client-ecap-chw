@@ -1,10 +1,13 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -25,10 +28,11 @@ import org.smartregister.opd.pojo.RegisterParams;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, IndexRegisterContract.InteractorCallBack {
-
+    private String baseId;
     private IndexRegisterContract.View view;
     private IndexRegisterContract.Model model;
     private IndexRegisterContract.Interactor interactor;
@@ -79,6 +83,8 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
                 return;
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
+            baseId = eventClientList.get(0).getClient().getBaseEntityId();
+
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -112,6 +118,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
             if (navigationMenu != null) {
                 navigationMenu.refreshCount();
             }
+            gotToChildProfile(baseId);
         }
     }
     @Override
@@ -135,5 +142,11 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
        if (getView() != null)
            getView().startFormActivity(form);
 
+   }
+   public void gotToChildProfile(String id){
+       Intent intent = new Intent(getView().getContext(),IndexDetailsActivity.class);
+       intent.putExtra("Child",id);
+       Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
+       getView().startActivity(intent);
    }
 }
