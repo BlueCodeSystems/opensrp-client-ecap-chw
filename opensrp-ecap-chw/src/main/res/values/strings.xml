@@ -444,6 +444,7 @@
     <string name="fragment_overview">OVERVIEW</string>
     <string name="fragment_contact">Caregiver</string>
     <string name="fragment_children">Children</string>
+    <string name="fragment_members">Members</string>
     <string name="fragment_housevisits">Visits</string>
     <string name="fragment_visits">Submitted Forms</string>
 

@@ -53,16 +53,38 @@
     }
   },
   "step1": {
-    "title": " Index VCA Sub-population Screening Form",
+    "title": "Index VCA Sub-population Screening Form",
     "next": "step2",
     "fields": [
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Index VCA Sub-population Screening Form",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "The Index VCA Screening Form will be used to assess the VCA Sub Population to determine whether s/he should be enrolled into the OVC Comprehensive program. \n\n The data collected on this tool are used to ensure that the criteria set for enrolling the VCA Sub Populations is followed and that it is consistent and only the target sub-populations are enrolled into the program. The data will form the basis for enrolling an individual into the program. ",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info"
+      },
+
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "A. Administrative Information"
+        "text": "Administrative Information"
       },
       {
         "key": "unique_id",
@@ -298,7 +320,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd2",
         "type": "label",
-        "text": "B. Socio-Demographic Information"
+        "text": "Socio-Demographic Information"
       },
       {
         "key": "spacer",
@@ -400,7 +422,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd3",
         "type": "label",
-        "text": "C. Children/Adolescents Living with HIV (C/ALHIV)"
+        "text": "Children/Adolescents Living with HIV (C/ALHIV)"
       },
       {
         "key": "spacer",
@@ -630,7 +652,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd4",
         "type": "label",
-        "text": "D. HIV Exposed Infant (HEI)"
+        "text": "HIV Exposed Infant (HEI)"
       },
       {
         "key": "spacer",
@@ -944,7 +966,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd5",
         "type": "label",
-        "text": "E. Children of Women Living with HIV (WLHIV)"
+        "text": "Children of Women Living with HIV (WLHIV)"
       },
       {
         "key": "spacer",
@@ -1137,7 +1159,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd6",
         "type": "label",
-        "text": "F. At Risk Adolescent Girls and Young Women (AGYW)"
+        "text": "At Risk Adolescent Girls and Young Women (AGYW)"
       },
       {
         "key": "spacer",
@@ -1485,7 +1507,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd7",
         "type": "label",
-        "text": "G. Children/Adolescents who are Survivors of Sexual Violence"
+        "text": "Children/Adolescents who are Survivors of Sexual Violence"
       },
       {
         "key": "child_ever_experienced_sexual_violence",
@@ -1662,7 +1684,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd8",
         "type": "label",
-        "text": "H. Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)"
+        "text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)"
       },
       {
         "key": "is_the_child_caregiver_an_fsw",
@@ -2678,7 +2700,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Please enter Birth Date"
         },
         "relevance": {

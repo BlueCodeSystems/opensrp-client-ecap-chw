@@ -115,8 +115,8 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
                     showProgressDialog(R.string.saving_dialog_title);
                     householdIndexPresenter().saveForm(jsonString, registerParam);
 
-                    Intent intent = new Intent(this, MemberActivity.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(this, MemberActivity.class);
+                    startActivity(intent);*/
                 }
             } catch (JSONException e) {
                 Timber.e(e);
