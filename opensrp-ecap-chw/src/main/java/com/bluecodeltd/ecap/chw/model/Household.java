@@ -25,6 +25,7 @@ public class Household {
     private String females_less_5;
     private String males_10_17;
     private String females_10_17;
+    private String income;
     private String fam_source_income;
     private String pregnant_women;
     private String beds;
@@ -198,5 +199,13 @@ public class Household {
 
     public void setBeds(String beds) {
         this.beds = beds;
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public void setIncome(String income) {
+        this.income = income;
     }
 }

@@ -184,6 +184,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.screenBtn:
+            case R.id.hh_screening:
 
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
@@ -203,6 +204,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 break;
+
+
 
             case R.id.hcase_plan:
                 try {
@@ -341,7 +344,24 @@ public class HouseholdDetails extends AppCompatActivity {
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
+            boolean is_edit_mode = false;
+
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
+            JSONObject jsonFormObject = null;
+            try {
+                jsonFormObject = new JSONObject(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
+            if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(EncounterType)) {
+
+                is_edit_mode = true;
+            }
+
 
             try {
 
@@ -351,7 +371,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -366,7 +386,17 @@ public class HouseholdDetails extends AppCompatActivity {
             JSONObject formJsonObject = new JSONObject(jsonString);
 
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
-            String entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();;
+
+
+            String entityId = "";
+
+            if(encounterType.equals("Household Screening")){
+
+                entityId  = formJsonObject.getString("entity_id");
+            } else {
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
@@ -387,7 +417,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
-                case "Edit Household":
+                case "Household Screening":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -408,7 +438,7 @@ public class HouseholdDetails extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType) {
 
         Runnable runnable = () -> {
 
@@ -450,7 +480,23 @@ public class HouseholdDetails extends AppCompatActivity {
         };
 
 
-        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+        switch (encounterType) {
+
+            case "Household Screening":
+
+                Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+
+                break;
+
+            case "Family Member":
+
+                Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+
+                break;
+
+        }
+
+
 
 
         try {
