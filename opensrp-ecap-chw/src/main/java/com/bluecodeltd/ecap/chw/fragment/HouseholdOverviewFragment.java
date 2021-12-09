@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 
 public class HouseholdOverviewFragment extends Fragment {
 
+    @SuppressLint("RestrictedApi")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +48,23 @@ public class HouseholdOverviewFragment extends Fragment {
 
         Household house = mymap.get("house");
         String is_screened = house.getScreened();
+        String incomeSource = house.getFam_source_income();
+        String iscome = house.getIncome();
+        String beds = house.getBeds();
+        //String malaria = house.getMalaria();
+        String male5 = house.getMales_less_5();
+        String female5 = house.getFemales_less_5();
+        String male10 = house.getMales_10_17();
+        String female10 = house.getFemales_10_17();
+
+        txtIncome.setText(iscome);
+        txtBeds.setText(beds);
+        txtIncomeSource.setText(incomeSource);
+        txtMales5.setText(male5);
+        txtFemales5.setText(female5);
+        txtMales10.setText(male10);
+        txtFemales10.setText(female10);
+
 
         if(is_screened != null && is_screened.equals("true")){
 
