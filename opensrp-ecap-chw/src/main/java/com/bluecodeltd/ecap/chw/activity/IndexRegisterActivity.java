@@ -114,6 +114,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
                     showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
+
                 }
             } catch (JSONException e) {
                 Timber.e(e);
@@ -154,4 +155,5 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             hideProgressDialog();
         }
     }
+
 }

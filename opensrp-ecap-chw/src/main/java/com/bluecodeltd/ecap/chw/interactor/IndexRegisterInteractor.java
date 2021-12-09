@@ -86,6 +86,7 @@ public class IndexRegisterInteractor implements IndexRegisterContract.Interactor
             appExecutors.mainThread().execute(() -> callBack.onRegistrationSaved(registerParams.isEditMode()));
         };
 
+
         appExecutors.diskIO().execute(runnable);
     }
 
