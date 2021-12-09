@@ -73,9 +73,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                 case (R.id.register_columns):
 
-                  /*Intent intent = new Intent(context, IndexDetailsActivity.class);
-                    intent.putExtra("clients",  children.get(position));
-                    context.startActivity(intent);*/
+                    Intent intent = new Intent(context, IndexDetailsActivity.class);
+                    intent.putExtra("child",  child.getEntity_id());
+                    context.startActivity(intent);
                     break;
             }
         });
