@@ -27,6 +27,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -63,12 +64,12 @@ public class HouseholdDetails extends AppCompatActivity {
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private Toolbar toolbar;
-    private TextView visitTabCount, cname;
+    private TextView visitTabCount, cname, txtDistrict, txtVillage;
     private TextView childTabCount;
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rchild, rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
+    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
 
 
 
@@ -87,10 +88,11 @@ public class HouseholdDetails extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        rchild = findViewById(R.id.child_form);
         rscreen = findViewById(R.id.hh_screening);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
+        txtDistrict = findViewById(R.id.myaddress);
+        txtVillage = findViewById(R.id.address1);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
         rvisit = findViewById(R.id.hh_visit);
@@ -102,20 +104,30 @@ public class HouseholdDetails extends AppCompatActivity {
         setupViewPager();
         updateTasksTabTitle();
         updateChildTabTitle();
-    }
-
-    public HashMap<String, String> getData() {
 
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
 
-        HashMap<String, String> map = new HashMap<>();
 
-        map.put("base_entity_id", client.getColumnmaps().get("base_entity_id"));
+        Household house = HouseholdDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
+        txtDistrict.setText(house.getDistrict());
+        txtVillage.setText(house.getVillage() + ", ");
+    }
 
-        // List<String> house = IndexPersonDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
+    public HashMap<String, Household> getData() {
 
-        //adolescent_name_of_caregiver
+        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+
+        Household house = HouseholdDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
+
+
+        HashMap<String, Household> map = new HashMap<>();
+
+        map.put("house", house);
+
+
         cname.setText(client.getColumnmaps().get("caregiver_name") + " Household");
+
+       // txtDistrict.setText(house.getDistrict());
 
 
         return map;
@@ -132,7 +144,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
-        mTabLayout.getTabAt(1).setText(getString(R.string.fragment_children));
+        mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
         mTabLayout.getTabAt(2).setText(getString(R.string.fragment_housevisits));
 
     }
@@ -149,7 +161,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private void updateChildTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
-        visitTabTitle.setText("CHILDREN");
+        visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
@@ -169,6 +181,27 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 animateFAB();
 
+                break;
+
+            case R.id.screenBtn:
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
+
+                    indexRegisterForm.put("entity_id", client.getColumnmaps().get("base_entity_id"));
+                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("caregiver_name") + " Household");
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
+
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case R.id.hcase_plan:
@@ -354,6 +387,19 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
+                case "Edit Household":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -448,7 +494,6 @@ public class HouseholdDetails extends AppCompatActivity {
             fab.startAnimation(rotate_backward);
             isFabOpen = false;
             rvisit.setVisibility(View.GONE);
-            rchild.setVisibility(View.GONE);
             hvisit20.setVisibility(View.GONE);
             rscreen.setVisibility(View.GONE);
             rassessment.setVisibility(View.GONE);
@@ -461,7 +506,6 @@ public class HouseholdDetails extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             rvisit.setVisibility(View.VISIBLE);
             hvisit20.setVisibility(View.VISIBLE);
-            rchild.setVisibility(View.VISIBLE);
             rscreen.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);

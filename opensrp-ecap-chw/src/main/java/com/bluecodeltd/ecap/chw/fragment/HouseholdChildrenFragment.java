@@ -18,6 +18,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.ChildrenAdapter;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,9 +34,10 @@ public class HouseholdChildrenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_children, container, false);
 
-        HashMap<String, String> mymap = ( (HouseholdDetails) requireActivity()).getData();
+        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
 
-        String base_entity_id = mymap.get("base_entity_id");
+        Household house = mymap.get("house");
+        String base_entity_id = house.getBase_entity_id();
 
         recyclerView = view.findViewById(R.id.recyclerView);
 

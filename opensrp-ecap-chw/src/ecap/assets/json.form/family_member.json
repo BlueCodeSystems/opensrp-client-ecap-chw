@@ -1,6 +1,6 @@
 {
   "count": "3",
-  "skip_blank_steps": true,
+  "skip_blank_steps": false,
   "encounter_type": "Family Member",
   "relational_id": "",
   "metadata": {
@@ -136,16 +136,28 @@
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
         "hint": "Child's Date of birth",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
         "min_date": "today-19y",
         "max_date": "today",
         "v_required": {
           "value": true,
           "err": "Please enter Birth Date"
+        }
+      },
+      {
+        "key": "myage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "myage",
+        "type": "edit_text",
+        "hint": "Age",
+        "hidden": "true",
+        "edit_type": "number",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
         }
       },
       {
@@ -1677,11 +1689,36 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relation",
-        "type": "edit_text",
-        "hint": "Relationship to Child",
+        "type": "native_radio",
+        "label": "Relationship to Child",
+        "options": [
+          {
+            "key": "mother",
+            "text": "Mother"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
         "v_required": {
           "value": true,
-          "err": "Please enter Relationship to Child"
+          "err": "Please enter relationship"
+        }
+      },
+      {
+        "key": "other_relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_reason",
+        "type": "edit_text",
+        "hint": "Other Relation",
+        "edit_type": "name",
+        "relevance": {
+          "step1:relation": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
         }
       },
       {
@@ -1942,7 +1979,7 @@
         "type": "check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity_id": "immunization",
         "options": [
           {
             "key": "bcg",
@@ -2023,9 +2060,14 @@
         "v_required": {
           "value": false,
           "err": "This is a required field"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
         }
-
-
       },
       {
         "key": "spacer",
@@ -2043,6 +2085,13 @@
         "text_color": "#000000",
         "v_required": {
           "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -2057,6 +2106,13 @@
         "v_regex": {
           "value": "[0-9]*",
           "err": "Enter correct MUAC Score"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
         }
       }
     ]

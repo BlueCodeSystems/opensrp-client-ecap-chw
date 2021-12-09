@@ -1,7 +1,7 @@
 {
   "count": 3,
   "skip_blank_steps": true,
-  "encounter_type": "Household Screening",
+  "encounter_type": "Edit Household",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {

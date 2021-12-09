@@ -4,7 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/overview_summary_row"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+
+
+    <com.rey.material.widget.Button
+        android:id="@+id/screenBtn"
+        android:onClick="onClick"
+        android:background="#218CC5"
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Screen this Household"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        app:rd_enable="true"
+        app:rd_rippleType="wave"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <TextView
         android:id="@+id/overview_section_header"
@@ -23,6 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/llayout"
         app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,7 +108,7 @@
 
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/referred"
+                android:id="@+id/income_source"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
