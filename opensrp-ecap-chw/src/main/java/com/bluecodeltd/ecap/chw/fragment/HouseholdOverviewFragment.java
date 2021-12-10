@@ -24,29 +24,47 @@ import java.util.HashMap;
 
 public class HouseholdOverviewFragment extends Fragment {
 
+
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales5,
+            txtFemales5, txtMales10, txtFemales10;
+    LinearLayout linearLayout;
+    Button screenBtn;
+    FloatingActionButton fab;
+    Household house;
+
+
     @SuppressLint("RestrictedApi")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_household_overview, container, false);
 
-        TextView housetitle = view.findViewById(R.id.overview_section_header);
-        TextView txtIncome = view.findViewById(R.id.income);
-        TextView txtIncomeSource = view.findViewById(R.id.income_source);
-        TextView txtBeds = view.findViewById(R.id.beds);
-        TextView txtMalaria = view.findViewById(R.id.malaria);
-        TextView txtMales5 = view.findViewById(R.id.males_less_5);
-        TextView txtFemales5 = view.findViewById(R.id.females_less_5);
-        TextView txtMales10 = view.findViewById(R.id.males_10);
-        TextView txtFemales10 = view.findViewById(R.id.females_10);
-        LinearLayout linearLayout = view.findViewById(R.id.llayout);
-        Button screenBtn = view.findViewById(R.id.screenBtn);
+        housetitle = view.findViewById(R.id.overview_section_header);
+        txtIncome = view.findViewById(R.id.income);
+        txtIncomeSource = view.findViewById(R.id.income_source);
+        txtBeds = view.findViewById(R.id.beds);
+        txtMalaria = view.findViewById(R.id.malaria);
+        txtMales5 = view.findViewById(R.id.males_less_5);
+        txtFemales5 = view.findViewById(R.id.females_less_5);
+        txtMales10 = view.findViewById(R.id.males_10);
+        txtFemales10 = view.findViewById(R.id.females_10);
+        linearLayout = view.findViewById(R.id.llayout);
+        screenBtn = view.findViewById(R.id.screenBtn);
 
-        FloatingActionButton fab = getActivity().findViewById(R.id.fabx);
+        fab = getActivity().findViewById(R.id.fabx);
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
 
-        Household house = mymap.get("house");
+        house = mymap.get("house");
+
+        setViews();
+
+
+        return view;
+
+    }
+
+    public void setViews(){
         String is_screened = house.getScreened();
         String incomeSource = house.getFam_source_income();
         String iscome = house.getIncome();
@@ -81,8 +99,5 @@ public class HouseholdOverviewFragment extends Fragment {
             linearLayout.setVisibility(View.GONE);
 
         }
-
-        return view;
-
     }
 }

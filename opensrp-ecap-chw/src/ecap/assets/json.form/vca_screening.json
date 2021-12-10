@@ -69,7 +69,6 @@
         "toaster_info_title": "Introduction",
         "toaster_type": "info"
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -164,21 +163,13 @@
       {
         "key": "partners",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partners",
-        "type": "spinner",
-        "hint": "Partners",
-        "values": [
-          "YWCA",
-          "BISO",
-          "ZEC",
-          "COH",
-          "PCZ"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please enter Partner"
-        }
+        "type": "edit_text",
+        "hint": "Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "adolescent_first_name",

@@ -373,6 +373,23 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
+                switch (EncounterType) {
+
+                    case "Household Screening":
+
+                        Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+
+
+                        break;
+
+                    case "Family Member":
+
+                        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+
+                        break;
+
+                }
+
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -478,25 +495,6 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
         };
-
-
-        switch (encounterType) {
-
-            case "Household Screening":
-
-                Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
-
-                break;
-
-            case "Family Member":
-
-                Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
-
-                break;
-
-        }
-
-
 
 
         try {

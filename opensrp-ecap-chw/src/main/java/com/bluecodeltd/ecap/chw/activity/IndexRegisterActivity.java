@@ -1,12 +1,14 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
@@ -88,6 +90,18 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     @Override
     public void startFormActivity(JSONObject jsonObject) {
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+        String partner = sp.getString("partner", "Not Set");
+
+
+        try {
+            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", partner);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //myForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
 
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
