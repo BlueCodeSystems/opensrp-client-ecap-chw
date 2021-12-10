@@ -8,9 +8,13 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.text.TextUtils;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity;
@@ -105,6 +109,10 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     private P2pProcessingStatusBroadcastReceiver p2pProcessingStatusBroadcastReceiver;
     private boolean isBulkProcessing;
     private boolean fetchedLoad = false;
+    private RequestQueue mRequestQueue;
+
+    public static final String TAG = ChwApplication.class.getSimpleName();
+
 
     public static Flavor getApplicationFlavor() {
         return flavor;
@@ -114,6 +122,32 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         prepareGuideBooksFolder();
         prepareCounselingDocsFolder();
     }
+
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+
+        return mRequestQueue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> req, String tag) {
+        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+        getRequestQueue().add(req);
+    }
+
+    public <T> void addToRequestQueue(Request<T> req) {
+        req.setTag(TAG);
+        getRequestQueue().add(req);
+    }
+
+    public void cancelPendingRequests(Object tag) {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(tag);
+
+        }
+    }
+
 
     public static void prepareGuideBooksFolder() {
         String rootFolder = getGuideBooksDirectory();
