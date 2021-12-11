@@ -90,6 +90,7 @@ public class IndexPersonDao  extends AbstractDao {
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "base_entity_id"),
+                    getCursorValue(c, "unique_id"),
                     getCursorValue(c, "first_name"),
                     getCursorValue(c, "last_name"),
                     getCursorValue(c, "adolescent_birthdate"),

@@ -98,6 +98,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     String myAge;
     ObjectMapper oMapper;
+    Child child;
 
 
     @Override
@@ -132,8 +133,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
 
-
-
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
@@ -160,11 +159,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         setupViewPager();
         //updateTasksTabTitle();
-
-
     }
-
-
 
 
     public HashMap<String, Child> getData() {
@@ -181,7 +176,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtName.setText(full_name);
         txtGender.setText(gender.toUpperCase());
 
-        Child child = IndexPersonDao.getChildByBaseId(childId);
+        child = IndexPersonDao.getChildByBaseId(childId);
 
 
         HashMap<String, Child> map = new HashMap<>();
@@ -439,7 +434,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("household",  client);
+            intent.putExtra("childId",  child.getEntity_id());
             startActivity(intent);
 
 

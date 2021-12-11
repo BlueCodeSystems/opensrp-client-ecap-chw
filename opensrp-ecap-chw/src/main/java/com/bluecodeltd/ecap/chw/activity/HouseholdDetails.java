@@ -29,8 +29,10 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -56,6 +58,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -72,7 +75,10 @@ public class HouseholdDetails extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
-
+    private String childId;
+    Household house;
+    Child child;
+    ObjectMapper oMapper;
 
 
     @Override
@@ -83,6 +89,11 @@ public class HouseholdDetails extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        childId = getIntent().getExtras().getString("childId");
+        child = IndexPersonDao.getChildByBaseId(childId);
+        house = HouseholdDao.getHousehold(childId);
+        oMapper = new ObjectMapper();
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -107,30 +118,18 @@ public class HouseholdDetails extends AppCompatActivity {
         updateTasksTabTitle();
         updateChildTabTitle();
 
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
-
-
-        Household house = HouseholdDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
+        Household house = HouseholdDao.getHousehold(childId);
         txtDistrict.setText(house.getDistrict());
         txtVillage.setText(house.getVillage() + ", ");
     }
 
     public HashMap<String, Household> getData() {
 
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
-
-        Household house = HouseholdDao.getHousehold(client.getColumnmaps().get("base_entity_id"));
-
-
         HashMap<String, Household> map = new HashMap<>();
 
         map.put("house", house);
 
-
-        cname.setText(client.getColumnmaps().get("caregiver_name") + " Household");
-
-       // txtDistrict.setText(house.getDistrict());
-
+        cname.setText(child.getCaregiver_name() + " Household");
 
         return map;
 
@@ -166,8 +165,7 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
-        String children = IndexPersonDao.countChildren(client.getColumnmaps().get("base_entity_id"));
+        String children = IndexPersonDao.countChildren(childId);
 
         childTabCount.setText(children);
 
@@ -176,7 +174,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public void onClick(View v) {
         int id = v.getId();
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+
 
         switch (id) {
             case R.id.fabx:
@@ -194,10 +192,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
 
-                    indexRegisterForm.put("entity_id", client.getColumnmaps().get("base_entity_id"));
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("caregiver_name") + " Household");
+                    indexRegisterForm.put("entity_id", childId);
+                    indexRegisterForm.getJSONObject("step1").put("title", child.getCaregiver_name() + " Household");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
@@ -216,7 +214,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("caregiver_case_plan");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    //TODO
+                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -231,7 +230,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("caregiver_assessment");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    //TODO
+                    //CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -247,7 +247,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    //TODO
+                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -264,7 +265,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("hh_visitation_20");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                   //TODO
+                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -277,26 +279,20 @@ public class HouseholdDetails extends AppCompatActivity {
 
         try {
 
-           String BaseEntityId = client.getColumnmaps().get("base_entity_id");
-
-           String is_screened = HouseholdDao.checkIfScreened(BaseEntityId);
-
-            if (is_screened == null){
-
-                Toasty.warning(HouseholdDetails.this, "Household has not been screened", Toast.LENGTH_LONG, true).show();
-
-
-            } else {
-
-                FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                JSONObject indexRegisterForm;
-
-                indexRegisterForm = formUtils.getFormJson("family_member");
-
-                CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-
-                startFormActivity(indexRegisterForm);
+            FormUtils formUtils = null;
+            try {
+                formUtils = new FormUtils(this);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            JSONObject formToBeOpened;
+
+                formToBeOpened = formUtils.getFormJson("family_member");
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(child, Map.class));
+
+                startFormActivity(formToBeOpened);
+
 
         } catch (Exception e) {
             e.printStackTrace();
