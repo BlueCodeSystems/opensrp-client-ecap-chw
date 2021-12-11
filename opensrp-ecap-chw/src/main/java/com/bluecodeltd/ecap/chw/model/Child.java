@@ -8,6 +8,396 @@ import java.io.Serializable;
 public class Child implements Serializable {
 
     public static final String ENTITY_ID = "entity_id";
+    
+    public Child() {
+
+    }
+
+    public Child(String status, String base_entity_id, String unique_id, String first_name, String last_name, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String adolescent_gender, String relational_id, String case_status, String index_check_box, String date_removed, String acceptance, String date_screened, String date_hiv_known, String is_hiv_positive, String is_on_hiv_treatment, String adolescent_first_name, String adolescent_last_name, String province, String district, String ward, String adolescent_village, String partners, String is_viral_load_test_results_on_file, String is_tb_screening_results_on_file, String screened_for_malnutrition, String gets_tb_preventive_therapy, String takes_drugs_to_prevent_other_diseases, String less_3, String positive_mother, String is_mother_currently_on_treatment, String mother_art_number, String is_mother_adhering_to_treatment, String is_mother_virally_suppressed, String is_child_hiv_positive, String child_receiving_breastfeeding, String child_tested_for_hiv_inline_with_guidelines, String receives_drugs_to_prevent_hiv_and_other_illnesses, String child_been_screened_for_malnutrition, String child_gets_drugs_to_prevent_tb_hei, String child_enrolled_in_early_childhood_development_program, String school, String other_school, String caregiver_nrc, String vl_next_result, String physical_address,String date_offered_enrollment) {
+        this.status = status;
+        this.base_entity_id = base_entity_id;
+        this.unique_id = unique_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.adolescent_birthdate = adolescent_birthdate;
+        this.subpop1 = subpop1;
+        this.subpop2 = subpop2;
+        this.subpop3 = subpop3;
+        this.subpop4 = subpop4;
+        this.subpop5 = subpop5;
+        this.subpop6 = subpop6;
+        this.date_referred = date_referred;
+        this.date_enrolled = date_enrolled;
+        this.art_check_box = art_check_box;
+        this.art_number = art_number;
+        this.date_started_art = date_started_art;
+        this.date_last_vl = date_last_vl;
+        this.date_next_vl = date_next_vl;
+        this.vl_last_result = vl_last_result;
+        this.vl_suppressed = vl_suppressed;
+        this.child_mmd = child_mmd;
+        this.level_mmd = level_mmd;
+        this.caregiver_name = caregiver_name;
+        this.caregiver_birth_date = caregiver_birth_date;
+        this.caregiver_sex = caregiver_sex;
+        this.caregiver_hiv_status = caregiver_hiv_status;
+        this.relation = relation;
+        this.caregiver_phone = caregiver_phone;
+        this.health_facility = health_facility;
+        this.adolescent_gender = adolescent_gender;
+        this.relational_id = relational_id;
+        this.case_status = case_status;
+        this.index_check_box = index_check_box;
+        this.date_removed = date_removed;
+        this.acceptance = acceptance;
+        this.date_screened = date_screened;
+        this.date_hiv_known = date_hiv_known;
+        this.is_hiv_positive = is_hiv_positive;
+        this.is_on_hiv_treatment = is_on_hiv_treatment;
+        this.adolescent_first_name = adolescent_first_name;
+        this.adolescent_last_name = adolescent_last_name;
+        this.province = province;
+        this.district = district;
+        this.ward = ward;
+        this.adolescent_village = adolescent_village;
+        this.partners = partners;
+        this.is_viral_load_test_results_on_file = is_viral_load_test_results_on_file;
+        this.is_tb_screening_results_on_file = is_tb_screening_results_on_file;
+        this.screened_for_malnutrition = screened_for_malnutrition;
+        this.gets_tb_preventive_therapy = gets_tb_preventive_therapy;
+        this.takes_drugs_to_prevent_other_diseases = takes_drugs_to_prevent_other_diseases;
+        this.less_3 = less_3;
+        this.positive_mother = positive_mother;
+        this.is_mother_currently_on_treatment = is_mother_currently_on_treatment;
+        this.mother_art_number = mother_art_number;
+        this.is_mother_adhering_to_treatment = is_mother_adhering_to_treatment;
+        this.is_mother_virally_suppressed = is_mother_virally_suppressed;
+        this.is_child_hiv_positive = is_child_hiv_positive;
+        this.child_receiving_breastfeeding = child_receiving_breastfeeding;
+        this.child_tested_for_hiv_inline_with_guidelines = child_tested_for_hiv_inline_with_guidelines;
+        this.receives_drugs_to_prevent_hiv_and_other_illnesses = receives_drugs_to_prevent_hiv_and_other_illnesses;
+        this.child_been_screened_for_malnutrition = child_been_screened_for_malnutrition;
+        this.child_gets_drugs_to_prevent_tb_hei = child_gets_drugs_to_prevent_tb_hei;
+        this.child_enrolled_in_early_childhood_development_program = child_enrolled_in_early_childhood_development_program;
+        this.school =school;
+        this.other_school = other_school;
+        this.caregiver_nrc =caregiver_nrc;
+        this.vl_next_result = vl_next_result;
+        this.physical_address = physical_address;
+        this.date_offered_enrollment =date_offered_enrollment;
+    }
+
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+    @SerializedName("base_entity_id")
+    @Expose
+    private String base_entity_id;
+
+    @SerializedName("unique_id")
+    @Expose
+    private String unique_id;
+
+    @SerializedName("first_name")
+    @Expose
+    private String first_name;
+
+    @SerializedName("last_name")
+    @Expose
+    private String last_name;
+
+    @SerializedName("adolescent_birthdate")
+    @Expose
+    private String adolescent_birthdate;
+
+    @SerializedName("subpop1")
+    @Expose
+    private String subpop1;
+
+    @SerializedName("subpop2")
+    @Expose
+    private String subpop2;
+
+    @SerializedName("subpop3")
+    @Expose
+    private String subpop3;
+
+    @SerializedName("subpop4")
+    @Expose
+    private String subpop4;
+
+    @SerializedName("subpop5")
+    @Expose
+    private String subpop5;
+
+    @SerializedName("subpop6")
+    @Expose
+    private String subpop6;
+
+    @SerializedName("date_referred")
+    @Expose
+    private String date_referred;
+
+    @SerializedName("date_enrolled")
+    @Expose
+    private String date_enrolled;
+
+    @SerializedName("art_check_box")
+    @Expose
+    private String art_check_box;
+
+    @SerializedName("art_number")
+    @Expose
+    private String art_number;
+
+    @SerializedName("date_started_art")
+    @Expose
+    private String date_started_art;
+
+    @SerializedName("date_last_vl")
+    @Expose
+    private String date_last_vl;
+
+    @SerializedName("date_next_vl")
+    @Expose
+    private String date_next_vl;
+
+    @SerializedName("vl_last_result")
+    @Expose
+    private String vl_last_result;
+
+    @SerializedName("vl_suppressed")
+    @Expose
+    private String vl_suppressed;
+
+    @SerializedName("child_mmd")
+    @Expose
+    private String child_mmd;
+
+    @SerializedName("level_mmd")
+    @Expose
+    private String level_mmd;
+
+    @SerializedName("caregiver_name")
+    @Expose
+    private String caregiver_name;
+
+    @SerializedName("caregiver_birth_date")
+    @Expose
+    private String caregiver_birth_date;
+
+    @SerializedName("caregiver_sex")
+    @Expose
+    private String caregiver_sex;
+
+    @SerializedName("caregiver_hiv_status")
+    @Expose
+    private String caregiver_hiv_status;
+
+    @SerializedName("relation")
+    @Expose
+    private String relation;
+
+    @SerializedName("caregiver_phone")
+    @Expose
+    private String caregiver_phone;
+
+    @SerializedName("health_facility")
+    @Expose
+    private String health_facility;
+
+    @SerializedName("gender")
+    @Expose
+    private String adolescent_gender;
+
+    @SerializedName("relational_id")
+    @Expose
+    private String relational_id;
+
+    @SerializedName("case_status")
+    @Expose
+    private String case_status;
+
+    @SerializedName("index_check_box")
+    @Expose
+    private String index_check_box;
+
+    @SerializedName("date_removed")
+    @Expose
+    private String date_removed;
+
+    @SerializedName("acceptance")
+    @Expose
+    private String acceptance;
+
+    @SerializedName("date_screened")
+    @Expose
+    private String date_screened;
+
+    @SerializedName("date_hiv_known")
+    @Expose
+    private String date_hiv_known;
+
+    @SerializedName("is_hiv_positive")
+    @Expose
+    private String is_hiv_positive;
+
+    @SerializedName("is_on_hiv_treatment")
+    @Expose
+    private String is_on_hiv_treatment;
+
+    @SerializedName("adolescent_first_name")
+    @Expose
+    private String adolescent_first_name;
+
+    @SerializedName("adolescent_last_name")
+    @Expose
+    private String adolescent_last_name;
+
+    @SerializedName("province")
+    @Expose
+    private String province;
+
+    @SerializedName("district")
+    @Expose
+    private String district;
+
+    @SerializedName("ward")
+    @Expose
+    private String ward;
+
+    @SerializedName("adolescent_village")
+    @Expose
+    private String adolescent_village;
+
+
+    @SerializedName("partners")
+    @Expose
+    private String partners;
+
+
+    @SerializedName("is_viral_load_test_results_on_file")
+    @Expose
+    private String is_viral_load_test_results_on_file;
+
+    @SerializedName("is_tb_screening_results_on_file")
+    @Expose
+    private String is_tb_screening_results_on_file;
+
+    @SerializedName("screened_for_malnutrition")
+    @Expose
+    private String screened_for_malnutrition;
+
+    @SerializedName("gets_tb_preventive_therapy")
+    @Expose
+    private String gets_tb_preventive_therapy;
+
+    @SerializedName("takes_drugs_to_prevent_other_diseases")
+    @Expose
+    private String takes_drugs_to_prevent_other_diseases;
+
+    @SerializedName("less_3")
+    @Expose
+    private String less_3;
+
+    @SerializedName("positive_mother")
+    @Expose
+    private String positive_mother;
+
+
+    @SerializedName("is_mother_currently_on_treatment")
+    @Expose
+    private String is_mother_currently_on_treatment;
+
+    @SerializedName("mother_art_number")
+    @Expose
+    private String mother_art_number;
+
+    @SerializedName("is_mother_adhering_to_treatment")
+    @Expose
+    private String is_mother_adhering_to_treatment;
+
+    @SerializedName("is_mother_virally_suppressed")
+    @Expose
+    private String is_mother_virally_suppressed;
+
+    @SerializedName("is_child_hiv_positive")
+    @Expose
+    private String is_child_hiv_positive;
+
+    @SerializedName("child_receiving_breastfeeding")
+    @Expose
+    private String child_receiving_breastfeeding;
+
+    @SerializedName("child_tested_for_hiv_inline_with_guidelines")
+    @Expose
+    private String child_tested_for_hiv_inline_with_guidelines;
+
+
+    @SerializedName("receives_drugs_to_prevent_hiv_and_other_illnesses")
+    @Expose
+    private String receives_drugs_to_prevent_hiv_and_other_illnesses;
+
+    @SerializedName("child_been_screened_for_malnutrition")
+    @Expose
+    private String child_been_screened_for_malnutrition;
+
+    @SerializedName("child_gets_drugs_to_prevent_tb")
+    @Expose
+    private String child_gets_drugs_to_prevent_tb_hei;
+
+    @SerializedName("caregiver_nrc")
+    @Expose
+    private String caregiver_nrc;
+
+    @SerializedName("date_offered_enrollment")
+    @Expose
+    private String date_offered_enrollment;
+
+    @SerializedName("child_enrolled_in_early_childhood_development_program")
+    @Expose
+    private String child_enrolled_in_early_childhood_development_program;
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    @SerializedName("school")
+    @Expose
+    private String school;
+
+    @SerializedName("other_school")
+    @Expose
+    private String other_school;
+
+    public String getVl_next_result() {
+        return vl_next_result;
+    }
+
+    public void setVl_next_result(String vl_next_result) {
+        this.vl_next_result = vl_next_result;
+    }
+
+    @SerializedName("vl_next_result")
+    @Expose
+    private String vl_next_result;
+
+    public String getPhysical_address() {
+        return physical_address;
+    }
+
+    public void setPhysical_address(String physical_address) {
+        this.physical_address = physical_address;
+    }
+
+    @SerializedName("physical_address")
+    @Expose
+    private String physical_address;
 
 
     public static String getEntityId() {
@@ -25,6 +415,14 @@ public class Child implements Serializable {
 
     public String getSubpop2() {
         return subpop2;
+    }
+
+    public String getOther_school() {
+        return other_school;
+    }
+
+    public void setOther_school(String other_school) {
+        this.other_school = other_school;
     }
 
     public void setSubpop2(String subpop2) {
@@ -207,179 +605,334 @@ public class Child implements Serializable {
         this.health_facility = health_facility;
     }
 
-    public Child() {
-
+    public String getUnique_id() {
+        return unique_id;
     }
 
-    public Child(String entity_id, String unique_id, String first_name, String last_name, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender) {
-        this.entity_id = entity_id;
+    public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.adolescent_birthdate = adolescent_birthdate;
-        this.subpop1 = subpop1;
-        this.subpop2 = subpop2;
-        this.subpop3 = subpop3;
-        this.subpop4 = subpop4;
-        this.subpop5 = subpop5;
-        this.subpop6 = subpop6;
-        this.date_referred = date_referred;
-        this.date_enrolled = date_enrolled;
-        this.art_check_box = art_check_box;
-        this.art_number = art_number;
-        this.date_started_art = date_started_art;
-        this.date_last_vl = date_last_vl;
-        this.date_next_vl = date_next_vl;
-        this.vl_last_result = vl_last_result;
-        this.vl_suppressed = vl_suppressed;
-        this.child_mmd = child_mmd;
-        this.level_mmd = level_mmd;
-        this.caregiver_name = caregiver_name;
-        this.caregiver_birth_date = caregiver_birth_date;
-        this.caregiver_sex = caregiver_sex;
-        this.caregiver_hiv_status = caregiver_hiv_status;
-        this.relation = relation;
-        this.caregiver_phone = caregiver_phone;
-        this.health_facility = health_facility;
-        this.gender = gender;
-    }
-
-    @SerializedName("entity_id")
-    @Expose
-    private String entity_id;
-
-    @SerializedName("unique_id")
-    @Expose
-    private String unique_id;
-
-    @SerializedName("first_name")
-    @Expose
-    private String first_name;
-
-    @SerializedName("last_name")
-    @Expose
-    private String last_name;
-
-    @SerializedName("adolescent_birthdate")
-    @Expose
-    private String adolescent_birthdate;
-
-    @SerializedName("subpop1")
-    @Expose
-    private String subpop1;
-
-    @SerializedName("subpop2")
-    @Expose
-    private String subpop2;
-
-    @SerializedName("subpop3")
-    @Expose
-    private String subpop3;
-
-    @SerializedName("subpop4")
-    @Expose
-    private String subpop4;
-
-    @SerializedName("subpop5")
-    @Expose
-    private String subpop5;
-
-    @SerializedName("subpop6")
-    @Expose
-    private String subpop6;
-
-    @SerializedName("date_referred")
-    @Expose
-    private String date_referred;
-
-    @SerializedName("date_enrolled")
-    @Expose
-    private String date_enrolled;
-
-    @SerializedName("art_check_box")
-    @Expose
-    private String art_check_box;
-
-    @SerializedName("art_number")
-    @Expose
-    private String art_number;
-
-    @SerializedName("date_started_art")
-    @Expose
-    private String date_started_art;
-
-    @SerializedName("date_last_vl")
-    @Expose
-    private String date_last_vl;
-
-    @SerializedName("date_next_vl")
-    @Expose
-    private String date_next_vl;
-
-    @SerializedName("vl_last_result")
-    @Expose
-    private String vl_last_result;
-
-    @SerializedName("vl_suppressed")
-    @Expose
-    private String vl_suppressed;
-
-    @SerializedName("child_mmd")
-    @Expose
-    private String child_mmd;
-
-    @SerializedName("level_mmd")
-    @Expose
-    private String level_mmd;
-
-    @SerializedName("caregiver_name")
-    @Expose
-    private String caregiver_name;
-
-    @SerializedName("caregiver_birth_date")
-    @Expose
-    private String caregiver_birth_date;
-
-    @SerializedName("caregiver_sex")
-    @Expose
-    private String caregiver_sex;
-
-    @SerializedName("caregiver_hiv_status")
-    @Expose
-    private String caregiver_hiv_status;
-
-    @SerializedName("relation")
-    @Expose
-    private String relation;
-
-    @SerializedName("caregiver_phone")
-    @Expose
-    private String caregiver_phone;
-
-    @SerializedName("health_facility")
-    @Expose
-    private String health_facility;
-
-    @SerializedName("gender")
-    @Expose
-    private String gender;
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
 
+    public String getRelational_id() {
+        return relational_id;
+    }
 
-    public String getEntity_id() {
-        return entity_id;
+
+    public void setRelational_id(String relational_id) {
+        this.relational_id = relational_id;
+    }
+
+    public String getCase_status() {
+        return case_status;
+    }
+
+    public void setCase_status(String case_status) {
+        this.case_status = case_status;
+    }
+
+    public String getIndex_check_box() {
+        return index_check_box;
+    }
+
+    public void setIndex_check_box(String index_check_box) {
+        this.index_check_box = index_check_box;
+    }
+
+    public String getDate_offered_enrollment() {
+        return date_offered_enrollment;
+    }
+
+    public void setDate_offered_enrollment(String date_offered_enrollment) {
+        this.date_offered_enrollment = date_offered_enrollment;
+    }
+
+    public String getDate_removed() {
+        return date_removed;
+    }
+
+    public void setDate_removed(String date_removed) {
+        this.date_removed = date_removed;
+    }
+
+    public String getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(String acceptance) {
+        this.acceptance = acceptance;
+    }
+
+    public String getDate_screened() {
+        return date_screened;
+    }
+
+    public void setDate_screened(String date_screened) {
+        this.date_screened = date_screened;
+    }
+
+    public String getDate_hiv_known() {
+        return date_hiv_known;
+    }
+
+    public void setDate_hiv_known(String date_hiv_known) {
+        this.date_hiv_known = date_hiv_known;
+    }
+
+    public String getIs_hiv_positive() {
+        return is_hiv_positive;
+    }
+
+    public void setIs_hiv_positive(String is_hiv_positive) {
+        this.is_hiv_positive = is_hiv_positive;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getBase_entity_id() {
+        return base_entity_id;
+    }
+
+    public void setBase_entity_id(String base_entity_id) {
+        this.base_entity_id = base_entity_id;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getAdolescent_village() {
+        return adolescent_village;
+    }
+
+    public void setAdolescent_village(String adolescent_village) {
+        this.adolescent_village = adolescent_village;
+    }
+
+    public String getPartners() {
+        return partners;
+    }
+
+    public void setPartners(String partners) {
+        this.partners = partners;
+    }
+
+    public String getIs_viral_load_test_results_on_file() {
+        return is_viral_load_test_results_on_file;
+    }
+
+    public void setIs_viral_load_test_results_on_file(String is_viral_load_test_results_on_file) {
+        this.is_viral_load_test_results_on_file = is_viral_load_test_results_on_file;
+    }
+
+    public String getIs_tb_screening_results_on_file() {
+        return is_tb_screening_results_on_file;
+    }
+
+    public void setIs_tb_screening_results_on_file(String is_tb_screening_results_on_file) {
+        this.is_tb_screening_results_on_file = is_tb_screening_results_on_file;
+    }
+
+    public String getScreened_for_malnutrition() {
+        return screened_for_malnutrition;
+    }
+
+    public void setScreened_for_malnutrition(String screened_for_malnutrition) {
+        this.screened_for_malnutrition = screened_for_malnutrition;
+    }
+
+    public String getGets_tb_preventive_therapy() {
+        return gets_tb_preventive_therapy;
+    }
+
+    public void setGets_tb_preventive_therapy(String gets_tb_preventive_therapy) {
+        this.gets_tb_preventive_therapy = gets_tb_preventive_therapy;
+    }
+
+    public String getTakes_drugs_to_prevent_other_diseases() {
+        return takes_drugs_to_prevent_other_diseases;
+    }
+
+    public void setTakes_drugs_to_prevent_other_diseases(String takes_drugs_to_prevent_other_diseases) {
+        this.takes_drugs_to_prevent_other_diseases = takes_drugs_to_prevent_other_diseases;
+    }
+
+    public String getLess_3() {
+        return less_3;
+    }
+
+    public void setLess_3(String less_3) {
+        this.less_3 = less_3;
+    }
+
+    public String getPositive_mother() {
+        return positive_mother;
+    }
+
+    public void setPositive_mother(String positive_mother) {
+        this.positive_mother = positive_mother;
+    }
+
+    public String getIs_mother_currently_on_treatment() {
+        return is_mother_currently_on_treatment;
+    }
+
+    public void setIs_mother_currently_on_treatment(String is_mother_currently_on_treatment) {
+        this.is_mother_currently_on_treatment = is_mother_currently_on_treatment;
+    }
+
+    public String getMother_art_number() {
+        return mother_art_number;
+    }
+
+    public void setMother_art_number(String mother_art_number) {
+        this.mother_art_number = mother_art_number;
+    }
+
+    public String getIs_mother_adhering_to_treatment() {
+        return is_mother_adhering_to_treatment;
+    }
+
+    public void setIs_mother_adhering_to_treatment(String is_mother_adhering_to_treatment) {
+        this.is_mother_adhering_to_treatment = is_mother_adhering_to_treatment;
+    }
+
+    public String getIs_mother_virally_suppressed() {
+        return is_mother_virally_suppressed;
+    }
+
+    public void setIs_mother_virally_suppressed(String is_mother_virally_suppressed) {
+        this.is_mother_virally_suppressed = is_mother_virally_suppressed;
+    }
+
+    public String getIs_child_hiv_positive() {
+        return is_child_hiv_positive;
+    }
+
+    public void setIs_child_hiv_positive(String is_child_hiv_positive) {
+        this.is_child_hiv_positive = is_child_hiv_positive;
+    }
+
+    public String getChild_receiving_breastfeeding() {
+        return child_receiving_breastfeeding;
+    }
+
+    public void setChild_receiving_breastfeeding(String child_receiving_breastfeeding) {
+        this.child_receiving_breastfeeding = child_receiving_breastfeeding;
+    }
+
+    public String getChild_tested_for_hiv_inline_with_guidelines() {
+        return child_tested_for_hiv_inline_with_guidelines;
+    }
+
+    public void setChild_tested_for_hiv_inline_with_guidelines(String child_tested_for_hiv_inline_with_guidelines) {
+        this.child_tested_for_hiv_inline_with_guidelines = child_tested_for_hiv_inline_with_guidelines;
+    }
+
+    public String getReceives_drugs_to_prevent_hiv_and_other_illnesses() {
+        return receives_drugs_to_prevent_hiv_and_other_illnesses;
+    }
+
+    public void setReceives_drugs_to_prevent_hiv_and_other_illnesses(String receives_drugs_to_prevent_hiv_and_other_illnesses) {
+        this.receives_drugs_to_prevent_hiv_and_other_illnesses = receives_drugs_to_prevent_hiv_and_other_illnesses;
+    }
+
+    public String getChild_been_screened_for_malnutrition() {
+        return child_been_screened_for_malnutrition;
+    }
+
+    public void setChild_been_screened_for_malnutrition(String child_been_screened_for_malnutrition) {
+        this.child_been_screened_for_malnutrition = child_been_screened_for_malnutrition;
+    }
+
+    public String getChild_gets_drugs_to_prevent_tb_hei() {
+        return child_gets_drugs_to_prevent_tb_hei;
+    }
+
+    public void setChild_gets_drugs_to_prevent_tb_hei(String child_gets_drugs_to_prevent_tb_hei) {
+        this.child_gets_drugs_to_prevent_tb_hei = child_gets_drugs_to_prevent_tb_hei;
+    }
+
+    public String getCaregiver_nrc() {
+        return caregiver_nrc;
+    }
+
+    public void setCaregiver_nrc(String caregiver_nrc) {
+        this.caregiver_nrc = caregiver_nrc;
+    }
+
+    public String getChild_enrolled_in_early_childhood_development_program() {
+        return child_enrolled_in_early_childhood_development_program;
+    }
+
+    public void setChild_enrolled_in_early_childhood_development_program(String child_enrolled_in_early_childhood_development_program) {
+        this.child_enrolled_in_early_childhood_development_program = child_enrolled_in_early_childhood_development_program;
+    }
+
+    public String getIs_on_hiv_treatment() {
+        return is_on_hiv_treatment;
+    }
+
+    public void setIs_on_hiv_treatment(String is_on_hiv_treatment) {
+        this.is_on_hiv_treatment = is_on_hiv_treatment;
+    }
+
+    public String getAdolescent_first_name() {
+        return adolescent_first_name;
+    }
+
+    public void setAdolescent_first_name(String adolescent_first_name) {
+        this.adolescent_first_name = adolescent_first_name;
+    }
+
+    public String getAdolescent_last_name() {
+        return adolescent_last_name;
+    }
+
+    public void setAdolescent_last_name(String adolescent_last_name) {
+        this.adolescent_last_name = adolescent_last_name;
+    }
+
+    public String getAdolescent_gender() {
+        return adolescent_gender;
+    }
+
+    public void setAdolescent_gender(String adolescent_gender) {
+        this.adolescent_gender = adolescent_gender;
+    }
+
+    public String getBaseEntity_id() {
+        return base_entity_id;
     }
 
     public void setEntity_id(String entity_id) {
-        this.entity_id = entity_id;
+        this.base_entity_id = entity_id;
     }
 
 
@@ -407,11 +960,4 @@ public class Child implements Serializable {
         this.adolescent_birthdate = adolescent_birthdate;
     }
 
-    public String getUnique_id() {
-        return unique_id;
-    }
-
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
-    }
 }
