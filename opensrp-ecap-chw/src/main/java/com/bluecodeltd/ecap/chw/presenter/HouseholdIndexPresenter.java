@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import android.app.Activity;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 
@@ -93,7 +94,7 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
 
         if (StringUtils.isBlank(entityId)) {
             Triple<String, String, String> triple = Triple.of(formName, metadata, currentLocationId);
-            interactor.getNextUniqueId(triple, this);
+            interactor.getNextUniqueId(getView().getContext(), triple, this);
             return;
         }
 

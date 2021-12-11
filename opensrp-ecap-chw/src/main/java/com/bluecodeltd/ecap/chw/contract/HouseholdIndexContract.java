@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.contract;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -29,7 +31,7 @@ public interface HouseholdIndexContract {
     }
 
     interface Interactor {
-        void getNextUniqueId(Triple<String, String, String> triple, HouseholdIndexContract.InteractorCallBack callBack);
+        void getNextUniqueId(Context context, Triple<String, String, String> triple, InteractorCallBack callBack);
 
         void onDestroy(boolean isChangingConfiguration);
 
