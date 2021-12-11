@@ -34,13 +34,13 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.VcaScreening;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -111,9 +111,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
-        childId = getIntent().getExtras().getString("Child");
+        childId = getIntent().getExtras().getString("child");
         indexChild = IndexPersonDao.getChildByBaseId(childId);
-        String gender = indexChild.getGender();
+        String gender = indexChild.getAdolescent_gender();
 
         oMapper = new ObjectMapper();
 
@@ -167,7 +167,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public HashMap<String, Child> getData() {
         String full_name = indexChild.getFirst_name() + " " + indexChild.getLast_name();
-        String gender =  indexChild.getGender();
+        String gender =  indexChild.getAdolescent_gender();
         String birthdate = indexChild.getAdolescent_birthdate();
 
         if(birthdate != null){
@@ -950,6 +950,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
        // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -961,11 +962,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         formToBeOpened = formUtils.getFormJson(formName);
 
 
-        formToBeOpened.getJSONObject("step1").put("title", indexChild.getFirst_name()+ " " + indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name()+ " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
         //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
         CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
 
-        formToBeOpened.put("entity_id", indexChild.getEntity_id());
+        formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
 
         startFormActivity(formToBeOpened);
     }
