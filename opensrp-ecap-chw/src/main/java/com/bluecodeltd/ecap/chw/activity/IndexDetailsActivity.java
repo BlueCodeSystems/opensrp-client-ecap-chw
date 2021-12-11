@@ -98,6 +98,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     String myAge;
     ObjectMapper oMapper;
+    Child child;
 
 
     @Override
@@ -111,7 +112,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
-        childId = getIntent().getExtras().getString("child");
+
+        childId = getIntent().getExtras().getString("Child");
+
         indexChild = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexChild.getAdolescent_gender();
 
@@ -128,8 +131,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             myAppbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
 
         }
-
-
 
 
         fab = findViewById(R.id.fab);
@@ -158,11 +159,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         setupViewPager();
         //updateTasksTabTitle();
-
-
     }
-
-
 
 
     public HashMap<String, Child> getData() {
@@ -179,7 +176,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtName.setText(full_name);
         txtGender.setText(gender.toUpperCase());
 
-        Child child = IndexPersonDao.getChildByBaseId(childId);
+        child = IndexPersonDao.getChildByBaseId(childId);
 
 
         HashMap<String, Child> map = new HashMap<>();
@@ -437,7 +434,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("household",  client);
+            intent.putExtra("childId",  child.getEntity_id());
             startActivity(intent);
 
 
