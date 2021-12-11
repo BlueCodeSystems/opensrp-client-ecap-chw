@@ -145,7 +145,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
    }
    public void gotToChildProfile(String id){
        Intent intent = new Intent(getView().getContext(),IndexDetailsActivity.class);
-       intent.putExtra("Child",id);
+       intent.putExtra("child",id);
        Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
        getView().startActivity(intent);
    }

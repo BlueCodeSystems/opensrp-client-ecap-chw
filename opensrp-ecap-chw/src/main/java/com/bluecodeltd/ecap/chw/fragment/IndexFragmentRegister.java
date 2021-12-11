@@ -114,7 +114,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     protected void goToIndexDetailActivity(String baseId) {
 
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-        intent.putExtra("Child",  baseId);
+        intent.putExtra("child",  baseId);
         startActivity(intent);
     }
 
