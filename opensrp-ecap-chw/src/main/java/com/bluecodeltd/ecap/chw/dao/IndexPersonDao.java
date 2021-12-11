@@ -62,7 +62,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String familyBaseEntityID) {
 
-        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE base_entity_id = '" + familyBaseEntityID + "' OR unique_id = '"+ familyBaseEntityID +"'";
+        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE (base_entity_id = '" + familyBaseEntityID + "' OR unique_id = '"+ familyBaseEntityID +"')";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)

@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.contract;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -33,7 +35,7 @@ public interface IndexRegisterContract {
 
     interface Interactor {
 
-        void getNextUniqueId(Triple<String, String, String> triple, IndexRegisterContract.InteractorCallBack callBack);
+        void getNextUniqueId(Context context, Triple<String, String, String> triple, IndexRegisterContract.InteractorCallBack callBack);
 
         void onDestroy(boolean isChangingConfiguration);
 

@@ -72,7 +72,7 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Unique ID",
+        "hint": "VCA ID",
         "edit_type": "name"
       },
       {

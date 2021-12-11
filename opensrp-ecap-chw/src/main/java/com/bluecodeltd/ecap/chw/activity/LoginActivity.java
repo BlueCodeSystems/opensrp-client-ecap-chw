@@ -260,8 +260,9 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
                         String sub = jObj.getString("sub");
                         String code = jObj.getString("code");
+                        String name = jObj.getString("name");
                         String given_name = jObj.getString("given_name");
-                        String family_name = jObj.getString("given_name");
+                        String family_name = jObj.getString("family_name");
                         String province = jObj.getString("province");
                         String partner = jObj.getString("partner");
                         String phone = jObj.getString("phone");
@@ -277,6 +278,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
                         edit.putString("sub", sub);
                         edit.putString("code", code);
+                        edit.putString("caseworker_name", name);
                         edit.putString("given_name", given_name);
                         edit.putString("family_name", family_name);
                         edit.putString("province", province);
