@@ -2,10 +2,13 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
@@ -20,20 +23,25 @@ import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.referral.R.id;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.domain.UniqueId;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
 import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdJsonFormUtils;
 import org.smartregister.opd.utils.OpdUtils;
+import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
@@ -45,6 +53,8 @@ import timber.log.Timber;
 public class IndexRegisterActivity extends BaseRegisterActivity implements IndexRegisterContract.View {
 
     public String action = null;
+    ObjectMapper oMapper;
+    private UniqueIdRepository uniqueIdRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,17 +101,31 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     @Override
     public void startFormActivity(JSONObject jsonObject) {
 
+        oMapper = new ObjectMapper();
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
-        String partner = sp.getString("partner", "Not Set");
+        String code = sp.getString("code", "00000");
+        Object obj = sp.getAll();
 
 
         try {
-            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).put("value", partner);
+
+            UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
+
+            String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+            String xId = entityId.replaceFirst("^0+(?!$)", "");
+
+            String household_id = code + "/" + xId;
+
+            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
+
+            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //myForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
 
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
@@ -168,6 +192,35 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         } else {
             hideProgressDialog();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profilemenu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+
+            case R.id.user:
+
+                Intent i = new Intent(this, Profile.class);
+                startActivity(i);
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
     }
 
 }

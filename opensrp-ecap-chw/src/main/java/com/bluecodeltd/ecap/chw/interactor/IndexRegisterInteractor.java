@@ -5,8 +5,12 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPrefer
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.model.EventClient;
@@ -49,15 +53,26 @@ public class IndexRegisterInteractor implements IndexRegisterContract.Interactor
 
 
     @Override
-    public void getNextUniqueId(final Triple<String, String, String> triple, final IndexRegisterContract.InteractorCallBack callBack) {
+    public void getNextUniqueId(final Context ctx, final Triple<String, String, String> triple, final IndexRegisterContract.InteractorCallBack callBack) {
         Runnable runnable = () -> {
+
             UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-            final String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+            String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+            String xId = entityId.replaceFirst("^0+(?!$)", "");
+
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
+            String code = sp.getString("code", "00000");
+
+            final String vcaId = code + "/" + xId;
+
+
             appExecutors.mainThread().execute(() -> {
-                if (StringUtils.isBlank(entityId)) {
+                if (StringUtils.isBlank(xId)) {
                     callBack.onNoUniqueId();
                 } else {
-                    callBack.onUniqueIdFetched(triple, entityId);
+                    callBack.onUniqueIdFetched(triple, xId);
                 }
             });
         };
