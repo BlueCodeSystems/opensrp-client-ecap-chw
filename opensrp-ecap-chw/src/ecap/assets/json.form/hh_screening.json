@@ -567,7 +567,7 @@
         },
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9]{1})",
-          "err": "ART should be in the format of ^XXXX-XXXX-XXXXXX-X"
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       },
       {
