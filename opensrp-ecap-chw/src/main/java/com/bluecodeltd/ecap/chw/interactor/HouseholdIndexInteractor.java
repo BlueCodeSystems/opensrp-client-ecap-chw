@@ -4,7 +4,11 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPrefer
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
@@ -52,15 +56,25 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
 
 
     @Override
-    public void getNextUniqueId(final Triple<String, String, String> triple, final HouseholdIndexContract.InteractorCallBack callBack) {
+    public void getNextUniqueId(final Context context, final Triple<String, String, String> triple, final HouseholdIndexContract.InteractorCallBack callBack) {
         Runnable runnable = () -> {
             UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-            final String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+
+            String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+            String xId = entityId.replaceFirst("^0+(?!$)", "");
+
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+            String code = sp.getString("code", "00000");
+
+            final String vcaId = code + "/" + xId;
+
             appExecutors.mainThread().execute(() -> {
-                if (StringUtils.isBlank(entityId)) {
+                if (StringUtils.isBlank(xId)) {
                     callBack.onNoUniqueId();
                 } else {
-                    callBack.onUniqueIdFetched(triple, entityId);
+                    callBack.onUniqueIdFetched(triple, xId);
                 }
             });
         };

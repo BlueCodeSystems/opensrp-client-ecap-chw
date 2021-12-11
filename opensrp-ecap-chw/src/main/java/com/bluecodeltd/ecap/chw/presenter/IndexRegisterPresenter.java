@@ -134,7 +134,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
 
        if (StringUtils.isBlank(entityId)) {
            Triple<String, String, String> triple = Triple.of(formName, metadata, currentLocationId);
-           interactor.getNextUniqueId(triple, this);
+           interactor.getNextUniqueId(getView().getContext(), triple, this);
            return;
        }
 

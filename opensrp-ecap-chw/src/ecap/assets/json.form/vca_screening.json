@@ -69,7 +69,6 @@
         "toaster_info_title": "Introduction",
         "toaster_type": "info"
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -85,6 +84,16 @@
         "openmrs_entity_id": "hd1",
         "type": "label",
         "text": "Administrative Information"
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
       },
       {
         "key": "unique_id",
@@ -162,23 +171,15 @@
         "look_up": "true"
       },
       {
-        "key": "partners",
+        "key": "partner",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners",
-        "type": "spinner",
-        "hint": "Partners",
-        "values": [
-          "YWCA",
-          "BISO",
-          "ZEC",
-          "COH",
-          "PCZ"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please enter Partner"
-        }
+        "openmrs_entity_id": "partner",
+        "type": "edit_text",
+        "hint": "Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "adolescent_first_name",
@@ -1712,12 +1713,13 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "screening_carried_out_by",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_carried_out_by",
+        "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
         "hint": "Carried out by",
+        "read_only": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",

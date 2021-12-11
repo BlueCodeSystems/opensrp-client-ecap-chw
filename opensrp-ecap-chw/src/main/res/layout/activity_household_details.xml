@@ -271,7 +271,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_add_family"  />
+                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
 
             </RelativeLayout>
 
@@ -450,7 +450,7 @@
             android:tint="@android:color/white"
             app:backgroundTint="@color/text_black"
             app:fabSize="normal"
-            app:srcCompat="@drawable/ic_input_add" />
+            app:srcCompat="@drawable/baseline_mode_edit_24" />
 
     </RelativeLayout>
 
