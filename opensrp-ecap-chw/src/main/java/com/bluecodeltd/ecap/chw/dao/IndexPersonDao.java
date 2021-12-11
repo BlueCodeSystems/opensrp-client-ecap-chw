@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.VcaScreening;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -86,9 +87,10 @@ public class IndexPersonDao  extends AbstractDao {
 
 
     public static Child getChildByBaseId(String baseEntityID){
-        String sql = "SELECT * FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"'";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"'";
         DataMap<Child> dataMap = c -> {
             return new Child(
+                    getCursorValue(c, "status"),
                     getCursorValue(c, "base_entity_id"),
                     getCursorValue(c, "unique_id"),
                     getCursorValue(c, "first_name"),
@@ -118,7 +120,51 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "relation"),
                     getCursorValue(c, "caregiver_phone"),
                     getCursorValue(c, "health_facility"),
-                    getCursorValue(c, "gender")
+                    getCursorValue(c, "adolescent_gender"),
+                    getCursorValue(c, "relational_id"),
+                    getCursorValue(c, "case_status"),
+                    getCursorValue(c, "index_check_box"),
+                    getCursorValue(c, "date_removed"),
+                    getCursorValue(c, "acceptance"),
+                    getCursorValue(c, "date_screened"),
+                    getCursorValue(c, "date_hiv_known"),
+                    getCursorValue(c, "is_hiv_positive"),
+                    getCursorValue(c, "is_on_hiv_treatment"),
+                    getCursorValue(c, "adolescent_first_name"),
+                    getCursorValue(c, "adolescent_last_name"),
+                    getCursorValue(c, "province"),
+                    getCursorValue(c, "district"),
+                    getCursorValue(c, "ward"),
+                    getCursorValue(c, "village"),
+                    getCursorValue(c, "partners"),
+                    getCursorValue(c, "is_viral_load_test_results_on_file"),
+                    getCursorValue(c, "is_tb_screening_results_on_file"),
+                    getCursorValue(c, "screened_for_malnutrition"),
+                    getCursorValue(c, "gets_tb_preventive_therapy"),
+                    getCursorValue(c, "takes_drugs_to_prevent_other_diseases"),
+                    getCursorValue(c, "less_3"),
+                    getCursorValue(c, "positive_mother"),
+                    getCursorValue(c, "is_mother_currently_on_treatment"),
+                    getCursorValue(c, "mother_art_number"),
+                    getCursorValue(c, "is_mother_adhering_to_treatment"),
+                    getCursorValue(c, "is_mother_virally_suppressed"),
+                    getCursorValue(c, "is_child_hiv_positive"),
+                    getCursorValue(c, "child_receiving_breastfeeding"),
+                    getCursorValue(c, "child_tested_for_hiv_inline_with_guidelines"),
+                    getCursorValue(c, "receives_drugs_to_prevent_hiv_and_other_illnesses"),
+                    getCursorValue(c, "child_been_screened_for_malnutrition"),
+                    getCursorValue(c, "child_gets_drugs_to_prevent_tb"),
+                    getCursorValue(c, "child_enrolled_in_early_childhood_development_program"),
+                    getCursorValue(c, "school"),
+                    getCursorValue(c, "other_school"),
+                    getCursorValue(c, "caregiver_nrc"),
+                    getCursorValue(c, "vl_next_result"),
+                    getCursorValue(c, "physical_address"),
+                    getCursorValue(c, "date_offered_enrollment")
+
+
+
+
             );
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
@@ -127,5 +173,60 @@ public class IndexPersonDao  extends AbstractDao {
         }
         return children.get(0);
     }
+   /* public static Child getChildVcaScreeningByBaseId(String baseEntityID){
+        String sql = "SELECT *  FROM ec_sub_population WHERE base_entity_id = '" + baseEntityID + "'";
+        DataMap<Child> dataMap = c -> {
+            return new Child(
 
+                    getCursorValue(c, "base_entity_id"),
+                    getCursorValue(c, "relational_id"),
+                    getCursorValue(c, "province"),
+                    getCursorValue(c, "district"),
+                    getCursorValue(c, "ward"),
+                    getCursorValue(c, "adolescent_village"),
+                    getCursorValue(c, "health_facility"),
+                    getCursorValue(c, "partners"),
+                    getCursorValue(c, "first_name"),
+                    getCursorValue(c, "last_name"),
+                    getCursorValue(c, "adolescent_birthdate"),
+                    getCursorValue(c, "adolescent_name_of_caregiver"),
+                    getCursorValue(c, "physical_address"),
+                    getCursorValue(c, "caregiver_nrc"),
+                    getCursorValue(c, "adolescent_phone"),
+                    getCursorValue(c, "adolescent_gender"),
+                    getCursorValue(c, "school"),
+                    getCursorValue(c, "other_school"),
+                    getCursorValue(c, "is_hiv_positive"),
+                    getCursorValue(c, "is_on_hiv_treatment"),
+                    getCursorValue(c, "is_viral_load_test_results_on_file"),
+                    getCursorValue(c, "is_tb_screening_results_on_file"),
+                    getCursorValue(c, "screened_for_malnutrition"),
+                    getCursorValue(c, "screened_for_malnutrition"),
+                    getCursorValue(c, "takes_drugs_to_prevent_other_diseases"),
+                    getCursorValue(c, "less_3"),
+                    getCursorValue(c, "positive_mother"),
+                    getCursorValue(c, "art_number"),
+                    getCursorValue(c, "is_mother_currently_on_treatment"),
+                    getCursorValue(c, "mother_art_number"),
+                    getCursorValue(c, "is_mother_adhering_to_treatment"),
+                    getCursorValue(c, "is_mother_virally_suppressed"),
+                    getCursorValue(c, "is_child_hiv_positive"),
+                    getCursorValue(c, "child_receiving_breastfeeding"),
+                    getCursorValue(c, "child_tested_for_hiv_inline_with_guidelines"),
+                    getCursorValue(c, "receives_drugs_to_prevent_hiv_and_other_illnesses"),
+                    getCursorValue(c, "child_been_screened_for_malnutrition"),
+                    getCursorValue(c, "child_gets_drugs_to_prevent_tb"),
+                    getCursorValue(c, "child_enrolled_in_early_childhood_development_program"),
+                    getCursorValue(c, "date_removed")
+
+
+            );
+        };
+        List <Child> children =  AbstractDao.readData(sql, dataMap);
+        if (children == null) {
+            return null;
+        }
+        return children.get(0);
+    }
+*/
 }
