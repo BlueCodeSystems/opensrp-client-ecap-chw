@@ -1,10 +1,12 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
@@ -24,12 +26,14 @@ import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.domain.UniqueId;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
 import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdJsonFormUtils;
 import org.smartregister.opd.utils.OpdUtils;
+import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
@@ -41,6 +45,7 @@ import timber.log.Timber;
 public class HouseholdIndexActivity extends BaseRegisterActivity implements HouseholdIndexContract.View{
 
     public String action = null;
+    private UniqueIdRepository uniqueIdRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,27 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
     @Override
     public void startFormActivity(JSONObject jsonObject) {
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String code = sp.getString("code", "00000");
+
+        UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
+
+
+        String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+        String xId = entityId.replaceFirst("^0+(?!$)", "");
+
+        String household_id = code + "/" + xId;
+
+        try {
+            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -105,7 +131,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
             try {
 
                 JSONObject jsonFormObject = new JSONObject(jsonString);
-              //  String entityId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).
+
 
                 if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
@@ -115,8 +141,6 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
                     showProgressDialog(R.string.saving_dialog_title);
                     householdIndexPresenter().saveForm(jsonString, registerParam);
 
-                    /*Intent intent = new Intent(this, MemberActivity.class);
-                    startActivity(intent);*/
                 }
             } catch (JSONException e) {
                 Timber.e(e);
@@ -156,5 +180,12 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         } else {
             hideProgressDialog();
         }
+    }
+
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
     }
 }

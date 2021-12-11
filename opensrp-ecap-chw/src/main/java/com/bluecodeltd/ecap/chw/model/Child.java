@@ -9,9 +9,11 @@ public class Child implements Serializable {
 
     public static final String ENTITY_ID = "entity_id";
 
+
     public static String getEntityId() {
         return ENTITY_ID;
     }
+
 
     public String getSubpop1() {
         return subpop1;
@@ -209,8 +211,9 @@ public class Child implements Serializable {
 
     }
 
-    public Child(String entity_id, String first_name, String last_name, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender) {
+    public Child(String entity_id, String unique_id, String first_name, String last_name, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender) {
         this.entity_id = entity_id;
+        this.unique_id = unique_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.adolescent_birthdate = adolescent_birthdate;
@@ -244,6 +247,10 @@ public class Child implements Serializable {
     @SerializedName("entity_id")
     @Expose
     private String entity_id;
+
+    @SerializedName("unique_id")
+    @Expose
+    private String unique_id;
 
     @SerializedName("first_name")
     @Expose
@@ -398,5 +405,13 @@ public class Child implements Serializable {
 
     public void setAdolescent_birthdate(String adolescent_birthdate) {
         this.adolescent_birthdate = adolescent_birthdate;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }
