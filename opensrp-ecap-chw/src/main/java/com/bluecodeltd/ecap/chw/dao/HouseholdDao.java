@@ -23,14 +23,12 @@ public class HouseholdDao extends AbstractDao {
     }
 
 
-    public static Household getHousehold (String baseEntityID) {
+    public static Household getHousehold (String householdID) {
 
-        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.base_entity_id = ec_client_index.base_entity_id WHERE ec_household.base_entity_id = '" + baseEntityID + "' ";
+        //String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' ";
+        String sql = "SELECT * FROM ec_household WHERE household_id = '" + householdID + "' ";
 
-
-        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
-        if (values == null || values.size() != 1)
-            return null;
+                List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
 
         return values.get(0);
 
@@ -41,6 +39,7 @@ public class HouseholdDao extends AbstractDao {
 
             Household record = new Household();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setVillage(getCursorValue(c, "adolescent_village"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setScreening_date(getCursorValue(c, "screening_date"));

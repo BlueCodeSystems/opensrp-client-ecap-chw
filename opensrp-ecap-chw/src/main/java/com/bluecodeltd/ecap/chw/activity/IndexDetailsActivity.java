@@ -40,7 +40,6 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.VcaScreening;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -88,7 +87,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private String childId;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
     private  Child indexChild;
-    private TextView txtName, txtGender, txtAge;
+    private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
@@ -116,7 +115,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         childId = getIntent().getExtras().getString("Child");
 
         indexChild = IndexPersonDao.getChildByBaseId(childId);
-        String gender = indexChild.getAdolescent_gender();
+        String gender = indexChild.getGender();
 
         oMapper = new ObjectMapper();
 
@@ -153,6 +152,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
+        txtChildid = findViewById(R.id.childid);
 
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
@@ -164,7 +164,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public HashMap<String, Child> getData() {
         String full_name = indexChild.getFirst_name() + " " + indexChild.getLast_name();
-        String gender =  indexChild.getAdolescent_gender();
+        String gender =  indexChild.getGender();
         String birthdate = indexChild.getAdolescent_birthdate();
 
         if(birthdate != null){
@@ -175,6 +175,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         txtName.setText(full_name);
         txtGender.setText(gender.toUpperCase());
+        txtChildid.setText("ID : " + indexChild.getUnique_id());
 
         child = IndexPersonDao.getChildByBaseId(childId);
 
@@ -434,7 +435,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getEntity_id());
+            intent.putExtra("childId",  child.getBase_entity_id());
+            intent.putExtra("householdId",  child.getHousehold_id());
             startActivity(intent);
 
 
@@ -915,6 +917,30 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return client.getColumnmaps().get("caregiver_firstname");
     }
 
+
+    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject formToBeOpened;
+
+        formToBeOpened = formUtils.getFormJson(formName);
+
+
+        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name()+ " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
+
+        formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
+
+        startFormActivity(formToBeOpened);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -944,27 +970,5 @@ public class IndexDetailsActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
-       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
-
-        formToBeOpened = formUtils.getFormJson(formName);
-
-
-        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name()+ " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
-
-        formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
-
-        startFormActivity(formToBeOpened);
     }
 }
