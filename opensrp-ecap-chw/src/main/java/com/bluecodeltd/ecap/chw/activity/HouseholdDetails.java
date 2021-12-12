@@ -76,9 +76,11 @@ public class HouseholdDetails extends AppCompatActivity {
     private Boolean isFabOpen = false;
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
     private String childId;
+    private String householdId;
     Household house;
     Child child;
     ObjectMapper oMapper;
+    CommonPersonObjectClient household;
 
 
     @Override
@@ -91,8 +93,11 @@ public class HouseholdDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         childId = getIntent().getExtras().getString("childId");
+        householdId = getIntent().getExtras().getString("householdId");
+        household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+
         child = IndexPersonDao.getChildByBaseId(childId);
-        house = HouseholdDao.getHousehold(childId);
+        house = HouseholdDao.getHousehold(householdId);
         oMapper = new ObjectMapper();
 
         fab = findViewById(R.id.fabx);
@@ -118,9 +123,8 @@ public class HouseholdDetails extends AppCompatActivity {
         updateTasksTabTitle();
         updateChildTabTitle();
 
-        Household house = HouseholdDao.getHousehold(childId);
-        txtDistrict.setText(house.getDistrict());
-        txtVillage.setText(house.getVillage() + ", ");
+        txtDistrict.setText(householdId);
+       // txtVillage.setText(house.getVillage() + ", ");
     }
 
     public HashMap<String, Household> getData() {
@@ -165,7 +169,8 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-        String children = IndexPersonDao.countChildren(childId);
+
+        String children = IndexPersonDao.countChildren(householdId);
 
         childTabCount.setText(children);
 
@@ -195,7 +200,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.put("entity_id", childId);
                     indexRegisterForm.getJSONObject("step1").put("title", child.getCaregiver_name() + " Household");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, household.getColumnmaps());
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
@@ -289,7 +294,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 formToBeOpened = formUtils.getFormJson("family_member");
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(child, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, household.getColumnmaps());
 
                 startFormActivity(formToBeOpened);
 

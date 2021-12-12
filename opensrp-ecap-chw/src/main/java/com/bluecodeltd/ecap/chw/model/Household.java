@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Household {
 
     private String base_entity_id;
+    private String household_id;
     private String village;
     private String district;
     private String screening_date;
@@ -207,5 +208,13 @@ public class Household {
 
     public void setIncome(String income) {
         this.income = income;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 }
