@@ -394,7 +394,14 @@ actions:
 name: step1_active_on_treatment
 description: active_on_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_adhering_to_treatment
+description: adhering_to_treatment
+priority: 1
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -402,13 +409,6 @@ name: step1_is_mother_virally_suppressed
 description: is_mother_virally_suppressed
 priority: 1
 condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
-actions:
-  - "isRelevant = true"
----
-name: step1_active_on_treatment
-description: active_on_treatment
-priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
