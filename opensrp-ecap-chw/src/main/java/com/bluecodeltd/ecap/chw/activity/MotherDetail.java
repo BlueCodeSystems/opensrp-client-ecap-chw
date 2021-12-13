@@ -40,6 +40,7 @@ public class MotherDetail extends AppCompatActivity {
     private Boolean isFabOpen = false;
     private RelativeLayout rhousehold, rassessment, rcase_plan, referral;
     private TextView txtName, txtVillage, txtPhone, txtArt, txtFacility, txtOvc, txtComment;
+    public String motherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class MotherDetail extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
+        motherId = getIntent().getExtras().getString("mother_basid");
+
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.ccase_plan);
 
@@ -62,7 +65,7 @@ public class MotherDetail extends AppCompatActivity {
         txtArt = findViewById(R.id.art);
         txtOvc = findViewById(R.id.ovc_date);
         txtComment = findViewById(R.id.comment);
-
+/*
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
 
         assert client != null;
@@ -82,7 +85,7 @@ public class MotherDetail extends AppCompatActivity {
         txtArt.setText(art);
         txtOvc.setText(ovc_date);
         txtComment.setText(comment);
-
+*/
     }
 
 

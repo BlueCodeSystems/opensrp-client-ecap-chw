@@ -399,7 +399,17 @@
               "ec_hiv_assessment_below_15"
 
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Caregiver Household Assessment Form",
+            "creates_case": [
+              "ec_caregiver_household_assessment"
+
+            ]
           }
+
+
         ]
       }
     }

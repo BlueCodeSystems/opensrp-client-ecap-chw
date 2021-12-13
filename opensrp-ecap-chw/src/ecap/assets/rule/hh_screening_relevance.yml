@@ -104,6 +104,13 @@ condition: "step1_active_on_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_biological_children
+description: enrolled_biological_children relevance
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('HIV+')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_enrolled_pmtct
 description: enrolled_pmtct relevance
 priority: 1

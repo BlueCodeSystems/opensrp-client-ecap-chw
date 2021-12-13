@@ -319,7 +319,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_add_family_active"  />
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
 
@@ -356,7 +356,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_add_family_active" />
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -393,7 +393,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_activity_visited" />
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -430,7 +430,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_activity_visited" />
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 

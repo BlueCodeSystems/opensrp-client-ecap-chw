@@ -258,7 +258,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_boy_child" />
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
 
@@ -305,7 +305,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_boy_child"  />
+                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
 
             </RelativeLayout>
 
@@ -342,7 +342,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_boy_child" />
+                    app:srcCompat="@android:drawable/ic_input_add"/>
 
             </RelativeLayout>
 
@@ -379,7 +379,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_refer" />
+                    app:srcCompat="@android:drawable/ic_input_add"/>
 
             </RelativeLayout>
 
@@ -416,7 +416,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_boy_child" />
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
             <RelativeLayout
@@ -452,7 +452,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_boy_child" />
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -490,7 +490,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_activity_visited"  />
+                    app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
 
@@ -528,7 +528,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_activity_visited"  />
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
 
@@ -553,7 +553,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="HIV Assessment"
+                    android:text="HIV Risk Assessment"
                     android:textStyle="italic"
                     android:textColor="@android:color/black" />
 
@@ -565,7 +565,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@mipmap/ic_jobaids"  />
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
 
@@ -584,7 +584,7 @@
             android:tint="@android:color/white"
             app:backgroundTint="@color/text_black"
             app:fabSize="normal"
-            app:srcCompat="@drawable/ic_input_add" />
+            app:srcCompat="@drawable/baseline_mode_edit_24" />
 
     </RelativeLayout>
 

@@ -1,0 +1,56 @@
+---
+name: step1_symptoms
+description: symptoms
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_following
+description: following
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_last_6_months
+description: last_6_months
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_last_12_months
+description: last_12_months
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_pregnant_breastfeeding
+description: pregnant_breastfeeding
+priority: 1
+condition: "(step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')) && step1_caregiver_sex.contains('Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_result
+description: hiv_result
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_date
+description: test_date
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_result
+description: hiv_result
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_hiv_test.contains('No')"
+actions:
+  - "isRelevant = true"
