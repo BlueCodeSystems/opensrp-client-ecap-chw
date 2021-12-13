@@ -197,11 +197,18 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
 
-                    indexRegisterForm.put("entity_id", childId);
+                    indexRegisterForm.put("entity_id", house.getBase_entity_id());
                     indexRegisterForm.getJSONObject("step1").put("title", child.getCaregiver_name() + " Household");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, household.getColumnmaps());
+
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop5());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop6());
 
                     startFormActivity(indexRegisterForm);
 
@@ -295,6 +302,9 @@ public class HouseholdDetails extends AppCompatActivity {
                 formToBeOpened = formUtils.getFormJson("family_member");
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, household.getColumnmaps());
+
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", "");
 
                 startFormActivity(formToBeOpened);
 

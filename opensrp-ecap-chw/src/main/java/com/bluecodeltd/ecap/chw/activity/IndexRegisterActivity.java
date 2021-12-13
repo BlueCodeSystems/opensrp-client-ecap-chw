@@ -69,17 +69,23 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
 
-        String username = getIntent().getExtras().getString("username");
-        String password = getIntent().getExtras().getString("password");
+        Bundle extras = getIntent().getExtras();
+        String username = extras.getString("username");
+        String password = extras.getString("password");
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
-        String code = sp.getString("code", "0000");
+        if (username != null && password != null) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+            String code = sp.getString("code", "0000");
 
-        if (!sp.contains("code") || code.equals("0000")) {
+            if (!sp.contains("code") || code.equals("0000")) {
 
-            getToken(username, password);
+                getToken(username, password);
+
+            }
+
 
         }
+
     }
     private void getToken (final String username, final String password) {
 

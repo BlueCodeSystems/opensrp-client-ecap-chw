@@ -50,9 +50,9 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
     
-    public static List<String> getGenders(String baseEntityID){
+    public static List<String> getGenders(String household_id){
 
-        String sql = "SELECT gender FROM ec_client_index WHERE (base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"') AND gender IS NOT NULL";
+        String sql = "SELECT gender FROM ec_client_index WHERE household_id =  '" + household_id + "' AND gender IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "gender");
 

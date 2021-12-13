@@ -39,6 +39,8 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 baseRegisterActivity.switchToBaseFragment();
             } else {
                 Intent intent = new Intent(context, IndexRegisterActivity.class);
+                intent.putExtra("username", "");
+                intent.putExtra("password", "");
                 context.startActivity(intent);
                 context.finish();
             }

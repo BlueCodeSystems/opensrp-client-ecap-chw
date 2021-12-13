@@ -1237,6 +1237,13 @@
           }
         },
         {
+          "column_name": "secure",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.secure"
+          }
+        },
+        {
           "column_name": "screened",
           "type": "Client",
           "json_mapping": {
