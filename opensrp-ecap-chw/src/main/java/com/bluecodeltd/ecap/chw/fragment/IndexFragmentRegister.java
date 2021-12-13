@@ -108,13 +108,14 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     protected void onViewClicked(View view) {
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
         String baseId = client.entityId();
-        goToIndexDetailActivity(baseId);
+        goToIndexDetailActivity(baseId,client);
     }
 
-    protected void goToIndexDetailActivity(String baseId) {
+    protected void goToIndexDetailActivity(String baseId, CommonPersonObjectClient client) {
 
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
         intent.putExtra("Child",  baseId);
+        intent.putExtra("clients",  client);
         startActivity(intent);
     }
 

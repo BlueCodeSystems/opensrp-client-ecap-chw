@@ -80,7 +80,7 @@
           "key": "reason",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "other_reason",
+          "openmrs_entity_id": "reason",
           "type": "native_radio",
           "label": "Reason for Closing Case",
           "options": [

@@ -1492,6 +1492,20 @@
           }
         },
         {
+          "column_name": "reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason"
+          }
+        },
+        {
+          "column_name": "other_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_reason"
+          }
+        },
+        {
           "column_name": "subpop1",
           "type": "Client",
           "json_mapping": {

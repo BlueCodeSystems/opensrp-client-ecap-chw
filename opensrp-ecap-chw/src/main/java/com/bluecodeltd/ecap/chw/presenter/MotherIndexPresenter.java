@@ -1,5 +1,10 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
+import android.content.Intent;
+import android.widget.Toast;
+
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.activity.MotherDetail;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.interactor.MotherIndexInteractor;
@@ -13,6 +18,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class MotherIndexPresenter implements MotherIndexContract.Presenter {
@@ -20,6 +26,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
     private MotherIndexContract.View view;
     private MotherIndexContract.Model model;
     private MotherIndexContract.Interactor interactor;
+    private String baseId;
 
     private WeakReference<MotherIndexContract.View> activityWeakReference;
 
@@ -69,6 +76,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
             }
 
             interactor.saveRegistration(eventClients, isEditMode);
+            baseId = eventClients.get(0).getClient().getBaseEntityId();
 
         } catch (Exception e) {
             Timber.e(e);
@@ -79,6 +87,8 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
     public void onRegistrationSaved() {
         getView().toggleDialogVisibility(false);
         getView().refreshList(FetchStatus.fetched);
+        gotToMotherProfile(baseId);
+
     }
 
     @Override
@@ -87,5 +97,12 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
             return (MotherIndexActivity) view;
         }
         return null;
+    }
+
+    public void gotToMotherProfile(String id){
+       /* Intent intent = new Intent(getView().getContext(), MotherDetail.class);
+        intent.putExtra("mother_basid",id);
+        Toasty.success(getView(), "Mother Saved", Toast.LENGTH_LONG, true).show();
+        getView().startActivity(intent);*/
     }
 }

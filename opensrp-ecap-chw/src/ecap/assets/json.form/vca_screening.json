@@ -679,10 +679,10 @@
         }
       },
       {
-        "key": "active_on_treatment",
+        "key": "adhering_to_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "active_on_treatment",
+        "openmrs_entity_id": "adhering_to_treatment",
         "type": "native_radio",
         "label": "Is the mother adhering to treatment?",
         "options": [
