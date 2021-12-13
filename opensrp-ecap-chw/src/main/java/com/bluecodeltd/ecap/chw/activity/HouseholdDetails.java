@@ -76,9 +76,11 @@ public class HouseholdDetails extends AppCompatActivity {
     private Boolean isFabOpen = false;
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
     private String childId;
+    private String householdId;
     Household house;
     Child child;
     ObjectMapper oMapper;
+    CommonPersonObjectClient household;
 
 
     @Override
@@ -91,8 +93,11 @@ public class HouseholdDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         childId = getIntent().getExtras().getString("childId");
+        householdId = getIntent().getExtras().getString("householdId");
+        household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+
         child = IndexPersonDao.getChildByBaseId(childId);
-        house = HouseholdDao.getHousehold(childId);
+        house = HouseholdDao.getHousehold(householdId);
         oMapper = new ObjectMapper();
 
         fab = findViewById(R.id.fabx);
@@ -118,9 +123,8 @@ public class HouseholdDetails extends AppCompatActivity {
         updateTasksTabTitle();
         updateChildTabTitle();
 
-        Household house = HouseholdDao.getHousehold(childId);
-        txtDistrict.setText(house.getDistrict());
-        txtVillage.setText(house.getVillage() + ", ");
+        txtDistrict.setText(householdId);
+       // txtVillage.setText(house.getVillage() + ", ");
     }
 
     public HashMap<String, Household> getData() {
@@ -165,7 +169,8 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-        String children = IndexPersonDao.countChildren(childId);
+
+        String children = IndexPersonDao.countChildren(householdId);
 
         childTabCount.setText(children);
 
@@ -192,11 +197,18 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
 
-                    indexRegisterForm.put("entity_id", childId);
+                    indexRegisterForm.put("entity_id", house.getBase_entity_id());
                     indexRegisterForm.getJSONObject("step1").put("title", child.getCaregiver_name() + " Household");
+
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop5());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop6());
 
                     startFormActivity(indexRegisterForm);
 
@@ -289,7 +301,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 formToBeOpened = formUtils.getFormJson("family_member");
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(child, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, household.getColumnmaps());
+
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", "");
 
                 startFormActivity(formToBeOpened);
 
