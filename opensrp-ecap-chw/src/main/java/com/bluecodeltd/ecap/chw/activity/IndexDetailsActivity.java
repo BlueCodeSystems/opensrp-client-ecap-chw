@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
@@ -158,7 +159,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
-        //updateTasksTabTitle();
+        updateTasksTabTitle();
     }
 
 
@@ -210,7 +211,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
         mPagerAdapter.addFragment(new ProfileContactFragment());
-        mPagerAdapter.addFragment(new ProfileVisitsFragment());
+        mPagerAdapter.addFragment(new HouseholdVisitsFragment());
 
 
         mViewPager.setAdapter(mPagerAdapter);
@@ -218,7 +219,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_contact));
-        mTabLayout.getTabAt(2).setText(getString(R.string.fragment_visits));
+        mTabLayout.getTabAt(2).setText("VISITS");
 
     }
 
