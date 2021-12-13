@@ -11,20 +11,20 @@
         android:id="@+id/toolbar_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/customAppThemeBlue">
+        android:background="#228B22">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/family_two_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/customAppThemeBlue"
+            android:background="#228B22"
             app:theme="@style/FamilyTheme.PopupOverlay">
 
             <RelativeLayout
                 android:id="@+id/profile_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/customAppThemeBlue">
+                android:background="#228B22">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageview_profile"

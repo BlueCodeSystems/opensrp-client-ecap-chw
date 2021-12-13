@@ -934,7 +934,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         formToBeOpened = formUtils.getFormJson(formName);
 
 
-        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name()+ " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
         //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
         CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
 

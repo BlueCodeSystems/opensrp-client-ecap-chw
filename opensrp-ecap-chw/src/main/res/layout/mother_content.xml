@@ -25,14 +25,14 @@
                 android:id="@+id/collapsing_toolbar_appbarlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/customAppThemeBlue">
+                android:background="#228B22">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:contentScrim="@color/customAppThemeBlue"
+                    app:contentScrim="#228B22"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <LinearLayout
@@ -40,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="36dp"
-                        android:background="#218CC5"
+                        android:background="#228B22"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         app:layout_collapseMode="parallax"
