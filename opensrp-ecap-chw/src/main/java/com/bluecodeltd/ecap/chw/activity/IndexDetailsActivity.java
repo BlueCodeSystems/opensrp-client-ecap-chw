@@ -437,6 +437,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, HouseholdDetails.class);
             intent.putExtra("childId",  child.getBase_entity_id());
             intent.putExtra("householdId",  child.getHousehold_id());
+
             startActivity(intent);
 
 

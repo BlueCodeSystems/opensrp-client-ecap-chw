@@ -47,7 +47,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
-        String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
+        String residence = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
 
         boolean plan = CasePlanDao.checkCasePlan(BaseEntityId);
 
@@ -55,7 +55,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         String status = IndexPersonDao.getIndexStatus(BaseEntityId);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, residence, plan, is_index, status);
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + residence, plan, is_index, status);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 

@@ -10,9 +10,9 @@ import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
 
-    public static String checkIfScreened (String baseEntityID) {
+    public static String checkIfScreened (String household_id) {
 
-        String sql = "SELECT screened FROM ec_household WHERE base_entity_id = '" + baseEntityID + "'";
+        String sql = "SELECT screened FROM ec_household WHERE household_id = '" + household_id + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "screened");
 
@@ -25,8 +25,8 @@ public class HouseholdDao extends AbstractDao {
 
     public static Household getHousehold (String householdID) {
 
-        //String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' ";
-        String sql = "SELECT * FROM ec_household WHERE household_id = '" + householdID + "' ";
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' AND index_check_box = 'yes' ";
+        //String sql = "SELECT * FROM ec_household WHERE household_id = '" + householdID + "' ";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
 
@@ -38,13 +38,35 @@ public class HouseholdDao extends AbstractDao {
         return c -> {
 
             Household record = new Household();
+            record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setFirst_name(getCursorValue(c, "first_name"));
+            record.setLast_name(getCursorValue(c, "last_name"));
+            record.setGender(getCursorValue(c, "gender"));
+            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
+            record.setSubpop1(getCursorValue(c, "subpop1"));
+            record.setSubpop2(getCursorValue(c, "subpop2"));
+            record.setSubpop3(getCursorValue(c, "subpop3"));
+            record.setSubpop4(getCursorValue(c, "subpop4"));
+            record.setSubpop5(getCursorValue(c, "subpop5"));
+            record.setSubpop6(getCursorValue(c, "subpop6"));
+            record.setSubpop6(getCursorValue(c, "subpop6"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
+            record.setCaregiver_sex(getCursorValue(c, "caregiver_sex"));
+            record.setCaregiver_birth_date(getCursorValue(c, "caregiver_birth_date"));
+            record.setPhysical_address(getCursorValue(c, "physical_address"));
+            record.setCaregiver_phone(getCursorValue(c, "caregiver_phone"));
+            record.setCaregiver_hiv_status(getCursorValue(c, "caregiver_hiv_status"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
+//
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
-            record.setVillage(getCursorValue(c, "adolescent_village"));
+            record.setVillage(getCursorValue(c, "village"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setScreening_date(getCursorValue(c, "screening_date"));
+            record.setScreening_location(getCursorValue(c, "screening_location"));
             record.setViolence_six_months(getCursorValue(c, "violence_six_months"));
             record.setChildren_violence_six_months(getCursorValue(c, "children_violence_six_months"));
+            record.setBiological_children(getCursorValue(c, "biological_children"));
             record.setEnrolled_pmtct(getCursorValue(c, "enrolled_pmtct"));
             record.setScreened(getCursorValue(c, "screened"));
             record.setEnrollment_date(getCursorValue(c, "enrollment_date"));

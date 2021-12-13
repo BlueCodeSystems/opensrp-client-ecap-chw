@@ -54,6 +54,7 @@
   },
   "step1": {
     "title": "Household Screening",
+    "display_back_button": "true",
     "next": "step2",
     "fields": [
       {
