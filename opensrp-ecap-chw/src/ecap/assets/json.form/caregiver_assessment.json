@@ -625,8 +625,8 @@
           "err": "Please enter childs ART number "
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         },
         "relevance": {
           "step1:art_caregiver": {
