@@ -13,8 +13,10 @@ public class Child implements Serializable {
 
     }
 
-    public Child(String status, String base_entity_id, String household_id, String unique_id, String first_name, String last_name, String adolescent_gender, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender,  String relational_id, String case_status, String index_check_box, String date_removed, String acceptance, String date_screened, String date_hiv_known, String is_hiv_positive, String is_on_hiv_treatment, String adolescent_first_name, String adolescent_last_name, String province, String district, String ward, String adolescent_village, String partner, String is_viral_load_test_results_on_file, String is_tb_screening_results_on_file, String screened_for_malnutrition, String gets_tb_preventive_therapy, String takes_drugs_to_prevent_other_diseases, String less_3, String positive_mother, String is_mother_currently_on_treatment, String mother_art_number, String is_mother_adhering_to_treatment, String is_mother_virally_suppressed, String is_child_hiv_positive, String child_receiving_breastfeeding, String child_tested_for_hiv_inline_with_guidelines, String receives_drugs_to_prevent_hiv_and_other_illnesses, String child_been_screened_for_malnutrition, String child_gets_drugs_to_prevent_tb_hei, String child_enrolled_in_early_childhood_development_program, String school, String other_school, String caregiver_nrc, String vl_next_result, String physical_address,String date_offered_enrollment) {
-        this.status = status;
+    public Child(String case_status, String reason, String other_reason, String base_entity_id, String household_id, String unique_id, String first_name, String last_name, String adolescent_gender, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender,  String relational_id, String index_check_box, String date_removed, String acceptance, String date_screened, String date_hiv_known, String is_hiv_positive, String is_on_hiv_treatment, String adolescent_first_name, String adolescent_last_name, String province, String district, String ward, String adolescent_village, String partner, String is_viral_load_test_results_on_file, String is_tb_screening_results_on_file, String screened_for_malnutrition, String gets_tb_preventive_therapy, String takes_drugs_to_prevent_other_diseases, String less_3, String positive_mother, String is_mother_currently_on_treatment, String mother_art_number, String is_mother_adhering_to_treatment, String is_mother_virally_suppressed, String is_child_hiv_positive, String child_receiving_breastfeeding, String child_tested_for_hiv_inline_with_guidelines, String receives_drugs_to_prevent_hiv_and_other_illnesses, String child_been_screened_for_malnutrition, String child_gets_drugs_to_prevent_tb_hei, String child_enrolled_in_early_childhood_development_program, String school, String other_school, String caregiver_nrc, String vl_next_result, String physical_address,String date_offered_enrollment) {
+
+        this.reason = reason;
+        this.other_reason = other_reason;
         this.base_entity_id = base_entity_id;
         this.household_id = household_id;
         this.unique_id = unique_id;
@@ -89,9 +91,17 @@ public class Child implements Serializable {
         this.date_offered_enrollment =date_offered_enrollment;
     }
 
-    @SerializedName("status")
+    @SerializedName("case_status")
     @Expose
-    private String status;
+    private String case_status;
+
+    @SerializedName("reason")
+    @Expose
+    private String reason;
+
+    @SerializedName("other_reason")
+    @Expose
+    private String other_reason;
 
     @SerializedName("base_entity_id")
     @Expose
@@ -224,10 +234,6 @@ public class Child implements Serializable {
     @SerializedName("relational_id")
     @Expose
     private String relational_id;
-
-    @SerializedName("case_status")
-    @Expose
-    private String case_status;
 
     @SerializedName("index_check_box")
     @Expose
@@ -697,14 +703,6 @@ public class Child implements Serializable {
         this.is_hiv_positive = is_hiv_positive;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getBase_entity_id() {
         return base_entity_id;
     }
@@ -980,5 +978,21 @@ public class Child implements Serializable {
 
     public void setHousehold_id(String household_id) {
         this.household_id = household_id;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getOther_reason() {
+        return other_reason;
+    }
+
+    public void setOther_reason(String other_reason) {
+        this.other_reason = other_reason;
     }
 }
