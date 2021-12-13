@@ -1,10 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import android.util.Log;
 
-import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.VcaScreening;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -26,13 +23,16 @@ public class IndexPersonDao  extends AbstractDao {
     }
 
 
-    public static String countChildren(String baseEntityID){
+    public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "1";
 
         return values.get(0);
 
@@ -50,9 +50,9 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
     
-    public static List<String> getGenders(String baseEntityID){
+    public static List<String> getGenders(String household_id){
 
-        String sql = "SELECT gender FROM ec_client_index WHERE (base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"') AND gender IS NOT NULL";
+        String sql = "SELECT gender FROM ec_client_index WHERE household_id =  '" + household_id + "' AND gender IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "gender");
 
@@ -61,9 +61,9 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
     }
 
-    public static List<Child> getFamilyChildren(String familyBaseEntityID) {
+    public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE (base_entity_id = '" + familyBaseEntityID + "' OR unique_id = '"+ familyBaseEntityID +"')";
+        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE household_id = '"+ householdID +"' ";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
@@ -92,9 +92,11 @@ public class IndexPersonDao  extends AbstractDao {
             return new Child(
                     getCursorValue(c, "status"),
                     getCursorValue(c, "base_entity_id"),
+                    getCursorValue(c, "household_id"),
                     getCursorValue(c, "unique_id"),
                     getCursorValue(c, "first_name"),
                     getCursorValue(c, "last_name"),
+                    getCursorValue(c, "adolescent_gender"),
                     getCursorValue(c, "adolescent_birthdate"),
                     getCursorValue(c, "subpop1"),
                     getCursorValue(c, "subpop2"),
@@ -120,7 +122,7 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "relation"),
                     getCursorValue(c, "caregiver_phone"),
                     getCursorValue(c, "health_facility"),
-                    getCursorValue(c, "adolescent_gender"),
+                    getCursorValue(c, "gender"),
                     getCursorValue(c, "relational_id"),
                     getCursorValue(c, "case_status"),
                     getCursorValue(c, "index_check_box"),
@@ -136,7 +138,7 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "district"),
                     getCursorValue(c, "ward"),
                     getCursorValue(c, "village"),
-                    getCursorValue(c, "partners"),
+                    getCursorValue(c, "partner"),
                     getCursorValue(c, "is_viral_load_test_results_on_file"),
                     getCursorValue(c, "is_tb_screening_results_on_file"),
                     getCursorValue(c, "screened_for_malnutrition"),
@@ -161,9 +163,6 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
                     getCursorValue(c, "date_offered_enrollment")
-
-
-
 
             );
         };

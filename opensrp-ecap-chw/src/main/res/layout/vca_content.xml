@@ -67,7 +67,7 @@
                             android:orientation="horizontal">
 
                             <org.smartregister.view.customcontrols.CustomFontTextView
-                                android:id="@+id/textview_detail_one"
+                                android:id="@+id/childid"
                                 style="@style/CustomFontTextViewStyle.ClientList.Light"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

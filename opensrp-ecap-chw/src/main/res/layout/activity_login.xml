@@ -142,6 +142,7 @@
 
             <Button
                 android:id="@+id/login_login_btn"
+                android:onClick="onClick"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_gravity="center_horizontal"
