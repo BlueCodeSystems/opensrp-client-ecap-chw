@@ -59,7 +59,7 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
 
        try {
 
-            view.toggleDialogVisibility(true);
+            view.toggleDialogVisibility(false);
 
 
             ArrayList<EventClient> eventClients = model.processRegistration(jsonString);

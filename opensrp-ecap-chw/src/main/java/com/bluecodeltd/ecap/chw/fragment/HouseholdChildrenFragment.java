@@ -37,11 +37,11 @@ public class HouseholdChildrenFragment extends Fragment {
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
 
         Household house = mymap.get("house");
-        String base_entity_id = house.getBase_entity_id();
+        String houseId = house.getHousehold_id();
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
-        childList.addAll(IndexPersonDao.getFamilyChildren(base_entity_id));
+        childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);

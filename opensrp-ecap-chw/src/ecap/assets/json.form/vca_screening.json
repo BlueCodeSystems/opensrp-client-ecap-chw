@@ -250,34 +250,6 @@
         }
       },
       {
-        "key": "adolescent_phone",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_phone",
-        "type": "edit_text",
-        "edit_type": "number",
-        "hint": "Telephone/Mobile",
-        "v_required": {
-          "value": true,
-          "err": "Please enter Phone Number"
-        },
-        "v_numeric": {
-          "value": "true",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "1",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },     {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -419,7 +391,11 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "is_on_hiv_treatment",
@@ -468,7 +444,7 @@
       {
         "key": "is_viral_load_test_results_on_file",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_viral_load_test_results_on_file",
         "type": "native_radio",
         "label": "Does the Child/Adolescent have their viral load test results on file?",
@@ -493,7 +469,7 @@
       {
         "key": "is_tb_screening_results_on_file",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_tb_screening_results_on_file",
         "type": "native_radio",
         "label": "Does the Child/Adolescent have their TB screening results on file?",
@@ -518,7 +494,7 @@
       {
         "key": "screened_for_malnutrition",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screened_for_malnutrition",
         "type": "native_radio",
         "label": "Has the child/adolescent been screened for malnutrition?",
@@ -543,7 +519,7 @@
       {
         "key": "gets_tb_preventive_therapy",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gets_tb_preventive_therapy",
         "type": "native_radio",
         "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
@@ -568,7 +544,7 @@
       {
         "key": "takes_drugs_to_prevent_other_diseases",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "takes_drugs_to_prevent_other_diseases",
         "type": "native_radio",
         "label": "Does the child/adolescent receive drugs to prevent other illnesses (cotrimoxazole prophylaxis)?",
@@ -593,7 +569,7 @@
       {
         "key": "less_3",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "less_3",
         "type": "edit_text",
         "hidden": "true",
@@ -636,7 +612,7 @@
       {
         "key": "positive_mother",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
         "label": "Was the child born from a mother who is HIV Positive?",
@@ -730,7 +706,7 @@
       {
         "key": "is_mother_virally_suppressed",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_virally_suppressed",
         "type": "native_radio",
         "label": "Is the mother virally suppressed?",
@@ -755,7 +731,7 @@
       {
         "key": "child_been_tested_for_hiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_been_tested_for_hiv",
         "type": "edit_text",
         "value": "yes",
@@ -776,7 +752,7 @@
       {
         "key": "child_receiving_breastfeeding",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_receiving_breastfeeding",
         "type": "native_radio",
         "label": "Is the child receiving breast feeding?",
@@ -801,7 +777,7 @@
       {
         "key": "child_tested_for_hiv_inline_with_guidelines",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_tested_for_hiv_inline_with_guidelines",
         "type": "native_radio",
         "label": "Has the child been tested for HIV in line with the guidelines?",
@@ -826,7 +802,7 @@
       {
         "key": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses",
         "type": "native_radio",
         "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
@@ -851,7 +827,7 @@
       {
         "key": "child_been_screened_for_malnutrition_hei",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_been_screened_for_malnutrition",
         "type": "native_radio",
         "label": "Has the child (6 months and above) been screened for malnutrition?",
@@ -876,7 +852,7 @@
       {
         "key": "child_gets_drugs_to_prevent_tb_hei",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
         "type": "native_radio",
         "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
@@ -901,7 +877,7 @@
       {
         "key": "child_enrolled_in_early_childhood_development_program",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_enrolled_in_early_childhood_development_program",
         "type": "native_radio",
         "label": "Is the child enrolled in an Early Childhood Development Program?",
@@ -950,7 +926,7 @@
       {
         "key": "is_biological_child_of_mother_living_with_hiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_biological_child_of_mother_living_with_hiv",
         "type": "native_radio",
         "label": "Is the Child/Adolescent a biological child of a mother living with HIV?",
@@ -975,8 +951,8 @@
       {
         "key": "child_tested_for_hiv_with_mother_as_index_client",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "9",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_tested_for_hiv_with_mother_as_index_client",
         "type": "native_radio",
         "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
         "options": [
@@ -1000,7 +976,7 @@
       {
         "key": "is_mother_currently_on_treatment_wlhiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_currently_on_treatment_wlhiv",
         "type": "native_radio",
         "label": "Is the mother currently on HIV treatment?",
@@ -1025,7 +1001,7 @@
       {
         "key": "mother_art_number_wlhiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_art_number_wlhiv",
         "type": "edit_text",
         "hint": "Mothers' ART Number",
@@ -1044,7 +1020,7 @@
       {
         "key": "is_mother_adhering_to_treatment_wlhiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_adhering_to_treatment_wlhiv",
         "type": "native_radio",
         "label": "Is the mother adhering to treatment?",
@@ -1069,7 +1045,7 @@
       {
         "key": "is_mother_virally_suppressed_wlhiv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_virally_suppressed_wlhiv",
         "type": "native_radio",
         "label": "Is the mother virally suppressed?",
@@ -1094,7 +1070,7 @@
       {
         "key": "child_receiving_any_hiv_and_violence_prevention_intervention",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_receiving_any_hiv_and_violence_prevention_intervention",
         "type": "native_radio",
         "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention? ",
@@ -1755,9 +1731,13 @@
         "type": "date_picker",
         "hint": "Date of screening",
         "look_up": "true",
-        "expanded": false,
+        "expanded": true,
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "approved_by",
