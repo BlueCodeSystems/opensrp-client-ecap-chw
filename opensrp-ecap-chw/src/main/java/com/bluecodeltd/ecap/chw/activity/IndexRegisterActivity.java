@@ -13,7 +13,13 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
@@ -24,6 +30,7 @@ import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
@@ -45,6 +52,7 @@ import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +68,140 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
+
+        Bundle extras = getIntent().getExtras();
+        String username = extras.getString("username");
+        String password = extras.getString("password");
+
+        if (username != null && password != null) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+            String code = sp.getString("code", "0000");
+
+            if (!sp.contains("code") || code.equals("0000")) {
+
+                getToken(username, password);
+
+            }
+
+
+        }
+
     }
+    private void getToken (final String username, final String password) {
+
+        String tag_string_req = "req_login";
+
+        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/token";
+        StringRequest
+                stringRequest
+                = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+
+
+                        String jsonInString = new Gson().toJson(response.toString().trim());
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.toString().trim());
+
+                            String token  = jsonObject.getString("access_token");
+
+                            getCreds(token);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                error -> {
+
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("grant_type","password");
+                params.put("username",username);
+                params.put("password",password);
+                params.put("scope","openid");
+                params.put("client_id", BuildConfig.OAUTH_CLIENT_ID);
+                params.put("client_secret",BuildConfig.OAUTH_CLIENT_SECRET);
+                return params;
+            }};
+
+        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_req);
+
+    }
+
+    private void getCreds(String token){
+
+        String tag_string_creds = "req_creds";
+
+        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/userinfo";
+        StringRequest
+                stringRequest
+                = new StringRequest(
+                Request.Method.GET,
+                url,
+                (Response.Listener<String>) response -> {
+
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+
+                        String sub = jObj.getString("sub");
+                        String code = jObj.getString("code");
+                        String name = jObj.getString("name");
+                        String given_name = jObj.getString("given_name");
+                        String family_name = jObj.getString("family_name");
+                        String province = jObj.getString("province");
+                        String partner = jObj.getString("partner");
+                        String phone = jObj.getString("phone");
+                        String district = jObj.getString("district");
+                        String facility = jObj.getString("facility");
+                        String email = jObj.getString("email");
+                        String nrc = jObj.getString("nrc");
+
+                        // save user data
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+                        SharedPreferences.Editor edit = sp.edit();
+
+
+                        edit.putString("sub", sub);
+                        edit.putString("code", code);
+                        edit.putString("caseworker_name", name);
+                        edit.putString("given_name", given_name);
+                        edit.putString("family_name", family_name);
+                        edit.putString("province", province);
+                        edit.putString("partner", partner);
+                        edit.putString("phone", phone);
+                        edit.putString("district", district);
+                        edit.putString("facility", facility);
+                        edit.putString("email", email);
+                        edit.putString("nrc", nrc);
+
+                        edit.commit();
+
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }};
+
+
+        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_creds);
+
+    }
+
 
     @Override
     protected void initializePresenter() {

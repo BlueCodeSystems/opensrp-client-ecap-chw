@@ -109,14 +109,16 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
         String baseId = client.entityId();
-        goToIndexDetailActivity(baseId);
+        goToIndexDetailActivity(baseId, client);
 
     }
 
-    protected void goToIndexDetailActivity(String childId) {
+    protected void goToIndexDetailActivity(String childId, CommonPersonObjectClient client) {
 
         Intent intent = new Intent(getActivity(), HouseholdDetails.class);
         intent.putExtra("childId",  childId);
+        intent.putExtra("householdId",  client.getColumnmaps().get("household_id"));
+        intent.putExtra("household",  client);
         startActivity(intent);
     }
     @Override

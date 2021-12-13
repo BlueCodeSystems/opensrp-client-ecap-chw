@@ -268,10 +268,10 @@
         "look_up": "true"
       },
       {
-        "key": "adolescent_village",
+        "key": "village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
+        "openmrs_entity_id": "village",
         "type": "edit_text",
         "hint": "Village/Compound",
         "edit_type": "name",
@@ -494,7 +494,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
-        "label": "HIV Status",
+        "label": "Caregiver HIV Status",
         "options": [
           {
             "key": "HIV+",
@@ -576,8 +576,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9]{1})",
-          "err": "ART should be in the format of ^XXXX-XXXX-XXXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       },
       {
@@ -779,10 +779,10 @@
         "toaster_type": "info"
       },
       {
-        "key": "household_food_socially_and_economically_secure",
+        "key": "secure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
+        "openmrs_entity_id": "secure",
         "type": "native_radio",
         "toaster_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
@@ -817,12 +817,13 @@
         }
       },
       {
-        "key": "screening_carried_out_by",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
         "hint": "Carried out by",
+        "read_only": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",

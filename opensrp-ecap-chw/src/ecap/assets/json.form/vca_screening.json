@@ -256,13 +256,6 @@
         "openmrs_entity_id": "1",
         "type": "spacer",
         "spacer_height": "15dp"
-      },     {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "1",
-        "type": "spacer",
-        "spacer_height": "15dp"
       },
       {
         "key": "hd2",
@@ -398,7 +391,11 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "is_on_hiv_treatment",
@@ -440,8 +437,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       },
       {
@@ -677,8 +674,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       },
       {
@@ -1016,8 +1013,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should be in the format of ^XXXX-XXX-XXXXX-X"
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       },
       {
@@ -1734,9 +1731,13 @@
         "type": "date_picker",
         "hint": "Date of screening",
         "look_up": "true",
-        "expanded": false,
+        "expanded": true,
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "approved_by",

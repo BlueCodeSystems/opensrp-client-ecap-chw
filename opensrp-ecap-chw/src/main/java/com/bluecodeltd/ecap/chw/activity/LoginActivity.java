@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -62,6 +64,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
     private PinLogger pinLogger = PinLoginUtil.getPinLogger();
     TextView txtUsername, txtPassword;
+    boolean connected;
 
 
     @Override
@@ -70,6 +73,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         //Sentry.captureMessage("testing SDK setup");
         txtUsername = findViewById(R.id.login_user_name_edit_text);
         txtPassword = findViewById(R.id.login_password_edit_text);
+
     }
 
     @Override
@@ -177,10 +181,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public void goToHome(boolean remote) {
         if (remote) {
-
             Utils.startAsyncTask(new SaveTeamLocationsTask(), null);
-
-            getToken(txtUsername.getText().toString().trim(), txtPassword.getText().toString().trim());
         }
 
         if (hasPinLogin()) {
@@ -194,129 +195,12 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     }
 
 
-    private void getToken (final String username, final String password) {
-
-        String tag_string_req = "req_login";
-
-        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/token";
-        StringRequest
-                stringRequest
-                = new StringRequest(
-                Request.Method.POST,
-                url,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-
-
-                        String jsonInString = new Gson().toJson(response.toString().trim());
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.toString().trim());
-
-                            String token  = jsonObject.getString("access_token");
-
-                            getCreds(token);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                error -> {
-
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("grant_type","password");
-                params.put("username",username);
-                params.put("password",password);
-                params.put("scope","openid");
-                params.put("client_id",BuildConfig.OAUTH_CLIENT_ID);
-                params.put("client_secret",BuildConfig.OAUTH_CLIENT_SECRET);
-                return params;
-            }};
-
-        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_req);
-
-    }
-
-
-    private void getCreds(String token){
-
-        String tag_string_creds = "req_creds";
-
-        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/userinfo";
-        StringRequest
-                stringRequest
-                = new StringRequest(
-                Request.Method.GET,
-                url,
-                (Response.Listener<String>) response -> {
-
-                    try {
-                        JSONObject jObj = new JSONObject(response);
-
-                        String sub = jObj.getString("sub");
-                        String code = jObj.getString("code");
-                        String name = jObj.getString("name");
-                        String given_name = jObj.getString("given_name");
-                        String family_name = jObj.getString("family_name");
-                        String province = jObj.getString("province");
-                        String partner = jObj.getString("partner");
-                        String phone = jObj.getString("phone");
-                        String district = jObj.getString("district");
-                        String facility = jObj.getString("facility");
-                        String email = jObj.getString("email");
-                        String nrc = jObj.getString("nrc");
-
-                        // save user data
-                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                        SharedPreferences.Editor edit = sp.edit();
-
-
-                        edit.putString("sub", sub);
-                        edit.putString("code", code);
-                        edit.putString("caseworker_name", name);
-                        edit.putString("given_name", given_name);
-                        edit.putString("family_name", family_name);
-                        edit.putString("province", province);
-                        edit.putString("partner", partner);
-                        edit.putString("phone", phone);
-                        edit.putString("district", district);
-                        edit.putString("facility", facility);
-                        edit.putString("email", email);
-                        edit.putString("nrc", nrc);
-
-                        edit.commit();
-
-                        startHome(true);
-
-
-                    } catch (JSONException e){
-
-                    }
-                },
-                error -> {
-
-                }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + token);
-                return params;
-            }};
-
-
-        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_creds);
-
-    }
-
     private void startHome(boolean remote) {
         Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
                 ChildRegisterActivity.class : IndexRegisterActivity.class);
         intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);
+        intent.putExtra("username", txtUsername.getText().toString().trim());
+        intent.putExtra("password", txtPassword.getText().toString().trim());
         startActivity(intent);
     }
 
