@@ -89,35 +89,22 @@
         "text": "Health Section"
       },
       {
-        "key": "hiv_status",
+        "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_status",
-        "type": "native_radio",
-        "label": "HIV Status",
-        "read_only": false,
-        "options": [
-          {
-            "key": "positive",
-            "text": "HIV Positive",
-            "value": false
-          },
-          {
-            "key": "negative",
-            "text": "HIV Negative",
-            "value": false
-          },
-          {
-            "key": "unknown",
-            "text": "Status Unknown",
-            "value": false
-          },
-          {
-            "key": "status_not_required",
-            "text": "Status not required based on risk assessment",
-            "value": false
-          }
-        ]
+        "openmrs_entity_id": "is_hiv_positive",
+        "type": "edit_text",
+        "hint": "HIV Status",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter VCA HIV Status"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter HIV Status"
+        }
       },
 
       {
