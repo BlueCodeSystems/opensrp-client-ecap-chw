@@ -438,6 +438,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, HouseholdDetails.class);
             intent.putExtra("childId",  child.getBase_entity_id());
             intent.putExtra("householdId",  child.getHousehold_id());
+           // intent.putExtra("household",  child.getHousehold_id());
 
             startActivity(intent);
 
@@ -468,7 +469,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    startFormActivity(indexRegisterForm);
+
                     String uniqueId = UUID.randomUUID().toString();
                     String hID = uniqueId.substring(0, 8);
 
@@ -480,6 +481,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", csw[0]);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", csw[1]);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", hID);
+
+                    startFormActivity(indexRegisterForm);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -494,9 +498,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", txtAge.getText().toString());
                     startFormActivity(indexRegisterForm);
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", txtAge.getText().toString());
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -506,13 +511,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.grad:
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
+                    //FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    //JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("graduation");
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    startFormActivity(indexRegisterForm);
+                    //indexRegisterForm = formUtils.getFormJson("graduation");
+                    //indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
+                    //CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"graduation");
+                    //startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -539,24 +545,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case R.id.hiv_assessment:
 
-                try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-                    if(Integer.valueOf(myAge) >15)
-                    {
-                        indexRegisterForm = formUtils.getFormJson("hiv_assessment");
-                    }
-                    else {
-                        indexRegisterForm = formUtils.getFormJson("risk_assessment_under_15");
-                    }
 
-
-                   CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_assessment");
 
                 break;
         }
@@ -936,9 +926,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
         //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
-
         formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
+
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
 
         startFormActivity(formToBeOpened);
     }

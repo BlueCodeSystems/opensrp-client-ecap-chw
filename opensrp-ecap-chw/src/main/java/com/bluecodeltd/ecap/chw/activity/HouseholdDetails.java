@@ -182,6 +182,23 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         switch (id) {
+            case R.id.myservice:
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("service_report");
+
+                    //indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
+
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
             case R.id.fabx:
 
                 animateFAB();
@@ -301,9 +318,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 formToBeOpened = formUtils.getFormJson("family_member");
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, household.getColumnmaps());
+            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(house, Map.class));
 
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
+
+            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", "");
 
                 startFormActivity(formToBeOpened);
