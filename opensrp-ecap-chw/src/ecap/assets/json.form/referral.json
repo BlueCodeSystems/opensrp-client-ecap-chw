@@ -52,10 +52,10 @@
     "display_back_button": "true",
     "fields": [
       {
-        "key": "referral_date",
+        "key": "date_referred",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "event",
-        "openmrs_entity_id": "referral_date",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_referred",
         "type": "date_picker",
         "hint": " Referral Date",
         "expanded": false,

@@ -1,0 +1,28 @@
+---
+name: step1_hiv_test
+description: hiv_test
+priority: 1
+condition: "step1_informed_consent.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_risk
+description: hiv_risk
+priority: 1
+condition: "step1_hiv_test.contains('negative') || step1_hiv_test.contains('never_tested')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_toaster_a
+description: toaster_a
+priority: 1
+condition: "step1_biological_mother.contains('yes') || step1_deceased_parents.contains('yes') || step1_tb_symptoms.contains('yes') || step1_child_been_sick.contains('yes') || step1_frequent_rashes.contains('yes') || step1_child_had_pus.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_tb
+description: hiv_tb
+priority: 1
+condition: "step1_biological_mother.contains('yes') || step1_deceased_parents.contains('yes') || step1_tb_symptoms.contains('yes') || step1_child_been_sick.contains('yes') || step1_frequent_rashes.contains('yes') || step1_child_had_pus.contains('yes')"
+actions:
+  - "isRelevant = true"

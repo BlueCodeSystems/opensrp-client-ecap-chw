@@ -75,7 +75,6 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
 
             jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("x","My Ward X");
 
-            Log.d("jjson", "myjson : " + jsonObject.toString());
 
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
