@@ -87,10 +87,12 @@ public class IndexPersonDao  extends AbstractDao {
 
 
     public static Child getChildByBaseId(String baseEntityID){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' OR unique_id = '"+ baseEntityID +"'";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' ";
         DataMap<Child> dataMap = c -> {
             return new Child(
-                    getCursorValue(c, "status"),
+                    getCursorValue(c, "case_status"),
+                    getCursorValue(c, "reason"),
+                    getCursorValue(c, "other_reason"),
                     getCursorValue(c, "base_entity_id"),
                     getCursorValue(c, "household_id"),
                     getCursorValue(c, "unique_id"),
@@ -124,7 +126,6 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "health_facility"),
                     getCursorValue(c, "gender"),
                     getCursorValue(c, "relational_id"),
-                    getCursorValue(c, "case_status"),
                     getCursorValue(c, "index_check_box"),
                     getCursorValue(c, "date_removed"),
                     getCursorValue(c, "acceptance"),

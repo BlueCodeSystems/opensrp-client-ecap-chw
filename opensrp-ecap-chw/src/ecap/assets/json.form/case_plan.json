@@ -78,10 +78,22 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_plan_status",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Case Plan Status",
-        "value": "Initial"
+        "type": "native_radio",
+        "label": "Case Plan Status",
+        "options": [
+          {
+            "key": "initial",
+            "text": "Initial"
+          },
+          {
+            "key": "updated",
+            "text": "Updated"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please Select Status"
+        }
       },
       {
         "key": "calhiv",

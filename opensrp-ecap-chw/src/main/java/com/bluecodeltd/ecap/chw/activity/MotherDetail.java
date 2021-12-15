@@ -65,7 +65,7 @@ public class MotherDetail extends AppCompatActivity {
         txtArt = findViewById(R.id.art);
         txtOvc = findViewById(R.id.ovc_date);
         txtComment = findViewById(R.id.comment);
-/*
+
         CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("mothers");
 
         assert client != null;
@@ -85,7 +85,7 @@ public class MotherDetail extends AppCompatActivity {
         txtArt.setText(art);
         txtOvc.setText(ovc_date);
         txtComment.setText(comment);
-*/
+
     }
 
 
