@@ -191,7 +191,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("service_report");
 
                     //indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -245,6 +245,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     //TODO
                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -261,6 +262,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     //TODO
                     //CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -278,6 +280,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     //TODO
                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -296,6 +299,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                    //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {

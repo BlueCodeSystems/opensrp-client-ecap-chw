@@ -103,14 +103,14 @@
         "hint": "Gender"
       },
       {
-        "key": "child_id",
+        "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_identifier",
-        "openmrs_entity_id": "child_id",
+        "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "hint": "VCA ID",
         "edit_type": "name",
-        "read_only": false,
+        "read_only": false
       },
       {
         "key": "child_art",
