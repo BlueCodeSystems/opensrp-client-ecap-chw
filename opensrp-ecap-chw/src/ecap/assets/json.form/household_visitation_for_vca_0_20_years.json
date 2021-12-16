@@ -2132,7 +2132,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
-        "hint": "Case Work Name ",
+        "hint": "Case Worker Name ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": false,
@@ -2184,7 +2184,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "manager_name",
         "type": "edit_text",
-        "hint": "Verified by Case Manager Name ",
+        "hint": "Verified by Case Worker Supervisor ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": false,
@@ -2193,24 +2193,7 @@
           "err": "Please enter a valid name"
         }
       },
-      {
-        "key": "manager_date_signed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "manager_date_signed",
-        "type": "date_picker",
-        "hint": "Verified by Case ManagerSigns",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date Signed"
-        }
-      },
+
       {
         "key": "manager_signature",
         "openmrs_entity_parent": "",
@@ -2235,7 +2218,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_administration_name",
         "type": "edit_text",
-        "hint": "Date Verified By School Administration Name ",
+        "hint": "School Administration Name ",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",
