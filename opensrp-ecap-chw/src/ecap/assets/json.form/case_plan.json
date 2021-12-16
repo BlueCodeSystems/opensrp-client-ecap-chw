@@ -402,13 +402,7 @@
             "hint": "Comments",
             "edit_type": "name"
           }
-        ],
-        "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "lessThan(., \"5\")"
-          }
-        }
+        ]
       },
       {
         "key": "safe",

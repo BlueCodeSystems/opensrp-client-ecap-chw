@@ -292,23 +292,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-
-
-                    indexRegisterForm = formUtils.getFormJson("vca_assessment");
-
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-
-
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(0).put("value", client.getColumnmaps().get("subpop1"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(1).put("value", client.getColumnmaps().get("subpop2"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(2).put("value", client.getColumnmaps().get("subpop3"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(3).put("value", client.getColumnmaps().get("subpop4"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(4).put("value", client.getColumnmaps().get("subpop5"));
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(40).getJSONArray("options").getJSONObject(5).put("value", client.getColumnmaps().get("subpop6"));
-
-                    startFormActivity(indexRegisterForm);
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -318,50 +302,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.case_plan:
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("case_plan");
-
-                    //  startFormActivity(indexRegisterForm);
-                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
-                    Form form = new Form();
-                    try {
-                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
-                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                            form.setWizard(true);
-                            form.setName(getString(R.string.child_details));
-                            form.setHideSaveLabel(true);
-                            form.setNextLabel(getString(R.string.next));
-                            form.setPreviousLabel(getString(R.string.previous));
-                            form.setSaveLabel(getString(R.string.submit));
-                            form.setNavigationBackground(R.color.primary);
-                        } else {
-                            form.setWizard(false);
-                            form.setHideSaveLabel(true);
-                            form.setNextLabel("");
-                        }
-                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-                    } catch (JSONException e) {
-                        Timber.e(e);
-                    }
-
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-
-
-                   if(client.getColumnmaps().get("subpop1") != null){
-
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", client.getColumnmaps().get("subpop1"));
-
-                    } else {
-
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "false");
-                    }
-
-
-                    startFormActivity(indexRegisterForm);
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
 
 
                 } catch (Exception e) {
@@ -371,43 +312,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.referral:
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("referral");
-
-                    //  startFormActivity(indexRegisterForm);
-                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
-                    Form form = new Form();
-                    try {
-                        if (indexRegisterForm.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                                indexRegisterForm.getString(JsonFormConstants.ENCOUNTER_TYPE)
-                                        .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                            form.setWizard(true);
-                            form.setName("Referral Form");
-                            form.setHideSaveLabel(true);
-                            form.setNextLabel(getString(R.string.next));
-                            form.setPreviousLabel(getString(R.string.previous));
-                            form.setSaveLabel(getString(R.string.submit));
-                            form.setNavigationBackground(R.color.primary);
-                        } else {
-                            form.setWizard(false);
-                            form.setHideSaveLabel(true);
-                            form.setNextLabel("");
-                        }
-                        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-                    } catch (JSONException e) {
-                        Timber.e(e);
-                    }
-
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-
-
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, indexRegisterForm.toString());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -417,14 +323,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.myservice:
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("service_report");
-
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-
-                    startFormActivity(indexRegisterForm);
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -448,41 +348,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.household_visitation_caregiver:
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
 
-                    indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-                try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
-
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-
-                    String uniqueId = UUID.randomUUID().toString();
-                    String hID = uniqueId.substring(0, 8);
-
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworker = prefs.getString("ecap", "");
-                    String[] csw = caseworker.split("\\s+");
-
-
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", csw[0]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", csw[1]);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(7).put("value", hID);
-
-                    startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -492,14 +360,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.household_visitation_for_vca:
 
                 try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
+                    //FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                    //JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+                    //indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", txtAge.getText().toString());
-                    startFormActivity(indexRegisterForm);
+                    //CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
+                   // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", txtAge.getText().toString());
+                    //startFormActivity(indexRegisterForm);
 
 
 
@@ -528,18 +397,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case R.id.grad_sub:
 
-                try {
-                    FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
+                //graduation_assessment_sub_for_repeating_fields
+                openFormUsingFormUtils(IndexDetailsActivity.this,"graduation_assessment_sub_for_repeating_fields");
 
-                    indexRegisterForm = formUtils.getFormJson("graduation_assessment_sub_for_repeating_fields");
-
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
                 break;
 
