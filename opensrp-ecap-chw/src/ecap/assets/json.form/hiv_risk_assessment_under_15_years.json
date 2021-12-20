@@ -77,7 +77,7 @@
       {
         "key": "hiv_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test",
         "type": "native_radio",
         "label": "What was your most recent HIV test result",
@@ -111,7 +111,7 @@
       {
         "key": "on_art",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "on_art",
         "type": "native_radio",
         "label": "Are you on Art?",
@@ -135,7 +135,7 @@
       {
         "key": "start_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "start_date",
         "type": "date_picker",
         "hint": "Indicate start date ",
@@ -167,7 +167,7 @@
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Art number",
@@ -189,7 +189,7 @@
       {
         "key": "symptoms",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "symptoms",
         "type": "native_radio",
         "label": "Do you have any of the following symptoms? (A) Current cough, (B) Fever, (C) Weight loss, (D) Night sweats?",
@@ -213,7 +213,7 @@
       {
         "key": "deceased_parents",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "deceased_parents",
         "type": "native_radio",
         "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats?",
@@ -237,7 +237,7 @@
       {
         "key": "tb_symptoms",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_symptoms",
         "type": "native_radio",
         "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats?",
@@ -261,7 +261,7 @@
       {
         "key": "child_been_sick",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_been_sick",
         "type": "native_radio",
         "label": "In the last 6 months, has this child been sick more than other children or been \nadmitted to hospital?",
@@ -285,7 +285,7 @@
       {
         "key": "frequent_rashes",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "frequent_rashes",
         "type": "native_radio",
         "label": "Has the child had frequent rashes or other skin problems?",
@@ -309,7 +309,7 @@
       {
         "key": "child_had_pus",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_had_pus",
         "type": "native_radio",
         "label": "Has the child had pus coming from his or her ear?",
@@ -381,7 +381,7 @@
       {
         "key": "hiv_tb",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_tb",
         "type": "native_radio",
         "label": "Was the test for HIV and TB conducted?",
@@ -406,7 +406,7 @@
       {
         "key": "hiv_test_result",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test_result",
         "type": "native_radio",
         "label": "Indicate HIV Test Result",
@@ -430,7 +430,7 @@
       {
         "key": "date_of_hiv_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_of_hiv_test",
         "type": "date_picker",
         "hint": "Date of  HIV test",

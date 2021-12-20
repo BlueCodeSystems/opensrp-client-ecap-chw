@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.VcaScreening;
 
 import org.smartregister.dao.AbstractDao;
 

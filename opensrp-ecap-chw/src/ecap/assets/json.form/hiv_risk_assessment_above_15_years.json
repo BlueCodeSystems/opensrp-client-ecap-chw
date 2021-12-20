@@ -75,7 +75,7 @@
       {
         "key": "hiv_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test",
         "type": "native_radio",
         "label": "In the last 12 months have you been tested for HIV?",
@@ -148,7 +148,7 @@
       {
         "key": "on_art",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "on_art",
         "type": "native_radio",
         "label": "Are you on Art?",
@@ -172,7 +172,7 @@
       {
         "key": "start_date",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "start_date",
         "type": "date_picker",
         "hint": "Indicate start date ",
@@ -204,7 +204,7 @@
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "hint": "Art number",
@@ -226,7 +226,7 @@
       {
         "key": "symptoms",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "symptoms",
         "type": "native_radio",
         "label": "Do you have any of the following symptoms?\n (A) Current cough,\n (B) Fever,\n (C) Weight loss,\n (D) Night sweats?",
@@ -266,7 +266,7 @@
       {
         "key": "private_parts",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "private_parts",
         "type": "native_radio",
         "label": "Do you have any of the following on your private parts?\n(A) sores,\n (B) Blisters,\n (C) Unusual Discharge?",
@@ -306,7 +306,7 @@
       {
         "key": "exposed_to_HIV",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "exposed_to_HIV",
         "type": "native_radio",
         "label": "In the last 6 months, have you been exposed to HIV through a needle stick, an injection, or a piercing?",
@@ -346,7 +346,7 @@
       {
         "key": "unprotected_sex",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unprotected_sex",
         "type": "native_radio",
         "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV- positive?",
@@ -386,7 +386,7 @@
       {
         "key": "pregnant_breastfeeding",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pregnant_breastfeeding",
         "type": "native_radio",
         "label": "Are you pregnant or breastfeeding?",
@@ -426,7 +426,7 @@
       {
         "key": "hiv_tb_sti",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_tb_sti",
         "type": "native_radio",
         "label": "Was the test for HIV, TB and STI?",
@@ -451,7 +451,7 @@
       {
         "key": "hiv_test_result",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test_result",
         "type": "native_radio",
         "label": "Indicate HIV Test Result",
@@ -475,7 +475,7 @@
       {
         "key": "date_of_hiv_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_of_hiv_test",
         "type": "date_picker",
         "hint": "Date of  HIV test",

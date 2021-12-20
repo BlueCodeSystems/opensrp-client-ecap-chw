@@ -40,7 +40,6 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.VcaScreening;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -434,7 +433,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getEntity_id());
+            intent.putExtra("childId",  child.getBaseEntity_id());
             startActivity(intent);
 
 
