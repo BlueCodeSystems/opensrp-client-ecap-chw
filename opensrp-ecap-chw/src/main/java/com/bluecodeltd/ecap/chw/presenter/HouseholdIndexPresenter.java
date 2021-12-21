@@ -2,15 +2,20 @@ package com.bluecodeltd.ecap.chw.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.interactor.HouseholdIndexInteractor;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.model.EventClient;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.HouseholdIndexModel;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
@@ -19,12 +24,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.commonregistry.CommonPersonObject;
+import org.smartregister.domain.Client;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.opd.pojo.RegisterParams;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter, HouseholdIndexContract.InteractorCallBack{
@@ -32,6 +40,8 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     private HouseholdIndexContract.View view;
     private HouseholdIndexContract.Model model;
     private HouseholdIndexContract.Interactor interactor;
+    private String baseId;
+    String householdId;
 
     private WeakReference<HouseholdIndexContract.View> activityWeakReference;
 
@@ -76,6 +86,9 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
                 return;
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
+            baseId = eventClientList.get(0).getClient().getBaseEntityId();
+            householdId = (String) eventClientList.get(0).getClient().getAttribute("household_id");
+
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -132,6 +145,15 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
             if (navigationMenu != null) {
                 navigationMenu.refreshCount();
             }
+            gotHouseholdProfile(baseId);
         }
+    }
+
+    public void gotHouseholdProfile(String id){
+        Intent intent = new Intent(getView().getContext(), HouseholdDetails.class);
+        intent.putExtra("childId",  baseId);
+        intent.putExtra("householdId",householdId);
+        Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
+        getView().startActivity(intent);
     }
 }
