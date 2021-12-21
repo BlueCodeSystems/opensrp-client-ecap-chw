@@ -148,7 +148,7 @@
         "openmrs_entity_id": "physical_address",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "Physical Address"
+        "hint": "Plot number,Village or Street"
       },
       {
         "key": "caseworker_firstname",

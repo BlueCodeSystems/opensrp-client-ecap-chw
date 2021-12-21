@@ -800,7 +800,7 @@
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "physical_address",
         "type": "edit_text",
-        "hint": "Physical Address",
+        "hint": "Plot number,Village or Street",
         "edit_type": "name",
         "v_required": {
           "value": false,
