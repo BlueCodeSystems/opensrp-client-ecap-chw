@@ -406,7 +406,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.hiv_assessment:
 
 
-                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_assessment");
+                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_risk_assessment_above_15_years");
 
                 break;
         }
@@ -563,6 +563,28 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_GRADUATION_SUB);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "HIV Risk Assessment Above 15":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_ABOVE_15);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "HIV Risk Assessment Below 15":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_BELOW_15);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
