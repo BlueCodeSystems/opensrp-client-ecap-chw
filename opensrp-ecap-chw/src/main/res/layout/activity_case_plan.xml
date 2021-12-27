@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,15 +88,15 @@
 
             <org.smartregister.view.customcontrols.CustomFontTextView
                 android:id="@+id/text_view_family_profile"
-                android:visibility="visible"
                 style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textview_family_has"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/family_image"
-                android:text=""
-                android:textColor="@android:color/darker_gray" />
+                android:text="HIV testing, HIV prevention knowledge, improved development for children below 5 years especially HIV exposed or positive, nutrition, WASH, routine healthcare, substance abuse support, perinatal care, etc."
+                android:textColor="@android:color/darker_gray"
+                android:visibility="visible" />
 
         </RelativeLayout>
         <View
@@ -240,9 +240,16 @@
                 android:text="Ability to meet important family needs. Adolescent’s participation in market-linked economic strengthening activity."
                 android:textColor="@android:color/darker_gray" />
 
+
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="#a9a9a9"
+            android:layout_height="1dp">
+        </View>
 
     </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>
 

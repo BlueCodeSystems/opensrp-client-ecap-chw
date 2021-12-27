@@ -37,6 +37,9 @@
         android:theme="@style/ChwTheme"
         tools:replace="android:theme">
         <activity
+            android:name=".activity.CasePlan"
+            android:exported="true" />
+        <activity
             android:name=".activity.Profile"
             android:exported="true" />
         <activity

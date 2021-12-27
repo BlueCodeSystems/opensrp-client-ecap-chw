@@ -302,8 +302,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.case_plan:
 
                 try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
-
+                   // openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
+                    Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
+                    startActivity(i);
 
                 } catch (Exception e) {
                     e.printStackTrace();
