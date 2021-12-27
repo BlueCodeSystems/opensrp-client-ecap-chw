@@ -143,7 +143,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
-        household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
         grad = findViewById(R.id.grad);
 
@@ -343,18 +342,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             startActivity(intent);
 
 
-                break;
-
-            case R.id.household_visitation_caregiver:
-
-                try {
-
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 break;
 
             case R.id.household_visitation_for_vca:
@@ -760,7 +747,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
             referral.setVisibility(View.GONE);
-            household_visitation_caregiver.setVisibility(View.GONE);
             household_visitation_for_vca.setVisibility(View.GONE);
             grad.setVisibility(View.GONE);
             grad_sub.setVisibility(View.GONE);
@@ -776,7 +762,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
-            household_visitation_caregiver.setVisibility(View.VISIBLE);
             household_visitation_for_vca.setVisibility(View.VISIBLE);
             grad.setVisibility(View.VISIBLE);
             grad_sub.setVisibility(View.VISIBLE);
