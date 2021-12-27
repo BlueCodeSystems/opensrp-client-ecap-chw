@@ -27,7 +27,7 @@ jobs:
           AUTH_ID: ${{ secrets.ACCESS_TOKEN }}
         run: echo "gpr.key=\""${{ secrets.ACCESS_TOKEN }}"\"" >> local.properties
 
-      - name:  Add ID user
+      - name:  Add  user ID
         env:
           AUTH_ID: ${{ secrets.AUTH_ID }}
         run: echo "oauth.client.id=\""${{ secrets.AUTH_ID }}"\"" >> local.properties
