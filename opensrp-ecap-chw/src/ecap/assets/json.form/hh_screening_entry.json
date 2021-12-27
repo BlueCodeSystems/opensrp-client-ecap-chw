@@ -220,12 +220,12 @@
         ]
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "District",
+        "hint": "Health Facility",
         "value": "Choma General Hospital",
         "read_only": "true",
         "edit_type": "name",

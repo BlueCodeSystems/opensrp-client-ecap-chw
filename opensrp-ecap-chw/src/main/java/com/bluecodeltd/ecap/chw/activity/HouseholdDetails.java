@@ -94,7 +94,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         childId = getIntent().getExtras().getString("childId");
         householdId = getIntent().getExtras().getString("householdId");
-        household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
+        //household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
 
         child = IndexPersonDao.getChildByBaseId(childId);
         house = HouseholdDao.getHousehold(householdId);
