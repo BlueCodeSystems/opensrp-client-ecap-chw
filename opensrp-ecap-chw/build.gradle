@@ -128,8 +128,8 @@ android {
         applicationId "com.bluecodeltd.chw"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode 2
-        versionName "v1.0.0-alpha-8"
+        versionCode 11
+        versionName "v1.0.1-alpha-8"
         multiDexEnabled true
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
@@ -276,8 +276,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 10
-            versionName "v1.0.0-alpha-8"
+            versionCode 11
+            versionName "v1.0.1-alpha-8"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.who.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.who.bluecodeltd.com/opensrp/"'

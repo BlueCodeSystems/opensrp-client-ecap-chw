@@ -159,7 +159,7 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
@@ -2620,7 +2620,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "Name of caregiver",
+        "hint": "Caregivers Full Name",
         "look_up": "true",
         "edit_type": "name",
         "v_regex": {
