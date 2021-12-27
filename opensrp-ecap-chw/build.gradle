@@ -93,6 +93,13 @@ allprojects {
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
+        maven {
+            url 'https://dl.bintray.com/ibm-watson-health/ibm-fhir-server-releases'
+            content {
+                // Does only include this group
+                includeGroup "com.ibm.fhir"
+            }
+        }
         /*maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-household")
