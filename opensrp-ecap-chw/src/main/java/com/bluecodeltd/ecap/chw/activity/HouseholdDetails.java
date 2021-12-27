@@ -74,7 +74,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form;
+    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver;;
     private String childId;
     private String householdId;
     Household house;
@@ -116,7 +116,7 @@ public class HouseholdDetails extends AppCompatActivity {
         rvisit = findViewById(R.id.hh_visit);
         hvisit20 = findViewById(R.id.hh_visit20);
         child_form = findViewById(R.id.child_form);
-
+        household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
         setupViewPager();
@@ -306,6 +306,22 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                break;
+
+            case R.id.household_visitation_caregiver:
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
+                    //openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
+                    startFormActivity(indexRegisterForm);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
     case R.id.child_form:
@@ -591,6 +607,7 @@ public class HouseholdDetails extends AppCompatActivity {
             rassessment.setVisibility(View.GONE);
             rcase_plan.setVisibility(View.GONE);
             child_form.setVisibility(View.GONE);
+            household_visitation_caregiver.setVisibility(View.GONE);
 
         } else {
 
@@ -602,6 +619,7 @@ public class HouseholdDetails extends AppCompatActivity {
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
+            household_visitation_caregiver.setVisibility(View.VISIBLE);
 
         }
     }
