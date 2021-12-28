@@ -40,6 +40,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
@@ -91,6 +92,7 @@ public class HouseholdDetails extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        NavigationMenu.getInstance(this, null, toolbar);
 
         childId = getIntent().getExtras().getString("childId");
         householdId = getIntent().getExtras().getString("householdId");
