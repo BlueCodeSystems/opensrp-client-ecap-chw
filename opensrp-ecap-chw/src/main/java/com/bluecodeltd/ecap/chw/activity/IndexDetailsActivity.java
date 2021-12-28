@@ -115,6 +115,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
+
         childId = getIntent().getExtras().getString("Child");
 
         indexChild = IndexPersonDao.getChildByBaseId(childId);
