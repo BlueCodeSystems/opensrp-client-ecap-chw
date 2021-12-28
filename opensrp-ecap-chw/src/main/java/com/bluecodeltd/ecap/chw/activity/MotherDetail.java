@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,6 +25,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -34,7 +36,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class MotherDetail extends AppCompatActivity {
-
+    private Toolbar motherToolbar;
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
@@ -46,13 +48,13 @@ public class MotherDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mother_detail);
-
+        motherToolbar = findViewById(R.id.family_two_toolbar);
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-
+        NavigationMenu.getInstance(this, null, motherToolbar);
         motherId = getIntent().getExtras().getString("mother_basid");
 
         rassessment = findViewById(R.id.cassessment);
