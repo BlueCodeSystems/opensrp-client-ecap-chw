@@ -53,8 +53,8 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             LinearLayout.LayoutParams params =  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             params.gravity = Gravity.CENTER;
-            params.width = 55;
-            params.height = 55;
+            params.width = 40;
+            params.height = 40;
             image.setLayoutParams(params);
 
             if (genderList.get(i).equals("male")){
