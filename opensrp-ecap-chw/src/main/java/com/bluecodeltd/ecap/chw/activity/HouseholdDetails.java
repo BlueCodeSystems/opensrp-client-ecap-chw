@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.activity;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -99,7 +97,8 @@ public class HouseholdDetails extends AppCompatActivity {
         //household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
 
         child = IndexPersonDao.getChildByBaseId(childId);
-        house = HouseholdDao.getHousehold(householdId);
+       // house = HouseholdDao.getHousehold(householdId);
+        house = getHousehold(householdId);
         oMapper = new ObjectMapper();
 
         fab = findViewById(R.id.fabx);
@@ -126,19 +125,28 @@ public class HouseholdDetails extends AppCompatActivity {
         updateChildTabTitle();
 
         txtDistrict.setText(householdId);
+        cname.setText(child.getCaregiver_name() + " Household");
        // txtVillage.setText(house.getVillage() + ", ");
     }
 
     public HashMap<String, Household> getData() {
 
-        HashMap<String, Household> map = new HashMap<>();
+        /*HashMap<String, Household> map = new HashMap<>();
 
         map.put("house", house);
 
         cname.setText(child.getCaregiver_name() + " Household");
 
         return map;
+         */
+        return  populateMapWithHouse(house);
 
+    }
+    public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
+    {
+        HashMap<String, Household> householdHashMap= new HashMap<>();
+        householdHashMap.put("house",houseToAdd);
+        return householdHashMap;
     }
 
     private void setupViewPager(){
@@ -430,6 +438,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     case "Household Screening":
 
+                        loadInformation(childIndexEventClient);//updates Ui data in activity
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
 
 
@@ -448,6 +457,10 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
         }
+        populateMapWithHouse(getHousehold(householdId));
+        setupViewPager();
+        updateTasksTabTitle();
+        updateChildTabTitle();
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -539,6 +552,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         JSONObject mergedClientJsonObject =
                                 org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        setupViewPager();
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
                     }
@@ -624,5 +638,14 @@ public class HouseholdDetails extends AppCompatActivity {
             household_visitation_caregiver.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    public void loadInformation(ChildIndexEventClient  updatedEventClient){
+        txtDistrict.setText(updatedEventClient.getClient().getAttribute("household_id").toString());
+        cname.setText(new StringBuilder().append(updatedEventClient.getClient().getAttribute("caregiver_name").toString()).append(" household").toString());
+    }
+    public Household getHousehold(String householdId)
+    {
+      return HouseholdDao.getHousehold(householdId);
     }
 }
