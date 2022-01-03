@@ -1188,6 +1188,23 @@
         }
       },
       {
+        "key": "telephone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "telephone",
+        "type": "edit_text",
+        "hint": "School Administration Telephone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with  095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
         "key": "school_administration_date_signed",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
