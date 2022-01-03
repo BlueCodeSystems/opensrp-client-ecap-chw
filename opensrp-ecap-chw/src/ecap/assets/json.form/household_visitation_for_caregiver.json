@@ -96,7 +96,6 @@
         ]
       },
 
-
       {
         "key": "caregiver_art",
         "openmrs_entity_parent": "",
@@ -149,7 +148,6 @@
           }
         }
       },
-
       {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
@@ -1185,6 +1183,23 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "telephone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "telephone",
+        "type": "edit_text",
+        "hint": "School Administration Telephone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with  095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
