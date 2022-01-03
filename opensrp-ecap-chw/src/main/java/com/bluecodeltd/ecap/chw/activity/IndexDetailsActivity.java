@@ -306,6 +306,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 try {
                    // openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
                     Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
+                    i.putExtra("hivstatus", child.getSubpop1());
                     startActivity(i);
 
                 } catch (Exception e) {
@@ -774,10 +775,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             //hiv_assessment_Below15.setVisibility(View.VISIBLE);
 
         }
-    }
-    public String getCareGiverFullname(CommonPersonObjectClient client){
-
-        return client.getColumnmaps().get("caregiver_firstname");
     }
 
 
