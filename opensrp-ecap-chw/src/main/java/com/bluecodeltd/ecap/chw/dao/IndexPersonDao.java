@@ -1,7 +1,9 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 
+import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -72,6 +74,41 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
 
     }
+
+
+    public static List<CasePlanModel> getCasePlansById(String childID) {
+
+        String sql = "SELECT * FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' ";
+
+        List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
+    public static DataMap<CasePlanModel> getCasePlanMap() {
+        return c -> {
+
+            CasePlanModel record = new CasePlanModel();
+            record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setCase_plan_date(getCursorValue(c, "case_plan_date"));
+            record.setCase_plan_status(getCursorValue(c, "case_plan_status"));
+            record.setType(getCursorValue(c, "type"));
+            record.setVulnerability(getCursorValue(c, "vulnerability"));
+            record.setGoal(getCursorValue(c, "goal"));
+            record.setServices(getCursorValue(c, "services"));
+            record.setService_referred(getCursorValue(c, "service_referred"));
+            record.setInstitution(getCursorValue(c, "institution"));
+            record.setDue_date(getCursorValue(c, "due_date"));
+            record.setQuarter(getCursorValue(c, "quarter"));
+            record.setStatus(getCursorValue(c, "status"));
+            record.setComment(getCursorValue(c, "comment"));
+
+            return record;
+          };
+        }
 
 
     public static DataMap<Child> getChildDataMap() {

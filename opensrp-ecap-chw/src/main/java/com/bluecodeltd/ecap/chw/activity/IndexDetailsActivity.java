@@ -35,12 +35,16 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
+import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
+import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -86,7 +90,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private String childId;
+    public String childId;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -94,12 +98,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
-    private TextView visitTabCount;
+    private TextView visitTabCount, plansTabCount;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     String myAge;
     ObjectMapper oMapper;
     Child child;
+    CasePlanModel casePlanModel;
 
 
     @Override
@@ -162,6 +167,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         setupViewPager();
         updateTasksTabTitle();
+        updatePlanTabTitle();
     }
 
 
@@ -191,6 +197,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     }
 
+
+
     private String getAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
@@ -212,16 +220,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
-        mPagerAdapter.addFragment(new ProfileContactFragment());
-        mPagerAdapter.addFragment(new HouseholdVisitsFragment());
+        mPagerAdapter.addFragment(new ChildVisitsFragment());
+        mPagerAdapter.addFragment(new ChildCasePlanFragment());
+
 
 
         mViewPager.setAdapter(mPagerAdapter);
         //mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
-        mTabLayout.getTabAt(1).setText(getString(R.string.fragment_contact));
+        mTabLayout.getTabAt(0).setText("OVERVIEW");
+        mTabLayout.getTabAt(1).setText("CASE PLANS");
         mTabLayout.getTabAt(2).setText("VISITS");
+
 
     }
 
@@ -234,33 +244,27 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
+    private void updatePlanTabTitle() {
+        ConstraintLayout plansTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.plan_tab_title, null);
+        TextView visitTabTitle = plansTabTitleLayout.findViewById(R.id.plans_title);
+        visitTabTitle.setText("CASE PLANS");
+        plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
+
+        mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
+    }
+
 
     public void startFormActivity(JSONObject jsonObject) {
 
-
-        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
         Form form = new Form();
-        try {
-            if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
-                            .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                form.setWizard(true);
-                form.setName(getString(R.string.child_details));
-                form.setHideSaveLabel(true);
-                form.setNextLabel(getString(R.string.next));
-                form.setPreviousLabel(getString(R.string.previous));
-                form.setSaveLabel(getString(R.string.submit));
-                form.setNavigationBackground(R.color.primary);
-            } else {
-                form.setWizard(false);
-                form.setHideSaveLabel(true);
-                form.setNextLabel("");
-            }
-            intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-        } catch (JSONException e) {
-            Timber.e(e);
-        }
+        form.setWizard(false);
+        form.setName(getString(R.string.child_details));
+        form.setHideSaveLabel(true);
+        form.setNextLabel(getString(R.string.next));
+        form.setPreviousLabel(getString(R.string.previous));
+        form.setSaveLabel(getString(R.string.submit));
+        form.setNavigationBackground(R.color.primary);
+        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -304,10 +308,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.case_plan:
 
                 try {
-                   // openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
-                    Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
-                    i.putExtra("hivstatus", child.getSubpop1());
-                    startActivity(i);
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
 
                 } catch (Exception e) {
                     e.printStackTrace();

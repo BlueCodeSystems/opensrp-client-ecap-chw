@@ -27,7 +27,8 @@ public class ProfileOverviewFragment extends Fragment {
     LinearLayout myview2;
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,
-    txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult;
+    txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
+            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone;
 
     @Nullable
     @Override
@@ -57,8 +58,17 @@ public class ProfileOverviewFragment extends Fragment {
         txtFacility = view.findViewById(R.id.facility);
         txtMMDResult = view.findViewById(R.id.mmd_level);
 
+        //Caregiver Views
+        txtCaregiverName= view.findViewById(R.id.caregiver_name);
+        txtGender = view.findViewById(R.id.caregiver_gender);
+        txtDob= view.findViewById(R.id.caregiver_dob);
+        txtHiv = view.findViewById(R.id.hiv_status);
+        txtRelation = view.findViewById(R.id.child_relation);
+        txtPhone = view.findViewById(R.id.caregiver_phone);
+
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
+
 
         String subpop1 = childIndex.getSubpop1();
         String subpop2 = childIndex.getSubpop2();
@@ -183,6 +193,13 @@ public class ProfileOverviewFragment extends Fragment {
             // imgBtn.setImageResource(R.drawable.goto_arrow);
 
         });
+
+        txtCaregiverName.setText(childIndex.getCaregiver_name());
+        txtGender.setText(childIndex.getCaregiver_sex());
+        txtDob.setText(childIndex.getCaregiver_birth_date());
+        txtHiv.setText(childIndex.getCaregiver_hiv_status());
+        txtRelation.setText(childIndex.getRelation());
+        txtPhone.setText(childIndex.getCaregiver_phone());
 
 
         return view;
