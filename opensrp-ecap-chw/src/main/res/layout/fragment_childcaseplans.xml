@@ -4,14 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="8dp"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
     <LinearLayout
+        android:visibility="visible"
         android:layout_centerInParent="true"
         android:id="@+id/visit_container"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/empty_calendar"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
@@ -19,7 +28,7 @@
         <TextView
             android:textSize="20dp"
             android:gravity="center_horizontal"
-            android:text="No Visits"
+            android:text="No Case Plans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
