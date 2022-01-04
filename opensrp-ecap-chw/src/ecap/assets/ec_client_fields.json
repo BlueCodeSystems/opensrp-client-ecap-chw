@@ -4273,41 +4273,7 @@
           }
         },
 
-        {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "ward",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.ward"
-          }
-        },
-        {
-          "column_name": "adolescent_village",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.adolescent_village"
-          }
-        },
-        {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
-          }
-        },
-        {
-          "column_name": "partners",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partners"
-          }
-        },
+
         {
           "column_name": "assessment_date_1",
           "type": "Client",
@@ -4322,49 +4288,7 @@
             "field": "attributes.assessment_date_2"
           }
         },
-        {
-          "column_name": "physical_address",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.physical_address"
-          }
-        },
-        {
-          "column_name": "caseworker_firstname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_firstname"
-          }
-        },
-        {
-          "column_name": "caseworker_lastname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_lastname"
-          }
-        },
-        {
-          "column_name": "caseworker_nrc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_nrc"
-          }
-        },
-        {
-          "column_name": "name_rcmc_dc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.name_rcmc_dc"
-          }
-        },
 
-        {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "identifiers.household_id"
-          }
-        },
         {
           "column_name": "date_family_enrolled",
           "type": "Client",
@@ -4394,20 +4318,7 @@
             "field": "attributes.caregiver_name"
           }
         },
-        {
-          "column_name": "gender",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.gender"
-          }
-        },
-        {
-          "column_name": "age",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.age"
-          }
-        },
+
         {
           "column_name": "enrolled_project",
           "type": "Client",

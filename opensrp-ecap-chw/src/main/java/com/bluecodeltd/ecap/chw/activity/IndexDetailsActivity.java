@@ -33,7 +33,9 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
@@ -41,6 +43,7 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -97,9 +100,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private TextView visitTabCount;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
+    private String baseEntityID;
     String myAge;
     ObjectMapper oMapper;
     Child child;
+    VcaAssessmentModel vcaAssessmentModel;
 
 
     @Override
@@ -111,12 +116,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessmentModel(baseEntityID);
+        baseEntityID = getIntent().getExtras().getString("baseEntityID");
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
 
         childId = getIntent().getExtras().getString("Child");
+
+
 
         indexChild = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexChild.getGender();
