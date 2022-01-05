@@ -8,14 +8,15 @@ import java.util.List;
 
 public class CasePlanDao extends AbstractDao {
 
-    public static boolean checkCasePlan (String baseEntityID) {
-        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE base_entity_id = '" + baseEntityID + "'";
+    public static int checkCasePlan (String childID) {
+
+        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        return Integer.valueOf(values.get(0)) != 0;
+        return Integer.parseInt(values.get(0));
 
     }
 }
