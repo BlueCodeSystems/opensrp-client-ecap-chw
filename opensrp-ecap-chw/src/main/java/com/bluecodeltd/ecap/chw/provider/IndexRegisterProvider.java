@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
@@ -47,15 +49,15 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
-        String residence = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
+        String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
 
-        boolean plan = CasePlanDao.checkCasePlan(BaseEntityId);
+        int plans = CasePlanDao.checkCasePlan(childId);
 
         String is_index = IndexPersonDao.checkIndexPerson(BaseEntityId);
 
         String status = IndexPersonDao.getIndexStatus(BaseEntityId);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + residence, plan, is_index, status);
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, is_index, status);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 
@@ -114,9 +116,11 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     }
 
 
-    @Override
-    public void onClick(View v) {
 
+
+
+    @Override
+    public void onClick(View view) {
 
     }
 }

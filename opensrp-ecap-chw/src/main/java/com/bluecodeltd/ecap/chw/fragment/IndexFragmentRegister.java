@@ -13,6 +13,7 @@ import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.rey.material.widget.Button;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import androidx.appcompat.widget.Toolbar;
 
 public class IndexFragmentRegister extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
+
 
     @Override
     protected void initializePresenter() {
@@ -77,6 +79,8 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         sortFilterBarLayout.setVisibility(View.GONE);
         View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
         filterSortLayout.setVisibility(View.GONE);
+
+
     }
 
     @Override
@@ -108,7 +112,9 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     protected void onViewClicked(View view) {
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
         String baseId = client.entityId();
-        goToIndexDetailActivity(baseId,client);
+
+            goToIndexDetailActivity(baseId,client);
+
     }
 
     protected void goToIndexDetailActivity(String baseId, CommonPersonObjectClient client) {
@@ -131,4 +137,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }
+
+
+
 }

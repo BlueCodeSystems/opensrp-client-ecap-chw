@@ -89,12 +89,24 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/expand_more"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/baseline_expand_more_24"
+        android:src="@drawable/baseline_expand_more_24" />
+
+    <ImageView
+        android:id="@+id/expand_less"
+        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/baseline_expand_less_24" />
 
     <View
         android:layout_below="@+id/itemm"

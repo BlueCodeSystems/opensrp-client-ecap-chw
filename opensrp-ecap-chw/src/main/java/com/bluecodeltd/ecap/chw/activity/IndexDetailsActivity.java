@@ -33,6 +33,7 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -90,7 +91,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId;
+    private String childId;
+    public String uniqueId;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -121,10 +123,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
 
+       /* int defaultValue = 0;
+        int page = getIntent().getIntExtra("tab", defaultValue);
+        mViewPager.setCurrentItem(page);*/
+
+
         childId = getIntent().getExtras().getString("Child");
 
         indexChild = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexChild.getGender();
+        uniqueId = indexChild.getUnique_id();
 
         oMapper = new ObjectMapper();
 
@@ -220,8 +228,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
-        mPagerAdapter.addFragment(new ChildVisitsFragment());
         mPagerAdapter.addFragment(new ChildCasePlanFragment());
+        mPagerAdapter.addFragment(new ChildVisitsFragment());
 
 
 
@@ -249,6 +257,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         TextView visitTabTitle = plansTabTitleLayout.findViewById(R.id.plans_title);
         visitTabTitle.setText("CASE PLANS");
         plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
+
+        int plans = CasePlanDao.checkCasePlan(uniqueId);
+
+        plansTabCount.setText(String.valueOf(plans));
 
         mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
     }
@@ -647,6 +659,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         };
 
         Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
 
         try {
             AppExecutors appExecutors = new AppExecutors();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,15 +31,17 @@ public class ChildCasePlanFragment extends Fragment {
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> casePlanList = new ArrayList<>();
+    private LinearLayout linearLayout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_childcaseplans, container, false);
 
-        String childId  = ( (IndexDetailsActivity) requireActivity()).childId;
+        String childId  = ( (IndexDetailsActivity) requireActivity()).uniqueId;
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.planrecyclerView);
+        linearLayout = view.findViewById(R.id.visit_container);
 
         casePlanList.addAll(IndexPersonDao.getCasePlansById(childId));
 
@@ -49,6 +52,11 @@ public class ChildCasePlanFragment extends Fragment {
         recyclerViewadapter = new CasePlanAdapter(casePlanList, getContext());
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
+
+        if (recyclerViewadapter.getItemCount() > 0){
+
+            linearLayout.setVisibility(View.GONE);
+        }
 
 
         return view;

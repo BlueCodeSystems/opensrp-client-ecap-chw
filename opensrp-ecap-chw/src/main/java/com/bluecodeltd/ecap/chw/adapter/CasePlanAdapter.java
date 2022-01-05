@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,6 +48,78 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
         final CasePlanModel casePlan = caseplans.get(position);
 
+        holder.txtCaseDate.setText(casePlan.getCase_plan_date());
+        if(casePlan.getQuarter().equals(("q1"))){
+
+            holder.txtQuarter.setText("1st Quarter");
+
+        } else if(casePlan.getQuarter().equals(("q2"))) {
+
+            holder.txtQuarter.setText("2nd Quarter");
+
+        } else if(casePlan.getQuarter().equals(("q3"))) {
+
+            holder.txtQuarter.setText("3rd Quarter");
+
+        }else if(casePlan.getQuarter().equals(("q4"))) {
+
+            holder.txtQuarter.setText("4th Quarter");
+
+        }
+
+        holder.txtType.setText(casePlan.getType());
+        holder.txtVulnerability.setText(casePlan.getVulnerability());
+        holder.txtGoal.setText(casePlan.getGoal());
+        holder.txtServices.setText(casePlan.getServices());
+        holder.txtServicesReferred.setText(casePlan.getService_referred());
+        holder.txtInstitution.setText(casePlan.getInstitution());
+        holder.txtDueDate.setText(casePlan.getDue_date());
+
+        if(casePlan.getStatus().equals(("C"))){
+
+            holder.txtStatus.setText("Complete");
+
+        } else if(casePlan.getQuarter().equals(("P"))) {
+
+            holder.txtStatus.setText("In Progress");
+
+        } else if(casePlan.getQuarter().equals(("D"))) {
+
+            holder.txtStatus.setText("Delayed");
+
+        }
+
+        holder.txtComment.setText(casePlan.getComment());
+
+        holder.linearLayout.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.itemm) {
+
+                holder.exPandableView.setVisibility(View.VISIBLE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.expMore.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_more) {
+
+                holder.exPandableView.setVisibility(View.VISIBLE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.expLess.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_less) {
+
+                holder.exPandableView.setVisibility(View.GONE);
+                holder.expMore.setVisibility(View.VISIBLE);
+                holder.expLess.setVisibility(View.GONE);
+            }
+        });
 
     }
 
@@ -59,24 +133,30 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
         TextView txtCaseDate, txtQuarter, txtType, txtVulnerability,
                 txtGoal, txtServices, txtServicesReferred, txtInstitution, txtDueDate, txtStatus, txtComment;
-        RelativeLayout lview;
+
+        LinearLayout linearLayout, exPandableView;
+
+        ImageView expMore, expLess;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-
-            txtCaseDate  = (TextView) itemView.findViewById(R.id.case_date);
-            txtQuarter  = (TextView) itemView.findViewById(R.id.quarter);
-            txtType = (TextView) itemView.findViewById(R.id.type);
-            txtVulnerability = (TextView) itemView.findViewById(R.id.vulnerability);
-            txtGoal = (TextView) itemView.findViewById(R.id.goal);
-            txtServices = (TextView) itemView.findViewById(R.id.service);
-            txtServicesReferred = (TextView) itemView.findViewById(R.id.services_referred);
-            txtInstitution = (TextView) itemView.findViewById(R.id.institution);
-            txtDueDate = (TextView) itemView.findViewById(R.id.due_date);
-            txtStatus = (TextView) itemView.findViewById(R.id.status);
-            txtComment = (TextView) itemView.findViewById(R.id.comment);
+            expLess = itemView.findViewById(R.id.expand_less);
+            expMore = itemView.findViewById(R.id.expand_more);
+            linearLayout = itemView.findViewById(R.id.itemm);
+            exPandableView = itemView.findViewById(R.id.expandable);
+            txtCaseDate  = itemView.findViewById(R.id.case_date);
+            txtQuarter  =  itemView.findViewById(R.id.quarter);
+            txtType = itemView.findViewById(R.id.type);
+            txtVulnerability = itemView.findViewById(R.id.vulnerability);
+            txtGoal = itemView.findViewById(R.id.goal);
+            txtServices = itemView.findViewById(R.id.services);
+            txtServicesReferred = itemView.findViewById(R.id.services_referred);
+            txtInstitution = itemView.findViewById(R.id.institution);
+            txtDueDate = itemView.findViewById(R.id.due_date);
+            txtStatus = itemView.findViewById(R.id.status);
+            txtComment = itemView.findViewById(R.id.comment);
 
         }
 

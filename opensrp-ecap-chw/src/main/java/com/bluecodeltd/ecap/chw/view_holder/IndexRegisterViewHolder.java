@@ -21,7 +21,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private TextView villageTextView;
 
-    private Button caseplan_layout;
+    public Button caseplan_layout;
 
     private View myStatus;
 
@@ -36,7 +36,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         myStatus = itemView.findViewById(R.id.mystatusx);
     }
 
-    public void setupViews(String family, String village, boolean plan, String is_index, String status){
+    public void setupViews(String family, String village, int plans, String is_index, String status){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
@@ -57,12 +57,13 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         }
 
 
-        if(plan){
+        if(plans > 0){
             caseplan_layout.setVisibility(View.VISIBLE);
         } else {
             caseplan_layout.setVisibility(View.GONE);
         }
 
     }
+
 
 }
