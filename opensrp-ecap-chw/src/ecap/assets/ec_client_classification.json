@@ -345,9 +345,9 @@
           },
           {
             "field": "eventType",
-            "field_value": "Assessment Form",
+            "field_value": "VCA Assessment",
             "creates_case": [
-              "ec_assessment"
+              "ec_vca_assessment"
             ]
           },
           {
