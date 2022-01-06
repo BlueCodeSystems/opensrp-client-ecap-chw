@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -46,6 +47,7 @@ import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -107,6 +109,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     ObjectMapper oMapper;
     Child child;
     CasePlanModel casePlanModel;
+    VcaAssessmentModel vcaAssessmentModel;
 
 
     @Override
@@ -129,6 +132,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         indexChild = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexChild.getGender();
         uniqueId = indexChild.getUnique_id();
+
+        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
 
         oMapper = new ObjectMapper();
 
@@ -436,6 +441,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
                     jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
+                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.VCA_ASSESSMENT.equalsIgnoreCase(
                     jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
                 is_edit_mode = true;
@@ -466,7 +472,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             String entityId = "";
 
-            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population")){
+            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population") || encounterType.equals("VCA Assessment")){
 
                 entityId  = formJsonObject.getString("entity_id");
             } else {
@@ -514,7 +520,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
-                case "Assessment Form":
+                case "VCA Assessment":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -803,11 +809,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
         formToBeOpened = formUtils.getFormJson(formName);
 
 
-        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
-        formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
 
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
+
+
+        if(formName.equals("vca_assessment")){
+            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
+            formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
+            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(vcaAssessmentModel, Map.class));
+        } else {
+            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+            formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
+            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
+        }
 
         startFormActivity(formToBeOpened);
     }
