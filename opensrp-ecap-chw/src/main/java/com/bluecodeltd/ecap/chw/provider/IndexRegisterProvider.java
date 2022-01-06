@@ -61,6 +61,19 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 
+
+        indexRegisterViewHolder.caseplan_layout.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.due_button) {
+
+                Intent intent = new Intent(context, IndexDetailsActivity.class);
+                intent.putExtra("Child",  BaseEntityId);
+                intent.putExtra("clients", personObjectClient);
+                intent.putExtra("tab", 1);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -114,9 +127,6 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     public boolean isFooterViewHolder(RecyclerView.ViewHolder viewHolder) {
         return viewHolder instanceof FooterViewHolder;
     }
-
-
-
 
 
     @Override

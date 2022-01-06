@@ -1422,6 +1422,13 @@
       "name": "ec_client_index",
       "columns": [
         {
+          "column_name": "_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "_id"
+          }
+        },
+        {
           "column_name": "province",
           "type": "Client",
           "json_mapping": {

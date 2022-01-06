@@ -108,8 +108,8 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
     protected void onViewClicked(View view) {
 
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
-        String baseId = client.entityId();
-        goToIndexDetailActivity(baseId, client);
+        String childId = client.getColumnmaps().get("unique_id");
+        goToIndexDetailActivity(childId, client);
 
     }
 

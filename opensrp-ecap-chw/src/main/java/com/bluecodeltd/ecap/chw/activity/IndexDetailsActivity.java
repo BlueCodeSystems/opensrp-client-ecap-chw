@@ -123,10 +123,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
 
-       /* int defaultValue = 0;
-        int page = getIntent().getIntExtra("tab", defaultValue);
-        mViewPager.setCurrentItem(page);*/
-
 
         childId = getIntent().getExtras().getString("Child");
 
@@ -176,6 +172,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         setupViewPager();
         updateTasksTabTitle();
         updatePlanTabTitle();
+
+        int page = getIntent().getIntExtra("tab",0);
+        mViewPager.setCurrentItem(page);
     }
 
 
@@ -230,8 +229,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
         mPagerAdapter.addFragment(new ChildCasePlanFragment());
         mPagerAdapter.addFragment(new ChildVisitsFragment());
-
-
 
         mViewPager.setAdapter(mPagerAdapter);
         //mViewPager.setOffscreenPageLimit(1);
@@ -353,7 +350,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getBase_entity_id());
+            intent.putExtra("childId",  child.getUnique_id());
             intent.putExtra("householdId",  child.getHousehold_id());
            // intent.putExtra("household",  child.getHousehold_id());
 

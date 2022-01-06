@@ -45,6 +45,9 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             homeIcon.setImageResource(R.mipmap.ic_home);
         }
 
+        //This prevents Duplication of Icons
+        hLayout.removeAllViews();
+
         for(int i=0; i < genderList.size(); i++) {
 
             ImageView image = new ImageView(context);
