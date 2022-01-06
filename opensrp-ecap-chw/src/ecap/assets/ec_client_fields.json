@@ -1929,6 +1929,13 @@
       "name": "ec_vca_assessment",
       "columns": [
         {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
