@@ -48,7 +48,7 @@
         <activity
             android:name=".activity.MotherDetail"
             android:label="Caregiver Details"
-            android:theme="@style/FamilyTheme.NoActionBar" />
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.FamilyPlanningMemberProfileActivity"
             android:label="@string/family_planning"
@@ -125,10 +125,10 @@
         </activity>
         <activity
             android:name=".activity.IndexDetailsActivity"
-            android:theme="@style/FamilyTheme.NoActionBar" />
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdDetails"
-            android:theme="@style/FamilyTheme.NoActionBar" />
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
             android:launchMode="singleTask"

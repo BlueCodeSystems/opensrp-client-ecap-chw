@@ -33,14 +33,21 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
+import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
+import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -51,6 +58,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
@@ -86,6 +94,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private String childId;
+    public String uniqueId;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -93,12 +102,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
-    private TextView visitTabCount;
+    private TextView visitTabCount, plansTabCount;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     String myAge;
     ObjectMapper oMapper;
     Child child;
+    CasePlanModel casePlanModel;
+    VcaAssessmentModel vcaAssessmentModel;
 
 
     @Override
@@ -110,13 +121,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        NavigationMenu.getInstance(this, null, toolbar);
+
 
         childId = getIntent().getExtras().getString("Child");
 
         indexChild = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexChild.getGender();
+        uniqueId = indexChild.getUnique_id();
+
+        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
 
         oMapper = new ObjectMapper();
 
@@ -143,7 +160,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rassessment = findViewById(R.id.assessment);
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
-        household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
         grad = findViewById(R.id.grad);
 
@@ -160,6 +176,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         setupViewPager();
         updateTasksTabTitle();
+        updatePlanTabTitle();
+
+        int page = getIntent().getIntExtra("tab",0);
+        mViewPager.setCurrentItem(page);
     }
 
 
@@ -189,6 +209,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     }
 
+
+
     private String getAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
@@ -210,16 +232,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new ProfileOverviewFragment());
-        mPagerAdapter.addFragment(new ProfileContactFragment());
-        mPagerAdapter.addFragment(new HouseholdVisitsFragment());
-
+        mPagerAdapter.addFragment(new ChildCasePlanFragment());
+        mPagerAdapter.addFragment(new ChildVisitsFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
         //mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
-        mTabLayout.getTabAt(1).setText(getString(R.string.fragment_contact));
+        mTabLayout.getTabAt(0).setText("OVERVIEW");
+        mTabLayout.getTabAt(1).setText("CASE PLANS");
         mTabLayout.getTabAt(2).setText("VISITS");
+
 
     }
 
@@ -232,33 +254,31 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
+    private void updatePlanTabTitle() {
+        ConstraintLayout plansTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.plan_tab_title, null);
+        TextView visitTabTitle = plansTabTitleLayout.findViewById(R.id.plans_title);
+        visitTabTitle.setText("CASE PLANS");
+        plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
+
+        int plans = CasePlanDao.checkCasePlan(uniqueId);
+
+        plansTabCount.setText(String.valueOf(plans));
+
+        mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
+    }
+
 
     public void startFormActivity(JSONObject jsonObject) {
 
-
-        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
         Form form = new Form();
-        try {
-            if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
-                    jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
-                            .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                form.setWizard(true);
-                form.setName(getString(R.string.child_details));
-                form.setHideSaveLabel(true);
-                form.setNextLabel(getString(R.string.next));
-                form.setPreviousLabel(getString(R.string.previous));
-                form.setSaveLabel(getString(R.string.submit));
-                form.setNavigationBackground(R.color.primary);
-            } else {
-                form.setWizard(false);
-                form.setHideSaveLabel(true);
-                form.setNextLabel("");
-            }
-            intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-        } catch (JSONException e) {
-            Timber.e(e);
-        }
+        form.setWizard(false);
+        form.setName(getString(R.string.child_details));
+        form.setHideSaveLabel(true);
+        form.setNextLabel(getString(R.string.next));
+        form.setPreviousLabel(getString(R.string.previous));
+        form.setSaveLabel(getString(R.string.submit));
+        form.setNavigationBackground(R.color.primary);
+        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -302,9 +322,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.case_plan:
 
                 try {
-                   // openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
-                    Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
-                    startActivity(i);
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -337,25 +355,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getBase_entity_id());
+            intent.putExtra("childId",  child.getUnique_id());
             intent.putExtra("householdId",  child.getHousehold_id());
            // intent.putExtra("household",  child.getHousehold_id());
 
             startActivity(intent);
 
 
-                break;
-
-            case R.id.household_visitation_caregiver:
-
-                try {
-
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 break;
 
             case R.id.household_visitation_for_vca:
@@ -435,6 +441,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
                     jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
+                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.VCA_ASSESSMENT.equalsIgnoreCase(
                     jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
                 is_edit_mode = true;
@@ -465,7 +472,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
             String entityId = "";
 
-            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population")){
+            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population") || encounterType.equals("VCA Assessment")){
 
                 entityId  = formJsonObject.getString("entity_id");
             } else {
@@ -513,7 +520,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
-                case "Assessment Form":
+                case "VCA Assessment":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -655,6 +662,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         };
 
         Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+        closeFab();
 
         try {
             AppExecutors appExecutors = new AppExecutors();
@@ -755,20 +763,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if (isFabOpen){
 
-            fab.startAnimation(rotate_backward);
-            isFabOpen = false;
-            txtScreening.setVisibility(View.GONE);
-            rassessment.setVisibility(View.GONE);
-            rcase_plan.setVisibility(View.GONE);
-            referral.setVisibility(View.GONE);
-            household_visitation_caregiver.setVisibility(View.GONE);
-            household_visitation_for_vca.setVisibility(View.GONE);
-            grad.setVisibility(View.GONE);
-            grad_sub.setVisibility(View.GONE);
-            hiv_assessment.setVisibility(View.GONE);
-            //hiv_assessment_Above15.setVisibility(View.GONE);
-            // hiv_assessment_Below15.setVisibility(View.GONE);
-
+            closeFab();
         } else {
 
             isFabOpen = true;
@@ -777,7 +772,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             referral.setVisibility(View.VISIBLE);
-            household_visitation_caregiver.setVisibility(View.VISIBLE);
             household_visitation_for_vca.setVisibility(View.VISIBLE);
             grad.setVisibility(View.VISIBLE);
             grad_sub.setVisibility(View.VISIBLE);
@@ -786,10 +780,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
             //hiv_assessment_Below15.setVisibility(View.VISIBLE);
 
         }
-    }
-    public String getCareGiverFullname(CommonPersonObjectClient client){
 
-        return client.getColumnmaps().get("caregiver_firstname");
+    }
+
+    public void closeFab(){
+        fab.startAnimation(rotate_backward);
+        isFabOpen = false;
+        txtScreening.setVisibility(View.GONE);
+        rassessment.setVisibility(View.GONE);
+        rcase_plan.setVisibility(View.GONE);
+        referral.setVisibility(View.GONE);
+        household_visitation_for_vca.setVisibility(View.GONE);
+        grad.setVisibility(View.GONE);
+        grad_sub.setVisibility(View.GONE);
+        hiv_assessment.setVisibility(View.GONE);
+        //hiv_assessment_Above15.setVisibility(View.GONE);
+        // hiv_assessment_Below15.setVisibility(View.GONE);
     }
 
 
@@ -807,11 +813,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
         formToBeOpened = formUtils.getFormJson(formName);
 
 
-        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        //CoreJsonFormUtils.populateJsonForm(formToBeOpened, client.getColumnmaps());
-        formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
-
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
+        if(formName.equals("vca_assessment")){
+            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
+            formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
+            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(vcaAssessmentModel, Map.class));
+        } else {
+            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+            formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
+            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
+        }
 
         startFormActivity(formToBeOpened);
     }
