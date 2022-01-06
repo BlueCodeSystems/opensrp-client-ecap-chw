@@ -67,7 +67,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             if (v.getId() == R.id.due_button) {
 
                 Intent intent = new Intent(context, IndexDetailsActivity.class);
-                intent.putExtra("Child",  BaseEntityId);
+                intent.putExtra("Child",  childId);
                 intent.putExtra("clients", personObjectClient);
                 intent.putExtra("tab", 1);
                 context.startActivity(intent);
