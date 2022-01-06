@@ -42,7 +42,7 @@ public class VcaAssessmentModel {
     private String date;
 
 
-    public VcaAssessmentModel(String base_entity_id, String is_hiv_positive, String vca_art, String date_art, String appointment, String taking_art, String months_medication, String viral_load, String documented, String vl_last_result, String art_health_facility, String art_number, String vca_exposed, String biological_mother, String parents_deceased, String siblings_deceased, String tb_symptoms, String child_sick, String rashes, String discharge, String female_sex_worker, String sexually_active, String sex_positive, String sexual_partner, String private_parts, String transactional_sex, String sexually_abused, String past_year, String substance_abuse, String been_married, String given_birth, String currently_pregnant, String vca_response, String eyp_population, String caseworker_firstname, String caseworker_lastname, String caseworker_nrc, String date) {
+  /*  public VcaAssessmentModel(String base_entity_id, String is_hiv_positive, String vca_art, String date_art, String appointment, String taking_art, String months_medication, String viral_load, String documented, String vl_last_result, String art_health_facility, String art_number, String vca_exposed, String biological_mother, String parents_deceased, String siblings_deceased, String tb_symptoms, String child_sick, String rashes, String discharge, String female_sex_worker, String sexually_active, String sex_positive, String sexual_partner, String private_parts, String transactional_sex, String sexually_abused, String past_year, String substance_abuse, String been_married, String given_birth, String currently_pregnant, String vca_response, String eyp_population, String caseworker_firstname, String caseworker_lastname, String caseworker_nrc, String date) {
         this.base_entity_id = base_entity_id;
         this.is_hiv_positive = is_hiv_positive;
         this.vca_art = vca_art;
@@ -82,7 +82,7 @@ public class VcaAssessmentModel {
         this.caseworker_nrc = caseworker_nrc;
         this.date = date;
     }
-
+*/
     public String getBase_entity_id() {
         return base_entity_id;
     }

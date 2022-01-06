@@ -116,8 +116,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessmentModel(baseEntityID);
-        baseEntityID = getIntent().getExtras().getString("baseEntityID");
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
@@ -126,10 +124,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         childId = getIntent().getExtras().getString("Child");
 
 
-
         indexChild = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexChild.getGender();
 
+        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         oMapper = new ObjectMapper();
 
         if(gender.equals("male")){
@@ -303,7 +301,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
                 try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
+                    // openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    JSONObject formToBeOpened;
+
+                    formToBeOpened = formUtils.getFormJson("vca_assessment");
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(vcaAssessmentModel, Map.class));
+
+                    startFormActivity(formToBeOpened);
 
                 } catch (Exception e) {
                     e.printStackTrace();
