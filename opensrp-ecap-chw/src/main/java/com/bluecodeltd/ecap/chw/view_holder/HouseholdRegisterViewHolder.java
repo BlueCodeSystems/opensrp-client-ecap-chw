@@ -45,6 +45,9 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             homeIcon.setImageResource(R.mipmap.ic_home);
         }
 
+        //This prevents Duplication of Icons
+        hLayout.removeAllViews();
+
         for(int i=0; i < genderList.size(); i++) {
 
             ImageView image = new ImageView(context);
@@ -53,8 +56,8 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             LinearLayout.LayoutParams params =  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             params.gravity = Gravity.CENTER;
-            params.width = 55;
-            params.height = 55;
+            params.width = 40;
+            params.height = 40;
             image.setLayoutParams(params);
 
             if (genderList.get(i).equals("male")){

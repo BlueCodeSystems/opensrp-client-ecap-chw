@@ -227,12 +227,12 @@
                 android:visibility="gone">
 
                 <RelativeLayout
+                    android:background="#666666"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/callFabx"
-                    android:background="@color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
@@ -244,7 +244,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="VCA Screening"
-                        android:textColor="@color/black"
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
                         android:textStyle="italic"
                         android:visibility="visible" />
 
@@ -273,12 +274,12 @@
                 android:visibility="gone">
 
                 <RelativeLayout
+                    android:background="#666666"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/callFab"
-                    android:background="@color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
@@ -286,14 +287,16 @@
 
 
                     <TextView
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
                         android:id="@+id/CallTextViewHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="Vulnerability Assessment"
-                        android:textColor="@color/black"
                         android:textStyle="italic"
                         android:visibility="visible" />
+
 
                 </RelativeLayout>
 
@@ -325,14 +328,15 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/case_plan_fab"
-                    android:background="@color/white"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
                     android:text="Add Case Plan"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black" />
+                    />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -362,14 +366,14 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/refer_to_facility_fab"
-                    android:background="@color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
                     android:text="Add new Referral"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black" />
+                    android:background="#666666"
+                    android:textColor="@android:color/white" />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -383,42 +387,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/household_visitation_caregiver"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/household_visitation_caregiver_fab"
-                    android:background="@color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Household Visitation For Caregiver"
-                    android:textStyle="italic"
-                    android:textColor="@android:color/black" />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/household_visitation_caregiver_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add" />
-
-            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/household_visitation_for_vca"
                 android:onClick="onClick"
@@ -435,14 +403,15 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/household_visitation_for_vca_fab"
-                    android:background="@color/white"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
                     android:text="Household Visitation For VCA 0-20 Years"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black" />
+                     />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -473,14 +442,15 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/grad_fab"
-                    android:background="@color/white"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
                     android:text="Graduation Assessment"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black" />
+                    />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -511,14 +481,15 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/grad_fab20"
-                    android:background="@color/white"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
                     android:text="Grad Assessment(Sub Form)"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black" />
+                     />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -548,14 +519,15 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/grad_fab21"
-                    android:background="@color/white"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
                     android:text="HIV Risk Assessment"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black" />
+                     />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
