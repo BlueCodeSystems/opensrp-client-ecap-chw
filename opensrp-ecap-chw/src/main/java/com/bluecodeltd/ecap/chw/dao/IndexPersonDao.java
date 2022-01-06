@@ -65,7 +65,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE household_id = '"+ householdID +"' ";
+        String sql = "SELECT unique_id, base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE household_id = '"+ householdID +"' ";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
@@ -114,6 +114,7 @@ public class IndexPersonDao  extends AbstractDao {
     public static DataMap<Child> getChildDataMap() {
         return c -> {
             Child record = new Child();
+            record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setEntity_id(getCursorValue(c, "base_entity_id"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
@@ -124,7 +125,7 @@ public class IndexPersonDao  extends AbstractDao {
 
 
     public static Child getChildByBaseId(String baseEntityID){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "' ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + baseEntityID + "' ";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "case_status"),

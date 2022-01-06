@@ -111,15 +111,16 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EcapClientTable.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER};
+        return new String[]{CoreConstants.TABLE_NAME.EC_HOUSEHOLD, Constants.EcapClientTable.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER};
     }
 
     @Override
     public Map<String, String[]> getFTSSearchMap() {
         Map<String, String[]> map = new HashMap<>();
-        map.put(CoreConstants.TABLE_NAME.FAMILY, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.VILLAGE_TOWN, DBConstants.KEY.FIRST_NAME,
-                DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChwDBConstants.NEAREST_HEALTH_FACILITY
+
+        map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                "caregiver_name",
+                "household_id"
         });
 
         map.put(CoreConstants.TABLE_NAME.FAMILY_MEMBER, new String[]{
