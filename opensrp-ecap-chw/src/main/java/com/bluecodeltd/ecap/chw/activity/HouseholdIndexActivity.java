@@ -39,6 +39,8 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -46,6 +48,8 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
     public String action = null;
     private UniqueIdRepository uniqueIdRepository;
+    Random Number;
+    int Rnumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +90,11 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
 
 
-        String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+        Number = new Random();
+        Rnumber = Number.nextInt(100000000);
 
-        String xId = entityId.replaceFirst("^0+(?!$)", "");
+
+        String xId =  Integer.toString(Rnumber);
 
         String household_id = code + "/" + xId;
 
