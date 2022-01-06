@@ -14,7 +14,7 @@ public class VcaAssessmentDao extends AbstractDao {
 
         List<VcaAssessmentModel> values = AbstractDao.readData(sql, getVcaAssessmentModelMap());
 
-        if (values == null) {
+        if (values.size() == 0) {
             return null;
         }
 

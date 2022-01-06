@@ -662,7 +662,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         };
 
         Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
+        closeFab();
 
         try {
             AppExecutors appExecutors = new AppExecutors();
@@ -763,19 +763,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if (isFabOpen){
 
-            fab.startAnimation(rotate_backward);
-            isFabOpen = false;
-            txtScreening.setVisibility(View.GONE);
-            rassessment.setVisibility(View.GONE);
-            rcase_plan.setVisibility(View.GONE);
-            referral.setVisibility(View.GONE);
-            household_visitation_for_vca.setVisibility(View.GONE);
-            grad.setVisibility(View.GONE);
-            grad_sub.setVisibility(View.GONE);
-            hiv_assessment.setVisibility(View.GONE);
-            //hiv_assessment_Above15.setVisibility(View.GONE);
-            // hiv_assessment_Below15.setVisibility(View.GONE);
-
+            closeFab();
         } else {
 
             isFabOpen = true;
@@ -792,6 +780,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
             //hiv_assessment_Below15.setVisibility(View.VISIBLE);
 
         }
+
+    }
+
+    public void closeFab(){
+        fab.startAnimation(rotate_backward);
+        isFabOpen = false;
+        txtScreening.setVisibility(View.GONE);
+        rassessment.setVisibility(View.GONE);
+        rcase_plan.setVisibility(View.GONE);
+        referral.setVisibility(View.GONE);
+        household_visitation_for_vca.setVisibility(View.GONE);
+        grad.setVisibility(View.GONE);
+        grad_sub.setVisibility(View.GONE);
+        hiv_assessment.setVisibility(View.GONE);
+        //hiv_assessment_Above15.setVisibility(View.GONE);
+        // hiv_assessment_Below15.setVisibility(View.GONE);
     }
 
 
@@ -807,9 +811,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
-
-
-
 
 
         if(formName.equals("vca_assessment")){

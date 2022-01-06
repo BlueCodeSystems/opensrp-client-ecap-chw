@@ -130,15 +130,6 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
     public HashMap<String, Household> getData() {
-
-        /*HashMap<String, Household> map = new HashMap<>();
-
-        map.put("house", house);
-
-        cname.setText(child.getCaregiver_name() + " Household");
-
-        return map;
-         */
         return  populateMapWithHouse(house);
 
     }
@@ -423,7 +414,6 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
-
             try {
 
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
@@ -438,8 +428,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     case "Household Screening":
 
+                        closeFab();
                         loadInformation(childIndexEventClient);//updates Ui data in activity
+
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+
 
 
                         break;
@@ -615,15 +608,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         if (isFabOpen){
 
-            fab.startAnimation(rotate_backward);
-            isFabOpen = false;
-            rvisit.setVisibility(View.GONE);
-            hvisit20.setVisibility(View.GONE);
-            rscreen.setVisibility(View.GONE);
-            rassessment.setVisibility(View.GONE);
-            rcase_plan.setVisibility(View.GONE);
-            child_form.setVisibility(View.GONE);
-            household_visitation_caregiver.setVisibility(View.GONE);
+            closeFab();
 
         } else {
 
@@ -640,9 +625,22 @@ public class HouseholdDetails extends AppCompatActivity {
         }
     }
 
+    public void closeFab(){
+        fab.startAnimation(rotate_backward);
+        isFabOpen = false;
+        rvisit.setVisibility(View.GONE);
+        hvisit20.setVisibility(View.GONE);
+        rscreen.setVisibility(View.GONE);
+        rassessment.setVisibility(View.GONE);
+        rcase_plan.setVisibility(View.GONE);
+        child_form.setVisibility(View.GONE);
+        household_visitation_caregiver.setVisibility(View.GONE);
+    }
+
     public void loadInformation(ChildIndexEventClient  updatedEventClient){
         txtDistrict.setText(updatedEventClient.getClient().getAttribute("household_id").toString());
         cname.setText(new StringBuilder().append(updatedEventClient.getClient().getAttribute("caregiver_name").toString()).append(" household").toString());
+
     }
     public Household getHousehold(String householdId)
     {
