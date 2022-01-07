@@ -373,9 +373,9 @@
           },
           {
             "field": "eventType",
-            "field_value": "Graduation Assessment Form",
+            "field_value": "OVC Graduation Assessment",
             "creates_case": [
-              "ec_graduation_assessment"
+              "ec_ovc_graduation"
             ]
           },
           {

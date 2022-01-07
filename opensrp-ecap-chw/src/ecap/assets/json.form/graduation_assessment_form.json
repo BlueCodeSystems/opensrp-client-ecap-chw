@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Graduation Assessment Form",
+  "encounter_type": "Graduation Assessment",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -55,7 +55,6 @@
   "step1": {
     "title": "Graduation Assessment Form",
     "fields": [
-
       {
         "key": "name_rcmc_dc",
         "openmrs_entity_parent": "",
