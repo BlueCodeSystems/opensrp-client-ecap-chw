@@ -763,10 +763,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_mother_currently_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
