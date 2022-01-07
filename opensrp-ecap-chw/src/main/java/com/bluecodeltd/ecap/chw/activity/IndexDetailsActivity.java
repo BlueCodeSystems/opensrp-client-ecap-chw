@@ -443,12 +443,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.VCA_ASSESSMENT.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.GRADUATION_ASSESSMENT.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
+            if(!jsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
             }
 
@@ -475,12 +471,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
             JSONObject formJsonObject = new JSONObject(jsonString);
 
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
-            String entityId = "";
 
-            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population") || encounterType.equals("VCA Assessment")){
+            String entityId = formJsonObject.optString("entity_id");
 
-                entityId  = formJsonObject.getString("entity_id");
-            } else {
+            if(entityId.isEmpty()){
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
@@ -805,7 +799,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
-       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+        // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         FormUtils formUtils = null;
         try {
@@ -816,26 +810,50 @@ public class IndexDetailsActivity extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
+
+        switch (formName) {
+            case "vca_screening":
+
+                formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                break;
+
+            case "vca_assessment":
+
+                if(vcaAssessmentModel == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
+                }
+
+                break;
+
+            case "graduation":
+
+                if(graduationAssessmentModel == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.graduationAssessmentModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationAssessmentModel, Map.class));
+                }
 
 
-        if(formName.equals("vca_assessment")){
-            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
-            formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
-            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(vcaAssessmentModel, Map.class));
 
-        }
-         if (formName.equals("graduation")){
-            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
-            formToBeOpened.put("entity_id", this.graduationAssessmentModel.getBase_entity_id());
-            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(graduationAssessmentModel, Map.class));
-        }
-        else {
-            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-            formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
-            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
-        }
+            break;
+    }
+
 
         startFormActivity(formToBeOpened);
     }
