@@ -93,7 +93,7 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab;
+    private FloatingActionButton fab, fabHiv, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private String childId;
@@ -137,9 +137,25 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String gender = indexChild.getGender();
         uniqueId = indexChild.getUnique_id();
 
+        fabHiv = findViewById(R.id.hiv_risk);
+        fabGradSub = findViewById(R.id.grad_fab20);
+        fabGrad = findViewById(R.id.grad_fab);
+        fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
+        fabReferal = findViewById(R.id.refer_to_facility_fab);
+        fabCasePlan =  findViewById(R.id.case_plan_fab);
+        fabAssessment = findViewById(R.id.fabAssessment);
+
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
         oMapper = new ObjectMapper();
+
+        if(vcaAssessmentModel == null){
+            fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+
+        if(graduationAssessmentModel == null){
+            fabGrad.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
 
         if(gender.equals("male")){
 
@@ -814,6 +830,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
 
         switch (formName) {
+
+            case "case_status":
             case "vca_screening":
 
                 formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
@@ -849,9 +867,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationAssessmentModel, Map.class));
                 }
 
-
-
             break;
+
     }
 
 
@@ -881,6 +898,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
