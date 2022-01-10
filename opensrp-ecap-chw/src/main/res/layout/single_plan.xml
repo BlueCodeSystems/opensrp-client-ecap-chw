@@ -34,7 +34,6 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="22 June 2022"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -54,22 +53,24 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/quarter"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="1st Quarter"
-                android:textColor="@color/text_black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
             <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/type"
+                    android:id="@+id/quarter"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    style="@style/CustomFontTextViewStyle.ClientList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/case_plan_status"
                 style="@style/CustomFontTextViewStyle.ClientList"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -78,7 +79,6 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="Schooled"
                 android:textAllCaps="true"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -88,25 +88,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/expand_more"
-        android:visibility="visible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/baseline_expand_more_24" />
-
-    <ImageView
-        android:id="@+id/expand_less"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/baseline_expand_less_24" />
 
     <View
         android:layout_below="@+id/itemm"
@@ -114,197 +95,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <LinearLayout
-        android:id="@+id/expandable"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:layout_below="@+id/itemm"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:weightSum="2"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-      <TextView
-          android:layout_weight="1"
-          android:textStyle="bold"
-        android:text="Vulnerability Identified"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/vulnerability"
-            android:layout_weight="1"
-            android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Goal"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/goal"
-                android:layout_weight="1"
-                android:text="yhs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Services to be provided by CW"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/services"
-                android:layout_weight="1"
-                android:text="DGHHDSGBVU JHB jyhgshgfuis fsjhisujhf sfiuhsiouho0sigK"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Services to be referred"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/services_referred"
-                android:layout_weight="1"
-                android:text="yhs dgbdfbhdh"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Institution of Service referral"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/institution"
-                android:layout_weight="1"
-                android:text="yhs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Due Date"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/due_date"
-                android:layout_weight="1"
-                android:text="20/09/2022"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Status at Follow Up"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/status"
-                android:layout_weight="1"
-                android:text="In Progress"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Comments"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/comment"
-                android:layout_weight="1"
-                android:text="yhsjhsiujhg ujhiujhoip mb"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 </RelativeLayout>

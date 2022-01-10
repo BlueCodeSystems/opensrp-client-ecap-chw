@@ -2314,7 +2314,7 @@
       ]
     },
     {
-      "name": "ec_vca_case_plan",
+      "name": "ec_case_plan_domain",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -2395,13 +2395,6 @@
           }
         },
         {
-          "column_name": "quarter",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.quarter"
-          }
-        },
-        {
           "column_name": "status",
           "type": "Client",
           "json_mapping": {
@@ -2417,6 +2410,40 @@
         }
       ]
     },
+    {
+      "name": "ec_vca_case_plan",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "case_plan_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_date"
+          }
+        },
+        {
+          "column_name": "case_plan_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_status"
+          }
+        }
+      ]
+    },
+
     {
       "name": "ec_service_report",
       "columns": [
