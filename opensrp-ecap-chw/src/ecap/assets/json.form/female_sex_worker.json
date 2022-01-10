@@ -180,7 +180,7 @@
         "openmrs_entity_id": "physical_address",
         "entity_id": "",
         "type": "edit_text",
-        "hint": "Physical address",
+        "hint": "Plot Number, Village or Street",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
