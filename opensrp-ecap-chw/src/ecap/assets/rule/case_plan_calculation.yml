@@ -1,7 +1,7 @@
 ---
-name: step1_age
-description: step1_age
+name: step2_test
+description: step2_test
 priority: 1
-condition: "step1_age == ''"
+condition: "step1_case_plan_status.contains('Initial')"
 actions:
-  - "calculation = helper.getDifferenceDays(step1_dob) / 365.25"
+  - 'calculation = step1_case_plan_date'

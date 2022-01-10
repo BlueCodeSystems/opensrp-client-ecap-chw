@@ -10,7 +10,7 @@ public class CasePlanDao extends AbstractDao {
 
     public static int checkCasePlan (String childID) {
 
-        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "'";
+        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
