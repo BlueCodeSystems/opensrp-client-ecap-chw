@@ -42,6 +42,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     @Override
     public CasePlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_plan, parent, false);
 
         CasePlanAdapter.ViewHolder viewHolder = new CasePlanAdapter.ViewHolder(v);
@@ -53,6 +54,8 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     public void onBindViewHolder(CasePlanAdapter.ViewHolder holder, final int position) {
 
         final CasePlanModel casePlan = caseplans.get(position);
+
+        holder.setIsRecyclable(false);
 
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());

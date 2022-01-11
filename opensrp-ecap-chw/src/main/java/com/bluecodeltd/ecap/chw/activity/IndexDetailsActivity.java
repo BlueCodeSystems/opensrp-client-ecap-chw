@@ -37,6 +37,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -50,6 +51,7 @@ import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -96,8 +98,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private String childId;
-    public String uniqueId;
+    public String childId, uniqueId, vcaAge;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -114,6 +115,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     CasePlanModel casePlanModel;
     VcaAssessmentModel vcaAssessmentModel;
     GraduationAssessmentModel graduationAssessmentModel;
+    VcaVisitationModel vcaVisitationModel;
 
 
     @Override
@@ -147,6 +149,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
+        vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         oMapper = new ObjectMapper();
 
         if(vcaAssessmentModel == null){
@@ -155,6 +158,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if(graduationAssessmentModel == null){
             fabGrad.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+
+        if(vcaVisitationModel == null){
+            fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
         if(gender.equals("male")){
@@ -210,6 +217,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if(birthdate != null){
            txtAge.setText(getAge(birthdate));
+           vcaAge = getAgeWithoutText(birthdate);
         }else {
             txtAge.setText("Not Set");
         }
@@ -227,6 +235,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         return map;
 
+    }
+
+    private String getAgeWithoutText(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getYears());
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getMonths());
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getDays());
+        }
+        else return "Not Set";
     }
 
 
@@ -474,6 +500,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
+                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
+                finish();
+                startActivity(getIntent());
+
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -676,8 +707,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         };
 
-        Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-        closeFab();
 
         try {
             AppExecutors appExecutors = new AppExecutors();
@@ -868,6 +897,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
             break;
+            case "household_visitation_for_vca_0_20_years":
+
+                if(vcaVisitationModel == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.vcaVisitationModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaVisitationModel, Map.class));
+                }
+                break;
 
     }
 
