@@ -79,7 +79,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Date Case Plan Created"
         }
       },
