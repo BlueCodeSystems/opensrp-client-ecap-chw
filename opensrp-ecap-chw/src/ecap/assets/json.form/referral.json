@@ -1,6 +1,6 @@
 {
-  "count": "2",
-  "encounter_type": "referral form",
+  "count": "1",
+  "encounter_type": "Referral",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -47,10 +47,19 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "Basic Information",
-    "next": "step2",
+    "title": "Referral Form",
     "display_back_button": "true",
     "fields": [
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
       {
         "key": "date_referred",
         "openmrs_entity_parent": "",
@@ -62,7 +71,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -72,7 +81,7 @@
       {
         "key": "receiving_organization",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "receiving_organization",
         "type": "edit_text",
         "hint": "Name of Receiving Organization",
@@ -80,14 +89,8 @@
           "value": true,
           "err":  "Name of Receiving Organization is empty"
         }
-      }
-    ]
-  },
+      },
 
-  "step2": {
-    "title": "Services Provided for Children, Caregiver and Household",
-    "display_back_button": "true",
-    "fields": [
       {
         "key": "health_services",
         "type": "label",
@@ -99,10 +102,10 @@
         }
       },
       {
-        "key": "cd",
+        "key": "cd4",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cd4",
         "type": "spinner",
         "hint": "CD4",
         "values": [
@@ -113,7 +116,7 @@
       {
         "key": "hiv_adherence",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_adherence",
         "type": "spinner",
         "hint": "HIV Adherence Support",
@@ -125,7 +128,7 @@
       {
         "key": "hiv_counseling_testing",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_counseling_testing",
         "type": "spinner",
         "hint": "HIV Counseling Testing",
@@ -137,7 +140,7 @@
       {
         "key": "post_gbv",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "post_gbv",
         "type": "spinner",
         "hint": "Post-GBV Care (Pre-exposure Prophylaxis)",
@@ -149,7 +152,7 @@
       {
         "key": "substance_abuse",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "substance_abuse",
         "type": "spinner",
         "hint": "Substance Abuse Support by a trained provider",
@@ -161,7 +164,7 @@
       {
         "key": "tb_screening",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
         "type": "spinner",
         "hint": "TB Screening",
@@ -173,7 +176,7 @@
       {
         "key": "supplementary",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "supplementary",
         "type": "spinner",
         "hint": "Supplementary or Therapeutic feeding",
@@ -183,10 +186,10 @@
         ]
       },
       {
-        "key": "cd1",
+        "key": "prep",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prep",
         "type": "spinner",
         "hint": "PrEP",
         "values": [
@@ -195,10 +198,10 @@
         ]
       },
       {
-        "key": "cd2",
+        "key": "f_planning",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "f_planning",
         "type": "spinner",
         "hint": "Family Planning Methods",
         "values": [
@@ -207,10 +210,10 @@
         ]
       },
       {
-        "key": "cd3",
+        "key": "insecticide",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "insecticide",
         "type": "spinner",
         "hint": "Insecticide Treated Net",
         "values": [
@@ -219,10 +222,10 @@
         ]
       },
       {
-        "key": "cd4",
+        "key": "hiv_aids_treatment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_aids_treatment",
         "type": "spinner",
         "hint": "Age -appropriate HIV/AIDS Treatment Literacy (CLHIV)",
         "values": [
@@ -231,10 +234,10 @@
         ]
       },
       {
-        "key": "cd5",
+        "key": "f_w_health",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "f_w_health",
         "type": "spinner",
         "hint": "Family Planning (Women's Health)",
         "values": [
@@ -243,10 +246,10 @@
         ]
       },
       {
-        "key": "cd6",
+        "key": "vmmc",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vmmc",
         "type": "spinner",
         "hint": "VMMC",
         "values": [
@@ -255,10 +258,10 @@
         ]
       },
       {
-        "key": "cd7",
+        "key": "immunization",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "immunization",
         "type": "spinner",
         "hint": "Immunization",
         "values": [
@@ -267,10 +270,10 @@
         ]
       },
       {
-        "key": "cd8",
+        "key": "condom",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "condom",
         "type": "spinner",
         "hint": "Condom",
         "values": [
@@ -279,10 +282,10 @@
         ]
       },
       {
-        "key": "cd9",
+        "key": "routine_care",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "routine_care",
         "type": "spinner",
         "hint": "Routine Health Care",
         "values": [
@@ -291,10 +294,10 @@
         ]
       },
       {
-        "key": "cd10",
+        "key": "emergency_care",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "emergency_care",
         "type": "spinner",
         "hint": "Emergency Health Care",
         "values": [
@@ -303,10 +306,10 @@
         ]
       },
       {
-        "key": "cd11",
+        "key": "age_counselling",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age_counselling",
         "type": "spinner",
         "hint": "Age-appropriate Counselling &HIV Disclosure Support",
         "values": [
@@ -315,10 +318,10 @@
         ]
       },
       {
-        "key": "cd12",
+        "key": "h_treatment_care",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "h_treatment_care",
         "type": "spinner",
         "hint": "HIV Treatment & Care",
         "values": [
@@ -327,10 +330,10 @@
         ]
       },
       {
-        "key": "cd13",
+        "key": "pmtct",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct",
         "type": "spinner",
         "hint": "PMTCT",
         "values": [
@@ -339,10 +342,10 @@
         ]
       },
       {
-        "key": "cd14",
+        "key": "hygiene_counselling",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hygiene_counselling",
         "type": "spinner",
         "hint": "Household Hygiene Counselling/WASH",
         "values": [
@@ -351,10 +354,10 @@
         ]
       },
       {
-        "key": "cd15",
+        "key": "transmitted_infections",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "transmitted_infections",
         "type": "spinner",
         "hint": "Sexually Transmitted Infections (STIs)",
         "values": [
@@ -363,10 +366,10 @@
         ]
       },
       {
-        "key": "cd16",
+        "key": "plha",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "plha",
         "type": "spinner",
         "hint": "Structured PLHA Support Group",
         "values": [
@@ -375,10 +378,10 @@
         ]
       },
       {
-        "key": "cd17",
+        "key": "viral_load",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "cd",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load",
         "type": "spinner",
         "hint": "Viral Load (PCR)",
         "values": [
@@ -389,10 +392,10 @@
       {
         "key": "other_health_services",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_health_services",
         "type": "edit_text",
-        "hint": "Other health service or education Specify: "
+        "hint": "If Other health service or education, Specify: "
       },
       {
         "key": "safety_services",
@@ -407,7 +410,7 @@
       {
         "key": "care_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "care_facility",
         "type": "spinner",
         "hint": "Emergency Shelter/Care Facility",
@@ -417,10 +420,10 @@
         ]
       },
       {
-        "key": "support_counselling",
+        "key": "post_violence_trauma",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "support_counselling",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "post_violence_trauma",
         "type": "spinner",
         "hint": "Post Violence Trauma Support Counselling",
         "values": [
@@ -431,7 +434,7 @@
       {
         "key": "legal_assistance",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "legal_assistance",
         "type": "spinner",
         "hint": "Legal Assistance",
@@ -443,10 +446,10 @@
       {
         "key": "other_safety_services",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_safety_services",
         "type": "edit_text",
-        "hint": "Other Protection and/or Legal Service, Specify:"
+        "hint": "If Other Protection Legal Service, Specify:"
       },
       {
         "key": "schooled_services",
@@ -461,7 +464,7 @@
       {
         "key": "vca_uniforms_books",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_uniforms_books",
         "type": "spinner",
         "hint": "Support VCAs with Uniforms and/or Book Materials",
@@ -473,7 +476,7 @@
       {
         "key": "re_enrollment",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "re_enrollment",
         "type": "spinner",
         "hint": "Re-enrollment (for dropouts or teen mothers)",
@@ -485,7 +488,7 @@
       {
         "key": "bursaries",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "bursaries",
         "type": "spinner",
         "hint": "Tuition/Bursaries/Fee-Waiver",
@@ -497,10 +500,10 @@
       {
         "key": "other_schooled_services",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_schooled_services",
         "type": "edit_text",
-        "hint": "Other Education Support, Specify:"
+        "hint": "If Other Education Support, Specify:"
       },
       {
         "key": "stability_services",
@@ -515,7 +518,7 @@
       {
         "key": "cash_transfer",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cash_transfer",
         "type": "spinner",
         "hint": "Cash Transfer/Social Grant",
@@ -527,7 +530,7 @@
       {
         "key": "cash_support",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cash_support",
         "type": "spinner",
         "hint": "Short Term Emergency Cash Support",
@@ -539,7 +542,7 @@
       {
         "key": "food_security",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "food_security",
         "type": "spinner",
         "hint": "Food Security Program/Intervention",
@@ -551,43 +554,24 @@
       {
         "key": "other_stability_services",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_stability_services",
         "type": "edit_text",
-        "hint": "Other economic strengthening Specify:"
+        "hint": "If Other economic strengthening, Specify:"
       },
       {
         "key": "follow_up",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "follow_up",
         "type": "edit_text",
         "hint": "Follow-up Required, Specify:"
       },
       {
-        "key": "last_name_of_person",
+        "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "last_name_of_person",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Last Name of Individual Providing Service ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter last name of individual providing service "
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "first_name_of_person",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "first_name_of_person",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
         "entity_id": "",
         "type": "edit_text",
         "hint": "First Name of Individual Providing Service ",
@@ -603,9 +587,29 @@
         }
       },
       {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "entity_id": "",
+        "type": "edit_text",
+        "hint": "Last Name of Individual Providing Service ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please enter last name of individual providing service "
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+
+      {
         "key": "job_title",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "job_title",
         "entity_id": "",
         "type": "edit_text",
@@ -624,7 +628,7 @@
       {
         "key": "date_of_service",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "event",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_of_service",
         "type": "date_picker",
         "hint": " Date a Service is Provided",
@@ -633,7 +637,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": false,
@@ -643,7 +647,7 @@
       {
         "key": "signature",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "signature",
         "openmrs_data_type": "",
         "type": "check_box",
