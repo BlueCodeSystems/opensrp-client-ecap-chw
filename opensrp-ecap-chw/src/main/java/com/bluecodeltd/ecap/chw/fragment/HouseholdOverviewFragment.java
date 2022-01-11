@@ -53,18 +53,17 @@ public class HouseholdOverviewFragment extends Fragment {
 
         fab = getActivity().findViewById(R.id.fabx);
 
-        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
-
-        house = mymap.get("house");
-
         setViews();
-
 
         return view;
 
     }
 
     public void setViews(){
+        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+
+        house = mymap.get("house");
+
         String is_screened = house.getScreened();
         String incomeSource = house.getFam_source_income();
         String iscome = house.getIncome();
