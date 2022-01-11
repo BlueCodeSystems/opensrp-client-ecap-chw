@@ -2314,7 +2314,7 @@
       ]
     },
     {
-      "name": "ec_vca_case_plan",
+      "name": "ec_case_plan_domain",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -2395,13 +2395,6 @@
           }
         },
         {
-          "column_name": "quarter",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.quarter"
-          }
-        },
-        {
           "column_name": "status",
           "type": "Client",
           "json_mapping": {
@@ -2417,6 +2410,40 @@
         }
       ]
     },
+    {
+      "name": "ec_vca_case_plan",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "case_plan_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_date"
+          }
+        },
+        {
+          "column_name": "case_plan_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_status"
+          }
+        }
+      ]
+    },
+
     {
       "name": "ec_service_report",
       "columns": [
@@ -3829,8 +3856,15 @@
       ]
     },
     {
-      "name": "ec_graduation_assessment",
+      "name": "ec_ovc_graduation",
       "columns": [
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
         {
           "column_name": "base_entity_id",
           "type": "Client",
@@ -3843,42 +3877,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
-          }
-        },
-
-        {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "ward",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.ward"
-          }
-        },
-        {
-          "column_name": "adolescent_village",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.adolescent_village"
-          }
-        },
-        {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
-          }
-        },
-        {
-          "column_name": "partners",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partners"
           }
         },
         {
@@ -3895,13 +3893,7 @@
             "field": "attributes.assessment_date_2"
           }
         },
-        {
-          "column_name": "physical_address",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.physical_address"
-          }
-        },
+
         {
           "column_name": "caseworker_firstname",
           "type": "Client",
@@ -3968,17 +3960,17 @@
           }
         },
         {
-          "column_name": "gender",
+          "column_name": "caregiver_sex",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.gender"
+            "field": "attributes.caregiver_sex"
           }
         },
         {
-          "column_name": "age",
+          "column_name": "caregiver_age",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.age"
+            "field": "attributes.caregiver_age"
           }
         },
         {
@@ -4149,13 +4141,7 @@
             "field": "attributes.additional_information"
           }
         },
-        {
-          "column_name": "caseworker_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_name"
-          }
-        },
+
         {
           "column_name": "caseworker_signature",
           "type": "Client",
@@ -4170,13 +4156,7 @@
             "field": "attributes.caseworker_date_signed"
           }
         },
-        {
-          "column_name": "rcmc_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.rcmc_name"
-          }
-        },
+
         {
           "column_name": "rcmc_signature",
           "type": "Client",

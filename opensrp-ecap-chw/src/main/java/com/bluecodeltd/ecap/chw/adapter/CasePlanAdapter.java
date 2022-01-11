@@ -2,21 +2,27 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHolder>{
@@ -49,77 +55,49 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         final CasePlanModel casePlan = caseplans.get(position);
 
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
-        if(casePlan.getQuarter().equals(("q1"))){
+        holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
 
-            holder.txtQuarter.setText("1st Quarter");
+        try {
+            Date thedate = new SimpleDateFormat("dd-MM-yyyy").parse(casePlan.getCase_plan_date());
+            String month = (String) DateFormat.format("M", thedate); // 6
+            int m = Integer.parseInt(month);
 
-        } else if(casePlan.getQuarter().equals(("q2"))) {
 
-            holder.txtQuarter.setText("2nd Quarter");
+          if(m >= 1 && m <= 3){
+              holder.txtQuarter.setText(R.string.quarter_two);
 
-        } else if(casePlan.getQuarter().equals(("q3"))) {
+          } else if(m > 3 && m <= 6){
 
-            holder.txtQuarter.setText("3rd Quarter");
+              holder.txtQuarter.setText(R.string.quarter_three);
 
-        }else if(casePlan.getQuarter().equals(("q4"))) {
+          } else if (m > 6 && m <=9 ){
 
-            holder.txtQuarter.setText("4th Quarter");
+              holder.txtQuarter.setText(R.string.quarter_four);
 
+          } else if (m > 9 && m <= 12) {
+
+              holder.txtQuarter.setText(R.string.quarter_one);
+
+          }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        holder.txtType.setText(casePlan.getType());
-        holder.txtVulnerability.setText(casePlan.getVulnerability());
-        holder.txtGoal.setText(casePlan.getGoal());
-        holder.txtServices.setText(casePlan.getServices());
-        holder.txtServicesReferred.setText(casePlan.getService_referred());
-        holder.txtInstitution.setText(casePlan.getInstitution());
-        holder.txtDueDate.setText(casePlan.getDue_date());
 
-        if(casePlan.getStatus().equals(("C"))){
-
-            holder.txtStatus.setText("Complete");
-
-        } else if(casePlan.getQuarter().equals(("P"))) {
-
-            holder.txtStatus.setText("In Progress");
-
-        } else if(casePlan.getQuarter().equals(("D"))) {
-
-            holder.txtStatus.setText("Delayed");
-
-        }
-
-        holder.txtComment.setText(casePlan.getComment());
 
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
 
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
+                Intent i = new Intent(context, CasePlan.class);
+                i.putExtra("childId",  casePlan.getUnique_id());
+                i.putExtra("dateId",  casePlan.getCase_plan_date());
+                context.startActivity(i);
+
             }
         });
 
-        holder.expMore.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_more) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
-            }
-        });
-
-        holder.expLess.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_less) {
-
-                holder.exPandableView.setVisibility(View.GONE);
-                holder.expMore.setVisibility(View.VISIBLE);
-                holder.expLess.setVisibility(View.GONE);
-            }
-        });
 
     }
 
@@ -131,10 +109,9 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtCaseDate, txtQuarter, txtType, txtVulnerability,
-                txtGoal, txtServices, txtServicesReferred, txtInstitution, txtDueDate, txtStatus, txtComment;
+        TextView txtCaseDate, txtQuarter, txtCasePlanStatus;
 
-        LinearLayout linearLayout, exPandableView;
+        LinearLayout linearLayout;
 
         ImageView expMore, expLess;
 
@@ -142,25 +119,14 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
             super(itemView);
 
-            expLess = itemView.findViewById(R.id.expand_less);
-            expMore = itemView.findViewById(R.id.expand_more);
             linearLayout = itemView.findViewById(R.id.itemm);
-            exPandableView = itemView.findViewById(R.id.expandable);
             txtCaseDate  = itemView.findViewById(R.id.case_date);
-            txtQuarter  =  itemView.findViewById(R.id.quarter);
-            txtType = itemView.findViewById(R.id.type);
-            txtVulnerability = itemView.findViewById(R.id.vulnerability);
-            txtGoal = itemView.findViewById(R.id.goal);
-            txtServices = itemView.findViewById(R.id.services);
-            txtServicesReferred = itemView.findViewById(R.id.services_referred);
-            txtInstitution = itemView.findViewById(R.id.institution);
-            txtDueDate = itemView.findViewById(R.id.due_date);
-            txtStatus = itemView.findViewById(R.id.status);
-            txtComment = itemView.findViewById(R.id.comment);
+            txtQuarter = itemView.findViewById(R.id.quarter);
+            txtCasePlanStatus = itemView.findViewById(R.id.case_plan_status);
 
         }
 
-        // Click event for all items
+
         @Override
         public void onClick(View v) {
 

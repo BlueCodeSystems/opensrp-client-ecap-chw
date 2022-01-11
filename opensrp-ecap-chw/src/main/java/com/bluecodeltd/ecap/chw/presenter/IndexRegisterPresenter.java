@@ -77,13 +77,14 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
     @Override
     public void saveForm(String jsonString, @NonNull RegisterParams registerParams) {
         try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
             List<EventClient> eventClientList = model.processRegistration(jsonString, registerParams.getFormTag());
 
             if (eventClientList == null || eventClientList.isEmpty()) {
                 return;
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
-            baseId = eventClientList.get(0).getClient().getBaseEntityId();
+            baseId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
 
         } catch (Exception e) {
             Timber.e(e);

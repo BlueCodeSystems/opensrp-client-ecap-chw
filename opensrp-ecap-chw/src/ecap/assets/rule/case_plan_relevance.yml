@@ -1,7 +1,7 @@
 ---
-name: step1_healthy
-description: step1_healthy
+name: step2_test
+description: test relevance
 priority: 1
-condition: "helper.formatDate(step1_age,'y') < 5"
+condition: "step1_case_plan_status.contains('Initial')"
 actions:
   - "isRelevant = true"

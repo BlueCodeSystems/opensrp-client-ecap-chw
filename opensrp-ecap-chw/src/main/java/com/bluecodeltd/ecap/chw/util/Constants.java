@@ -84,6 +84,7 @@ public class Constants extends CoreConstants {
         String MOTHER_INDEX = "Mother Register";
         String HOUSEHOLD_INDEX = "Household Screening";
         String IDENTIFICATION = "identification";
+        String GRADUATION_ASSESSMENT = "OVC Graduation Assessment";
     }
 
     public interface EcapClientTable {
@@ -91,14 +92,15 @@ public class Constants extends CoreConstants {
         String EC_FAMILY = "ec_family";
         String EC_HOUSEHOLD = "ec_household";
         String EC_VCA_CASE_PLAN = "ec_vca_case_plan";
+        String EC_VCA_CASE_PLAN_DOMAIN = "ec_vca_case_plan_domain";
         String EC_MOTHER_INDEX = "ec_mother_index";
         String EC_POPULATION = "ec_sub_population";
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
         String EC_SERVICE_REPORT = "ec_service_report";
         String EC_ASSESSMENT = "ec_vca_assessment";
+        String EC_OVC_GRADUATION = "ec_ovc_graduation";
         String EC_HOUSEHOLD_CAREGIVER = "ec_household_visitation_for_caregiver";
         String EC_HOUSEHOLD_VCA = "ec_household_visitation_for_vca_0_20_years";
-        String EC_GRADUATION = "ec_graduation_assessment";
         String EC_GRADUATION_SUB = "ec_graduation_assessment_sub_form";
         String EC_CAREGIVER_HOUSEHOLD_ASSESSMENT = "ec_caregiver_household_assessment";
         String EC_HIV_ASSESSMENT_ABOVE_15 = "ec_hiv_assessment_above_15";
