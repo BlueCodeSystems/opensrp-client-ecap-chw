@@ -177,6 +177,10 @@ public class CasePlan extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
+                Toasty.success(CasePlan.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                finish();
+                startActivity(getIntent());
+
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -265,9 +269,6 @@ public class CasePlan extends AppCompatActivity {
             }
 
         };
-
-        Toasty.success(CasePlan.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-        fetchData();
 
 
         try {

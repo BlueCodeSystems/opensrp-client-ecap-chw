@@ -100,7 +100,7 @@ public class HouseholdDetails extends AppCompatActivity {
         //household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
 
         child = IndexPersonDao.getChildByBaseId(childId);
-       // house = HouseholdDao.getHousehold(householdId);
+        // house = HouseholdDao.getHousehold(householdId);
         house = getHousehold(householdId);
         oMapper = new ObjectMapper();
 
@@ -129,7 +129,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         txtDistrict.setText(householdId);
         cname.setText(child.getCaregiver_name() + " Household");
-       // txtVillage.setText(house.getVillage() + ", ");
+        // txtVillage.setText(house.getVillage() + ", ");
     }
 
     public HashMap<String, Household> getData() {
@@ -248,7 +248,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("caregiver_case_plan");
 
                     //TODO
-                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
@@ -283,7 +283,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
 
                     //TODO
-                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
@@ -301,7 +301,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("hh_visitation_20");
 
-                   //TODO
+                    //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
@@ -328,34 +328,34 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
-    case R.id.child_form:
+            case R.id.child_form:
 
-        try {
+                try {
 
-            FormUtils formUtils = null;
-            try {
-                formUtils = new FormUtils(this);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            JSONObject formToBeOpened;
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    JSONObject formToBeOpened;
 
-                formToBeOpened = formUtils.getFormJson("family_member");
+                    formToBeOpened = formUtils.getFormJson("family_member");
 
-            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(house, Map.class));
-
-
-            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", "");
-
-                startFormActivity(formToBeOpened);
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(house, Map.class));
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", "");
 
-        break;
+                    startFormActivity(formToBeOpened);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
 
         }
     }
@@ -435,10 +435,8 @@ public class HouseholdDetails extends AppCompatActivity {
                         //loadInformation(childIndexEventClient);//updates Ui data in activity
 
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
-
-
-
-
+                        finish();
+                        startActivity(getIntent());
 
                         break;
 
@@ -550,7 +548,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         JSONObject mergedClientJsonObject =
                                 org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
-                        setupViewPager();
+
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
                     }
@@ -651,9 +649,10 @@ public class HouseholdDetails extends AppCompatActivity {
         HouseholdOverviewFragment mFragment = (HouseholdOverviewFragment) mPagerAdapter.getItem(mViewPager.getCurrentItem());
         mFragment.setViews();
 
+
     }
     public Household getHousehold(String householdId)
     {
-      return HouseholdDao.getHousehold(householdId);
+        return HouseholdDao.getHousehold(householdId);
     }
 }
