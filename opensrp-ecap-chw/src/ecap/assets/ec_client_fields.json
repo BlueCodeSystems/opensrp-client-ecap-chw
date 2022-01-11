@@ -3222,6 +3222,13 @@
       "name": "ec_household_visitation_for_vca_0_20_years",
       "columns": [
         {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -3251,10 +3258,10 @@
           }
         },
         {
-          "column_name": "caregiver_art",
+          "column_name": "child_art",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_art"
+            "field": "attributes.child_art"
           }
         },
         {
@@ -3514,7 +3521,7 @@
           "column_name": "muac_other_a",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.muac_other_a"
+            "field": "muac_other_a"
           }
         },
         {
@@ -3837,6 +3844,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_name"
+          }
+        },
+        {
+          "column_name": "telephone_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.telephone_number"
           }
         },
         {
