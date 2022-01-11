@@ -402,7 +402,7 @@
         "openmrs_entity_id": "village_compound",
         "openmrs_data_type": "text",
         "type": "edit_text",
-        "hint": "Mothers Village or Compound",
+        "hint": "Plot Number, Village or Street",
         "tree": [
         ],
         "v_required": {

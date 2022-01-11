@@ -37,6 +37,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -50,6 +51,7 @@ import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -114,6 +116,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     CasePlanModel casePlanModel;
     VcaAssessmentModel vcaAssessmentModel;
     GraduationAssessmentModel graduationAssessmentModel;
+    VcaVisitationModel vcaVisitationModel;
 
 
     @Override
@@ -147,6 +150,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
+        vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         oMapper = new ObjectMapper();
 
         if(vcaAssessmentModel == null){
@@ -155,6 +159,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if(graduationAssessmentModel == null){
             fabGrad.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+
+        if(vcaVisitationModel == null){
+            fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
         if(gender.equals("male")){
@@ -868,6 +876,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
             break;
+            case "household_visitation_for_vca_0_20_years":
+
+                if(vcaVisitationModel == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.vcaVisitationModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaVisitationModel, Map.class));
+                }
+                break;
 
     }
 
