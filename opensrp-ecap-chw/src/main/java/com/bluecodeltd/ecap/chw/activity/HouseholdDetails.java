@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import android.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -27,6 +29,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
+import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -429,9 +432,11 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "Household Screening":
 
                         closeFab();
-                        loadInformation(childIndexEventClient);//updates Ui data in activity
+                        //loadInformation(childIndexEventClient);//updates Ui data in activity
 
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+
+
 
 
 
@@ -638,8 +643,13 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
     public void loadInformation(ChildIndexEventClient  updatedEventClient){
+        house = getHousehold(householdId);
         txtDistrict.setText(updatedEventClient.getClient().getAttribute("household_id").toString());
         cname.setText(new StringBuilder().append(updatedEventClient.getClient().getAttribute("caregiver_name").toString()).append(" household").toString());
+
+        mPagerAdapter.notifyDataSetChanged();
+        HouseholdOverviewFragment mFragment = (HouseholdOverviewFragment) mPagerAdapter.getItem(mViewPager.getCurrentItem());
+        mFragment.setViews();
 
     }
     public Household getHousehold(String householdId)
