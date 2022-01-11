@@ -55,6 +55,7 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import timber.log.Timber;
 
@@ -63,6 +64,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     public String action = null;
     ObjectMapper oMapper;
     private UniqueIdRepository uniqueIdRepository;
+    Random Number;
+    int Rnumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,16 +250,16 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         String code = sp.getString("code", "00000");
         Object obj = sp.getAll();
 
+        Number = new Random();
+        Rnumber = Number.nextInt(100000000);
+
+
+        String xId =  Integer.toString(Rnumber);
+
+        String household_id = code + "/" + xId;
 
         try {
 
-            UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-
-            String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
-
-            String xId = entityId.replaceFirst("^0+(?!$)", "");
-
-            String household_id = code + "/" + xId;
 
             CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
 

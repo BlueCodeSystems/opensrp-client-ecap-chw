@@ -383,7 +383,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"/>
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
 
@@ -421,7 +421,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add" />
+                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
 
             </RelativeLayout>
 

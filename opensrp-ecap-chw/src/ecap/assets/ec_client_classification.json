@@ -380,7 +380,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "Household Visitation For VCA 0-20 years",
+            "field_value": "Household Visitation Form 0-20 years",
             "creates_case": [
               "ec_household_visitation_for_vca_0_20_years"
             ]
