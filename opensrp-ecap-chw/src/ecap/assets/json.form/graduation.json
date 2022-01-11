@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Graduation Assessment Form",
+  "encounter_type": "OVC Graduation Assessment",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -53,8 +53,18 @@
     }
   },
   "step1": {
-    "title": "Graduation Assessment",
+    "title": "Graduation_Assessment",
     "fields": [
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
       {
         "key": "assessment_date_1",
         "openmrs_entity_parent": "",
@@ -67,8 +77,8 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today",
-        "max_date": "today + 100y",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
           "value": false,
           "err": "Date of Assessment  cannot be empty"
@@ -86,12 +96,69 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today",
-        "max_date": "today + 100y",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
           "value": false,
           "err": "Date of Assessment  cannot be empty"
         }
+      },
+      {
+        "key": "caseworker_firstname",
+        "openmrs_entity_parent": "",
+        "read_only": "false",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_firstname",
+        "type": "edit_text",
+        "hint": "Case Worker First Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "caseworker_lastname",
+        "openmrs_entity_parent": "",
+        "read_only": "false",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
+        "type": "edit_text",
+        "hint": "Case Worker Last Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "caseworker_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_nrc",
+        "entity_id": "",
+        "read_only": "false",
+        "type": "edit_text",
+        "hint": "Case Worker NRC number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "name_rcmc_dc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "name_rcmc_dc",
+        "type": "edit_text",
+        "hint": "Name of RCMC/DC",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Name of RCMC/DC"
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "hint": "Household ID",
+        "edit_type": "name",
+        "read_only": "false"
       },
       {
         "key": "date_family_enrolled",
@@ -159,19 +226,45 @@
         }
       },
       {
-        "key": "adolescent_name_of_caregiver",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Caregiver Name",
         "edit_type": "name",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
         }
+      },
+      {
+        "key": "caregiver_sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_sex",
+        "type": "spinner",
+        "hint": "Caregiver Gender",
+        "values": [
+          "Male",
+          "Female"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select gender"
+        }
+      },
+      {
+        "key": "caregiver_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_age",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
       },
       {
         "key": "toaster_a",
@@ -961,21 +1054,7 @@
         }
       },
 
-      {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Case Work Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
+
       {
         "key": "caseworker_signature",
         "openmrs_entity_parent": "",
@@ -1009,22 +1088,6 @@
         "v_required": {
           "value": false,
           "err": "Date Signed"
-        }
-      },
-
-      {
-        "key": "rcmc_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "rcmc_name",
-        "type": "edit_text",
-        "hint": "RCMC/DC Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
         }
       },
 

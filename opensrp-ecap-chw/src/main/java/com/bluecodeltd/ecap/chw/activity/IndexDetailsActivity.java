@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -46,6 +47,7 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -74,6 +76,7 @@ import org.smartregister.repository.BaseRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
+import org.smartregister.view.dialog.OpenFormOption;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -90,7 +93,7 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab;
+    private FloatingActionButton fab, fabHiv, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private String childId;
@@ -110,6 +113,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     Child child;
     CasePlanModel casePlanModel;
     VcaAssessmentModel vcaAssessmentModel;
+    GraduationAssessmentModel graduationAssessmentModel;
 
 
     @Override
@@ -133,9 +137,25 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String gender = indexChild.getGender();
         uniqueId = indexChild.getUnique_id();
 
-        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
+        fabHiv = findViewById(R.id.hiv_risk);
+        fabGradSub = findViewById(R.id.grad_fab20);
+        fabGrad = findViewById(R.id.grad_fab);
+        fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
+        fabReferal = findViewById(R.id.refer_to_facility_fab);
+        fabCasePlan =  findViewById(R.id.case_plan_fab);
+        fabAssessment = findViewById(R.id.fabAssessment);
 
+        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
+        graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
         oMapper = new ObjectMapper();
+
+        if(vcaAssessmentModel == null){
+            fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+
+        if(graduationAssessmentModel == null){
+            fabGrad.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
 
         if(gender.equals("male")){
 
@@ -303,7 +323,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }
+                   }
 
                 break;
 
@@ -439,11 +459,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if (Constants.EcapEncounterType.CACE_STATUS.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "")) || Constants.EcapEncounterType.VCA_ASSESSMENT.equalsIgnoreCase(
-                    jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
+            if(!jsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
             }
 
@@ -470,12 +487,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
             JSONObject formJsonObject = new JSONObject(jsonString);
 
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
-            String entityId = "";
 
-            if(encounterType.equals("Case Record Status") || encounterType.equals("Sub Population") || encounterType.equals("VCA Assessment")){
+            String entityId = formJsonObject.optString("entity_id");
 
-                entityId  = formJsonObject.getString("entity_id");
-            } else {
+            if(entityId.isEmpty()){
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
@@ -554,12 +569,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
-                case "Graduation Assessment Form":
+                case "OVC Graduation Assessment":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_GRADUATION);
+                                encounterType, Constants.EcapClientTable.EC_OVC_GRADUATION);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -800,7 +815,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
-       // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+        // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
 
         FormUtils formUtils = null;
         try {
@@ -811,18 +826,51 @@ public class IndexDetailsActivity extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
 
+        switch (formName) {
 
-        if(formName.equals("vca_assessment")){
-            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-            formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
-            formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
-            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(vcaAssessmentModel, Map.class));
-        } else {
-            formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-            formToBeOpened.put("entity_id", this.indexChild.getBaseEntity_id());
-            CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(indexChild, Map.class));
-        }
+            case "case_status":
+            case "vca_screening":
+
+                formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                break;
+
+            case "vca_assessment":
+
+                if(vcaAssessmentModel == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
+                }
+
+                break;
+
+            case "graduation":
+
+                if(graduationAssessmentModel == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.graduationAssessmentModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationAssessmentModel, Map.class));
+                }
+
+            break;
+
+    }
+
 
         startFormActivity(formToBeOpened);
     }
@@ -850,6 +898,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -1731,7 +1731,7 @@
         "type": "date_picker",
         "hint": "Date of screening",
         "look_up": "true",
-        "expanded": true,
+        "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today",
         "v_required": {
@@ -2675,7 +2675,7 @@
         "type": "date_picker",
         "hint": "Caregiver Date of birth",
         "look_up": "true",
-        "expanded": true,
+        "expanded": false,
         "duration": {
           "label": "Age"
         },
