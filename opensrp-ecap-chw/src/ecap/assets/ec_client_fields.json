@@ -4632,6 +4632,13 @@
           }
         },
         {
+          "column_name": "informed_consent",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.informed_consent"
+          }
+        },
+        {
           "column_name": "hiv_test",
           "type": "Client",
           "json_mapping": {

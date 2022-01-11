@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
@@ -49,6 +50,7 @@ import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -117,6 +119,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaAssessmentModel vcaAssessmentModel;
     GraduationAssessmentModel graduationAssessmentModel;
     ReferralModel referralModel;
+    HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
 
 
 
@@ -153,6 +156,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
 
         referralModel = ReferralDao.getReferral(childId);
+        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         oMapper = new ObjectMapper();
 
         if(vcaAssessmentModel == null){
@@ -164,6 +168,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
         if(referralModel == null){
             fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+        if(hivRiskAssessmentAbove15Model == null){
+            fabHiv.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
         if(gender.equals("male")){
@@ -903,6 +910,21 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     formToBeOpened.put("entity_id", this.referralModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referralModel, Map.class));
+                }
+
+                break;
+
+            case "hiv_risk_assessment_above_15_years":
+
+                if(hivRiskAssessmentAbove15Model == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.hivRiskAssessmentAbove15Model.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivRiskAssessmentAbove15Model, Map.class));
                 }
 
                 break;
