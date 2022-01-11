@@ -98,8 +98,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private String childId;
-    public String uniqueId;
+    public String childId, uniqueId, vcaAge;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -218,6 +217,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if(birthdate != null){
            txtAge.setText(getAge(birthdate));
+           vcaAge = getAgeWithoutText(birthdate);
         }else {
             txtAge.setText("Not Set");
         }
@@ -235,6 +235,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         return map;
 
+    }
+
+    private String getAgeWithoutText(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getYears());
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getMonths());
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getDays());
+        }
+        else return "Not Set";
     }
 
 
@@ -482,6 +500,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
+                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
+                finish();
+                startActivity(getIntent());
+
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -684,8 +707,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         };
 
-        Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-        closeFab();
 
         try {
             AppExecutors appExecutors = new AppExecutors();
@@ -882,6 +903,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
                 } else {
 
