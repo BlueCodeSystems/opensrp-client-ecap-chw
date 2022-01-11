@@ -55,13 +55,24 @@
   "step1": {
     "title": "Household Visitation For VCA 0-20 years",
     "fields": [
+
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
       {
         "key": "age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
         "type": "edit_text",
-        "read_only": false,
+        "read_only": "true",
         "hint": "VCA Age",
         "calculation": {
           "rules-engine": {
@@ -89,22 +100,35 @@
         "text": "Health Section"
       },
       {
-        "key": "is_hiv_positive",
+        "key": "hiv_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "is_hiv_positive",
-        "type": "edit_text",
-        "hint": "HIV Status",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": true,
-          "err": "Please enter VCA HIV Status"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter HIV Status"
-        }
+        "openmrs_entity_id": "hiv_status",
+        "type": "native_radio",
+        "label": "Is the HIV status known?",
+        "read_only": false,
+        "options": [
+          {
+            "key": "Positive",
+            "text": "Yes, status POSITIVE",
+            "value": false
+          },
+          {
+            "key": "Negative",
+            "text": "Yes, status NEGATIVE",
+            "value": false
+          },
+          {
+            "key": "Unknown",
+            "text": "No, status not known",
+            "value": false
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
+            "value": false
+          }
+        ]
       },
 
       {
@@ -129,7 +153,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"positive\")"
+            "ex": "equalTo(., \"Positive\")"
           }
         }
       },
@@ -358,7 +382,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"positive\")"
+            "ex": "equalTo(., \"Positive\")"
           }
         }
       },
@@ -416,7 +440,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"negative\")"
+            "ex": "equalTo(., \"Negative\")"
           }
         }
       },
@@ -505,7 +529,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"negative\")"
+            "ex": "equalTo(., \"Negative\")"
           }
         }
       },
@@ -578,7 +602,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"unknown\")"
+            "ex": "equalTo(., \"Unknown\")"
           }
         }
       },
@@ -606,7 +630,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"unknown\")"
+            "ex": "equalTo(., \"Unknown\")"
           }
         }
       },
@@ -1679,7 +1703,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sexual_abuse",
         "type": "native_radio",
-        "label": "If child is 12 years and above, has s/he reported experiencing any form of sexual abuse?",
+        "label": "If child is 12 years and above, has s/he reported experiencing any from of sexual abuse?",
         "options": [
           {
             "key": "yes",
@@ -2022,7 +2046,7 @@
       },
 
       {
-        "key": "health_label",
+        "key": "label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "hd1",
@@ -2193,7 +2217,24 @@
           "err": "Please enter a valid name"
         }
       },
-
+      {
+        "key": "manager_date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "manager_date_signed",
+        "type": "date_picker",
+        "hint": "Date Case Worker Signs",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        }
+      },
       {
         "key": "manager_signature",
         "openmrs_entity_parent": "",
@@ -2225,6 +2266,23 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "telephone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "telephone_number",
+        "type": "edit_text",
+        "hint": "Telephone number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {

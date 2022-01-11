@@ -284,7 +284,7 @@
         "openmrs_entity": "person_address",
         "openmrs_entity_id": "addressFields.physical_address",
         "type": "edit_text",
-        "hint": "Physical address",
+        "hint": "Plot Number, Village or Street",
         "edit_type": "name",
         "v_required": {
           "value": false,
