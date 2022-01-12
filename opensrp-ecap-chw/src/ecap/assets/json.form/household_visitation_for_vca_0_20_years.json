@@ -82,7 +82,21 @@
           }
         }
       },
-
+      {
+        "key": "visit_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "visit_date",
+        "type": "date_picker",
+        "hint": "Date of Household Visit",
+        "look_up": "true",
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -100,33 +114,29 @@
         "text": "Health Section"
       },
       {
-        "key": "hiv_status",
+        "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_status",
+        "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
-        "label": "Is the HIV status known?",
-        "read_only": false,
+        "label": "HIV Status",
+        "read_only": true,
         "options": [
           {
-            "key": "Positive",
-            "text": "Yes, status POSITIVE",
-            "value": false
+            "key": "yes",
+            "text": "Yes"
           },
           {
-            "key": "Negative",
-            "text": "Yes, status NEGATIVE",
-            "value": false
+            "key": "no",
+            "text": "No"
           },
           {
-            "key": "Unknown",
-            "text": "No, status not known",
-            "value": false
+            "key": "unknown",
+            "text": "Unknown"
           },
           {
-            "key": "status_not_required",
-            "text": "Status not required based on risk assessment",
-            "value": false
+            "key": "not_required",
+            "text": "Status not required based on risk assessment"
           }
         ]
       },
@@ -151,9 +161,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_status": {
+          "step1:is_hiv_positive": {
             "type": "string",
-            "ex": "equalTo(., \"Positive\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -361,11 +371,12 @@
       },
 
       {
-        "key": "mmd",
+        "key": "child_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mmd",
+        "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
+        "read_only": "true",
         "label": "Is the child on single or multi-month dispensation (MMD)?",
         "options": [
           {
@@ -380,28 +391,29 @@
           }
         ],
         "relevance": {
-          "step1:hiv_status": {
+          "step1:is_hiv_positive": {
             "type": "string",
-            "ex": "equalTo(., \"Positive\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
 
 
       {
-        "key": "mmd_months",
+        "key": "level_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mmd_months",
+        "openmrs_entity_id": "level_mmd",
         "type": "edit_text",
         "hint": "Indicate the number of MMD months of drugs ",
         "edit_type": "number",
+        "read_only": "true",
         "v_required": {
           "value": false,
           "err": "Indicate the number of MMD months of drugs "
         },
         "relevance": {
-          "step1:mmd": {
+          "step1:child_mmd": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -420,14 +432,12 @@
           "err": "Indicate drug regimen"
         },
         "relevance": {
-          "step1:mmd": {
+          "step1:child_mmd": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
         }
       },
-
-
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -438,9 +448,9 @@
         "edit_type": "number",
         "read_only": false,
         "relevance": {
-          "step1:hiv_status": {
+          "step1:is_hiv_positive": {
             "type": "string",
-            "ex": "equalTo(., \"Negative\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -527,9 +537,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_status": {
+          "step1:is_hiv_positive": {
             "type": "string",
-            "ex": "equalTo(., \"Negative\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -600,9 +610,9 @@
         "toaster_info_title": "Information Toaster Info Title",
         "text": "If HIV status unknown, conduct HIV risk reduction counselling and risk assessment",
         "relevance": {
-          "step1:hiv_status": {
+          "step1:is_hiv_positive": {
             "type": "string",
-            "ex": "equalTo(., \"Unknown\")"
+            "ex": "equalTo(., \"unknown\")"
           }
         }
       },
@@ -628,9 +638,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_status": {
+          "step1:is_hiv_positive": {
             "type": "string",
-            "ex": "equalTo(., \"Unknown\")"
+            "ex": "equalTo(., \"unknown\")"
           }
         }
       },
@@ -650,7 +660,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "HIV Exposed Infant (VCA aged 24 months and below)  Section"
+        "text": "HIV Exposed Infant (VCA aged 24 months and below) Section"
       },
 
       {
@@ -733,22 +743,20 @@
         }
       },
       {
-        "key": "breastfeeding",
+        "key": "child_receiving_breastfeeding",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "breastfeeding",
+        "openmrs_entity_id": "child_receiving_breastfeeding",
         "type": "native_radio",
         "label": "Is infant still breastfeeding?",
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
-            "value": false
+            "text": "Yes"
           },
           {
             "key": "no",
-            "text": "No",
-            "value": false
+            "text": "No"
           }
         ],
         "relevance": {
@@ -1698,10 +1706,10 @@
         }
       },
       {
-        "key": "sexual_abuse",
+        "key": "child_ever_experienced_sexual_violence",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sexual_abuse",
+        "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
         "label": "If child is 12 years and above, has s/he reported experiencing any from of sexual abuse?",
         "options": [
