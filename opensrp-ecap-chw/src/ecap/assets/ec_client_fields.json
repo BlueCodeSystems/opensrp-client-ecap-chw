@@ -2714,114 +2714,340 @@
       "name": "ec_referral",
       "columns": [
         {
-          "column_name": "chw_referral_service",
-          "type": "Event",
+          "column_name": "unique_id",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "chw_referral_service"
+            "field": "attributes.unique_id"
           }
         },
         {
-          "column_name": "chw_referral_hf",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "chw_referral_hf"
-          }
-        },
-        {
-          "column_name": "entity_id",
-          "type": "Event",
+          "column_name": "base_entity_id",
+          "type": "Client",
           "json_mapping": {
             "field": "baseEntityId"
           }
         },
         {
-          "column_name": "base_entity_id",
-          "type": "Event",
+          "column_name": "relational_id",
+          "type": "Client",
           "json_mapping": {
-            "field": "formSubmissionId"
+            "field": "relationships.family"
+          }
+        },
+
+        {
+          "column_name": "date_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_referred"
           }
         },
         {
-          "column_name": "problem",
-          "type": "Event",
+          "column_name": "receiving_organization",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "problem"
+            "field": "attributes.receiving_organization"
           }
         },
         {
-          "column_name": "problem_other",
-          "type": "Event",
+          "column_name": "cd4",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "problem_other"
+            "field": "attributes.cd4"
           }
         },
         {
-          "column_name": "service_before_referral",
-          "type": "Event",
+          "column_name": "hiv_adherence",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "service_before_referral"
+            "field": "attributes.hiv_adherence"
           }
         },
         {
-          "column_name": "service_before_referral_other",
-          "type": "Event",
+          "column_name": "hiv_counseling_testing",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "service_before_referral_other"
+            "field": "attributes.hiv_counseling_testing"
           }
         },
         {
-          "column_name": "referral_date",
-          "type": "Event",
-          "data_type": "date",
+          "column_name": "post_gbv",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "referral_date"
+            "field": "attributes.post_gbv"
           }
         },
         {
-          "column_name": "referral_time",
-          "type": "Event",
+          "column_name": "substance_abuse",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "formSubmissionField": "referral_time"
+            "field": "attributes.substance_abuse"
           }
         },
         {
-          "column_name": "referral_appointment_date",
-          "type": "Event",
+          "column_name": "tb_screening",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "referral_appointment_date"
+            "field": "attributes.tb_screening"
           }
         },
         {
-          "column_name": "referral_type",
-          "type": "Event",
+          "column_name": "supplementary",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "referral_type"
+            "field": "attributes.supplementary"
           }
         },
         {
-          "column_name": "referral_status",
-          "type": "Event",
+          "column_name": "prep",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.formSubmissionField",
-            "concept": "referral_status"
+            "field": "attributes.prep"
           }
         },
         {
-          "column_name": "fp_method_accepted_referral",
-          "type": "Event",
+          "column_name": "f_planning",
+          "type": "Client",
           "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "374AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "field": "attributes.f_planning"
+          }
+        },
+        {
+          "column_name": "insecticide",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.insecticide"
+          }
+        },
+        {
+          "column_name": "hiv_aids_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_aids_treatment"
+          }
+        },
+        {
+          "column_name": "f_w_health",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.f_w_health"
+          }
+        },
+        {
+          "column_name": "vmmc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vmmc"
+          }
+        },
+        {
+          "column_name": "immunization",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.immunization"
+          }
+        },
+        {
+          "column_name": "condom",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.condom"
+          }
+        },
+        {
+          "column_name": "routine_care",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.routine_care"
+          }
+        },
+        {
+          "column_name": "emergency_care",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.emergency_care"
+          }
+        },
+        {
+          "column_name": "age_counselling",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.age_counselling"
+          }
+        },
+        {
+          "column_name": "h_treatment_care",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.h_treatment_care"
+          }
+        },
+        {
+          "column_name": "pmtct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pmtct"
+          }
+        },
+        {
+          "column_name": "hygiene_counselling",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hygiene_counselling"
+          }
+        },
+        {
+          "column_name": "transmitted_infections",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.transmitted_infections"
+          }
+        },
+        {
+          "column_name": "plha",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.plha"
+          }
+        },
+        {
+          "column_name": "viral_load",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.viral_load"
+          }
+        },
+        {
+          "column_name": "other_health_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_health_services"
+          }
+        },
+        {
+          "column_name": "care_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.care_facility"
+          }
+        },
+        {
+          "column_name": "post_violence_trauma",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.post_violence_trauma"
+          }
+        },
+        {
+          "column_name": "legal_assistance",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.legal_assistance"
+          }
+        },
+        {
+          "column_name": "other_safety_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_safety_services"
+          }
+        },
+        {
+          "column_name": "vca_uniforms_books",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_uniforms_books"
+          }
+        },
+        {
+          "column_name": "re_enrollment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.re_enrollment"
+          }
+        },
+        {
+          "column_name": "bursaries",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.bursaries"
+          }
+        },
+        {
+          "column_name": "other_schooled_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_schooled_services"
+          }
+        },
+        {
+          "column_name": "cash_transfer",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cash_transfer"
+          }
+        },
+        {
+          "column_name": "cash_support",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cash_support"
+          }
+        },
+        {
+          "column_name": "food_security",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.food_security"
+          }
+        },
+        {
+          "column_name": "other_stability_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_stability_services"
+          }
+        },
+        {
+          "column_name": "follow_up",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.follow_up"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "job_title",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.job_title"
+          }
+        },
+        {
+          "column_name": "date_of_service",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service"
+          }
+        },
+        {
+          "column_name": "signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.signature"
           }
         }
       ]
@@ -4397,6 +4623,14 @@
     {
       "name": "ec_hiv_assessment_above_15",
       "columns": [
+
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
         {
           "column_name": "base_entity_id",
           "type": "Client",
@@ -4409,6 +4643,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "informed_consent",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.informed_consent"
           }
         },
         {
