@@ -161,7 +161,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
 
         referralModel = ReferralDao.getReferral(childId);
-        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(ch
+        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
 
         oMapper = new ObjectMapper();
