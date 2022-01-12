@@ -1555,10 +1555,10 @@
           }
         },
         {
-          "column_name": "subpop6",
+          "column_name": "subpop",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.subpop6"
+            "field": "attributes.subpop"
           }
         },
         {
