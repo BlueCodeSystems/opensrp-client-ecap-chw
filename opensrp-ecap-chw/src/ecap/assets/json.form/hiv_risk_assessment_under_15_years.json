@@ -57,22 +57,32 @@
     "title": "HIV Risk Assessment For 15 Years And Below",
     "fields": [
       {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
         "key": "informed_consent",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "informed_consent",
         "type": "native_radio",
         "label": "Talk with the person in privacy.  Mention that all information given is confidential.",
         "options": [
           {
-            "key": "yes",
+            "key": "Yes",
             "text": "Yes, Consent given proceed"
-          },
-          {
-            "key": "no",
-            "text": "No, Consent not given don't proceed"
           }
-        ]
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select an option"
+        }
       },
       {
         "key": "hiv_test",
@@ -101,10 +111,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "risk_assessment_under_15.yml"
-            }
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
           }
         }
       },
