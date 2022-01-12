@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.model;
 public class HivRiskAssessmentAbove15Model {
 
     private String base_entity_id;
+    private String informed_consent;
     private String hiv_test;
     private String hiv_status;
     private String on_art;
@@ -20,6 +21,14 @@ public class HivRiskAssessmentAbove15Model {
 
     public String getBase_entity_id() {
         return base_entity_id;
+    }
+
+    public String getInformed_consent() {
+        return informed_consent;
+    }
+
+    public void setInformed_consent(String informed_consent) {
+        this.informed_consent = informed_consent;
     }
 
     public void setBase_entity_id(String base_entity_id) {
