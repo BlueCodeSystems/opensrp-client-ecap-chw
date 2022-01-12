@@ -33,6 +33,7 @@ public class Household {
     private String base_entity_id;
     private String household_id;
     private String village;
+    private String user_gps;
     private String district;
     private String screening_date;
     private String violence_six_months;
@@ -397,5 +398,13 @@ public class Household {
 
     public void setCaseworker_name(String caseworker_name) {
         this.caseworker_name = caseworker_name;
+    }
+
+    public String getUser_gps() {
+        return user_gps;
+    }
+
+    public void setUser_gps(String user_gps) {
+        this.user_gps = user_gps;
     }
 }

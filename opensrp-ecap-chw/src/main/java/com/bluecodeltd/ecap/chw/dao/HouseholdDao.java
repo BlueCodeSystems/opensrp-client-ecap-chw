@@ -61,6 +61,7 @@ public class HouseholdDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setVillage(getCursorValue(c, "village"));
+            record.setUser_gps(getCursorValue(c, "user_gps"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setScreening_date(getCursorValue(c, "screening_date"));
             record.setScreening_location(getCursorValue(c, "screening_location"));

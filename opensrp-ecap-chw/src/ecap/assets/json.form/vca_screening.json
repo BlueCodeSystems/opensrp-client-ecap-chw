@@ -142,23 +142,6 @@
         "look_up": "true"
       },
       {
-        "key": "adolescent_village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_village",
-        "type": "edit_text",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village/Compound  only takes letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Village is required"
-        }
-      },
-      {
         "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -237,18 +220,40 @@
         }
       },
       {
-        "key": "physical_address",
+        "key": "info",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "addressFields.physical_address",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "toaster_info_text": "",
+        "toaster_type": "info"
+      },
+      {
+        "key": "adolescent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
-        "hint": "Plot Number, Village or Street",
-        "edit_type": "name",
+        "hint": "Address",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Village/Compound  only takes letters"
+        },
         "v_required": {
-          "value": false,
-          "err": "Please enter the home address"
+          "value": true,
+          "err": "Village is required"
         }
       },
+      {
+        "key": "user_gps",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "user_gps",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -1780,22 +1785,24 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
       },
+
       {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "consent_check_box",
-        "openmrs_data_type": "select one",
-        "type": "check_box",
-        "label_text_style": "italic",
+        "type": "native_radio",
+        "label": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
         "options": [
           {
             "key": "consent_check_box",
-            "text": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
-            "value": false,
-            "openmrs_choice_id": ""
+            "text": "Yes"
           }
-        ]
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "You need to consent"
+        }
       }
     ]
   },

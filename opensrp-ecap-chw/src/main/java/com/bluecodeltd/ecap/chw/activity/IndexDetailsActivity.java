@@ -1005,7 +1005,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
 
 
-
     }
 
 
