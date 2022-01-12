@@ -81,7 +81,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "Please select an option"
+          "err": "You need to consent"
         }
       },
       {

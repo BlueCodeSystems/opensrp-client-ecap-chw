@@ -1457,10 +1457,17 @@
           }
         },
         {
-          "column_name": "partners",
+          "column_name": "user_gps",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.partners"
+            "field": "attributes.user_gps"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
           }
         },
         {
