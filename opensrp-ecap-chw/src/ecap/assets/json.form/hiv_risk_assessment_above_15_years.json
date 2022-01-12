@@ -75,10 +75,6 @@
           {
             "key": "Yes",
             "text": "Yes, Consent given proceed"
-          },
-          {
-            "key": "No",
-            "text": "No, Consent not given don't proceed"
           }
         ],
         "v_required": {

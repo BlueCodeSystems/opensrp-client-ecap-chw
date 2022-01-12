@@ -390,6 +390,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
           }
         ],
         "v_required": {
@@ -2592,7 +2596,7 @@
         "type": "spinner",
         "hint": "Level of MMD for child ",
         "values": [
-          "Less than 3 month",
+          "Less than 3 months",
           "Between 3-5 months",
           "6 months or more"
         ],
