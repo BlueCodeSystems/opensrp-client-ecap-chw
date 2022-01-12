@@ -1457,10 +1457,17 @@
           }
         },
         {
-          "column_name": "partners",
+          "column_name": "user_gps",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.partners"
+            "field": "attributes.user_gps"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
           }
         },
         {
@@ -1548,10 +1555,10 @@
           }
         },
         {
-          "column_name": "subpop6",
+          "column_name": "subpop",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.subpop6"
+            "field": "attributes.subpop"
           }
         },
         {
@@ -4505,6 +4512,14 @@
     {
       "name": "ec_hiv_assessment_below_15",
       "columns": [
+
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
         {
           "column_name": "base_entity_id",
           "type": "Client",
@@ -4517,6 +4532,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "informed_consent",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.informed_consent"
           }
         },
         {

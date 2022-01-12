@@ -155,7 +155,7 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "subpop3"),
                     getCursorValue(c, "subpop4"),
                     getCursorValue(c, "subpop5"),
-                    getCursorValue(c, "subpop6"),
+                    getCursorValue(c, "subpop"),
                     getCursorValue(c, "date_referred"),
                     getCursorValue(c, "date_enrolled"),
                     getCursorValue(c, "art_check_box"),
