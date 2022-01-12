@@ -242,6 +242,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         if(birthdate != null){
            txtAge.setText(getAge(birthdate));
            vcaAge = getAgeWithoutText(birthdate);
+
+
         }else {
             txtAge.setText("Not Set");
         }
@@ -847,11 +849,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
             household_visitation_for_vca.setVisibility(View.VISIBLE);
             grad.setVisibility(View.VISIBLE);
             grad_sub.setVisibility(View.VISIBLE);
-            hiv_assessment.setVisibility(View.VISIBLE);
-            hiv_assessment2.setVisibility(View.VISIBLE);
-           // hiv_assessment_Above15.setVisibility(View.VISIBLE);
-            //hiv_assessment_Below15.setVisibility(View.VISIBLE);
 
+            if(Integer.parseInt(vcaAge) < 15){
+                hiv_assessment.setVisibility(View.VISIBLE);
+            }
+
+            if(Integer.parseInt(vcaAge) >= 15){
+                hiv_assessment2.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -868,8 +873,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         grad_sub.setVisibility(View.GONE);
         hiv_assessment.setVisibility(View.GONE);
         hiv_assessment2.setVisibility(View.GONE);
-        //hiv_assessment_Above15.setVisibility(View.GONE);
-        // hiv_assessment_Below15.setVisibility(View.GONE);
+
     }
 
 

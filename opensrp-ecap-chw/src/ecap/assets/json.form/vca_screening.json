@@ -1817,8 +1817,9 @@
       {
         "key": "subpop1_toast",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop1_toast",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1",
+        "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_type": "positive",
@@ -1833,13 +1834,33 @@
         }
       },
       {
+        "key": "subpop6_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop",
+        "value": "true",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "toaster_type": "positive",
+        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "subpop2_toast",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop2_toast",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop2",
+        "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
-        "toaster_type": "info",
+        "toaster_type": "positive",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1853,8 +1874,9 @@
       {
         "key": "subpop3_toast",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop3_toast",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
         "toaster_type": "positive",
@@ -1870,9 +1892,10 @@
       },
       {
         "key": "subpop4_toast",
+        "value": "true",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop4_toast",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_type": "positive",
@@ -1888,140 +1911,15 @@
       },
       {
         "key": "subpop5_toast",
+        "value": "true",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop5_toast",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_type": "positive",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop6_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop6_toast",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_type": "positive",
-        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "Children/Adolescents Living with HIV (C/ALHIV)",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop2",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop2",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "HIV Exposed Infant (HEI)",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop3",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop3",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "Children of Women Living with HIV (WLHIV)",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop4",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop5",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "Children/Adolescents who are Survivors of Sexual Violence",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop6",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop6",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "edit_type": "name",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2795,15 +2693,24 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "edit_text",
+        "type": "native_radio",
         "value": "1",
-        "read_only": "true",
-        "hint": "Case Status",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
+          }
+        ]
       }
     ]
   },

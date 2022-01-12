@@ -251,22 +251,8 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
-name: step3_subpop1
-description: subpop1 relevance
-priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box')"
-actions:
-  - "isRelevant = true"
----
 name: step3_subpop2_toast
 description: subpop2_toast relevance
-priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box')"
-actions:
-  - "isRelevant = true"
----
-name: step3_subpop2
-description: subpop2 relevance
 priority: 1
 condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box')"
 actions:
@@ -279,13 +265,6 @@ condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step3_subpop3
-description: subpop3 relevance
-priority: 1
-condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
-actions:
-  - "isRelevant = true"
----
 name: step3_subpop4_toast
 description: subpop4_toast relevance
 priority: 1
@@ -293,29 +272,8 @@ condition: "step1_agyw_sexually_active.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step3_subpop4
-description: subpop4 relevance
-priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step3_subpop6
-description: subpop6 relevance
-priority: 1
-condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
-actions:
-  - "isRelevant = true"
----
 name: step3_subpop5_toast
 description: subpop5_toast relevance
-priority: 1
-condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step3_subpop5
-description: subpop5 relevance
 priority: 1
 condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
 actions:
