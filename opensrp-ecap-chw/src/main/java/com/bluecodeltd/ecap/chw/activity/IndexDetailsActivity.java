@@ -36,6 +36,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
+import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
@@ -52,6 +53,7 @@ import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
+import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -99,11 +101,11 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab, fabHiv, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
+    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
@@ -122,6 +124,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     GraduationAssessmentModel graduationAssessmentModel;
     ReferralModel referralModel;
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
+    HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
 
     @Override
@@ -146,6 +149,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         uniqueId = indexChild.getUnique_id();
 
         fabHiv = findViewById(R.id.hiv_risk);
+        fabHiv2 = findViewById(R.id.hiv_risk2);
         fabGradSub = findViewById(R.id.grad_fab20);
         fabGrad = findViewById(R.id.grad_fab);
         fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
@@ -158,6 +162,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         referralModel = ReferralDao.getReferral(childId);
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
+        hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
 
         oMapper = new ObjectMapper();
@@ -172,10 +177,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
         if(referralModel == null){
             fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
-        if(hivRiskAssessmentAbove15Model == null){
+        if(hivRiskAssessmentUnder15Model == null){
             fabHiv.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
-
+        if(hivRiskAssessmentAbove15Model == null){
+            fabHiv2.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
         if(vcaVisitationModel == null){
             fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
@@ -208,6 +215,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         grad_sub = findViewById(R.id.grad_sub);
         hiv_assessment = findViewById(R.id.hiv_assessment);
+        hiv_assessment2 = findViewById(R.id.hiv_assessment2);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -460,11 +468,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
 
             case R.id.hiv_assessment:
-
-
-                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_risk_assessment_above_15_years");
+                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_risk_assessment_under_15_years");
 
                 break;
+
+            case R.id.hiv_assessment2:
+                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_risk_assessment_above_15_years");
+                break;
+
         }
     }
 
@@ -837,6 +848,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             grad.setVisibility(View.VISIBLE);
             grad_sub.setVisibility(View.VISIBLE);
             hiv_assessment.setVisibility(View.VISIBLE);
+            hiv_assessment2.setVisibility(View.VISIBLE);
            // hiv_assessment_Above15.setVisibility(View.VISIBLE);
             //hiv_assessment_Below15.setVisibility(View.VISIBLE);
 
@@ -855,7 +867,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         grad.setVisibility(View.GONE);
         grad_sub.setVisibility(View.GONE);
         hiv_assessment.setVisibility(View.GONE);
-
+        hiv_assessment2.setVisibility(View.GONE);
+        //hiv_assessment_Above15.setVisibility(View.GONE);
+        // hiv_assessment_Below15.setVisibility(View.GONE);
     }
 
 
@@ -913,7 +927,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
             break;
-            case "household_visitation_for_vca_0_20_years":
+
+                case "household_visitation_for_vca_0_20_years":
 
                // if(vcaVisitationModel == null){
 
@@ -943,6 +958,21 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
+            case "hiv_risk_assessment_under_15_years":
+
+                if(hivRiskAssessmentUnder15Model == null){
+
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.hivRiskAssessmentUnder15Model.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivRiskAssessmentUnder15Model, Map.class));
+                }
+
+                break;
+
             case "hiv_risk_assessment_above_15_years":
 
                 if(hivRiskAssessmentAbove15Model == null){
@@ -957,6 +987,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 break;
+
 
     }
 
