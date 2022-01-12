@@ -37,7 +37,7 @@ actions:
 name: step1_type_of_neglect_sexual
 description: type_of_neglect_sexual
 priority: 1
-condition: "step1_sexually_abused.contains('yes') || step1_sexual_abuse.contains('yes')"
+condition: "step1_sexually_abused.contains('yes') || step1_child_ever_experienced_sexual_violence.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -196,8 +196,8 @@ condition: "step1_age >= 12"
 actions:
   - "isRelevant = true"
 ---
-name: step1_sexual_abuse
-description: sexual_abuse
+name: step1_child_ever_experienced_sexual_violence
+description: child_ever_experienced_sexual_violence
 priority: 1
 condition: "step1_age > 12 && step1_sexually_abused.contains('yes')"
 actions:
@@ -217,8 +217,8 @@ condition: "step1_age > 12 && step1_signs_of_violence.contains('yes') "
 actions:
   - "isRelevant = true"
 ---
-name: step1_sexual_abuse
-description: sexual_abuse
+name: step1_child_ever_experienced_sexual_violence
+description: child_ever_experienced_sexual_violence
 priority: 1
 condition: "step1_age >= 12"
 actions:

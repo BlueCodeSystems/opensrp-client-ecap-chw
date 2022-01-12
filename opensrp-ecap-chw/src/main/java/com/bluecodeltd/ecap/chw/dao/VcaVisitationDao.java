@@ -1,13 +1,27 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VcaVisitationDao extends AbstractDao {
+
+    public static int countVisits(String householdID){
+
+        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "visitCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
 
     public static VcaVisitationModel getVcaVisitation (String vcaID) {
 
@@ -23,20 +37,33 @@ public class VcaVisitationDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static List<VcaVisitationModel> getVisitsByID(String childID) {
+
+        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + childID + "' ORDER BY visit_date DESC ";
+
+        List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
     public static AbstractDao.DataMap<VcaVisitationModel> getVcaVisitationModelMap() {
         return c -> {
 
             VcaVisitationModel record = new VcaVisitationModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setAge(getCursorValue(c, "age"));
-            record.setHiv_status(getCursorValue(c, "hiv_status"));
+            record.setVisit_date(getCursorValue(c, "visit_date"));
+            record.setHiv_status(getCursorValue(c, "is_hiv_positive"));
             record.setChild_art(getCursorValue(c, "child_art"));
             record.setClinical_care(getCursorValue(c, "clinical_care"));
             record.setArt_appointment(getCursorValue(c, "art_appointment"));
             record.setCounselling(getCursorValue(c, "counselling"));
             record.setArt_medication(getCursorValue(c, "art_medication"));
-            record.setMmd(getCursorValue(c, "mmd"));
-            record.setMmd_months(getCursorValue(c, "mmd_months"));
+            record.setMmd(getCursorValue(c, "child_mmd"));
+            record.setMmd_months(getCursorValue(c, "level_mmd"));
             record.setDrug_regimen(getCursorValue(c, "drug_regimen"));
             record.setDate_art(getCursorValue(c, "date_art"));
             record.setSix_months(getCursorValue(c, "six_months"));

@@ -2,11 +2,9 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class VcaVisitationModel {
 
-
-
-
     private String base_entity_id;
     private String age;
+    private String visit_date;
     private String hiv_status;
     private String child_art;
     private String clinical_care;
@@ -814,5 +812,13 @@ public class VcaVisitationModel {
 
     public void setSchool_administration_signature(String school_administration_signature) {
         this.school_administration_signature = school_administration_signature;
+    }
+
+    public String getVisit_date() {
+        return visit_date;
+    }
+
+    public void setVisit_date(String visit_date) {
+        this.visit_date = visit_date;
     }
 }
