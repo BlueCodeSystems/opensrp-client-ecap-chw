@@ -29,6 +29,7 @@ public class HivAssessmentAbove15Dao extends AbstractDao {
 
             HivRiskAssessmentAbove15Model record = new HivRiskAssessmentAbove15Model();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setInformed_consent(getCursorValue(c, "informed_consent"));
             record.setHiv_test(getCursorValue(c, "hiv_test"));
             record.setHiv_status(getCursorValue(c, "hiv_status"));
             record.setOn_art(getCursorValue(c, "on_art"));
