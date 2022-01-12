@@ -395,6 +395,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
           }
         ],
         "v_required": {
@@ -2599,7 +2603,7 @@
         "type": "spinner",
         "hint": "Level of MMD for child ",
         "values": [
-          "Less than 3 month",
+          "Less than 3 months",
           "Between 3-5 months",
           "6 months or more"
         ],
@@ -2791,14 +2795,27 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "edit_text",
-        "value": "1",
+        "type": "native_radio",
+        "value": "active",
         "read_only": "true",
-        "hint": "Case Status",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "active",
+            "text": "Active"
+          },
+          {
+            "key": "closed",
+            "text": "Closed"
+          },
+          {
+            "key": "inactive",
+            "text": "Inactive"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": ""
         }
       }
     ]

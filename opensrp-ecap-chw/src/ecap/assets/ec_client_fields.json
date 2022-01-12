@@ -3475,7 +3475,13 @@
             "field": "relationships.family"
           }
         },
-
+        {
+          "column_name": "visit_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.visit_date"
+          }
+        },
         {
           "column_name": "age",
           "type": "Client",
@@ -3484,10 +3490,10 @@
           }
         },
         {
-          "column_name": "hiv_status",
+          "column_name": "is_hiv_positive",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.hiv_status"
+            "field": "attributes.is_hiv_positive"
           }
         },
         {
@@ -3526,17 +3532,17 @@
           }
         },
         {
-          "column_name": "mmd",
+          "column_name": "child_mmd",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mmd"
+            "field": "attributes.child_mmd"
           }
         },
         {
-          "column_name": "mmd_months",
+          "column_name": "level_mmd",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mmd_months"
+            "field": "attributes.level_mmd"
           }
         },
         {
@@ -3645,10 +3651,10 @@
           }
         },
         {
-          "column_name": "breastfeeding",
+          "column_name": "child_receiving_breastfeeding",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.breastfeeding"
+            "field": "attributes.child_receiving_breastfeeding"
           }
         },
         {
@@ -3891,10 +3897,10 @@
           }
         },
         {
-          "column_name": "sexual_abuse",
+          "column_name": "child_ever_experienced_sexual_violence",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.sexual_abuse"
+            "field": "attributes.child_ever_experienced_sexual_violence"
           }
         },
         {

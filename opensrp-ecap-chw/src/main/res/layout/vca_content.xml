@@ -409,7 +409,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Household Visitation For VCA 0-20 Years"
+                    android:text="Household Visitation"
                     android:textStyle="italic"
                      />
 
@@ -421,7 +421,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
+                    app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
 

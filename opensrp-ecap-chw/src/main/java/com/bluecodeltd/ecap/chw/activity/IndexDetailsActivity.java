@@ -118,17 +118,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
     String myAge;
     ObjectMapper oMapper;
     Child child;
+
     CasePlanModel casePlanModel;
     VcaAssessmentModel vcaAssessmentModel;
     GraduationAssessmentModel graduationAssessmentModel;
-
     ReferralModel referralModel;
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
-
     VcaVisitationModel vcaVisitationModel;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +226,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
-        updateTasksTabTitle();
+        updateVisitsTabTitle();
         updatePlanTabTitle();
 
         int page = getIntent().getIntExtra("tab",0);
@@ -318,11 +315,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void updateTasksTabTitle() {
+    private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText(this.getString(R.string.visits));
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = VcaVisitationDao.countVisits(uniqueId);
+
+        visitTabCount.setText(String.valueOf(visits));
 
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
@@ -440,17 +441,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.household_visitation_for_vca:
 
                 try {
-                    //FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    //JSONObject indexRegisterForm;
 
-                    //indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
-
-                    //CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
-                   // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", txtAge.getText().toString());
-                    //startFormActivity(indexRegisterForm);
-
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -460,14 +452,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.grad:
 
                 try {
-                    //FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                    //JSONObject indexRegisterForm;
 
-                    //indexRegisterForm = formUtils.getFormJson("graduation");
-                    //indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
-                    //CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     openFormUsingFormUtils(IndexDetailsActivity.this,"graduation");
-                    //startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -477,9 +463,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case R.id.grad_sub:
 
-                //graduation_assessment_sub_for_repeating_fields
                 openFormUsingFormUtils(IndexDetailsActivity.this,"graduation_assessment_sub_for_repeating_fields");
-
 
                 break;
 
@@ -890,7 +874,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
-        // CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+
 
         FormUtils formUtils = null;
         try {
@@ -946,17 +930,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 case "household_visitation_for_vca_0_20_years":
 
-                if(vcaVisitationModel == null){
+               // if(vcaVisitationModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
-                } else {
+              /*  } else {
 
                     formToBeOpened.put("entity_id", this.vcaVisitationModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaVisitationModel, Map.class));
-                }
+                }*/
                 break;
 
             case "referral":
