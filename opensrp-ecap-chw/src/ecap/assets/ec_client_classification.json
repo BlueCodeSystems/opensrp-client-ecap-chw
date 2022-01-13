@@ -318,7 +318,8 @@
             "field": "eventType",
             "field_value": "Mother Register",
             "creates_case": [
-              "ec_mother_index"
+              "ec_mother_index",
+              "ec_household"
             ]
           },
           {

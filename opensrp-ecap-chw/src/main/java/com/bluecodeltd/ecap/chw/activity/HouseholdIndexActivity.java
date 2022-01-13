@@ -87,9 +87,6 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String code = sp.getString("code", "00000");
 
-        UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-
-
         Number = new Random();
         Rnumber = Number.nextInt(100000000);
 

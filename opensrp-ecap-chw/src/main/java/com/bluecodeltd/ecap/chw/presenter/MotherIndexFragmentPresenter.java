@@ -29,7 +29,7 @@ public class MotherIndexFragmentPresenter implements MotherIndexFragmentContract
         String mothers = Constants.EcapClientTable.EC_MOTHER_INDEX;
 
         String countSelect = "SELECT COUNT(*) FROM " + mothers;
-        String mainSelect = "SELECT *, id as _id, mother_first_name AS first_name, mother_surname AS last_name, health_facility AS residence FROM " + mothers;
+        String mainSelect = "SELECT *, base_entity_id as _id FROM " + mothers;
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_MOTHER_INDEX, countSelect, mainSelect);
         getView().initializeAdapter();

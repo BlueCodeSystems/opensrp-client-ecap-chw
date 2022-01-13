@@ -14,6 +14,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -53,16 +54,18 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         int plans = CasePlanDao.checkCasePlan(childId);
 
+        int visits = VcaVisitationDao.countVisits(childId);
+
         String is_index = IndexPersonDao.checkIndexPerson(BaseEntityId);
 
         String status = IndexPersonDao.getIndexStatus(BaseEntityId);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, is_index, status);
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, visits, is_index, status);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 
 
-        indexRegisterViewHolder.caseplan_layout.setOnClickListener(v -> {
+    /*    indexRegisterViewHolder.caseplan_layout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.due_button) {
 
@@ -73,7 +76,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
                 context.startActivity(intent);
             }
         });
-
+*/
     }
 
 
