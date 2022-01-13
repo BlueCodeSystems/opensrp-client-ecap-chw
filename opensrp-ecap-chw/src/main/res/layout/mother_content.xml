@@ -39,7 +39,7 @@
                         android:id="@+id/profile_name_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="36dp"
+
                         android:background="#228B22"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
@@ -48,8 +48,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imageview_profile"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center_horizontal"
                             app:civ_border_color="#FFFFFFFF"
                             app:civ_border_width="0dp" />
@@ -61,65 +61,12 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
+                            android:layout_marginBottom="20dp"
                             android:paddingStart="0dp"
                             android:text="Charity Otala"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/activity_title_size" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <org.smartregister.view.customcontrols.CustomFontTextView
-                                android:id="@+id/textview_detail_one"
-                                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:paddingStart="0dp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/profile_dot_separator_margin"
-                                android:layout_marginEnd="@dimen/profile_dot_separator_margin"
-                                android:text="\u00b7" />
-
-                            <org.smartregister.view.customcontrols.CustomFontTextView
-                                android:id="@+id/mfacilityx"
-                                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:paddingStart="0dp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/profile_dot_separator_margin"
-                                android:layout_marginEnd="@dimen/profile_dot_separator_margin"
-                                android:text="\u00b7" />
-
-                            <org.smartregister.view.customcontrols.CustomFontTextView
-                                android:id="@+id/textview_detail_three"
-                                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:paddingStart="0dp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
 
                         <Button
                             android:id="@+id/btn_profile_registration_info"
@@ -131,7 +78,7 @@
                             android:paddingTop="0dp"
                             android:paddingEnd="@dimen/profile_btn_registration_info_padding"
                             android:paddingBottom="0dp"
-                            android:text="@string/registration_info"
+                            android:text="Household Profile"
                             android:textAllCaps="false"
                             tools:text="Registration info" />
                     </LinearLayout>
@@ -144,220 +91,30 @@
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:tabContentStart="0dp"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="#E2E363"
+                    app:tabIndicatorHeight="4dp"
+                    app:tabMaxWidth="0dp"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
+
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/overview_summary_row"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <TextView
-                    android:id="@+id/overview_section_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/overview_header_bg"
-                    android:gravity="left"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_drawable_padding"
-                    android:paddingBottom="@dimen/contact_drawable_padding"
-                    android:singleLine="true"
-                    android:text="Contact Details"
-                    android:textAllCaps="true"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/overview_section_details_left"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Village/Compound"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/village"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:text="My Village"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Phone Number"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/phone"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:text="0977654321"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Art Number"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/art"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:text="98617963741"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Date Referred to OVC "
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/ovc_date"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/overview_header_bg"
-                        android:gravity="left"
-                        android:paddingLeft="@dimen/contact_drawable_padding"
-                        android:paddingTop="@dimen/contact_drawable_padding"
-                        android:paddingBottom="@dimen/contact_drawable_padding"
-                        android:singleLine="true"
-                        android:text="Comments"
-                        android:textAllCaps="true"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textColor="@color/white"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/comment"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/contact_drawable_padding"
-                            android:paddingTop="@dimen/contact_small_padding"
-                            android:paddingBottom="@dimen/contact_small_padding"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/black_text_color"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+            </androidx.viewpager.widget.ViewPager>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
