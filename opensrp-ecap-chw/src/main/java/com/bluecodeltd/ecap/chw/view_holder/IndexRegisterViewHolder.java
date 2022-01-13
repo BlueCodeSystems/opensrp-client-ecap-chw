@@ -21,22 +21,23 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private TextView villageTextView;
 
-    public Button caseplan_layout;
+    //public Button caseplan_layout;
 
     private View myStatus;
 
-    private final ImageView index_icon_layout;
+    private final ImageView index_icon_layout, visitLayout, caseplan_layout;
 
     public IndexRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
         familyNameTextView = itemView.findViewById(R.id.familyNameTextView);
         villageTextView = itemView.findViewById(R.id.villageTextView);
-        caseplan_layout = itemView.findViewById(R.id.due_button);
+        caseplan_layout = itemView.findViewById(R.id.index_case_plan);
         index_icon_layout = itemView.findViewById(R.id.index_icon);
         myStatus = itemView.findViewById(R.id.mystatusx);
+        visitLayout = itemView.findViewById(R.id.index_visit);
     }
 
-    public void setupViews(String family, String village, int plans, String is_index, String status){
+    public void setupViews(String family, String village, int plans, int visits, String is_index, String status){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
@@ -50,7 +51,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         if (is_index != null){
 
-            index_icon_layout.setVisibility(View.VISIBLE);
+            index_icon_layout.setVisibility(View.GONE);
         } else {
 
             index_icon_layout.setVisibility(View.GONE);
@@ -61,6 +62,12 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             caseplan_layout.setVisibility(View.VISIBLE);
         } else {
             caseplan_layout.setVisibility(View.GONE);
+        }
+
+        if(visits > 0){
+            visitLayout.setVisibility(View.VISIBLE);
+        } else {
+            visitLayout.setVisibility(View.GONE);
         }
 
     }

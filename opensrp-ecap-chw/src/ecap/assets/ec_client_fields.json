@@ -331,66 +331,73 @@
           }
         },
         {
-          "column_name": "unique_id",
+          "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.opensrp_id"
+            "field": "attributes.household_id"
           }
         },
         {
-          "column_name": "relational_id",
+          "column_name": "physical_address",
           "type": "Client",
           "json_mapping": {
-            "field": "relationships.family"
+            "field": "attributes.physical_address"
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "screening_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.screening_date"
           }
         },
         {
-          "column_name": "mother_surname",
+          "column_name": "caregiver_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_surname"
+            "field": "attributes.caregiver_name"
           }
         },
         {
-          "column_name": "mother_first_name",
+          "column_name": "caregiver_sex",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_first_name"
+            "field": "attributes.caregiver_sex"
           }
         },
         {
-          "column_name": "ovc_date",
+          "column_name": "caregiver_birth_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.ovc_date"
+            "field": "attributes.caregiver_birth_date"
           }
         },
         {
-          "column_name": "art_number",
+          "column_name": "caregiver_hiv_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_number"
+            "field": "attributes.caregiver_hiv_status"
           }
         },
         {
-          "column_name": "village_compound",
+          "column_name": "active_on_treatment",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.village_compound"
+            "field": "attributes.active_on_treatment"
           }
         },
         {
-          "column_name": "mothers_number",
+          "column_name": "caregiver_art_number",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mothers_number"
+            "field": "attributes.caregiver_art_number"
+          }
+        },
+        {
+          "column_name": "caregiver_phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_phone"
           }
         },
         {
@@ -2450,7 +2457,6 @@
         }
       ]
     },
-
     {
       "name": "ec_service_report",
       "columns": [

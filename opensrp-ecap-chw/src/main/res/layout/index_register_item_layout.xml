@@ -82,29 +82,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="2dp"
-                >
-            </ImageView>
+                />
 
-            <Button
-                android:visibility="visible"
-                android:id="@+id/due_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/index_visit"
+                android:src="@drawable/activityrow_visited"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:background="@drawable/due_contact"
-                android:elevation="@dimen/register_list_elevation"
-                android:gravity="center"
-                android:hapticFeedbackEnabled="true"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:stateListAnimator="@drawable/button"
-                android:text="Case Plan"
-                android:textAllCaps="false"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@color/vaccine_blue_bg_st"
-                android:textSize="@dimen/register_list_due_size"
-                android:typeface="normal" />
+                android:layout_marginRight="5dp"
+                />
+
+            <ImageView
+                android:visibility="gone"
+                android:tint="@color/light_grey_text"
+                android:id="@+id/index_case_plan"
+                android:src="@drawable/ic_baseline_event_note_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                />
+
 
         </LinearLayout>
 

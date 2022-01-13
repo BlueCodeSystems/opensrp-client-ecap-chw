@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -30,13 +31,19 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
 import timber.log.Timber;
 
 public class MotherIndexActivity extends BaseRegisterActivity implements MotherIndexContract.View {
 
     public String action = null;
+    Random Number;
+    int Rnumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +78,25 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
     @Override
     public void startFormActivity(JSONObject jsonObject) {
 
-        try {
 
-            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("x","My Ward X");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String code = sp.getString("code", "00000");
+
+        Number = new Random();
+        Rnumber = Number.nextInt(100000000);
+
+
+        String xId =  Integer.toString(Rnumber);
+
+        String household_id = code + "/" + xId;
+
+        try {
+            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value",household_id);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
@@ -82,9 +105,6 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
     }
