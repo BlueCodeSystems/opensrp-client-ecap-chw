@@ -1244,10 +1244,73 @@
           }
         },
         {
+          "column_name": "at_risk_reasons",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.at_risk_reasons"
+          }
+        },
+        {
+          "column_name": "reason_for_hiv_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason_for_hiv_risk"
+          }
+        },
+        {
           "column_name": "secure",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.secure"
+          }
+        },
+        {
+          "column_name": "carried_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.carried_by"
+          }
+        },
+        {
+          "column_name": "approved_family",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.approved_family"
+          }
+        },
+        {
+          "column_name": "approved_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.approved_by"
+          }
+        },
+        {
+          "column_name": "date_approved",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_approved"
+          }
+        },
+        {
+          "column_name": "highest_grade",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.highest_grade"
+          }
+        },
+        {
+          "column_name": "marriage_partner_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.marriage_partner_name"
+          }
+        },
+        {
+          "column_name": "relationship_partner_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship_partner_name"
           }
         },
         {

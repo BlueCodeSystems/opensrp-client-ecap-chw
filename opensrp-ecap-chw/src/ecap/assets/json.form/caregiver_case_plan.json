@@ -712,39 +712,23 @@
         }
       },
       {
-        "key": "caregiver_first_name",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_first_name",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "First name of caregiver",
-        "edit_type": "Primary Caregiver First Name",
+        "hint": "Caregiver's Full Name",
+        "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of caregiver can only contain letters"
         },
         "v_required": {
           "value": false,
-          "err": "Name of caregiver is required"
+          "err": "Full name of caregiver is required"
         }
       },
-      {
-        "key": "caregiver_second_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_second_name",
-        "type": "edit_text",
-        "hint": "Second name of caregiver",
-        "edit_type": "Primary Caregiver Second Name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": false,
-          "err": "Name of caregiver is required"
-        }
-      },
+
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
@@ -764,7 +748,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_status",
         "type": "native_radio",
-        "label": "Is Caregiver HIV Positive?",
+        "label": "Caregiver's HIV Status",
         "options": [
           {
             "key": "yes",
@@ -784,7 +768,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "telephone_mobile",
         "type": "edit_text",
-        "hint": "Caregiver Telephone Number",
+        "hint": "Caregiver's Phone Number",
         "v_numeric": {
           "value": "true",
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
@@ -840,7 +824,7 @@
         "openmrs_entity_id": "caregiver_nrc",
         "entity_id": "guardian",
         "type": "edit_text",
-        "hint": "Primary Caregiver NRC",
+        "hint": "Caregiver's NRC#",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
           "err": "Number must take the format of ######/##/#"

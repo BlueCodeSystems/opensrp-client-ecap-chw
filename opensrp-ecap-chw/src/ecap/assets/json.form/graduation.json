@@ -231,7 +231,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "Caregiver Name",
+        "hint": "Caregiver's Full Name",
         "edit_type": "name",
         "read_only": "false",
         "look_up": "true",
@@ -246,7 +246,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
         "type": "spinner",
-        "hint": "Caregiver Gender",
+        "hint": "Caregiver's HIV Status",
         "values": [
           "Male",
           "Female"
