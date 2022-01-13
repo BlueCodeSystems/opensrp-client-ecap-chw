@@ -93,7 +93,11 @@
         "type": "edit_text",
         "read_only": "true",
         "hint": "Household ID",
-        "edit_type": "name"
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "unique_id",
@@ -103,7 +107,11 @@
         "type": "edit_text",
         "hint": "VCA ID",
         "edit_type": "name",
-        "read_only": "true"
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "first_name",
@@ -119,7 +127,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Please Enter First Name"
+          "err": "Required"
         }
       },
       {
@@ -137,7 +145,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Please Enter Last Name"
+          "err": "Required"
         }
       },
       {
@@ -156,7 +164,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please Enter Birth date"
+          "err": "Required"
         }
       },
       {
@@ -178,7 +186,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Please Select Gender"
+          "err": "Required"
         }
       },
       {
@@ -217,7 +225,11 @@
             "key": "none",
             "text": "None"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "facility",
@@ -229,7 +241,11 @@
         "value": "Choma General Hospital",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true"
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "province",
@@ -241,7 +257,11 @@
         "value": "Southern",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true"
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "district",
@@ -253,7 +273,11 @@
         "value": "Choma",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true"
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "ward",
@@ -265,7 +289,21 @@
         "value": "Choma Central",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true"
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "toaster_info_text": "",
+        "toaster_type": "info"
       },
       {
         "key": "village",
@@ -273,17 +311,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "village",
         "type": "edit_text",
-        "hint": "Village/Compound",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village/Compound  only takes letters"
-        },
+        "hint": "Address",
         "v_required": {
           "value": true,
-          "err": "Village is required"
+          "err": "Required"
         }
       },
+
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -310,7 +344,11 @@
         "value": "ZEC",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true"
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "screening_date",
@@ -322,7 +360,11 @@
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "screening_location",
@@ -335,6 +377,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Screening location  only take letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -348,10 +394,7 @@
       {
         "key": "primary_caregivers_only",
         "type": "label",
-        "text": "For Primary Caregivers Only",
-        "v_required": {
-          "value": false
-        }
+        "text": "For Primary Caregivers Only"
       },
       {
         "key": "spacer",
@@ -367,7 +410,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "Name of caregiver",
+        "hint": "Caregiver's Full Name",
         "look_up": "true",
         "edit_type": "name",
         "v_regex": {
@@ -376,7 +419,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Name of caregiver is required"
+          "err": "Required"
         }
       },
       {
@@ -385,14 +428,14 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
         "type": "spinner",
-        "hint": "Caregiver Gender",
+        "hint": "Caregiver's HIV Status",
         "values": [
           "Male",
           "Female"
         ],
         "v_required": {
           "value": true,
-          "err": "Please select gender"
+          "err": "Required"
         }
       },
       {
@@ -401,7 +444,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
-        "hint": "Caregiver Date of birth",
+        "hint": "Caregiver's Date of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -410,21 +453,30 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Please enter Birth Date"
+          "value": true,
+          "err": "Required"
         }
       },
       {
-        "key": "physical_address",
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "toaster_info_text": "",
+        "toaster_type": "info"
+      },
+      {
+        "key": "adolescent_village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "physical_address",
+        "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
-        "hint": "Plot Number, Village or Street",
-        "edit_type": "name",
+        "hint": "Address",
         "v_required": {
-          "value": false,
-          "err": "Please enter the home address"
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -433,11 +485,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
-        "hint": "Caregivers phone number",
+        "hint": "Caregiver's Phone Number",
         "edit_type": "number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
@@ -468,7 +524,11 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "children_violence_six_months",
@@ -486,7 +546,11 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "caregiver_hiv_status",
@@ -494,7 +558,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
-        "label": "Caregiver HIV Status",
+        "label": "Caregiver's HIV Status",
         "options": [
           {
             "key": "HIV+",
@@ -515,7 +579,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Select HIV status"
+          "err": "Required"
         }
       },
       {
@@ -535,6 +599,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -552,6 +620,10 @@
         "v_required": {
           "value": false
         },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -566,7 +638,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_art_number",
         "type": "edit_text",
-        "hint": "Caregivers' ART Number",
+        "hint": "Caregiver`s ART Number",
         "edit_type": "name",
         "relevance": {
           "rules-engine": {
@@ -574,6 +646,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
@@ -586,7 +662,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_caregiver_virally_suppressed",
         "type": "native_radio",
-        "label": "Is the caregiver virally suppressed?",
+        "label": "Is the caregiver`s virally suppressed?",
         "options": [
           {
             "key": "yes",
@@ -597,6 +673,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -612,7 +692,8 @@
         "text": "Refer to appropriate treatment and care services as part of enrollment",
         "text_color": "#d20000",
         "v_required": {
-          "value": false
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -632,6 +713,10 @@
         "v_numeric": {
           "value": "true",
           "err": "Viral load can only contain numbers"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -658,6 +743,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -677,6 +766,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -702,6 +795,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -711,10 +808,10 @@
         }
       },
       {
-        "key": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
+        "key": "at_risk_reasons",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "at_risk_reasons",
         "type": "native_radio",
         "label": "Are there any reasons you may be at risk for HIV?)",
         "options": [
@@ -727,18 +824,21 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV-\")"
           }
         }
       },
       {
         "key": "reason_for_hiv_risk",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "reason_for_hiv_risk",
         "type": "edit_text",
         "hint": "State reason for HIV Risk",
@@ -747,11 +847,14 @@
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  test name"
         },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:at_risk_reasons": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -762,7 +865,8 @@
         "text": "Provide appropriate preventive services as part of enrollment",
         "text_color": "#d20000",
         "v_required": {
-          "value": false
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -788,7 +892,7 @@
       {
         "key": "secure",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "secure",
         "type": "native_radio",
         "toaster_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
@@ -804,7 +908,11 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "economic_service",
@@ -813,7 +921,8 @@
         "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
         "text_color": "#d20000",
         "v_required": {
-          "value": false
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -824,10 +933,10 @@
         }
       },
       {
-        "key": "caseworker_name",
+        "key": "carried_by",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "name",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "carried_by",
         "type": "edit_text",
         "hint": "Carried out by",
         "read_only": "true",
@@ -835,31 +944,39 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
-        "key": "vca_sub_population_is_approved_for_enrollment",
+        "key": "approved_family",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "vca_sub_population_is_approved_for_enrollment",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "approved_family",
         "type": "native_radio",
         "label": "THIS FAMILY IS APPROVED FOR ENROLLMENT",
         "options": [
           {
-            "key": "yes",
+            "key": "Yes",
             "text": "Yes"
           },
           {
-            "key": "no",
+            "key": "No",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "approved_by",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "name",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "approved_by",
         "type": "edit_text",
         "hint": "Approved By",
         "edit_type": "name",
@@ -867,18 +984,21 @@
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
         },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:approved_family": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
           }
         }
       },
       {
         "key": "date_approved",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_approved",
         "type": "date_picker",
         "hint": "Date of screening",
@@ -892,6 +1012,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       }
     ]
@@ -916,6 +1040,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -934,6 +1062,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -952,6 +1084,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -970,6 +1106,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -988,6 +1128,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -1006,6 +1150,10 @@
               "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -1017,7 +1165,11 @@
         "value": "true",
         "type": "edit_text",
         "hint": "Is Screened",
-        "edit_type": "name"
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "index_check_box",
@@ -1032,6 +1184,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Ward only takes letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       }
     ]
@@ -1062,7 +1218,11 @@
           "label": ""
         },
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "entry_type",
@@ -1092,7 +1252,11 @@
             "text": "Other",
             "value": false
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "other_entry_type",
@@ -1111,6 +1275,10 @@
             "type": "string",
             "ex": "equalTo(., \"other\")"
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -1143,14 +1311,14 @@
           }
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "You`re to select the level of education"
         }
       },
       {
         "key": "highest_grade",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "highest_grade",
         "type": "edit_text",
         "hint": "Highest Grade",
@@ -1158,6 +1326,10 @@
         "v_regex": {
           "value": "[0-9]*",
           "err": "Please enter a valid number"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "step3:caregiver_education": {
@@ -1206,7 +1378,7 @@
           }
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "You`re required to select income source"
         }
       },
@@ -1230,12 +1402,16 @@
           "divorced",
           "widowed",
           "in_relationship"
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "marriage_partner_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "marriage_partner_name",
         "type": "edit_text",
         "hint": "Name of Partner/Spouse",
@@ -1243,6 +1419,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  Partner/Spouse Name"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -1255,7 +1435,7 @@
       {
         "key": "relationship_partner_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relationship_partner_name",
         "type": "edit_text",
         "hint": "Name of Relationship Partner",
@@ -1263,6 +1443,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  Relationship Partner Name"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -1281,7 +1465,7 @@
         "hint": "Number of Males < 5 Years Old in household",
         "edit_type": "number",
         "v_required": {
-          "value": "false",
+          "value": true,
           "err": "Required"
         }
       },
@@ -1294,7 +1478,7 @@
         "hint": "Number of Females < 5 Years Old in household",
         "edit_type": "number",
         "v_required": {
-          "value": "false",
+          "value": true,
           "err": "Required"
         }
       },
@@ -1307,7 +1491,7 @@
         "hint": "Number of Males 10-17 Years Old in household",
         "edit_type": "number",
         "v_required": {
-          "value": "false",
+          "value": true,
           "err": "Required"
         }
       },
@@ -1320,7 +1504,7 @@
         "hint": "Number of Females 10-17 Years Old in household",
         "edit_type": "number",
         "v_required": {
-          "value": "false",
+          "value": true,
           "err": "Required"
         }
       },
@@ -1346,7 +1530,7 @@
         "hint": "No. of Women currently pregnant in household",
         "edit_type": "number",
         "v_required": {
-          "value": "false",
+          "value": true,
           "err": "Required"
         }
       },
@@ -1357,7 +1541,7 @@
         "text": "Malaria Prevention",
         "text_color": "#000000",
         "v_required": {
-          "value": false
+          "value": true
         }
       },
       {
@@ -1372,7 +1556,7 @@
         "tree": [
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Number of beds in household"
         }
       },
@@ -1388,7 +1572,7 @@
         "tree": [
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Number of ITNs  in use"
         }
       },
