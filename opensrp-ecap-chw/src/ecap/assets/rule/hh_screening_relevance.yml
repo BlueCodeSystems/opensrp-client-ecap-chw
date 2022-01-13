@@ -121,7 +121,7 @@ actions:
 name: step1_are_there_any_reasons_you_may_be_at_risk_for_hiv
 description: are_there_any_reasons_you_may_be_at_risk_for_hiv relevance
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step1_caregiver_hiv_status.contains('HIV-')"
 actions:
   - "isRelevant = true"
 ---

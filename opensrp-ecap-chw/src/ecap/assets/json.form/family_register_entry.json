@@ -1043,7 +1043,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "Name of Primary Caregiver",
+        "hint": "Caregiver's Full Name",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",

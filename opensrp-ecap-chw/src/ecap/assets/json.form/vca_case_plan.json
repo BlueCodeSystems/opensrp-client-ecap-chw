@@ -106,23 +106,15 @@
         "hint": "Health Facility"
       },
       {
-        "key": "caregiver_firstname",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_firstname",
+        "openmrs_entity_id": "caregiver_name",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "Full name of caregiver"
+        "hint": "Caregiver's Full Name"
       },
-      {
-        "key": "caregiver_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_lastname",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Last name of caregiver"
-      },
+
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
@@ -177,7 +169,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_nrc",
         "type": "edit_text",
-        "hint": "Caregiver NRC",
+        "hint": "Caregiver's NRC#",
         "edit_type": "name"
       },
       {
@@ -241,7 +233,7 @@
         "openmrs_entity_id": "age",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA Age",
+        "hint": "VCA`s Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -257,7 +249,7 @@
         "openmrs_entity_id": "gender",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA Gender"
+        "hint": "VCA`s Gender"
       },
       {
         "key": "calhiv",
