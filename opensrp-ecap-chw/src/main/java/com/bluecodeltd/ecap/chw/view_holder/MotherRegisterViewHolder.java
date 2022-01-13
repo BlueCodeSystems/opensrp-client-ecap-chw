@@ -20,9 +20,9 @@ public class MotherRegisterViewHolder extends RecyclerView.ViewHolder {
         villageTextView = itemView.findViewById(R.id.villageTextView);
     }
 
-    public void setupViews(String family, String village){
-        familyNameTextView.setText(family);
-        villageTextView.setText(village);
+    public void setupViews(String fullName, String hh_id){
+        familyNameTextView.setText(fullName);
+        villageTextView.setText(hh_id);
     }
 
 }

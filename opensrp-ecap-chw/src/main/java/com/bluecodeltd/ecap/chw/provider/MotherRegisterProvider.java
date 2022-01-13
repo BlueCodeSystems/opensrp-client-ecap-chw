@@ -43,10 +43,10 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
     @Override
     public void getView(Cursor cursor, SmartRegisterClient smartRegisterClient, MotherRegisterViewHolder motherRegisterViewHolder) {
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
-        String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
-        String residence = Utils.getValue(personObjectClient.getColumnmaps(), "residence", true);
-        motherRegisterViewHolder.setupViews(firstName +" "+lastName, residence);
+        String fullName = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+        String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
+
+        motherRegisterViewHolder.setupViews(fullName, household_id);
         motherRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         motherRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
@@ -87,7 +87,7 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
 
     @Override
     public MotherRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.index_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.mother_layout, null);
         return new MotherRegisterViewHolder(viewHolder);
     }
 

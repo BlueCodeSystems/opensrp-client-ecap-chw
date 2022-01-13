@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
-import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.model.EventClient;
 import com.bluecodeltd.ecap.chw.model.IndexRegisterModel;
@@ -20,10 +18,8 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.domain.FetchStatus;
-import org.smartregister.opd.contract.OpdRegisterActivityContract;
-import org.smartregister.opd.pojo.OpdDiagnosisAndTreatmentForm;
-import org.smartregister.opd.pojo.OpdEventClient;
 import org.smartregister.opd.pojo.RegisterParams;
+import org.smartregister.repository.UniqueIdRepository;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -32,10 +28,11 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, IndexRegisterContract.InteractorCallBack {
-    private String baseId;
+    private String uniqueId;
     private IndexRegisterContract.View view;
     private IndexRegisterContract.Model model;
     private IndexRegisterContract.Interactor interactor;
+    private UniqueIdRepository uniqueIdRepository;
 
     private WeakReference<IndexRegisterContract.View> activityWeakReference;
 
@@ -84,7 +81,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
                 return;
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
-            baseId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+            uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
 
         } catch (Exception e) {
             Timber.e(e);
@@ -119,7 +116,8 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
             if (navigationMenu != null) {
                 navigationMenu.refreshCount();
             }
-            gotToChildProfile(baseId);
+            gotToChildProfile(uniqueId);
+            getUniqueIdRepository().close(uniqueId);
         }
     }
     @Override
@@ -128,6 +126,14 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
             return (IndexRegisterActivity) view;
         }
         return null;
+    }
+
+    @NonNull
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
     }
 
 
