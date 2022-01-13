@@ -6,6 +6,13 @@ condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 0.6)"
 actions:
   - "isRelevant = true"
 ---
+name: step2_no_consent_reason
+description: no_consent_reason relevance
+priority: 1
+condition: "step2_consent_check_box.contains('no_consent_check_box')"
+actions:
+  - "isRelevant = true"
+---
 name: step3_first_name
 description: first_name relevance
 priority: 1

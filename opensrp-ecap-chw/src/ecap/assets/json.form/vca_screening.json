@@ -1794,8 +1794,38 @@
             "text": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
             "value": false,
             "openmrs_choice_id": ""
+          },
+          {
+            "key": "no_consent_check_box",
+            "text": "I DO NOT CONSENT.",
+            "value": false,
+            "openmrs_choice_id": ""
           }
         ]
+      },
+      {
+        "key": "no_consent_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "no_consent_reason",
+        "type": "edit_text",
+        "hint": "Please give reason for NOT Consenting",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "err": "Please give reason for not consenting."
+        },
+        "v_required": {
+          "value": false,
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
       }
     ]
   },
