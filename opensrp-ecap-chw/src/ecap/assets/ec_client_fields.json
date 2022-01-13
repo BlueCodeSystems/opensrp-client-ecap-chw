@@ -1139,6 +1139,13 @@
           }
         },
         {
+          "column_name": "no_consent_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.no_consent_reason"
+          }
+        },
+        {
           "column_name": "caregiver_sex",
           "type": "Client",
           "json_mapping": {
