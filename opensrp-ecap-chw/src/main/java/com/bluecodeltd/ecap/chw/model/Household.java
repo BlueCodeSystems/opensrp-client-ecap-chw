@@ -54,6 +54,11 @@ public class Household {
     private String beds;
     private String malaria_itns;
     private String household_member_had_malaria;
+    private String emergency_name;
+    private String e_relationship;
+    private String contact_address;
+    private String contact_number;
+
 
 
     public String getBase_entity_id() {
@@ -406,5 +411,39 @@ public class Household {
 
     public void setUser_gps(String user_gps) {
         this.user_gps = user_gps;
+    }
+
+
+
+    public String getEmergency_name() {
+        return emergency_name;
+    }
+
+    public void setEmergency_name(String emergency_name) {
+        this.emergency_name = emergency_name;
+    }
+
+    public String getE_relationship() {
+        return e_relationship;
+    }
+
+    public void setE_relationship(String e_relationship) {
+        this.e_relationship = e_relationship;
+    }
+
+    public String getContact_address() {
+        return contact_address;
+    }
+
+    public void setContact_address(String contact_address) {
+        this.contact_address = contact_address;
+    }
+
+    public String getContact_number() {
+        return contact_number;
+    }
+
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
     }
 }

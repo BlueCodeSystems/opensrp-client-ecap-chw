@@ -618,9 +618,6 @@
         "text": "Refer to appropriate treatment and care services as part of enrollment",
         "text_color": "#d20000",
         "v_required": {
-          "value": false
-        },
-        "v_required": {
           "value": true,
           "err": "Required"
         },
@@ -1552,7 +1549,7 @@
         "openmrs_data_type": "text",
         "type": "edit_text",
         "edit_text": "number",
-        "hint": "Number of Beds in household",
+        "hint": "Number of beds in household",
         "tree": [
         ],
         "v_required": {
@@ -1592,6 +1589,96 @@
         "v_required": {
           "value": false,
           "err": "Last time household member had malaria"
+        }
+      },
+
+      {
+        "key": "emergency_contact",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Emergency Contact",
+        "text_color": "#000000",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "emergency_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "emergency_name",
+        "type": "edit_text",
+        "hint": "Emergency Contact Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z]*",
+          "err": "Emergency Name"
+        },
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "e_relationship",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "e_relationship",
+        "type": "spinner",
+        "hint": "Relationship to caregiver",
+        "values": [
+          "Single",
+          "Married",
+          "Divorced",
+          "Widowed",
+          "Not Married,in a Relationship"
+        ],
+        "keys": [
+          "single",
+          "married",
+          "divorced",
+          "widowed",
+          "in_relationship"
+        ]
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "In the Contact Address field below, you can put the Plot Number, Village or Street.",
+        "toaster_info_text": "",
+        "toaster_type": "info"
+      },
+      {
+        "key": "contact_address",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_address",
+        "type": "edit_text",
+        "hint": "Contact Address",
+        "v_required": {
+          "value": true
+        }
+      },
+      {
+        "key": "contact_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_number",
+        "type": "edit_text",
+        "hint": "Contact Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_required": {
+          "value": true
         }
       }
     ]
