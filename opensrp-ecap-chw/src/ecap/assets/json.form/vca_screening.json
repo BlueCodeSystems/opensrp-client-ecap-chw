@@ -1,6 +1,6 @@
 {
   "count": "6",
-  "skip_blank_steps" : false,
+  "hide_blank_steps" : true,
   "encounter_type": "Sub Population",
   "entity_id": "",
   "relational_id": "",
@@ -2082,7 +2082,6 @@
   },
   "step4": {
     "title": "Enrollment into OVC program - HIV positive",
-    "next": "step5",
     "fields": [
       {
         "key": "date_referred",
@@ -2096,11 +2095,11 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "",
         "v_required": {
-          "value": false,
-          "err": "Please enter Date Referred"
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -2122,11 +2121,11 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Please enter date Referred"
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -2137,6 +2136,30 @@
         }
       },
       {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "native_radio",
+        "value": "1",
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
+          }
+        ]
+      },
+      {
         "key": "acceptance",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -2145,28 +2168,22 @@
         "label": "Do you accept the offer of the enrollment? ",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
         "options": [
           {
             "key": "yes",
             "text": "Yes",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes"
+            "value": false
           },
           {
             "key": "no",
             "text": "No",
-            "value": false,
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No"
+            "value": false
+
           }
         ],
         "v_required": {
-          "value": false,
-          "err": "You're required check the enrollment offer"
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "rules-engine": {
@@ -2188,17 +2205,20 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": false,
           "err": "Please enter date you were enrolled"
         },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2210,14 +2230,18 @@
         "type": "date_picker",
         "hint": "Date HIV Status Was known",
         "look_up": "true",
+        "label_info_text": "Give an estimate if the exact date is not known",
         "expanded": false,
         "min_date": "today - 17y",
         "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2250,10 +2274,9 @@
           "err": "You're required check the ART number check box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2264,22 +2287,21 @@
         "openmrs_entity_id": "date_started_art",
         "type": "date_picker",
         "hint": "Date started ART",
-        "label_info_title": "Date when ART Started",
+        "label_info_text": "Give an estimate if the exact date is not known",
         "expanded": false,
         "duration": {
           "label": ""
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Please enter when ART Started"
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:art_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2297,25 +2319,24 @@
         ],
         "options": [
           {
-            "key": "Yes",
+            "key": "yes",
             "text": "Yes",
             "value": false
           },
           {
-            "key": "No",
+            "key": "no",
             "text": "No",
             "value": false
           }
         ],
         "v_required": {
-          "value": false,
-          "err": "You're required to keep VL test check box checked"
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2337,10 +2358,9 @@
           "err": "Please enter date Referred"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:vl_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2349,21 +2369,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
-        "type": "edit_text",
+        "type": "spinner",
         "hint": "Last VL results",
-        "v_required": {
-          "value": false,
-          "err": "Enter last VL results"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Last VL results must be an integer"
-        },
+        "values": [
+          "Less than 1000 copies/ml",
+          "Above 1000 copies/ml"
+        ],
+        "keys": [
+          "Less than 1000 copies/ml",
+          "Above 1000 copies/ml"
+        ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:vl_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2393,13 +2412,12 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Tick 'Yes' if child was indexed or 'No' to mean child was'nt indexed "
+          "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:vl_last_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Less than 1000 copies/ml\")"
           }
         }
       },
@@ -2421,36 +2439,13 @@
           "err": "Please enter date of next viral load"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:vl_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
-      {
-        "key": "vl_next_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_next_result",
-        "type": "edit_text",
-        "hint": "VL next results",
-        "v_required": {
-          "value": false,
-          "err": "Enter next VL results"
-        },
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Last VL results must be an integer"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "child_mmd",
         "openmrs_entity_parent": "",
@@ -2482,10 +2477,9 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:art_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2506,19 +2500,26 @@
           "err": "Select level of MMD for child"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:child_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
-      }
-    ]
-  },
-  "step5": {
-    "title": "Details of Caregiver (Parent/Guardian)",
-    "next": "step6",
-    "fields": [
+      },
+      {
+        "key": "label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Details of Caregiver (Parent/Guardian)",
+        "relevance": {
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
       {
         "key": "caregiver_name",
         "openmrs_entity_parent": "",
@@ -2535,6 +2536,12 @@
         "v_required": {
           "value": true,
           "err": "Name of caregiver is required"
+        },
+        "relevance": {
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -2547,6 +2554,12 @@
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
           "err": "Number must take the format of ######/##/#"
+        },
+        "relevance": {
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -2565,10 +2578,9 @@
           "err": "Please select gender"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2591,10 +2603,9 @@
           "err": "Please enter Birth Date"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2616,10 +2627,9 @@
           "err": "Select HIV status"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2639,10 +2649,9 @@
           "err": "Select "
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2664,10 +2673,9 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           },
           "calculation": {
             "rules-engine": {
@@ -2681,53 +2689,6 @@
           "rules-engine": {
             "ex-rules": {
               "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "case_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_status",
-        "type": "native_radio",
-        "value": "1",
-        "read_only": true,
-        "label": "Case Status",
-        "options": [
-          {
-            "key": "1",
-            "text": "Active"
-          },
-          {
-            "key": "2",
-            "text": "Inactive"
-          },
-          {
-            "key": "0",
-            "text": "Closed"
-          }
-        ]
-      }
-    ]
-  },
-  "step6": {
-    "title": "END",
-    "fields": [
-      {
-        "key": "has_no_consent",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "text": "You have not Consented to this form",
-        "toaster_type": "warning",
-        "toaster_info_text": "You have not Consented to this form",
-        "toaster_info_title": "Warnings",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
             }
           }
         }
