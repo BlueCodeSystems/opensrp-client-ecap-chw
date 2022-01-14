@@ -95,10 +95,10 @@
                 />
 
             <ImageView
-                android:visibility="gone"
+                android:visibility="visible"
                 android:tint="@color/light_grey_text"
                 android:id="@+id/index_case_plan"
-                android:src="@drawable/ic_baseline_event_note_24"
+                android:src="@drawable/ic_baseline_content_paste_24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
