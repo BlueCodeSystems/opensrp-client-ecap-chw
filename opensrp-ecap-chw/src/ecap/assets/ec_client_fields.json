@@ -1998,8 +1998,35 @@
           "json_mapping": {
             "field": "attributes.caseworker_name"
           }
+        },
+        {
+          "column_name": "emergency_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.emergency_name"
+          }
+        },
+        {
+          "column_name": "e_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.e_relationship"
+          }
+        },
+        {
+          "column_name": "contact_address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_address"
+          }
+        },
+        {
+          "column_name": "contact_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_number"
+          }
         }
-
       ]
     },
     {

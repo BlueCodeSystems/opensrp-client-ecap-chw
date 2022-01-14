@@ -160,29 +160,21 @@
         }
       },
       {
-        "key": "primary_firstname",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "primary_firstname",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "Primary Caregiver First Name",
+        "hint": "Caregiver's Full Name",
+        "look_up": "true",
         "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of caregiver can only contain letters"
+        },
         "v_required": {
-          "value": false,
-          "err": "First Name of Primary Caregiver cannot be empty"
-        }
-      },
-      {
-        "key": "primary_surname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "primary_attribute",
-        "openmrs_entity_id": "primary_surname",
-        "type": "edit_text",
-        "hint": "Primary Caregiver Surname",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Surname Name of Primary Caregiver cannot be empty"
+          "value": true,
+          "err": "Name of caregiver is required"
         }
       },
       {

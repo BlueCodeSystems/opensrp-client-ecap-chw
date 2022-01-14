@@ -194,16 +194,17 @@
         "openmrs_entity_id": "dob",
         "read_only": "false",
         "type": "date_picker",
-        "hint": "Caregiver Date of Birth",
+        "hint": "Caregiver's Date of Birth",
+        "look_up": "true",
         "expanded": false,
         "duration": {
-          "label": ""
+          "label": "Age"
         },
-        "min_date": "today",
-        "max_date": "today + 100y",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Caregiver Date of Birth cannot be empty"
+          "value": true,
+          "err": "Please enter Birth Date"
         }
       },
       {
