@@ -84,6 +84,11 @@ public class HouseholdDao extends AbstractDao {
             record.setBeds(getCursorValue(c, "beds"));
             record.setMalaria_itns(getCursorValue(c, "malaria_itns"));
             record.setHousehold_member_had_malaria(getCursorValue(c, "household_member_had_malaria"));
+            record.setEmergency_name(getCursorValue(c, "emergency_name"));
+            record.setE_relationship(getCursorValue(c, "e_relationship"));
+            record.setContact_address(getCursorValue(c, "contact_address"));
+            record.setContact_number(getCursorValue(c, "contact_number"));
+
 
             return record;
         };
