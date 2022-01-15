@@ -181,6 +181,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
+
     public void onClick(View v) {
         int id = v.getId();
 
