@@ -108,17 +108,14 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
     @Override
     protected void onViewClicked(View view) {
 
-        //  Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
-
-        // startActivity(intent);
         goToIndexDetailActivity((CommonPersonObjectClient) view.getTag());
 
     }
 
-    protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
+    protected void goToIndexDetailActivity(CommonPersonObjectClient commonPersonObjectClient) {
 
         Intent intent = new Intent(getActivity(), MotherDetail.class);
-        intent.putExtra("mothers",  client);
+        intent.putExtra("mother",  commonPersonObjectClient);
         startActivity(intent);
     }
     @Override
