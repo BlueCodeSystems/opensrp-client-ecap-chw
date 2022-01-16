@@ -266,7 +266,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_name_of_caregiver",
         "type": "edit_text",
-        "hint": "Name of caregiver",
+        "hint": "Caregiver's Full Name",
         "look_up": "true",
         "edit_type": "name",
         "v_regex": {
@@ -297,7 +297,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_nrc",
         "type": "edit_text",
-        "hint": "Primary Caregiver NRC ",
+        "hint": "Caregiver's NRC#",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
           "err": "Number must take the format of ######/##/#"
@@ -2705,7 +2705,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_firstname",
         "type": "edit_text",
-        "hint": "Caregiver full name ",
+        "hint": "Caregiver's Full Name",
         "read_only": "true",
         "edit_type": "name",
         "relevance": {
@@ -2729,7 +2729,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
         "type": "spinner",
-        "hint": "Caregiver Gender",
+        "hint": "Caregiver's Gender",
         "values": [
           "Male",
           "Female"
@@ -2752,7 +2752,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
-        "hint": "Caregiver Date of birth",
+        "hint": "Caregiver's Date of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -2778,7 +2778,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "spinner",
-        "hint": "HIV Status",
+        "hint": "Caregiver's HIV Status",
         "values": [
           "HIV+",
           "HIV-",
@@ -2825,7 +2825,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
-        "hint": "Caregivers phone number",
+        "hint": "Caregiver's Phone Number",
         "edit_type": "number",
         "v_numeric": {
           "value": false,

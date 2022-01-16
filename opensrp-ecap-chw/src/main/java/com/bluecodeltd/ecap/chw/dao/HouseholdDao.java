@@ -25,7 +25,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static Household getHousehold (String householdID) {
 
-        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' AND index_check_box = 'yes' ";
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' ";
         //String sql = "SELECT * FROM ec_household WHERE household_id = '" + householdID + "' ";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
@@ -84,6 +84,11 @@ public class HouseholdDao extends AbstractDao {
             record.setBeds(getCursorValue(c, "beds"));
             record.setMalaria_itns(getCursorValue(c, "malaria_itns"));
             record.setHousehold_member_had_malaria(getCursorValue(c, "household_member_had_malaria"));
+            record.setEmergency_name(getCursorValue(c, "emergency_name"));
+            record.setE_relationship(getCursorValue(c, "e_relationship"));
+            record.setContact_address(getCursorValue(c, "contact_address"));
+            record.setContact_number(getCursorValue(c, "contact_number"));
+
 
             return record;
         };
