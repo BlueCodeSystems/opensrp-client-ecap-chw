@@ -181,6 +181,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
+
     public void onClick(View v) {
         int id = v.getId();
 
@@ -443,7 +444,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "Family Member":
 
                         Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
-
+                        finish();
+                        startActivity(getIntent());
                         break;
 
                 }

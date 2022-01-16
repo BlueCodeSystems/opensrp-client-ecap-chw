@@ -1043,7 +1043,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "name",
         "type": "edit_text",
-        "hint": "Name of Primary Caregiver",
+        "hint": "Caregiver's Full Name",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1051,13 +1051,26 @@
         }
       },
       {
-        "key": "Residential_Address",
-        "openmrs_entity_parent": "usual_residence",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "address2",
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "toaster_info_text": "",
+        "toaster_type": "info"
+      },
+      {
+        "key": "adolescent_village",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
-        "hint": "Plot Number, Village or Street ",
-        "edit_type": "name"
+        "hint": "Address",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
 
       {
