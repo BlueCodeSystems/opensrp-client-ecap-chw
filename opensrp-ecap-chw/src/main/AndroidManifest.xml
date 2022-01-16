@@ -48,7 +48,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.MotherDetail"
-            android:label="Caregiver Details"
+            android:label="Mother Details"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.FamilyPlanningMemberProfileActivity"

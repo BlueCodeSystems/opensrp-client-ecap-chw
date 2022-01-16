@@ -116,6 +116,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
 
         Intent intent = new Intent(getActivity(), MotherDetail.class);
         intent.putExtra("mother",  commonPersonObjectClient);
+        intent.putExtra("refresh",  "1");
         startActivity(intent);
     }
     @Override

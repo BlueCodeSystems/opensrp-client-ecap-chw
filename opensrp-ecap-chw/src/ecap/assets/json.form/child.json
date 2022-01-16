@@ -1,239 +1,274 @@
 {
-  "key": "children",
-  "type": "repeating_group",
-  "reference_edit_text": "",
-  "reference_edit_text_hint": "Number of children",
-  "repeating_group_label": "Child",
-  "openmrs_entity_parent": "",
-  "openmrs_entity": "person_attribute",
-  "openmrs_entity_id": "",
-  "v_required": {
-    "value": false,
-    "err": "Please specify the number of children"
+  "count": "1",
+  "encounter_type": "Child",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
   },
-  "value": [
-    {
-      "key": "first_name",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person",
-      "openmrs_entity_id": "first_name",
-      "type": "edit_text",
-      "hint": "Child's first name ",
-      "edit_type": "name",
-      "look_up": "true"
-    },
-    {
-      "key": "last_name",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person",
-      "openmrs_entity_id": "last_name",
-      "type": "edit_text",
-      "hint": "Child's last name ",
-      "edit_type": "name",
-      "look_up": "true",
-      "v_required": {
-        "value": false,
-        "err": "Please enter VCA last name"
+  "step1": {
+    "title": "Childs Details",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Pediatric Surge Facility Index Mother Register",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "This Register serves as a detailed record for Vulnerable Children and Adolescents (VCAs) aged 0-18 years identified through index tracing of Children/Adolescents of\nHIV+ mothers, offered and/or enrolled into the VCA comprehensive program. ",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info"
       },
-      "v_regex": {
-        "value": "[A-Za-z\\s\\.\\-]*",
-        "err": "Please enter a valid name"
-      }
-    },
-    {
-      "key": "gender",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "gender",
-      "type": "native_radio",
-      "label": "VCA Gender",
-      "options": [
-        {
-          "key": "male",
-          "text": "Male"
-        },
-        {
-          "key": "female",
-          "text": "Female"
-        }
-      ]
-    },
-    {
-      "key": "birthdate",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "birthdate",
-      "type": "date_picker",
-      "hint": "Child's DOB",
-      "label_info_title": "Child's Date of Birth",
-      "expanded": false,
-      "duration": {
-        "label": "Age"
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
       },
-      "min_date": "today-19y",
-      "max_date": "today",
-      "v_required": {
-        "value": false,
-        "err": "Please enter the date of birth"
-      }
-    },
-    {
-      "key": "user_select_test",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "user_select_test",
-      "type": "native_radio",
-      "label_text_style": "bold",
-      "text_color": "#000000",
-      "label": "Was the child linked to testing?",
-      "options": [
-        {
-          "key": "yes",
-          "text": "Yes"
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "VCA ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Child's first name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter First Name"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Child's last name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter last name"
         },
-        {
-          "key": "no",
-          "text": "No"
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
         }
-      ]
-    },
-    {
-      "key": "user_select_hiv",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "user_select_hiv",
-      "type": "native_radio",
-      "label_text_style": "bold",
-      "text_color": "#000000",
-      "label": "Was the child tested for HIV?",
-      "options": [
-        {
-          "key": "yes",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "Yes",
-          "text": "Yes"
+      },
+      {
+        "key": "adolescent_birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_birthdate",
+        "type": "date_picker",
+        "hint": "Child's Date of birth",
+        "min_date": "today-19y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter Birth Date"
+        }
+      },
+      {
+        "key": "myage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "myage",
+        "type": "edit_text",
+        "hint": "Age",
+        "hidden": "true",
+        "edit_type": "number",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Child's Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please Select Gender"
+        }
+      },
+      {
+        "key": "user_select_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "user_select_hiv",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Was the child tested for HIV?",
+        "options": [
+          {
+            "key": "yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "No",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "is_hiv_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_hiv_positive",
+        "type": "native_radio",
+        "label": "Is the Child/Adolescent HIV Positive",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
         },
-        {
-          "key": "no",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "No",
-          "text": "No"
+        "relevance": {
+          "step1:user_select_hiv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
-      ]
-    },
-    {
-      "key": "hiv_status",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "hiv_status",
-      "type": "spinner",
-      "hint": "HIV Status  ",
-      "values": [
-        "HIV+",
-        "HIV-",
-        "Unknown",
-        "Status not required based on risk assessment"
-      ],
-      "relevance": {
-        "step1:user_select_hiv": {
-          "type": "string",
-          "ex": "equalTo(., \"yes\")"
+      },
+      {
+        "key": "is_on_hiv_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_on_hiv_treatment",
+        "type": "native_radio",
+        "label": "Is the Child/Adolescent currently on HIV treatment?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "ART Number",
+        "relevance": {
+          "step1:is_on_hiv_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       }
-    },
-    {
-      "key": "user_select_art",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "user_select_art",
-      "type": "native_radio",
-      "label_text_style": "bold",
-      "text_color": "#000000",
-      "label": "Is the child already on ART?",
-      "options": [
-        {
-          "key": "Yes",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "Yes",
-          "text": "Yes"
-        },
-        {
-          "key": "No",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "No",
-          "text": "No"
-        }
-      ],
-      "relevance": {
-        "step1:hiv_status": {
-          "type": "string",
-          "ex": "equalTo(., \"HIV+\")"
-        }
-      }
-    },
-    {
-      "key": "user_select_enrollment",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "user_select_enrollment",
-      "type": "native_radio",
-      "label_text_style": "bold",
-      "text_color": "#000000",
-      "label": "Has the child been offered enrollment into the OVC Program?",
-      "options": [
-        {
-          "key": "Yes",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "Yes",
-          "text": "Yes"
-        },
-        {
-          "key": "No",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "No",
-          "text": "No"
-        }
-      ],
-      "v_required": {
-        "value": false,
-        "err": "You need to make a selection"
-      }
-    },
-    {
-      "key": "user_select_ovc_program",
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "person_attribute",
-      "openmrs_entity_id": "user_select_ovc_program",
-      "type": "native_radio",
-      "label_text_style": "bold",
-      "text_color": "#000000",
-      "label": "Has the child been enrolled into the OVC Program?",
-      "options": [
-        {
-          "key": "Yes",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "Yes",
-          "text": "Yes"
-        },
-        {
-          "key": "No",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "No",
-          "text": "No"
-        }
-      ],
-      "v_required": {
-        "value": false,
-        "err": "You need to make a selection"
-      }
-    }
-  ]
-},
+    ]
+  }
+}
