@@ -2646,7 +2646,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Select "
+          "err": "This field is required"
         },
         "relevance": {
           "step4:acceptance": {

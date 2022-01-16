@@ -90,7 +90,7 @@
 
 
                     <Button
-                        android:id="@+id/btn_profile_registration_info"
+                        android:id="@+id/hh_prof"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -101,6 +101,7 @@
                         android:paddingStart="@dimen/profile_btn_registration_info_padding"
                         android:paddingTop="0dp"
                         android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                        android:onClick="onClick"
                         android:text="Household Profile"
                         android:textAllCaps="false"
                  />
