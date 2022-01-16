@@ -5,6 +5,7 @@ import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -31,14 +32,9 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,12 +52,14 @@ import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.domain.UniqueId;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.BaseRepository;
+import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
@@ -91,6 +89,8 @@ public class MotherDetail extends AppCompatActivity {
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
     private RelativeLayout cLayout, mLayout;
+    private UniqueIdRepository uniqueIdRepository;
+    public String vca_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,6 +228,12 @@ public class MotherDetail extends AppCompatActivity {
 
                 break;
 
+            case R.id.hh_prof:
+
+                Intent intent = new Intent(this, HouseholdIndexActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 
@@ -243,20 +249,29 @@ public class MotherDetail extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
-        formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
 
         switch (formName) {
 
             case "mother_index":
 
                 formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
+                formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
 
                 break;
 
             case "child":
 
+                UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
+                String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+
+                String xId = entityId.replaceFirst("^0+(?!$)", "");
+                String uId = xId.replace("-", "");
+                vca_id = uId;
+
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", this.commonPersonObjectClient.getColumnmaps().get("household_id"));
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", uId);
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
 
                 break;
         }
@@ -314,8 +329,9 @@ public class MotherDetail extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
-                Toasty.success(MotherDetail.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                getUniqueIdRepository().close(vca_id);
 
+                Toasty.success(MotherDetail.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
                 finish();
                 startActivity(getIntent());
@@ -326,10 +342,17 @@ public class MotherDetail extends AppCompatActivity {
 
         }
 
-
         getData();
         setupViewPager();
         updateChildTabTitle();
+    }
+
+    @NonNull
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
     }
 
     public ChildIndexEventClient processRegistration(String jsonString) {
@@ -348,7 +371,6 @@ public class MotherDetail extends AppCompatActivity {
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
-
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
@@ -358,6 +380,18 @@ public class MotherDetail extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_MOTHER_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Child":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -427,47 +461,6 @@ public class MotherDetail extends AppCompatActivity {
         return ChwApplication.getInstance().getEcSyncHelper();
     }
 
-
-    public void finishUpdate(Pair<Client, Event> pair, String jsonString, boolean isEditMode) {
-
-        try {
-
-            Client baseClient = pair.first;
-            Event baseEvent = pair.second;
-
-            if (baseClient != null) {
-                JSONObject clientJson = new JSONObject(JsonFormUtils.gson.toJson(baseClient));
-                if (isEditMode) {
-                    JsonFormUtils.mergeAndSaveClient(getSyncHelper(), baseClient);
-                } else {
-                    getSyncHelper().addClient(baseClient.getBaseEntityId(), clientJson);
-                }
-            }
-
-            if (baseEvent != null) {
-                JSONObject eventJson = new JSONObject(JsonFormUtils.gson.toJson(baseEvent));
-                getSyncHelper().addEvent(baseEvent.getBaseEntityId(), eventJson);
-            }
-
-            if (!isEditMode && baseClient != null) {
-                String opensrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey);
-                //mark OPENSRP ID as used
-                // getUniqueIdRepository().close(opensrpId);
-            }
-
-            if (baseClient != null || baseEvent != null) {
-                String imageLocation = JsonFormUtils.getFieldValue(jsonString, org.smartregister.family.util.Constants.KEY.PHOTO);
-                JsonFormUtils.saveImage(baseEvent.getProviderId(), baseClient.getBaseEntityId(), imageLocation);
-            }
-
-            long lastSyncTimeStamp = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-            Date lastSyncDate = new Date(lastSyncTimeStamp);
-            getClientProcessorForJava().processClient(getSyncHelper().getEvents(lastSyncDate, BaseRepository.TYPE_Unprocessed));
-            getAllSharedPreferences().saveLastUpdatedAtDate(lastSyncDate.getTime());
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-    }
 
     public AllSharedPreferences getAllSharedPreferences () {
         return ChwApplication.getInstance().getContext().allSharedPreferences();

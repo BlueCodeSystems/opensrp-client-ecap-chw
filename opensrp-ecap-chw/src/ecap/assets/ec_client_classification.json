@@ -324,6 +324,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Child",
+            "creates_case": [
+              "ec_client_index"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Household Screening",
             "creates_case": [
               "ec_household",
