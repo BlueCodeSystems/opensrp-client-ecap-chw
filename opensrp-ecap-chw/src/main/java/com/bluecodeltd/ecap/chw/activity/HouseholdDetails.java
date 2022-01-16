@@ -444,7 +444,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "Family Member":
 
                         Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
-
+                        finish();
+                        startActivity(getIntent());
                         break;
 
                 }

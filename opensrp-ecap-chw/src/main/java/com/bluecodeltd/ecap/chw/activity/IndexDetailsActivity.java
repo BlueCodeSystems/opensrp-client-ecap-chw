@@ -737,7 +737,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         };
 
-
         try {
             AppExecutors appExecutors = new AppExecutors();
             appExecutors.diskIO().execute(runnable);

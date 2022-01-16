@@ -48,16 +48,47 @@
 
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/caregiver_name"
+                        android:id="@+id/mother_name"
                         style="@style/CustomFontTextViewStyle.ClientList.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="25dp"
                         android:paddingStart="0dp"
-                        android:text="Mother : "
+                        android:text="Hope Chanda"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/activity_title_size" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <org.smartregister.view.customcontrols.CustomFontTextView
+                            style="@style/CustomFontTextViewStyle.ClientList.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="AGE : "
+                            android:paddingStart="0dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColor="@color/white" />
+
+                        <org.smartregister.view.customcontrols.CustomFontTextView
+                            android:id="@+id/mother_age"
+                            style="@style/CustomFontTextViewStyle.ClientList.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="5"
+                            android:paddingStart="0dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+
                     <Button
                         android:id="@+id/btn_profile_registration_info"
                         android:layout_width="wrap_content"
@@ -103,7 +134,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
 
         <LinearLayout
@@ -117,6 +149,52 @@
             android:orientation="vertical"
             android:visibility="visible">
 
+            <RelativeLayout
+                android:id="@+id/mother_form"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/callFab3"
+                    android:background="#666666"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/add_mother"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="Edit Mother"
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24"   />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/child_form"
