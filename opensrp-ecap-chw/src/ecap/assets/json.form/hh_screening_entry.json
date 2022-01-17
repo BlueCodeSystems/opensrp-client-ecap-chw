@@ -941,10 +941,6 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
         }
       },
       {
@@ -1598,9 +1594,6 @@
         "label_text_style": "bold",
         "text": "Emergency Contact",
         "text_color": "#000000",
-        "v_required": {
-          "value": true
-        }
       },
       {
         "key": "emergency_name",
@@ -1608,14 +1601,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "emergency_name",
         "type": "edit_text",
-        "hint": "Emergency Contact Name",
+        "hint": "Emergency Contact Name ",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Emergency Name"
-        },
+        "look_up": "true",
         "v_required": {
-          "value": true
+          "value": true,
+          "err": "This field is required"
         }
       },
       {
@@ -1623,22 +1614,14 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "e_relationship",
-        "type": "spinner",
-        "hint": "Relationship to caregiver",
-        "values": [
-          "Single",
-          "Married",
-          "Divorced",
-          "Widowed",
-          "Not Married,in a Relationship"
-        ],
-        "keys": [
-          "single",
-          "married",
-          "divorced",
-          "widowed",
-          "in_relationship"
-        ]
+        "type": "edit_text",
+        "hint": "Relationship to caregiver ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "info",
@@ -1650,25 +1633,31 @@
         "toaster_info_text": "",
         "toaster_type": "info"
       },
+
       {
         "key": "contact_address",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "contact_address",
         "type": "edit_text",
-        "hint": "Contact Address",
+        "hint": "Contact Address ",
+        "edit_type": "name",
+        "look_up": "true",
         "v_required": {
-          "value": true
+          "value": true,
+          "err": "This field is required"
         }
       },
+
       {
         "key": "contact_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "contact_number",
         "type": "edit_text",
-        "hint": "Contact Phone Number",
-        "edit_type": "number",
+        "hint": "Contact Phone Number ",
+        "edit_type": "name",
+        "look_up": "true",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
@@ -1676,9 +1665,6 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_required": {
-          "value": true
         }
       }
     ]
