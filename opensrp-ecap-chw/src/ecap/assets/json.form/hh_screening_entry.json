@@ -1593,7 +1593,7 @@
         "type": "label",
         "label_text_style": "bold",
         "text": "Emergency Contact",
-        "text_color": "#000000",
+        "text_color": "#000000"
       },
       {
         "key": "emergency_name",
