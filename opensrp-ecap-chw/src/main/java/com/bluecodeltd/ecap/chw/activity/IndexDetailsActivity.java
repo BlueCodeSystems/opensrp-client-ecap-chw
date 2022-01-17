@@ -894,6 +894,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         switch (formName) {
 
             case "case_status":
+            case "case_plan":
             case "vca_screening":
 
                 formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
