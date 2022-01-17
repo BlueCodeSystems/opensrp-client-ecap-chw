@@ -81,12 +81,12 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Child's first name ",
+        "hint": "VCA's first name ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter First Name"
+          "err": "Please enter First Name of VCA"
         }
       },
       {
@@ -95,12 +95,12 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Child's last name ",
+        "hint": "VCA's last name ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter last name"
+          "err": "Please enter last name of VCA"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -135,12 +135,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "Child's Date of birth",
+        "hint": "VCA's Date of birth",
         "min_date": "today-19y",
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please enter Birth Date"
+          "err": "Please enter Birth Date of VCA"
         }
       },
       {
@@ -166,7 +166,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
-        "label": "Child's Gender",
+        "label": "VCA's Gender",
         "options": [
           {
             "key": "male",
@@ -179,7 +179,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Please Select Gender"
+          "err": "Please Select Gender of VCA"
         }
       },
       {
@@ -1690,7 +1690,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relation",
         "type": "native_radio",
-        "label": "Relationship to Child",
+        "label": "Caregiver's Relationship to VCA",
         "options": [
           {
             "key": "mother",
@@ -1703,7 +1703,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Please enter relationship"
+          "err": "Please enter relationship of Caregiver to VCA"
         }
       },
       {
@@ -1727,7 +1727,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
-        "hint": "Caregivers phone number",
+        "hint": "Caregiver's phone number",
         "read_only": "true",
         "edit_type": "number"
       },
@@ -1736,14 +1736,27 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "edit_text",
-        "value": "1",
+        "type": "native_radio",
+        "value": "active",
         "read_only": "true",
-        "hint": "Case Status",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "active",
+            "text": "Active"
+          },
+          {
+            "key": "closed",
+            "text": "Closed"
+          },
+          {
+            "key": "inactive",
+            "text": "Inactive"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": ""
         }
       }
     ]
