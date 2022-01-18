@@ -237,7 +237,7 @@
         "type": "edit_text",
         "hint": "Address",
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Required"
         }
       },
@@ -247,7 +247,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "landmark",
         "type": "edit_text",
-        "hint": "Address",
+        "hint": "Landmark",
         "v_required": {
           "value": true,
           "err": "Required"

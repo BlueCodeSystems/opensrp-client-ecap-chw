@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Caregiver Household Assessment Form",
+  "encounter_type": "Caregiver Assessment",
   "skip_blank_steps": true,
   "entity_id": "",
   "relational_id": "",
@@ -55,6 +55,20 @@
   "step1": {
     "title": "Caregiver Household Assessment",
     "fields": [
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
       {
         "key": "caregiver_sex",
         "openmrs_entity_parent": "",
@@ -128,7 +142,6 @@
           "err": "You're required select family head"
         }
       },
-
       {
         "key": "household_enrollment_header",
         "type": "label",
@@ -213,34 +226,20 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "symptoms",
         "type": "native_radio",
-        "label": "Do you have any of the following symptoms?\n(A) Current cough, (B) Fever, (C) Weight loss,\n(D) Night sweats ",
-
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
+        "label": "Do you have any of the following symptoms?\nCurrent cough\nFever\nWeight loss\nNight sweats",
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
-            "value": false
+            "text": "Yes"
           },
           {
             "key": "no",
-            "text": "No",
-            "value": false
+            "text": "No"
           }
         ],
         "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_assessment.yml"
-            }
-          }
+          "value": true,
+          "err": "This field is Required"
         }
       },
       {
