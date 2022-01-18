@@ -30,6 +30,8 @@ public class Household {
     private String physical_address;
     private String caregiver_phone;
     private String caregiver_hiv_status;
+    private String active_on_treatment;
+    private String caregiver_art_number;
     private String base_entity_id;
     private String household_id;
     private String village;
@@ -445,5 +447,21 @@ public class Household {
 
     public void setContact_number(String contact_number) {
         this.contact_number = contact_number;
+    }
+
+    public String getActive_on_treatment() {
+        return active_on_treatment;
+    }
+
+    public void setActive_on_treatment(String active_on_treatment) {
+        this.active_on_treatment = active_on_treatment;
+    }
+
+    public String getCaregiver_art_number() {
+        return caregiver_art_number;
+    }
+
+    public void setCaregiver_art_number(String caregiver_art_number) {
+        this.caregiver_art_number = caregiver_art_number;
     }
 }

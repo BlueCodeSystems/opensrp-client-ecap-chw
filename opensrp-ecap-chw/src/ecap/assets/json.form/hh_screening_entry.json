@@ -559,6 +559,7 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
+        "read_only":"true",
         "options": [
           {
             "key": "HIV+",
@@ -573,7 +574,7 @@
             "text": "Unknown"
           },
           {
-            "key": "Status not required based on risk assessment",
+            "key": "not_required",
             "text": "Status not required based on risk assessment"
           }
         ],
@@ -588,7 +589,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Are you active on treatment?",
+        "label": "Is the primary Caregiver on ART?",
         "options": [
           {
             "key": "yes",
@@ -599,10 +600,6 @@
             "text": "No"
           }
         ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {

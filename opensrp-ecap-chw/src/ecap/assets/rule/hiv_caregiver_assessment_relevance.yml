@@ -1,0 +1,70 @@
+---
+name: step1_symptoms
+description: symptoms
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_active_on_treatment
+description: active_on_treatment
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('HIV+')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_appointments
+description: appointments
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('HIV+')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_regularly
+description: art_regularly
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('HIV+')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_private_parts
+description: private_parts
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_exposed
+description: exposed
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_counseling_testing
+description: hiv_counseling_testing
+priority: 1
+condition: "step1_symptoms.contains('yes') || step1_private_parts.contains('yes') || step1_exposed.contains('yes') || step1_unprotected.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_adherence
+description: hiv_hiv_adherence
+priority: 1
+condition: "step1_appointments.contains('no') || step1_art_regularly.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_adherence
+description: hiv_hiv_adherence
+priority: 1
+condition: "step1_appointments.contains('no') || step1_art_regularly.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_plha
+description: plha
+priority: 1
+condition: "step1_appointments.contains('no') || step1_art_regularly.contains('no')"
+actions:
+  - "isRelevant = true"
