@@ -296,6 +296,39 @@
         }
       },
       {
+        "key": "partners",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partners",
+        "type": "edit_text",
+        "hint": "Partners",
+        "value": "ZEC",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "          Household Information",
+        "label_text_style": "bold"
+      },
+      {
         "key": "info",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -312,39 +345,6 @@
         "openmrs_entity_id": "village",
         "type": "edit_text",
         "hint": "Address",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "1",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "hd2",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Household Information"
-      },
-      {
-        "key": "partners",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners",
-        "type": "edit_text",
-        "hint": "Partners",
-        "value": "ZEC",
-        "read_only": "true",
-        "edit_type": "name",
-        "look_up": "true",
         "v_required": {
           "value": true,
           "err": "Required"
@@ -394,15 +394,8 @@
       {
         "key": "primary_caregivers_only",
         "type": "label",
-        "text": "For Primary Caregivers Only"
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "1",
-        "type": "spacer",
-        "spacer_height": "15dp"
+        "text": "          For Primary Caregivers Only",
+        "label_text_style": "bold"
       },
       {
         "key": "caregiver_name",
@@ -427,11 +420,17 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
-        "type": "spinner",
-        "hint": "Caregiver's HIV Status",
-        "values": [
-          "Male",
-          "Female"
+        "type": "native_radio",
+        "label": "Caregiver's Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
         ],
         "v_required": {
           "value": true,
@@ -463,7 +462,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "text": "In the Address field below, you can put the Plot Number, Village or Street of the Caregiver.",
         "toaster_info_text": "",
         "toaster_type": "info"
       },
@@ -473,7 +472,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_village",
         "type": "edit_text",
-        "hint": "Address",
+        "hint": "Caregiver's Address",
         "v_required": {
           "value": true,
           "err": "Required"
@@ -1444,58 +1443,6 @@
               "rules-file": "family_register_relevance.yml"
             }
           }
-        }
-      },
-      {
-        "key": "males_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "males_less_5",
-        "type": "edit_text",
-        "hint": "Number of Males < 5 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "females_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "females_less_5",
-        "type": "edit_text",
-        "hint": "Number of Females < 5 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "males_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "males_10_17",
-        "type": "edit_text",
-        "hint": "Number of Males 10-17 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "females_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "females_10_17",
-        "type": "edit_text",
-        "hint": "Number of Females 10-17 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
         }
       },
       {
