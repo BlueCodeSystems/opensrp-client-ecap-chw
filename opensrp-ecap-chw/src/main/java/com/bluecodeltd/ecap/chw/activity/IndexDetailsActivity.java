@@ -37,6 +37,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
@@ -115,6 +116,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private TextView visitTabCount, plansTabCount;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
+
     String myAge;
     ObjectMapper oMapper;
     Child child;
@@ -126,6 +128,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +152,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String gender = indexChild.getGender();
         uniqueId = indexChild.getUnique_id();
 
+        is_screened = HouseholdDao.checkIfScreened(indexChild.getHousehold_id());
+
+
+
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
         fabGradSub = findViewById(R.id.grad_fab20);
@@ -160,12 +167,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
-
         referralModel = ReferralDao.getReferral(childId);
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
-
         oMapper = new ObjectMapper();
 
         if(vcaAssessmentModel == null){
@@ -844,19 +849,27 @@ public class IndexDetailsActivity extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
-            rassessment.setVisibility(View.VISIBLE);
-            rcase_plan.setVisibility(View.VISIBLE);
-            referral.setVisibility(View.VISIBLE);
-            household_visitation_for_vca.setVisibility(View.VISIBLE);
-            grad.setVisibility(View.VISIBLE);
-            grad_sub.setVisibility(View.VISIBLE);
 
-            if(Integer.parseInt(vcaAge) < 15){
-                hiv_assessment.setVisibility(View.VISIBLE);
+            if (is_screened != null && is_screened.equals("true")){
+
+                rassessment.setVisibility(View.VISIBLE);
+                rcase_plan.setVisibility(View.VISIBLE);
+                referral.setVisibility(View.VISIBLE);
+                household_visitation_for_vca.setVisibility(View.VISIBLE);
+                grad.setVisibility(View.VISIBLE);
+                grad_sub.setVisibility(View.VISIBLE);
+
+                if(Integer.parseInt(vcaAge) < 15){
+                    hiv_assessment.setVisibility(View.VISIBLE);
+                }
+
+                if(Integer.parseInt(vcaAge) >= 15){
+                    hiv_assessment2.setVisibility(View.VISIBLE);
+                }
+
             }
-
-            if(Integer.parseInt(vcaAge) >= 15){
-                hiv_assessment2.setVisibility(View.VISIBLE);
+            else{
+                Toast.makeText(getApplicationContext(),"Household Has Not Yet Been Screened",Toast.LENGTH_LONG).show();
             }
         }
 
