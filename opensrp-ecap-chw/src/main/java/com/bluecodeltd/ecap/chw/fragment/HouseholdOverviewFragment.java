@@ -26,7 +26,7 @@ public class HouseholdOverviewFragment extends Fragment {
 
 
     TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales5,
-            txtFemales5, txtMales10, txtFemales10;
+            txtFemales5, txtMales10, txtFemales10, txtNumber, txtName;
     LinearLayout linearLayout;
     Button screenBtn;
     FloatingActionButton fab;
@@ -48,6 +48,9 @@ public class HouseholdOverviewFragment extends Fragment {
         txtFemales5 = view.findViewById(R.id.females_less_5);
         txtMales10 = view.findViewById(R.id.males_10);
         txtFemales10 = view.findViewById(R.id.females_10);
+        txtName = view.findViewById(R.id.emergency_name);
+        txtNumber = view.findViewById(R.id.emergency_number);
+
         linearLayout = view.findViewById(R.id.llayout);
         screenBtn = view.findViewById(R.id.screenBtn);
 
@@ -73,6 +76,8 @@ public class HouseholdOverviewFragment extends Fragment {
         String female5 = house.getFemales_less_5();
         String male10 = house.getMales_10_17();
         String female10 = house.getFemales_10_17();
+        String emergency_name = house.getEmergency_name();
+        String contact_number = house.getContact_number();
 
         txtIncome.setText(iscome);
         txtBeds.setText(beds);
@@ -81,7 +86,8 @@ public class HouseholdOverviewFragment extends Fragment {
         txtFemales5.setText(female5);
         txtMales10.setText(male10);
         txtFemales10.setText(female10);
-
+        txtName.setText(emergency_name);
+        txtNumber.setText(contact_number);
 
         if(is_screened != null && is_screened.equals("true")){
 

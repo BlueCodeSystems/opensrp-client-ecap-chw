@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.model;
 
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

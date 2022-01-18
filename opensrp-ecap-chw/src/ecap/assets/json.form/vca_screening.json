@@ -242,12 +242,16 @@
         }
       },
       {
-        "key": "user_gps",
+        "key": "landmark",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "user_gps",
-        "openmrs_data_type": "text",
-        "type": "gps"
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Address",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
 
       {
@@ -442,8 +446,8 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
-          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
+          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
+          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
         }
       },
       {
@@ -496,6 +500,104 @@
           }
         }
       },
+
+      {
+        "key": "client_screened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "client_screened",
+        "type": "native_radio",
+        "label": "Was the client screened for TB during the last clinical visit?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:is_tb_screening_results_on_file": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "client_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "client_result",
+        "type": "native_radio",
+        "label": "If the answer is Yes, what was the screening result",
+        "options": [
+          {
+            "key": "Negative",
+            "text": "Negative"
+          },
+          {
+            "key": "Positive",
+            "text": "Positive"
+          }
+        ],
+        "relevance": {
+          "step1:client_screened": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "tpt_client_eligibility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tpt_client_eligibility",
+        "type": "native_radio",
+        "label": "If the answer is Negative, was client eligible for TPT",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:client_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Negative\")"
+          }
+        }
+      },
+      {
+        "key": "tpt_client_initiated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tpt_client_initiated",
+        "type": "native_radio",
+        "label": "If the answer is yes, was the client initiated on TPT",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:tpt_client_eligibility": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
       {
         "key": "screened_for_malnutrition",
         "openmrs_entity_parent": "",
@@ -514,10 +616,33 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:hiv_tb": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "screened_for_malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "screened_for_malnutrition",
+        "type": "native_radio",
+        "label": "Has the child/adolescent been screened for malnutrition?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_tb": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
