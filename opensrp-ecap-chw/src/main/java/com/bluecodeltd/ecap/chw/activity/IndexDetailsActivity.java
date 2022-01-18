@@ -104,7 +104,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge;
+    public String childId, uniqueId, vcaAge,is_screened ;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
     private  Child indexChild;
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -131,6 +131,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vca_content);
+
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
@@ -240,8 +241,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String birthdate = indexChild.getAdolescent_birthdate();
 
         if(birthdate != null){
-           txtAge.setText(getAge(birthdate));
-           vcaAge = getAgeWithoutText(birthdate);
+            txtAge.setText(getAge(birthdate));
+            vcaAge = getAgeWithoutText(birthdate);
 
 
         }else {
@@ -262,6 +263,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return map;
 
     }
+
 
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
