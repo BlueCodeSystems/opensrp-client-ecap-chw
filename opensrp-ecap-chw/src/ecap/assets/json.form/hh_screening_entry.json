@@ -1449,58 +1449,6 @@
         }
       },
       {
-        "key": "males_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "males_less_5",
-        "type": "edit_text",
-        "hint": "Number of Males < 5 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "females_less_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "females_less_5",
-        "type": "edit_text",
-        "hint": "Number of Females < 5 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "males_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "males_10_17",
-        "type": "edit_text",
-        "hint": "Number of Males 10-17 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "females_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "females_10_17",
-        "type": "edit_text",
-        "hint": "Number of Females 10-17 Years Old in household",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
         "key": "fam_source_income",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
