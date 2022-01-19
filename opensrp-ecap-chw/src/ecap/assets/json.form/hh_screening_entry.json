@@ -1492,7 +1492,7 @@
         "openmrs_entity_id": "beds",
         "openmrs_data_type": "text",
         "type": "edit_text",
-        "edit_text": "number",
+        "edit_type": "number",
         "hint": "Number of beds in household",
         "tree": [
         ],
@@ -1508,7 +1508,7 @@
         "openmrs_entity_id": "malaria_itns",
         "openmrs_data_type": "text",
         "type": "edit_text",
-        "edit_text": "number",
+        "edit_type": "number",
         "hint": "Number of malaria ITNs in use",
         "tree": [
         ],
