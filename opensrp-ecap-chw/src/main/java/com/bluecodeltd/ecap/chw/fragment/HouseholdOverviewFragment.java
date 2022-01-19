@@ -71,7 +71,7 @@ public class HouseholdOverviewFragment extends Fragment {
         String incomeSource = house.getFam_source_income();
         String iscome = house.getIncome();
         String beds = house.getBeds();
-        //String malaria = house.getMalaria();
+        String household_member_had_malaria = house.getHousehold_member_had_malaria();
         String male5 = house.getMales_less_5();
         String female5 = house.getFemales_less_5();
         String male10 = house.getMales_10_17();
@@ -82,6 +82,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncome.setText(iscome);
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
+        txtMalaria.setText(household_member_had_malaria);
         txtMales5.setText(male5);
         txtFemales5.setText(female5);
         txtMales10.setText(male10);
