@@ -1134,7 +1134,6 @@
           }
         }
       },
-
       {
         "key": "toaster_source_income",
         "openmrs_entity_parent": "",
@@ -1762,6 +1761,7 @@
           }
         }
       },
+
       {
         "key": "toaster_sanitary_product",
         "openmrs_entity_parent": "",

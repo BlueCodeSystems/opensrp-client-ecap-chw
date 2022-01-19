@@ -145,8 +145,6 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "client_result"),
                     getCursorValue(c, "tpt_client_eligibility"),
                     getCursorValue(c, "tpt_client_initiated"),
-
-
                     getCursorValue(c, "case_status"),
                     getCursorValue(c, "reason"),
                     getCursorValue(c, "other_reason"),

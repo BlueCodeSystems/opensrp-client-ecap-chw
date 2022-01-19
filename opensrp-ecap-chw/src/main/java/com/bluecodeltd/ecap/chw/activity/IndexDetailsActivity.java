@@ -869,7 +869,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             }
             else{
-                Toast.makeText(getApplicationContext(),"Household Has Not Yet Been Screened",Toast.LENGTH_LONG).show();
+
+                Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
             }
         }
 
