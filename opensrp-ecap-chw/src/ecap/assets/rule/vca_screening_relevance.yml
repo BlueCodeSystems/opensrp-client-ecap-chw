@@ -352,7 +352,7 @@ actions:
 name: step1_adhering_to_treatment
 description: adhering_to_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes')"
+condition: "step1_positive_mother.contains('yes') && step1_active_on_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---

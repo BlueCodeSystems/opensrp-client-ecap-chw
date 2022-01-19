@@ -498,7 +498,6 @@
           }
         }
       },
-
       {
         "key": "client_screened",
         "openmrs_entity_parent": "",
@@ -595,7 +594,6 @@
           }
         }
       },
-
       {
         "key": "screened_for_malnutrition",
         "openmrs_entity_parent": "",
@@ -1382,7 +1380,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_engaged_in_sex_work",
         "type": "native_radio",
-        "label": "F6. Is the AGYW engaged in sex work?",
+        "label": "Is the AGYW engaged in sex work?",
         "options": [
           {
             "key": "yes",

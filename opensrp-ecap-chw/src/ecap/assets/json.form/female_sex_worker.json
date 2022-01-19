@@ -1,6 +1,6 @@
 {
-  "count": "2",
-  "skip_blank_steps": true,
+  "count": "1",
+  "skip_blank_steps": false,
   "encounter_type": "FSW",
   "entity_id": "",
   "metadata": {
@@ -49,129 +49,75 @@
   },
   "step1": {
     "title": "Female Sex Worker Screening",
-    "next": "step2",
     "fields": [
       {
-        "key": "health_facility",
+        "key": "adolescent_first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "adolescent_first_name",
         "type": "edit_text",
-        "hint": "Health facility",
+        "hint": "First Name of FSW ",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Health Facility only takes letters"
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter VCA first name"
         },
-        "v_required": {
-          "value": true,
-          "err": "Please enter Health Facility"
-        }
-      },
-      {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "stateProvince",
-        "type": "spinner",
-        "hint": "Province",
-        "values": [
-          "Central",
-          "Southern"
-        ],
-        "keys": [
-          "central",
-          "southern"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select Province"
-        }
-      },
-      {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "countyDistrict",
-        "type": "spinner",
-        "hint": "District",
-        "values": [
-          "Chibombo",
-          "Chisamba",
-          "Mumbwa",
-          "Mkushi",
-          "Kabwe",
-          "Kapiri",
-          "Chikankata",
-          "Choma",
-          "Mazabuka",
-          "Monze",
-          "Kalomo",
-          "Namwala",
-          "Sinazongwe",
-          "Livingstone"
-        ],
-        "keys": [
-          "chibombo",
-          "chisamba",
-          "mumbwa",
-          "mkushi",
-          "kabwe",
-          "kapiri",
-          "chikankata",
-          "choma",
-          "mazabuka",
-          "monze",
-          "kalomo",
-          "namwala",
-          "sinazongwe",
-          "livingstone"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please select District"
-        }
-      },
-      {
-        "key": "Implementing Partner",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": " ",
-        "type": "spinner",
-        "hint": "Implementing Partner ",
-        "values": [
-          "Project Concern Zambia (PCZ)",
-          "Young Women Christian Association (YWCA) ",
-          "Bwafwano Integrated Services Organization (BISO)",
-          "Circle of Hope (COH)",
-          "Zambia Episcopal Conference (ZEC)"
-        ]
-      },
-      {
-        "key": "ward",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "ward",
-        "type": "edit_text",
-        "hint": "Ward",
-        "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of ward only take letters"
+          "err": "Please enter a valid name"
         }
       },
       {
-        "key": "village",
+        "key": "adolescent_last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "village",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_last_name",
         "type": "edit_text",
-        "hint": "Village/Compound",
+        "hint": "Last Name of FSW",
         "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter VCA last name"
+        },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Village/Compound only take letters"
+          "err": "Please enter a valid name"
         }
+      },
+      {
+        "key": "nrc_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nrc_number",
+        "entity_id": "guardian",
+        "type": "edit_text",
+        "hint": "NRC Number",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
       },
       {
         "key": "physical_address",
@@ -193,54 +139,56 @@
         }
       },
       {
-        "key": "fname_fsw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "fname_fsw",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "First Name of FSW",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter FSW first name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "lname_fsw",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "lname_fsw",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Last Name of FSW",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter FSW last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "nrc_number",
+        "key": "adolescent_birthdate",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "nrc_number",
-        "entity_id": "guardian",
+        "openmrs_entity_id": "adolescent_birthdate",
+        "type": "date_picker",
+        "hint": "VCA Date of birth",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today-9y",
+        "v_required": {
+          "value": true,
+          "err": "Please enter Birth Date"
+        }
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "read_only": "true",
         "type": "edit_text",
-        "hint": "NRC Number",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
-          "err": "Number must take the format of ######/##/#"
+        "hint": "FSW Age",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "female_sex_worker_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4_toast",
+        "value": "true",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA will been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_type": "positive",
+        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "lessThan(., \"18\")"
+          }
         }
       },
       {
@@ -284,41 +232,6 @@
         "hint": "Mobile Number"
       },
       {
-        "key": "dob",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "event",
-        "openmrs_entity_id": "dob",
-        "type": "date_picker",
-        "hint": "Date of Birth",
-
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "FSW Date Of Birth"
-        }
-      },
-      {
-        "key": "age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "FSW Age",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_calculation.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "children_under18",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -341,13 +254,7 @@
             "text": "No"
           }
         ]
-      }
-    ]
-  },
-  "step2": {
-    "title": "Female Sex Worker Screening",
-    "display_back_button": "true",
-    "fields": [
+      },
       {
         "key": "offer_enrollment",
         "openmrs_entity_parent": "",
@@ -356,7 +263,7 @@
         "type": "toaster_notes",
         "text": "Please proceed to request for consent to offer enrollment",
         "toaster_type": "info",
-        "toaster_info_text": "This is an information note",
+        "toaster_info_text": "Please proceed to request for consent to offer enrollment",
         "toaster_info_title": "Request Consent",
         "relevance": {
           "step1:children_under18": {
@@ -374,47 +281,11 @@
         "text": "DO NOT proceed with enrollment.",
         "toaster_type": "problem",
         "toaster_info_text": "DO NOT proceed with enrollment.",
-        "toaster_info_title": "DO NOT proceed with enrollment",
+        "toaster_info_title": "Entry does not match any Sub Populations",
         "relevance": {
           "step1:children_under18": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "subpop4_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "subpop4_toast",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index FSW has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_type": "positive",
-        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop4",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "read_only": "true",
-        "type": "edit_text",
-        "value": "true",
-        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_relevance.yml"
-            }
           }
         }
       }
