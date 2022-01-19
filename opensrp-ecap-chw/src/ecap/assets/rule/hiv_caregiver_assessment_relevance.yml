@@ -2,7 +2,7 @@
 name: step1_symptoms
 description: symptoms
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('Unknown')"
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_test_6months.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -30,14 +30,28 @@ actions:
 name: step1_private_parts
 description: private_parts
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('Unknown')"
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_test_6months.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_exposed
 description: exposed
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('Unknown')"
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_test_6months.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_unprotected
+description: unprotected
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_test_6months.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_breastfeeding
+description: breastfeeding
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('Unknown') || step1_test_6months.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -62,9 +76,16 @@ condition: "step1_appointments.contains('no') || step1_art_regularly.contains('n
 actions:
   - "isRelevant = true"
 ---
+name: step1_care_facility
+description: care_facility
+priority: 1
+condition: "step1_cancer_screened.contains('no') || step1_malnutrition_screened.contains('no')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_plha
 description: plha
 priority: 1
-condition: "step1_appointments.contains('no') || step1_art_regularly.contains('no')"
+condition: "step1_appointments.contains('no') || step1_art_regularly.contains('no') || step1_documented_12months.contains('no')"
 actions:
   - "isRelevant = true"

@@ -20,26 +20,12 @@ condition: "step3_birthdate == ''"
 actions:
   - "calculation = step1_adolescent_birthdate"
 ---
-name: step5_caregiver_firstname
-description: Caregiver Firstname
-priority: 1
-condition: "step5_caregiver_firstname == ''"
-actions:
-  - "calculation = step1_adolescent_name_of_caregiver"
----
 name: step5_village
 description: Caregiver Village
 priority: 1
 condition: "step5_village == ''"
 actions:
   - "calculation = step1_adolescent_village"
----
-name: step5_caregiver_phone
-description: Caregiver Phone
-priority: 1
-condition: "step5_phone_number == ''"
-actions:
-  - "calculation = step1_adolescent_phone"
 ---
 name: step1_disrict
 description: District
