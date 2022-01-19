@@ -128,8 +128,15 @@ public class HouseholdDetails extends AppCompatActivity {
         updateChildTabTitle();
 
         txtDistrict.setText(householdId);
-        cname.setText(child.getCaregiver_name() + " Household");
-        // txtVillage.setText(house.getVillage() + ", ");
+
+        if(child.getCaregiver_name() == null || child.getCaregiver_name().equals("null")){
+
+            cname.setText("No Household");
+
+        } else {
+            cname.setText(child.getCaregiver_name() + " Household");
+        }
+
     }
 
     public HashMap<String, Household> getData() {

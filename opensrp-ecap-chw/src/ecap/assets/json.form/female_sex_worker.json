@@ -1,7 +1,7 @@
 {
   "count": "1",
   "skip_blank_steps": false,
-  "encounter_type": "FSW",
+  "encounter_type": "Sub Population",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -48,13 +48,13 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "Female Sex Worker Screening",
+    "title": "Sub Population",
     "fields": [
       {
-        "key": "adolescent_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_first_name",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "First Name of FSW ",
         "edit_type": "name",
@@ -69,10 +69,10 @@
         }
       },
       {
-        "key": "adolescent_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_last_name",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "Last Name of FSW",
         "edit_type": "name",
@@ -120,6 +120,75 @@
         "read_only": "true"
       },
       {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "edit_text",
+        "hint": "Gender",
+        "value": "female",
+        "read_only": "true"
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stateProvince",
+        "type": "edit_text",
+        "hint": "Province",
+        "value": "Southern",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "countyDistrict",
+        "type": "edit_text",
+        "hint": "District",
+        "value": "Choma",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subTown",
+        "type": "edit_text",
+        "hint": "Ward",
+        "value": "Choma Central",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "value": "Choma General Hospital",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
+        "type": "edit_text",
+        "hint": "Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
         "key": "physical_address",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -151,7 +220,7 @@
           "label": "Age"
         },
         "min_date": "today-100y",
-        "max_date": "today-9y",
+        "max_date": "today-10y",
         "v_required": {
           "value": true,
           "err": "Please enter Birth Date"
@@ -184,6 +253,36 @@
         "toaster_type": "positive",
         "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "lessThan(., \"18\")"
+          }
+        }
+      },
+      {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "native_radio",
+        "value": "1",
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
+          }
+        ],
         "relevance": {
           "step1:age": {
             "type": "string",
