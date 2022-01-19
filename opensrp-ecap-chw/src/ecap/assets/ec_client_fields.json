@@ -1527,10 +1527,38 @@
           }
         },
         {
-          "column_name": "user_gps",
+          "column_name": "landmark",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.user_gps"
+            "field": "attributes.landmark"
+          }
+        },
+        {
+          "column_name": "client_screened",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_screened"
+          }
+        },
+        {
+          "column_name": "client_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_result"
+          }
+        },
+        {
+          "column_name": "tpt_client_eligibility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tpt_client_eligibility"
+          }
+        },
+        {
+          "column_name": "tpt_client_initiated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tpt_client_initiated"
           }
         },
         {
