@@ -1535,7 +1535,6 @@
           "err": "Last time household member had malaria"
         }
       },
-
       {
         "key": "emergency_contact",
         "type": "label",
@@ -1604,8 +1603,7 @@
         "openmrs_entity_id": "contact_number",
         "type": "edit_text",
         "hint": "Contact Phone Number ",
-        "edit_type": "name",
-        "look_up": "true",
+        "edit_type": "number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
