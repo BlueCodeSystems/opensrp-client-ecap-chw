@@ -9,8 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 
 public class HouseholdVisitsFragment extends Fragment {
+
+
 
     @Nullable
     @Override
