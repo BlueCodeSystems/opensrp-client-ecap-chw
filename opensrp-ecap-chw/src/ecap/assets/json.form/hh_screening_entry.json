@@ -558,6 +558,7 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
+        "read_only":"true",
         "options": [
           {
             "key": "HIV+",
@@ -572,7 +573,7 @@
             "text": "Unknown"
           },
           {
-            "key": "Status not required based on risk assessment",
+            "key": "not_required",
             "text": "Status not required based on risk assessment"
           }
         ],
@@ -587,7 +588,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Are you active on treatment?",
+        "label": "Is the primary Caregiver on ART?",
         "options": [
           {
             "key": "yes",
@@ -598,10 +599,6 @@
             "text": "No"
           }
         ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -648,8 +645,8 @@
           "err": "Required"
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
-          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
+          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
+          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
         }
       },
       {
@@ -714,6 +711,10 @@
           "value": true,
           "err": "Required"
         },
+        "v_regex": {
+          "value": "([0-9]{1}||[0-9]{2}||[0-9]{3})|\\s*",
+          "err": "Viral load cannot be 1000 or above"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -731,7 +732,7 @@
         "hint": "Date of last viral load test",
         "label_info_title": "Date of last viral load test",
         "expanded": false,
-        "min_date": "today-50y",
+        "min_date": "today-100y",
         "max_date": "today",
         "relevance": {
           "rules-engine": {

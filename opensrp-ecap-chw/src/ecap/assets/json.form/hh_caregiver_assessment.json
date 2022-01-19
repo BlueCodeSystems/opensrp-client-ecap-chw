@@ -1,0 +1,578 @@
+{
+  "count": "1",
+  "encounter_type": "Caregiver Assessment",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "",
+    "fields": [
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "BASIC INFORMATION"
+      },
+      {
+        "key": "household_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_type",
+        "type": "native_radio",
+        "label": "Household type",
+        "options": [
+          {
+            "key": "child_headed",
+            "text": "Child Headed Household"
+          },
+          {
+            "key": "male_headed",
+            "text": "Male Headed Household"
+          },
+          {
+            "key": "female_headed",
+            "text": "Female Headed Household"
+          },
+          {
+            "key": "aged_headed",
+            "text": "Aged Headed Household"
+          },
+          {
+            "key": "disabled_caregiver",
+            "text": "Disabled Caregiver Headed Household"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "CURRENT HIV STATUS"
+      },
+      {
+        "key": "caregiver_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_hiv_status",
+        "type": "native_radio",
+        "label": "Caregiver's HIV Status",
+        "options": [
+          {
+            "key": "HIV+",
+            "text": "HIV+"
+          },
+          {
+            "key": "HIV-",
+            "text": "HIV-"
+          },
+          {
+            "key": "Unknown",
+            "text": "Unknown"
+          },
+          {
+            "key": "not_required",
+            "text": "Status not required based on risk assessment"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "HIV RISK ASSESSMENT"
+      },
+      {
+        "key": "symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "symptoms",
+        "type": "native_radio",
+        "label": "Do you have any of the following symptoms? Current cough, Fever, Weight loss, Night sweats?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "private_parts",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "private_parts",
+        "type": "native_radio",
+        "label": "Do you have any of the following on your private parts? Sores, Blisters, Unusual Discharge",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "exposed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "exposed",
+        "type": "native_radio",
+        "label": "In the last 6 months, have you been exposed to HIV through a needle stick, an injection, or a piercing? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "unprotected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unprotected",
+        "type": "native_radio",
+        "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV- positive? ?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "breastfeeding",
+        "type": "native_radio",
+        "label": "Are you pregnant or breastfeeding?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_counseling_testing",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_counseling_testing",
+        "type": "toaster_notes",
+        "value": "Referred",
+        "text": "Refer for HIV Counselling and Testing",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Refer for HIV Counselling and Testing",
+        "toaster_info_title": "Refer",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "tb_screening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_screening",
+        "type": "toaster_notes",
+        "value": "Referred",
+        "text": "Refer for TB testing",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Refer for TB Testing",
+        "toaster_info_title": "Refer",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:symptoms": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "transmitted_infections",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "transmitted_infections",
+        "type": "toaster_notes",
+        "text": "Refer for STI Treatment",
+        "value": "Referred",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Refer for STI Treatment",
+        "toaster_info_title": "Refer",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:private_parts": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "ART ASSESSMENT FOR HIV+ CAREGIVER"
+      },
+      {
+        "key": "active_on_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "active_on_treatment",
+        "type": "native_radio",
+        "read_only": "true",
+        "label": "Is the primary Caregiver on ART?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "read_only":"true",
+        "edit_type": "name",
+        "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "v_regex": {
+          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
+        }
+      },
+      {
+        "key": "appointments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "appointments",
+        "type": "native_radio",
+        "read_only": "true",
+        "label": "Has the primary caregiver been regularly attending ART appointments and collecting drugs from the facility on schedule?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "art_regularly",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_regularly",
+        "type": "native_radio",
+        "read_only": "true",
+        "label": "In the past year, has the primary caregiver been taking ART regularly as prescribed? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_adherence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_adherence",
+        "type": "toaster_notes",
+        "text": "Provide ART adherence support",
+        "value": "Provided",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Provide ART adherence support",
+        "toaster_info_title": "Provided",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "plha",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "plha",
+        "type": "toaster_notes",
+        "text": "Refer to support group",
+        "value": "Provided",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Refer to support group",
+        "toaster_info_title": "Referred",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "health_facility_refer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility_refer",
+        "type": "toaster_notes",
+        "text": "Refer to Health Facility",
+        "value": "Referred",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Refer to Health Facility",
+        "toaster_info_title": "Refer",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "months_medication",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "months_medication",
+        "type": "native_radio",
+        "label": "How many months of medications are typically received from the facility?",
+        "options": [
+          {
+            "key": "0<3 months",
+            "text": "0<3 months"
+          },
+          {
+            "key": "3-5 months",
+            "text": "3-5 months"
+          },
+          {
+            "key": "6+ months",
+            "text": "6+ months"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      }
+    ]
+  }
+}
+
