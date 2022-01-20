@@ -850,6 +850,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
 
+
             if (is_screened != null && is_screened.equals("true")){
 
                 rassessment.setVisibility(View.VISIBLE);
@@ -871,6 +872,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             else{
 
                 Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+
             }
         }
 
