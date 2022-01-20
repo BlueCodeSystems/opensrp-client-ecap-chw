@@ -19,12 +19,14 @@ import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.domain.UniqueId;
 import org.smartregister.family.util.JsonFormUtils;
@@ -50,6 +52,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
     private UniqueIdRepository uniqueIdRepository;
     Random Number;
     int Rnumber;
+    ObjectMapper oMapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +87,11 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
     @Override
     public void startFormActivity(JSONObject jsonObject) {
 
+        oMapper = new ObjectMapper();
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String code = sp.getString("code", "00000");
+        Object obj = sp.getAll();
 
         Number = new Random();
         Rnumber = Number.nextInt(100000000);
@@ -96,6 +102,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         String household_id = code + "/" + xId;
 
         try {
+            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));//
             jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
 
 

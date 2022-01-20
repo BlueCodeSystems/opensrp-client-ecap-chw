@@ -116,8 +116,9 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
             if (navigationMenu != null) {
                 navigationMenu.refreshCount();
             }
-            gotToChildProfile(uniqueId);
             getUniqueIdRepository().close(uniqueId);
+            gotToChildProfile(uniqueId);
+
         }
     }
     @Override

@@ -97,18 +97,13 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
         }
         else if (item.getItemId() == R.id.action_fsw) {
 
-            if ( context instanceof MotherIndexActivity) {
+            if ( context instanceof IndexRegisterActivity) {
 
-                MotherIndexActivity motherIndexActivity = (MotherIndexActivity) context;
+                IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 
                 try {
-                    FormUtils formUtils = new FormUtils(context);
 
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("female_sex_worker");
-
-                    motherIndexActivity.startFormActivity(indexRegisterForm);
+                    idRegisterActivity.startFormActivity("female_sex_worker",null,"");
 
                 } catch (Exception e) {
                     Timber.e(e);
