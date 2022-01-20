@@ -930,10 +930,10 @@
         }
       },
       {
-        "key": "carried_by",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "carried_by",
+        "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
         "hint": "Carried out by",
         "read_only": "true",
