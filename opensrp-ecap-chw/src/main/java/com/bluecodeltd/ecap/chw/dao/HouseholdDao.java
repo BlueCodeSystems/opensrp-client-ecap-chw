@@ -90,8 +90,16 @@ public class HouseholdDao extends AbstractDao {
             record.setE_relationship(getCursorValue(c, "e_relationship"));
             record.setContact_address(getCursorValue(c, "contact_address"));
             record.setContact_number(getCursorValue(c, "contact_number"));
-
-
+            record.setSecure(getCursorValue(c, "secure"));
+            record.setApproved_family(getCursorValue(c, "approved_family"));
+            record.setAdolescent_village(getCursorValue(c, "adolescent_village"));
+            record.setApproved_by(getCursorValue(c, "approved_by"));
+            record.setIs_caregiver_virally_suppressed(getCursorValue(c, "is_caregiver_virally_suppressed"));
+            record.setViral_load_results(getCursorValue(c, "viral_load_results"));
+            record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
+            record.setCarried_by(getCursorValue(c, "carried_by"));
+            record.setCaregiver_education(getCursorValue(c, "caregiver_education"));
+            record.setMarital_status(getCursorValue(c, "marital_status"));
             return record;
         };
     }

@@ -63,8 +63,102 @@ public class Household {
     private String e_relationship;
     private String contact_address;
     private String contact_number;
+    private String secure;
+    private String approved_family;
+    private String adolescent_village;
+    private String approved_by;
+    private String is_caregiver_virally_suppressed;
+    private String viral_load_results;
+    private String date_of_last_viral_load;
+    private String carried_by;
+    private String caregiver_education;
+    private String marital_status;
+
+    public String getMarital_status() {
+        return marital_status;
+    }
+
+    public void setMarital_status(String marital_status) {
+        this.marital_status = marital_status;
+    }
+
+    public String getCaregiver_education() {
+        return caregiver_education;
+    }
+
+    public void setCaregiver_education(String caregiver_education) {
+        this.caregiver_education = caregiver_education;
+    }
+
+    public String getCarried_by() {
+        return carried_by;
+    }
+
+    public void setCarried_by(String carried_by) {
+        this.carried_by = carried_by;
+    }
+
+    public String getDate_of_last_viral_load() {
+        return date_of_last_viral_load;
+    }
+
+    public void setDate_of_last_viral_load(String date_of_last_viral_load) {
+        this.date_of_last_viral_load = date_of_last_viral_load;
+    }
+
+    public String getViral_load_results() {
+        return viral_load_results;
+    }
+
+    public void setViral_load_results(String viral_load_results) {
+        this.viral_load_results = viral_load_results;
+    }
+
+    public String getIs_caregiver_virally_suppressed() {
+        return is_caregiver_virally_suppressed;
+    }
+
+    public void setIs_caregiver_virally_suppressed(String is_caregiver_virally_suppressed) {
+        this.is_caregiver_virally_suppressed = is_caregiver_virally_suppressed;
+    }
+
+    public String getApproved_by() {
+        return approved_by;
+    }
+
+    public void setApproved_by(String approved_by) {
+        this.approved_by = approved_by;
+    }
 
 
+
+    public String getAdolescent_village() {
+        return adolescent_village;
+    }
+
+    public void setAdolescent_village(String adolescent_village) {
+        this.adolescent_village = adolescent_village;
+    }
+
+
+
+
+
+    public String getSecure() {
+        return secure;
+    }
+
+    public void setSecure(String secure) {
+        this.secure = secure;
+    }
+
+    public String getApproved_family() {
+        return approved_family;
+    }
+
+    public void setApproved_family(String approved_family) {
+        this.approved_family = approved_family;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;
