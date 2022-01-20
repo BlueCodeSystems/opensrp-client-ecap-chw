@@ -1740,15 +1740,24 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "edit_text",
+        "type": "native_radio",
         "value": "1",
-        "read_only": "true",
-        "hint": "Case Status",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
+          }
+        ]
       }
     ]
   },
