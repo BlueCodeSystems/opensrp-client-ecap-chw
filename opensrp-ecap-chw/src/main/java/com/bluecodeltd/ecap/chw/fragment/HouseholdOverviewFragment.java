@@ -62,8 +62,10 @@ public class HouseholdOverviewFragment extends Fragment {
 
     }
 
+    @SuppressLint("RestrictedApi")
     public void setViews(){
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+        String females = ( (HouseholdDetails) requireActivity()).countFemales;
 
         house = mymap.get("house");
 
@@ -84,7 +86,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncomeSource.setText(incomeSource);
         txtMalaria.setText(household_member_had_malaria);
         txtMales5.setText(male5);
-        txtFemales5.setText(female5);
+        txtFemales5.setText(females);
         txtMales10.setText(male10);
         txtFemales10.setText(female10);
         txtName.setText(emergency_name);

@@ -25,16 +25,16 @@
     <item
         android:id="@+id/action_identifcation"
         android:enabled="true"
-        android:icon="@mipmap/ic_add_family"
+        android:icon="@drawable/ic_baseline_person_add_24"
         app:showAsAction="ifRoom"
-        android:title="" />
+        android:title="VCA Screening" />
 
     <item
         android:id="@+id/action_fsw"
         android:enabled="true"
-        android:icon="@mipmap/ic_add_family"
+        android:icon="@drawable/ic_baseline_person_add_24"
         app:showAsAction="ifRoom"
-        android:title="Add FSW" />
+        android:title="FSW Screening" />
 
 
 </menu>

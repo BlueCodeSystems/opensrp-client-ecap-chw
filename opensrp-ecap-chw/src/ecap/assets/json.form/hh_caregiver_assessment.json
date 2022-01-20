@@ -143,6 +143,28 @@
         }
       },
       {
+        "key": "test_6months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "test_6months",
+        "type": "native_radio",
+        "label": "Was the HIV test done less than 6 months ago? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes, less than 6 months"
+          },
+          {
+            "key": "no",
+            "text": "No, more than 6 months"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -569,6 +591,1015 @@
           "step1:caregiver_hiv_status": {
             "type": "string",
             "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "viral_load_12months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load_12months",
+        "type": "native_radio",
+        "label": "Has the primary caregiver had a viral load test in the past 12 months?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load",
+        "type": "toaster_notes",
+        "text": "Support Caregiver to access viral load testing.",
+        "value": "Provided",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Support Caregiver to access viral load testing.",
+        "toaster_info_title": "Provide",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:viral_load_12months": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "viral_load_results",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load_results",
+        "type": "edit_text",
+        "hint": "Result of most recent viral load test.",
+        "read_only":"true",
+        "relevance": {
+          "step1:viral_load_12months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_of_last_viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "edit_text",
+        "hint": "Date of last viral load test",
+        "read_only":"true",
+        "relevance": {
+          "step1:viral_load_12months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "documented_12months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "documented_12months",
+        "type": "native_radio",
+        "label": "Was the primary caregiver documented as virally suppressed (<1000 copies/mL) in the most recent viral load test? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "pmtct_enrolled",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_enrolled",
+        "type": "native_radio",
+        "label": "Has the primary caregiver enrolled in PMTCT (if pregnant or breastfeeding) ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "pmtct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct",
+        "type": "toaster_notes",
+        "text": "Provide support enrollment in the PMTCT program",
+        "value": "Provided",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Support Caregiver to access viral load testing.",
+        "toaster_info_title": "Provide",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:pmtct_enrolled": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "cancer_screened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cancer_screened",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been screened for cervical cancer?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "care_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "care_facility",
+        "type": "toaster_notes",
+        "text": "Provide escort to health facility",
+        "value": "Provided",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Provide escort to health facility",
+        "toaster_info_title": "Provide",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "malnutrition_screened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "malnutrition_screened",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been screened for malnutrition?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd5",
+        "type": "label",
+        "text": "ECONOMIC STABILITY AND SECURITY"
+      },
+      {
+        "key": "household_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_number",
+        "type": "edit_text",
+        "hint": "How many members does the household have?",
+        "edit_type": "number",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "caregiver_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_education",
+        "type": "native_radio",
+        "label": "Caregiver’s education level",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          },
+          {
+            "key": "highest_grade",
+            "text": "Highest grade",
+            "value": false
+          },
+          {
+            "key": "college_university",
+            "text": "College/University",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You`re to select the level of education"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "household_member",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_member",
+        "type": "native_radio",
+        "label": "In the last 6 months, has there been\nat least one member of the household\nwho has consistently had formal or\ninformal   employment   or   is   self-\nemployed or has a business or is\nengaged   in   an   economically\nproductive activity?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_household_member",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer   for   economic   strengthening interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:household_member": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "source_income",
+        "type": "native_radio",
+        "label": "What   is   the   MAIN   SOURCE   of\nhousehold income?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "None"
+        ],
+        "options": [
+          {
+            "key": "Full-time or part-time job (salary or own business)",
+            "text": "Full-time or part-time job (salary or own business)"
+          },
+          {
+            "key": "Farming",
+            "text": "Farming"
+          },
+          {
+            "key": "Livestock farming (chickens, cattle, pigs etc.)",
+            "text": "Livestock farming (chickens, cattle, pigs etc.)"
+          },
+          {
+            "key": "None",
+            "text": "None"
+          },
+          {
+            "key": "Other",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_source_income",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer   for   economic   strengthening interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:source_income": {
+            "type": "string",
+            "ex": "equalTo(., \"None\")"
+          }
+        }
+      },
+      {
+        "key": "other_source_main",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_source",
+        "type": "edit_text",
+        "hint": "Specify other income source",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "step1:source_income": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
+          }
+        }
+      },
+      {
+        "key": "source_earner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "source_earner",
+        "hint": "Who is the MAIN household income earner?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Primary Caregiver (self)",
+          "Spouse",
+          "Other"
+        ],
+        "keys": [
+          "Primary Caregiver (self)",
+          "Spouse",
+          "Other"
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "other_earner_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_earner",
+        "type": "edit_text",
+        "hint": "Specify other income earner",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "step1:source_earner": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
+          }
+        }
+      },
+      {
+        "key": "last_time",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_time",
+        "type": "native_radio",
+        "label": "The   last   time   there   was   an unexpected,   urgent   household\nexpense   (e.g.,   emergency   medical\nexpense   or   house   repair),   was\nsomeone in the household able to pay\nfor that expense?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_last_time",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer   for   economic   strengthening interventions",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:last_time": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "hh_head_spouse",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_head_spouse",
+        "type": "native_radio",
+        "label": "Does   the   HH   head,   spouse,   or\ncaregiver have any form of severe\ndisability   (e.g.,   hearing,   speech,\nphysical,   mental,   visual,   genetic\ndeficiencies (albinism)) that prevents\nhim/her   from   engaging   in\neconomically productive activities?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "any_adult",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "any_adult",
+        "type": "native_radio",
+        "label": "Does the household have ANY adult member who has been very sick for at\nleast three months during the past 12\nmonths?   (This   means   that   the\nhousehold head or any adult member\nwas too sick to work or do normal\nactivities around the house for at least\nthree of the past 12 months)",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],       "options": [
+        {
+          "key": "yes",
+          "text": "Yes"
+        },
+        {
+          "key": "no",
+          "text": "No"
+        }
+      ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "household_stable",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_stable",
+        "type": "native_radio",
+        "label": "Does   the   household   have   stable\nshelter that is adequate, safe, and\ndry? (Please observe)",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "every_member",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "every_member",
+        "type": "native_radio",
+        "label": "Does every member of your \nhousehold have at least one pair of \nshoes?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "material_construction",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "material_construction",
+        "hint": "What type of material is mainly used \nfor construction of the wall of the \ndwelling?",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Un-burnt bricks with mud",
+          "mud and poles",
+          "Un-burnt bricks with cements",
+          "wood",
+          "tin/iron sheets",
+          "concrete/stones",
+          "Burnt stabilized bricks",
+          "cement blocks",
+          "Other"
+        ],
+        "keys": [
+          "Un-burnt bricks with mud",
+          "mud and poles",
+          "Un-burnt bricks with cements",
+          "wood",
+          "tin/iron sheets",
+          "concrete/stones",
+          "Burnt stabilized bricks",
+          "cement blocks",
+          "Other"
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "material_construction_roof",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "material_construction_roof",
+        "hint": "What type of material is mainly used \nfor construction of the roof of the \ndwelling",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "Thatch, or tins",
+          "Iron sheets",
+          "concrete",
+          "tiles",
+          "asbestos"
+        ],
+        "keys": [
+          "Thatch, or tins",
+          "Iron sheets",
+          "concrete",
+          "tiles",
+          "asbestos"
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "early_childhood",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "early_childhood",
+        "type": "native_radio",
+        "label": "Are there any children aged 0-5 year\nin this household enrolled in Early\nChildhood Development and/or Early\nChildhood Education services?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_early_childhood",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort for enrollment in ECD/ECE services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:early_childhood": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "children_adolescent_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children_adolescent_a",
+        "type": "native_radio",
+        "label": "Are   there   any   children/adolescents aged 6–19 years in this household\nwho are not enrolled in primary or secondary school? ",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_children_adolescent_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Discuss   barriers   with   primary\ncaregiver and refer to appropriate services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:children_adolescent_a": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "children_adolescent_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children_adolescent_b",
+        "type": "native_radio",
+        "label": "Are   there   any   children/adolescents\naged 6–19 years in this household\nwho are enrolled in school and have\nmissed school for about 20 days in the\nlast school term?",
+
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_children_adolescent_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Discuss   barriers   with   primary caregiver and refer to appropriate services",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:children_adolescent_b": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "drinking_water",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "drinking_water",
+        "label_text_style": "bold",
+        "type": "check_box",
+        "label": "What is the main source of drinking\nwater   for   members   of   your\nhousehold?",
+        "options": [
+          {
+            "key": "piped_water",
+            "text": "Piped water"
+          },
+          {
+            "key": "piped_yard",
+            "text": "piped to yard/plot"
+          },
+          {
+            "key": "public_taps",
+            "text": "public taps/standpipe"
+          },
+          {
+            "key": "borehole",
+            "text": "Borehole"
+          },
+          {
+            "key": "dug_well",
+            "text": "Dug well"
+          },
+          {
+            "key": "protected_well",
+            "text": "Protected well"
+          },
+          {
+            "key": "unprotected_well",
+            "text": "Unprotected well"
+          },
+          {
+            "key": "water_spring",
+            "text": "Water from spring"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "other_water_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_water",
+        "type": "edit_text",
+        "hint": "Specify other drinking water source",
+        "edit_type": "name",
+        "v_required": {
+          "value": "false",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toilet_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "toilet_facility",
+        "label_text_style": "bold",
+        "type": "check_box",
+        "label": "What type of toilet facility does the \nhousehold mainly use?",
+        "options": [
+          {
+            "key": "Flush toilet",
+            "text": "Flush toilet"
+          },
+          {
+            "key": "Ventilated improved latrine (VIP)",
+            "text": "Ventilated improved latrine (VIP)"
+          },
+          {
+            "key": "Pit latrine with a slab",
+            "text": "Pit latrine with a slab"
+          },
+          {
+            "key": "Pit latrine without a slab",
+            "text": "Pit latrine without a slab"
+          },
+          {
+            "key": "bucket toilet",
+            "text": "Bucket toilet"
+          },
+          {
+            "key": "No facility/bush/field",
+            "text": "No facility/bush/field"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "sanitary_products",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sanitary_products",
+        "label_text_style": "bold",
+        "type": "check_box",
+        "label": "Do AGYW in the household have access to sanitary products?",
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+          {
+            "key": "Sanitary pads/tampons",
+            "text": "Sanitary pads/tampons"
+          },
+          {
+            "key": "Recycled cloth pads",
+            "text": "Recycled cloth pads"
+          },
+          {
+            "key": "none",
+            "text": "None"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       }

@@ -63,6 +63,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     public String action = null;
     ObjectMapper oMapper;
+    ObjectMapper oMapper_hh_screen;
     private UniqueIdRepository uniqueIdRepository;
     Random Number;
     int Rnumber;
@@ -244,11 +245,12 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     @Override
     public void startFormActivity(JSONObject jsonObject) {
 
-        oMapper = new ObjectMapper();
+        oMapper = new ObjectMapper();//
+        oMapper_hh_screen = new ObjectMapper();
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);//
         String code = sp.getString("code", "00000");
-        Object obj = sp.getAll();
+        Object obj = sp.getAll();//
 
         Number = new Random();
         Rnumber = Number.nextInt(100000000);
@@ -261,15 +263,13 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         try {
 
 
-            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
+            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));//
 
             jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -322,8 +322,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     new ChwBottomNavigationListener(this));
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
-            bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
-            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
+         //   bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
 
         }
     }
