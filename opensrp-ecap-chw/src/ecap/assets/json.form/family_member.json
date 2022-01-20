@@ -108,6 +108,25 @@
         }
       },
       {
+        "key": "caregiver_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_name",
+        "type": "edit_text",
+        "hint": "Caregiver's Full Name",
+        "read_only": "true",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of caregiver can only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Name of caregiver is required"
+        }
+      },
+      {
         "key": "member_type",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1641,25 +1660,6 @@
         "openmrs_entity_id": "4",
         "type": "spacer",
         "spacer_height": "15dp"
-      },
-      {
-        "key": "caregiver_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_name",
-        "type": "edit_text",
-        "hint": "Caregiver's Full Name",
-        "read_only": "true",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Name of caregiver is required"
-        }
       },
       {
         "key": "caregiver_sex",

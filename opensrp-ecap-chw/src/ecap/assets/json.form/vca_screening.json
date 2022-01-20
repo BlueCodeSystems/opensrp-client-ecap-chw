@@ -1,6 +1,5 @@
 {
-  "count": "6",
-  "hide_blank_steps" : true,
+  "count": "5",
   "encounter_type": "Sub Population",
   "entity_id": "",
   "relational_id": "",
@@ -237,7 +236,7 @@
         "type": "edit_text",
         "hint": "Address",
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Required"
         }
       },
@@ -247,13 +246,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "landmark",
         "type": "edit_text",
-        "hint": "Address",
+        "hint": "Landmark",
         "v_required": {
           "value": true,
           "err": "Required"
         }
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -598,6 +596,102 @@
         }
       },
 
+      {
+        "key": "client_screened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "client_screened",
+        "type": "native_radio",
+        "label": "Was the client screened for TB during the last clinical visit?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:is_tb_screening_results_on_file": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "client_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "client_result",
+        "type": "native_radio",
+        "label": "If the answer is Yes, what was the screening result",
+        "options": [
+          {
+            "key": "Negative",
+            "text": "Negative"
+          },
+          {
+            "key": "Positive",
+            "text": "Positive"
+          }
+        ],
+        "relevance": {
+          "step1:client_screened": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "tpt_client_eligibility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tpt_client_eligibility",
+        "type": "native_radio",
+        "label": "If the answer is Negative, was client eligible for TPT",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:client_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Negative\")"
+          }
+        }
+      },
+      {
+        "key": "tpt_client_initiated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tpt_client_initiated",
+        "type": "native_radio",
+        "label": "If the answer is yes, was the client initiated on TPT",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:tpt_client_eligibility": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
       {
         "key": "screened_for_malnutrition",
         "openmrs_entity_parent": "",
@@ -1384,7 +1478,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_engaged_in_sex_work",
         "type": "native_radio",
-        "label": "F6. Is the AGYW engaged in sex work?",
+        "label": "Is the AGYW engaged in sex work?",
         "options": [
           {
             "key": "yes",
@@ -1910,7 +2004,6 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
       },
-
       {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
@@ -2202,63 +2295,6 @@
             }
           }
         }
-      }
-    ]
-  },
-  "step4": {
-    "title": "Enrollment into OVC program - HIV positive",
-    "fields": [
-      {
-        "key": "date_referred",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_referred",
-        "type": "date_picker",
-        "hint": "Date Referred",
-        "label_info_title": "Date Referred",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "date_offered_enrollment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_offered_enrollment",
-        "type": "date_picker",
-        "hint": "Date Offered Enrollment",
-        "label_info_title": "Date Oferred Enrollment",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
       },
       {
         "key": "case_status",
@@ -2283,6 +2319,50 @@
             "text": "Closed"
           }
         ]
+      }
+    ]
+  },
+  "step4": {
+    "title": "Enrollment into OVC program",
+    "next": "step5",
+    "fields": [
+      {
+        "key": "date_referred",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_referred",
+        "type": "date_picker",
+        "hint": "Date Referred",
+        "label_info_title": "Date Referred",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "date_offered_enrollment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_offered_enrollment",
+        "type": "date_picker",
+        "hint": "Date Offered Enrollment",
+        "label_info_title": "Date Oferred Enrollment",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
       },
       {
         "key": "acceptance",
@@ -2309,13 +2389,6 @@
         "v_required": {
           "value": true,
           "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
         }
       },
       {
@@ -2364,9 +2437,10 @@
           "err": "Required"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2399,9 +2473,10 @@
           "err": "You're required check the ART number check box"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2459,9 +2534,10 @@
           "err": "Required"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2570,7 +2646,6 @@
           }
         }
       },
-
       {
         "key": "child_mmd",
         "openmrs_entity_parent": "",
@@ -2639,12 +2714,18 @@
         "type": "label",
         "text": "Details of Caregiver (Parent/Guardian)",
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
-      },
+      }
+    ]
+  },
+  "step5": {
+    "title": "Caregiver Details",
+    "fields": [
       {
         "key": "caregiver_name",
         "openmrs_entity_parent": "",
@@ -2652,20 +2733,15 @@
         "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Caregiver's Full Name",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
-        },
         "v_required": {
           "value": true,
           "err": "Name of caregiver is required"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2681,9 +2757,10 @@
           "err": "Number must take the format of ######/##/#"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2703,9 +2780,10 @@
           "err": "Please select gender"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2722,15 +2800,16 @@
           "label": "Age"
         },
         "min_date": "today-100y",
-        "max_date": "today",
+        "max_date": "today-19y",
         "v_required": {
           "value": true,
           "err": "Please enter Birth Date"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2752,9 +2831,10 @@
           "err": "Select HIV status"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2774,9 +2854,10 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -2786,7 +2867,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
-
         "hint": "Caregiver's Phone Number",
         "edit_type": "number",
         "v_numeric": {
@@ -2798,15 +2878,9 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          },
-          "calculation": {
-            "rules-engine": {
-              "ex-rules": {
-                "rules-file": "vca_screening_calculation.yml"
-              }
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
             }
           }
         },
