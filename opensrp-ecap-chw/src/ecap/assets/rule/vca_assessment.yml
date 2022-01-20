@@ -6,17 +6,24 @@ condition: "step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = false"
 ---
+name: step1_biological_mother
+description: step1_biological_mother
+priority: 1
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age > 0 && 10 &&step1_age < 10)"
+actions:
+  - "isRelevant = true"
+---
 name: step1_parents_deceased
 description: parents_deceased_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
+condition: "step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no') && (step1_age > 0 && 10 &&step1_age < 10)"
 actions:
   - "isRelevant = true"
 ---
 name: step1_siblings_deceased
 description: siblings_deceased_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 10"
 actions:
   - "isRelevant = true"
 ---
@@ -30,35 +37,28 @@ actions:
 name: step1_child_sick
 description: child_sick_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_rashes
 description: rashes_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_discharge
 description: discharge_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_female_sex_worker
 description: female_sex-worker_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
-actions:
-  - "isRelevant = true"
----
-name: step1_biological_mother
-description: biological_mother
-priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 20"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age < 10"
 actions:
   - "isRelevant = true"
 ---
@@ -135,77 +135,77 @@ actions:
 name: step1_sexually_active
 description: sexually_active_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_sex_positive
 description: sex_positive_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_sexual_partner
 description: sexual_partner_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_private_parts
 description: private_parts_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_transactional_sex
 description: transactional_sex_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_sexually_abused
 description: sexually_abused_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_past_year
 description: past_year_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_substance_abuse
 description: substance_abuse_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_been_married
 description: been_married_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_currently_pregnant
 description: currently_pregnant_vca_assessment
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---
 name: step1_vca_response
 description: vca_response
 priority: 1
-condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && (step1_age >=10 && step1_age <=17)"
+condition: "(step1_is_hiv_positive.contains('no') || step1_hiv_test.contains('no') || step1_vca_exposed.contains('no')) && step1_age >=10"
 actions:
   - "isRelevant = true"
 ---

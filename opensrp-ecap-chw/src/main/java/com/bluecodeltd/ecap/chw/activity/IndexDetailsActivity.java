@@ -396,7 +396,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -920,6 +919,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "vca_assessment":
 
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+/*
                 if(vcaAssessmentModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
@@ -932,7 +934,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 break;
-
+*/
             case "graduation":
 
                 if(graduationAssessmentModel == null){
