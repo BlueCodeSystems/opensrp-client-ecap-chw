@@ -531,7 +531,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months?? ",
+        "label": "Have the children experienced violence in the home in the last six months? ",
         "options": [
           {
             "key": "yes",
@@ -554,6 +554,8 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
+        "read_only":"false",
+
         "options": [
           {
             "key": "HIV+",
@@ -931,7 +933,7 @@
         "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
         "hint": "Carried out by",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1526,7 +1528,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Last time household member had malaria"
         }
       },
