@@ -68,8 +68,6 @@ public class Household {
     private String adolescent_village;
     private String approved_by;
     private String is_caregiver_virally_suppressed;
-    private String viral_load_results;
-    private String date_of_last_viral_load;
     private String carried_by;
     private String caregiver_education;
     private String marital_status;
@@ -562,19 +560,4 @@ public class Household {
         this.caregiver_art_number = caregiver_art_number;
     }
 
-    public String getViral_load_results() {
-        return viral_load_results;
-    }
-
-    public void setViral_load_results(String viral_load_results) {
-        this.viral_load_results = viral_load_results;
-    }
-
-    public String getDate_of_last_viral_load() {
-        return date_of_last_viral_load;
-    }
-
-    public void setDate_of_last_viral_load(String date_of_last_viral_load) {
-        this.date_of_last_viral_load = date_of_last_viral_load;
-    }
 }
