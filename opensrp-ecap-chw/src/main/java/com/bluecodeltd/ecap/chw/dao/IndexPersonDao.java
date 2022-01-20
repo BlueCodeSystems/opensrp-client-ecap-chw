@@ -7,6 +7,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,23 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+
+    public static String countFemalesLess5 (String householdID){
+        
+
+        String sql = "SELECT COUNT(*) AS females FROM ec_client_index WHERE gender = 'female' AND household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "females");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
 
     public static String getIndexStatus (String baseEntityID){
 
