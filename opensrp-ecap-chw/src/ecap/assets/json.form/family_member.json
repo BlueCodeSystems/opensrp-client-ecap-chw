@@ -1,5 +1,5 @@
 {
-  "count": "1",
+  "count": "2",
   "skip_blank_steps": false,
   "encounter_type": "Family Member",
   "relational_id": "",
@@ -52,6 +52,7 @@
     }
   },
   "step1": {
+    "next": "step2",
     "title": "Family Member",
     "fields": [
       {
@@ -269,10 +270,6 @@
           {
             "key": "no",
             "text": "No"
-          },
-          {
-            "key": "unknown",
-            "text": "Unknown"
           }
         ],
         "v_required": {
@@ -303,6 +300,153 @@
             "text": "Closed"
           }
         ]
+      }
+    ]
+  },
+  "step2": {
+    "title": "Immunization Status",
+    "fields": [
+      {
+        "key": "immunization",
+        "label": "Has the child received the following vaccinations?",
+        "type": "check_box",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "immunization",
+        "options": [
+          {
+            "key": "bcg",
+            "text": "BIRTH-BCG",
+            "value": false
+          },
+          {
+            "key": "opv0",
+            "text": "BIRTH-OPV0",
+            "value": false
+          },
+          {
+            "key": "dtp1",
+            "text": "6 WEEKS-DTP1",
+            "value": false
+          },
+          {
+            "key": "OPV1",
+            "text": "6 WEEKS-OPV1",
+            "value": false
+          },
+          {
+            "key": "PCV1",
+            "text": "6 WEEKS-PCV1",
+            "value": false
+          },
+          {
+            "key": "ROT1",
+            "text": "6 WEEKS-ROT1",
+            "value": false
+          },
+          {
+            "key": "DTP2",
+            "text": "10 WEEKS-DTP2",
+            "value": false
+          },
+          {
+            "key": "OPV2",
+            "text": "10 WEEKS-OPV2",
+            "value": false
+          },
+          {
+            "key": "PCV2",
+            "text": "10 WEEKS-PCV2",
+            "value": false
+          },
+          {
+            "key": "ROT2",
+            "text": "10 WEEKS-ROT2",
+            "value": false
+          },
+          {
+            "key": "DTP3",
+            "text": "14 WEEKS-DTP3",
+            "value": false
+          },
+          {
+            "key": "OPV3",
+            "text": "14 WEEKS-OPV3",
+            "value": false
+          },
+          {
+            "key": "PCV3",
+            "text": "14 WEEKS-PCV3",
+            "value": false
+          },
+          {
+            "key": "MEASL R1",
+            "text": "9 MNTHS-MEASL R1",
+            "value": false
+          },
+          {
+            "key": "MEASL R1",
+            "text": "18MNTHS-MEASL R1",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This is a required field"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "child_nut_assessment",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Child Nutrition Assessment",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "muac_score",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "muac_score",
+        "type": "edit_text",
+        "hint": "MUAC Score",
+        "edit_type": "numeric",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Enter correct MUAC Score"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
       }
     ]
   }
