@@ -54,7 +54,7 @@
   },
   "step1": {
     "title": "Household Screening",
-    "next": "step2",
+    "next": "step3",
     "fields": [
       {
         "key": "instructions",
@@ -531,7 +531,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months?? ",
+        "label": "Have the children experienced violence in the home in the last six months? ",
         "options": [
           {
             "key": "yes",
@@ -554,6 +554,8 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
+        "read_only":"false",
+
         "options": [
           {
             "key": "HIV+",
@@ -925,13 +927,13 @@
         }
       },
       {
-        "key": "carried_by",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "carried_by",
+        "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
         "hint": "Carried out by",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1487,7 +1489,7 @@
         "openmrs_entity_id": "beds",
         "openmrs_data_type": "text",
         "type": "edit_text",
-        "edit_text": "number",
+        "edit_type": "number",
         "hint": "Number of beds in household",
         "tree": [
         ],
@@ -1503,7 +1505,7 @@
         "openmrs_entity_id": "malaria_itns",
         "openmrs_data_type": "text",
         "type": "edit_text",
-        "edit_text": "number",
+        "edit_type": "number",
         "hint": "Number of malaria ITNs in use",
         "tree": [
         ],
@@ -1526,11 +1528,10 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Last time household member had malaria"
         }
       },
-
       {
         "key": "emergency_contact",
         "type": "label",
@@ -1557,13 +1558,27 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "e_relationship",
-        "type": "edit_text",
+        "type": "spinner",
         "hint": "Relationship to caregiver ",
-        "edit_type": "name",
-        "look_up": "true",
+        "values": [
+          "Son/Daughter",
+          "Niece/Nephew",
+          "Grandchild",
+          "Cousin",
+          "Sibling",
+          "Aunt/Uncle"
+        ],
+        "keys": [
+          "child",
+          "niece/nephew",
+          "grandchild",
+          "cousin",
+          "sibling",
+          "aunt/uncle"
+        ],
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Required"
         }
       },
       {
@@ -1599,8 +1614,7 @@
         "openmrs_entity_id": "contact_number",
         "type": "edit_text",
         "hint": "Contact Phone Number ",
-        "edit_type": "name",
-        "look_up": "true",
+        "edit_type": "number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
