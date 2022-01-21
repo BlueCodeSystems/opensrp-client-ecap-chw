@@ -71,7 +71,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "VCA Age",
         "calculation": {
           "rules-engine": {
@@ -88,7 +88,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the HIV status known?",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -206,7 +206,7 @@
         }
       },
       {
-        "key": "toaster_e",
+        "key": "toaster_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
@@ -216,10 +216,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:appointment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -250,7 +249,7 @@
         }
       },
       {
-        "key": "toaster_f",
+        "key": "toaster_year",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
@@ -260,10 +259,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:taking_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -322,6 +320,23 @@
         }
       },
       {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "hint": "VL Result",
+        "edit_type": "number",
+        "read_only": true,
+        "relevance": {
+          "step1:viral_load": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
         "key": "toaster_g",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -364,30 +379,14 @@
           }
         }
       },
-      {
-        "key": "vl_last_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_last_result",
-        "type": "edit_text",
-        "hint": "VL Result",
-        "edit_type": "number",
-        "read_only": true,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "art_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
-        "hint": "Name of Facility where VCA receives ART",
+        "hint": "Health Facility",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
@@ -406,7 +405,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "ART Number",
         "edit_type": "number",
         "v_regex": {
@@ -437,7 +436,7 @@
         "options": [
           {
             "key": "yes",
-            "text": "Less than 6 months",
+            "text": "Yes,less than 6 months",
             "value": false
           },
           {
@@ -489,10 +488,11 @@
         "relevance": {
           "step1:hiv_test": {
             "type": "string",
-            "ex": "equalTo(., \"no\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -507,6 +507,25 @@
           "step1:vca_exposed": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "toaster_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "toaster_age",
+        "type": "toaster_notes",
+        "text": "The following questions should not be asked directly to VCA less than 10 years",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -710,7 +729,8 @@
         "openmrs_entity_id": "female_sex_worker",
         "type": "native_radio",
         "label_text_style": "",
-        "label": "Is the primary caregiver a female sex worker? (Do not ask question directly. Probe)",
+        "label_info_text": "Do not ask question directly",
+        "label": "Is the primary caregiver a female sex worker?",
         "options": [
           {
             "key": "yes",
@@ -723,6 +743,25 @@
             "value": false
           }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "toaster_direct_questions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "The following questions are to be asked directly to the VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
