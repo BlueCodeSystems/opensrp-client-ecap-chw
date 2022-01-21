@@ -919,22 +919,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "vca_assessment":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-/*
                 if(vcaAssessmentModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+
 
                 } else {
 
                     formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+
                 }
 
                 break;
-*/
+
             case "graduation":
 
                 if(graduationAssessmentModel == null){
