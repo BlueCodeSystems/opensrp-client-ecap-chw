@@ -270,8 +270,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -324,8 +322,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     new ChwBottomNavigationListener(this));
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
-            bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
-            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
+         //   bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
 
         }
     }

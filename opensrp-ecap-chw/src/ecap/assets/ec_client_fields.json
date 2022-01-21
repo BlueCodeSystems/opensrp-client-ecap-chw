@@ -1279,10 +1279,24 @@
           }
         },
         {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
           "column_name": "approved_by",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.approved_by"
+          }
+        },
+        {
+          "column_name": "carried_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.carried_by"
           }
         },
         {
@@ -1417,7 +1431,22 @@
           "json_mapping": {
             "field": "attributes.household_member_had_malaria"
           }
+        },
+        {
+          "column_name": "caregiver_education",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_education"
+          }
+        },
+        {
+          "column_name": "marital_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.marital_status"
+          }
         }
+
       ]
     },
     {
