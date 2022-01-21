@@ -4,7 +4,9 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Fragment;
+
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -44,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -87,6 +92,7 @@ public class HouseholdDetails extends AppCompatActivity {
     Household house;
     Child child;
     ObjectMapper oMapper;
+    ObjectMapper householdMapper;
     CommonPersonObjectClient household;
 
 
@@ -234,13 +240,19 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    Object obj = prefs.getAll();//
+
+                    householdMapper = new ObjectMapper();
+
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
 
                     indexRegisterForm.put("entity_id", house.getBase_entity_id());
                     indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
 
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
@@ -248,6 +260,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop5());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop6());
+
 
                     startFormActivity(indexRegisterForm);
 
@@ -366,7 +379,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getHousehold_id());
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", x);
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", house.getCaregiver_name());
+
 
                     startFormActivity(formToBeOpened);
 
@@ -449,10 +462,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
+
+
                 try {
                     String  uniqueId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).optString("value");
                     childId = uniqueId;
                     getUniqueIdRepository().close(uniqueId);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -604,6 +621,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
 
 
                 } catch (Exception e) {
