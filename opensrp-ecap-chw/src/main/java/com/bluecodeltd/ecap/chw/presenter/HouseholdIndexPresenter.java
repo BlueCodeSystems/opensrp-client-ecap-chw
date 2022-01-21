@@ -28,6 +28,7 @@ import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.domain.Client;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.opd.pojo.RegisterParams;
+import org.smartregister.repository.UniqueIdRepository;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -41,7 +42,9 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     private HouseholdIndexContract.Model model;
     private HouseholdIndexContract.Interactor interactor;
     private String baseId;
+    private String uniqueId;
     String householdId;
+    private UniqueIdRepository uniqueIdRepository;
 
     private WeakReference<HouseholdIndexContract.View> activityWeakReference;
 
@@ -80,6 +83,7 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     @Override
     public void saveForm(String jsonString, @NonNull RegisterParams registerParams) {
         try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
             List<EventClient> eventClientList = model.processRegistration(jsonString, registerParams.getFormTag());
 
             if (eventClientList == null || eventClientList.isEmpty()) {
@@ -88,6 +92,8 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
             baseId = eventClientList.get(0).getClient().getBaseEntityId();
             householdId = (String) eventClientList.get(0).getClient().getAttribute("household_id");
+            uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+
 
         } catch (Exception e) {
             Timber.e(e);
@@ -145,9 +151,19 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
             if (navigationMenu != null) {
                 navigationMenu.refreshCount();
             }
+
+            getUniqueIdRepository().close(uniqueId);
             gotHouseholdProfile(baseId);
         }
     }
+    @NonNull
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
+    }
+
 
     public void gotHouseholdProfile(String id){
         Intent intent = new Intent(getView().getContext(), HouseholdDetails.class);

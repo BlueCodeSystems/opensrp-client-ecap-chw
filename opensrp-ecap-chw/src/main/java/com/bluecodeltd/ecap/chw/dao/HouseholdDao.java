@@ -26,7 +26,6 @@ public class HouseholdDao extends AbstractDao {
     public static Household getHousehold (String householdID) {
 
         String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' ";
-        //String sql = "SELECT * FROM ec_household WHERE household_id = '" + householdID + "' ";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
 
@@ -58,8 +57,9 @@ public class HouseholdDao extends AbstractDao {
             record.setCaregiver_hiv_status(getCursorValue(c, "caregiver_hiv_status"));
             record.setActive_on_treatment(getCursorValue(c, "active_on_treatment"));
             record.setCaregiver_art_number(getCursorValue(c, "caregiver_art_number"));
+            record.setViral_load_results(getCursorValue(c, "viral_load_results"));
+            record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
-//active_on_treatment
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setVillage(getCursorValue(c, "village"));
@@ -90,8 +90,16 @@ public class HouseholdDao extends AbstractDao {
             record.setE_relationship(getCursorValue(c, "e_relationship"));
             record.setContact_address(getCursorValue(c, "contact_address"));
             record.setContact_number(getCursorValue(c, "contact_number"));
-
-
+            record.setSecure(getCursorValue(c, "secure"));
+            record.setApproved_family(getCursorValue(c, "approved_family"));
+            record.setAdolescent_village(getCursorValue(c, "adolescent_village"));
+            record.setApproved_by(getCursorValue(c, "approved_by"));
+            record.setIs_caregiver_virally_suppressed(getCursorValue(c, "is_caregiver_virally_suppressed"));
+            record.setViral_load_results(getCursorValue(c, "viral_load_results"));
+            record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
+            record.setCarried_by(getCursorValue(c, "carried_by"));
+            record.setCaregiver_education(getCursorValue(c, "caregiver_education"));
+            record.setMarital_status(getCursorValue(c, "marital_status"));
             return record;
         };
     }

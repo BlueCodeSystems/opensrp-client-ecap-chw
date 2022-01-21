@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -50,11 +51,13 @@ import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.domain.UniqueId;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
@@ -82,6 +85,8 @@ public class HouseholdDetails extends AppCompatActivity {
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver;;
     private String childId;
     private String householdId;
+    public String countFemales;
+    private UniqueIdRepository uniqueIdRepository;
     Household house;
     Child child;
     ObjectMapper oMapper;
@@ -101,10 +106,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
         childId = getIntent().getExtras().getString("childId");
         householdId = getIntent().getExtras().getString("householdId");
-        //household = (CommonPersonObjectClient) getIntent().getSerializableExtra("household");
 
-        child = IndexPersonDao.getChildByBaseId(childId);
-        // house = HouseholdDao.getHousehold(householdId);
+        if(childId != null){
+            child = IndexPersonDao.getChildByBaseId(childId);
+        }
+
         house = getHousehold(householdId);
         oMapper = new ObjectMapper();
 
@@ -132,9 +138,20 @@ public class HouseholdDetails extends AppCompatActivity {
         updateChildTabTitle();
 
         txtDistrict.setText(householdId);
-        cname.setText(child.getCaregiver_name() + " Household");
-        // txtVillage.setText(house.getVillage() + ", ");
+
+        if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
+
+            cname.setText("No Household");
+
+        } else {
+            cname.setText(house.getCaregiver_name() + " Household");
+        }
+
+        countFemales = IndexPersonDao.countFemalesLess5(householdId);
+
     }
+
+
 
     public HashMap<String, Household> getData() {
         return  populateMapWithHouse(house);
@@ -230,10 +247,10 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
 
                     indexRegisterForm.put("entity_id", house.getBase_entity_id());
-                    indexRegisterForm.getJSONObject("step1").put("title", child.getCaregiver_name() + " Household");
+                    indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
 
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(obj, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
@@ -352,11 +369,15 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     formToBeOpened = formUtils.getFormJson("family_member");
 
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(house, Map.class));
+                    UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
+                    String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+                    String xId = entityId.replaceFirst("^0+(?!$)", "");
+                    String x = xId.replace("-", "");
 
 
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "");
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", "");
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getHousehold_id());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", x);
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).put("value", house.getCaregiver_name());
 
                     startFormActivity(formToBeOpened);
 
@@ -422,6 +443,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
+
+
             if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(EncounterType)) {
 
                 is_edit_mode = true;
@@ -436,6 +459,14 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
 
                 saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+
+                try {
+                    String  uniqueId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).optString("value");
+                    childId = uniqueId;
+                    getUniqueIdRepository().close(uniqueId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 switch (EncounterType) {
 
@@ -464,11 +495,21 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
         }
+        getUniqueIdRepository().close(childId);
         populateMapWithHouse(getHousehold(householdId));
         setupViewPager();
         updateTasksTabTitle();
         updateChildTabTitle();
     }
+
+    @NonNull
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
+    }
+
 
     public ChildIndexEventClient processRegistration(String jsonString){
 
