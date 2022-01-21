@@ -2042,6 +2042,13 @@
           }
         },
         {
+          "column_name": "relationship_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship_other"
+          }
+        },
+        {
           "column_name": "contact_address",
           "type": "Client",
           "json_mapping": {
