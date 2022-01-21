@@ -108,6 +108,25 @@
         }
       },
       {
+        "key": "caregiver_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_name",
+        "type": "edit_text",
+        "hint": "Caregiver's Full Name",
+        "read_only": "true",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of caregiver can only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Name of caregiver is required"
+        }
+      },
+      {
         "key": "member_type",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1643,25 +1662,6 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "caregiver_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_name",
-        "type": "edit_text",
-        "hint": "Caregiver's Full Name",
-        "read_only": "true",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Name of caregiver is required"
-        }
-      },
-      {
         "key": "caregiver_sex",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1740,15 +1740,24 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "edit_text",
+        "type": "native_radio",
         "value": "1",
-        "read_only": "true",
-        "hint": "Case Status",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
-        }
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
+          }
+        ]
       }
     ]
   },
