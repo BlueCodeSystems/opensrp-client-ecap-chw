@@ -27,24 +27,24 @@ condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_posi
 actions:
   - "isRelevant = true"
 ---
-name: step3_immunization
-description: step3_immunization relevance
+name: step2_immunization
+description: step2_immunization relevance
 priority: 1
-condition: "step1_myage == 1"
+condition: "step1_age < 5"
 actions:
   - "isRelevant = true"
 ---
-name: step3_child_nut_assessment
-description: step3_child_nut_assessment relevance
+name: step2_child_nut_assessment
+description: step2_child_nut_assessment relevance
 priority: 1
-condition: "step1_myage == 1"
+condition: "step1_age < 5"
 actions:
   - "isRelevant = true"
 ---
-name: step3_muac_score
-description: step3_muac_score
+name: step2_muac_score
+description: step2_muac_score
 priority: 1
-condition: "step1_myage == 1"
+condition: "step1_age < 5"
 actions:
   - "isRelevant = true"
 ---
