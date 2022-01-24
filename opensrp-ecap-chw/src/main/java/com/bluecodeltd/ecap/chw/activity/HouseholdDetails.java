@@ -87,7 +87,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver;;
     private String childId;
     private String householdId;
-    public String countFemales;
+    public String countFemales, countMales;
     private UniqueIdRepository uniqueIdRepository;
     Household house;
     Child child;
@@ -149,7 +149,8 @@ public class HouseholdDetails extends AppCompatActivity {
             cname.setText(house.getCaregiver_name() + " Household");
         }
 
-        countFemales = IndexPersonDao.countFemalesLess5(householdId);
+        countFemales = IndexPersonDao.countFemales(householdId);
+        countMales = IndexPersonDao.countMales(householdId);
 
     }
 
@@ -258,8 +259,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop5());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop6());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop6());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
 
 
                     startFormActivity(indexRegisterForm);

@@ -41,12 +41,28 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
-    public static String countFemalesLess5 (String householdID){
+    public static String countFemales (String householdID){
         
 
         String sql = "SELECT COUNT(*) AS females FROM ec_client_index WHERE gender = 'female' AND household_id = '" + householdID + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "females");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
+    public static String countMales (String householdID){
+
+
+        String sql = "SELECT COUNT(*) AS males FROM ec_client_index WHERE gender = 'male' AND household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "males");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 

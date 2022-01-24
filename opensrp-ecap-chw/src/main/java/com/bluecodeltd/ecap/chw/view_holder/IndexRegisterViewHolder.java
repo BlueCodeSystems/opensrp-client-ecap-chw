@@ -19,7 +19,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private TextView familyNameTextView;
 
-    private TextView villageTextView;
+    private TextView villageTextView, gender_age;
 
     //public Button caseplan_layout;
 
@@ -35,11 +35,14 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         index_icon_layout = itemView.findViewById(R.id.index_icon);
         myStatus = itemView.findViewById(R.id.mystatusx);
         visitLayout = itemView.findViewById(R.id.index_visit);
+        gender_age = itemView.findViewById(R.id.gender_age);
     }
 
-    public void setupViews(String family, String village, int plans, int visits, String is_index, String status){
+    public void setupViews(String family, String village, int plans, int visits, String is_index, String status, String gender, String age){
+
         familyNameTextView.setText(family);
         villageTextView.setText(village);
+        gender_age.setText(gender + " : " + age);
 
         if(status != null && status.equals("1")){
             myStatus.setBackgroundColor(0xff05b714);

@@ -25,8 +25,8 @@ import java.util.HashMap;
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales5,
-            txtFemales5, txtMales10, txtFemales10, txtNumber, txtName;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales,
+            txtFemales, txtNumber, txtName;
     LinearLayout linearLayout;
     Button screenBtn;
     FloatingActionButton fab;
@@ -44,10 +44,8 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncomeSource = view.findViewById(R.id.income_source);
         txtBeds = view.findViewById(R.id.beds);
         txtMalaria = view.findViewById(R.id.malaria);
-        txtMales5 = view.findViewById(R.id.males_less_5);
-        txtFemales5 = view.findViewById(R.id.females_less_5);
-        txtMales10 = view.findViewById(R.id.males_10);
-        txtFemales10 = view.findViewById(R.id.females_10);
+        txtMales = view.findViewById(R.id.males);
+        txtFemales = view.findViewById(R.id.females);
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
 
@@ -65,7 +63,9 @@ public class HouseholdOverviewFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     public void setViews(){
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+
         String females = ( (HouseholdDetails) requireActivity()).countFemales;
+        String males = ( (HouseholdDetails) requireActivity()).countMales;
 
         house = mymap.get("house");
 
@@ -74,10 +74,6 @@ public class HouseholdOverviewFragment extends Fragment {
         String iscome = house.getIncome();
         String beds = house.getBeds();
         String household_member_had_malaria = house.getHousehold_member_had_malaria();
-        String male5 = house.getMales_less_5();
-        String female5 = house.getFemales_less_5();
-        String male10 = house.getMales_10_17();
-        String female10 = house.getFemales_10_17();
         String emergency_name = house.getEmergency_name();
         String contact_number = house.getContact_number();
 
@@ -85,10 +81,9 @@ public class HouseholdOverviewFragment extends Fragment {
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
         txtMalaria.setText(household_member_had_malaria);
-        txtMales5.setText(male5);
-        txtFemales5.setText(females);
-        txtMales10.setText(male10);
-        txtFemales10.setText(female10);
+        txtMales.setText(males);
+        txtFemales.setText(females);
+        txtMales.setText(males);
         txtName.setText(emergency_name);
         txtNumber.setText(contact_number);
 
