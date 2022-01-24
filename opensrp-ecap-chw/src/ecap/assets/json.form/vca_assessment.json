@@ -66,13 +66,29 @@
         "read_only": "true"
       },
       {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "VCA Age",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_calculation.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the HIV status known?",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -116,10 +132,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -158,12 +173,11 @@
           "err": "When was the VCA initiated on ART"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
+        "step1:vca_art": {
+          "type": "string",
+          "ex": "equalTo(., \"yes\")"
         }
+      }
       },
       {
         "key": "appointment",
@@ -185,15 +199,14 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
       {
-        "key": "toaster_e",
+        "key": "toaster_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
@@ -203,10 +216,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:appointment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -230,15 +242,14 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
       {
-        "key": "toaster_f",
+        "key": "toaster_year",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
@@ -248,10 +259,9 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:taking_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -277,10 +287,9 @@
           "err": "Months of medications "
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -304,13 +313,29 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+      {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "hint": "VL Result",
+        "edit_type": "number",
+        "read_only": true,
+        "relevance": {
+          "step1:viral_load": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
       {
         "key": "toaster_g",
         "openmrs_entity_parent": "",
@@ -348,47 +373,29 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
-      {
-        "key": "vl_last_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_last_result",
-        "type": "edit_text",
-        "hint": "VL Result",
-        "edit_type": "number",
-        "read_only": true,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "art_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
-        "hint": "Name of Facility where VCA receives ART",
+        "hint": "Health Facility",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Error"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -398,7 +405,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "ART Number",
         "edit_type": "number",
         "v_regex": {
@@ -406,13 +413,14 @@
           "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+
+
       {
         "key": "hiv_test",
         "openmrs_entity_parent": "",
@@ -428,7 +436,7 @@
         "options": [
           {
             "key": "yes",
-            "text": "Less than 6 months",
+            "text": "Yes,less than 6 months",
             "value": false
           },
           {
@@ -442,14 +450,13 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"negative\")"
           }
         }
-
       },
+
       {
         "key": "vca_exposed",
         "openmrs_entity_parent": "",
@@ -479,13 +486,13 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -500,6 +507,25 @@
           "step1:vca_exposed": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "toaster_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "toaster_age",
+        "type": "toaster_notes",
+        "text": "The following questions should not be asked directly to VCA less than 10 years",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -703,7 +729,8 @@
         "openmrs_entity_id": "female_sex_worker",
         "type": "native_radio",
         "label_text_style": "",
-        "label": "Is the primary caregiver a female sex worker? (Do not ask question directly. Probe)",
+        "label_info_text": "Do not ask question directly",
+        "label": "Is the primary caregiver a female sex worker?",
         "options": [
           {
             "key": "yes",
@@ -716,6 +743,25 @@
             "value": false
           }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "toaster_direct_questions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "The following questions are to be asked directly to the VCA",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1106,103 +1152,22 @@
             "text": "Children of People Living with HIV"
           },
           {
-            "key": "subpop4",
+            "key": "subpop",
             "text": "Children of Female Sex Worker"
           },
           {
-            "key": "subpop5",
+            "key": "subpop6",
             "text": "Girls at risk of HIV infection (at-risk AGYW)"
           },
           {
-            "key": "subpop6",
+            "key": "subpop5",
             "text": "Children/adolescent who has experienced sexual violence/gender-based violence"
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "caseworker_firstname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
-        "type": "edit_text",
-        "hint": "Case Worker First Name",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "read_only": "true",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Worker Last Name",
-        "edit_type": "name",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "caseworker_nrc",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_nrc",
-        "entity_id": "",
-        "read_only": "false",
-        "type": "edit_text",
-        "hint": "Case Worker NRC number",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
-          "err": "Number must take the format of ######/##/#"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date",
-        "type": "date_picker",
-        "hint": "Date",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "When was the VCA initiated on ART"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
+          "step1:vca_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       }

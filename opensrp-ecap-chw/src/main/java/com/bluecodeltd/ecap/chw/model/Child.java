@@ -167,7 +167,7 @@ public class Child implements Serializable {
     @Expose
     private String subpop5;
 
-    @SerializedName("subpop6")
+    @SerializedName("subpop")
     @Expose
     private String subpop6;
 
