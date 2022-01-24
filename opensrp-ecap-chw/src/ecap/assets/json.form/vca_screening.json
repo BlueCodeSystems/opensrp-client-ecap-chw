@@ -595,31 +595,7 @@
           }
         }
       },
-      {
-        "key": "gets_tb_preventive_therapy",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gets_tb_preventive_therapy",
-        "type": "native_radio",
-        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "takes_drugs_to_prevent_other_diseases",
         "openmrs_entity_parent": "",
@@ -655,7 +631,7 @@
         "value": "yes",
         "hint": "Less than 3yrs Old",
         "edit_type": "name",
-        "label": "D1. Is the Child in the 0-2 years age group? (If no, screen for other sub populations).",
+        "label": "Is the Child in the 0-2 years age group? (If no, screen for other sub populations).",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1092,7 +1068,7 @@
           }
         },
         "v_regex": {
-          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
+          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
           "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
         }
       },
@@ -2306,8 +2282,9 @@
         "openmrs_entity_id": "art_check_box",
         "type": "native_radio",
         "label": "Is the child currently on ART?",
-        "label_text_style": "bold",
         "text_color": "#000000",
+        "read_only": true,
+        "value": "yes",
         "exclusive": [
           "Yes"
         ],
@@ -2328,10 +2305,45 @@
           "err": "You're required check the ART number check box"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_on_hiv_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "art_check_box1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_check_box1",
+        "type": "native_radio",
+        "label": "Is the child currently on ART?",
+        "text_color": "#000000",
+        "read_only": true,
+        "value": "no",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required check the ART number check box"
+        },
+        "relevance": {
+          "step1:is_on_hiv_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
