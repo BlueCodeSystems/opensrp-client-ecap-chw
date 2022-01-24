@@ -29,16 +29,20 @@ public class ChildVisitsFragment extends Fragment {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<VcaVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
+    View vieww;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_childvisits, container, false);
+
+        vieww = inflater.inflate(R.layout.fragment_childvisits, container, false);
 
         String childId  = ( (IndexDetailsActivity) requireActivity()).uniqueId;
 
-        recyclerView = view.findViewById(R.id.visitrecyclerView);
-        linearLayout = view.findViewById(R.id.visit_container);
+        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
+        linearLayout = vieww.findViewById(R.id.visit_container);
+
+        visitList.clear();
 
         visitList.addAll(VcaVisitationDao.getVisitsByID(childId));
 
@@ -56,7 +60,7 @@ public class ChildVisitsFragment extends Fragment {
         }
 
 
-        return view;
+        return vieww;
 
     }
 

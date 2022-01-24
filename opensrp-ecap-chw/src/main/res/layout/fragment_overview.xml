@@ -124,7 +124,7 @@
                    android:paddingLeft="@dimen/contact_drawable_padding"
                    android:paddingTop="@dimen/contact_small_padding"
                    android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="Survivor/Sexual Violence."
+                   android:text="S/SV"
                    android:textAppearance="?android:textAppearanceMedium"
                    android:textColor="@color/black_text_color"
                    />
