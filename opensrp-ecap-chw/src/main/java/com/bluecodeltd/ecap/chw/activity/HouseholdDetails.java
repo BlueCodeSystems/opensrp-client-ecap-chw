@@ -28,6 +28,7 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -35,6 +36,7 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
+import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -90,9 +92,9 @@ public class HouseholdDetails extends AppCompatActivity {
     public String countFemales, countMales;
     private UniqueIdRepository uniqueIdRepository;
     Household house;
+    Caregiver caregiver;
     Child child;
-    ObjectMapper oMapper;
-    ObjectMapper householdMapper;
+    ObjectMapper oMapper, householdMapper, caregiverMapper;
     CommonPersonObjectClient household;
 
 
@@ -114,7 +116,11 @@ public class HouseholdDetails extends AppCompatActivity {
         }
 
         house = getHousehold(householdId);
+        caregiver = CaregiverDao.getCaregiver(householdId);
+
+
         oMapper = new ObjectMapper();
+        caregiverMapper = new ObjectMapper();
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -381,7 +387,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getHousehold_id());
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", x);
 
-
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,caregiverMapper.convertValue(caregiver, Map.class));
                     startFormActivity(formToBeOpened);
 
 

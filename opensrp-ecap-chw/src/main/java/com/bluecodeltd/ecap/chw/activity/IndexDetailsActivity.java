@@ -155,7 +155,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         is_screened = HouseholdDao.checkIfScreened(indexChild.getHousehold_id());
 
 
-
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
         fabGradSub = findViewById(R.id.grad_fab20);

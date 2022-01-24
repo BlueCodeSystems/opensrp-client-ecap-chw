@@ -276,8 +276,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 11
-            versionName "v1.0.1-alpha-8"
+            versionCode 12
+            versionName "v1.2.0-alpha-8"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.who.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.who.bluecodeltd.com/opensrp/"'
@@ -286,7 +286,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '1'
+            buildConfigField "int", "DATABASE_VERSION", '2'
         }
     }
 }

@@ -1146,6 +1146,20 @@
           }
         },
         {
+          "column_name": "caregiver_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_nrc"
+          }
+        },
+        {
+          "column_name": "relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relation"
+          }
+        },
+        {
           "column_name": "caregiver_sex",
           "type": "Client",
           "json_mapping": {
@@ -1910,6 +1924,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_nrc"
+          }
+        },
+        {
+          "column_name": "relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relation"
           }
         },
         {

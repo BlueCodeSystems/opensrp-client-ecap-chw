@@ -87,28 +87,20 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
-        "label": "Is the HIV status known?",
+        "label": "HIV status",
         "read_only": true,
         "options": [
           {
             "key": "yes",
-            "text": "Yes, status POSITIVE",
-            "value": false
-          },
-          {
-            "key": "negative",
-            "text": "Yes, status NEGATIVE",
-            "value": false
+            "text": "Yes"
           },
           {
             "key": "no",
-            "text": "No, status not known",
-            "value": false
+            "text": "No"
           },
           {
-            "key": "status_not_required",
-            "text": "Status not required based on risk assessment",
-            "value": false
+            "key": "unknown",
+            "text": "Unknown"
           }
         ]
       },
