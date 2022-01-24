@@ -214,11 +214,11 @@
             "text": "AGYW"
           },
           {
-            "key": "subpop5",
+            "key": "subpop",
             "text": "Children of FSW"
           },
           {
-            "key": "subpop6",
+            "key": "subpop5",
             "text": "Survivor of Sexual Violence"
           },
           {
@@ -325,7 +325,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "          Household Information",
+        "text": " Household Information",
         "label_text_style": "bold"
       },
       {
@@ -927,20 +927,6 @@
         }
       },
       {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Carried out by",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
-        }
-      },
-      {
         "key": "approved_family",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1526,11 +1512,7 @@
           "label": ""
         },
         "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Last time household member had malaria"
-        }
+        "max_date": "today"
       },
       {
         "key": "emergency_contact",
@@ -1561,24 +1543,45 @@
         "type": "spinner",
         "hint": "Relationship to caregiver ",
         "values": [
-          "Son/Daughter",
-          "Niece/Nephew",
-          "Grandchild",
-          "Cousin",
+          "Parent",
+          "Child",
           "Sibling",
-          "Aunt/Uncle"
+          "Aunty",
+          "Uncle",
+          "Other (Please specify below)"
         ],
         "keys": [
+          "parent",
           "child",
-          "niece/nephew",
-          "grandchild",
-          "cousin",
           "sibling",
-          "aunt/uncle"
+          "aunty",
+          "uncle",
+          "other"
         ],
         "v_required": {
           "value": true,
           "err": "Required"
+        }
+      },
+      {
+        "key": "relationship_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relationship_other",
+        "type": "edit_text",
+        "hint": "Specify Relationship",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
         }
       },
       {

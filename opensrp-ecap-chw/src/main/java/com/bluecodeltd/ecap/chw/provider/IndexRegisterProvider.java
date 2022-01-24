@@ -30,6 +30,9 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder>, View.OnClickListener {
 
@@ -51,6 +54,10 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
+        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
+        String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true);
+
+        String age = getAge(birthdate);
 
         int plans = CasePlanDao.checkCasePlan(childId);
 
@@ -60,24 +67,47 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         String status = IndexPersonDao.getIndexStatus(BaseEntityId);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, visits, is_index, status);
+
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, visits, is_index, status, gender, age);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 
 
-    /*    indexRegisterViewHolder.caseplan_layout.setOnClickListener(v -> {
 
-            if (v.getId() == R.id.due_button) {
-
-                Intent intent = new Intent(context, IndexDetailsActivity.class);
-                intent.putExtra("Child",  childId);
-                intent.putExtra("clients", personObjectClient);
-                intent.putExtra("tab", 1);
-                context.startActivity(intent);
-            }
-        });
-*/
     }
+    private String getAge(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            if(periodBetweenDateOfBirthAndNow.getYears() == 1){
+
+                return periodBetweenDateOfBirthAndNow.getYears() +" Year Old";
+
+            } else {
+                return periodBetweenDateOfBirthAndNow.getYears() +" Years Old";
+            }
+
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+
+            if (periodBetweenDateOfBirthAndNow.getMonths() == 1){
+
+                return periodBetweenDateOfBirthAndNow.getMonths() +" Month Old";
+
+            } else {
+                return periodBetweenDateOfBirthAndNow.getMonths() +" Months Old";
+            }
+
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return periodBetweenDateOfBirthAndNow.getDays() +" Days Old";
+        }
+        else return "Age Not Set";
+    }
+
 
 
     @Override
