@@ -254,12 +254,15 @@ public class HouseholdDetails extends AppCompatActivity {
                     householdMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
+                    indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
-                    indexRegisterForm.put("entity_id", house.getBase_entity_id());
+
+
+
                     indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
 
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
@@ -454,8 +457,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
 
-            if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(EncounterType)) {
-
+            if(!jsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
             }
 
@@ -532,12 +534,9 @@ public class HouseholdDetails extends AppCompatActivity {
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
 
 
-            String entityId = "";
+            String entityId = formJsonObject.optString("entity_id");
 
-            if(encounterType.equals("Household Screening")){
-
-                entityId  = formJsonObject.getString("entity_id");
-            } else {
+            if(entityId.isEmpty()){
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
