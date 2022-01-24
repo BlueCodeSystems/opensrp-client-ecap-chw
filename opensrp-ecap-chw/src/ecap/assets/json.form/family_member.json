@@ -1,5 +1,5 @@
 {
-  "count": "2",
+  "count": "3",
   "skip_blank_steps": false,
   "encounter_type": "Family Member",
   "relational_id": "",
@@ -304,6 +304,7 @@
     ]
   },
   "step2": {
+    "next": "step3",
     "title": "Immunization Status",
     "fields": [
       {
@@ -446,6 +447,116 @@
               "rules-file": "family_member_relevance.yml"
             }
           }
+        }
+      }
+    ]
+  },
+  "step3": {
+    "title": "Caregiver Details",
+    "fields": [
+      {
+        "key": "caregiver_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's Full Name",
+        "v_required": {
+          "value": true,
+          "err": "Name of caregiver is required"
+        }
+      },
+      {
+        "key": "caregiver_nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_nrc",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's NRC#",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "caregiver_sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_sex",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's Gender"
+      },
+      {
+        "key": "caregiver_birth_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_birth_date",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's Date of Birth"
+      },
+
+      {
+        "key": "caregiver_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_hiv_status",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's HIV Status"
+      },
+      {
+        "key": "caregiver_art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_art_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's ART Number",
+        "edit_type": "name"
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relation",
+        "type": "spinner",
+        "hint": "Relationship to Child",
+        "values": [
+          "Parent",
+          "Guardian"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "caregiver_phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_phone",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver's Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       }
     ]
