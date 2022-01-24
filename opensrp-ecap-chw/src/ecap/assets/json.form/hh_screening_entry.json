@@ -214,11 +214,11 @@
             "text": "AGYW"
           },
           {
-            "key": "subpop5",
+            "key": "subpop",
             "text": "Children of FSW"
           },
           {
-            "key": "subpop6",
+            "key": "subpop5",
             "text": "Survivor of Sexual Violence"
           },
           {
@@ -325,7 +325,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "          Household Information",
+        "text": " Household Information",
         "label_text_style": "bold"
       },
       {
@@ -1512,11 +1512,7 @@
           "label": ""
         },
         "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Last time household member had malaria"
-        }
+        "max_date": "today"
       },
       {
         "key": "emergency_contact",

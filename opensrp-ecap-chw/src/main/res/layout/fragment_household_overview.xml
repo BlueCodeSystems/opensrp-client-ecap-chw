@@ -207,10 +207,10 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Males &lt; 5 yrs Old" />
+                android:text="Males in Household" />
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/males_less_5"
+                android:id="@+id/males"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -238,10 +238,10 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Females &lt; 5 yrs Old" />
+                android:text="Females in Household" />
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/females_less_5"
+                android:id="@+id/females"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -255,67 +255,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:layout_weight="1"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Males 10-17 yrs Old" />
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/males_10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Not Set"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:layout_weight="1"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Females 10-17 yrs Old" />
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/females_10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Not Set"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                />
-
-        </LinearLayout>
         <TextView
             android:id="@+id/overview_section_header2"
             android:layout_width="match_parent"
