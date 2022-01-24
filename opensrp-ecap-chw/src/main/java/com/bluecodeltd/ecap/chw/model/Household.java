@@ -33,6 +33,7 @@ public class Household {
     private String caregiver_hiv_status;
     private String active_on_treatment;
     private String caregiver_art_number;
+    private String relation;
     private String viral_load_results;
     private String date_of_last_viral_load;
     private String base_entity_id;
@@ -560,4 +561,11 @@ public class Household {
         this.caregiver_art_number = caregiver_art_number;
     }
 
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 }

@@ -56,6 +56,7 @@ public class HouseholdDao extends AbstractDao {
             record.setCaregiver_hiv_status(getCursorValue(c, "caregiver_hiv_status"));
             record.setActive_on_treatment(getCursorValue(c, "active_on_treatment"));
             record.setCaregiver_art_number(getCursorValue(c, "caregiver_art_number"));
+            record.setRelation(getCursorValue(c, "relation"));
             record.setViral_load_results(getCursorValue(c, "viral_load_results"));
             record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
