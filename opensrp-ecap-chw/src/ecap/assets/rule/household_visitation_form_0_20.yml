@@ -241,7 +241,7 @@ actions:
 name: step1_currently_in_school
 description: currently_in_school
 priority: 1
-condition: "step1_age >= 3"
+condition: "step1_age >  5"
 actions:
   - "isRelevant = true"
 ---
