@@ -124,7 +124,7 @@
         "options": [
           {
             "key": "yes",
-            "text": "HIV Negative"
+            "text": "HIV Positive"
           },
           {
             "key": "no",
@@ -307,7 +307,7 @@
         "type": "edit_text",
         "hint": "Number of MMD months of drugs ",
         "edit_type": "number",
-        "read_only": "true",
+        "read_only": "false",
         "v_required": {
           "value": false,
           "err": "Indicate the number of MMD months of drugs "
@@ -478,6 +478,33 @@
           }
         }
       },
+
+      {
+        "key": "visits",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "visits",
+        "type": "native_radio",
+        "label": "Is this the first visit?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:date_hiv": {
+            "type": "string",
+            "ex": "greaterThan(., \"3\")"
+          }
+        }
+      },
       {
         "key": "visit_hiv_test",
         "openmrs_entity_parent": "",
@@ -498,14 +525,12 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_for_vca_0_20_years.yml"
-            }
+          "step1:visits": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
-
       {
         "key": "referred_for_testing",
         "openmrs_entity_parent": "",
@@ -555,19 +580,18 @@
             "value": false
           },
           {
-            "key": "none",
-            "text": "None",
+            "key": "n/a",
+            "text": "N/A",
             "value": false
           }
         ],
         "relevance": {
-          "step1:is_hiv_positive": {
+          "step1:visits": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
         }
       },
-
       {
         "key": "hiv_muac",
         "openmrs_entity_parent": "",
@@ -1922,10 +1946,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
           }
         }
       },

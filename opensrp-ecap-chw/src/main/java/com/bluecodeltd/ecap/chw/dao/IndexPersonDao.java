@@ -174,7 +174,7 @@ public class IndexPersonDao  extends AbstractDao {
         String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + baseEntityID + "' ";
         DataMap<Child> dataMap = c -> {
             return new Child(
-
+                    getCursorValue(c, "landmark"),
                     getCursorValue(c, "client_screened"),
                     getCursorValue(c, "client_result"),
                     getCursorValue(c, "tpt_client_eligibility"),
