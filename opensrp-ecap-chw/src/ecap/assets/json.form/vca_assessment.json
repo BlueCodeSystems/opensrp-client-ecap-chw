@@ -799,12 +799,12 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
+            "text": "HIV Positive",
             "value": false
           },
           {
             "key": "no",
-            "text": "No",
+            "text": "HIV Negative",
             "value": false
           }
         ],
