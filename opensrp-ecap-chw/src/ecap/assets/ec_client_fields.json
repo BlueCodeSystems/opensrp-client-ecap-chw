@@ -1181,6 +1181,13 @@
           }
         },
         {
+          "column_name": "landmark",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.landmark"
+          }
+        },
+        {
           "column_name": "caregiver_phone",
           "type": "Client",
           "json_mapping": {
@@ -1271,6 +1278,23 @@
             "field": "attributes.reason_for_hiv_risk"
           }
         },
+        {
+          "column_name": "is_biological_child_of_mother_living_with_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_biological_child_of_mother_living_with_hiv"
+          }
+        },
+        {
+          "column_name": "is_mother_currently_on_treatment_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_currently_on_treatment_wlhiv"
+          }
+        },
+
+
+
         {
           "column_name": "secure",
           "type": "Client",
