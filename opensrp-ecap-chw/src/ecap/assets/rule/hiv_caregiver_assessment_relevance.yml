@@ -1,4 +1,11 @@
 ---
+name: step1_test_6months
+description: test_6months
+priority: 1
+condition: "step1_caregiver_hiv_status.contains('HIV-')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_symptoms
 description: symptoms
 priority: 1
