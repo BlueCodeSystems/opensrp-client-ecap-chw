@@ -153,24 +153,31 @@ condition: "step1_age > 5"
 actions:
   - "isRelevant = true"
 ---
+name: step1_toaster
+description: toaster
+priority: 1
+condition:  "(step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23) &&  step1_age > 4 "
+actions:
+  - "isRelevant = true"
+---
 name: step1_nutrition_counselling_b
 description: nutrition_counselling_b
 priority: 1
-condition:  "step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23 "
+condition:  "(step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23) &&  step1_age > 4 "
 actions:
   - "isRelevant = true"
 ---
 name: step1_heps_b
 description: heps_b
 priority: 1
-condition:  "step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23 "
+condition:  "(step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23) &&  step1_age > 4 "
 actions:
   - "isRelevant = true"
 ---
 name: step1_muac_other_b
 description: muac_other_b
 priority: 1
-condition:  "step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23 "
+condition:  "(step1_muac_measurement_b > 0 && step1_muac_measurement_b < 23) &&  step1_age > 4 "
 actions:
   - "isRelevant = true"
 ---
@@ -192,28 +199,28 @@ actions:
 name: step1_physical_violence
 description: physical_violence
 priority: 1
-condition: "step1_age >= 12"
+condition: "step1_age > 12 && step1_signs_of_violence.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_ever_experienced_sexual_violence
 description: child_ever_experienced_sexual_violence
 priority: 1
-condition: "step1_age > 12 && step1_sexually_abused.contains('yes')"
+condition: "step1_age > 12 && step1_sexually_abused.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_above_12_a
 description: child_above_12_a
 priority: 1
-condition: "step1_age > 12 && step1_neglected.contains('yes')"
+condition: "step1_age > 12 && step1_neglected.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_physical_violence
 description: physical_violence
 priority: 1
-condition: "step1_age > 12 && step1_signs_of_violence.contains('yes') "
+condition: "step1_age > 12 && step1_signs_of_violence.contains('no') "
 actions:
   - "isRelevant = true"
 ---
