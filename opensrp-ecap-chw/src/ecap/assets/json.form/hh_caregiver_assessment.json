@@ -118,6 +118,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
+        "read_only": true,
         "label": "Caregiver's HIV Status",
         "options": [
           {
@@ -162,6 +163,13 @@
         "v_required": {
           "value": true,
           "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_caregiver_assessment_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -835,7 +843,7 @@
           "err": "Please enter a valid name"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -875,7 +883,7 @@
           "err": "You`re to select the level of education"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -905,10 +913,10 @@
         ],
         "v_required": {
           "value": false,
-          "err": "You're required to check the box"
+          "err": "You're required to select one option."
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -970,7 +978,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1031,7 +1039,7 @@
           "Other"
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1083,7 +1091,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1133,7 +1141,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1165,7 +1173,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1198,7 +1206,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1231,7 +1239,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1268,7 +1276,7 @@
           "Other"
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1297,7 +1305,7 @@
           "asbestos"
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1330,7 +1338,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1380,7 +1388,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1430,7 +1438,7 @@
           "err": "You're required to check the box"
         },
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1500,7 +1508,7 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1561,7 +1569,7 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1597,7 +1605,7 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
