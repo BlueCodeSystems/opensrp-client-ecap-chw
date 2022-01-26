@@ -65,21 +65,21 @@ actions:
 name: step1_eid_test
 description: eid_test
 priority: 1
-condition: "step1_age <= 0 && step1_age <= 2"
+condition: "step1_age > 0 && step1_age <= 2"
 actions:
   - "isRelevant = true"
 ---
 name: step1_age_appropriate
 description: age_appropriate
 priority: 1
-condition: "step1_age <= 0 && step1_age <= 2"
+condition: "step1_age > 0 && step1_age <= 2"
 actions:
   - "isRelevant = true"
 ---
-name: step1_breastfeeding
-description: breastfeeding
+name: step1_child_receiving_breastfeeding
+description: child_receiving_breastfeeding
 priority: 1
-condition: "step1_age <= 0 && step1_age <= 2"
+condition: "step1_age > 0 && step1_age <= 2"
 actions:
   - "isRelevant = true"
 ---

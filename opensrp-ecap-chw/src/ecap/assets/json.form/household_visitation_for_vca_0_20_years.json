@@ -120,7 +120,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "HIV Status",
-        "read_only": true,
+        "read_only": false,
         "options": [
           {
             "key": "yes",
@@ -2097,7 +2097,13 @@
         "hint": "Days missed verified by the school",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "true"
+        "look_up": "true",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       },
 
       {
@@ -2117,7 +2123,13 @@
         "hint": "What grade was the child doing in the\n last calendar year?",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "true"
+        "look_up": "true",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       },
       {
         "key": "current_calendar",
@@ -2128,7 +2140,13 @@
         "hint": "What grade is the child doing in the \ncurrent calendar year?",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "false"
+        "look_up": "false",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       },
       {
         "key": "did_not_progress",
@@ -2321,6 +2339,12 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
         }
       },
       {
@@ -2338,6 +2362,12 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
         }
       },
       {
@@ -2356,6 +2386,12 @@
         "v_required": {
           "value": false,
           "err": "Date Signed"
+        },
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
         }
       },
       {
@@ -2372,7 +2408,13 @@
             "text": "Yes",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       }
 
     ]
