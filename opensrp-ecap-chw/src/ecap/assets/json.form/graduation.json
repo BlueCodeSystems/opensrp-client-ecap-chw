@@ -248,8 +248,10 @@
         "type": "spinner",
         "hint": "Caregiver's HIV Status",
         "values": [
-          "Male",
-          "Female"
+          "HIV +",
+          "HIV -",
+          "Unknown"
+          "Status not required based on risk assessment"
         ],
         "v_required": {
           "value": true,
