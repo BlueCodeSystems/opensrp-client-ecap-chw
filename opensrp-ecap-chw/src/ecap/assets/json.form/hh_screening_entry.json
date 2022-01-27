@@ -394,7 +394,7 @@
       {
         "key": "primary_caregivers_only",
         "type": "label",
-        "text": "          For Primary Caregivers Only",
+        "text": "For Primary Caregivers Only",
         "label_text_style": "bold"
       },
       {
