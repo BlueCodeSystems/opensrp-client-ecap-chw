@@ -92,11 +92,11 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Positive"
           },
           {
             "key": "no",
-            "text": "No"
+            "text": "Negative"
           },
           {
             "key": "unknown",
@@ -319,7 +319,7 @@
         "type": "edit_text",
         "hint": "VL Result",
         "edit_type": "number",
-        "read_only": true,
+        "read_only": false,
         "relevance": {
           "step1:viral_load": {
             "type": "string",
