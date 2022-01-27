@@ -120,7 +120,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "HIV Status",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -1701,6 +1701,8 @@
           }
         }
       },
+
+
       {
         "key": "child_ever_experienced_sexual_violence",
         "openmrs_entity_parent": "",
@@ -1748,12 +1750,35 @@
           }
         ],
         "relevance": {
-          "step1:sexually_abused": {
+          "step1:child_ever_experienced_sexual_violence": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
         }
       },
+      {
+        "key": "type_of_neglect_sexual",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "type_of_neglect_sexual",
+        "type": "edit_text",
+        "hint": "list the signs observed or type of violence reported",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+
       {
         "key": "parenting_intervention",
         "openmrs_entity_parent": "",
@@ -1774,32 +1799,26 @@
           }
         ],
         "relevance": {
-          "step1:sexually_abused": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-
-      {
-        "key": "type_of_neglect_sexual",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "type_of_neglect_sexual",
-        "type": "edit_text",
-        "hint": "list the signs observed or type of violence reported",
-        "edit_type": "name",
-        "read_only": "false",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        },
-        "relevance": {
           "rules-engine": {
             "ex-rules": {
               "rules-file": "household_visitation_form_0_20.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "toasterr",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": " Project-filed report of suspected abuse to child protection office, police or other local authority",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
           }
         }
       },
@@ -1896,7 +1915,7 @@
         "openmrs_entity_id": "referred_services",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "List the services",
+        "hint": "List the other referred services",
         "relevance": {
           "step1:child_other_services": {
             "type": "string",
@@ -1947,35 +1966,10 @@
           }
         ],
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
-          }
-        }
-      },
-      {
-        "key": "not_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "not_in_school",
-        "type": "native_radio",
-        "label": "If child is of school going age is not in school, were the barriers \nto being in school discussed?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:currently_in_school": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1990,12 +1984,48 @@
         "read_only": "false",
         "look_up": "true",
         "relevance": {
-          "step1:not_in_school": {
+          "step1:currently_in_school": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
         }
       },
+      {
+        "key": "ovc_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ovc_caregiver",
+        "type": "edit_text",
+        "hint": "Days missed as reported by OVC/Caregiver",
+        "edit_type": "number",
+        "read_only": "true",
+        "look_up": "true",
+        "relevance": {
+          "step1:currently_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "verified_by_school_days",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "verified_by_school_days",
+        "type": "edit_text",
+        "hint": "Days missed verified by the school",
+        "edit_type": "number",
+        "read_only": "false",
+        "look_up": "true",
+        "relevance": {
+          "step1:currently_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
       {
         "key": "challenges_barriers",
         "openmrs_entity_parent": "",
@@ -2023,6 +2053,34 @@
           }
         }
       },
+
+      {
+        "key": "not_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "not_in_school",
+        "type": "native_radio",
+        "label": "If child is of school going age is not in school, were the barriers \nto being in school discussed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:currently_in_school": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
       {
         "key": "child_household",
         "openmrs_entity_parent": "",
@@ -2072,42 +2130,6 @@
       },
 
       {
-        "key": "ovc_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ovc_caregiver",
-        "type": "edit_text",
-        "hint": "Days missed as reported by OVC/Caregiver",
-        "edit_type": "number",
-        "read_only": "true",
-        "look_up": "true",
-        "relevance": {
-          "step1:not_in_school": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-
-      {
-        "key": "verified_by_school_days",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "verified_by_school_days",
-        "type": "edit_text",
-        "hint": "Days missed verified by the school",
-        "edit_type": "number",
-        "read_only": "false",
-        "look_up": "true",
-        "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
-          }
-        }
-      },
-
-      {
         "key": "label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -2126,9 +2148,10 @@
         "read_only": "false",
         "look_up": "true",
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -2143,9 +2166,10 @@
         "read_only": "false",
         "look_up": "false",
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -2342,9 +2366,10 @@
           "err": "Please enter a valid name"
         },
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -2365,9 +2390,10 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -2389,9 +2415,10 @@
           "err": "Date Signed"
         },
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThan(., \"5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
