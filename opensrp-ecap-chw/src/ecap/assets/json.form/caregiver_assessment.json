@@ -204,7 +204,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "You're required to check the box"
+          "err": "You're required to select one option."
         },
         "relevance": {
           "step1:caregiver_hiv_status": {

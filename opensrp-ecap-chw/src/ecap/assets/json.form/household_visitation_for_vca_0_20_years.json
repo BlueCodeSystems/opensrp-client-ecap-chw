@@ -120,7 +120,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "HIV Status",
-        "read_only": true,
+        "read_only": false,
         "options": [
           {
             "key": "yes",
@@ -716,17 +716,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "eid_test",
-        "type": "date_picker",
-        "hint": "Check child’s under-five clinic card\n When was the last EID test done?",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
+        "type": "edit_text",
+        "hint": "Check child’s under-five clinic card When was the last EID test done?",
+        "edit_type": "number",
+        "read_only": "false",
         "v_required": {
           "value": false,
-          "err": "Date Signed"
+          "err": "Indicate the number of months "
         },
         "relevance": {
           "rules-engine": {
@@ -736,7 +732,6 @@
           }
         }
       },
-
       {
         "key": "age_appropriate",
         "openmrs_entity_parent": "",
@@ -808,10 +803,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
+          "step1:age_appropriate": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -835,7 +829,7 @@
           }
         ],
         "relevance": {
-          "step1:breastfeeding": {
+          "step1:child_receiving_breastfeeding": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -875,7 +869,6 @@
         "type": "label",
         "text": "Knowledge of HIV/AIDS (10-17 Years Old) Section"
       },
-
       {
         "key": "hiv_infection",
         "openmrs_entity_parent": "",
@@ -904,12 +897,12 @@
         }
       },
       {
-        "key": "prevention_support",
+        "key": "infection_risk",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "prevention_support",
+        "openmrs_entity_id": "infection_risk",
         "type": "native_radio",
-        "label": "Is the child able to correctly describe the location of at least one place where HIV prevention support is available?",
+        "label": "If the child cannot describe at least two HIV infection risks in \ntheir local community or provide at least one example of how \nthey can protect themselves against HIV risk or correctly describe \nthe location of at least one place where HIV prevention support, \nhas the child been provided with HIV risk reduction counselling?",
         "options": [
           {
             "key": "yes",
@@ -925,10 +918,12 @@
         "relevance": {
           "step1:hiv_infection": {
             "type": "string",
-            "ex": "equalTo(., \"yes\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
+
+
       {
         "key": "against_hiv_risk",
         "openmrs_entity_parent": "",
@@ -950,6 +945,59 @@
         ],
         "relevance": {
           "step1:hiv_infection": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "referred_health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_health_facility",
+        "type": "native_radio",
+        "label": "Has child been referred to health facility for HIV testing if test is required?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:against_hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "prevention_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prevention_support",
+        "type": "native_radio",
+        "label": "Is the child able to correctly describe the location of at least one place where HIV prevention support is available?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:against_hiv_risk": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -981,62 +1029,6 @@
           }
         }
       },
-
-      {
-        "key": "infection_risk",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infection_risk",
-        "type": "native_radio",
-        "label": "If the child cannot describe at least two HIV infection risks in \ntheir local community or provide at least one example of how \nthey can protect themselves against HIV risk or correctly describe \nthe location of at least one place where HIV prevention support, \nhas the child been provided with HIV risk reduction counselling?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:hiv_infection": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-
-
-      {
-        "key": "referred_health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "referred_health_facility",
-        "type": "native_radio",
-        "label": "Has child been referred to health facility for HIV testing if test is required?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:against_hiv_risk": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-
 
 
 
@@ -1243,14 +1235,7 @@
           }
         }
       },
-      {
-        "key": "hd1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Nutrition (ALL VCA except Under-Five Children) Section"
-      },
+
       {
         "key": "muac_measurement_b",
         "openmrs_entity_parent": "",
@@ -1260,6 +1245,23 @@
         "hint": "What is the child’s MUAC measurement?",
         "edit_type": "number",
         "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "If child’s MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
+        "toaster_type": "info",
+        "toaster_info_text": "Test for HIV",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1439,33 +1441,6 @@
           }
         }
       },
-
-      {
-        "key": "neglected_child_relationships",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "neglected_child_relationships",
-        "type": "native_radio",
-        "label": "If child is being neglected/exploited, has the family participated \nin a structured psycho-social support related to family conflict \nmitigation and family relationships?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:neglected": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
       {
         "key": "child_above_12_a",
         "openmrs_entity_parent": "",
@@ -1490,6 +1465,32 @@
             "ex-rules": {
               "rules-file": "household_visitation_form_0_20.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "neglected_child_relationships",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "neglected_child_relationships",
+        "type": "native_radio",
+        "label": "If child is being neglected/exploited, has the family participated \nin a structured psycho-social support related to family conflict \nmitigation and family relationships?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:child_above_12_a": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1618,7 +1619,7 @@
           }
         ],
         "relevance": {
-          "step1:relationships_neglected": {
+          "step1:physical_violence": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1650,7 +1651,7 @@
         "key": "health_label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
+        "openmrs_entity_id": "",
         "type": "label",
         "text": "Sexual and/or Gender Based Violence Section"
       },
@@ -1700,7 +1701,33 @@
           }
         }
       },
-
+      {
+        "key": "child_ever_experienced_sexual_violence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_ever_experienced_sexual_violence",
+        "type": "native_radio",
+        "label": "If child is 12 years and above, has s/he reported experiencing any from of sexual abuse?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
       {
         "key": "vsu_legal_support",
         "openmrs_entity_parent": "",
@@ -1753,33 +1780,7 @@
           }
         }
       },
-      {
-        "key": "child_ever_experienced_sexual_violence",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_ever_experienced_sexual_violence",
-        "type": "native_radio",
-        "label": "If child is 12 years and above, has s/he reported experiencing any from of sexual abuse?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "type_of_neglect_sexual",
         "openmrs_entity_parent": "",
@@ -2097,7 +2098,13 @@
         "hint": "Days missed verified by the school",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "true"
+        "look_up": "true",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       },
 
       {
@@ -2117,7 +2124,13 @@
         "hint": "What grade was the child doing in the\n last calendar year?",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "true"
+        "look_up": "true",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       },
       {
         "key": "current_calendar",
@@ -2128,7 +2141,13 @@
         "hint": "What grade is the child doing in the \ncurrent calendar year?",
         "edit_type": "number",
         "read_only": "false",
-        "look_up": "false"
+        "look_up": "false",
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       },
       {
         "key": "did_not_progress",
@@ -2321,6 +2340,12 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid name"
+        },
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
         }
       },
       {
@@ -2338,6 +2363,12 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
         }
       },
       {
@@ -2356,6 +2387,12 @@
         "v_required": {
           "value": false,
           "err": "Date Signed"
+        },
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
         }
       },
       {
@@ -2372,7 +2409,13 @@
             "text": "Yes",
             "value": false
           }
-        ]
+        ],
+        "relevance": {
+          "step1:age": {
+            "type": "string",
+            "ex": "greaterThan(., \"5\")"
+          }
+        }
       }
 
     ]
