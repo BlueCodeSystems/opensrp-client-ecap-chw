@@ -954,17 +954,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 case "household_visitation_for_vca_0_20_years":
 
-               // if(vcaVisitationModel == null){
+                if(vcaVisitationModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
-              /*  } else {
+                } else {
 
                     formToBeOpened.put("entity_id", this.vcaVisitationModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaVisitationModel, Map.class));
-                }*/
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+                }
                 break;
 
             case "referral":
