@@ -234,7 +234,7 @@ actions:
 name: step1_progression_child_household
 description: progression_child_household
 priority: 1
-condition: "(step1_current_calendar == 1 && step1_verified_by_school == 1 || step1_current_calendar == 2 && step1_verified_by_school == 2 || step1_current_calendar == 3 && step1_verified_by_school == 3 || step1_current_calendar == 4 && step1_verified_by_school == 4 || step1_current_calendar == 5 && step1_verified_by_school == 5 || step1_current_calendar == 6 && step1_verified_by_school == 6 || step1_current_calendar == 7 && step1_verified_by_school == 7 || step1_current_calendar == 8 && step1_verified_by_school == 8 || step1_current_calendar == 9 && step1_verified_by_school == 9 || step1_current_calendar == 10 && step1_verified_by_school == 10 || step1_current_calendar == 11 && step1_verified_by_school == 11 || step1_current_calendar == 12 && step1_verified_by_school == 12) "
+condition: "step1_did_not_progress.contains('yes') || step1_did_not_progress.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -252,9 +252,58 @@ condition: "step1_age >  5"
 actions:
   - "isRelevant = true"
 ---
-name: step1_currently_in_school
-description: currently_in_school
+name: step1_parenting_intervention
+description: parenting_intervention
 priority: 1
-condition: "step1_age >= 3"
+condition: "step1_vsu_legal_support.contains('yes') || step1_vsu_legal_support.contains('no') "
+actions:
+  - "isRelevant = true"
+---
+name: step1_toasterr
+description: toasterr
+priority: 1
+condition: "step1_parenting_intervention.contains('yes') || step1_parenting_intervention.contains('no') "
+actions:
+  - "isRelevant = true"
+---
+name: step1_child_household
+description: child_household
+priority: 1
+condition: "step1_challenges_barriers.contains('yes') || step1_challenges_barriers.contains('no') "
+actions:
+  - "isRelevant = true"
+---
+name: step1_verified_by_school
+description: verified_by_school
+priority: 1
+condition: "step1_age >  5 && step1_age <= 19"
+actions:
+  - "isRelevant = true"
+---
+name: step1_current_calendar
+description: current_calendar
+priority: 1
+condition: "step1_age >  5 && step1_age <= 19"
+actions:
+  - "isRelevant = true"
+---
+name: step1_school_administration_name
+description: school_administration_name
+priority: 1
+condition: "step1_age >  5 && step1_age <= 19"
+actions:
+  - "isRelevant = true"
+---
+name: step1_telephone_number
+description: telephone_number
+priority: 1
+condition: "step1_age >  5 && step1_age <= 19"
+actions:
+  - "isRelevant = true"
+---
+name: step1_school_administration_date_signed
+description: school_administration_date_signed
+priority: 1
+condition: "step1_age >  5 && step1_age <= 19"
 actions:
   - "isRelevant = true"
