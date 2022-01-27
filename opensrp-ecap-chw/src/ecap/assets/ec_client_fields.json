@@ -4402,7 +4402,6 @@
             "field": "attributes.assessed_graduation"
           }
         },
-
         {
           "column_name": "family_date",
           "type": "Client",
@@ -4429,6 +4428,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_age"
+          }
+        },
+        {
+          "column_name": "caregiver_hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_hiv_status"
           }
         },
         {
