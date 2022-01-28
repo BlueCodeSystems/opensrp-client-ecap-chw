@@ -911,9 +911,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "case_status":
             case "case_plan":
+                formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
             case "vca_screening":
 
                 formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
+                formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(4).put("min_date",  "today - " + getAgeWithoutText(indexChild.getAdolescent_birthdate())+"y");
+
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
 
                 break;

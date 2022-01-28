@@ -2261,7 +2261,6 @@
         "look_up": "true",
         "label_info_text": "Give an estimate if the exact date is not known",
         "expanded": false,
-        "min_date": "today - 17y",
         "max_date": "today",
         "v_required": {
           "value": true,
