@@ -76,7 +76,11 @@
         "options": [
           {
             "key": "Yes",
-            "text": "Yes, Consent given proceed"
+            "text": "Yes, Proceed"
+          },
+          {
+            "key": "no",
+            "text": "NO, Don`t  Proceed"
           }
         ],
         "v_required": {
@@ -192,12 +196,12 @@
         }
       },
       {
-        "key": "symptoms",
+        "key": "Question",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "symptoms",
+        "openmrs_entity_id": "Question",
         "type": "native_radio",
-        "label": "Do you have any of the following symptoms? (A) Current cough, (B) Fever, (C) Weight loss, (D) Night sweats?",
+        "label": "Have you had new HIV exposure since last test?",
         "options": [
           {
             "key": "yes",
@@ -209,9 +213,10 @@
           }
         ],
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "risk_assessment_under_15.yml"
+            }
           }
         }
       },
@@ -233,12 +238,14 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:Question": {
             "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+
+
       {
         "key": "deceased_parents",
         "openmrs_entity_parent": "",
@@ -257,12 +264,13 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:Question": {
             "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
+
       {
         "key": "tb_symptoms",
         "openmrs_entity_parent": "",
@@ -281,33 +289,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:Question": {
             "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
-          }
-        }
-      },
-      {
-        "key": "tb_symptoms",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tb_symptoms",
-        "type": "native_radio",
-        "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "step1:hiv_test": {
-            "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -329,9 +313,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:Question": {
             "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -353,9 +337,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:Question": {
             "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -377,9 +361,9 @@
           }
         ],
         "relevance": {
-          "step1:hiv_test": {
+          "step1:Question": {
             "type": "string",
-            "ex": "equalTo(., \"never_tested\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -407,15 +391,14 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_risk_assessment_under_15.yml"
-            }
+          "step1:Question": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
       {
-        "key": "toaster_a",
+        "key": "toast",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",

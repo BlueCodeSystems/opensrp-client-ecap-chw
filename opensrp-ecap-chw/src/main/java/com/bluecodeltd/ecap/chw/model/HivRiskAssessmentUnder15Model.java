@@ -9,7 +9,7 @@ public class HivRiskAssessmentUnder15Model {
     private String start_date;
     private String health_facility;
     private String art_number;
-    private String symptoms;
+    private String biological_mother;
     private String deceased_parents;
     private String tb_symptoms;
     private String child_been_sick;
@@ -19,6 +19,7 @@ public class HivRiskAssessmentUnder15Model {
     private String hiv_tb;
     private String hiv_test_result;
     private String date_of_hiv_test;
+
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -76,12 +77,12 @@ public class HivRiskAssessmentUnder15Model {
         this.art_number = art_number;
     }
 
-    public String getSymptoms() {
-        return symptoms;
+    public String getBiological_mother() {
+        return biological_mother;
     }
 
-    public void setSymptoms(String symptoms) {
-        this.symptoms = symptoms;
+    public void setBiological_mother(String biological_mother) {
+        this.biological_mother = biological_mother;
     }
 
     public String getDeceased_parents() {

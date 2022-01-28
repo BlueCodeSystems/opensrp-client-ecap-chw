@@ -4788,10 +4788,10 @@
           }
         },
         {
-          "column_name": "symptoms",
+          "column_name": "biological_mother",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.symptoms"
+            "field": "attributes.biological_mother"
           }
         },
         {
