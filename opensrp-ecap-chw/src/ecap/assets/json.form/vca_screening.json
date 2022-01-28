@@ -504,7 +504,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_result",
         "type": "native_radio",
-        "label": "If the answer is Yes, what was the screening result",
+        "label": "What was the screening result",
         "options": [
           {
             "key": "Negative",
@@ -528,7 +528,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_eligibility",
         "type": "native_radio",
-        "label": "If the answer is Negative, was client eligible for TPT",
+        "label": "Was client eligible for TPT",
         "options": [
           {
             "key": "yes",
@@ -552,7 +552,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_initiated",
         "type": "native_radio",
-        "label": "If the answer is yes, was the client initiated on TPT",
+        "label": "Was the client initiated on TPT",
         "options": [
           {
             "key": "yes",
@@ -2261,7 +2261,6 @@
         "look_up": "true",
         "label_info_text": "Give an estimate if the exact date is not known",
         "expanded": false,
-        "min_date": "today - 17y",
         "max_date": "today",
         "v_required": {
           "value": true,
