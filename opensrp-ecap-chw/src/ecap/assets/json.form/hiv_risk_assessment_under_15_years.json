@@ -209,7 +209,31 @@
           }
         ],
         "relevance": {
-          "step1:hiv_stau": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "biological_mother",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "biological_mother",
+        "type": "native_radio",
+        "label": "Is the child’s biological mother HIV+ or is her HIV status unknown?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
             "type": "string",
             "ex": "equalTo(., \"never_tested\")"
           }
@@ -220,6 +244,30 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "deceased_parents",
+        "type": "native_radio",
+        "label": "Are one or both of this child’s biological parents deceased?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "tb_symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_symptoms",
         "type": "native_radio",
         "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats?",
         "options": [
@@ -361,7 +409,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "risk_assessment_under_15.yml"
+              "rules-file": "hiv_risk_assessment_under_15.yml"
             }
           }
         }
