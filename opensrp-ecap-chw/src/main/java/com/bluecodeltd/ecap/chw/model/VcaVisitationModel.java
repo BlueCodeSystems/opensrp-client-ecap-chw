@@ -5,6 +5,7 @@ public class VcaVisitationModel {
     private String base_entity_id;
     private String age;
     private String visit_date;
+    private String is_hiv_positive;
     private String hiv_status;
     private String child_art;
     private String clinical_care;
@@ -108,6 +109,22 @@ public class VcaVisitationModel {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getVisit_date() {
+        return visit_date;
+    }
+
+    public void setVisit_date(String visit_date) {
+        this.visit_date = visit_date;
+    }
+
+    public String getIs_hiv_positive() {
+        return is_hiv_positive;
+    }
+
+    public void setIs_hiv_positive(String is_hiv_positive) {
+        this.is_hiv_positive = is_hiv_positive;
     }
 
     public String getHiv_status() {
@@ -812,13 +829,5 @@ public class VcaVisitationModel {
 
     public void setSchool_administration_signature(String school_administration_signature) {
         this.school_administration_signature = school_administration_signature;
-    }
-
-    public String getVisit_date() {
-        return visit_date;
-    }
-
-    public void setVisit_date(String visit_date) {
-        this.visit_date = visit_date;
     }
 }
