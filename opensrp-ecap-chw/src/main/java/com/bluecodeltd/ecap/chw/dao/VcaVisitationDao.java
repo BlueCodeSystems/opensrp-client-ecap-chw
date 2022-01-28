@@ -56,7 +56,7 @@ public class VcaVisitationDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setAge(getCursorValue(c, "age"));
             record.setVisit_date(getCursorValue(c, "visit_date"));
-            record.setHiv_status(getCursorValue(c, "is_hiv_positive"));
+            record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
             record.setChild_art(getCursorValue(c, "child_art"));
             record.setClinical_care(getCursorValue(c, "clinical_care"));
             record.setArt_appointment(getCursorValue(c, "art_appointment"));
