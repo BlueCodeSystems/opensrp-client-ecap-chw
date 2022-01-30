@@ -375,7 +375,7 @@
       {
         "key": "art_number",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
         "read_only": "true",
