@@ -232,36 +232,12 @@
         }
       },
       {
-        "key": "tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tested",
-        "type": "native_radio",
-        "label": "Tested for HIV?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "Is the Child/Household Member HIV Positive",
-        "relevance": {
-          "step1:tested": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        },
         "options": [
           {
             "key": "yes",
@@ -270,6 +246,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
           }
         ],
         "v_required": {
