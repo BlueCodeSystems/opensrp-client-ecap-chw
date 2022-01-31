@@ -400,10 +400,6 @@
         "read_only": "false",
         "hint": "ART Number",
         "edit_type": "number",
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
-          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
-        },
         "relevance": {
           "step1:vca_art": {
             "type": "string",
