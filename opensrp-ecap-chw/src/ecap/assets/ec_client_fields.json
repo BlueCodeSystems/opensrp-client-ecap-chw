@@ -2303,7 +2303,137 @@
       ]
     },
     {
+      "name": "ec_caregiver_case_plan_domain",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "case_plan_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_date"
+          }
+        },
+        {
+          "column_name": "case_plan_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_status"
+          }
+        },
+
+        {
+          "column_name": "type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.type"
+          }
+        },
+        {
+          "column_name": "vulnerability",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vulnerability"
+          }
+        },
+        {
+          "column_name": "goal",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.goal"
+          }
+        },
+        {
+          "column_name": "services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services"
+          }
+        },
+        {
+          "column_name": "service_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_referred"
+          }
+        },
+        {
+          "column_name": "institution",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.institution"
+          }
+        },
+        {
+          "column_name": "due_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.due_date"
+          }
+        },
+        {
+          "column_name": "status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_vca_case_plan",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "case_plan_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_date"
+          }
+        },
+        {
+          "column_name": "case_plan_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_caregiver_case_plan",
       "columns": [
         {
           "column_name": "base_entity_id",
