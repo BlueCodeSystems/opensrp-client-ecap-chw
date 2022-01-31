@@ -381,10 +381,6 @@
         "read_only": "true",
         "hint": "ART Number",
         "edit_type": "number",
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
-          "err": "ART should be in the format of XXXX-XXXX-XXXXXX-X"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {

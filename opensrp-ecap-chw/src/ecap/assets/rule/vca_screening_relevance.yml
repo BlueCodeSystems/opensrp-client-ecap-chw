@@ -503,6 +503,13 @@ condition: "step1_agyw_sexually_active.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_agyw_transactional_sex
+description: agyw_transactional_sex
+priority: 1
+condition: "step1_agyw_sexually_active.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_agwy_engaged_in_sex_work
 description: agwy_engaged_in_sex_work
 priority: 1
