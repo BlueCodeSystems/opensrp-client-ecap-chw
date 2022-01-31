@@ -704,7 +704,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "re_enrollment",
-        "hint": "Re-enrollment (for dropouts or teen mothers)",
+        "label": "Re-enrollment (for dropouts or teen mothers)",
         "type": "check_box",
         "options": [
           {
