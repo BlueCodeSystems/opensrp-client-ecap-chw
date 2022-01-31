@@ -469,7 +469,6 @@
           }
         }
       },
-
       {
         "key": "client_screened",
         "openmrs_entity_parent": "",
@@ -495,10 +494,10 @@
         }
       },
       {
-        "key": "client_result",
+        "key": "screening_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "client_result",
+        "openmrs_entity_id": "screening_result",
         "type": "native_radio",
         "label": "What was the screening result",
         "options": [
@@ -566,7 +565,6 @@
           }
         }
       },
-
       {
         "key": "screened_for_malnutrition",
         "openmrs_entity_parent": "",
@@ -591,7 +589,6 @@
           }
         }
       },
-
       {
         "key": "takes_drugs_to_prevent_other_diseases",
         "openmrs_entity_parent": "",
