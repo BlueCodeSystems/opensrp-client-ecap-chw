@@ -331,7 +331,7 @@
           },
           {
             "key": "not_in_school",
-            "text": "not in school"
+            "text": "Not in school"
           }
         ]
       },
@@ -719,7 +719,7 @@
         "hint": "Mothers' ART Number",
         "edit_type": "name",
         "relevance": {
-          "step1:is_mother_currently_on_treatment": {
+          "step1:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -839,10 +839,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:child_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -864,10 +863,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:child_receiving_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -2296,7 +2294,6 @@
         "label": "Is the child currently on ART?",
         "text_color": "#000000",
         "read_only": true,
-        "value": "yes",
         "exclusive": [
           "Yes"
         ],
@@ -2317,45 +2314,16 @@
           "err": "You're required check the ART number check box"
         },
         "relevance": {
-          "step1:is_on_hiv_treatment": {
+          "step4:acceptance": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
-        }
-      },
-      {
-        "key": "art_check_box1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_check_box1",
-        "type": "native_radio",
-        "label": "Is the child currently on ART?",
-        "text_color": "#000000",
-        "read_only": true,
-        "value": "no",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required check the ART number check box"
         },
-        "relevance": {
-          "step1:is_on_hiv_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
           }
         }
       },
