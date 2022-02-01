@@ -286,7 +286,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("caregiver_case_plan");
+                    indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
