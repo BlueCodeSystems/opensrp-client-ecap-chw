@@ -1162,7 +1162,7 @@
       {
         "key": "agyw_sexually_active",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_sexually_active",
         "type": "native_radio",
         "label": "Is the AGYW sexually active? ",
@@ -1244,7 +1244,7 @@
       {
         "key": "agyw_having_sex_with_older_men",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_having_sex_with_older_men",
         "type": "native_radio",
         "label": "Is the AGYW having sex with older men?",
@@ -1294,7 +1294,7 @@
       {
         "key": "agyw_engaged_in_transactional_sex",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
         "type": "native_radio",
         "label": "Is the AGYW engaged in transactional sex?",
@@ -1319,7 +1319,7 @@
       {
         "key": "agwy_engaged_in_sex_work",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_engaged_in_sex_work",
         "type": "native_radio",
         "label": "Is the AGYW engaged in sex work?",
@@ -1344,7 +1344,7 @@
       {
         "key": "agyw_food_or_economically_insecure",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_food_or_economically_insecure",
         "type": "native_radio",
         "label": "Is the AGYW food or economically insecure?",
@@ -1369,7 +1369,7 @@
       {
         "key": "agyw_marry_early",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_marry_early",
         "type": "native_radio",
         "label": "Did the AGYW marry early (child marriage)? ",
@@ -1394,7 +1394,7 @@
       {
         "key": "agyw_give_birth_before_the_age_of_18",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_give_birth_before_the_age_of_18",
         "type": "native_radio",
         "label": "Did the AGYW give birth before the age of 18 (teen mum)?",
@@ -1419,7 +1419,7 @@
       {
         "key": "agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
         "type": "native_radio",
         "label": "Does the AGYW have a partner who is violent or has experienced violence?",
@@ -1444,7 +1444,7 @@
       {
         "key": "agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness",
         "type": "native_radio",
         "label": "Has the AGYW ever been diagnosed with a Sexually Transmitted Illness (STI)?",
@@ -1469,7 +1469,7 @@
       {
         "key": "agyw_in_school",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_in_school",
         "type": "native_radio",
         "label": "Is the AGYW in school?",
@@ -1494,7 +1494,7 @@
       {
         "key": "agyw_receiving_an_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
         "type": "native_radio",
         "label": "Is the AGYW receiving an economic strengthening intervention?",
@@ -1527,7 +1527,7 @@
       {
         "key": "child_ever_experienced_sexual_violence",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
         "label": "Has the child/adolescent ever experienced sexual violence?",
@@ -1545,7 +1545,7 @@
       {
         "key": "child_still_living_in_the_same_household_as_the_perpetrator",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_still_living_in_the_same_household_as_the_perpetrator",
         "type": "native_radio",
         "label": "Is the child/adolescent still living in the same household as the perpetrator? ",
@@ -1570,7 +1570,7 @@
       {
         "key": "child_supported_to_seek_justice",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_supported_to_seek_justice ",
         "type": "native_radio",
         "label": "Was the child/adolescent supported to seek justice ",
@@ -1595,7 +1595,7 @@
       {
         "key": "did_the_child_access_clinical_care",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "did_the_child_access_clinical_care",
         "type": "native_radio",
         "label": "Did the child/adolescent access clinical care? ",
@@ -1620,7 +1620,7 @@
       {
         "key": "child_clinical_care_services_received",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_clinical_care_services_received",
         "type": "check_box",
         "label": "Did the child/adolescent receive any of these clinical care services? ",
@@ -1665,7 +1665,7 @@
       {
         "key": "child_clinical_care_services_received_other",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_clinical_care_services_received_other",
         "type": "edit_text",
         "hint": "Other Clinical Care Services",
@@ -1704,7 +1704,7 @@
       {
         "key": "is_the_child_caregiver_an_fsw",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_the_child_caregiver_an_fsw",
         "type": "native_radio",
         "label": "Is the child/adolescent’s caregiver an FSW?",
@@ -1722,7 +1722,7 @@
       {
         "key": "fsw_prevention_intervention",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fsw_prevention_intervention",
         "type": "native_radio",
         "label": "Is the Child/Adolescent receiving any age-appropriate HIV and sexual violence prevention intervention?",
