@@ -62,4 +62,10 @@ condition: "true"
 actions:
   - "calculation = step4_date_hiv_known < step1_adolescent_birthdate"
 
-
+---
+name: step4_art_check_box
+description: art_check_box
+priority: 1
+condition: "step4_art_check_box == ''"
+actions:
+  - "calculation = step1_is_on_hiv_treatment"
