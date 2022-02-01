@@ -913,9 +913,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case "case_plan":
                 formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
-
-                break;
-
             case "vca_screening":
 
                 formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
