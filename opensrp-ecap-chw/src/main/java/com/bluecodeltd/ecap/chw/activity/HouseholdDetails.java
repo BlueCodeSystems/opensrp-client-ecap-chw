@@ -209,7 +209,7 @@ public class HouseholdDetails extends AppCompatActivity {
         int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getUnique_id());
 
         //change valueOf to plans after query is re-visited
-        casePlanTabCount.setText(String.valueOf(1));
+        casePlanTabCount.setText("0");
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
