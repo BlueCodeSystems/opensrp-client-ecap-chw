@@ -132,7 +132,7 @@
         "key": "ward",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subTown",
+        "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
         "value": "Choma Central",
@@ -2121,7 +2121,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward only takes letters"
+          "err": "This field is required"
         },
         "calculation": {
           "rules-engine": {
