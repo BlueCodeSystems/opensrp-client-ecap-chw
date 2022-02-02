@@ -1085,13 +1085,6 @@
           }
         },
         {
-          "column_name": "entry_type",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.entry_type"
-          }
-        },
-        {
           "column_name": "other_entry_type",
           "type": "Client",
           "json_mapping": {
@@ -1267,7 +1260,7 @@
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.stateProvince"
+            "field": "attributes.stateProvince"
           }
         },
         {
@@ -1281,7 +1274,7 @@
           "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.subTown"
+            "field": "attributes.subTown"
           }
         },
         {
@@ -1404,6 +1397,13 @@
           }
         },
         {
+          "column_name": "active_on_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.active_on_treatment"
+          }
+        },
+        {
           "column_name": "did_the_child_access_clinical_care",
           "type": "Client",
           "json_mapping": {
@@ -1415,6 +1415,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.subpop4"
+          }
+        },
+        {
+          "column_name": "positive_mother",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.positive_mother"
+          }
+        },
+        {
+          "column_name": "caregiver_art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_art_number"
+          }
+        },
+        {
+          "column_name": "adhering_to_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adhering_to_treatment"
           }
         },
         {
@@ -1449,7 +1470,7 @@
           "column_name": "child_gets_drugs_to_prevent_tb",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_gets_drugs_to_prevent_tb_hei"
+            "field": "attributes.child_gets_drugs_to_prevent_tb"
           }
         },
         {
@@ -2124,7 +2145,7 @@
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.province"
+            "field": "attributes.province"
           }
         },
         {
@@ -2132,6 +2153,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.district"
+          }
+        },
+        {
+          "column_name": "ward",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ward"
           }
         },
         {
