@@ -972,9 +972,27 @@
             "field": "attributes.is_mother_currently_on_treatment_wlhiv"
           }
         },
-
-
-
+        {
+          "column_name": "mother_art_number_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_art_number_wlhiv"
+          }
+        },
+        {
+          "column_name": "is_mother_adhering_to_treatment_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_adhering_to_treatment_wlhiv"
+          }
+        },
+        {
+          "column_name": "is_mother_virally_suppressed_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_virally_suppressed_wlhiv"
+          }
+        },
         {
           "column_name": "secure",
           "type": "Client",
@@ -1386,10 +1404,255 @@
           }
         },
         {
+          "column_name": "did_the_child_access_clinical_care",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.did_the_child_access_clinical_care"
+          }
+        },
+        {
           "column_name": "subpop4",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.subpop4"
+          }
+        },
+        {
+          "column_name": "child_receiving_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_receiving_breastfeeding"
+          }
+        },
+        {
+          "column_name": "child_tested_for_hiv_inline_with_guidelines",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_tested_for_hiv_inline_with_guidelines"
+          }
+        },
+        {
+          "column_name": "receives_drugs_to_prevent_hiv_and_other_illnesses",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.receives_drugs_to_prevent_hiv_and_other_illnesses_hei"
+          }
+        },
+        {
+          "column_name": "child_been_screened_for_malnutrition",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_been_screened_for_malnutrition"
+          }
+        },
+        {
+          "column_name": "child_gets_drugs_to_prevent_tb",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_gets_drugs_to_prevent_tb_hei"
+          }
+        },
+        {
+          "column_name": "child_enrolled_in_early_childhood_development_program",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_enrolled_in_early_childhood_development_program"
+          }
+        },
+        {
+          "column_name": "takes_drugs_to_prevent_other_diseases",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.takes_drugs_to_prevent_other_diseases"
+          }
+        },
+        {
+          "column_name": "agyw_sexually_active",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_sexually_active"
+          }
+        },
+        {
+          "column_name": "is_biological_child_of_mother_living_with_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_biological_child_of_mother_living_with_hiv"
+          }
+        },
+        {
+          "column_name": "is_mother_currently_on_treatment_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_currently_on_treatment_wlhiv"
+          }
+        },
+        {
+          "column_name": "mother_art_number_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_art_number_wlhiv"
+          }
+        },
+        {
+          "column_name": "is_mother_adhering_to_treatment_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_adhering_to_treatment_wlhiv"
+          }
+        },
+        {
+          "column_name": "is_mother_virally_suppressed_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_virally_suppressed_wlhiv"
+          }
+        },
+        {
+          "column_name": "child_clinical_care_services_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_clinical_care_services_received"
+          }
+        },
+        {
+          "column_name": "agyw_having_sex_with_older_men",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_having_sex_with_older_men"
+          }
+        },
+        {
+          "column_name": "agyw_transactional_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_transactional_sex"
+          }
+        },
+        {
+          "column_name": "agyw_engaged_in_transactional_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_engaged_in_transactional_sex"
+          }
+        },
+        {
+          "column_name": "agwy_engaged_in_sex_work",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agwy_engaged_in_sex_work"
+          }
+        },
+        {
+          "column_name": "agyw_food_or_economically_insecure",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_food_or_economically_insecure"
+          }
+        },
+        {
+          "column_name": "agyw_marry_early",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_marry_early"
+          }
+        },
+        {
+          "column_name": "agyw_give_birth_before_the_age_of_18",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_give_birth_before_the_age_of_18"
+          }
+        },
+        {
+          "column_name": "agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_have_a_partner_who_is_violent_or_has_experienced_violence"
+          }
+        },
+        {
+          "column_name": "agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness"
+          }
+        },
+        {
+          "column_name": "agyw_in_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_in_school"
+          }
+        },
+        {
+          "column_name": "agyw_receiving_an_economic_strengthening_intervention",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_receiving_an_economic_strengthening_intervention"
+          }
+        },
+        {
+          "column_name": "agyw_receiving_an_economic_strengthening_intervention",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_receiving_an_economic_strengthening_intervention"
+          }
+        },
+        {
+          "column_name": "child_ever_experienced_sexual_violence",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_ever_experienced_sexual_violence"
+          }
+        },
+        {
+          "column_name": "child_still_living_in_the_same_household_as_the_perpetrator",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_still_living_in_the_same_household_as_the_perpetrator"
+          }
+        },
+        {
+          "column_name": "child_clinical_care_services_received_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_clinical_care_services_received_other"
+          }
+        },
+        {
+          "column_name": "other_child_clinical_care_services_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_child_clinical_care_services_received"
+          }
+        },
+        {
+          "column_name": "is_the_child_caregiver_an_fsw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_the_child_caregiver_an_fsw"
+          }
+        },
+        {
+          "column_name": "fsw_economic_strengthening_intervention",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.fsw_economic_strengthening_intervention"
+          }
+        },
+        {
+          "column_name": "child_supported_to_seek_justice",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_supported_to_seek_justice"
+          }
+        },
+        {
+          "column_name": "fsw_prevention_intervention",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.fsw_prevention_intervention"
           }
         },
         {
@@ -1703,48 +1966,7 @@
             "field": "attributes.is_child_hiv_positive"
           }
         },
-        {
-          "column_name": "child_receiving_breastfeeding",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child_receiving_breastfeeding"
-          }
-        },
-        {
-          "column_name": "child_tested_for_hiv_inline_with_guidelines",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child_tested_for_hiv_inline_with_guidelines"
-          }
-        },
-        {
-          "column_name": "receives_drugs_to_prevent_hiv_and_other_illnesses",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.receives_drugs_to_prevent_hiv_and_other_illnesses_hei"
-          }
-        },
-        {
-          "column_name": "child_been_screened_for_malnutrition",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child_been_screened_for_malnutrition"
-          }
-        },
-        {
-          "column_name": "child_gets_drugs_to_prevent_tb",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child_gets_drugs_to_prevent_tb_hei"
-          }
-        },
-        {
-          "column_name": "child_enrolled_in_early_childhood_development_program",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child_enrolled_in_early_childhood_development_program"
-          }
-        },
+
         {
           "column_name": "date_removed",
           "type": "Client",
@@ -1752,13 +1974,7 @@
             "field": "attributes.dateRemoved"
           }
         },
-        {
-          "column_name": "takes_drugs_to_prevent_other_diseases",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.takes_drugs_to_prevent_other_diseases"
-          }
-        },
+
         {
           "column_name": "date_offered_enrollment",
           "type": "Client",
@@ -3910,11 +4126,13 @@
             "field": "attributes.parenting_intervention"
           }
         },
+
+
         {
-          "column_name": "child_ever_experienced_sexual_violence",
+          "column_name": "did_the_child_access_clinical_care",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_ever_experienced_sexual_violence"
+            "field": "attributes.did_the_child_access_clinical_care"
           }
         },
         {
@@ -3938,6 +4156,7 @@
             "field": "attributes.psychosocial_needs"
           }
         },
+
         {
           "column_name": "psychosocial_services",
           "type": "Client",
