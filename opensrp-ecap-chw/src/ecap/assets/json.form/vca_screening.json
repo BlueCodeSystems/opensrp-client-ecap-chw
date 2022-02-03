@@ -2314,15 +2314,9 @@
           "err": "You're required check the ART number check box"
         },
         "relevance": {
-          "step4:acceptance": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        },
-        "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
+              "rules-file": "vca_screening_relevance.yml"
             }
           }
         }
