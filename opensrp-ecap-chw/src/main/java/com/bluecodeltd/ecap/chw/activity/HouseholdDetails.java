@@ -277,8 +277,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
-
-
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
