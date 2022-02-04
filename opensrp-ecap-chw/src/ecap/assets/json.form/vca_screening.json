@@ -108,7 +108,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
         "value": "Southern",
@@ -120,7 +120,7 @@
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "countyDistrict",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
         "hint": "District",
         "value": "Choma",
@@ -132,7 +132,7 @@
         "key": "ward",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subTown",
+        "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
         "value": "Choma Central",
@@ -141,7 +141,7 @@
         "look_up": "true"
       },
       {
-        "key": "facility",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
@@ -1679,8 +1679,8 @@
       {
         "key": "other_child_clinical_care_services_received",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "other_clinical_services",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_child_clinical_care_services_received",
         "type": "edit_text",
         "hint": "Other Child care services received",
         "relevance": {
@@ -1849,7 +1849,7 @@
       {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "consent_check_box",
         "type": "native_radio",
         "label": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
@@ -2250,10 +2250,6 @@
         "v_required": {
           "value": false,
           "err": "Please enter date you were enrolled"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
         },
         "relevance": {
           "step4:acceptance": {
