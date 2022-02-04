@@ -793,12 +793,12 @@
         "options": [
           {
             "key": "yes",
-            "text": "HIV Positive",
+            "text": "Yes",
             "value": false
           },
           {
             "key": "no",
-            "text": "HIV Negative",
+            "text": "No",
             "value": false
           }
         ],
