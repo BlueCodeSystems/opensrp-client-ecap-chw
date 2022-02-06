@@ -205,11 +205,16 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
         casePlanTabTitle.setText("Case plans");
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
-        //re-visit query in Dao
-        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getUnique_id());
+        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());        //re-visit query in Dao
 
+        if (plans > 0)
+        {
+            casePlanTabCount.setText(String.valueOf(plans));
+        }
+        else{
+            casePlanTabCount.setText("0");
+        }
         //change valueOf to plans after query is re-visited
-        casePlanTabCount.setText(String.valueOf(1));
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
@@ -602,6 +607,19 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
+                case "Caregiver Case Plan":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_CASEPLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -643,7 +661,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
 
 
                 } catch (Exception e) {
