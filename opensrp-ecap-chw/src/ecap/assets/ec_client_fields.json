@@ -2535,6 +2535,7 @@
             "field": "attributes.unique_id"
           }
         },
+
         {
           "column_name": "case_plan_date",
           "type": "Client",
@@ -2663,6 +2664,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
           }
         },
         {
