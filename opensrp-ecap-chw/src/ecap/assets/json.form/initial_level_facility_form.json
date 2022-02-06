@@ -185,8 +185,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "hint": "Art number",
-        "edit_type": "number"
+        "hint": "Art number"
       },
       {
         "key": "date_identified",
