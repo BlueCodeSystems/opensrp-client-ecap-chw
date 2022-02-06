@@ -167,7 +167,7 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
 
     public void gotHouseholdProfile(String id){
         Intent intent = new Intent(getView().getContext(), HouseholdDetails.class);
-        intent.putExtra("childId",  baseId);
+        intent.putExtra("childId",  uniqueId);
         intent.putExtra("householdId",householdId);
         Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
         getView().startActivity(intent);

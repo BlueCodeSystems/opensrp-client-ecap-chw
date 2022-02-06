@@ -156,7 +156,6 @@
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Ward  only takes letters"
@@ -169,7 +168,6 @@
         "openmrs_entity_id": "village",
         "type": "edit_text",
         "hint": "Village",
-        "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Village only takes letters"
@@ -900,7 +898,6 @@
             "openmrs_entity_id": "hiv_management_goal",
             "type": "edit_text",
             "hint": "Goal",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -913,7 +910,6 @@
             "openmrs_entity_id": "hiv_management_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Services to be provided by CW"
@@ -926,7 +922,6 @@
             "openmrs_entity_id": "hiv_management_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please enter services and institution"
@@ -956,8 +951,7 @@
             "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "hiv_management_follow_up",
             "type": "edit_text",
-            "hint": "Status at Follow-up",
-            "edit_type": "name",
+            "hint": "Status",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -970,7 +964,6 @@
             "openmrs_entity_id": "hiv_management_comment",
             "type": "edit_text",
             "hint": "Comment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -999,7 +992,6 @@
             "openmrs_entity_id": "health_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Vulnerabilities identified from Assessment"
@@ -1012,7 +1004,6 @@
             "openmrs_entity_id": "health_goal",
             "type": "edit_text",
             "hint": "Goal",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1025,7 +1016,6 @@
             "openmrs_entity_id": "health_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Services to be provided by CW"
@@ -1038,7 +1028,6 @@
             "openmrs_entity_id": "health_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please enter services and institution"
@@ -1068,8 +1057,7 @@
             "openmrs_entity": "person_attribute",
             "openmrs_entity_id": "health_follow_up",
             "type": "edit_text",
-            "hint": "Status at Follow-up",
-            "edit_type": "name",
+            "hint": "Status",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1082,10 +1070,9 @@
             "openmrs_entity_id": "health_comment",
             "type": "edit_text",
             "hint": "Comment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
-              "err": "Please Case Worker Name"
+              "err": "Comment"
             }
           }
         ]
@@ -1111,7 +1098,6 @@
             "openmrs_entity_id": "stable_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Vulnerabilities identified from Assessment"
@@ -1124,7 +1110,6 @@
             "openmrs_entity_id": "stable_management_goal",
             "type": "edit_text",
             "hint": "Goal",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1137,7 +1122,6 @@
             "openmrs_entity_id": "stable_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Services to be provided by CW"
@@ -1150,7 +1134,6 @@
             "openmrs_entity_id": "stable_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please enter services and institution"
@@ -1181,7 +1164,6 @@
             "openmrs_entity_id": "stable_follow_up",
             "type": "edit_text",
             "hint": "Status at Follow-up",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1194,7 +1176,6 @@
             "openmrs_entity_id": "stable_comment",
             "type": "edit_text",
             "hint": "Comment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1223,7 +1204,6 @@
             "openmrs_entity_id": "safe_vulnerabilities",
             "type": "edit_text",
             "hint": "Vulnerabilities identified from Assessment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Vulnerabilities identified from Assessment"
@@ -1236,7 +1216,6 @@
             "openmrs_entity_id": "safe_goal",
             "type": "edit_text",
             "hint": "Goal",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1249,7 +1228,6 @@
             "openmrs_entity_id": "safe_services",
             "type": "edit_text",
             "hint": "Services to be provided by CW",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Services to be provided by CW"
@@ -1262,7 +1240,6 @@
             "openmrs_entity_id": "safe_referred_institution",
             "type": "edit_text",
             "hint": "Services to be Referred and Institution",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please enter services and institution"
@@ -1293,7 +1270,6 @@
             "openmrs_entity_id": "safe_follow_up",
             "type": "edit_text",
             "hint": "Status at Follow-up",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1306,7 +1282,6 @@
             "openmrs_entity_id": "safe_comment",
             "type": "edit_text",
             "hint": "Comment",
-            "edit_type": "name",
             "v_required": {
               "value": false,
               "err": "Please Case Worker Name"
@@ -1321,7 +1296,6 @@
         "openmrs_entity_id": "remarks",
         "type": "edit_text",
         "hint": "Additional Remarks by Case Worker",
-        "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Additional remarks"
