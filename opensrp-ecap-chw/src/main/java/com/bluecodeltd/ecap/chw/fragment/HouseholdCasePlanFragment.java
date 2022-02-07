@@ -34,7 +34,7 @@ public class HouseholdCasePlanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_householdcaseplans, container, false);
 
-        String householdId = ( (HouseholdDetails) requireActivity()).house.getUnique_id();
+        String householdId = ( (HouseholdDetails) requireActivity()).house.getHousehold_id();
 
         recyclerView = view.findViewById(R.id.householdRecycler);
         linearLayout = view.findViewById(R.id.household_visit_container);
