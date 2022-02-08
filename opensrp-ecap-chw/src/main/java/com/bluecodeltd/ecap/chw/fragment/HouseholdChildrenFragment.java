@@ -40,6 +40,8 @@ public class HouseholdChildrenFragment extends Fragment {
         String houseId = house.getHousehold_id();
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        childList.clear();
+
 
         childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
 

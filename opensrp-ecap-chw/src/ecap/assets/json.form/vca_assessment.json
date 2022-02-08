@@ -318,8 +318,7 @@
         "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
         "hint": "VL Result",
-        "edit_type": "number",
-        "read_only": false,
+        "read_only": true,
         "relevance": {
           "step1:viral_load": {
             "type": "string",
@@ -399,7 +398,6 @@
         "type": "edit_text",
         "read_only": "false",
         "hint": "ART Number",
-        "edit_type": "number",
         "relevance": {
           "step1:vca_art": {
             "type": "string",
@@ -795,12 +793,12 @@
         "options": [
           {
             "key": "yes",
-            "text": "HIV Positive",
+            "text": "Yes",
             "value": false
           },
           {
             "key": "no",
-            "text": "HIV Negative",
+            "text": "No",
             "value": false
           }
         ],

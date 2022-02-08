@@ -152,7 +152,6 @@
         "openmrs_entity_id": "services",
         "type": "edit_text",
         "hint": "Services to be provided by CW",
-        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "This field is Required"
@@ -165,7 +164,6 @@
         "openmrs_entity_id": "service_referred",
         "type": "edit_text",
         "hint": "Service to be referred",
-        "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Field is Required"
@@ -208,7 +206,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "status",
         "type": "native_radio",
-        "label": "Status at Follow-up",
+        "label": "Status",
         "v_required": {
           "value": true,
           "err": "Field is Required"
@@ -234,8 +232,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "comment",
         "type": "edit_text",
-        "hint": "Comment",
-        "edit_type": "name"
+        "hint": "Comment"
+
       }
     ]
   }
