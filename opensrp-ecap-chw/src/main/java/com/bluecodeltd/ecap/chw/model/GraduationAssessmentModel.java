@@ -4,6 +4,45 @@ public class GraduationAssessmentModel {
     private String base_entity_id;
     private String assessment_date_1;
     private String assessment_date_2;
+    private String caseworker_firstname;
+    private String caseworker_lastname;
+    private String caseworker_nrc;
+    private String name_rcmc_dc;
+    private String household_id;
+    private String date_family_enrolled;
+    private String assessed_graduation;
+    private String family_date;
+    private String caregiver_name;
+    private String caregiver_sex;
+    private String caregiver_age;
+    private String enrolled_project;
+    private String caregiver_household;
+    private String hiv_status;
+    private String virally_suppressed;
+    private String aged_10_17;
+    private String most_common_hiv_infected_hiv_ways;
+    private String prevent_reinfection;
+    private String place_for_hiv_prevention;
+    private String aged_5;
+    private String undernourished;
+    private String grade_7;
+    private String medical_costs;
+    private String additional_question;
+    private String beaten;
+    private String punched;
+    private String touching_in_sexual;
+    private String sex_against_your_will;
+    private String under_the_care;
+    private String benchmark_8_question;
+    private String school_age;
+    private String attended_school_regularly;
+    private String school_progress;
+    private String benchmark_description;
+    private String additional_information;
+    private String caseworker_signature;
+    private String caseworker_date_signed;
+    private String rcmc_signature;
+    private String rcmc_date_signed;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -340,46 +379,4 @@ public class GraduationAssessmentModel {
     public void setRcmc_date_signed(String rcmc_date_signed) {
         this.rcmc_date_signed = rcmc_date_signed;
     }
-
-    private String caseworker_firstname;
-    private String caseworker_lastname;
-    private String caseworker_nrc;
-    private String name_rcmc_dc;
-    private String household_id;
-    private String date_family_enrolled;
-    private String assessed_graduation;
-    private String family_date;
-    private String caregiver_name;
-    private String caregiver_sex;
-    private String caregiver_age;
-    private String enrolled_project;
-    private String caregiver_household;
-    private String hiv_status;
-    private String virally_suppressed;
-    private String aged_10_17;
-    private String most_common_hiv_infected_hiv_ways;
-    private String prevent_reinfection;
-    private String place_for_hiv_prevention;
-    private String aged_5;
-    private String undernourished;
-    private String grade_7;
-    private String medical_costs;
-    private String additional_question;
-    private String beaten;
-    private String punched;
-    private String touching_in_sexual;
-    private String sex_against_your_will;
-    private String under_the_care;
-    private String benchmark_8_question;
-    private String school_age;
-    private String attended_school_regularly;
-    private String school_progress;
-    private String benchmark_description;
-    private String additional_information;
-    private String caseworker_signature;
-    private String caseworker_date_signed;
-    private String rcmc_signature;
-    private String rcmc_date_signed;
-
-
 }

@@ -108,7 +108,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
         "value": "Southern",
@@ -120,7 +120,7 @@
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "countyDistrict",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
         "hint": "District",
         "value": "Choma",
@@ -141,7 +141,7 @@
         "look_up": "true"
       },
       {
-        "key": "facility",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
@@ -1185,7 +1185,7 @@
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
         "type": "check_box",
         "label": "Is AGYW using any of these HIV/pregnancy prevention methods?",
@@ -1226,7 +1226,7 @@
       {
         "key": "hiv_or_pregnancy_prevention_method_used_other",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used_other",
         "type": "edit_text",
         "hint": "Method Used",
@@ -1745,7 +1745,7 @@
       {
         "key": "fsw_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fsw_economic_strengthening_intervention",
         "type": "native_radio",
         "label": "Is the Adolescent and caregiver receiving any economic strengthening intervention?",
@@ -1849,7 +1849,7 @@
       {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "consent_check_box",
         "type": "native_radio",
         "label": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
@@ -1987,7 +1987,7 @@
       {
         "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "Child's first name ",
@@ -2012,7 +2012,7 @@
       {
         "key": "last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "Child's last name ",

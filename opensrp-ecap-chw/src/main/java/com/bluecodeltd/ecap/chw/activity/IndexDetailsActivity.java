@@ -42,6 +42,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.VcaScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -59,6 +60,7 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -104,7 +106,7 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
+    private FloatingActionButton fab,callFabx, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened ;
@@ -131,6 +133,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
+    VcaScreeningModel vcaScreeningModel;
 
     CommonPersonObjectClient client;
 
@@ -168,6 +171,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fabReferal = findViewById(R.id.refer_to_facility_fab);
         fabCasePlan =  findViewById(R.id.case_plan_fab);
         fabAssessment = findViewById(R.id.fabAssessment);
+        callFabx = findViewById(R.id.callFabx);
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
@@ -175,6 +179,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
+        vcaScreeningModel = VcaScreeningDao.getVcaScreening(childId);
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -197,6 +202,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
         if(vcaVisitationModel == null){
             fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+        if(vcaScreeningModel == null){
+            callFabx.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
         if(gender.equals("male")){
@@ -938,12 +946,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
             case "vca_screening":
+                if(vcaScreeningModel == null){
 
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
 
-                formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(4).put("min_date",  "today - " + getAgeWithoutText(indexChild.getAdolescent_birthdate())+"y");
+                } else {
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(client.getColumnmaps(), Map.class));
-                formToBeOpened.put("entity_id", indexChild.getBase_entity_id());
+                    formToBeOpened.put("entity_id", this.vcaScreeningModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaScreeningModel, Map.class));
+                }
                 break;
 
             case "vca_assessment":
