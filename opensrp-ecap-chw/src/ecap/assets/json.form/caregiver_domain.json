@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Case Plan Vulnerability",
+    "title": "Caregiver Vulnerability",
     "fields": [
       {
         "key": "unique_id",
@@ -61,9 +61,22 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "VCA ID",
+        "hint": "Caregiver ID",
         "edit_type": "name",
         "read_only": "true"
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "hint": "Household ID",
+        "edit_type": "numeric",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the household ID"
+        }
       },
       {
         "key": "case_plan_date",
