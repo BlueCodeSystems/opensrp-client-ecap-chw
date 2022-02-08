@@ -584,20 +584,18 @@
         }
       },
       {
-        "key": "hiv_appropriate_treatment",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Refer to appropriate treatment and care services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
+        "key": "active_on_treatment_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for appropriate treatment and care services as part of enrollment.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -919,6 +917,33 @@
         "v_required": {
           "value": true,
           "err": "Required"
+        }
+      },
+      {
+        "key": "referred_services",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "    List of Referred Services:",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "active_on_treatment_no_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for appropriate treatment and care services as part of enrollment.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
         }
       }
     ]
