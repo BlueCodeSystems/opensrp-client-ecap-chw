@@ -16,9 +16,11 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
+import com.bluecodeltd.ecap.chw.adapter.HouseholdCasePlanAdapter;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public class HouseholdCasePlanFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_householdcaseplans, container, false);
 
         String householdId = ( (HouseholdDetails) requireActivity()).house.getHousehold_id();
-
+        Household house = ( (HouseholdDetails) requireActivity()).house;
         recyclerView = view.findViewById(R.id.householdRecycler);
         linearLayout = view.findViewById(R.id.household_visit_container);
 
@@ -45,7 +47,7 @@ public class HouseholdCasePlanFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new CasePlanAdapter(householdCasePlanList, getContext());
+        recyclerViewadapter = new HouseholdCasePlanAdapter(householdCasePlanList, getContext(),house);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
