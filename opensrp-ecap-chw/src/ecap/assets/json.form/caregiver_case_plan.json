@@ -737,7 +737,7 @@
         "edit_type": "number",
         "v_required": {
           "value": false,
-          "err": "Please enter the home address"
+          "err": "Please enter the household ID"
         }
       },
       {

@@ -96,7 +96,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Household ID has been missed"
+          "err": "Household ID is required"
         }
       },
       {
@@ -110,7 +110,7 @@
         "read_only": "true",
         "v_required": {
           "value": true,
-          "err": "VCA ID has been missed"
+          "err": "VCA ID is required"
         }
       },
       {
@@ -127,7 +127,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "VCA first name has been missed"
+          "err": "VCA First Name id required"
         }
       },
       {
@@ -145,7 +145,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "VCA last name has been missed"
+          "err": "VCA Last Name is required"
         }
       },
       {
@@ -164,7 +164,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "VCA date of birth has been missed"
+          "err": "VCA Date of birth is required"
         }
       },
       {
@@ -186,7 +186,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "VCA gender has been missed"
+          "err": " VCA Gender is required"
         }
       },
       {
@@ -228,7 +228,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Sup population has been missed"
+          "err": "Sub Population is required"
         }
       },
       {
@@ -260,7 +260,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Province has been missed"
+          "err": " Province is required"
         }
       },
       {
@@ -276,7 +276,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "District has been missed"
+          "err": "District is required"
         }
       },
       {
@@ -292,7 +292,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Ward has been missed"
+          "err": " Ward is required"
         }
       },
       {
@@ -308,7 +308,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Partner has been missed"
+          "err": "Partners is required"
         }
       },
       {
@@ -347,7 +347,7 @@
         "hint": "Address",
         "v_required": {
           "value": true,
-          "err": "Village has been missed"
+          "err": "Village is required"
         }
       },
       {
@@ -363,7 +363,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Date of screening has been missed"
+          "err": "Date of screening is required"
         }
       },
       {
@@ -376,7 +376,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Screening location has been missed"
+          "err": "Screening Location is required"
         }
       },
       {
@@ -587,7 +587,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Refer to appropriate treatment and care services as part of enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -625,7 +625,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Refer to appropriate treatment and care services as part of enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -816,7 +816,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "State reason for HIV Risk is required"
         },
         "relevance": {
           "step1:at_risk_reasons": {
@@ -833,7 +833,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Provide appropriate preventive services as part of enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -878,7 +878,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Is your household food, socially and economically secure? is required"
         }
       },
       {
@@ -889,7 +889,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -918,7 +918,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "THIS FAMILY IS APPROVED FOR ENROLLMENT is required"
         }
       },
       {
@@ -941,7 +941,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Date of screening is required"
         }
       }
     ]
@@ -969,7 +969,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children/Adolescents Living with HIV (C/ALHIV) is required"
         }
       },
       {
@@ -991,7 +991,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "HIV Exposed Infant (HEI) is required"
         }
       },
       {
@@ -1013,7 +1013,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children of Women Living with HIV (WLHIV) is required"
         }
       },
       {
@@ -1035,7 +1035,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "At Risk Adolescent Girls and Young Women (AGYW) is required"
         }
       },
       {
@@ -1057,7 +1057,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children/Adolescents who are Survivors of Sexual Violence is required"
         }
       },
       {
@@ -1079,7 +1079,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children/Adolescents whose Primary Caregivers are HIV FSWs is required"
         }
       },
       {
@@ -1094,7 +1094,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Is Screened is required"
         }
       },
       {
@@ -1113,7 +1113,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Was child identified through Index? is required"
         }
       }
     ]
@@ -1147,7 +1147,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Date of HH Enrollment is required"
         }
       },
       {
@@ -1181,7 +1181,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": " Type of Entry into Program is required"
         }
       },
       {
@@ -1204,7 +1204,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Other type of Entry is required"
         }
       },
       {
@@ -1255,7 +1255,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Highest Grade is required"
         },
         "relevance": {
           "step3:caregiver_education": {
@@ -1331,7 +1331,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Marital Status is required"
         }
       },
       {
@@ -1348,7 +1348,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Name of partner/spouse"
+          "err": "Name of Partner/Spouse is required"
         },
         "relevance": {
           "rules-engine": {
@@ -1415,7 +1415,8 @@
         "text": "Malaria Prevention",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": true,
+          "err":"Malaria Prevention is required"
         }
       },
       {
@@ -1431,7 +1432,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of beds in household"
+          "err": "Number of beds in household is required"
         }
       },
       {
@@ -1524,7 +1525,7 @@
         "look_up": "true",
         "v_required": {
           "value": false,
-          "err": "This field is required"
+          "err": "Specify Relationship is required"
         },
         "relevance": {
           "rules-engine": {
