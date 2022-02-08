@@ -794,7 +794,7 @@
           "column_name": "village",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.adolescent_village"
+            "field": "attributes.village"
           }
         },
         {
@@ -909,6 +909,7 @@
             "field": "attributes.caregiver_art_number"
           }
         },
+
         {
           "column_name": "is_caregiver_virally_suppressed",
           "type": "Client",

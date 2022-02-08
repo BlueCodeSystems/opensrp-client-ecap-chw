@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import es.dmoral.toasty.Toasty;
@@ -11,7 +10,6 @@ import timber.log.Timber;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -42,23 +40,21 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.VcaScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -87,7 +83,6 @@ import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
-import org.smartregister.view.dialog.OpenFormOption;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -97,14 +92,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
+    private FloatingActionButton fab,callFabx, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened ;
@@ -131,6 +125,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
+    VcaScreeningModel vcaScreeningModel;
 
     CommonPersonObjectClient client;
 
@@ -168,6 +163,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fabReferal = findViewById(R.id.refer_to_facility_fab);
         fabCasePlan =  findViewById(R.id.case_plan_fab);
         fabAssessment = findViewById(R.id.fabAssessment);
+        callFabx = findViewById(R.id.callFabx);
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
@@ -175,6 +171,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
+        vcaScreeningModel = VcaScreeningDao.getVcaScreening(childId);
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -197,6 +194,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
         if(vcaVisitationModel == null){
             fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+        if(vcaScreeningModel == null){
+            callFabx.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
         if(gender.equals("male")){
@@ -301,17 +301,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
-         if(periodBetweenDateOfBirthAndNow.getYears() >0)
-         {
-             return periodBetweenDateOfBirthAndNow.getYears() +" Years";
-         }
-         else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
-                 return periodBetweenDateOfBirthAndNow.getMonths() +" Months ";
-             }
-         else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
-             return periodBetweenDateOfBirthAndNow.getDays() +" Days ";
-         }
-         else return "Not Set";
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            return periodBetweenDateOfBirthAndNow.getYears() +" Years";
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+            return periodBetweenDateOfBirthAndNow.getMonths() +" Months ";
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return periodBetweenDateOfBirthAndNow.getDays() +" Days ";
+        }
+        else return "Not Set";
     }
 
     private void setupViewPager(){
@@ -386,13 +386,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 animateFAB();
                 break;
 
-                case R.id.vca_screening:
+            case R.id.vca_screening:
 
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                   }
+                try {
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 break;
 
@@ -442,12 +442,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.household_profile:
 
 
-            Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getUnique_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
-           // intent.putExtra("household",  child.getHousehold_id());
+                Intent intent = new Intent(this, HouseholdDetails.class);
+                intent.putExtra("childId",  child.getUnique_id());
+                intent.putExtra("householdId",  child.getHousehold_id());
+                // intent.putExtra("household",  child.getHousehold_id());
 
-            startActivity(intent);
+                startActivity(intent);
 
 
                 break;
@@ -787,7 +787,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     public void updateChildProfile(String jsonString) {
-       // getView().showProgressDialog(R.string.updating);
+        // getView().showProgressDialog(R.string.updating);
         Pair<Client, Event> pair = new ChildRegisterModel().processRegistration(jsonString);
         if (pair == null) {
             return;
@@ -800,8 +800,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         Runnable runnable = () -> {
             finishUpdate(pair, jsonString, isEditMode);
             appExecutors.mainThread().execute(() -> {
-               Intent i = new Intent(IndexDetailsActivity.this, IndexRegisterActivity.class);
-               startActivity(i);
+                Intent i = new Intent(IndexDetailsActivity.this, IndexRegisterActivity.class);
+                startActivity(i);
             });
         };
 
@@ -832,7 +832,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             if (!isEditMode && baseClient != null) {
                 String opensrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey);
                 //mark OPENSRP ID as used
-               // getUniqueIdRepository().close(opensrpId);
+                // getUniqueIdRepository().close(opensrpId);
             }
 
             if (baseClient != null || baseEvent != null) {
@@ -939,11 +939,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
             case "vca_screening":
 
-
                 formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(4).put("min_date",  "today - " + getAgeWithoutText(indexChild.getAdolescent_birthdate())+"y");
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(client.getColumnmaps(), Map.class));
                 formToBeOpened.put("entity_id", indexChild.getBase_entity_id());
+
                 break;
 
             case "vca_assessment":
@@ -978,9 +978,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationAssessmentModel, Map.class));
                 }
 
-            break;
+                break;
 
-                case "household_visitation_for_vca_0_20_years":
+            case "household_visitation_for_vca_0_20_years":
 
                 if(vcaVisitationModel == null){
 
@@ -1042,7 +1042,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
 
 
-    }
+        }
 
 
         startFormActivity(formToBeOpened);

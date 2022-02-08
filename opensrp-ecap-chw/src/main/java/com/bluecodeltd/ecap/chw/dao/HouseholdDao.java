@@ -135,6 +135,8 @@ public class HouseholdDao extends AbstractDao {
             record.setCarried_by(getCursorValue(c, "carried_by"));
             record.setCaregiver_education(getCursorValue(c, "caregiver_education"));
             record.setMarital_status(getCursorValue(c, "marital_status"));
+            record.setMarital_status(getCursorValue(c, "highest_grade"));
+
             return record;
         };
     }

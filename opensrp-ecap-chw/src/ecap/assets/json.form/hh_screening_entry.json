@@ -760,11 +760,7 @@
             "text": "No"
           }
         ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
+              "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
             "ex": "equalTo(., \"HIV-\")"
