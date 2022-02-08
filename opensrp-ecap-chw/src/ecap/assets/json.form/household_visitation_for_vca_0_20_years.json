@@ -348,12 +348,13 @@
         "edit_type": "number",
         "v_required": {
           "value": false,
-          "err": "Indicate the number of months the child has been on ART "
+          "err": "Number of months the child has been on ART "
         },
         "relevance": {
-          "step1:child_mmd": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },

@@ -118,6 +118,13 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
+name: step4_art_check_box
+description: art_check_box relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step4_art_number
 description: art_number relevance
 priority: 1

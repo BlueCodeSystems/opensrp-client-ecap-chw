@@ -90,7 +90,6 @@
           "err":  "Name of Receiving Organization is empty"
         }
       },
-
       {
         "key": "health_services",
         "type": "label",
@@ -122,7 +121,6 @@
           }
         ]
       },
-
       {
         "key": "hiv_adherence",
         "openmrs_entity_parent": "",
@@ -834,64 +832,6 @@
         "hint": "Follow-up Required, Specify:"
       },
       {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "First Name of Individual Providing Service ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter first name of the individual providing service"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Last Name of Individual Providing Service ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter last name of individual providing service "
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-
-      {
-        "key": "job_title",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "job_title",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Job Title of Individual Providing Service",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter job title"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
         "key": "date_of_service",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -908,29 +848,6 @@
         "v_required": {
           "value": false,
           "err": "Date a service is provided is required"
-        }
-      },
-      {
-        "key": "signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "signature",
-        "openmrs_data_type": "",
-        "type": "check_box",
-        "label": " I agree to the information provided",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false,
-            "openmrs_choice_id": ""
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please check the box if you are agree"
-
         }
       }
     ]

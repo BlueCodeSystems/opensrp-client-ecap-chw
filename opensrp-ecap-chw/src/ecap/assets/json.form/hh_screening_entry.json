@@ -374,10 +374,6 @@
         "type": "edit_text",
         "hint": "Screening Location",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Screening location  only take letters"
-        },
         "v_required": {
           "value": true,
           "err": "Required"
