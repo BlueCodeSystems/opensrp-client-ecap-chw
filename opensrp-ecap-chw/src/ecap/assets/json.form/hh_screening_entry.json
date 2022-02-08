@@ -96,7 +96,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Household ID is required"
         }
       },
       {
@@ -110,7 +110,7 @@
         "read_only": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA ID is required"
         }
       },
       {
@@ -127,7 +127,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA First Name id required"
         }
       },
       {
@@ -145,7 +145,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Last Name is required"
         }
       },
       {
@@ -164,7 +164,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Date of birth is required"
         }
       },
       {
@@ -186,7 +186,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": " VCA Gender is required"
         }
       },
       {
@@ -228,7 +228,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Sub Population is required"
         }
       },
       {
@@ -260,7 +260,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": " Province is required"
         }
       },
       {
@@ -276,7 +276,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "District is required"
         }
       },
       {
@@ -292,7 +292,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": " Ward is required"
         }
       },
       {
@@ -308,7 +308,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Partners is required"
         }
       },
       {
@@ -347,7 +347,7 @@
         "hint": "Address",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Address is required"
         }
       },
       {
@@ -363,7 +363,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Date of screening is required"
         }
       },
       {
@@ -376,7 +376,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Screening Location is required"
         }
       },
       {
@@ -408,7 +408,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver's Full Name is required"
         }
       },
       {
@@ -430,7 +430,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver's Gender is required"
         }
       },
       {
@@ -450,7 +450,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver's Date of Birth is required"
         }
       },
       {
@@ -497,7 +497,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Have you experienced violence in the home in the last six months is required"
         }
       },
       {
@@ -519,7 +519,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Have the children experienced violence in the home in the last six months is required"
         }
       },
       {
@@ -551,7 +551,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver's HIV Status is required"
         }
       },
       {
@@ -587,7 +587,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Refer to appropriate treatment and care services as part of enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -614,7 +614,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver`s ART Number is required"
         }
       },
       {
@@ -625,7 +625,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Refer to appropriate treatment and care services as part of enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -641,14 +641,14 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
-        "hint": "Result of most recent viral load test.",
+        "hint": "Result of most recent viral load test",
         "v_numeric": {
           "value": "true",
           "err": "Viral load can only contain numbers"
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Result of most recent viral load test is required"
         },
         "v_regex": {
           "value": "([0-9]{1}||[0-9]{2}||[0-9]{3})|\\s*",
@@ -682,7 +682,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Date of last viral load test is required"
         }
       },
       {
@@ -704,7 +704,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Do you have biological children 0-2 years? is required"
         },
         "relevance": {
           "rules-engine": {
@@ -733,7 +733,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Are you and your biological children enrolled in the PMTCT program is required"
         },
         "relevance": {
           "rules-engine": {
@@ -749,7 +749,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "at_risk_reasons",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV?)",
+        "label": "Are there any reasons you may be at risk for HIV?",
         "options": [
           {
             "key": "yes",
@@ -762,7 +762,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Are there any reasons you may be at risk for HIV? is required"
         },
         "relevance": {
           "step1:caregiver_hiv_status": {
@@ -785,7 +785,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "State reason for HIV Risk is required"
         },
         "relevance": {
           "step1:at_risk_reasons": {
@@ -802,7 +802,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Provide appropriate preventive services as part of enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -847,7 +847,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Is your household food, socially and economically secure? is required"
         }
       },
       {
@@ -858,7 +858,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment is required"
         },
         "relevance": {
           "rules-engine": {
@@ -887,7 +887,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "THIS FAMILY IS APPROVED FOR ENROLLMENT is required"
         }
       },
       {
@@ -910,7 +910,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Date of screening is required"
         }
       }
     ]
@@ -938,7 +938,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children/Adolescents Living with HIV (C/ALHIV) is required"
         }
       },
       {
@@ -960,7 +960,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "HIV Exposed Infant (HEI) is required"
         }
       },
       {
@@ -982,7 +982,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children of Women Living with HIV (WLHIV) is required"
         }
       },
       {
@@ -1004,7 +1004,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "At Risk Adolescent Girls and Young Women (AGYW) is required"
         }
       },
       {
@@ -1026,7 +1026,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children/Adolescents who are Survivors of Sexual Violence is required"
         }
       },
       {
@@ -1048,7 +1048,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Children/Adolescents whose Primary Caregivers are HIV FSWs is required"
         }
       },
       {
@@ -1063,7 +1063,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Is Screened is required"
         }
       },
       {
@@ -1082,7 +1082,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Was child identified through Index? is required"
         }
       }
     ]
@@ -1116,7 +1116,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Date of HH Enrollment is required"
         }
       },
       {
@@ -1150,7 +1150,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": " Type of Entry into Program is required"
         }
       },
       {
@@ -1173,7 +1173,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Other type of Entry is required"
         }
       },
       {
@@ -1224,7 +1224,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Highest Grade is required"
         },
         "relevance": {
           "step3:caregiver_education": {
@@ -1300,7 +1300,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Marital Status is required"
         }
       },
       {
@@ -1317,7 +1317,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Name of Partner/Spouse is required"
         },
         "relevance": {
           "rules-engine": {
@@ -1341,7 +1341,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Name of Relationship Partner is required"
         },
         "relevance": {
           "rules-engine": {
@@ -1374,7 +1374,7 @@
         "edit_type": "number",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "No. of Women currently pregnant in household is required"
         }
       },
       {
@@ -1384,7 +1384,8 @@
         "text": "Malaria Prevention",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": true,
+          "err":"Malaria Prevention is required"
         }
       },
       {
@@ -1400,7 +1401,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of beds in household"
+          "err": "Number of beds in household is required"
         }
       },
       {
@@ -1416,7 +1417,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of ITNs  in use"
+          "err": "Number of ITNs  in use is required"
         }
       },
       {
@@ -1451,7 +1452,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Emergency Contact Name is required"
         }
       },
       {
@@ -1479,7 +1480,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Relationship to caregiver is required"
         }
       },
       {
@@ -1493,7 +1494,7 @@
         "look_up": "true",
         "v_required": {
           "value": false,
-          "err": "This field is required"
+          "err": "Specify Relationship is required"
         },
         "relevance": {
           "rules-engine": {
@@ -1525,7 +1526,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Contact Address is required"
         }
       },
 
