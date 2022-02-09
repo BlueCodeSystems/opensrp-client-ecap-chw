@@ -661,10 +661,9 @@
           "err": "Viral load cannot be 1000 or above"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -680,10 +679,9 @@
         "min_date": "today-100y",
         "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         },
         "v_required": {
