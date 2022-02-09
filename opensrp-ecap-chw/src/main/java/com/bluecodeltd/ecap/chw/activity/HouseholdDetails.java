@@ -29,9 +29,11 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
@@ -81,17 +83,17 @@ public class HouseholdDetails extends AppCompatActivity {
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private Toolbar toolbar;
-    private TextView visitTabCount, cname, txtDistrict, txtVillage;
+    private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
     private TextView childTabCount;
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver;;
     private String childId;
-    private String householdId;
+    public String householdId;
     public String countFemales, countMales;
     private UniqueIdRepository uniqueIdRepository;
-    Household house;
+    public Household house;
     Caregiver caregiver;
     Child child;
     ObjectMapper oMapper, householdMapper, caregiverMapper;
@@ -144,7 +146,7 @@ public class HouseholdDetails extends AppCompatActivity {
         setupViewPager();
         updateTasksTabTitle();
         updateChildTabTitle();
-
+        updateCaseplanTitle();
         txtDistrict.setText(householdId);
 
         if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
@@ -177,6 +179,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new HouseholdOverviewFragment());
         mPagerAdapter.addFragment(new HouseholdChildrenFragment());
+        mPagerAdapter.addFragment(new HouseholdCasePlanFragment());
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
@@ -184,7 +187,8 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
-        mTabLayout.getTabAt(2).setText(getString(R.string.fragment_housevisits));
+        mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
+        mTabLayout.getTabAt(2).setText("Case plans");
 
     }
 
@@ -192,8 +196,25 @@ public class HouseholdDetails extends AppCompatActivity {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText(this.getString(R.string.visits));
-        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
+        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+    }
 
+    private void updateCaseplanTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.household_plan_tab_title, null);
+        TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
+        casePlanTabTitle.setText("Case plans");
+        casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
+        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());        //re-visit query in Dao
+
+        if (plans > 0)
+        {
+            casePlanTabCount.setText(String.valueOf(plans));
+        }
+        else{
+            casePlanTabCount.setText("0");
+        }
+        //change valueOf to plans after query is re-visited
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
@@ -261,8 +282,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
-
-
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
@@ -286,7 +305,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("caregiver_case_plan");
+                    indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
@@ -586,6 +605,19 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
+                case "Caregiver Case Plan":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_CASEPLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -627,7 +659,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
 
 
                 } catch (Exception e) {

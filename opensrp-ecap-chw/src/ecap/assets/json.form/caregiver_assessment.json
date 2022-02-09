@@ -63,7 +63,6 @@
         "type": "edit_text",
         "read_only": "true",
         "hint": "Household ID",
-        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "Required"
@@ -579,15 +578,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_art_number",
         "type": "edit_text",
-        "edit_type": "name",
         "hint": "ART Number",
         "v_required": {
           "value": false,
           "err": "Please enter childs ART number "
-        },
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
-          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
         },
         "relevance": {
           "step1:caregiver_art": {
@@ -1070,7 +1064,7 @@
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "err": ""
         },
         "relevance": {
           "step1:hiv_test": {
@@ -1238,7 +1232,6 @@
         "openmrs_entity_id": "other_source",
         "type": "edit_text",
         "hint": "Specify other income source",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"
@@ -1282,7 +1275,6 @@
         "openmrs_entity_id": "other_earner",
         "type": "edit_text",
         "hint": "Specify other income earner",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"
@@ -1751,7 +1743,6 @@
         "openmrs_entity_id": "other_water",
         "type": "edit_text",
         "hint": "Specify other drinking water source",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"
@@ -1867,7 +1858,6 @@
         "openmrs_entity_id": "other_sanitary_product",
         "type": "edit_text",
         "hint": "Specify other sanitary products",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"
@@ -2125,7 +2115,6 @@
         "openmrs_entity_id": "other_food_source_other",
         "type": "edit_text",
         "hint": "Specify other main food source",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"
@@ -2498,7 +2487,6 @@
         "openmrs_entity_id": "other_obvious_issues",
         "type": "edit_text",
         "hint": "Record obvious issues here",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"

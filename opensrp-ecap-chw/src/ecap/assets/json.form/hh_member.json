@@ -495,17 +495,12 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "edit_type": "number",
         "hint": "ART Number",
         "relevance": {
           "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
-        },
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
-          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
         }
       },
       {
