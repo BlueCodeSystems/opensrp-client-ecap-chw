@@ -199,7 +199,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "status",
         "type": "native_radio",
-        "label": "Status at Follow-up",
+        "label": "Status",
         "v_required": {
           "value": true,
           "err": "Field is Required"
