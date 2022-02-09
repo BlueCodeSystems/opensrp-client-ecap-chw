@@ -48,6 +48,7 @@ public class ReferralModel {
     private String job_title;
     private String date_of_service;
     private String signature;
+    private String covid_19;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -415,5 +416,13 @@ public class ReferralModel {
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    public String getCovid_19() {
+        return covid_19;
+    }
+
+    public void setCovid_19(String covid_19) {
+        this.covid_19 = covid_19;
     }
 }
