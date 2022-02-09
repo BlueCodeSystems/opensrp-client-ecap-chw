@@ -74,6 +74,7 @@ public class VcaScreeningModel {
     private String first_name;
     private String last_name;
     private String gender;
+    private String adolescent_birthdate;
     private String birthdate;
     private String index_check_box;
     private String case_status;
@@ -857,5 +858,13 @@ public class VcaScreeningModel {
 
     public void setCaregiver_phone(String caregiver_phone) {
         this.caregiver_phone = caregiver_phone;
+    }
+
+    public String getAdolescent_birthdate() {
+        return adolescent_birthdate;
+    }
+
+    public void setAdolescent_birthdate(String adolescent_birthdate) {
+        this.adolescent_birthdate = adolescent_birthdate;
     }
 }

@@ -1340,7 +1340,6 @@
             "field": "attributes.tpt_client_initiated"
           }
         },
-
         {
           "column_name": "screened_for_malnutrition",
           "type": "Client",
@@ -1762,6 +1761,13 @@
           }
         },
         {
+          "column_name": "adolescent_birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_birthdate"
+          }
+        },
+        {
           "column_name": "index_check_box",
           "type": "Client",
           "json_mapping": {
@@ -1803,7 +1809,6 @@
             "field": "attributes.date_enrolled"
           }
         },
-
         {
           "column_name": "date_hiv_known",
           "type": "Client",
@@ -1853,7 +1858,6 @@
             "field": "attributes.date_next_vl"
           }
         },
-
         {
           "column_name": "child_mmd",
           "type": "Client",

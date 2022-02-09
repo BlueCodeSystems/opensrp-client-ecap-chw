@@ -98,6 +98,7 @@ public class VcaScreeningDao extends AbstractDao {
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setGender(getCursorValue(c, "gender"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
+            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
             record.setCase_status(getCursorValue(c, "case_status"));
             record.setDate_referred(getCursorValue(c, "date_referred"));

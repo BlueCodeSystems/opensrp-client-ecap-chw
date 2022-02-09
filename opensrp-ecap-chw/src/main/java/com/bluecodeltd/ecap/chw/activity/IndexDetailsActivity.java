@@ -946,16 +946,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
             case "vca_screening":
-                if(vcaScreeningModel == null){
 
-                    //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
-
-                } else {
 
                     formToBeOpened.put("entity_id", this.vcaScreeningModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaScreeningModel, Map.class));
-                }
+
                 break;
 
             case "vca_assessment":
