@@ -35,6 +35,18 @@ public class VcaScreeningDao extends AbstractDao {
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setIs_tb_screening_results_on_file(getCursorValue(c, "is_tb_screening_results_on_file"));
             record.setClient_screened(getCursorValue(c, "client_screened"));
+
+            record.setPartner(getCursorValue(c, "partner"));
+            record.setAdolescent_first_name(getCursorValue(c, "adolescent_first_name"));
+            record.setAdolescent_first_name(getCursorValue(c, "adolescent_last_name"));
+            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
+            record.setAdolescent_village(getCursorValue(c, "adolescent_village"));
+            record.setLandmark(getCursorValue(c, "landmark"));
+            record.setAdolescent_gender(getCursorValue(c, "adolescent_gender"));
+            record.setSchool(getCursorValue(c, "school"));
+            record.setOther_school(getCursorValue(c, "other_school"));
+            record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
+            record.setIs_on_hiv_treatment(getCursorValue(c, "is_on_hiv_treatment"));
             record.setClient_result(getCursorValue(c, "client_result"));
             record.setTpt_client_eligibility(getCursorValue(c, "tpt_client_eligibility"));
             record.setTpt_client_initiated(getCursorValue(c, "tpt_client_initiated"));

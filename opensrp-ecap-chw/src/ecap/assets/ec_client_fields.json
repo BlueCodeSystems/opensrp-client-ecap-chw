@@ -1299,6 +1299,84 @@
           }
         },
         {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
+          }
+        },
+        {
+          "column_name": "adolescent_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_first_name"
+          }
+        },
+        {
+          "column_name": "adolescent_last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_last_name"
+          }
+        },
+        {
+          "column_name": "adolescent_birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_birthdate"
+          }
+        },
+        {
+          "column_name": "adolescent_village",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_village"
+          }
+        },
+        {
+          "column_name": "landmark",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.landmark"
+          }
+        },
+        {
+          "column_name": "adolescent_gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_gender"
+          }
+        },
+        {
+          "column_name": "school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school"
+          }
+        },
+        {
+          "column_name": "other_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_school"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
+          }
+        },
+        {
+          "column_name": "is_on_hiv_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_on_hiv_treatment"
+          }
+        },
+
+        {
           "column_name": "art_number",
           "type": "Client",
           "json_mapping": {

@@ -9,6 +9,19 @@ public class VcaScreeningModel {
     private String district;
     private String ward;
     private String health_facility;
+
+    private String partner;
+    private String adolescent_first_name;
+    private String adolescent_last_name;
+    private String adolescent_birthdate;
+    private String adolescent_village;
+    private String landmark;
+    private String adolescent_gender;
+    private String school;
+    private String other_school;
+    private String is_hiv_positive;
+    private String is_on_hiv_treatment;
+
     private String art_number;
     private String is_tb_screening_results_on_file;
     private String client_screened;
@@ -98,7 +111,6 @@ public class VcaScreeningModel {
     private String relation;
     private String caregiver_phone;
 
-
     public String getBase_entity_id() {
         return base_entity_id;
     }
@@ -153,6 +165,94 @@ public class VcaScreeningModel {
 
     public void setHealth_facility(String health_facility) {
         this.health_facility = health_facility;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
+    }
+
+    public String getAdolescent_first_name() {
+        return adolescent_first_name;
+    }
+
+    public void setAdolescent_first_name(String adolescent_first_name) {
+        this.adolescent_first_name = adolescent_first_name;
+    }
+
+    public String getAdolescent_last_name() {
+        return adolescent_last_name;
+    }
+
+    public void setAdolescent_last_name(String adolescent_last_name) {
+        this.adolescent_last_name = adolescent_last_name;
+    }
+
+    public String getAdolescent_birthdate() {
+        return adolescent_birthdate;
+    }
+
+    public void setAdolescent_birthdate(String adolescent_birthdate) {
+        this.adolescent_birthdate = adolescent_birthdate;
+    }
+
+    public String getAdolescent_village() {
+        return adolescent_village;
+    }
+
+    public void setAdolescent_village(String adolescent_village) {
+        this.adolescent_village = adolescent_village;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public String getAdolescent_gender() {
+        return adolescent_gender;
+    }
+
+    public void setAdolescent_gender(String adolescent_gender) {
+        this.adolescent_gender = adolescent_gender;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getOther_school() {
+        return other_school;
+    }
+
+    public void setOther_school(String other_school) {
+        this.other_school = other_school;
+    }
+
+    public String getIs_hiv_positive() {
+        return is_hiv_positive;
+    }
+
+    public void setIs_hiv_positive(String is_hiv_positive) {
+        this.is_hiv_positive = is_hiv_positive;
+    }
+
+    public String getIs_on_hiv_treatment() {
+        return is_on_hiv_treatment;
+    }
+
+    public void setIs_on_hiv_treatment(String is_on_hiv_treatment) {
+        this.is_on_hiv_treatment = is_on_hiv_treatment;
     }
 
     public String getArt_number() {

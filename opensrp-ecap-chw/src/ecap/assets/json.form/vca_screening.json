@@ -108,7 +108,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "province",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "hint": "Province",
         "value": "Southern",
@@ -120,7 +120,7 @@
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "district",
+        "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
         "value": "Choma",
@@ -141,7 +141,7 @@
         "look_up": "true"
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
