@@ -1,0 +1,240 @@
+{
+  "count": "1",
+  "encounter_type": "Caregiver Domain",
+  "hide_blank_spaces": true,
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Caregiver Vulnerability",
+    "fields": [
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "Caregiver ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "hint": "Household ID",
+        "edit_type": "numeric",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the household ID"
+        }
+      },
+      {
+        "key": "case_plan_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_plan_date",
+        "type": "edit_text",
+        "hint": "Date Created",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "Field is Required"
+        }
+      },
+      {
+        "key": "type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "type",
+        "type": "native_radio",
+        "label": "Domain",
+        "v_required": {
+          "value": true,
+          "err": "Field is Required"
+        },
+        "options": [
+          {
+            "key": "hiv",
+            "text": "HIV Management of HIV+ VCAs"
+          },
+          {
+            "key": "healthy",
+            "text": "Healthy"
+          },
+          {
+            "key": "safe",
+            "text": "Safe"
+          },
+          {
+            "key": "stable",
+            "text": "Stable"
+          }
+        ]
+      },
+      {
+        "key": "vulnerability",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vulnerability",
+        "type": "edit_text",
+        "hint": "Vulnerability identified from Assessment",
+        "v_required": {
+          "value": true,
+          "err": "Field is Requiredy"
+        }
+      },
+      {
+        "key": "goal",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "goal",
+        "type": "edit_text",
+        "hint": "Goal",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "services",
+        "type": "edit_text",
+        "hint": "Services to be provided by CW",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "service_referred",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "service_referred",
+        "type": "edit_text",
+        "hint": "Service to be referred",
+        "v_required": {
+          "value": false,
+          "err": "Field is Required"
+        }
+      },
+      {
+        "key": "institution",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "institution",
+        "type": "edit_text",
+        "hint": "Institution where Service to be referred",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Field is Required"
+        }
+      },
+      {
+        "key": "due_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "due_date",
+        "type": "date_picker",
+        "hint": "Due Date",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": false,
+          "err": "Due Date"
+        }
+      },
+      {
+        "key": "status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "status",
+        "type": "native_radio",
+        "label": "Status",
+        "v_required": {
+          "value": true,
+          "err": "Field is Required"
+        },
+        "options": [
+          {
+            "key": "C",
+            "text": "Complete"
+          },
+          {
+            "key": "P",
+            "text": "In Progress"
+          },
+          {
+            "key": "D",
+            "text": "Delayed"
+          }
+        ]
+      },
+      {
+        "key": "comment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comment",
+        "type": "edit_text",
+        "hint": "Comment"
+
+      }
+    ]
+  }
+}

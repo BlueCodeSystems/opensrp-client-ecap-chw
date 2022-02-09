@@ -13,7 +13,72 @@ public class Child implements Serializable {
 
     }
 
-    public Child(String landmark, String client_screened,String client_result,String tpt_client_eligibility, String tpt_client_initiated, String case_status, String reason, String other_reason, String base_entity_id, String household_id, String unique_id, String first_name, String last_name, String adolescent_gender, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String is_biological_child_of_mother_living_with_hiv, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender,  String relational_id, String index_check_box, String date_removed, String acceptance, String date_screened, String date_hiv_known, String is_hiv_positive, String is_on_hiv_treatment, String adolescent_first_name, String adolescent_last_name, String province, String district, String ward, String adolescent_village, String partner, String is_viral_load_test_results_on_file, String is_tb_screening_results_on_file, String screened_for_malnutrition, String gets_tb_preventive_therapy, String takes_drugs_to_prevent_other_diseases, String less_3, String positive_mother, String is_mother_currently_on_treatment, String mother_art_number, String is_mother_adhering_to_treatment, String is_mother_virally_suppressed, String is_child_hiv_positive, String child_receiving_breastfeeding, String child_tested_for_hiv_inline_with_guidelines, String receives_drugs_to_prevent_hiv_and_other_illnesses, String child_been_screened_for_malnutrition, String child_gets_drugs_to_prevent_tb_hei, String child_enrolled_in_early_childhood_development_program, String school, String other_school, String caregiver_nrc, String vl_next_result, String physical_address,String date_offered_enrollment) {
+    public String getVl_check_box() {
+        return vl_check_box;
+    }
+
+    public void setVl_check_box(String vl_check_box) {
+        this.vl_check_box = vl_check_box;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public String getClient_screened() {
+        return client_screened;
+    }
+
+    public void setClient_screened(String client_screened) {
+        this.client_screened = client_screened;
+    }
+
+    public String getClient_result() {
+        return client_result;
+    }
+
+    public void setClient_result(String client_result) {
+        this.client_result = client_result;
+    }
+
+    public String getTpt_client_eligibility() {
+        return tpt_client_eligibility;
+    }
+
+    public void setTpt_client_eligibility(String tpt_client_eligibility) {
+        this.tpt_client_eligibility = tpt_client_eligibility;
+    }
+
+    public String getTpt_client_initiated() {
+        return tpt_client_initiated;
+    }
+
+    public void setTpt_client_initiated(String tpt_client_initiated) {
+        this.tpt_client_initiated = tpt_client_initiated;
+    }
+
+    public void setOther_reason(String other_reason) {
+        this.other_reason = other_reason;
+    }
+
+    public String getIs_biological_child_of_mother_living_with_hiv() {
+        return is_biological_child_of_mother_living_with_hiv;
+    }
+
+    public void setIs_biological_child_of_mother_living_with_hiv(String is_biological_child_of_mother_living_with_hiv) {
+        this.is_biological_child_of_mother_living_with_hiv = is_biological_child_of_mother_living_with_hiv;
+    }
+
+    public void setAdolescent_gender(String adolescent_gender) {
+        this.adolescent_gender = adolescent_gender;
+    }
+
+    public Child(String vl_check_box, String landmark, String client_screened, String client_result, String tpt_client_eligibility, String tpt_client_initiated, String case_status, String reason, String other_reason, String base_entity_id, String household_id, String unique_id, String first_name, String last_name, String adolescent_gender, String adolescent_birthdate, String subpop1, String subpop2, String subpop3, String subpop4, String subpop5, String subpop6, String is_biological_child_of_mother_living_with_hiv, String date_referred, String date_enrolled, String art_check_box, String art_number, String date_started_art, String date_last_vl, String date_next_vl, String vl_last_result, String vl_suppressed, String child_mmd, String level_mmd, String caregiver_name, String caregiver_birth_date, String caregiver_sex, String caregiver_hiv_status, String relation, String caregiver_phone, String health_facility, String gender, String relational_id, String index_check_box, String date_removed, String acceptance, String date_screened, String date_hiv_known, String is_hiv_positive, String is_on_hiv_treatment, String adolescent_first_name, String adolescent_last_name, String province, String district, String ward, String adolescent_village, String partner, String is_viral_load_test_results_on_file, String is_tb_screening_results_on_file, String screened_for_malnutrition, String gets_tb_preventive_therapy, String takes_drugs_to_prevent_other_diseases, String less_3, String positive_mother, String is_mother_currently_on_treatment, String mother_art_number, String is_mother_adhering_to_treatment, String is_mother_virally_suppressed, String is_child_hiv_positive, String child_receiving_breastfeeding, String child_tested_for_hiv_inline_with_guidelines, String receives_drugs_to_prevent_hiv_and_other_illnesses, String child_been_screened_for_malnutrition, String child_gets_drugs_to_prevent_tb_hei, String child_enrolled_in_early_childhood_development_program, String school, String other_school, String caregiver_nrc, String vl_next_result, String physical_address, String date_offered_enrollment) {
+        this.vl_check_box = vl_check_box;
         this.landmark = landmark;
         this.client_screened = client_screened;
         this.client_result = client_result;
@@ -95,6 +160,10 @@ public class Child implements Serializable {
         this.physical_address = physical_address;
         this.date_offered_enrollment =date_offered_enrollment;
     }
+    @SerializedName("vl_check_box")
+    @Expose
+    private String vl_check_box;
+
     @SerializedName("landmark")
     @Expose
     private String landmark;
@@ -1020,11 +1089,5 @@ public class Child implements Serializable {
         return other_reason;
     }
 
-    public void setOther_reason(String other_reason) {
-        this.other_reason = other_reason;
-    }
 
-    public String getIs_biological_child_of_mother_living_with_hiv() {
-        return is_biological_child_of_mother_living_with_hiv;
-    }
 }

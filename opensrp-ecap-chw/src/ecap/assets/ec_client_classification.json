@@ -359,6 +359,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Caregiver Domain",
+            "creates_case": [
+              "ec_caregiver_case_plan_domain"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Update VCA Case Plan",
             "creates_case": [
               "ec_vca_case_plan"
@@ -426,6 +433,14 @@
             "field_value": "Caregiver Household Assessment Form",
             "creates_case": [
               "ec_caregiver_household_assessment"
+
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Caregiver Case Plan",
+            "creates_case": [
+              "ec_caregiver_case_plan"
 
             ]
           }

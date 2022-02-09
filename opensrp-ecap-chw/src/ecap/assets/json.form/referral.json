@@ -90,7 +90,6 @@
           "err":  "Name of Receiving Organization is empty"
         }
       },
-
       {
         "key": "health_services",
         "type": "label",
@@ -106,11 +105,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cd4",
-        "type": "spinner",
-        "hint": "CD4",
-        "values": [
-          "Referred",
-          "Provided"
+        "type": "check_box",
+        "label": "CD4",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -118,11 +126,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_adherence",
-        "type": "spinner",
-        "hint": "HIV Adherence Support",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "HIV Adherence Support",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -130,11 +146,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_counseling_testing",
-        "type": "spinner",
-        "hint": "HIV Counseling Testing",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "HIV Counseling Testing",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -142,11 +166,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "post_gbv",
-        "type": "spinner",
-        "hint": "Post-GBV Care (Pre-exposure Prophylaxis)",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Post-GBV Care (Pre-exposure Prophylaxis)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -154,11 +186,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "substance_abuse",
-        "type": "spinner",
-        "hint": "Substance Abuse Support by a trained provider",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Substance Abuse Support by a trained provider",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -166,11 +206,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
-        "type": "spinner",
-        "hint": "TB Screening",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "TB Screening",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -178,11 +226,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "supplementary",
-        "type": "spinner",
-        "hint": "Supplementary or Therapeutic feeding",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Supplementary or Therapeutic feeding",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -190,11 +246,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "prep",
-        "type": "spinner",
-        "hint": "PrEP",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "PrEP",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -202,11 +266,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "f_planning",
-        "type": "spinner",
-        "hint": "Family Planning Methods",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Family Planning Methods",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -214,11 +286,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "insecticide",
-        "type": "spinner",
-        "hint": "Insecticide Treated Net",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Insecticide Treated Net",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -226,11 +306,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_aids_treatment",
-        "type": "spinner",
-        "hint": "Age -appropriate HIV/AIDS Treatment Literacy (CLHIV)",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Age -appropriate HIV/AIDS Treatment Literacy (CLHIV)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -238,11 +326,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "f_w_health",
-        "type": "spinner",
-        "hint": "Family Planning (Women's Health)",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Family Planning (Women's Health)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -250,11 +346,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vmmc",
-        "type": "spinner",
-        "hint": "VMMC",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "VMMC",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -262,11 +366,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "immunization",
-        "type": "spinner",
-        "hint": "Immunization",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Immunization",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -274,11 +386,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "condom",
-        "type": "spinner",
-        "hint": "Condom",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Condom",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -286,11 +406,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "routine_care",
-        "type": "spinner",
-        "hint": "Routine Health Care",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Routine Health Care",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -298,11 +426,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "emergency_care",
-        "type": "spinner",
-        "hint": "Emergency Health Care",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Emergency Health Care",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -310,11 +446,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age_counselling",
-        "type": "spinner",
-        "hint": "Age-appropriate Counselling &HIV Disclosure Support",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Age-appropriate Counselling &HIV Disclosure Support",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -322,11 +466,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "h_treatment_care",
-        "type": "spinner",
-        "hint": "HIV Treatment & Care",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "HIV Treatment & Care",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -334,11 +486,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pmtct",
-        "type": "spinner",
-        "hint": "PMTCT",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "PMTCT",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -346,11 +506,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hygiene_counselling",
-        "type": "spinner",
-        "hint": "Household Hygiene Counselling/WASH",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Household Hygiene Counselling/WASH",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -358,11 +526,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "transmitted_infections",
-        "type": "spinner",
-        "hint": "Sexually Transmitted Infections (STIs)",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Sexually Transmitted Infections (STIs)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -370,11 +546,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "plha",
-        "type": "spinner",
-        "hint": "Structured PLHA Support Group",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Structured PLHA Support Group",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -382,11 +566,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "viral_load",
-        "type": "spinner",
-        "hint": "Viral Load (PCR)",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Viral Load (PCR)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -412,11 +604,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "care_facility",
-        "type": "spinner",
-        "hint": "Emergency Shelter/Care Facility",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Emergency Shelter/Care Facility",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -424,11 +624,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "post_violence_trauma",
-        "type": "spinner",
-        "hint": "Post Violence Trauma Support Counselling",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Post Violence Trauma Support Counselling",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -436,11 +644,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "legal_assistance",
-        "type": "spinner",
-        "hint": "Legal Assistance",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Legal Assistance",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -466,11 +682,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_uniforms_books",
-        "type": "spinner",
-        "hint": "Support VCAs with Uniforms and/or Book Materials",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Support VCAs with Uniforms and/or Book Materials",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -478,11 +702,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "re_enrollment",
-        "type": "spinner",
-        "hint": "Re-enrollment (for dropouts or teen mothers)",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Re-enrollment (for dropouts or teen mothers)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -490,11 +722,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "bursaries",
-        "type": "spinner",
-        "hint": "Tuition/Bursaries/Fee-Waiver",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Tuition/Bursaries/Fee-Waiver",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -520,11 +760,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cash_transfer",
-        "type": "spinner",
-        "hint": "Cash Transfer/Social Grant",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Cash Transfer/Social Grant",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -532,11 +780,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cash_support",
-        "type": "spinner",
-        "hint": "Short Term Emergency Cash Support",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Short Term Emergency Cash Support",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -544,11 +800,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "food_security",
-        "type": "spinner",
-        "hint": "Food Security Program/Intervention",
-        "values": [
-          "Referred",
-          "Provided"
+        "label": "Food Security Program/Intervention",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
         ]
       },
       {
@@ -568,64 +832,6 @@
         "hint": "Follow-up Required, Specify:"
       },
       {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "First Name of Individual Providing Service ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter first name of the individual providing service"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Last Name of Individual Providing Service ",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter last name of individual providing service "
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-
-      {
-        "key": "job_title",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "job_title",
-        "entity_id": "",
-        "type": "edit_text",
-        "hint": "Job Title of Individual Providing Service",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter job title"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
         "key": "date_of_service",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -642,30 +848,6 @@
         "v_required": {
           "value": false,
           "err": "Date a service is provided is required"
-        }
-      },
-      {
-        "key": "signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "signature",
-        "openmrs_data_type": "",
-        "type": "check_box",
-        "label": " I agree to the information provided",
-        "label_text_style": "italic",
-        "options": [
-
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false,
-            "openmrs_choice_id": ""
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please check the box if you are agree"
-
         }
       }
     ]
