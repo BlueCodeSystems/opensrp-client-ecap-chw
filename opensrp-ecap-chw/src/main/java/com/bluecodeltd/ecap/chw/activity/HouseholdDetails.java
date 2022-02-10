@@ -138,7 +138,7 @@ public class HouseholdDetails extends AppCompatActivity {
         txtVillage = findViewById(R.id.address1);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
-        rvisit = findViewById(R.id.hh_visit);
+        //rvisit = findViewById(R.id.hh_visit);
         hvisit20 = findViewById(R.id.hh_visit20);
         child_form = findViewById(R.id.child_form);
         household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
@@ -331,25 +331,6 @@ public class HouseholdDetails extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                break;
-
-            case R.id.hh_visit:
-
-                try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_assessment");
-
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
                 break;
 
             case R.id.hh_visit20:
@@ -729,7 +710,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
-            rvisit.setVisibility(View.VISIBLE);
+        //    rvisit.setVisibility(View.VISIBLE);
             hvisit20.setVisibility(View.VISIBLE);
             rscreen.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
@@ -743,7 +724,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
-        rvisit.setVisibility(View.GONE);
+      //  rvisit.setVisibility(View.GONE);
         hvisit20.setVisibility(View.GONE);
         rscreen.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
