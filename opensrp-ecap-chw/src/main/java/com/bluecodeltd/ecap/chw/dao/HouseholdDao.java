@@ -94,6 +94,7 @@ public class HouseholdDao extends AbstractDao {
             record.setRelation(getCursorValue(c, "relation"));
             record.setViral_load_results(getCursorValue(c, "viral_load_results"));
             record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
+            record.setVl_suppressed(getCursorValue(c, "vl_suppressed"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
@@ -135,6 +136,10 @@ public class HouseholdDao extends AbstractDao {
             record.setCarried_by(getCursorValue(c, "carried_by"));
             record.setCaregiver_education(getCursorValue(c, "caregiver_education"));
             record.setMarital_status(getCursorValue(c, "marital_status"));
+            record.setMarriage_partner_name(getCursorValue(c, "marriage_partner_name"));
+            record.setHighest_grade(getCursorValue(c, "highest_grade"));
+
+
             return record;
         };
     }

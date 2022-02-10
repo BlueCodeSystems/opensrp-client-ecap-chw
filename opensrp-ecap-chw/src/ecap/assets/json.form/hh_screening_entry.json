@@ -635,6 +635,7 @@
           }
         }
       },
+
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
@@ -666,11 +667,11 @@
         "label": "Are you virally suppressed as of your most recent viral load test?",
         "options": [
           {
-            "key": "Yes",
+            "key": "Less than 1000 copies/ml",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "Above 1000 copies/ml",
             "text": "No"
           }
         ],
@@ -682,9 +683,10 @@
           }
         },
         "relevance": {
-          "step1:viral_load_results": {
-            "type": "string",
-            "ex": "equalTo(., \"Less than 1000 copies/ml\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
           }
         }
       },
@@ -701,7 +703,7 @@
           "label": ""
         },
         "min_date": "today",
-        "max_date": "today + 100y",
+        "max_date": "today - 100y",
         "v_required": {
           "value": false,
           "err": "Please enter date of next viral load"
