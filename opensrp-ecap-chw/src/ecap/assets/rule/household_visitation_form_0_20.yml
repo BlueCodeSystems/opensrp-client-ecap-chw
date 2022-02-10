@@ -307,3 +307,10 @@ priority: 1
 condition: "step1_age >  5 && step1_age <= 19"
 actions:
   - "isRelevant = true"
+---
+name: step1_date_art
+description: date_art
+priority: 1
+condition: "(step1_level_mmd >  0 && step1_level_mmd <= 12) && (step1_drug_regimen >  0 && step1_drug_regimen <= 12)"
+actions:
+  - "isRelevant = true"

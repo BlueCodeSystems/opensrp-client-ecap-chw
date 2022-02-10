@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
@@ -82,6 +83,7 @@ import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.BaseRepository;
+import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
@@ -116,9 +118,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private TextView visitTabCount, plansTabCount;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
+    private UniqueIdRepository uniqueIdRepository;
 
     String myAge;
-    ObjectMapper oMapper;
+    ObjectMapper oMapper, clientMapper;
     Child child;
 
     CasePlanModel casePlanModel;
@@ -128,6 +131,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
+
+    CommonPersonObjectClient client;
 
 
     @Override
@@ -170,7 +175,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
+
         oMapper = new ObjectMapper();
+        clientMapper = new ObjectMapper();
 
         if(vcaAssessmentModel == null){
             fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
@@ -371,7 +378,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public void onClick(View v) throws JSONException {
         int id = v.getId();
-        CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
+        client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
         assert client != null;
         switch (id){
             case R.id.fab:
@@ -520,8 +527,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
+                getUniqueIdRepository().close(uniqueId);
+
 
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
 
                 finish();
                 startActivity(getIntent());
@@ -531,7 +541,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         }
+
     }
+
+    @NonNull
+    public UniqueIdRepository getUniqueIdRepository() {
+        if (uniqueIdRepository == null) {
+            uniqueIdRepository = new UniqueIdRepository();
+        }
+        return uniqueIdRepository;
+    }
+
+
 
     public ChildIndexEventClient processRegistration(String jsonString){
 
@@ -911,11 +932,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "case_status":
             case "case_plan":
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
+
+                break;
             case "vca_screening":
 
-                formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
 
+                formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(4).put("min_date",  "today - " + getAgeWithoutText(indexChild.getAdolescent_birthdate())+"y");
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(client.getColumnmaps(), Map.class));
+                formToBeOpened.put("entity_id", indexChild.getBase_entity_id());
                 break;
 
             case "vca_assessment":

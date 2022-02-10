@@ -11,7 +11,7 @@ public class CaregiverDao extends AbstractDao {
 
     public static Caregiver getCaregiver (String householdID) {
 
-        String sql = "SELECT caregiver_name, caregiver_nrc, caregiver_sex, caregiver_birth_date, caregiver_phone, caregiver_hiv_status, caregiver_art_number, relation FROM ec_household WHERE ec_household.household_id = '" + householdID + "' ";
+        String sql = "SELECT caregiver_name, caregiver_nrc, caregiver_sex, caregiver_birth_date, caregiver_phone, caregiver_hiv_status, caregiver_art_number, active_on_treatment, relation FROM ec_household WHERE ec_household.household_id = '" + householdID + "' ";
 
         List<Caregiver> values = AbstractDao.readData(sql, getCaregiverMap());
 

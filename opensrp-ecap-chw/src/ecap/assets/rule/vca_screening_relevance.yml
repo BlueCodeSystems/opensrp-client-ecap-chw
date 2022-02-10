@@ -118,6 +118,13 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
+name: step4_art_check_box
+description: art_check_box relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step4_art_number
 description: art_number relevance
 priority: 1
@@ -503,6 +510,13 @@ condition: "step1_agyw_sexually_active.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_agyw_transactional_sex
+description: agyw_transactional_sex
+priority: 1
+condition: "step1_agyw_sexually_active.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_agwy_engaged_in_sex_work
 description: agwy_engaged_in_sex_work
 priority: 1
@@ -605,5 +619,12 @@ name: step1_children_under18
 description: children_under18
 priority: 1
 condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vl_suppressed
+description: vl_suppressed
+priority: 1
+condition: "step1_vl_last_result.contains('Less than 1000 copies/ml') || step1_vl_last_result.contains('Above 1000 copies/ml')"
 actions:
   - "isRelevant = true"
