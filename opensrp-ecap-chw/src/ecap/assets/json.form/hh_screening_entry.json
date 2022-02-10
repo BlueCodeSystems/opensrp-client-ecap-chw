@@ -641,6 +641,7 @@
           }
         }
       },
+
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
@@ -668,6 +669,41 @@
         }
       },
       {
+
+        "key": "vl_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_suppressed",
+        "type": "native_radio",
+        "label": "Are you virally suppressed as of your most recent viral load test?",
+        "options": [
+          {
+            "key": "Less than 1000 copies/ml",
+            "text": "Yes"
+          },
+          {
+            "key": "Above 1000 copies/ml",
+            "text": "No"
+          }
+        ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_calculation.yml"
+            }
+          }
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+
+      {
+
         "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
