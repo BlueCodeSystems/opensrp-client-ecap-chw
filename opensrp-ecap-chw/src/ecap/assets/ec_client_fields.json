@@ -924,6 +924,13 @@
           }
         },
         {
+          "column_name": "vl_suppressed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_suppressed"
+          }
+        },
+        {
           "column_name": "date_of_last_viral_load",
           "type": "Client",
           "json_mapping": {
@@ -2051,6 +2058,13 @@
           "json_mapping": {
             "field": "attributes.contact_number"
           }
+        },
+        {
+          "column_name": "vl_suppressed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_suppressed"
+          }
         }
       ]
     },
@@ -3026,6 +3040,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.receiving_organization"
+          }
+        },
+        {
+          "column_name": "covid_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.covid_19"
           }
         },
         {

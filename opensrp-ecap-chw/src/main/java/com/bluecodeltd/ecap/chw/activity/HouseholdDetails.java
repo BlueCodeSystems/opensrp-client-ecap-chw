@@ -39,6 +39,7 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
+import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -378,6 +379,25 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
                     //openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
+                    CaregiverHouseholdvisitationModel householdVisitationCaregiver = new CaregiverHouseholdvisitationModel();
+                    if(caregiver.getCaregiver_hiv_status().equals("HIV+"))
+                    {
+                        householdVisitationCaregiver.setCaregiver_hiv_status("positive");
+                    }
+                    else if(caregiver.getCaregiver_hiv_status().equals("HIV-"))
+                    {
+                        householdVisitationCaregiver.setCaregiver_hiv_status("negative");
+                    }
+                    else if(caregiver.getCaregiver_hiv_status().equals("Unknown"))
+                    {
+                        householdVisitationCaregiver.setCaregiver_hiv_status("unknown");
+                    }
+                    else if(caregiver.getCaregiver_hiv_status().equals("not_required"))
+                    {
+                        householdVisitationCaregiver.setCaregiver_hiv_status("status_not_required");
+                    }
+                    householdVisitationCaregiver.setCaregiver_art(caregiver.getActive_on_treatment());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(householdVisitationCaregiver, Map.class));
                     startFormActivity(indexRegisterForm);
 
 
@@ -529,11 +549,7 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
         }
-        getUniqueIdRepository().close(childId);
-        populateMapWithHouse(getHousehold(householdId));
-        setupViewPager();
-        updateTasksTabTitle();
-        updateChildTabTitle();
+
     }
 
     @NonNull

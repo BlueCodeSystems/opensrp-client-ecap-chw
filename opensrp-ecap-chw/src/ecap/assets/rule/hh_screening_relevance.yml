@@ -145,3 +145,10 @@ priority: 1
 condition: "step3_marital_status.contains('married') || step3_marital_status.contains('in_relationship') "
 actions:
   - "isRelevant = true"
+---
+name: step1_vl_suppressed
+description: vl_suppressed
+priority: 1
+condition: "step1_viral_load_results.contains('Less than 1000 copies/ml') || step1_viral_load_results.contains('Above 1000 copies/ml') "
+actions:
+  - "isRelevant = true"
