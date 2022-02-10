@@ -101,6 +101,27 @@
         }
       },
       {
+        "key": "covid_19",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "covid_19",
+        "type": "check_box",
+        "label": "Covid 19",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred",
+            "value": false
+
+          },
+          {
+            "key": "provided",
+            "text": "Provided",
+            "value": false
+          }
+        ]
+      },
+      {
         "key": "cd4",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

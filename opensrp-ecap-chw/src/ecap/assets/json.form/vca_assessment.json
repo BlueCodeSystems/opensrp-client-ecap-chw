@@ -316,9 +316,17 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
-        "type": "edit_text",
-        "hint": "VL Result",
-        "read_only": true,
+        "type": "spinner",
+        "hint": "Last VL results",
+        "values": [
+          "Less than 1000 copies/ml",
+          "Above 1000 copies/ml"
+        ],
+        "keys": [
+          "Less than 1000 copies/ml",
+          "Above 1000 copies/ml"
+        ],
+        "read_only": false,
         "relevance": {
           "step1:viral_load": {
             "type": "string",
@@ -353,20 +361,26 @@
         "label": "Was the VCA documented as virally suppressed (1000 copies/mL) in the most recent viral load test?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
+            "key": "Less than 1000 copies/ml",
+            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No",
-            "value": false
+            "key": "Above 1000 copies/ml",
+            "text": "No"
           }
         ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_calculation.yml"
+            }
+          }
+        },
         "relevance": {
-          "step1:vca_art": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },

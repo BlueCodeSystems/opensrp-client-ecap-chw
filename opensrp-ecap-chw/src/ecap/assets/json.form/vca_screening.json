@@ -2440,14 +2440,21 @@
         "label": "Is the child VL suppressed? (less than 1000 copies/ml)",
         "options": [
           {
-            "key": "Yes",
+            "key": "Less than 1000 copies/ml",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "Above 1000 copies/ml",
             "text": "No"
           }
         ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        },
         "relevance": {
           "step4:vl_last_result": {
             "type": "string",
