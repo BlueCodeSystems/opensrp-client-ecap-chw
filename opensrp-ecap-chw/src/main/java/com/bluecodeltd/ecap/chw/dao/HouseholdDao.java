@@ -1,11 +1,13 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.domain.Mother;
+import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.chw.core.domain.Child;
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
@@ -31,6 +33,39 @@ public class HouseholdDao extends AbstractDao {
 
         return values.get(0);
 
+    }
+
+    public static List<CasePlanModel> getCasePlansById(String householdId) {
+
+        String sql = "SELECT * FROM ec_caregiver_case_plan WHERE household_id = '" + householdId + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC ";
+
+        List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+    public static DataMap<CasePlanModel> getCasePlanMap() {
+        return c -> {
+
+            CasePlanModel record = new CasePlanModel();
+            record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setCase_plan_date(getCursorValue(c, "case_plan_date"));
+            record.setCase_plan_status(getCursorValue(c, "case_plan_status"));
+            record.setType(getCursorValue(c, "type"));
+            record.setVulnerability(getCursorValue(c, "vulnerability"));
+            record.setGoal(getCursorValue(c, "goal"));
+            record.setServices(getCursorValue(c, "services"));
+            record.setService_referred(getCursorValue(c, "service_referred"));
+            record.setInstitution(getCursorValue(c, "institution"));
+            record.setDue_date(getCursorValue(c, "due_date"));
+            record.setQuarter(getCursorValue(c, "quarter"));
+            record.setStatus(getCursorValue(c, "status"));
+            record.setComment(getCursorValue(c, "comment"));
+
+            return record;
+        };
     }
 
     public static DataMap<Household> getHouseholdMap() {
@@ -59,6 +94,7 @@ public class HouseholdDao extends AbstractDao {
             record.setRelation(getCursorValue(c, "relation"));
             record.setViral_load_results(getCursorValue(c, "viral_load_results"));
             record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
+            record.setVl_suppressed(getCursorValue(c, "vl_suppressed"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
@@ -100,8 +136,24 @@ public class HouseholdDao extends AbstractDao {
             record.setCarried_by(getCursorValue(c, "carried_by"));
             record.setCaregiver_education(getCursorValue(c, "caregiver_education"));
             record.setMarital_status(getCursorValue(c, "marital_status"));
+            record.setMarriage_partner_name(getCursorValue(c, "marriage_partner_name"));
+            record.setHighest_grade(getCursorValue(c, "highest_grade"));
+
+
             return record;
         };
+    }
+
+    public static List<CasePlanModel> getDomainsById(String householdID, String caseDate) {
+
+        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC ";
+
+        List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
     }
 
 }

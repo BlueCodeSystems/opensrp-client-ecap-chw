@@ -72,6 +72,9 @@ public class Household {
     private String carried_by;
     private String caregiver_education;
     private String marital_status;
+    private  String vl_suppressed;
+    private  String marriage_partner_name;
+    private String highest_grade;
 
     public String getMarital_status() {
         return marital_status;
@@ -567,5 +570,29 @@ public class Household {
 
     public void setRelation(String relation) {
         this.relation = relation;
+    }
+
+    public String getVl_suppressed() {
+        return vl_suppressed;
+    }
+
+    public void setVl_suppressed(String vl_suppressed) {
+        this.vl_suppressed = vl_suppressed;
+    }
+
+    public String getMarriage_partner_name() {
+        return marriage_partner_name;
+    }
+
+    public void setMarriage_partner_name(String marriage_partner_name) {
+        this.marriage_partner_name = marriage_partner_name;
+    }
+
+    public String getHighest_grade() {
+        return highest_grade;
+    }
+
+    public void setHighest_grade(String highest_grade) {
+        this.highest_grade = highest_grade;
     }
 }

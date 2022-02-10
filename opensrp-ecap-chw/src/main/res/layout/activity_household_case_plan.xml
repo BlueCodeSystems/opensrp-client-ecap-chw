@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/household_domainrecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/household_domainBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#218CC5"
+        android:padding="8dp"
+        android:text="Add Vulnerability"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:visibility="visible"
+        app:rd_enable="true"
+        app:rd_rippleType="wave" />
+
+    <com.rey.material.widget.Button
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:id="@+id/household_domainBtn2"
+        android:onClick="onClick"
+        android:background="#218CC5"
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Vulnerability"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        app:rd_enable="true"
+        app:rd_rippleType="wave"
+        />
+
+
+</RelativeLayout>
+

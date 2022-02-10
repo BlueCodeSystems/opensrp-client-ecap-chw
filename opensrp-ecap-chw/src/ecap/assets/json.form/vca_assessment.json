@@ -316,9 +316,16 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
-        "type": "edit_text",
-        "hint": "VL Result",
-        "edit_type": "number",
+        "type": "spinner",
+        "hint": "Last VL results",
+        "values": [
+          "Less than 1000 copies/ml",
+          "Above 1000 copies/ml"
+        ],
+        "keys": [
+          "Less than 1000 copies/ml",
+          "Above 1000 copies/ml"
+        ],
         "read_only": false,
         "relevance": {
           "step1:viral_load": {
@@ -354,20 +361,26 @@
         "label": "Was the VCA documented as virally suppressed (1000 copies/mL) in the most recent viral load test?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
+            "key": "Less than 1000 copies/ml",
+            "text": "Yes"
           },
           {
-            "key": "no",
-            "text": "No",
-            "value": false
+            "key": "Above 1000 copies/ml",
+            "text": "No"
           }
         ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_calculation.yml"
+            }
+          }
+        },
         "relevance": {
-          "step1:vca_art": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -399,11 +412,6 @@
         "type": "edit_text",
         "read_only": "false",
         "hint": "ART Number",
-        "edit_type": "number",
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
-          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
-        },
         "relevance": {
           "step1:vca_art": {
             "type": "string",
@@ -799,12 +807,12 @@
         "options": [
           {
             "key": "yes",
-            "text": "HIV Positive",
+            "text": "Yes",
             "value": false
           },
           {
             "key": "no",
-            "text": "HIV Negative",
+            "text": "No",
             "value": false
           }
         ],
@@ -1133,7 +1141,7 @@
         "options": [
           {
             "key": "subpop1",
-            "text": "Child/Adolescent Living with HIV (C/ALHIV) ART Number"
+            "text": "Child/Adolescent Living with HIV (C/ALHIV)"
           },
           {
             "key": "subpop2",

@@ -584,20 +584,18 @@
         }
       },
       {
-        "key": "hiv_appropriate_treatment",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Refer to appropriate treatment and care services as part of enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
+        "key": "active_on_treatment_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for appropriate treatment and care services as part of enrollment.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -643,6 +641,7 @@
           }
         }
       },
+
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
@@ -663,6 +662,38 @@
           "err": "Viral load cannot be 1000 or above"
         },
         "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+
+        "key": "vl_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_suppressed",
+        "type": "native_radio",
+        "label": "Are you virally suppressed as of your most recent viral load test?",
+        "options": [
+          {
+            "key": "Less than 1000 copies/ml",
+            "text": "Yes"
+          },
+          {
+            "key": "Above 1000 copies/ml",
+            "text": "No"
+          }
+        ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_calculation.yml"
+            }
+          }
+        },
+        "relevance": {
           "rules-engine": {
             "ex-rules": {
               "rules-file": "hh_screening_relevance.yml"
@@ -670,7 +701,9 @@
           }
         }
       },
+
       {
+
         "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -682,10 +715,9 @@
         "min_date": "today-100y",
         "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         },
         "v_required": {
@@ -748,6 +780,22 @@
             "ex-rules": {
               "rules-file": "hh_screening_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "enrolled_pmtct_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:enrolled_pmtct": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -821,19 +869,6 @@
         }
       },
       {
-        "key": "instructions",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Food, Social and Economic Security",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
-        "toaster_info_title": "Example",
-        "toaster_type": "info"
-      },
-      {
         "key": "secure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -859,20 +894,18 @@
         }
       },
       {
-        "key": "economic_service",
-        "type": "label",
-        "label_text_style": "bold",
-        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
+        "key": "secure_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:secure": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -919,6 +952,65 @@
         "v_required": {
           "value": true,
           "err": "Required"
+        }
+      },
+      {
+        "key": "referred_services",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "    List of Referred Services:",
+        "text_color": "#d20000",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "active_on_treatment_no_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for appropriate treatment and care services as part of enrollment.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "secure_no_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:secure": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "enrolled_pmtct_no_list",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:enrolled_pmtct": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
         }
       }
     ]
