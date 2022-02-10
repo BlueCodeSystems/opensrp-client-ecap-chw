@@ -242,6 +242,22 @@
         }
       },
       {
+        "key": "symptoms_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test & TB Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:symptoms": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "following",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -274,6 +290,22 @@
             "ex-rules": {
               "rules-file": "caregiver_household_assessment.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "following_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test & Treat STI.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:following": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -314,6 +346,22 @@
         }
       },
       {
+        "key": "last_6_months_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:last_6_months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "last_12_months",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -350,6 +398,22 @@
         }
       },
       {
+        "key": "last_12_months_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:last_12_months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "pregnant_breastfeeding",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -382,6 +446,22 @@
             "ex-rules": {
               "rules-file": "caregiver_household_assessment.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "pregnant_breastfeeding_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:pregnant_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },

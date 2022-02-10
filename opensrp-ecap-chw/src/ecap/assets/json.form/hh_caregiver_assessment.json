@@ -218,6 +218,22 @@
         }
       },
       {
+        "key": "symptoms_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test & TB Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:symptoms": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "private_parts",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -243,6 +259,22 @@
             "ex-rules": {
               "rules-file": "hiv_caregiver_assessment_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "private_parts_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test & Treat STI.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:private_parts": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -276,6 +308,22 @@
         }
       },
       {
+        "key": "exposed_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:exposed": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "unprotected",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -305,6 +353,22 @@
         }
       },
       {
+        "key": "unprotected_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:unprotected": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "breastfeeding",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -330,6 +394,22 @@
             "ex-rules": {
               "rules-file": "hiv_caregiver_assessment_relevance.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "breastfeeding_yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HIV Test.",
+        "toaster_info_text": "",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
