@@ -56,7 +56,13 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                 try {
 
-                    idRegisterActivity.startFormActivity("vca_screening",null,"");
+                    FormUtils formUtils = new FormUtils(context);
+
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("vca_screening");
+
+                    idRegisterActivity.startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     Timber.e(e);
