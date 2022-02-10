@@ -65,8 +65,6 @@ public class IndexRegisterInteractor implements IndexRegisterContract.Interactor
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
             String code = sp.getString("code", "00000");
 
-            final String vcaId = code + "/" + xId;
-
 
             appExecutors.mainThread().execute(() -> {
                 if (StringUtils.isBlank(xId)) {
