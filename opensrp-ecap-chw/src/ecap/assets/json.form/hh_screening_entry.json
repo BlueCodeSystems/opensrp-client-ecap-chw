@@ -617,10 +617,6 @@
         "v_required": {
           "value": true,
           "err": "Required"
-        },
-        "v_regex": {
-          "value": "([0-9]{4}-[0-9]{5}-[0-9]{6}-[0-9]{1})|\\s*",
-          "err": "ART should be in the format of XXXX-XXXXX-XXXXXX-X"
         }
       },
       {
@@ -1615,10 +1611,10 @@
       },
 
       {
-        "key": "contact_address",
+        "key": "homeaddress",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "contact_address",
+        "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
         "hint": "Contact Address ",
         "edit_type": "name",
