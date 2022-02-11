@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.ibm.fhir.core.util.URLSupport.getQuery;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,6 +14,7 @@ import timber.log.Timber;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +44,7 @@ import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
+import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -58,7 +62,9 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
+import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,12 +77,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -100,6 +109,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
+import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 public class IndexDetailsActivity extends AppCompatActivity {
@@ -109,7 +119,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened ;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
-    private  Child indexChild;
+
+    private VcaScreeningModel indexVCA;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -120,7 +131,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private UniqueIdRepository uniqueIdRepository;
 
-    String myAge;
     ObjectMapper oMapper, clientMapper;
     Child child;
 
@@ -132,7 +142,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
 
-    CommonPersonObjectClient client;
+
+    public VCAModel client;
 
 
     @Override
@@ -150,14 +161,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
 
-
         childId = getIntent().getExtras().getString("Child");
 
-        indexChild = IndexPersonDao.getChildByBaseId(childId);
-        String gender = indexChild.getGender();
-        uniqueId = indexChild.getUnique_id();
+        indexVCA = VCAScreeningDao.getVcaScreening(childId);
 
-        is_screened = HouseholdDao.checkIfScreened(indexChild.getHousehold_id());
+        String gender = indexVCA.getGender();
+        uniqueId = indexVCA.getUnique_id();
+
+
+        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
 
 
         fabHiv = findViewById(R.id.hiv_risk);
@@ -247,9 +259,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
     public HashMap<String, Child> getData() {
-        String full_name = indexChild.getFirst_name() + " " + indexChild.getLast_name();
-        String gender =  indexChild.getGender();
-        String birthdate = indexChild.getAdolescent_birthdate();
+        String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
+        String gender =  indexVCA.getGender();
+        String birthdate = indexVCA.getAdolescent_birthdate();
 
         if(birthdate != null){
             txtAge.setText(getAge(birthdate));
@@ -262,7 +274,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         txtName.setText(full_name);
         txtGender.setText(gender.toUpperCase());
-        txtChildid.setText("ID : " + indexChild.getUnique_id());
+        txtChildid.setText("ID : " + indexVCA.getUnique_id());
 
         child = IndexPersonDao.getChildByBaseId(childId);
 
@@ -378,8 +390,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public void onClick(View v) throws JSONException {
         int id = v.getId();
-        client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-        assert client != null;
+
         switch (id){
             case R.id.fab:
 
@@ -527,11 +538,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
-                getUniqueIdRepository().close(uniqueId);
+              //  getUniqueIdRepository().close(uniqueId);
 
 
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
 
                 finish();
                 startActivity(getIntent());
@@ -552,7 +562,28 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return uniqueIdRepository;
     }
 
+    public void updateCommonPersonObject(String baseEntityId) {
+        Cursor cursor = null;
+        try {
+            cursor = getCommonRepository(CoreConstants.TABLE_NAME.EC_CLIENT_INDEX).rawCustomQueryForAdapter("SELECT * FROM " + CoreConstants.TABLE_NAME.EC_CLIENT_INDEX + " WHERE base_entity_id = " + "'" + baseEntityId + "'");
+            if (cursor != null && cursor.moveToFirst()) {
+                CommonPersonObject personObject = getCommonRepository(CoreConstants.TABLE_NAME.EC_CLIENT_INDEX).readAllcommonforCursorAdapter(cursor);
+                client = new VCAModel(personObject.getCaseId(),
+                        personObject.getDetails(), "");
+                client.setColumnmaps(personObject.getColumnmaps());
+            }
+        } catch (Exception ex) {
+            Timber.e(ex, "CoreChildProfileInteractor --> updateChildCommonPerson");
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
 
+    public CommonRepository getCommonRepository(String tableName) {
+        return Utils.context().commonrepository(tableName);
+    }
 
     public ChildIndexEventClient processRegistration(String jsonString){
 
@@ -740,6 +771,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         JSONObject mergedClientJsonObject =
                                 org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
                     }
@@ -925,25 +957,25 @@ public class IndexDetailsActivity extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
-        formToBeOpened.getJSONObject("step1").put("title", this.indexChild.getFirst_name() + " " + this.indexChild.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexChild.getUnique_id());
+        formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
 
         switch (formName) {
 
             case "case_status":
             case "case_plan":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
-                formToBeOpened.put("entity_id", this.indexChild.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
 
                 break;
             case "vca_screening":
 
+                formToBeOpened.put("entity_id", indexVCA.getBase_entity_id());
+               // formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(13).put("min_date",  "today - " + getAgeWithoutText(indexVCA.getAdolescent_birthdate())+"y");
 
-                formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(4).put("min_date",  "today - " + getAgeWithoutText(indexChild.getAdolescent_birthdate())+"y");
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(indexVCA, Map.class));
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(client.getColumnmaps(), Map.class));
-                formToBeOpened.put("entity_id", indexChild.getBase_entity_id());
                 break;
 
             case "vca_assessment":
@@ -951,7 +983,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(vcaAssessmentModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
 
@@ -970,7 +1002,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(graduationAssessmentModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
                 } else {
 
@@ -985,7 +1017,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(vcaVisitationModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
                 } else {
@@ -1001,7 +1033,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(referralModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
                 } else {
 
@@ -1016,7 +1048,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(hivRiskAssessmentUnder15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
                 } else {
 
@@ -1031,7 +1063,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(hivRiskAssessmentAbove15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexChild, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
                 } else {
 
