@@ -1465,31 +1465,6 @@
         }
       },
       {
-        "key": "agyw_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "agyw_in_school",
-        "type": "native_radio",
-        "label": "Is the AGYW in school?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "agyw_receiving_an_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
