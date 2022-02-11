@@ -1,5 +1,9 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.util.JsonFormUtils.STEP1;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -33,6 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
@@ -57,6 +62,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexRegisterActivity extends BaseRegisterActivity implements IndexRegisterContract.View {
@@ -67,6 +73,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     private UniqueIdRepository uniqueIdRepository;
     Random Number;
     int Rnumber;
+    private String uniqueId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,20 +259,52 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         String code = sp.getString("code", "00000");
         Object obj = sp.getAll();//
 
+        //******** HOUSEHOLD ID ******//
         Number = new Random();
         Rnumber = Number.nextInt(100000000);
-
-
         String xId =  Integer.toString(Rnumber);
-
         String household_id = code + "/" + xId;
 
+
+        //******** VCA ID *********//
+      /*  UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
+        String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
+        String newEntityId  = entityId.replaceFirst("^0+(?!$)", "");
+
+        if (StringUtils.isNotBlank(entityId)) {
+            newEntityId = entityId.replace("-", "");
+        }*/
+        Number = new Random();
+        Rnumber = Number.nextInt(900000000);
+        String newEntityId =  Integer.toString(Rnumber);
+
+
+        //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+
+        if (stepOneUniqueId != null) {
+            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            try {
+                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
+            //******** POPULATE JSON FORM WITH HOUSEHOLD ID ******//
+            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
 
+            JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
 
-            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));//
-
-            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
+            if (stepHouseholdId != null) {
+                stepHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                try {
+                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -295,12 +334,22 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
                     showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
+                    uniqueId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
 
+                    gotToChildProfile(uniqueId);
                 }
             } catch (JSONException e) {
                 Timber.e(e);
             }
         }
+    }
+
+    public void gotToChildProfile(String id){
+        Intent intent = new Intent(this,IndexDetailsActivity.class);
+        //Addedd for trying to clear previous data
+        intent.putExtra("Child",id);
+        Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
+        startActivity(intent);
     }
 
     @Override
