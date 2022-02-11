@@ -140,6 +140,12 @@
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        },
+        "min_date": "today-20y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "{{family_member_register.step1.dob.v_required.err}}"
         }
       },
       {
