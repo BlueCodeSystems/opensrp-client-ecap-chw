@@ -121,7 +121,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
         Intent intent = new Intent(getActivity(), IndexDetailsActivity.class);
         intent.putExtra("Child",  childId);
-        intent.putExtra("clients",  client);
+        intent.putExtra("baseId",  client);
         startActivity(intent);
     }
 

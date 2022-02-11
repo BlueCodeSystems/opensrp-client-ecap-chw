@@ -321,6 +321,13 @@ condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_viral_load_results_on_file
+description: viral_load_results_on_file relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_gets_tb_preventive_therapy
 description: gets_tb_preventive_therapy relevance
 priority: 1
