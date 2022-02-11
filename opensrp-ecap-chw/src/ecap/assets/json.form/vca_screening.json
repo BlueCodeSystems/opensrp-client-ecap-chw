@@ -445,6 +445,31 @@
         }
       },
       {
+        "key": "is_viral_load_test_results_on_file",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "is_viral_load_test_results_on_file",
+        "type": "native_radio",
+        "label": "Does the Child/Adolescent have their viral load test results on file?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "is_tb_screening_results_on_file",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
