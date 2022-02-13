@@ -854,10 +854,10 @@
           }
         },
         {
-          "column_name": "physical_address",
+          "column_name": "homeaddress",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.physical_address"
+            "field": "attributes.homeaddress"
           }
         },
         {
@@ -1257,10 +1257,24 @@
       "name": "ec_client_index",
       "columns": [
         {
-          "column_name": "_id",
+          "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "_id"
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
           }
         },
         {
@@ -1281,14 +1295,49 @@
           "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.subTown"
+            "field": "attributes.ward"
           }
         },
         {
-          "column_name": "village",
+          "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.adolescent_village"
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
+          }
+        },
+        {
+          "column_name": "adolescent_first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_first_name"
+          }
+        },
+        {
+          "column_name": "adolescent_last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_last_name"
+          }
+        },
+        {
+          "column_name": "adolescent_birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_birthdate"
+          }
+        },
+        {
+          "column_name": "homeaddress",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.homeaddress"
           }
         },
         {
@@ -1296,6 +1345,62 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.landmark"
+          }
+        },
+        {
+          "column_name": "adolescent_gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_gender"
+          }
+        },
+        {
+          "column_name": "school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school"
+          }
+        },
+        {
+          "column_name": "other_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_school"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
+          }
+        },
+        {
+          "column_name": "is_on_hiv_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_on_hiv_treatment"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "viral_load_results_on_file",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.viral_load_results_on_file"
+          }
+        },
+        {
+          "column_name": "is_tb_screening_results_on_file",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_tb_screening_results_on_file"
           }
         },
         {
@@ -1327,101 +1432,24 @@
           }
         },
         {
-          "column_name": "partner",
+          "column_name": "screened_for_malnutrition",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.partner"
+            "field": "attributes.screened_for_malnutrition"
           }
         },
         {
-          "column_name": "base_entity_id",
+          "column_name": "takes_drugs_to_prevent_other_diseases",
           "type": "Client",
           "json_mapping": {
-            "field": "baseEntityId"
+            "field": "attributes.takes_drugs_to_prevent_other_diseases"
           }
         },
         {
-          "column_name": "household_id",
+          "column_name": "less_3",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.household_id"
-          }
-        },
-        {
-          "column_name": "unique_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.unique_id"
-          }
-        },
-        {
-          "column_name": "relational_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "relationships.family"
-          }
-        },
-        {
-          "column_name": "case_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.case_status"
-          }
-        },
-        {
-          "column_name": "reason",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.reason"
-          }
-        },
-        {
-          "column_name": "other_reason",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.other_reason"
-          }
-        },
-        {
-          "column_name": "subpop1",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.subpop1"
-          }
-        },
-        {
-          "column_name": "subpop2",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.subpop2"
-          }
-        },
-        {
-          "column_name": "subpop3",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.subpop3"
-          }
-        },
-        {
-          "column_name": "active_on_treatment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.active_on_treatment"
-          }
-        },
-        {
-          "column_name": "did_the_child_access_clinical_care",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.did_the_child_access_clinical_care"
-          }
-        },
-        {
-          "column_name": "subpop4",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.subpop4"
+            "field": "attributes.less_3"
           }
         },
         {
@@ -1429,6 +1457,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.positive_mother"
+          }
+        },
+        {
+          "column_name": "active_on_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.active_on_treatment"
           }
         },
         {
@@ -1446,6 +1481,20 @@
           }
         },
         {
+          "column_name": "is_mother_virally_suppressed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_mother_virally_suppressed"
+          }
+        },
+        {
+          "column_name": "child_been_tested_for_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_been_tested_for_hiv"
+          }
+        },
+        {
           "column_name": "child_receiving_breastfeeding",
           "type": "Client",
           "json_mapping": {
@@ -1460,24 +1509,24 @@
           }
         },
         {
-          "column_name": "receives_drugs_to_prevent_hiv_and_other_illnesses",
+          "column_name": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.receives_drugs_to_prevent_hiv_and_other_illnesses_hei"
           }
         },
         {
-          "column_name": "child_been_screened_for_malnutrition",
+          "column_name": "child_been_screened_for_malnutrition_hei",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_been_screened_for_malnutrition"
+            "field": "attributes.child_been_screened_for_malnutrition_hei"
           }
         },
         {
-          "column_name": "child_gets_drugs_to_prevent_tb",
+          "column_name": "child_gets_drugs_to_prevent_tb_hei",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_gets_drugs_to_prevent_tb"
+            "field": "attributes.child_gets_drugs_to_prevent_tb_hei"
           }
         },
         {
@@ -1488,24 +1537,17 @@
           }
         },
         {
-          "column_name": "takes_drugs_to_prevent_other_diseases",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.takes_drugs_to_prevent_other_diseases"
-          }
-        },
-        {
-          "column_name": "agyw_sexually_active",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.agyw_sexually_active"
-          }
-        },
-        {
           "column_name": "is_biological_child_of_mother_living_with_hiv",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.is_biological_child_of_mother_living_with_hiv"
+          }
+        },
+        {
+          "column_name": "child_tested_for_hiv_with_mother_as_index_client",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_tested_for_hiv_with_mother_as_index_client"
           }
         },
         {
@@ -1537,10 +1579,31 @@
           }
         },
         {
-          "column_name": "child_clinical_care_services_received",
+          "column_name": "child_receiving_any_hiv_and_violence_prevention_intervention",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_clinical_care_services_received"
+            "field": "attributes.child_receiving_any_hiv_and_violence_prevention_intervention"
+          }
+        },
+        {
+          "column_name": "agyw_sexually_active",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.agyw_sexually_active"
+          }
+        },
+        {
+          "column_name": "hiv_or_pregnancy_prevention_method_used",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_or_pregnancy_prevention_method_used"
+          }
+        },
+        {
+          "column_name": "hiv_or_pregnancy_prevention_method_used_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_or_pregnancy_prevention_method_used_other"
           }
         },
         {
@@ -1621,13 +1684,6 @@
           }
         },
         {
-          "column_name": "agyw_receiving_an_economic_strengthening_intervention",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.agyw_receiving_an_economic_strengthening_intervention"
-          }
-        },
-        {
           "column_name": "child_ever_experienced_sexual_violence",
           "type": "Client",
           "json_mapping": {
@@ -1639,6 +1695,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.child_still_living_in_the_same_household_as_the_perpetrator"
+          }
+        },
+        {
+          "column_name": "child_supported_to_seek_justice",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_supported_to_seek_justice"
+          }
+        },
+        {
+          "column_name": "did_the_child_access_clinical_care",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.did_the_child_access_clinical_care"
+          }
+        },
+        {
+          "column_name": "child_clinical_care_services_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_clinical_care_services_received"
           }
         },
         {
@@ -1663,6 +1740,13 @@
           }
         },
         {
+          "column_name": "fsw_prevention_intervention",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.fsw_prevention_intervention"
+          }
+        },
+        {
           "column_name": "fsw_economic_strengthening_intervention",
           "type": "Client",
           "json_mapping": {
@@ -1670,17 +1754,59 @@
           }
         },
         {
-          "column_name": "child_supported_to_seek_justice",
+          "column_name": "caseworker_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_supported_to_seek_justice"
+            "field": "attributes.caseworker_name"
           }
         },
         {
-          "column_name": "fsw_prevention_intervention",
+          "column_name": "date_screened",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.fsw_prevention_intervention"
+            "field": "attributes.date_screened"
+          }
+        },
+        {
+          "column_name": "approved_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.approved_by"
+          }
+        },
+        {
+          "column_name": "consent_check_box",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.consent_check_box"
+          }
+        },
+        {
+          "column_name": "subpop1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop1"
+          }
+        },
+        {
+          "column_name": "subpop2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop2"
+          }
+        },
+        {
+          "column_name": "subpop3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop3"
+          }
+        },
+        {
+          "column_name": "subpop4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop4"
           }
         },
         {
@@ -1695,13 +1821,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.subpop"
-          }
-        },
-        {
-          "column_name": "health_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.health_facility"
           }
         },
         {
@@ -1726,6 +1845,20 @@
           }
         },
         {
+          "column_name": "adolescent_gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent_gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.birthdate"
+          }
+        },
+        {
           "column_name": "adolescent_birthdate",
           "type": "Client",
           "json_mapping": {
@@ -1740,14 +1873,21 @@
           }
         },
         {
-          "column_name": "date_removed",
+          "column_name": "case_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.dateRemoved"
+            "field": "attributes.case_status"
           }
         },
         {
           "column_name": "date_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_referred"
+          }
+        },
+        {
+          "column_name": "date_offered_enrollment",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_offered_enrollment"
@@ -1768,13 +1908,6 @@
           }
         },
         {
-          "column_name": "date_screened",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_screened"
-          }
-        },
-        {
           "column_name": "date_hiv_known",
           "type": "Client",
           "json_mapping": {
@@ -1786,27 +1919,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.art_check_box"
-          }
-        },
-        {
-          "column_name": "is_hiv_positive",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_hiv_positive"
-          }
-        },
-        {
-          "column_name": "is_on_hiv_treatment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_on_hiv_treatment"
-          }
-        },
-        {
-          "column_name": "art_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_number"
           }
         },
         {
@@ -1838,24 +1950,10 @@
           }
         },
         {
-          "column_name": "vl_suppressed",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vl_suppressed"
-          }
-        },
-        {
           "column_name": "date_next_vl",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_next_vl"
-          }
-        },
-        {
-          "column_name": "vl_next_result",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vl_next_result"
           }
         },
         {
@@ -1877,6 +1975,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_name"
+          }
+        },
+        {
+          "column_name": "caregiver_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_nrc"
           }
         },
         {
@@ -1912,158 +2017,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_phone"
-          }
-        },
-        {
-          "column_name": "caregiver_nrc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caregiver_nrc"
-          }
-        },
-        {
-          "column_name": "relation",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.relation"
-          }
-        },
-        {
-          "column_name": "school",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.school"
-          }
-        },
-        {
-          "column_name": "other_school",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.other_school"
-          }
-        },
-        {
-          "column_name": "is_viral_load_test_results_on_file",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_viral_load_test_results_on_file"
-          }},
-        {
-          "column_name": "is_tb_screening_results_on_file",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_tb_screening_results_on_file"
-          }},
-        {
-          "column_name": "screened_for_malnutrition",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.screened_for_malnutrition"
-          }
-        },
-        {
-          "column_name": "is_mother_currently_on_treatment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_mother_currently_on_treatment"
-          }},
-        {
-          "column_name": "mother_art_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mother_art_number"
-          }},
-        {
-          "column_name": "is_mother_adhering_to_treatment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_mother_adhering_to_treatment"
-          }
-        },
-        {
-          "column_name": "is_mother_virally_suppressed",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_mother_virally_suppressed"
-          }
-        },
-        {
-          "column_name": "is_child_hiv_positive",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_child_hiv_positive"
-          }
-        },
-
-        {
-          "column_name": "date_removed",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.dateRemoved"
-          }
-        },
-
-        {
-          "column_name": "date_offered_enrollment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_offered_enrollment"
-          }
-        },
-        {
-          "column_name": "physical_address",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addressFields.physical_address"
-          }
-        },
-        {
-          "column_name": "caseworker_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_name"
-          }
-        },
-        {
-          "column_name": "emergency_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.emergency_name"
-          }
-        },
-        {
-          "column_name": "e_relationship",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.e_relationship"
-          }
-        },
-        {
-          "column_name": "relationship_other",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.relationship_other"
-          }
-        },
-        {
-          "column_name": "contact_address",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.contact_address"
-          }
-        },
-        {
-          "column_name": "contact_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.contact_number"
-          }
-        },
-        {
-          "column_name": "vl_suppressed",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vl_suppressed"
           }
         }
       ]
