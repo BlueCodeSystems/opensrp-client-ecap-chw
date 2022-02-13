@@ -81,7 +81,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
                 return;
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
-            uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+//            uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
 
         } catch (Exception e) {
             Timber.e(e);
@@ -106,6 +106,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
         }
     }
 
+
     @Override
     public void onRegistrationSaved(boolean inEditMode) {
         if (getView() != null) {
@@ -117,7 +118,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
                 navigationMenu.refreshCount();
             }
             getUniqueIdRepository().close(uniqueId);
-            gotToChildProfile(uniqueId);
+//            gotToChildProfile(uniqueId);
 
         }
     }
@@ -140,6 +141,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
 
    public void startForm(String formName, String entityId, String metadata, String currentLocationId) throws Exception {
 
+
        if (StringUtils.isBlank(entityId)) {
            Triple<String, String, String> triple = Triple.of(formName, metadata, currentLocationId);
            interactor.getNextUniqueId(getView().getContext(), triple, this);
@@ -151,10 +153,7 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
            getView().startFormActivity(form);
 
    }
-   public void gotToChildProfile(String id){
-       Intent intent = new Intent(getView().getContext(),IndexDetailsActivity.class);
-       intent.putExtra("Child",id);
-       Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
-       getView().startActivity(intent);
-   }
+
+
+
 }

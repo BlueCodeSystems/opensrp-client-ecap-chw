@@ -73,6 +73,14 @@ actions:
 name: step4_vl_suppressed
 description: vl_suppressed
 priority: 1
-condition: "step4_vl_suppressed == ''"
+condition: "step4_vl_last_result < 1000"
 actions:
-  - "calculation = step4_vl_last_result"
+  - "calculation = yes"
+---
+name: step4_vl_suppressed
+description: vl_suppressed
+priority: 1
+condition: "step4_vl_last_result > 1000"
+actions:
+  - "calculation = no"
+
