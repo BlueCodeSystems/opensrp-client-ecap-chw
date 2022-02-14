@@ -589,7 +589,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
-                case "Caregiver Household Assessment Form":
+                case "Caregiver Assessment":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

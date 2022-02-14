@@ -1325,50 +1325,7 @@
           }
         }
       },
-      {
-        "key": "monthly_expenses",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "monthly_expenses",
-        "type": "native_radio",
-        "label": "Estimated household expenses per month",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "Less than K500",
-            "text": "Less than K500",
-            "value": false
-          },
-          {
-            "key": "K500 -K999",
-            "text": "K500 -K999",
-            "value": false
-          },
-          {
-            "key": "K1,000 –K1,999",
-            "text": "K1,000 –K1,999",
-            "value": false
-          },
-          {
-            "key": "K2,000 –K4,999",
-            "text": "K2,000 –K4,999",
-            "value": false
-          },
-          {
-            "key": "Greater than K5,000",
-            "text": "Greater than K5,000",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "You`re required to select income source"
-        }
-      },
+
       {
         "key": "marital_status",
         "openmrs_entity_parent": "",
