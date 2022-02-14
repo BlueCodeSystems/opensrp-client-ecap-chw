@@ -442,7 +442,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 try {
 
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"service_report");
 
                 } catch (Exception e) {
                     e.printStackTrace();
