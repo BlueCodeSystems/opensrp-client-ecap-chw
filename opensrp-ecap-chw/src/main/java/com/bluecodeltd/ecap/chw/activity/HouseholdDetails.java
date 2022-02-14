@@ -239,7 +239,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         switch (id) {
-            case R.id.myservice:
+    /*        case R.id.myservice:
 
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
@@ -255,7 +255,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                break;
+                break;*/
             case R.id.fabx:
 
                 animateFAB();
