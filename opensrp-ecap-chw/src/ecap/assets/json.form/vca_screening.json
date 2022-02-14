@@ -111,7 +111,6 @@
         "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "hint": "Province",
-        "value": "Southern",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
@@ -123,7 +122,6 @@
         "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
-        "value": "Choma",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
@@ -135,7 +133,6 @@
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "value": "Choma Central",
         "read_only": "false",
         "edit_type": "name",
         "look_up": "true"
@@ -164,40 +161,48 @@
         "look_up": "true"
       },
       {
-        "key": "adolescent_first_name",
+        "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_first_name",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "VCA first name ",
+        "hint": "VCA First Name",
         "edit_type": "name",
-        "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter VCA first name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "err": "This field is Required"
         }
       },
       {
-        "key": "adolescent_last_name",
+        "key": "last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_last_name",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "VCA last name ",
+        "hint": "VCA Last Name",
         "edit_type": "name",
-        "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter VCA last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "err": "This field is Required"
         }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "VCA Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ]
       },
       {
         "key": "adolescent_birthdate",
@@ -219,38 +224,24 @@
         }
       },
       {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
-        "toaster_info_text": "",
-        "toaster_type": "info"
-      },
-      {
-        "key": "village",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "village",
-        "type": "edit_text",
-        "hint": "Address",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
         "key": "landmark",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "landmark",
         "type": "edit_text",
-        "hint": "Landmark",
+        "hint": "Nearest Landmark",
         "v_required": {
           "value": true,
           "err": "Required"
         }
+      },
+      {
+        "key": "homeaddress",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "homeaddress",
+        "type": "edit_text",
+        "hint": "Home Address"
       },
       {
         "key": "spacer",
@@ -275,28 +266,6 @@
         "openmrs_entity_id": "2",
         "type": "spacer",
         "spacer_height": "15dp"
-      },
-      {
-        "key": "adolescent_gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_gender",
-        "type": "native_radio",
-        "label": "VCA Gender",
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Please Select Gender"
-        }
       },
       {
         "key": "school",
@@ -445,6 +414,31 @@
         }
       },
       {
+        "key": "viral_load_results_on_file",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load_results_on_file",
+        "type": "native_radio",
+        "label": "Does the Child/Adolescent have their viral load test results on file?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "is_tb_screening_results_on_file",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -469,7 +463,6 @@
           }
         }
       },
-
       {
         "key": "client_screened",
         "openmrs_entity_parent": "",
@@ -566,7 +559,6 @@
           }
         }
       },
-
       {
         "key": "screened_for_malnutrition",
         "openmrs_entity_parent": "",
@@ -591,7 +583,6 @@
           }
         }
       },
-
       {
         "key": "takes_drugs_to_prevent_other_diseases",
         "openmrs_entity_parent": "",
@@ -1114,7 +1105,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_receiving_any_hiv_and_violence_prevention_intervention",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention? ",
+        "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention?",
         "options": [
           {
             "key": "yes",
@@ -1163,7 +1154,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_sexually_active",
         "type": "native_radio",
-        "label": "Is the AGYW sexually active? ",
+        "label": "Is the AGYW sexually active?",
         "options": [
           {
             "key": "yes",
@@ -1465,31 +1456,6 @@
         }
       },
       {
-        "key": "agyw_in_school",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "agyw_in_school",
-        "type": "native_radio",
-        "label": "Is the AGYW in school?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "agyw_receiving_an_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1569,9 +1535,9 @@
         "key": "child_supported_to_seek_justice",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_supported_to_seek_justice ",
+        "openmrs_entity_id": "child_supported_to_seek_justice",
         "type": "native_radio",
-        "label": "Was the child/adolescent supported to seek justice ",
+        "label": "Was the child/adolescent supported to seek justice",
         "options": [
           {
             "key": "yes",
@@ -1596,7 +1562,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "did_the_child_access_clinical_care",
         "type": "native_radio",
-        "label": "Did the child/adolescent access clinical care? ",
+        "label": "Did the child/adolescent access clinical care?",
         "options": [
           {
             "key": "yes",
@@ -1621,7 +1587,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_clinical_care_services_received",
         "type": "check_box",
-        "label": "Did the child/adolescent receive any of these clinical care services? ",
+        "label": "Did the child/adolescent receive any of these clinical care services?",
         "options": [
           {
             "key": "pep",
@@ -1849,7 +1815,7 @@
       {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "consent_check_box",
         "type": "native_radio",
         "label": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
@@ -1867,9 +1833,55 @@
     ]
   },
   "step3": {
-    "title": "Child's Details",
+    "title": "Summary",
     "next": "step4",
     "fields": [
+      {
+        "key": "hdx",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hdx",
+        "type": "label",
+        "text": "Information Summary"
+      },
+      {
+        "key": "index_check_box",
+        "value": "yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "index_check_box",
+        "type": "toaster_notes",
+        "text": "This VCA has been Identified as an Index",
+        "toaster_type": "info",
+        "toaster_info_text": "This VCA has been Identified as an Index",
+        "toaster_info_title": "Index Tracing",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "case_status",
+        "value": "1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "toaster_notes",
+        "text": "This VCA will be enrolled as an Active VCA on the program",
+        "toaster_type": "info",
+        "toaster_info_text": "This VCA will be enrolled as an Active VCA on the program",
+        "toaster_info_title": "Case Status",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
       {
         "key": "subpop1_toast",
         "openmrs_entity_parent": "",
@@ -1878,7 +1890,7 @@
         "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1897,7 +1909,7 @@
         "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1915,8 +1927,8 @@
         "openmrs_entity_id": "subpop2",
         "value": "true",
         "type": "toaster_notes",
+        "toaster_type": "info",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
-        "toaster_type": "positive",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1935,7 +1947,7 @@
         "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (WLHIV)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1954,7 +1966,7 @@
         "openmrs_entity_id": "subpop4",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1973,7 +1985,7 @@
         "openmrs_entity_id": "subpop5",
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1983,189 +1995,11 @@
             }
           }
         }
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "Child's first name ",
-        "edit_type": "name",
-        "read_only": "true",
-        "look_up": "true",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "hint": "Child's last name ",
-        "edit_type": "name",
-        "read_only": "true",
-        "look_up": "true",
-        "v_required": {
-          "value": false,
-          "err": "Please enter VCA last name"
-        },
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "read_only": "true",
-        "label": "VCA Gender",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        },
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ]
-      },
-      {
-        "key": "birthdate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "birthdate",
-        "type": "date_picker",
-        "read_only": "true",
-        "hint": "Child's DOB",
-        "label_info_title": "Child's Date of Birth",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-19y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Please enter the date of birth"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "index_check_box",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "index_check_box",
-        "type": "edit_text",
-        "value": "yes",
-        "read_only": "true",
-        "hint": "Was child identified through Index?",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "This field is required"
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "case_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_status",
-        "type": "native_radio",
-        "value": "1",
-        "read_only": true,
-        "label": "Case Status",
-        "options": [
-          {
-            "key": "1",
-            "text": "Active"
-          },
-          {
-            "key": "2",
-            "text": "Inactive"
-          },
-          {
-            "key": "0",
-            "text": "Closed"
-          }
-        ]
       }
     ]
   },
   "step4": {
-    "title": "Enrollment into OVC program",
+    "title": "Enrollment Into OVC program",
     "next": "step5",
     "fields": [
       {
@@ -2414,16 +2248,9 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
-        "type": "spinner",
+        "type": "edit_text",
+        "edit_type": "number",
         "hint": "Last VL results",
-        "values": [
-          "Less than 1000 copies/ml",
-          "Above 1000 copies/ml"
-        ],
-        "keys": [
-          "Less than 1000 copies/ml",
-          "Above 1000 copies/ml"
-        ],
         "relevance": {
           "step4:vl_check_box": {
             "type": "string",
@@ -2431,38 +2258,6 @@
           }
         }
       },
-      {
-        "key": "vl_suppressed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_suppressed",
-        "type": "native_radio",
-        "label": "Is the child VL suppressed? (less than 1000 copies/ml)",
-        "options": [
-          {
-            "key": "Less than 1000 copies/ml",
-            "text": "Yes"
-          },
-          {
-            "key": "Above 1000 copies/ml",
-            "text": "No"
-          }
-        ],
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        },
-        "relevance": {
-          "step4:vl_last_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Less than 1000 copies/ml\")"
-          }
-        }
-      },
-
       {
         "key": "date_next_vl",
         "openmrs_entity_parent": "",
@@ -2612,11 +2407,11 @@
         "label": "Caregiver's Gender",
         "options": [
           {
-            "key": "Male",
+            "key": "male",
             "text": "Male"
           },
           {
-            "key": "Female",
+            "key": "female",
             "text": "Female"
           }
         ],

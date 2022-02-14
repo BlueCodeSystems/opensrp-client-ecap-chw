@@ -170,8 +170,8 @@ public class IndexPersonDao  extends AbstractDao {
     }
 
 
-    public static Child getChildByBaseId(String baseEntityID){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + baseEntityID + "' ";
+    public static Child getChildByBaseId(String UID){
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' ";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "vl_check_box"),
