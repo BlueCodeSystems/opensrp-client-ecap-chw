@@ -438,17 +438,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.myservice:
+          /*  case R.id.myservice:
 
                 try {
 
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"service_report");
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                break;
+                break;*/
 
             case R.id.household_profile:
 
@@ -970,6 +970,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
             case "vca_screening":
+            case "service_report":
 
                 formToBeOpened.put("entity_id", indexVCA.getBase_entity_id());
                // formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(13).put("min_date",  "today - " + getAgeWithoutText(indexVCA.getAdolescent_birthdate())+"y");
@@ -977,6 +978,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(indexVCA, Map.class));
 
                 break;
+
 
             case "vca_assessment":
 
