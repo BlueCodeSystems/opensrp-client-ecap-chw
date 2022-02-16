@@ -120,7 +120,6 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "HIV Status",
-        "read_only": true,
         "options": [
           {
             "key": "yes",
