@@ -121,7 +121,7 @@
         "hint": "Vulnerability identified from Assessment",
         "v_required": {
           "value": true,
-          "err": "Field is Requiredy"
+          "err": "Field is Required"
         }
       },
       {
