@@ -71,6 +71,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -146,6 +147,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public VCAModel client;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,6 +182,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fabReferal = findViewById(R.id.refer_to_facility_fab);
         fabCasePlan =  findViewById(R.id.case_plan_fab);
         fabAssessment = findViewById(R.id.fabAssessment);
+
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
@@ -442,7 +445,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 try {
 
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"service_report");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -970,13 +973,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
             case "vca_screening":
+            case "service_report":
 
-                formToBeOpened.put("entity_id", indexVCA.getBase_entity_id());
-               // formToBeOpened.getJSONObject("step4").getJSONArray("fields").getJSONObject(13).put("min_date",  "today - " + getAgeWithoutText(indexVCA.getAdolescent_birthdate())+"y");
+                try {
+                    FormUtils fUtils = new FormUtils(IndexDetailsActivity.this);
+                    JSONObject indexRegisterForm;
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, clientMapper.convertValue(indexVCA, Map.class));
+                    indexRegisterForm = fUtils.getFormJson("service_report");
+                    startFormActivity(indexRegisterForm);
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
+
 
             case "vca_assessment":
 

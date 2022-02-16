@@ -3,17 +3,20 @@ package com.bluecodeltd.ecap.chw.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 
 import java.time.LocalDate;
@@ -21,6 +24,9 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHolder>{
 
@@ -54,7 +60,29 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
 
+
+
         String dob = child.getAdolescent_birthdate();
+
+//        String caseStatus = child.getCase_status();
+        String caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
+
+
+        if(caseStatus != null && caseStatus.equals("1")){
+
+            holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
+
+        } else if (caseStatus != null && caseStatus.equals("0")) {
+
+            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+
+        } else if(caseStatus != null && caseStatus.equals("2")){
+
+            holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
+        } else{
+            holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+        }
+
 
 
         if(dob != null){
@@ -67,15 +95,30 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         }
 
+        String memberAge = getAgeWithoutText(dob);
+
         holder.lview.setOnClickListener(v -> {
 
             switch (v.getId()) {
 
                 case (R.id.register_columns):
 
-                    Intent intent = new Intent(context, IndexDetailsActivity.class);
-                    intent.putExtra("Child",  child.getUnique_id());
-                    context.startActivity(intent);
+                    String subpop3 = child.getSubpop3();
+                    assert subpop3 != null;
+
+                    if(Integer.parseInt(memberAge) < 20){
+
+                        Intent intent = new Intent(context, IndexDetailsActivity.class);
+                        intent.putExtra("Child",  child.getUnique_id());
+                        context.startActivity(intent);
+
+                    } else {
+
+                        Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
+
+                    }
+
+
                     break;
             }
         });
@@ -100,6 +143,24 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         else return "Not Set";
     }
 
+    private String getAgeWithoutText(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getYears());
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getMonths());
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return String.valueOf(periodBetweenDateOfBirthAndNow.getDays());
+        }
+        else return "Not Set";
+    }
+
 
     @Override
     public int getItemCount() {
@@ -110,6 +171,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView fullName, age;
+        View colorView;
         RelativeLayout lview;
 
         public ViewHolder(View itemView) {
@@ -120,6 +182,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             fullName  = (TextView) itemView.findViewById(R.id.familyNameTextView);
             age  = (TextView) itemView.findViewById(R.id.child_age);
             lview = (RelativeLayout) itemView.findViewById(R.id.register_columns);
+            colorView = itemView.findViewById(R.id.mycolor);
 
         }
 

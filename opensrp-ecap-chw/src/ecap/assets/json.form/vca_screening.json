@@ -949,7 +949,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd5",
         "type": "label",
-        "text": "Children of Women Living with HIV (WLHIV)"
+        "text": "Children of Women Living with HIV (C/WLHIV)"
       },
       {
         "key": "spacer",
@@ -1164,14 +1164,7 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
+        ]
       },
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
@@ -1865,22 +1858,27 @@
       },
       {
         "key": "case_status",
-        "value": "1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "toaster_notes",
-        "text": "This VCA will be enrolled as an Active VCA on the program",
-        "toaster_type": "info",
-        "toaster_info_text": "This VCA will be enrolled as an Active VCA on the program",
-        "toaster_info_title": "Case Status",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+        "type": "native_radio",
+        "value": "1",
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
           }
-        }
+        ]
       },
       {
         "key": "subpop1_toast",
@@ -1948,7 +1946,7 @@
         "type": "toaster_notes",
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
         "toaster_type": "info",
-        "toaster_info_text": "Children of Women Living with HIV (WLHIV)",
+        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
         "toaster_info_title": "Sub Population",
         "relevance": {
           "rules-engine": {
@@ -2123,7 +2121,6 @@
         "type": "native_radio",
         "label": "Is the child currently on ART?",
         "text_color": "#000000",
-        "read_only": true,
         "exclusive": [
           "Yes"
         ],

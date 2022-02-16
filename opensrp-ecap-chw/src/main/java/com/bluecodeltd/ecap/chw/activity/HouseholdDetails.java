@@ -1,6 +1,9 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -74,6 +77,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -99,6 +103,8 @@ public class HouseholdDetails extends AppCompatActivity {
     Child child;
     ObjectMapper oMapper, householdMapper, caregiverMapper;
     CommonPersonObjectClient household;
+    Random Number;
+    int Rnumber;
 
 
     @Override
@@ -147,7 +153,7 @@ public class HouseholdDetails extends AppCompatActivity {
         setupViewPager();
         updateTasksTabTitle();
         updateChildTabTitle();
-        updateCaseplanTitle();
+        //updateCaseplanTitle();
         txtDistrict.setText(householdId);
 
         if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
@@ -201,7 +207,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
 
-    private void updateCaseplanTitle() {
+  /*  private void updateCaseplanTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.household_plan_tab_title, null);
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
         casePlanTabTitle.setText("Case plans");
@@ -217,7 +223,7 @@ public class HouseholdDetails extends AppCompatActivity {
         }
         //change valueOf to plans after query is re-visited
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
-    }
+    }*/
 
     private void updateChildTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
@@ -239,7 +245,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         switch (id) {
-            case R.id.myservice:
+    /*        case R.id.myservice:
 
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
@@ -255,7 +261,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                break;
+                break;*/
             case R.id.fabx:
 
                 animateFAB();
@@ -408,7 +414,24 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getHousehold_id());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", x);
+
+                    Number = new Random();
+                    Rnumber = Number.nextInt(900000000);
+                    String newEntityId =  Integer.toString(Rnumber);
+
+
+                    //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+                    JSONObject stepOneUniqueId = getFieldJSONObject(fields(formToBeOpened, STEP1), "unique_id");
+
+                    if (stepOneUniqueId != null) {
+                        stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                        try {
+                            stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
 
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened,caregiverMapper.convertValue(caregiver, Map.class));
                     startFormActivity(formToBeOpened);
@@ -589,7 +612,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
-                case "Caregiver Household Assessment Form":
+                case "Caregiver Assessment":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
