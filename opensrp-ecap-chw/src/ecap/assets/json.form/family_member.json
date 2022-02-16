@@ -141,7 +141,7 @@
           "value": true,
           "err": "This field is Required"
         },
-        "min_date": "today-20y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": "true",
@@ -264,28 +264,22 @@
         }
       },
       {
-        "key": "case_status",
+        "key": "subpop1_toast",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_status",
-        "type": "native_radio",
-        "value": "1",
-        "read_only": true,
-        "label": "Case Status",
-        "options": [
-          {
-            "key": "1",
-            "text": "Active"
-          },
-          {
-            "key": "2",
-            "text": "Inactive"
-          },
-          {
-            "key": "0",
-            "text": "Closed"
+        "openmrs_entity_id": "subpop1",
+        "value": "true",
+        "type": "toaster_notes",
+        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
-        ]
+        }
       }
     ]
   },
@@ -484,7 +478,6 @@
         "read_only": "true",
         "hint": "Caregiver's Date of Birth"
       },
-
       {
         "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
@@ -543,6 +536,55 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "subpop3_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "value": "true",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "step3:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "native_radio",
+        "value": "1",
+        "read_only": true,
+        "label": "Case Status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
+          },
+          {
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
         }
       }
     ]
