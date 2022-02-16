@@ -1162,6 +1162,20 @@
           }
         },
         {
+          "column_name": "emergency_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.emergency_name"
+          }
+        },
+        {
+          "column_name": "contact_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_number"
+          }
+        },
+        {
           "column_name": "caregiver_education",
           "type": "Client",
           "json_mapping": {
