@@ -1324,7 +1324,6 @@
           }
         }
       },
-
       {
         "key": "muac_other_b",
         "openmrs_entity_parent": "",
@@ -1342,26 +1341,20 @@
           }
         }
       },
-
       {
         "key": "nutrition_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_status",
-        "type": "native_radio",
-        "label": "With reference to the age of the child, what is the nutrition status of the child?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
+        "type": "edit_text",
+        "hint": "With reference to the age of the child, what is the nutrition status of the child?",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
