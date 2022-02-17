@@ -121,7 +121,7 @@
         "hint": "Vulnerability identified from Assessment",
         "v_required": {
           "value": true,
-          "err": "Field is Requiredy"
+          "err": "Field is Required"
         }
       },
       {
@@ -143,7 +143,6 @@
         "openmrs_entity_id": "services",
         "type": "edit_text",
         "hint": "Services to be provided by CW",
-        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "This field is Required"
@@ -156,7 +155,6 @@
         "openmrs_entity_id": "service_referred",
         "type": "edit_text",
         "hint": "Service to be referred",
-        "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Field is Required"
