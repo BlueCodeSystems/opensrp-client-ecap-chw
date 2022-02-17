@@ -70,11 +70,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "informed_consent",
         "type": "native_radio",
-        "label": "Talk with the person in privacy.  Mention that all information given is confidential.",
+        "label": "Talk with the person in privacy.  Mention that all information given is confidential. Consent Given:",
         "options": [
           {
             "key": "Yes",
-            "text": "Yes, Consent given proceed"
+            "text": "YES, Proceed"
+          },
+          {
+            "key": "no",
+            "text": "NO, Don`t  Proceed"
           }
         ],
         "v_required": {
