@@ -145,7 +145,7 @@ public class HouseholdDetails extends AppCompatActivity {
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
         //rvisit = findViewById(R.id.hh_visit);
-        hvisit20 = findViewById(R.id.hh_visit20);
+        //hvisit20 = findViewById(R.id.hh_visit20);
         child_form = findViewById(R.id.child_form);
         household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         mTabLayout =  findViewById(R.id.tabs);
@@ -339,7 +339,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.hh_visit20:
+          /*  case R.id.hh_visit20:
 
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
@@ -357,7 +357,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
 
                 break;
-
+*/
             case R.id.household_visitation_caregiver:
 
                 try {
@@ -734,7 +734,7 @@ public class HouseholdDetails extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
         //    rvisit.setVisibility(View.VISIBLE);
-            hvisit20.setVisibility(View.VISIBLE);
+          //  hvisit20.setVisibility(View.VISIBLE);
             rscreen.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
@@ -748,7 +748,7 @@ public class HouseholdDetails extends AppCompatActivity {
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
       //  rvisit.setVisibility(View.GONE);
-        hvisit20.setVisibility(View.GONE);
+      //  hvisit20.setVisibility(View.GONE);
         rscreen.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
