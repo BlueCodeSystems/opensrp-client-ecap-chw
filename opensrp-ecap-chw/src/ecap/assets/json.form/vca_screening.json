@@ -229,11 +229,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "landmark",
         "type": "edit_text",
-        "hint": "Nearest Landmark",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
+        "hint": "Nearest Landmark"
       },
       {
         "key": "homeaddress",
@@ -241,7 +237,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Home Address"
+        "hint": "Home Address",
+        "v_required": {
+          "value": true,
+          "err": "Home Address is Required."
+        }
       },
       {
         "key": "spacer",
