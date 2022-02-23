@@ -1164,7 +1164,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:gender": {
+            "type": "string",
+            "ex": "equalTo(., \"female\")"
+          }
+        }
       },
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
@@ -1694,10 +1700,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1719,10 +1724,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
