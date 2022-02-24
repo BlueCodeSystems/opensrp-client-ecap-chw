@@ -154,7 +154,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_appointment",
         "type": "native_radio",
-        "label": "Check the ART appointment card. Did Caregiver meet the last clinical/pharmacy appointment? ",
+        "label": "Did Caregiver meet the last clinical/pharmacy appointment? ",
         "options": [
           {
             "key": "yes",
@@ -410,7 +410,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "visit_hiv_test",
         "type": "native_radio",
-        "label": "If first home visit and HIV test was conducted more than 3 months ago, has an HIV risk assessment been done?",
+        "label": "Has an HIV risk assessment been done?",
         "options": [
           {
             "key": "yes",
