@@ -197,7 +197,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "Question",
         "type": "native_radio",
-        "label": "Have you had new HIV exposure since last test?",
+        "label": "Has the beneficiary had new HIV exposure since the last test?",
         "options": [
           {
             "key": "yes",
