@@ -224,14 +224,6 @@
         }
       },
       {
-        "key": "landmark",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "landmark",
-        "type": "edit_text",
-        "hint": "Nearest Landmark"
-      },
-      {
         "key": "homeaddress",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -242,6 +234,14 @@
           "value": true,
           "err": "Home Address is Required."
         }
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark"
       },
       {
         "key": "spacer",
