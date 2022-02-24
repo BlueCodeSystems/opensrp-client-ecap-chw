@@ -1558,7 +1558,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "In the Contact Address field below, you can put the Plot Number, Village or Street.",
+        "text": "In the Home Address field below, you can put the Plot Number, Village or Street.",
         "toaster_info_text": "",
         "toaster_type": "info"
       },
@@ -1569,7 +1569,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Contact Address ",
+        "hint": "Home Address ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
