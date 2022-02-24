@@ -826,7 +826,6 @@
         "openmrs_entity_id": "reason_for_hiv_risk",
         "type": "edit_text",
         "hint": "State reason for HIV Risk",
-        "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  test name"
@@ -1498,6 +1497,10 @@
         "hint": "Emergency Contact Name ",
         "edit_type": "name",
         "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        },
         "v_required": {
           "value": true,
           "err": "This field is required"
