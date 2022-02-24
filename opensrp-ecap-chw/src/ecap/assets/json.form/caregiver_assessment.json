@@ -1063,8 +1063,8 @@
         "edit_type": "number",
         "look_up": "true",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": ""
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
         },
         "relevance": {
           "step1:hiv_test": {
