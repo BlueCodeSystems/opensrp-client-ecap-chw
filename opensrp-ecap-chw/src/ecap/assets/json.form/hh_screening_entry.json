@@ -334,7 +334,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "text": "In the Home Address field below, you can put the Plot Number, Village or Street.",
         "toaster_info_text": "",
         "toaster_type": "info"
       },
@@ -344,7 +344,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "village",
         "type": "edit_text",
-        "hint": "Address",
+        "hint": "Home Address",
         "v_required": {
           "value": true,
           "err": "Required"
@@ -1350,54 +1350,6 @@
         "v_required": {
           "value": true,
           "err": "Required"
-        }
-      },
-      {
-        "key": "marriage_partner_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "marriage_partner_name",
-        "type": "edit_text",
-        "hint": "Name of Partner/Spouse",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Partner/Spouse Name"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "relationship_partner_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relationship_partner_name",
-        "type": "edit_text",
-        "hint": "Name of Relationship Partner",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Relationship Partner Name"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
         }
       },
       {
