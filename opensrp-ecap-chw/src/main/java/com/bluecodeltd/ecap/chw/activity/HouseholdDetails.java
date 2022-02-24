@@ -545,8 +545,9 @@ public class HouseholdDetails extends AppCompatActivity {
                         finish();
                         startActivity(getIntent());
                         break;
-
                 }
+                finish();
+                startActivity(getIntent());
 
             } catch (Exception e) {
                 Timber.e(e);
