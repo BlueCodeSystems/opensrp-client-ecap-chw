@@ -138,6 +138,23 @@
         "look_up": "true"
       },
       {
+        "key": "screening_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "screening_location",
+        "type": "edit_text",
+        "hint": "Screening Location",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Screening location  only take letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
         "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1683,12 +1700,84 @@
         ]
       },
       {
+        "key": "fsw_child_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "fsw_child_tested",
+        "type": "native_radio",
+        "label": "Has the child/adolescent been tested for HIV?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "fsw_child_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "fsw_child_positive",
+        "type": "native_radio",
+        "label": "Was the HIV test result positive?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:fsw_child_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "fsw_prevention_intervention",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fsw_prevention_intervention",
         "type": "native_radio",
         "label": "Is the Child/Adolescent receiving any age-appropriate HIV and sexual violence prevention intervention?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "fsw_child_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "fsw_child_school",
+        "type": "native_radio",
+        "label": "Is the Child/Adolescent in school?",
         "options": [
           {
             "key": "yes",

@@ -96,8 +96,22 @@
 
                         </LinearLayout>
 
-
                     </LinearLayout>
+
+                    <Button
+                        android:onClick="onClick"
+                        android:id="@+id/myservice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/transparent_white_button"
+                        android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                        android:paddingBottom="0dp"
+                        android:text="Service Report"
+                        android:textAllCaps="false"
+                        tools:text="Service Report" />
 
                 </LinearLayout>
 
