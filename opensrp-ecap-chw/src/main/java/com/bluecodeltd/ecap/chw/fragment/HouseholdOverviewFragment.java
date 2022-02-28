@@ -84,8 +84,15 @@ public class HouseholdOverviewFragment extends Fragment {
         txtMales.setText(males);
         txtFemales.setText(females);
         txtMales.setText(males);
-        txtName.setText(emergency_name);
-        txtNumber.setText(contact_number);
+        if(emergency_name != null)
+        {
+            txtName.setText(emergency_name);
+        }
+        if(contact_number != null)
+        {
+            txtNumber.setText(contact_number);
+        }
+
 
         if(is_screened != null && is_screened.equals("true")){
 
