@@ -122,6 +122,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
 
     private VcaScreeningModel indexVCA;
+    private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -166,7 +167,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         childId = getIntent().getExtras().getString("Child");
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
-
+        
         String gender = indexVCA.getGender();
         uniqueId = indexVCA.getUnique_id();
 
@@ -995,11 +996,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", indexVCA.getIs_on_hiv_treatment());
 
 
                 } else {
 
                     formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
+                    vcaAssessmentModel.setVca_art(indexVCA.getIs_on_hiv_treatment());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
