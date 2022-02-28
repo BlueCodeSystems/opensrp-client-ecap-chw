@@ -637,7 +637,29 @@
           }
         }
       },
+      {
 
+        "key": "date_of_last_viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "date_picker",
+        "hint": "Date of last viral load test",
+        "label_info_title": "Date of last viral load test",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "relevance": {
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
@@ -693,30 +715,26 @@
           }
         }
       },
-
       {
-
-        "key": "date_of_last_viral_load",
+        "key": "high_viral_toaster",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_last_viral_load",
-        "type": "date_picker",
-        "hint": "Date of last viral load test",
-        "label_info_title": "Date of last viral load test",
-        "expanded": false,
-        "min_date": "today-100y",
-        "max_date": "today",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and provide appropriate care and support support services",
+        "text_color": "#000000",
+        "toaster_info_text": "Viral load is above 1000 copies,Refer and provide appropriate care and support support services",
+        "toaster_info_title": "Viral load is above 1000 copies ",
+        "toaster_type": "problem",
         "relevance": {
-          "step1:active_on_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
           }
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
         }
       },
+
       {
         "key": "biological_children",
         "openmrs_entity_parent": "",

@@ -1174,6 +1174,41 @@
           "json_mapping": {
             "field": "attributes.marital_status"
           }
+        },
+        {
+          "column_name": "emergency_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.emergency_name"
+          }
+        },
+        {
+          "column_name": "e_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.e_relationship"
+          }
+        },
+        {
+          "column_name": "relationship_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship_other"
+          }
+        },
+        {
+          "column_name": "homeaddress",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.homeaddress"
+          }
+        },
+        {
+          "column_name": "contact_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_number"
+          }
         }
       ]
     },
