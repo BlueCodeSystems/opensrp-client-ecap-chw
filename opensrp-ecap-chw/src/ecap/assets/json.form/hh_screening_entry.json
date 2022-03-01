@@ -950,11 +950,7 @@
         "type": "label",
         "label_text_style": "bold",
         "text": "    List of Referred Services:",
-        "text_color": "#d20000",
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
-        }
+        "text_color": "#004c99"
       },
       {
         "key": "active_on_treatment_no_list",
@@ -1349,6 +1345,50 @@
         "v_required": {
           "value": true,
           "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "relationship_married",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relationship_married",
+        "type": "edit_text",
+        "hint": "Spouse Full Name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please specify spouse full name.",
+          "text_size": 8
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "in_relationship",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "in_relationship",
+        "type": "edit_text",
+        "hint": "Relationship Partner Full Name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": false,
+          "err": "Please specify relationship partner full name.",
+          "text_size": 8
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
         }
       },
       {

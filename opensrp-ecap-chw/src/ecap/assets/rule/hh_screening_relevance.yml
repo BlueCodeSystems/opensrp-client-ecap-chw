@@ -132,6 +132,20 @@ condition: "step1_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes
 actions:
   - "isRelevant = true"
 ---
+name: step3_relationship_married
+description: relationship_married relevance
+priority: 1
+condition: "step3_marital_status.contains('married')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_in_relationship
+description: in_relationship relevance
+priority: 1
+condition: "step3_marital_status.contains('in_relationship')"
+actions:
+  - "isRelevant = true"
+---
 name: step3_relationship_other
 description: relationship_other relevance
 priority: 1

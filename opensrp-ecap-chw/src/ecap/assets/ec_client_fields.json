@@ -994,6 +994,20 @@
           }
         },
         {
+          "column_name": "at_risk_reasons",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.at_risk_reasons"
+          }
+        },
+        {
+          "column_name": "reason_for_hiv_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason_for_hiv_risk"
+          }
+        },
+        {
           "column_name": "secure",
           "type": "Client",
           "json_mapping": {
@@ -1057,10 +1071,24 @@
           }
         },
         {
+          "column_name": "relationship_married",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship_married"
+          }
+        },
+        {
           "column_name": "relationship_partner_name",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.relationship_partner_name"
+          }
+        },
+        {
+          "column_name": "in_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.in_relationship"
           }
         },
         {
