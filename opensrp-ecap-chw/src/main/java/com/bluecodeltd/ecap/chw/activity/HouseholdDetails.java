@@ -544,9 +544,13 @@ public class HouseholdDetails extends AppCompatActivity {
                         finish();
                         startActivity(getIntent());
                         break;
+                    case "Caregiver Case Plan":
+                      String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                        AddVulnarabilitiesToCasePlan(dateId);
+                        break;
                 }
-                finish();
-                startActivity(getIntent());
+             //   finish();
+           //     startActivity(getIntent());
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -554,6 +558,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
         }
 
+    }
+
+    private void AddVulnarabilitiesToCasePlan(String dateId) {
+        Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
+        i.putExtra("unique_id",  house.getUnique_id());
+        i.putExtra("householdId",  house.getHousehold_id());
+        i.putExtra("dateId",  dateId);
+        startActivity(i);
     }
 
     @NonNull
