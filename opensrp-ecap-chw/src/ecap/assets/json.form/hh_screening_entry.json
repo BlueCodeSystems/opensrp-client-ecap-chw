@@ -883,9 +883,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "secure",
         "type": "native_radio",
-        "toaster_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
+        "label_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
-        "toaster_type": "",
+        "label_text_style": "bold",
         "label": "Is your household food, socially and economically secure?",
         "options": [
           {
