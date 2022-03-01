@@ -96,7 +96,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Household ID is Required"
         }
       },
       {
@@ -110,7 +110,7 @@
         "read_only": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Unique ID is Required"
         }
       },
       {
@@ -127,7 +127,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA First Name is Required"
         }
       },
       {
@@ -145,7 +145,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Last Name is Required"
         }
       },
       {
@@ -164,7 +164,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Date of Birth is Required"
         }
       },
       {
@@ -186,7 +186,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Gender is Required"
         }
       },
       {
@@ -228,7 +228,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "You are required to select at least ONE option here."
         }
       },
       {
@@ -244,7 +244,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Health facility Required"
         }
       },
       {
@@ -260,7 +260,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Province is Required"
         }
       },
       {
@@ -276,7 +276,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "District is Required"
         }
       },
       {
@@ -292,7 +292,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Ward is Required"
         }
       },
       {
@@ -308,7 +308,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Partners is Required"
         }
       },
       {
@@ -347,7 +347,7 @@
         "hint": "Home Address",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Village is Required"
         }
       },
       {
@@ -363,7 +363,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Screening Date is Required"
         }
       },
       {
@@ -380,7 +380,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Screening Location is Required"
         }
       },
       {
@@ -412,7 +412,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver Full Name is Required"
         }
       },
       {
@@ -434,7 +434,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver Gender is Required"
         }
       },
       {
@@ -454,7 +454,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver Date of Birth is Required"
         }
       },
       {
@@ -501,7 +501,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field."
         }
       },
       {
@@ -523,7 +523,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field."
         }
       },
       {
@@ -555,7 +555,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field."
         }
       },
       {
@@ -616,7 +616,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver ART number is Required"
         }
       },
       {
@@ -627,7 +627,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field"
         },
         "relevance": {
           "rules-engine": {
@@ -637,29 +637,7 @@
           }
         }
       },
-      {
 
-        "key": "date_of_last_viral_load",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_last_viral_load",
-        "type": "date_picker",
-        "hint": "Date of last viral load test",
-        "label_info_title": "Date of last viral load test",
-        "expanded": false,
-        "min_date": "today-100y",
-        "max_date": "today",
-        "relevance": {
-          "step1:active_on_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
@@ -673,7 +651,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step1:active_on_treatment": {
@@ -715,26 +693,30 @@
           }
         }
       },
+
       {
-        "key": "high_viral_toaster",
+
+        "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and provide appropriate care and support support services",
-        "text_color": "#000000",
-        "toaster_info_text": "Viral load is above 1000 copies,Refer and provide appropriate care and support support services",
-        "toaster_info_title": "Viral load is above 1000 copies ",
-        "toaster_type": "problem",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "date_picker",
+        "hint": "Date of last viral load test",
+        "label_info_title": "Date of last viral load test",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step1:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
         }
       },
-
       {
         "key": "biological_children",
         "openmrs_entity_parent": "",
@@ -754,7 +736,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "rules-engine": {
@@ -783,7 +765,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "rules-engine": {
@@ -828,7 +810,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step1:caregiver_hiv_status": {
@@ -850,7 +832,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step1:at_risk_reasons": {
@@ -867,7 +849,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "rules-engine": {
@@ -899,7 +881,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -937,7 +919,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -960,7 +942,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -971,7 +953,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1047,7 +1029,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1069,7 +1051,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1091,7 +1073,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1113,7 +1095,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1135,7 +1117,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1157,7 +1139,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1172,7 +1154,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1191,7 +1173,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       }
     ]
@@ -1225,7 +1207,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1259,7 +1241,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1282,7 +1264,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1333,7 +1315,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step3:caregiver_education": {
@@ -1366,7 +1348,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1392,7 +1374,7 @@
         "edit_type": "number",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1402,7 +1384,8 @@
         "text": "Malaria Prevention",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": true,
+          "err": "This is a Required field."
         }
       },
       {
@@ -1418,7 +1401,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of beds in household"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1434,7 +1417,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of ITNs  in use"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1473,7 +1456,8 @@
         },
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Emergency Contact Name is required.",
+          "text_size": 8
         }
       },
       {
@@ -1501,7 +1485,8 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Relationship to Caregiver is required.",
+          "text_size": 8
         }
       },
       {
@@ -1515,7 +1500,8 @@
         "look_up": "true",
         "v_required": {
           "value": false,
-          "err": "This field is required"
+          "err": "Please specify relationship.",
+          "text_size": 8
         },
         "relevance": {
           "rules-engine": {
@@ -1547,7 +1533,8 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Emergency Contact Home Address is required.",
+          "text_size": 8
         }
       },
 
