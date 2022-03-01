@@ -6,7 +6,6 @@ import static org.smartregister.util.JsonFormUtils.REPEATING_GROUP;
 import static org.smartregister.util.JsonFormUtils.VALUE;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -14,19 +13,14 @@ import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.domain.UniqueId;
 import org.smartregister.domain.tag.FormTag;
-import org.smartregister.family.util.Utils;
 import org.smartregister.opd.OpdLibrary;
 import org.smartregister.opd.pojo.RegisterParams;
-import org.smartregister.opd.utils.OpdJsonFormUtils;
-import org.smartregister.opd.utils.OpdUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.util.JsonFormUtils;
@@ -35,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import timber.log.Timber;
