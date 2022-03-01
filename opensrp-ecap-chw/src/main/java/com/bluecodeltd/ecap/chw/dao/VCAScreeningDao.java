@@ -134,7 +134,10 @@ public class VCAScreeningDao extends AbstractDao {
             record.setCaregiver_hiv_status(getCursorValue(c, "caregiver_hiv_status"));
             record.setRelation(getCursorValue(c, "relation"));
             record.setCaregiver_phone(getCursorValue(c, "caregiver_phone"));
-
+            record.setDe_registration_date(getCursorValue(c, "de_registration_date"));
+            record.setReason(getCursorValue(c, "reason"));
+            record.setTransfer_reason(getCursorValue(c, "transfer_reason"));
+            record.setOther_reason(getCursorValue(c, "other_reason"));
             return record;
         };
     }

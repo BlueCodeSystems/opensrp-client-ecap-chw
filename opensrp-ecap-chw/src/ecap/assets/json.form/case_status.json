@@ -77,6 +77,28 @@
           ]
         },
         {
+          "key": "de_registration_date",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "de_registration_date",
+          "type": "date_picker",
+          "hint": "Date of De-registration",
+          "look_up": "true",
+          "expanded": false,
+          "min_date": "01-01-1900",
+          "max_date": "today",
+          "v_required": {
+            "value": true,
+            "err": "Required"
+          },
+          "relevance": {
+            "step1:case_status": {
+              "type": "string",
+              "ex": "equalTo(., \"0\")"
+            }
+          }
+        },
+        {
           "key": "reason",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
@@ -85,24 +107,29 @@
           "label": "Reason for Closing Case",
           "options": [
             {
-              "key": "graduated",
-              "text": "Graduated"
+              "key": "Transferred to other OVC program",
+              "text": "Transferred to other OVC program"
             },
             {
-              "key": "died",
-              "text": "Died"
+              "key": "Exited without graduation",
+              "text": "Exited without graduation"
+            },
+
+            {
+              "key": "Loss to follow up",
+              "text": "Loss to follow up"
             },
             {
-              "key": "wrong_entry",
-              "text": "Wrong Entry"
+              "key": "Aging without transition plan",
+              "text": "Aging without transition plan"
             },
             {
-              "key": "relocated",
-              "text": "Relocated"
+              "key": "Moved (Relocated)",
+              "text": "Moved (Relocated)"
             },
             {
-              "key": "lost",
-              "text": "Lost to Follow Up"
+              "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
+              "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
             },
             {
               "key": "other",
@@ -118,6 +145,21 @@
           "v_required": {
             "value": true,
             "err": "Please select Reason for Closing Case"
+          }
+        },
+        {
+          "key": "transfer_reason",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "transfer_reason",
+          "type": "edit_text",
+          "hint": "Specify organization, program, and name of receiving officer",
+          "edit_type": "",
+          "relevance": {
+            "step1:reason": {
+              "type": "string",
+              "ex": "equalTo(., \"Transferred to other OVC program\")"
+            }
           }
         },
         {

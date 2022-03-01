@@ -2045,6 +2045,34 @@
           "json_mapping": {
             "field": "attributes.caregiver_phone"
           }
+        },
+        {
+          "column_name": "de_registration_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.de_registration_date"
+          }
+        },
+        {
+          "column_name": "reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason"
+          }
+        },
+        {
+          "column_name": "transfer_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.transfer_reason"
+          }
+        },
+        {
+          "column_name": "other_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_reason"
+          }
         }
       ]
     },
