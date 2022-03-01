@@ -527,7 +527,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             if(!jsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
@@ -546,16 +546,29 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                if(encounterType.equals("VCA Case Plan"))
+                {
+                    String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                    openVcaCasplanToAddVulnarabilities(dateId);
+                }
+                else {
 
-                finish();
-                startActivity(getIntent());
-
+                    finish();
+                    startActivity(getIntent());
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
 
         }
 
+    }
+
+    private void openVcaCasplanToAddVulnarabilities(String dateId) {
+        Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
+        i.putExtra("childId", indexVCA.getUnique_id());
+        i.putExtra("dateId",  dateId);
+        startActivity(i);
     }
 
     @NonNull
