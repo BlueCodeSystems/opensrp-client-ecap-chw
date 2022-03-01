@@ -534,7 +534,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_eligibility",
         "type": "native_radio",
-        "label": "Was client eligible for TB Preventive Therapy (TPT)?",
+        "label": "Was client initiated for TB Preventive Therapy (TPT)?",
         "options": [
           {
             "key": "yes",
