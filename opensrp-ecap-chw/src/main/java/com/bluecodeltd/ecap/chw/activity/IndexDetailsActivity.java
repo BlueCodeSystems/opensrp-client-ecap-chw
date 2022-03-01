@@ -968,24 +968,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "case_status":
             case "case_plan":
+            case "vca_screening":
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
 
-                break;
-            case "vca_screening":
-            case "service_report":
-
-                try {
-                    FormUtils fUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = fUtils.getFormJson("service_report");
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 break;
 
 
