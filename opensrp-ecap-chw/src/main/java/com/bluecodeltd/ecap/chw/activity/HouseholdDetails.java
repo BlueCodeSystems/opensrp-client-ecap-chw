@@ -245,7 +245,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         switch (id) {
-    /*        case R.id.myservice:
+            case R.id.myservice:
 
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
@@ -253,15 +253,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
 
-                    //indexRegisterForm.getJSONObject("step1").put("title", client.getColumnmaps().get("first_name") + " " + client.getColumnmaps().get("last_name") + " : " + txtAge.getText().toString() + "Yrs - " + txtGender.getText().toString());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
 
-                break;*/
             case R.id.fabx:
 
                 animateFAB();
