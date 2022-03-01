@@ -1,19 +1,10 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.ibm.fhir.core.util.URLSupport.getQuery;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-
-import es.dmoral.toasty.Toasty;
-import timber.log.Timber;
+import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
+import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -31,7 +22,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -50,17 +46,13 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -71,7 +63,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -97,7 +88,6 @@ import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
-import org.smartregister.view.dialog.OpenFormOption;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -107,18 +97,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import es.dmoral.toasty.Toasty;
+import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened ;
+    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
 
     private VcaScreeningModel indexVCA;
@@ -173,6 +161,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
         is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+        is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
 
 
         fabHiv = findViewById(R.id.hiv_risk);
@@ -928,12 +917,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 grad.setVisibility(View.VISIBLE);
                 grad_sub.setVisibility(View.VISIBLE);
 
-                if(Integer.parseInt(vcaAge) < 15){
-                    hiv_assessment.setVisibility(View.VISIBLE);
-                }
 
-                if(Integer.parseInt(vcaAge) >= 15){
-                    hiv_assessment2.setVisibility(View.VISIBLE);
+                if (is_hiv_positive != null && is_hiv_positive.equals("no")) {
+                    if(Integer.parseInt(vcaAge) < 15){
+                        hiv_assessment.setVisibility(View.VISIBLE);
+                    }
+
+                    if(Integer.parseInt(vcaAge) >= 15){
+                        hiv_assessment2.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }
