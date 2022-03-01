@@ -21,6 +21,18 @@ public class VCAScreeningDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static String checkStatus (String UID) {
+
+        String sql = "SELECT is_hiv_positive FROM ec_client_index WHERE unique_id = '" + UID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "is_hiv_positive");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return values.get(0);
+
+    }
+
     public static DataMap<VcaScreeningModel> getVcaScreeningModelMap() {
         return c -> {
 
