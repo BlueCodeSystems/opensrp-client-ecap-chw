@@ -110,6 +110,10 @@ public class VcaScreeningModel {
     private String caregiver_hiv_status;
     private String relation;
     private String caregiver_phone;
+    private String de_registration_date;
+    private String reason;
+    private String transfer_reason;
+    private String other_reason;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -191,6 +195,22 @@ public class VcaScreeningModel {
         this.adolescent_last_name = adolescent_last_name;
     }
 
+    public String getAdolescent_birthdate() {
+        return adolescent_birthdate;
+    }
+
+    public void setAdolescent_birthdate(String adolescent_birthdate) {
+        this.adolescent_birthdate = adolescent_birthdate;
+    }
+
+    public String getHomeaddress() {
+        return homeaddress;
+    }
+
+    public void setHomeaddress(String homeaddress) {
+        this.homeaddress = homeaddress;
+    }
+
     public String getLandmark() {
         return landmark;
     }
@@ -245,6 +265,14 @@ public class VcaScreeningModel {
 
     public void setArt_number(String art_number) {
         this.art_number = art_number;
+    }
+
+    public String getViral_load_results_on_file() {
+        return viral_load_results_on_file;
+    }
+
+    public void setViral_load_results_on_file(String viral_load_results_on_file) {
+        this.viral_load_results_on_file = viral_load_results_on_file;
     }
 
     public String getIs_tb_screening_results_on_file() {
@@ -943,28 +971,35 @@ public class VcaScreeningModel {
         this.caregiver_phone = caregiver_phone;
     }
 
-    public String getAdolescent_birthdate() {
-        return adolescent_birthdate;
+    public String getDe_registration_date() {
+        return de_registration_date;
     }
 
-    public void setAdolescent_birthdate(String adolescent_birthdate) {
-        this.adolescent_birthdate = adolescent_birthdate;
+    public void setDe_registration_date(String de_registration_date) {
+        this.de_registration_date = de_registration_date;
     }
 
-
-    public String getHomeaddress() {
-        return homeaddress;
+    public String getReason() {
+        return reason;
     }
 
-    public void setHomeaddress(String homeaddress) {
-        this.homeaddress = homeaddress;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
-    public String getViral_load_results_on_file() {
-        return viral_load_results_on_file;
+    public String getTransfer_reason() {
+        return transfer_reason;
     }
 
-    public void setViral_load_results_on_file(String viral_load_results_on_file) {
-        this.viral_load_results_on_file = viral_load_results_on_file;
+    public void setTransfer_reason(String transfer_reason) {
+        this.transfer_reason = transfer_reason;
+    }
+
+    public String getOther_reason() {
+        return other_reason;
+    }
+
+    public void setOther_reason(String other_reason) {
+        this.other_reason = other_reason;
     }
 }
