@@ -3341,10 +3341,31 @@
           }
         },
         {
-          "column_name": "date_of_service",
+          "column_name": "date_of_service1",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service"
+            "field": "attributes.date_of_service1"
+          }
+        },
+        {
+          "column_name": "date_of_service2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service2"
+          }
+        },
+        {
+          "column_name": "date_of_service3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service3"
+          }
+        },
+        {
+          "column_name": "date_of_service4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service4"
           }
         },
         {

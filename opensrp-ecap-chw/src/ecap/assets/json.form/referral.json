@@ -106,18 +106,17 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "covid_19",
         "type": "check_box",
+        "read_only": "false",
+        "label_text_style": "",
         "label": "Covid 19",
         "options": [
           {
-            "key":"referred",
-            "text": "Referred",
-            "value": false
-
+            "key": "Provided",
+            "text": "Provided"
           },
           {
-            "key": "provided",
-            "text": "Provided",
-            "value": false
+            "key": "Referred",
+            "text": "Referred"
           }
         ]
       },
@@ -127,18 +126,17 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cd4",
         "type": "check_box",
+        "read_only": "false",
+        "label_text_style": "",
         "label": "CD4",
         "options": [
           {
-            "key":"referred",
-            "text": "Referred",
-            "value": false
-
+            "key": "Provided",
+            "text": "Provided"
           },
           {
-            "key": "provided",
-            "text": "Provided",
-            "value": false
+            "key": "Referred",
+            "text": "Referred"
           }
         ]
       },
@@ -152,13 +150,13 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
+
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
+
           }
         ]
       },
@@ -172,13 +170,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -192,13 +188,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -212,13 +206,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -232,13 +224,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -252,13 +242,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -272,13 +260,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -292,13 +278,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -312,13 +296,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -332,13 +314,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -352,13 +332,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -372,13 +350,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -392,13 +368,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -412,13 +386,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -432,13 +404,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -452,13 +422,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -472,13 +440,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -492,13 +458,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -512,13 +476,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -532,13 +494,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -552,13 +512,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -572,13 +530,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -592,13 +548,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -611,12 +565,32 @@
         "hint": "If Other health service or education, Specify: "
       },
       {
+        "key": "date_of_service1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service1",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+      },
+      {
         "key": "safety_services",
         "type": "label",
         "label_text_style": "bold",
         "text": "Safety Services",
         "text_color": "#000000",
         "v_required": {
+<<<<<<< HEAD
           "value": true,
           "err": "Required"
         },
@@ -633,6 +607,281 @@
             "value": true
           }
         ]
+=======
+          "value": false
+        }
+      },
+      {
+        "key": "care_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "care_facility",
+        "label": "Emergency Shelter/Care Facility",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "post_violence_trauma",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "post_violence_trauma",
+        "label": "Post Violence Trauma Support Counselling",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "legal_assistance",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "legal_assistance",
+        "label": "Legal Assistance",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "other_safety_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_safety_services",
+        "type": "edit_text",
+        "hint": "If Other Protection Legal Service, Specify:"
+      },
+      {
+        "key": "date_of_service2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service2",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+      },
+      {
+        "key": "schooled_services",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Schooled Services",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "vca_uniforms_books",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_uniforms_books",
+        "label": "Support VCAs with Uniforms and/or Book Materials",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "re_enrollment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "re_enrollment",
+        "label": "Re-enrollment (for dropouts or teen mothers)",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "bursaries",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "bursaries",
+        "label": "Tuition/Bursaries/Fee-Waiver",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "other_schooled_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_schooled_services",
+        "type": "edit_text",
+        "hint": "If Other Education Support, Specify:"
+      },
+      {
+        "key": "date_of_service3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service3",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+      },
+      {
+        "key": "stability_services",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Stability Services",
+        "text_color": "#000000",
+        "v_required": {
+          "value": false
+        }
+      },
+      {
+        "key": "cash_transfer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cash_transfer",
+        "label": "Cash Transfer/Social Grant",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "cash_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cash_support",
+        "label": "Short Term Emergency Cash Support",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "food_security",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "food_security",
+        "label": "Food Security Program/Intervention",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "other_stability_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_stability_services",
+        "type": "edit_text",
+        "hint": "If Other economic strengthening, Specify:"
+      },
+      {
+        "key": "follow_up",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "follow_up",
+        "type": "edit_text",
+        "hint": "Follow-up Required, Specify:"
+      },
+      {
+        "key": "date_of_service4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service4",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+>>>>>>> 45910881b090353148c044599287cf3a7b0b8fde
       }
     ]
   }
