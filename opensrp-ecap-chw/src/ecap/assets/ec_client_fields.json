@@ -3285,6 +3285,27 @@
           }
         },
         {
+          "column_name": "education_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.education_other"
+          }
+        },
+        {
+          "column_name": "legal_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.legal_other"
+          }
+        },
+        {
+          "column_name": "economic_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.economic_other"
+          }
+        },
+        {
           "column_name": "cash_transfer",
           "type": "Client",
           "json_mapping": {
