@@ -590,24 +590,6 @@
         "text": "Safety Services",
         "text_color": "#000000",
         "v_required": {
-<<<<<<< HEAD
-          "value": true,
-          "err": "Required"
-        },
-        "options": [
-          {
-            "key":"referred",
-            "text": "Referred",
-            "value": true
-
-          },
-          {
-            "key": "provided",
-            "text": "Provided",
-            "value": true
-          }
-        ]
-=======
           "value": false
         }
       },
@@ -881,7 +863,6 @@
           "value": false,
           "err": "Date a service is provided is required"
         }
->>>>>>> 45910881b090353148c044599287cf3a7b0b8fde
       }
     ]
   }
