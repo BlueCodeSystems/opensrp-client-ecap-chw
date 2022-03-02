@@ -1,8 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
-import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -55,7 +53,7 @@ public class ReferralDao extends AbstractDao {
             record.setPlha(getCursorValue(c, "plha"));
             record.setViral_load(getCursorValue(c, "viral_load"));
             record.setOther_health_services(getCursorValue(c, "other_health_services"));
-            record.setSubstance_abuse(getCursorValue(c, "care_facility"));
+            record.setCare_facility(getCursorValue(c, "care_facility"));
             record.setPost_violence_trauma(getCursorValue(c, "post_violence_trauma"));
             record.setLegal_assistance(getCursorValue(c, "legal_assistance"));
             record.setOther_safety_services(getCursorValue(c, "other_safety_services"));
@@ -71,7 +69,10 @@ public class ReferralDao extends AbstractDao {
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setJob_title(getCursorValue(c, "job_title"));
-            record.setDate_of_service(getCursorValue(c, "date_of_service"));
+            record.setDate_of_service1(getCursorValue(c, "date_of_service1"));
+            record.setDate_of_service2(getCursorValue(c, "date_of_service2"));
+            record.setDate_of_service3(getCursorValue(c, "date_of_service3"));
+            record.setDate_of_service4(getCursorValue(c, "date_of_service4"));
             record.setSignature(getCursorValue(c, "signature"));
             record.setCovid_19(getCursorValue(c, "covid_19"));
 
