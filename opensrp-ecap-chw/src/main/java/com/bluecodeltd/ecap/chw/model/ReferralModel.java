@@ -46,7 +46,10 @@ public class ReferralModel {
     private String first_name;
     private String last_name;
     private String job_title;
-    private String date_of_service;
+    private String date_of_service1;
+    private String date_of_service2;
+    private String date_of_service3;
+    private String date_of_service4;
     private String signature;
     private String covid_19;
 
@@ -402,12 +405,36 @@ public class ReferralModel {
         this.job_title = job_title;
     }
 
-    public String getDate_of_service() {
-        return date_of_service;
+    public String getDate_of_service1() {
+        return date_of_service1;
     }
 
-    public void setDate_of_service(String date_of_service) {
-        this.date_of_service = date_of_service;
+    public void setDate_of_service1(String date_of_service1) {
+        this.date_of_service1 = date_of_service1;
+    }
+
+    public String getDate_of_service2() {
+        return date_of_service2;
+    }
+
+    public void setDate_of_service2(String date_of_service2) {
+        this.date_of_service2 = date_of_service2;
+    }
+
+    public String getDate_of_service3() {
+        return date_of_service3;
+    }
+
+    public void setDate_of_service3(String date_of_service3) {
+        this.date_of_service3 = date_of_service3;
+    }
+
+    public String getDate_of_service4() {
+        return date_of_service4;
+    }
+
+    public void setDate_of_service4(String date_of_service4) {
+        this.date_of_service4 = date_of_service4;
     }
 
     public String getSignature() {
