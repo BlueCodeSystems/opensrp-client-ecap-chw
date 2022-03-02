@@ -994,6 +994,20 @@
           }
         },
         {
+          "column_name": "at_risk_reasons",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.at_risk_reasons"
+          }
+        },
+        {
+          "column_name": "reason_for_hiv_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason_for_hiv_risk"
+          }
+        },
+        {
           "column_name": "secure",
           "type": "Client",
           "json_mapping": {
@@ -1057,10 +1071,24 @@
           }
         },
         {
+          "column_name": "relationship_married",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship_married"
+          }
+        },
+        {
           "column_name": "relationship_partner_name",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.relationship_partner_name"
+          }
+        },
+        {
+          "column_name": "in_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.in_relationship"
           }
         },
         {
@@ -3285,27 +3313,6 @@
           }
         },
         {
-          "column_name": "education_other",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.education_other"
-          }
-        },
-        {
-          "column_name": "legal_other",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.legal_other"
-          }
-        },
-        {
-          "column_name": "economic_other",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.economic_other"
-          }
-        },
-        {
           "column_name": "cash_transfer",
           "type": "Client",
           "json_mapping": {
@@ -3331,6 +3338,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.other_stability_services"
+          }
+        },
+        {
+          "column_name": "education_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.education_other"
+          }
+        },
+        {
+          "column_name": "legal_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.legal_other"
+          }
+        },
+        {
+          "column_name": "economic_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.economic_other"
           }
         },
         {
@@ -3362,10 +3390,31 @@
           }
         },
         {
-          "column_name": "date_of_service",
+          "column_name": "date_of_service1",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service"
+            "field": "attributes.date_of_service1"
+          }
+        },
+        {
+          "column_name": "date_of_service2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service2"
+          }
+        },
+        {
+          "column_name": "date_of_service3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service3"
+          }
+        },
+        {
+          "column_name": "date_of_service4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service4"
           }
         },
         {

@@ -106,18 +106,17 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "covid_19",
         "type": "check_box",
+        "read_only": "false",
+        "label_text_style": "",
         "label": "Covid 19",
         "options": [
           {
-            "key":"referred",
-            "text": "Referred",
-            "value": false
-
+            "key": "Provided",
+            "text": "Provided"
           },
           {
-            "key": "provided",
-            "text": "Provided",
-            "value": false
+            "key": "Referred",
+            "text": "Referred"
           }
         ]
       },
@@ -127,18 +126,17 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cd4",
         "type": "check_box",
+        "read_only": "false",
+        "label_text_style": "",
         "label": "CD4",
         "options": [
           {
-            "key":"referred",
-            "text": "Referred",
-            "value": false
-
+            "key": "Provided",
+            "text": "Provided"
           },
           {
-            "key": "provided",
-            "text": "Provided",
-            "value": false
+            "key": "Referred",
+            "text": "Referred"
           }
         ]
       },
@@ -152,13 +150,13 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
+
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
+
           }
         ]
       },
@@ -172,13 +170,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -192,13 +188,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -212,13 +206,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -232,13 +224,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -252,13 +242,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -272,13 +260,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -292,13 +278,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -312,13 +296,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -332,13 +314,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -352,13 +332,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -372,13 +350,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -392,13 +368,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -412,13 +386,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -432,13 +404,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -452,13 +422,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -472,13 +440,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -492,13 +458,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -512,13 +476,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -532,13 +494,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -552,13 +512,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -572,13 +530,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -592,13 +548,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -609,6 +563,25 @@
         "openmrs_entity_id": "other_health_services",
         "type": "edit_text",
         "hint": "If Other health service or education, Specify: "
+      },
+      {
+        "key": "date_of_service1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service1",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
       },
       {
         "key": "safety_services",
@@ -630,13 +603,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -650,13 +621,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -670,13 +639,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -709,6 +676,25 @@
         ]
       },
       {
+        "key": "date_of_service2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service2",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+      },
+      {
         "key": "schooled_services",
         "type": "label",
         "label_text_style": "bold",
@@ -728,13 +714,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -748,13 +732,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -768,13 +750,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -806,6 +786,26 @@
           }
         ]
       },
+
+      {
+        "key": "date_of_service3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_service3",
+        "type": "date_picker",
+        "hint": " Date a Service is Provided",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date a service is provided is required"
+        }
+      },
       {
         "key": "stability_services",
         "type": "label",
@@ -826,13 +826,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -846,13 +844,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -866,13 +862,11 @@
         "options": [
           {
             "key":"referred",
-            "text": "Referred",
-            "value": false
+            "text": "Referred"
           },
           {
             "key": "provided",
-            "text": "Provided",
-            "value": false
+            "text": "Provided"
           }
         ]
       },
@@ -913,10 +907,10 @@
         "hint": "Follow-up Required, Specify:"
       },
       {
-        "key": "date_of_service",
+        "key": "date_of_service4",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_service",
+        "openmrs_entity_id": "date_of_service4",
         "type": "date_picker",
         "hint": " Date a Service is Provided",
 
