@@ -39,12 +39,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sub Populations"
                 android:paddingLeft="@dimen/contact_drawable_padding"
@@ -59,13 +57,12 @@
                android:paddingTop="@dimen/contact_small_padding"
                android:paddingBottom="@dimen/contact_small_padding"
                android:gravity="start"
-               android:layout_weight="1"
-               android:layout_width="0dp"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="horizontal">
 
                <TextView
-                   android:visibility="gone"
+                   android:visibility="visible"
                    android:id="@+id/subpop1"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -78,7 +75,7 @@
                    />
 
                <TextView
-                   android:visibility="gone"
+                   android:visibility="visible"
                    android:id="@+id/subpop2"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -91,7 +88,7 @@
                    />
 
                <TextView
-                   android:visibility="gone"
+                   android:visibility="visible"
                    android:id="@+id/subpop3"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -104,7 +101,7 @@
                    />
 
                <TextView
-                   android:visibility="gone"
+                   android:visibility="visible"
                    android:id="@+id/subpop4"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
