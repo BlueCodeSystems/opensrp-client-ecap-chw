@@ -1097,12 +1097,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.call:
-                CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-                Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
+                String caregiverPhoneNumber = child.getCaregiver_phone();
+                if(!caregiverPhoneNumber.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
 
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:" + client.getColumnmaps().get("caregiver_phone")));
-                startActivity(callIntent);
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                    startActivity(callIntent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"No number for caregiver found",Toast.LENGTH_LONG).show();
+                }
+
                 return true;
             case R.id.case_status:
 
