@@ -1174,6 +1174,41 @@
           "json_mapping": {
             "field": "attributes.marital_status"
           }
+        },
+        {
+          "column_name": "emergency_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.emergency_name"
+          }
+        },
+        {
+          "column_name": "e_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.e_relationship"
+          }
+        },
+        {
+          "column_name": "relationship_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship_other"
+          }
+        },
+        {
+          "column_name": "homeaddress",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.homeaddress"
+          }
+        },
+        {
+          "column_name": "contact_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_number"
+          }
         }
       ]
     },
@@ -2009,6 +2044,34 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_phone"
+          }
+        },
+        {
+          "column_name": "de_registration_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.de_registration_date"
+          }
+        },
+        {
+          "column_name": "reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason"
+          }
+        },
+        {
+          "column_name": "transfer_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.transfer_reason"
+          }
+        },
+        {
+          "column_name": "other_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_reason"
           }
         }
       ]
@@ -3278,10 +3341,31 @@
           }
         },
         {
-          "column_name": "date_of_service",
+          "column_name": "date_of_service1",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service"
+            "field": "attributes.date_of_service1"
+          }
+        },
+        {
+          "column_name": "date_of_service2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service2"
+          }
+        },
+        {
+          "column_name": "date_of_service3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service3"
+          }
+        },
+        {
+          "column_name": "date_of_service4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_service4"
           }
         },
         {

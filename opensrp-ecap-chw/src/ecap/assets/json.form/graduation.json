@@ -1077,6 +1077,10 @@
           {
             "key": "All children in the household aged 6 to at least Grade 7, have progressed from the past year, and attended school at least 4 out of 5 days in average.",
             "text": "All children in the household aged 6 to at least Grade 7, have progressed from the past year, and attended school at least 4 out of 5 days in average. "
+          },
+          {
+            "key": "None",
+            "text": "None"
           }
         ]
       },

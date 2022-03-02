@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/case_status"
-        android:title="Case status"
+        android:title="De-Registration"
         app:showAsAction="never"/>
 
 </menu>

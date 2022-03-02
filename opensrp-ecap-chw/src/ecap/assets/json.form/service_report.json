@@ -74,29 +74,21 @@
         }
       },
       {
-        "key": "household_firstname",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_firstname",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "Caregiver First Name",
+        "hint": "Caregiver's Full Name",
+        "look_up": "true",
         "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of caregiver can only contain letters"
+        },
         "v_required": {
-          "value": false,
-          "err": "Name of Head of Household"
-        }
-      },
-      {
-        "key": "household_surname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_surname",
-        "type": "edit_text",
-        "hint": "Caregiver Surname",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Name of Head of Household"
+          "value": true,
+          "err": "Required"
         }
       },
       {
@@ -114,12 +106,11 @@
         }
       },
       {
-        "key": "first_name",
+        "key": "bfirst_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "entity": "child",
-        "read_only": true,
         "type": "edit_text",
         "hint": "Beneficiary First Name",
         "edit_type": "name",
@@ -134,13 +125,12 @@
         }
       },
       {
-        "key": "last_name",
+        "key": "blast_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "entity": "child",
         "type": "edit_text",
-        "read_only": true,
         "hint": "Beneficiary Last Name",
         "edit_type": "name",
         "look_up": "true",
@@ -174,7 +164,7 @@
         "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "ART Health Facility"
+        "hint": "ART Number"
       },
       {
         "key": "date_last_vl",
