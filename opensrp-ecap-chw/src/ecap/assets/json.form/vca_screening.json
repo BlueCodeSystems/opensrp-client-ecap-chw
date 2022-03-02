@@ -138,6 +138,23 @@
         "look_up": "true"
       },
       {
+        "key": "screening_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "screening_location",
+        "type": "edit_text",
+        "hint": "Screening Location",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Screening location  only take letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
         "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -224,24 +241,24 @@
         }
       },
       {
-        "key": "landmark",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "landmark",
-        "type": "edit_text",
-        "hint": "Nearest Landmark",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
         "key": "homeaddress",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Home Address"
+        "hint": "Home Address",
+        "v_required": {
+          "value": true,
+          "err": "Home Address is Required."
+        }
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark"
       },
       {
         "key": "spacer",
@@ -517,7 +534,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_eligibility",
         "type": "native_radio",
-        "label": "Was client eligible for TPT",
+        "label": "Was client initiated for TB Preventive Therapy (TPT)?",
         "options": [
           {
             "key": "yes",
@@ -541,7 +558,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_initiated",
         "type": "native_radio",
-        "label": "Was the client initiated on TPT",
+        "label": "Was the client initiated on TB Preventive Therapy (TPT)?",
         "options": [
           {
             "key": "yes",
@@ -1164,7 +1181,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:gender": {
+            "type": "string",
+            "ex": "equalTo(., \"female\")"
+          }
+        }
       },
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
@@ -1677,6 +1700,54 @@
         ]
       },
       {
+        "key": "fsw_child_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "fsw_child_tested",
+        "type": "native_radio",
+        "label": "Has the child/adolescent been tested for HIV?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "fsw_child_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "fsw_child_positive",
+        "type": "native_radio",
+        "label": "Was the HIV test result positive?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:fsw_child_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "fsw_prevention_intervention",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1694,10 +1765,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1719,10 +1789,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_the_child_caregiver_an_fsw": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2256,26 +2325,34 @@
         }
       },
       {
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "165260AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "key": "date_calculation",
+        "type": "hidden",
+        "label_text_style": "bold",
+        "text_color": "#FF0000",
+       "value": "90d"
+      },
+      {
         "key": "date_next_vl",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
-        "type": "date_picker",
+        "type": "edit_text",
+        "read_only": "true",
         "hint": "Date of next VL test",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Please enter date of next viral load"
-        },
         "relevance": {
           "step4:vl_check_box": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
           }
         }
       },

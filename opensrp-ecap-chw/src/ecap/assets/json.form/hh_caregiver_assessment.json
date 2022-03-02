@@ -1105,8 +1105,8 @@
         "edit_type": "number",
         "look_up": "true",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
         },
         "relevance": {
           "step1:test_6months": {
@@ -1726,6 +1726,9 @@
         "label_text_style": "",
         "type": "check_box",
         "label": "What is the main source of drinking\nwater   for   members   of   your\nhousehold?",
+        "exclusive": [
+          "none"
+        ],
         "options": [
           {
             "key": "piped_water",
@@ -1762,6 +1765,10 @@
           {
             "key": "other",
             "text": "Other"
+          },
+          {
+            "key": "none",
+            "text": "None"
           }
         ],
         "relevance": {
@@ -1778,16 +1785,17 @@
         "openmrs_entity_id": "other_water",
         "type": "edit_text",
         "hint": "Specify other drinking water source",
-        "edit_type": "name",
         "v_required": {
           "value": "false",
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:drinking_water": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }
+            ]
           }
         }
       },
@@ -1799,6 +1807,9 @@
         "label_text_style": "",
         "type": "check_box",
         "label": "What type of toilet facility does the \nhousehold mainly use?",
+        "exclusive": [
+          "none"
+        ],
         "options": [
           {
             "key": "Flush toilet",
@@ -1823,12 +1834,37 @@
           {
             "key": "No facility/bush/field",
             "text": "No facility/bush/field"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          },
+          {
+            "key": "none",
+            "text": "None"
           }
         ],
         "relevance": {
           "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "other_toilet_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_toilet_facility",
+        "type": "edit_text",
+        "hint": "Other toilet facility (specify)",
+        "relevance": {
+          "step1:toilet_facility": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }
+              ]
           }
         }
       },
@@ -1865,6 +1901,23 @@
           "step1:test_6months": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "other_sanitary_products",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_sanitary_products",
+        "type": "edit_text",
+        "hint": "Other sanitary products (specify)",
+        "relevance": {
+          "step1:sanitary_products": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }
+            ]
           }
         }
       },

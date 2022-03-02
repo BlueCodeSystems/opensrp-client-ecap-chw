@@ -1,19 +1,10 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.ibm.fhir.core.util.URLSupport.getQuery;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-
-import es.dmoral.toasty.Toasty;
-import timber.log.Timber;
+import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
+import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -31,7 +22,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -50,17 +46,13 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileContactFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -71,7 +63,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -97,7 +88,6 @@ import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
-import org.smartregister.view.dialog.OpenFormOption;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -107,21 +97,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import es.dmoral.toasty.Toasty;
+import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened ;
+    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
 
     private VcaScreeningModel indexVCA;
+    private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -166,12 +155,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
         childId = getIntent().getExtras().getString("Child");
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
-
+        
         String gender = indexVCA.getGender();
         uniqueId = indexVCA.getUnique_id();
 
 
         is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+        is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
 
 
         fabHiv = findViewById(R.id.hiv_risk);
@@ -526,7 +516,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             if(!jsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
@@ -545,16 +535,29 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                if(encounterType.equals("VCA Case Plan"))
+                {
+                    String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                    openVcaCasplanToAddVulnarabilities(dateId);
+                }
+                else {
 
-                finish();
-                startActivity(getIntent());
-
+                    finish();
+                    startActivity(getIntent());
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
 
         }
 
+    }
+
+    private void openVcaCasplanToAddVulnarabilities(String dateId) {
+        Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
+        i.putExtra("childId", indexVCA.getUnique_id());
+        i.putExtra("dateId",  dateId);
+        startActivity(i);
     }
 
     @NonNull
@@ -914,12 +917,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 grad.setVisibility(View.VISIBLE);
                 grad_sub.setVisibility(View.VISIBLE);
 
-                if(Integer.parseInt(vcaAge) < 15){
-                    hiv_assessment.setVisibility(View.VISIBLE);
-                }
 
-                if(Integer.parseInt(vcaAge) >= 15){
-                    hiv_assessment2.setVisibility(View.VISIBLE);
+                if (is_hiv_positive != null && is_hiv_positive.equals("no")) {
+                    if(Integer.parseInt(vcaAge) < 15){
+                        hiv_assessment.setVisibility(View.VISIBLE);
+                    }
+
+                    if(Integer.parseInt(vcaAge) >= 15){
+                        hiv_assessment2.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }
@@ -967,24 +973,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "case_status":
             case "case_plan":
+            case "vca_screening":
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
 
-                break;
-            case "vca_screening":
-            case "service_report":
-
-                try {
-                    FormUtils fUtils = new FormUtils(IndexDetailsActivity.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = fUtils.getFormJson("service_report");
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 break;
 
 
@@ -995,11 +988,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", indexVCA.getIs_on_hiv_treatment());
 
 
                 } else {
 
                     formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
+                    vcaAssessmentModel.setVca_art(indexVCA.getIs_on_hiv_treatment());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
@@ -1102,12 +1097,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.call:
-                CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-                Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
+                String caregiverPhoneNumber = child.getCaregiver_phone();
+                if(!caregiverPhoneNumber.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
 
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:" + client.getColumnmaps().get("caregiver_phone")));
-                startActivity(callIntent);
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                    startActivity(callIntent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"No number for caregiver found",Toast.LENGTH_LONG).show();
+                }
+
                 return true;
             case R.id.case_status:
 

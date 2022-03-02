@@ -149,6 +149,28 @@ actions:
 name: step1_vl_suppressed
 description: vl_suppressed
 priority: 1
-condition: "step1_viral_load_results.contains('Less than 1000 copies/ml') || step1_viral_load_results.contains('Above 1000 copies/ml') "
+condition: "step1_viral_load_results !=''"
+actions:
+  - "isRelevant = true"
+---
+name: step3_relationship_partner_name
+description: relationship_partner_name
+priority: 1
+condition: "step3_marital_status.contains('in_relationship')  "
+actions:
+  - "isRelevant = true"
+---
+name: step3_marriage_partner_name
+description: marriage_partner_name
+priority: 1
+condition: "step3_marital_status.contains('married')  "
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_high_viral_toaster
+description: High viral load toaster
+priority: 1
+condition: "step1_viral_load_results > 1000 "
 actions:
   - "isRelevant = true"

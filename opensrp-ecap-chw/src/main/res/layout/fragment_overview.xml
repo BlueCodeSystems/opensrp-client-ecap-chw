@@ -11,6 +11,111 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/overview_section_header1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/overview_header_bg"
+            android:gravity="left"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_drawable_padding"
+            android:paddingBottom="@dimen/contact_drawable_padding"
+            android:singleLine="true"
+            android:text="Sub Populations"
+            android:textAllCaps="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/subpop1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="C/ALHIV,"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/subpop2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="HEI,"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/subpop3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="C/WLHIV,"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/subpop4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="AGYW,"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/subpop5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="S/SV,"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/subpop6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="C/FSWs."
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+
+        </LinearLayout>
+
 
     <TextView
         android:id="@+id/overview_section_header"
@@ -28,6 +133,8 @@
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
         android:layout_width="match_parent"
@@ -35,118 +142,6 @@
         android:paddingTop="@dimen/contact_small_padding"
         android:paddingBottom="@dimen/contact_small_padding"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Sub Populations"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                />
-
-
-           <LinearLayout
-               android:paddingTop="@dimen/contact_small_padding"
-               android:paddingBottom="@dimen/contact_small_padding"
-               android:gravity="start"
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal">
-
-               <TextView
-                   android:visibility="gone"
-                   android:id="@+id/subpop1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingLeft="@dimen/contact_drawable_padding"
-                   android:paddingTop="@dimen/contact_small_padding"
-                   android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="C/ALHIV."
-                   android:textAppearance="?android:textAppearanceMedium"
-                   android:textColor="@color/black_text_color"
-                   />
-
-               <TextView
-                   android:visibility="gone"
-                   android:id="@+id/subpop2"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingLeft="@dimen/contact_drawable_padding"
-                   android:paddingTop="@dimen/contact_small_padding"
-                   android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="HEI."
-                   android:textAppearance="?android:textAppearanceMedium"
-                   android:textColor="@color/black_text_color"
-                   />
-
-               <TextView
-                   android:visibility="gone"
-                   android:id="@+id/subpop3"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingLeft="@dimen/contact_drawable_padding"
-                   android:paddingTop="@dimen/contact_small_padding"
-                   android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="C/WLHIV."
-                   android:textAppearance="?android:textAppearanceMedium"
-                   android:textColor="@color/black_text_color"
-                   />
-
-               <TextView
-                   android:visibility="gone"
-                   android:id="@+id/subpop4"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingLeft="@dimen/contact_drawable_padding"
-                   android:paddingTop="@dimen/contact_small_padding"
-                   android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="AGYW."
-                   android:textAppearance="?android:textAppearanceMedium"
-                   android:textColor="@color/black_text_color"
-                   />
-
-               <TextView
-                   android:visibility="gone"
-                   android:id="@+id/subpop5"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingLeft="@dimen/contact_drawable_padding"
-                   android:paddingTop="@dimen/contact_small_padding"
-                   android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="S/SV"
-                   android:textAppearance="?android:textAppearanceMedium"
-                   android:textColor="@color/black_text_color"
-                   />
-
-               <TextView
-                   android:visibility="gone"
-                   android:id="@+id/subpop6"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingLeft="@dimen/contact_drawable_padding"
-                   android:paddingTop="@dimen/contact_small_padding"
-                   android:paddingBottom="@dimen/contact_small_padding"
-                   android:text="C/FSWs."
-                   android:textAppearance="?android:textAppearanceMedium"
-                   android:textColor="@color/black_text_color"
-                   />
-
-
-           </LinearLayout>
-
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"

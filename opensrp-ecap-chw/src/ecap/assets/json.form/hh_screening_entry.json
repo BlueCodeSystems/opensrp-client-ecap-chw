@@ -96,7 +96,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Household ID is Required"
         }
       },
       {
@@ -110,7 +110,7 @@
         "read_only": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Unique ID is Required"
         }
       },
       {
@@ -127,7 +127,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA First Name is Required"
         }
       },
       {
@@ -145,7 +145,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Last Name is Required"
         }
       },
       {
@@ -164,7 +164,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Date of Birth is Required"
         }
       },
       {
@@ -186,7 +186,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "VCA Gender is Required"
         }
       },
       {
@@ -228,7 +228,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "You are required to select at least ONE option here."
         }
       },
       {
@@ -244,7 +244,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Health facility Required"
         }
       },
       {
@@ -260,7 +260,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Province is Required"
         }
       },
       {
@@ -276,7 +276,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "District is Required"
         }
       },
       {
@@ -292,7 +292,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Ward is Required"
         }
       },
       {
@@ -308,7 +308,7 @@
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Partners is Required"
         }
       },
       {
@@ -334,7 +334,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "In the Address field below, you can put the Plot Number, Village or Street.",
+        "text": "In the Home Address field below, you can put the Plot Number, Village or Street.",
         "toaster_info_text": "",
         "toaster_type": "info"
       },
@@ -344,10 +344,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "village",
         "type": "edit_text",
-        "hint": "Address",
+        "hint": "Home Address",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Village is Required"
         }
       },
       {
@@ -363,7 +363,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Screening Date is Required"
         }
       },
       {
@@ -380,7 +380,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Screening Location is Required"
         }
       },
       {
@@ -412,7 +412,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver Full Name is Required"
         }
       },
       {
@@ -434,7 +434,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver Gender is Required"
         }
       },
       {
@@ -454,7 +454,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver Date of Birth is Required"
         }
       },
       {
@@ -501,7 +501,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field."
         }
       },
       {
@@ -523,7 +523,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field."
         }
       },
       {
@@ -555,7 +555,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field."
         }
       },
       {
@@ -616,7 +616,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Caregiver ART number is Required"
         }
       },
       {
@@ -627,7 +627,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a required field"
         },
         "relevance": {
           "rules-engine": {
@@ -651,7 +651,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step1:active_on_treatment": {
@@ -714,7 +714,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -736,7 +736,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "rules-engine": {
@@ -765,7 +765,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "rules-engine": {
@@ -810,7 +810,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step1:caregiver_hiv_status": {
@@ -826,14 +826,13 @@
         "openmrs_entity_id": "reason_for_hiv_risk",
         "type": "edit_text",
         "hint": "State reason for HIV Risk",
-        "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Please enter a valid  test name"
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step1:at_risk_reasons": {
@@ -850,7 +849,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "rules-engine": {
@@ -866,9 +865,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "secure",
         "type": "native_radio",
-        "toaster_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
+        "label_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
-        "toaster_type": "",
+        "label_text_style": "bold",
         "label": "Is your household food, socially and economically secure?",
         "options": [
           {
@@ -882,7 +881,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -920,7 +919,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -943,7 +942,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -954,7 +953,7 @@
         "text_color": "#d20000",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1030,7 +1029,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1052,7 +1051,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1074,7 +1073,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1096,7 +1095,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1118,7 +1117,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1140,7 +1139,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1155,7 +1154,7 @@
         "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1174,7 +1173,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       }
     ]
@@ -1208,7 +1207,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1242,7 +1241,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1265,7 +1264,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1316,7 +1315,7 @@
         },
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         },
         "relevance": {
           "step3:caregiver_education": {
@@ -1349,55 +1348,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "marriage_partner_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "marriage_partner_name",
-        "type": "edit_text",
-        "hint": "Name of Partner/Spouse",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Partner/Spouse Name"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "relationship_partner_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relationship_partner_name",
-        "type": "edit_text",
-        "hint": "Name of Relationship Partner",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Relationship Partner Name"
-        },
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_register_relevance.yml"
-            }
-          }
+          "err": "This is a Required field."
         }
       },
       {
@@ -1423,7 +1374,7 @@
         "edit_type": "number",
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1433,7 +1384,8 @@
         "text": "Malaria Prevention",
         "text_color": "#000000",
         "v_required": {
-          "value": true
+          "value": true,
+          "err": "This is a Required field."
         }
       },
       {
@@ -1449,7 +1401,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of beds in household"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1465,7 +1417,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Number of ITNs  in use"
+          "err": "This is a Required field."
         }
       },
       {
@@ -1498,9 +1450,14 @@
         "hint": "Emergency Contact Name ",
         "edit_type": "name",
         "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of VCA only take letters"
+        },
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Emergency Contact Name is required.",
+          "text_size": 8
         }
       },
       {
@@ -1528,7 +1485,8 @@
         ],
         "v_required": {
           "value": true,
-          "err": "Required"
+          "err": "Relationship to Caregiver is required.",
+          "text_size": 8
         }
       },
       {
@@ -1542,7 +1500,8 @@
         "look_up": "true",
         "v_required": {
           "value": false,
-          "err": "This field is required"
+          "err": "Please specify relationship.",
+          "text_size": 8
         },
         "relevance": {
           "rules-engine": {
@@ -1558,7 +1517,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "In the Contact Address field below, you can put the Plot Number, Village or Street.",
+        "text": "In the Home Address field below, you can put the Plot Number, Village or Street.",
         "toaster_info_text": "",
         "toaster_type": "info"
       },
@@ -1569,12 +1528,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Contact Address ",
+        "hint": "Home Address ",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "This field is required"
+          "err": "Emergency Contact Home Address is required.",
+          "text_size": 8
         }
       },
 
