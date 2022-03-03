@@ -257,31 +257,28 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.FAMILY, Constants.EcapClientTable.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER, CoreConstants.TABLE_NAME.CHILD};
+        return new String[]{CoreConstants.TABLE_NAME.EC_CLIENT_INDEX, Constants.EcapClientTable.EC_MOTHER_INDEX, CoreConstants.TABLE_NAME.EC_HOUSEHOLD};
     }
 
     @Override
     public Map<String, String[]> getFTSSearchMap() {
         Map<String, String[]> map = new HashMap<>();
-        map.put(CoreConstants.TABLE_NAME.FAMILY, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.VILLAGE_TOWN, DBConstants.KEY.FIRST_NAME,
-                DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID
-        });
 
-        map.put(CoreConstants.TABLE_NAME.FAMILY_MEMBER, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.FIRST_NAME, DBConstants.KEY.MIDDLE_NAME,
-                DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
-        });
-
-        map.put(CoreConstants.TABLE_NAME.CHILD, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.FIRST_NAME, DBConstants.KEY.MIDDLE_NAME,
-                DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
-        });
 
         map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID,
+                DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+        });
+
+        map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
+                "caregiver_name",
+                "household_id"
+        });
+
+        map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                "caregiver_name",
+                "household_id"
         });
         return map;
     }
@@ -289,19 +286,21 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
     @Override
     public Map<String, String[]> getFTSSortMap() {
         Map<String, String[]> map = new HashMap<>();
-        map.put(CoreConstants.TABLE_NAME.FAMILY, new String[]{DBConstants.KEY.LAST_INTERACTED_WITH, DBConstants.KEY.DATE_REMOVED,
-                DBConstants.KEY.FAMILY_HEAD, DBConstants.KEY.PRIMARY_CAREGIVER, DBConstants.KEY.ENTITY_TYPE,
-                CoreConstants.DB_CONSTANTS.DETAILS
-        });
-
-        map.put(CoreConstants.TABLE_NAME.FAMILY_MEMBER, new String[]{DBConstants.KEY.DOB, DBConstants.KEY.DOD,
-                DBConstants.KEY.LAST_INTERACTED_WITH, DBConstants.KEY.DATE_REMOVED, DBConstants.KEY.RELATIONAL_ID
-        });
 
         map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID,
+                DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+        });
+
+        map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
+                "caregiver_name",
+                "household_id"
+        });
+
+        map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                "caregiver_name",
+                "household_id"
         });
         return map;
     }
