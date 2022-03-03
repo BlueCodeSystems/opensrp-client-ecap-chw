@@ -805,6 +805,13 @@
           }
         },
         {
+          "column_name": "edit_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.edit_date"
+          }
+        },
+        {
           "column_name": "screening_location",
           "type": "Client",
           "json_mapping": {
@@ -816,6 +823,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_name"
+          }
+        },
+        {
+          "column_name": "edited_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.edited_by"
+          }
+        },
+        {
+          "column_name": "editedby_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.editedby_number"
           }
         },
         {
