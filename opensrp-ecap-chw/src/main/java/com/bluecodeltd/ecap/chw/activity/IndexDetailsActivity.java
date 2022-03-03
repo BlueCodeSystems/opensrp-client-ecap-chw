@@ -917,15 +917,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 grad.setVisibility(View.VISIBLE);
                 grad_sub.setVisibility(View.VISIBLE);
 
+                if(Integer.parseInt(vcaAge) < 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                    hiv_assessment.setVisibility(View.VISIBLE);
+                }
 
-                if (is_hiv_positive != null && is_hiv_positive.equals("no")) {
-                    if(Integer.parseInt(vcaAge) < 15){
-                        hiv_assessment.setVisibility(View.VISIBLE);
-                    }
-
-                    if(Integer.parseInt(vcaAge) >= 15){
-                        hiv_assessment2.setVisibility(View.VISIBLE);
-                    }
+                if(Integer.parseInt(vcaAge) >= 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                    hiv_assessment2.setVisibility(View.VISIBLE);
                 }
 
             }
