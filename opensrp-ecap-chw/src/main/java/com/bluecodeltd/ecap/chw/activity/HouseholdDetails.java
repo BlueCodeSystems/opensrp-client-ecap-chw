@@ -5,11 +5,9 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,8 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import android.app.Fragment;
-
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -31,8 +27,9 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.CaregiverAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
-import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -40,9 +37,10 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
+import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
+import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -56,7 +54,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
-import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -106,6 +103,8 @@ public class HouseholdDetails extends AppCompatActivity {
     Random Number;
     int Rnumber;
 
+    CaregiverAssessmentModel caregiverAssessmentModel;
+    CaregiverVisitationModel caregiverVisitationModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +119,15 @@ public class HouseholdDetails extends AppCompatActivity {
         childId = getIntent().getExtras().getString("childId");
         householdId = getIntent().getExtras().getString("householdId");
 
+        caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
+        caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
+
         if(childId != null){
             child = IndexPersonDao.getChildByBaseId(childId);
         }
 
         house = getHousehold(householdId);
+
         caregiver = CaregiverDao.getCaregiver(householdId);
 
 
@@ -330,9 +333,15 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("hh_caregiver_assessment");
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    //TODO
+                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    if(caregiverAssessmentModel ==null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
+                    }
+                    else{
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(caregiverAssessmentModel, Map.class));
+                    }
                     startFormActivity(indexRegisterForm);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -358,7 +367,6 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 */
             case R.id.household_visitation_caregiver:
-
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
@@ -383,7 +391,12 @@ public class HouseholdDetails extends AppCompatActivity {
                         householdVisitationCaregiver.setCaregiver_hiv_status("status_not_required");
                     }
                     householdVisitationCaregiver.setCaregiver_art(caregiver.getActive_on_treatment());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(householdVisitationCaregiver, Map.class));
+                    if (caregiverVisitationModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(caregiverVisitationModel, Map.class));
+                    }
                     startFormActivity(indexRegisterForm);
 
 
@@ -643,6 +656,18 @@ public class HouseholdDetails extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable. EC_CAREGIVER_CASEPLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+                case "Household Visitation For Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_VISITATION);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

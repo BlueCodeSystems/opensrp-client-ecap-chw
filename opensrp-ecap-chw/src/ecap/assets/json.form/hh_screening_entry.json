@@ -867,7 +867,7 @@
         "type": "native_radio",
         "label_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
-        "label_text_style": "bold",
+        "label_text_style": "",
         "label": "Is your household food, socially and economically secure?",
         "options": [
           {
