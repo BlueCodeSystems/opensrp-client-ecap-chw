@@ -100,3 +100,18 @@ condition: "( step4_date_last_vl != null ) && (step4_vl_last_result > 0 && step4
 actions:
   - "calculation = helper.addDuration(step4_date_last_vl,'365d')"
 
+---
+name: step1_fsw_child_tested
+description: fsw_child_tested
+priority: 1
+condition: "( step1_child_tested_for_hiv_with_mother_as_index_client != null )"
+actions:
+  - "calculation = step1_child_tested_for_hiv_with_mother_as_index_client "
+
+---
+name: step1_fsw_economic_strengthening_intervention
+description: fsw_economic_strengthening_intervention
+priority: 1
+condition: "( step1_agyw_receiving_an_economic_strengthening_intervention != null )"
+actions:
+  - "calculation = step1_agyw_receiving_an_economic_strengthening_intervention "
