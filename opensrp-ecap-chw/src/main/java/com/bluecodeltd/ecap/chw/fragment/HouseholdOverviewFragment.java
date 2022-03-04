@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
+import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.rey.material.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +32,7 @@ public class HouseholdOverviewFragment extends Fragment {
     Button screenBtn;
     FloatingActionButton fab;
     Household house;
+    CaregiverAssessmentModel caregiverAssessmentModel;
 
 
     @SuppressLint("RestrictedApi")
@@ -62,22 +64,31 @@ public class HouseholdOverviewFragment extends Fragment {
 
     @SuppressLint("RestrictedApi")
     public void setViews(){
+
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+        HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
 
         String females = ( (HouseholdDetails) requireActivity()).countFemales;
         String males = ( (HouseholdDetails) requireActivity()).countMales;
 
         house = mymap.get("house");
+        caregiverAssessmentModel = vmap.get("vulnerabilities");
 
         String is_screened = house.getScreened();
         String incomeSource = house.getFam_source_income();
-        String iscome = house.getIncome();
+
+        String income = "Not Set";
+
+        if(caregiverAssessmentModel != null){
+            income = caregiverAssessmentModel.getMonthly_expenses();
+        }
+
         String beds = house.getBeds();
         String household_member_had_malaria = house.getHousehold_member_had_malaria();
         String emergency_name = house.getEmergency_name();
         String contact_number = house.getContact_number();
 
-        txtIncome.setText(iscome);
+        txtIncome.setText(income);
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
         txtMalaria.setText(household_member_had_malaria);
