@@ -1183,9 +1183,10 @@
           }
         ],
         "relevance": {
-          "step1:gender": {
-            "type": "string",
-            "ex": "equalTo(., \"female\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
