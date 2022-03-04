@@ -55,6 +55,16 @@
     "title": "",
     "fields": [
       {
+        "key": "e_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "e_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "BaseEntityId",
+        "edit_type": "name"
+      },
+      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -116,34 +126,26 @@
         "label": "Estimated household expenses per month",
         "label_text_style": "",
         "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
         "options": [
           {
             "key": "Less than K500",
-            "text": "Less than K500",
-            "value": false
+            "text": "Less than K500"
           },
           {
             "key": "K500 -K999",
-            "text": "K500 -K999",
-            "value": false
+            "text": "K500 -K999"
           },
           {
             "key": "K1,000 –K1,999",
-            "text": "K1,000 –K1,999",
-            "value": false
+            "text": "K1,000 –K1,999"
           },
           {
             "key": "K2,000 –K4,999",
-            "text": "K2,000 –K4,999",
-            "value": false
+            "text": "K2,000 –K4,999"
           },
           {
             "key": "Greater than K5,000",
-            "text": "Greater than K5,000",
-            "value": false
+            "text": "Greater than K5,000"
           }
         ],
         "v_required": {

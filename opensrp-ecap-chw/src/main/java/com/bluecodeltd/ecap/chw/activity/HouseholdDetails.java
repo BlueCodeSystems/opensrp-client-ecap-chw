@@ -98,7 +98,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public Household house;
     Caregiver caregiver;
     Child child;
-    ObjectMapper oMapper, householdMapper, caregiverMapper;
+    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper;
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
@@ -133,6 +133,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
+
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -287,9 +288,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
-
-
-
                     indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
@@ -331,15 +329,19 @@ public class HouseholdDetails extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
+                    assessmentMapper = new ObjectMapper();
+
                     indexRegisterForm = formUtils.getFormJson("hh_caregiver_assessment");
 
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    if(caregiverAssessmentModel ==null) {
+
+
+                    if(caregiverAssessmentModel == null) {
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
                     }
                     else{
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(caregiverAssessmentModel, Map.class));
+                        indexRegisterForm.put("entity_id", this.caregiverAssessmentModel.getBase_entity_id());
+                        //indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getSubpop5());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, assessmentMapper.convertValue(caregiverAssessmentModel, Map.class));
                     }
                     startFormActivity(indexRegisterForm);
                 } catch (Exception e) {
@@ -347,25 +349,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
-          /*  case R.id.hh_visit20:
 
-                try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("hh_visitation_20");
-
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                break;
-*/
             case R.id.household_visitation_caregiver:
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
@@ -395,6 +379,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
                     }
                     else {
+                        indexRegisterForm.put("entity_id", this.caregiverVisitationModel.getBase_entity_id());
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(caregiverVisitationModel, Map.class));
                     }
                     startFormActivity(indexRegisterForm);
@@ -642,7 +627,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HOUSEHOLD_ASSESSMENT);
+                                encounterType, Constants.EcapClientTable.EC_CAREGIVER_HOUSEHOLD_ASSESSMENT);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -655,7 +640,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_CASEPLAN);
+                                encounterType, Constants.EcapClientTable.EC_CAREGIVER_CASEPLAN);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
