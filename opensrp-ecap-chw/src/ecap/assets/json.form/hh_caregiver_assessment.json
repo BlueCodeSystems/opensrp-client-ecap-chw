@@ -55,16 +55,6 @@
     "title": "",
     "fields": [
       {
-        "key": "e_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "e_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "BaseEntityId",
-        "edit_type": "name"
-      },
-      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
