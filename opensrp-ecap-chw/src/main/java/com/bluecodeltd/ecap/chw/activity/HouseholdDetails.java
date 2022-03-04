@@ -130,7 +130,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
         caregiver = CaregiverDao.getCaregiver(householdId);
 
-
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
 
@@ -177,14 +176,27 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public HashMap<String, Household> getData() {
         return  populateMapWithHouse(house);
-
     }
+
+    public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
+        return  populateMapWithVulnerabilities(caregiverAssessmentModel);
+    }
+
+
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {
         HashMap<String, Household> householdHashMap= new HashMap<>();
         householdHashMap.put("house",houseToAdd);
         return householdHashMap;
     }
+
+    public HashMap<String, CaregiverAssessmentModel> populateMapWithVulnerabilities(CaregiverAssessmentModel vToAdd)
+    {
+        HashMap<String, CaregiverAssessmentModel> vHashMap= new HashMap<>();
+        vHashMap.put("vulnerabilities", vToAdd);
+        return vHashMap;
+    }
+
 
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
@@ -290,12 +302,12 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
+                   /* indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop6());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());*/
 
 
                     startFormActivity(indexRegisterForm);
@@ -522,30 +534,36 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 switch (EncounterType) {
 
+                    case "Caregiver Assessment":
+
+                        closeFab();
+                        Toasty.success(HouseholdDetails.this, "Vulnerabilities Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+                        break;
+
                     case "Household Screening":
 
                         closeFab();
-                        //loadInformation(childIndexEventClient);//updates Ui data in activity
-
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
-
                         break;
 
                     case "Family Member":
 
+                        closeFab();
                         Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
+
                     case "Caregiver Case Plan":
-                      String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
                 }
-             //   finish();
-           //     startActivity(getIntent());
+
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -752,8 +770,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
-        //    rvisit.setVisibility(View.VISIBLE);
-          //  hvisit20.setVisibility(View.VISIBLE);
             rscreen.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
@@ -766,8 +782,6 @@ public class HouseholdDetails extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
-      //  rvisit.setVisibility(View.GONE);
-      //  hvisit20.setVisibility(View.GONE);
         rscreen.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
@@ -775,17 +789,7 @@ public class HouseholdDetails extends AppCompatActivity {
         household_visitation_caregiver.setVisibility(View.GONE);
     }
 
-    public void loadInformation(ChildIndexEventClient  updatedEventClient){
-        house = getHousehold(householdId);
-        txtDistrict.setText(updatedEventClient.getClient().getAttribute("household_id").toString());
-        cname.setText(new StringBuilder().append(updatedEventClient.getClient().getAttribute("caregiver_name").toString()).append(" household").toString());
 
-        mPagerAdapter.notifyDataSetChanged();
-        HouseholdOverviewFragment mFragment = (HouseholdOverviewFragment) mPagerAdapter.getItem(mViewPager.getCurrentItem());
-        mFragment.setViews();
-
-
-    }
     public Household getHousehold(String householdId)
     {
         return HouseholdDao.getHousehold(householdId);
