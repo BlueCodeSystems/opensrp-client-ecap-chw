@@ -292,22 +292,20 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    Object obj = prefs.getAll();//
+                    Object obj = prefs.getAll();
 
                     householdMapper = new ObjectMapper();
 
-                    indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
+                    indexRegisterForm = formUtils.getFormJson("hh_screening");
                     indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
-                    indexRegisterForm.getJSONObject("step1").put("title", house.getCaregiver_name() + " Household");
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(6).put("value", "true");
-                   /* indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop6());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());*/
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
 
 
                     startFormActivity(indexRegisterForm);

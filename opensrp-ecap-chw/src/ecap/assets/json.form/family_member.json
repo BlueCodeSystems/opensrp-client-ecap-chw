@@ -1,6 +1,6 @@
 {
   "count": "3",
-  "skip_blank_steps": false,
+  "skip_blank_steps": "true",
   "encounter_type": "Family Member",
   "relational_id": "",
   "metadata": {
@@ -267,7 +267,7 @@
         "key": "subpop1_toast",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1",
+        "openmrs_entity_id": "subpop1_toast",
         "value": "true",
         "type": "toaster_notes",
         "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
@@ -275,9 +275,10 @@
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
         "relevance": {
-          "step1:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
           }
         }
       }
@@ -577,6 +578,33 @@
           {
             "key": "0",
             "text": "Closed"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1",
+        "type": "native_radio",
+        "value": "true",
+        "read_only": true,
+        "label": "VCA Sub Population",
+        "options": [
+          {
+            "key": "true",
+            "text": "C/ALHIV"
+          },
+          {
+            "key": "false",
+            "text": "Other Sub Population"
           }
         ],
         "relevance": {

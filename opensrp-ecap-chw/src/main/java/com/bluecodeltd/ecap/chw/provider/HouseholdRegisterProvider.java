@@ -29,6 +29,9 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,16 +56,18 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
         String householdId = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", false);
         String caregiver_Name = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
-        ;
 
         List<String> genderList = IndexPersonDao.getGenders(householdId);
+        List<String> ageList = IndexPersonDao.getAges(householdId);
         String is_screened = HouseholdDao.checkIfScreened(householdId);
 
 
-        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", householdId, genderList, is_screened, context);
+        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", householdId, genderList, is_screened, ageList, context);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
+
+
 
 
     @Override
