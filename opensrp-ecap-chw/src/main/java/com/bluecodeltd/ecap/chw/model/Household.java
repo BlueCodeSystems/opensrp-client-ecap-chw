@@ -24,7 +24,7 @@ public class Household {
     private String subpop3;
     private String subpop4;
     private String subpop5;
-    private String subpop6;
+    private String subpop;
     private String caregiver_name;
     private String caregiver_sex;
     private String caregiver_birth_date;
@@ -75,6 +75,7 @@ public class Household {
     private  String vl_suppressed;
     private  String marriage_partner_name;
     private String highest_grade;
+    private String homeaddress;
 
     public String getMarital_status() {
         return marital_status;
@@ -426,12 +427,12 @@ public class Household {
         this.subpop5 = subpop5;
     }
 
-    public String getSubpop6() {
-        return subpop6;
+    public String getSubpop() {
+        return subpop;
     }
 
-    public void setSubpop6(String subpop6) {
-        this.subpop6 = subpop6;
+    public void setSubpop(String subpop) {
+        this.subpop = subpop;
     }
 
     public String getCaregiver_name() {
@@ -594,5 +595,13 @@ public class Household {
 
     public void setHighest_grade(String highest_grade) {
         this.highest_grade = highest_grade;
+    }
+
+    public String getHomeaddress() {
+        return homeaddress;
+    }
+
+    public void setHomeaddress(String homeaddress) {
+        this.homeaddress = homeaddress;
     }
 }
