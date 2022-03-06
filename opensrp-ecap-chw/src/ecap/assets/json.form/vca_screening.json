@@ -1183,9 +1183,10 @@
           }
         ],
         "relevance": {
-          "step1:gender": {
-            "type": "string",
-            "ex": "equalTo(., \"female\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1716,6 +1717,13 @@
             "text": "No"
           }
         ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        },
         "relevance": {
           "step1:is_the_child_caregiver_an_fsw": {
             "type": "string",
@@ -1763,6 +1771,7 @@
             "key": "no",
             "text": "No"
           }
+
         ],
         "relevance": {
           "step1:is_the_child_caregiver_an_fsw": {
@@ -1788,6 +1797,13 @@
             "text": "No"
           }
         ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        },
         "relevance": {
           "step1:is_the_child_caregiver_an_fsw": {
             "type": "string",
