@@ -69,6 +69,8 @@ public class Household {
     private String highest_grade;
     private String spouse_name;
     private String homeaddress;
+    private String at_risk_reasons;
+    private String reason_for_hiv_risk;
 
     public String getMarital_status() {
         return marital_status;
@@ -606,5 +608,21 @@ public class Household {
     public void setHomeaddress(String homeaddress) {
         this.homeaddress = homeaddress;
 
+    }
+
+    public String getAt_risk_reasons() {
+        return at_risk_reasons;
+    }
+
+    public void setAt_risk_reasons(String at_risk_reasons) {
+        this.at_risk_reasons = at_risk_reasons;
+    }
+
+    public String getReason_for_hiv_risk() {
+        return reason_for_hiv_risk;
+    }
+
+    public void setReason_for_hiv_risk(String reason_for_hiv_risk) {
+        this.reason_for_hiv_risk = reason_for_hiv_risk;
     }
 }
