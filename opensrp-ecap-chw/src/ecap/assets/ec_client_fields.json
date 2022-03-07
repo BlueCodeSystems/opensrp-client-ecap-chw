@@ -1057,6 +1057,13 @@
           }
         },
         {
+          "column_name": "spouse_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.spouse_name"
+          }
+        },
+        {
           "column_name": "relationship_partner_name",
           "type": "Client",
           "json_mapping": {
