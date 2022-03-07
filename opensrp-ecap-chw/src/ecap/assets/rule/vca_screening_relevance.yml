@@ -597,7 +597,7 @@ actions:
 name: step1_school
 description: school
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 7"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 4"
 actions:
   - "isRelevant = true"
 ---
