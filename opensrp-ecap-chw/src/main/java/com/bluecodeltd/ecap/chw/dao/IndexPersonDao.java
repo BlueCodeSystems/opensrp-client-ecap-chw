@@ -85,12 +85,35 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+
+    public static String getBirthdate (String uniqueId){
+
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE unique_id = '" + uniqueId + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return values.get(0);
+
+    }
     
     public static List<String> getGenders(String household_id){
 
-        String sql = "SELECT gender FROM ec_client_index WHERE household_id =  '" + household_id + "' AND gender IS NOT NULL";
+        String sql = "SELECT gender FROM ec_client_index WHERE household_id = '" + household_id + "' AND gender IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "gender");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return values;
+    }
+
+    public static List<String> getAges(String household_id){
+
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE household_id = '" + household_id + "' AND adolescent_birthdate IS NOT NULL";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
