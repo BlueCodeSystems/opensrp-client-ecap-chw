@@ -1816,6 +1816,20 @@
           }
         },
         {
+          "column_name": "fsw_child_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.fsw_child_tested"
+          }
+        },
+        {
+          "column_name": "fsw_child_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.fsw_child_positive"
+          }
+        },
+        {
           "column_name": "fsw_prevention_intervention",
           "type": "Client",
           "json_mapping": {
@@ -2189,6 +2203,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_firstname"
+          }
+        },
+        {
+          "column_name": "homeaddress",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.homeaddress"
+          }
+        },
+        {
+          "column_name": "screening_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screening_location"
           }
         },
         {
