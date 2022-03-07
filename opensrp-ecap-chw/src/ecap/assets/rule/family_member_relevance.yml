@@ -1,22 +1,22 @@
 ---
-name: step1_subpop1_toast
+name: step2_subpop1_toast
 description: subpop1_toast relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
+condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_case_status
 description: step3_case_status relevance
 priority: 1
-condition: "(step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20) || (step3_caregiver_hiv_status.contains('HIV+') && step3_caregiver_sex.contains('female'))"
+condition: "step1_is_hiv_positive.contains('yes') || (step3_caregiver_hiv_status.contains('HIV+') && step3_caregiver_sex.contains('female'))"
 actions:
   - "isRelevant = true"
 ---
-name: step3_subpop1
+name: step2_subpop1
 description: subpop1 relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
+condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---

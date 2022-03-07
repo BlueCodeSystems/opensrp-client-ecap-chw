@@ -56,16 +56,6 @@
     "title": "Household Visitation For Caregiver",
     "fields": [
       {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Household ID",
-        "edit_type": "name"
-      },
-      {
         "key": "health_label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -73,6 +63,7 @@
         "type": "label",
         "text": "Health Section"
       },
+
       {
         "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
@@ -1066,21 +1057,6 @@
         }
       },
       {
-        "key": "case_worker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_worker",
-        "type": "edit_text",
-        "hint": "Name of Case Worker Conducting Assessment",
-        "edit_type": "name",
-        "read_only": "false",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
         "key": "caseworker_date_signed",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1098,14 +1074,29 @@
           "err": "Date Signed"
         }
       },
-
       {
-        "key": "case_manager",
+        "key": "caseworker_signature",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_manager",
+        "openmrs_entity_id": "caseworker_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "manager_firstname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_firstname",
         "type": "edit_text",
-        "hint": "Verified by Case Manager",
+        "hint": "Verified by Case Manager First Name",
         "edit_type": "name",
         "read_only": "false",
         "look_up": "true",
@@ -1114,7 +1105,21 @@
           "err": "Please enter a valid name"
         }
       },
-
+      {
+        "key": "manager_lastname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_lastname",
+        "type": "edit_text",
+        "hint": "Verified by Case Manager Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
       {
         "key": "manager_date_signed",
         "openmrs_entity_parent": "",
@@ -1134,12 +1139,29 @@
         }
       },
       {
-        "key": "school_administration_name",
+        "key": "manager_signature",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "school_administration_name",
+        "openmrs_entity_id": "manager_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ]
+      },
+
+      {
+        "key": "school_administration_firstname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_firstname",
         "type": "edit_text",
-        "hint": "Verified By School Administration",
+        "hint": "Verified By School Administration First Name",
         "edit_type": "name",
         "read_only": "false",
         "look_up": "true",
@@ -1148,8 +1170,21 @@
           "err": "Please enter a valid name"
         }
       },
-
-
+      {
+        "key": "school_administration_lastname",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_lastname",
+        "type": "edit_text",
+        "hint": "Verified By School Administration Last Name ",
+        "edit_type": "name",
+        "look_up": "true",
+        "read_only": "false",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
       {
         "key": "telephone",
         "openmrs_entity_parent": "",
@@ -1184,7 +1219,24 @@
           "value": false,
           "err": "Date Signed"
         }
+      },
+      {
+        "key": "school_administration_signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "school_administration_signature",
+        "type": "check_box",
+        "label": "I hereby confirms that the information I have given is true",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          }
+        ]
       }
+
     ]
   }
 }

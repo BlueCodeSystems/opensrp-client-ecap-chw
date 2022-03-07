@@ -1,7 +1,9 @@
 {
   "count": 3,
+  "skip_blank_steps": true,
   "encounter_type": "Household Screening",
   "entity_id": "",
+  "show_errors_on_submit": true,
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -52,7 +54,7 @@
   },
   "step1": {
     "title": "Household Screening",
-    "next": "step2",
+    "next": "step3",
     "fields": [
       {
         "key": "instructions",
@@ -193,37 +195,35 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "label": "Sub Population :",
+        "label": "Sub Population:",
         "options": [
           {
             "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": "false"
+            "text": "C/ALHIV"
           },
           {
             "key": "subpop2",
-            "text": "HIV Exposed Infants (HEIs)",
-            "value": "false"
+            "text": "HEI"
           },
           {
             "key": "subpop3",
-            "text": "Children of Women Living with HIV",
-            "value": "false"
+            "text": "Children of WLHIV"
           },
           {
             "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
-          },
-          {
-            "key": "subpop5",
-            "text": "Survivors of Sexual Violence",
-            "value": "false"
+            "text": "AGYW"
           },
           {
             "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
-            "value": "false"
+            "text": "Children of FSW"
+          },
+          {
+            "key": "subpop5",
+            "text": "Survivor of Sexual Violence"
+          },
+          {
+            "key": "none",
+            "text": "None"
           }
         ],
         "v_required": {
@@ -339,10 +339,10 @@
         "toaster_type": "info"
       },
       {
-        "key": "homeaddress",
+        "key": "village",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "homeaddress",
+        "openmrs_entity_id": "village",
         "type": "edit_text",
         "hint": "Home Address",
         "v_required": {
@@ -637,6 +637,7 @@
           }
         }
       },
+
       {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
@@ -692,6 +693,7 @@
           }
         }
       },
+
       {
 
         "key": "date_of_last_viral_load",
@@ -779,7 +781,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
+        "text": "refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
         "toaster_info_text": "",
         "toaster_type": "info",
         "relevance": {
@@ -865,7 +867,7 @@
         "type": "native_radio",
         "label_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
-        "label_text_style": "",
+        "label_text_style": "bold",
         "label": "Is your household food, socially and economically secure?",
         "options": [
           {
@@ -947,8 +949,8 @@
         "key": "referred_services",
         "type": "label",
         "label_text_style": "bold",
-        "text": "List of Services to be Referred :",
-        "text_color": "#000000",
+        "text": "    List of Referred Services:",
+        "text_color": "#0000cc",
         "v_required": {
           "value": true,
           "err": "This is a Required field."
@@ -962,7 +964,7 @@
         "type": "toaster_notes",
         "text": "Refer for appropriate treatment and care services as part of enrollment.",
         "toaster_info_text": "",
-        "toaster_type": "warning",
+        "toaster_type": "info",
         "relevance": {
           "step1:active_on_treatment": {
             "type": "string",
@@ -978,7 +980,7 @@
         "type": "toaster_notes",
         "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment.",
         "toaster_info_text": "",
-        "toaster_type": "warning",
+        "toaster_type": "info",
         "relevance": {
           "step1:secure": {
             "type": "string",
@@ -992,9 +994,9 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
+        "text": "refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
         "toaster_info_text": "",
-        "toaster_type": "warning",
+        "toaster_type": "info",
         "relevance": {
           "step1:enrolled_pmtct": {
             "type": "string",
@@ -1005,191 +1007,173 @@
     ]
   },
   "step2": {
-    "title": "Summary",
+    "title": "Sub Populations",
     "next": "step3",
     "fields": [
       {
-        "key": "hdx",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hdx",
-        "type": "label",
-        "text": "Information Summary"
-      },
-      {
-        "key": "index_check_box",
-        "value": "yes",
+        "key": "subpop1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "index_check_box",
-        "type": "toaster_notes",
-        "text": "This VCA has been Identified as an Index",
-        "toaster_type": "info",
-        "toaster_info_text": "This VCA has been Identified as an Index",
-        "toaster_info_title": "Index Tracing",
+        "openmrs_entity_id": "subpop1",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "edit_type": "name",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
         }
       },
       {
-        "key": "case_status",
+        "key": "subpop2",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_status",
-        "type": "native_radio",
-        "value": "1",
-        "read_only": true,
-        "label": "Index VCA Case Status",
-        "options": [
-          {
-            "key": "1",
-            "text": "Active"
-          },
-          {
-            "key": "2",
-            "text": "Inactive"
-          },
-          {
-            "key": "0",
-            "text": "Closed"
+        "openmrs_entity_id": "subpop2",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "hint": "HIV Exposed Infant (HEI)",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
           }
-        ]
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "subpop3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "hint": "Children of Women Living with HIV (WLHIV)",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "subpop4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "hint": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "read_only": "true",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "subpop5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
+        "read_only": "true",
+        "hint": "Children/Adolescents who are Survivors of Sexual Violence",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "subpop",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop6",
+        "read_only": "true",
+        "hint": "Children/Adolescents whose Primary Caregivers are HIV FSWs",
+        "type": "edit_text",
+        "value": "true",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
       },
       {
         "key": "screened",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screened",
-        "type": "native_radio",
+        "read_only": "true",
         "value": "true",
-        "label": "Household Status",
-        "options": [
-          {
-            "key": "true",
-            "text": "Screened"
-          },
-          {
-            "key": "false",
-            "text": "Not Screened"
-          }
-        ]
-      },
-      {
-        "key": "subpop1_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
+        "type": "edit_text",
+        "hint": "Is Screened",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
         }
       },
       {
-        "key": "subpop6_toast",
+        "key": "index_check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop2_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop2",
-        "value": "true",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
-        "toaster_info_text": "HIV Exposed Infant (HEI)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop3_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop3",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop4_toast",
-        "value": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_type": "info",
-        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop5_toast",
-        "value": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop5",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
+        "openmrs_entity_id": "index_check_box",
+        "type": "edit_text",
+        "value": "yes",
+        "read_only": "true",
+        "hint": "Was child identified through Index?",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Ward only takes letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
         }
       }
     ]
@@ -1340,6 +1324,7 @@
           }
         }
       },
+
       {
         "key": "marital_status",
         "openmrs_entity_parent": "",
@@ -1527,6 +1512,33 @@
         }
       },
       {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "In the Home Address field below, you can put the Plot Number, Village or Street.",
+        "toaster_info_text": "",
+        "toaster_type": "info"
+      },
+
+      {
+        "key": "homeaddress",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "homeaddress",
+        "type": "edit_text",
+        "hint": "Home Address ",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Emergency Contact Home Address is required.",
+          "text_size": 8
+        }
+      },
+
+      {
         "key": "contact_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1542,6 +1554,48 @@
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "edited_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edited_by",
+        "type": "edit_text",
+        "hint": "Record Last Edited By",
+        "look_up": "true",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "edit_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edit_date",
+        "type": "date_picker",
+        "hint": "Date when record was last edited",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today",
+        "max_date": "today",
+        "read_only": "true"
+      },
+      {
+        "key": "editedby_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "editedby_number",
+        "type": "edit_text",
+        "hint": "Contact Phone Number of last person to edit record",
+        "edit_type": "number",
+        "read_only": "true"
       }
     ]
   }

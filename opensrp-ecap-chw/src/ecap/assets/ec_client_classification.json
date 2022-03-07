@@ -430,6 +430,14 @@
           },
           {
             "field": "eventType",
+            "field_value": "Caregiver Household Assessment Form",
+            "creates_case": [
+              "ec_caregiver_household_assessment"
+
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Caregiver Case Plan",
             "creates_case": [
               "ec_caregiver_case_plan"

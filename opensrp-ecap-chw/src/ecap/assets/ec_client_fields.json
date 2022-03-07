@@ -805,13 +805,6 @@
           }
         },
         {
-          "column_name": "edit_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.edit_date"
-          }
-        },
-        {
           "column_name": "screening_location",
           "type": "Client",
           "json_mapping": {
@@ -826,6 +819,20 @@
           }
         },
         {
+          "column_name": "caregiver_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_nrc"
+          }
+        },
+        {
+          "column_name": "edit_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.edit_date"
+          }
+        },
+        {
           "column_name": "edited_by",
           "type": "Client",
           "json_mapping": {
@@ -837,13 +844,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.editedby_number"
-          }
-        },
-        {
-          "column_name": "caregiver_nrc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caregiver_nrc"
           }
         },
         {
@@ -3465,13 +3465,6 @@
           }
         },
         {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_id"
-          }
-        },
-        {
           "column_name": "caregiver_hiv_status",
           "type": "Client",
           "json_mapping": {
@@ -3499,7 +3492,13 @@
             "field": "attributes.date_art"
           }
         },
-
+        {
+          "column_name": "date_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_art"
+          }
+        },
         {
           "column_name": "art_appointment",
           "type": "Client",
@@ -3529,10 +3528,24 @@
           }
         },
         {
+          "column_name": "mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mmd"
+          }
+        },
+        {
           "column_name": "mmd_months",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.mmd_months"
+          }
+        },
+        {
+          "column_name": "six_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.six_months"
           }
         },
         {
@@ -3570,7 +3583,13 @@
             "field": "attributes.visit_hiv_test"
           }
         },
-
+        {
+          "column_name": "referred_for_testing",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_for_testing"
+          }
+        },
         {
           "column_name": "referred_for_testing",
           "type": "Client",
@@ -3719,10 +3738,17 @@
           }
         },
         {
-          "column_name": "case_worker",
+          "column_name": "caseworker_firstname",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_worker"
+            "field": "attributes.caseworker_firstname"
+          }
+        },
+        {
+          "column_name": "caseworker_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_lastname"
           }
         },
         {
@@ -3733,10 +3759,31 @@
           }
         },
         {
-          "column_name": "case_manager",
+          "column_name": "caseworker_signature",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_manager"
+            "field": "attributes.caseworker_signature"
+          }
+        },
+        {
+          "column_name": "caseworker_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_signature"
+          }
+        },
+        {
+          "column_name": "manager_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_firstname"
+          }
+        },
+        {
+          "column_name": "manager_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.manager_lastname"
           }
         },
         {
@@ -3746,19 +3793,32 @@
             "field": "attributes.manager_date_signed"
           }
         },
-
         {
-          "column_name": "school_administration_name",
+          "column_name": "manager_signature",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.school_administration_name"
+            "field": "attributes.manager_signature"
           }
         },
         {
-          "column_name": "telephone",
+          "column_name": "manager_signature",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.telephone"
+            "field": "attributes.manager_signature"
+          }
+        },
+        {
+          "column_name": "school_administration_firstname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_firstname"
+          }
+        },
+        {
+          "column_name": "school_administration_lastname",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_lastname"
           }
         },
         {
@@ -3766,6 +3826,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_date_signed"
+          }
+        },
+        {
+          "column_name": "school_administration_signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_administration_signature"
           }
         }
       ]
@@ -5108,10 +5175,10 @@
           }
         },
         {
-          "column_name": "household_id",
+          "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.household_id"
+            "field": "attributes.unique_id"
           }
         },
         {

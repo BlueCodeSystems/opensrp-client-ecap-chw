@@ -1,9 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.vijay.jsonwizard.utils.FormUtils.fields;
-import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.util.JsonFormUtils.STEP1;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -109,28 +105,11 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
             CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));//
             jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
 
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //******** VCA ID *********//
-
-        Number = new Random();
-        Rnumber = Number.nextInt(900000000);
-        String newEntityId =  Integer.toString(Rnumber);
-
-
-        //******** POPULATE JSON FORM WITH VCA UNIQUE ID ******//
-        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
-
-        if (stepOneUniqueId != null) {
-            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
-            try {
-                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
 
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();

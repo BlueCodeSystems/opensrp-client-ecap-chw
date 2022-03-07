@@ -1,43 +1,43 @@
 ---
-name: step2_subpop1_toast
+name: step2_subpop1
 description: subpop1 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop1')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop2_toast
+name: step2_subpop2
 description: subpop2 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop2')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop3_toast
+name: step2_subpop3
 description: subpop3 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop3')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop4_toast
+name: step2_subpop4
 description: subpop4 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop4')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop5_toast
+name: step2_subpop5
 description: subpop5 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop5')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop6_toast
+name: step2_subpop6
 description: subpop6 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop')"
+condition: "step1_sub_population.contains('subpop6')"
 actions:
   - "isRelevant = true"
 ---
@@ -129,6 +129,20 @@ name: step1_reason_for_hiv_risk
 description: reason_for_hiv_risk relevance
 priority: 1
 condition: "step1_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_relationship_married
+description: relationship_married relevance
+priority: 1
+condition: "step3_marital_status.contains('married')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_in_relationship
+description: in_relationship relevance
+priority: 1
+condition: "step3_marital_status.contains('in_relationship')"
 actions:
   - "isRelevant = true"
 ---

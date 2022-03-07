@@ -82,7 +82,7 @@ public class HouseholdDao extends AbstractDao {
             record.setSubpop3(getCursorValue(c, "subpop3"));
             record.setSubpop4(getCursorValue(c, "subpop4"));
             record.setSubpop5(getCursorValue(c, "subpop5"));
-            record.setSubpop(getCursorValue(c, "subpop"));
+            record.setSubpop6(getCursorValue(c, "subpop"));
             record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setCaregiver_sex(getCursorValue(c, "caregiver_sex"));
             record.setCaregiver_birth_date(getCursorValue(c, "caregiver_birth_date"));
@@ -138,7 +138,6 @@ public class HouseholdDao extends AbstractDao {
             record.setMarital_status(getCursorValue(c, "marital_status"));
             record.setMarriage_partner_name(getCursorValue(c, "marriage_partner_name"));
             record.setHighest_grade(getCursorValue(c, "highest_grade"));
-            record.setHomeaddress(getCursorValue(c, "homeaddress"));
 
 
             return record;
