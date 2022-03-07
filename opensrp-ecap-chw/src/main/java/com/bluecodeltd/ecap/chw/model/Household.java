@@ -1,13 +1,5 @@
 package com.bluecodeltd.ecap.chw.model;
 
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.io.Serializable;
-
 public class Household {
 
 
@@ -75,7 +67,10 @@ public class Household {
     private  String vl_suppressed;
     private  String marriage_partner_name;
     private String highest_grade;
+    private String spouse_name;
     private String homeaddress;
+    private String at_risk_reasons;
+    private String reason_for_hiv_risk;
 
     public String getMarital_status() {
         return marital_status;
@@ -597,11 +592,37 @@ public class Household {
         this.highest_grade = highest_grade;
     }
 
+
+    public String getSpouse_name() {
+        return spouse_name;
+    }
+
+    public void setSpouse_name(String spouse_name) {
+        this.spouse_name = spouse_name;
+    }
+
     public String getHomeaddress() {
         return homeaddress;
     }
 
     public void setHomeaddress(String homeaddress) {
         this.homeaddress = homeaddress;
+
+    }
+
+    public String getAt_risk_reasons() {
+        return at_risk_reasons;
+    }
+
+    public void setAt_risk_reasons(String at_risk_reasons) {
+        this.at_risk_reasons = at_risk_reasons;
+    }
+
+    public String getReason_for_hiv_risk() {
+        return reason_for_hiv_risk;
+    }
+
+    public void setReason_for_hiv_risk(String reason_for_hiv_risk) {
+        this.reason_for_hiv_risk = reason_for_hiv_risk;
     }
 }
