@@ -19,6 +19,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.Child;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
@@ -195,7 +196,8 @@ public class ProfileOverviewFragment extends Fragment {
         });
 
         txtCaregiverName.setText(childIndex.getCaregiver_name());
-        txtGender.setText(childIndex.getCaregiver_sex());
+        String myString = childIndex.getCaregiver_sex();
+        txtGender.setText(myString.substring(0, 1).toUpperCase() + myString.substring(1).toLowerCase());
         txtDob.setText(childIndex.getCaregiver_birth_date());
         txtHiv.setText(childIndex.getCaregiver_hiv_status());
         txtRelation.setText(childIndex.getRelation());

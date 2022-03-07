@@ -259,7 +259,7 @@
             android:paddingTop="@dimen/contact_drawable_padding"
             android:paddingBottom="@dimen/contact_drawable_padding"
             android:singleLine="true"
-            android:text="ART STATUS DETAILS"
+            android:text="ART STATUS AND VL DETAILS"
             android:textAllCaps="true"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/white"
@@ -390,21 +390,6 @@
                 />
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/overview_header_bg"
-            android:gravity="left"
-            android:paddingLeft="@dimen/contact_drawable_padding"
-            android:paddingTop="@dimen/contact_drawable_padding"
-            android:paddingBottom="@dimen/contact_drawable_padding"
-            android:singleLine="true"
-            android:text="VIRAL LOAD DETAILS"
-            android:textAllCaps="true"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -695,6 +680,7 @@
                     android:id="@+id/caregiver_gender"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:capitalize="words"
                     android:gravity="start"
                     android:paddingLeft="@dimen/contact_drawable_padding"
                     android:paddingTop="@dimen/contact_small_padding"
