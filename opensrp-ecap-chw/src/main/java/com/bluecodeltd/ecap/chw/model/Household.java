@@ -1,13 +1,5 @@
 package com.bluecodeltd.ecap.chw.model;
 
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.io.Serializable;
-
 public class Household {
 
 
@@ -75,6 +67,7 @@ public class Household {
     private  String vl_suppressed;
     private  String marriage_partner_name;
     private String highest_grade;
+    private String spouse_name;
 
     public String getMarital_status() {
         return marital_status;
@@ -594,5 +587,13 @@ public class Household {
 
     public void setHighest_grade(String highest_grade) {
         this.highest_grade = highest_grade;
+    }
+
+    public String getSpouse_name() {
+        return spouse_name;
+    }
+
+    public void setSpouse_name(String spouse_name) {
+        this.spouse_name = spouse_name;
     }
 }

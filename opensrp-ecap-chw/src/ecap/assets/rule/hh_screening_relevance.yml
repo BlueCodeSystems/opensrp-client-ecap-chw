@@ -174,3 +174,10 @@ priority: 1
 condition: "step1_viral_load_results > 1000 "
 actions:
   - "isRelevant = true"
+---
+name: step3_spouse_name
+description: spouse_name
+priority: 1
+condition: "step3_marital_status.contains('Married') || step3_marital_status.contains('Not Married, but in a Relationship')"
+actions:
+  - "isRelevant = true"

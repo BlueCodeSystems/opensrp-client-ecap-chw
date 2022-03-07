@@ -1,10 +1,8 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
-import org.smartregister.chw.core.domain.Child;
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
@@ -138,6 +136,7 @@ public class HouseholdDao extends AbstractDao {
             record.setMarital_status(getCursorValue(c, "marital_status"));
             record.setMarriage_partner_name(getCursorValue(c, "marriage_partner_name"));
             record.setHighest_grade(getCursorValue(c, "highest_grade"));
+            record.setSpouse_name(getCursorValue(c, "spouse_name"));
 
 
             return record;
