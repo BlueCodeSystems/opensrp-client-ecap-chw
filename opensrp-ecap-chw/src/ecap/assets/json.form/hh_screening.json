@@ -1,5 +1,5 @@
 {
-  "count": 3,
+  "count": 2,
   "encounter_type": "Household Screening",
   "entity_id": "",
   "metadata": {
@@ -188,48 +188,55 @@
         }
       },
       {
+        "key": "info1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Use the Index VCA Screening Form to Edit the VCA Sub Population",
+        "toaster_info_text": "",
+        "toaster_type": "info"
+      },
+      {
         "key": "sub_population",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
+        "read_only": true,
         "type": "check_box",
         "label": "Sub Population :",
         "options": [
           {
             "key": "subpop1",
             "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": "false"
+            "value": false
           },
           {
             "key": "subpop2",
             "text": "HIV Exposed Infants (HEIs)",
-            "value": "false"
+            "value": false
           },
           {
             "key": "subpop3",
             "text": "Children of Women Living with HIV",
-            "value": "false"
+            "value": false
           },
           {
             "key": "subpop4",
             "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
+            "value": false
           },
           {
             "key": "subpop5",
             "text": "Survivors of Sexual Violence",
-            "value": "false"
+            "value": false
           },
           {
             "key": "subpop",
             "text": "Children of Female Sex Workers (FSWs)",
-            "value": "false"
+            "value": false
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "You are required to select at least ONE option here."
-        }
+        ]
       },
       {
         "key": "facility",
@@ -1004,197 +1011,7 @@
       }
     ]
   },
-  "step2": {
-    "title": "Summary",
-    "next": "step3",
-    "fields": [
-      {
-        "key": "hdx",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hdx",
-        "type": "label",
-        "text": "Information Summary"
-      },
-      {
-        "key": "index_check_box",
-        "value": "yes",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "index_check_box",
-        "type": "toaster_notes",
-        "text": "This VCA has been Identified as an Index",
-        "toaster_type": "info",
-        "toaster_info_text": "This VCA has been Identified as an Index",
-        "toaster_info_title": "Index Tracing",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "case_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_status",
-        "type": "native_radio",
-        "value": "1",
-        "read_only": true,
-        "label": "Index VCA Case Status",
-        "options": [
-          {
-            "key": "1",
-            "text": "Active"
-          },
-          {
-            "key": "2",
-            "text": "Inactive"
-          },
-          {
-            "key": "0",
-            "text": "Closed"
-          }
-        ]
-      },
-      {
-        "key": "screened",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screened",
-        "type": "native_radio",
-        "value": "true",
-        "label": "Household Status",
-        "options": [
-          {
-            "key": "true",
-            "text": "Screened"
-          },
-          {
-            "key": "false",
-            "text": "Not Screened"
-          }
-        ]
-      },
-      {
-        "key": "subpop1_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop6_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop2_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop2",
-        "value": "true",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
-        "toaster_info_text": "HIV Exposed Infant (HEI)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop3_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop3",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop4_toast",
-        "value": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_type": "info",
-        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop5_toast",
-        "value": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop5",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      }
-    ]
-  },
-  "step3":{
+  "step2":{
     "title":"Household Enrollment",
     "fields":[
       {
@@ -1352,38 +1169,18 @@
           "Married",
           "Divorced",
           "Widowed",
-          "Not Married, but in a Relationship"
+          "Not Married,in a Relationship"
         ],
         "keys": [
-          "Single",
-          "Married",
-          "Divorced",
-          "Widowed",
-          "Not Married, but in a Relationship"
+          "single",
+          "married",
+          "divorced",
+          "widowed",
+          "in_relationship"
         ],
         "v_required": {
           "value": true,
           "err": "This is a Required field."
-        }
-      },
-      {
-        "key": "spouse_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "spouse_name",
-        "type": "edit_text",
-        "hint": "Spouse Name",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter spouse name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
         }
       },
       {
