@@ -3465,6 +3465,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "caregiver_hiv_status",
           "type": "Client",
           "json_mapping": {
@@ -3492,13 +3499,7 @@
             "field": "attributes.date_art"
           }
         },
-        {
-          "column_name": "date_art",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_art"
-          }
-        },
+
         {
           "column_name": "art_appointment",
           "type": "Client",
@@ -3528,24 +3529,10 @@
           }
         },
         {
-          "column_name": "mmd",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mmd"
-          }
-        },
-        {
           "column_name": "mmd_months",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.mmd_months"
-          }
-        },
-        {
-          "column_name": "six_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.six_months"
           }
         },
         {
@@ -3583,13 +3570,7 @@
             "field": "attributes.visit_hiv_test"
           }
         },
-        {
-          "column_name": "referred_for_testing",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.referred_for_testing"
-          }
-        },
+
         {
           "column_name": "referred_for_testing",
           "type": "Client",
@@ -3738,17 +3719,10 @@
           }
         },
         {
-          "column_name": "caseworker_firstname",
+          "column_name": "case_worker",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caseworker_firstname"
-          }
-        },
-        {
-          "column_name": "caseworker_lastname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_lastname"
+            "field": "attributes.case_worker"
           }
         },
         {
@@ -3759,31 +3733,10 @@
           }
         },
         {
-          "column_name": "caseworker_signature",
+          "column_name": "case_manager",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caseworker_signature"
-          }
-        },
-        {
-          "column_name": "caseworker_signature",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_signature"
-          }
-        },
-        {
-          "column_name": "manager_firstname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.manager_firstname"
-          }
-        },
-        {
-          "column_name": "manager_lastname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.manager_lastname"
+            "field": "attributes.case_manager"
           }
         },
         {
@@ -3793,32 +3746,19 @@
             "field": "attributes.manager_date_signed"
           }
         },
+
         {
-          "column_name": "manager_signature",
+          "column_name": "school_administration_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.manager_signature"
+            "field": "attributes.school_administration_name"
           }
         },
         {
-          "column_name": "manager_signature",
+          "column_name": "telephone",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.manager_signature"
-          }
-        },
-        {
-          "column_name": "school_administration_firstname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.school_administration_firstname"
-          }
-        },
-        {
-          "column_name": "school_administration_lastname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.school_administration_lastname"
+            "field": "attributes.telephone"
           }
         },
         {
@@ -3826,13 +3766,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_date_signed"
-          }
-        },
-        {
-          "column_name": "school_administration_signature",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.school_administration_signature"
           }
         }
       ]
@@ -5175,10 +5108,10 @@
           }
         },
         {
-          "column_name": "unique_id",
+          "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.unique_id"
+            "field": "attributes.household_id"
           }
         },
         {

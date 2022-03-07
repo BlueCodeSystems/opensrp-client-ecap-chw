@@ -917,15 +917,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 grad.setVisibility(View.VISIBLE);
                 grad_sub.setVisibility(View.VISIBLE);
 
+                if(Integer.parseInt(vcaAge) < 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                    hiv_assessment.setVisibility(View.VISIBLE);
+                }
 
-                if (is_hiv_positive != null && is_hiv_positive.equals("no")) {
-                    if(Integer.parseInt(vcaAge) < 15){
-                        hiv_assessment.setVisibility(View.VISIBLE);
-                    }
-
-                    if(Integer.parseInt(vcaAge) >= 15){
-                        hiv_assessment2.setVisibility(View.VISIBLE);
-                    }
+                if(Integer.parseInt(vcaAge) >= 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                    hiv_assessment2.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -1097,12 +1094,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.call:
-                CommonPersonObjectClient client = (CommonPersonObjectClient) getIntent().getSerializableExtra("clients");
-                Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
+                String caregiverPhoneNumber = child.getCaregiver_phone();
+                if(!caregiverPhoneNumber.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
 
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:" + client.getColumnmaps().get("caregiver_phone")));
-                startActivity(callIntent);
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                    startActivity(callIntent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"No number for caregiver found",Toast.LENGTH_LONG).show();
+                }
+
                 return true;
             case R.id.case_status:
 

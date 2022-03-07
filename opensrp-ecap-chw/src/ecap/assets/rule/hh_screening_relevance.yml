@@ -1,43 +1,43 @@
 ---
-name: step2_subpop1
+name: step2_subpop1_toast
 description: subpop1 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop1')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop2
+name: step2_subpop2_toast
 description: subpop2 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop2')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop3
+name: step2_subpop3_toast
 description: subpop3 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop3')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop4
+name: step2_subpop4_toast
 description: subpop4 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop4')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop5
+name: step2_subpop5_toast
 description: subpop5 relevance
 priority: 1
 condition: "step1_sub_population.contains('subpop5')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop6
+name: step2_subpop6_toast
 description: subpop6 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop6')"
+condition: "step1_sub_population.contains('subpop')"
 actions:
   - "isRelevant = true"
 ---

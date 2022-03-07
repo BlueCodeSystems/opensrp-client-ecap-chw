@@ -111,28 +111,31 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.EC_HOUSEHOLD, Constants.EcapClientTable.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.FAMILY_MEMBER};
+        return new String[]{CoreConstants.TABLE_NAME.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.EC_MOTHER_INDEX, Constants.EcapClientTable.EC_HOUSEHOLD};
     }
 
     @Override
     public Map<String, String[]> getFTSSearchMap() {
         Map<String, String[]> map = new HashMap<>();
 
+        map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
+                DBConstants.KEY.FIRST_NAME,
+                DBConstants.KEY.LAST_NAME,
+                DBConstants.KEY.UNIQUE_ID
+        });
+
+        map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
+                "caregiver_name",
+                "household_id"
+
+        });
+
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
                 "caregiver_name",
                 "household_id"
         });
 
-        map.put(CoreConstants.TABLE_NAME.FAMILY_MEMBER, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID, DBConstants.KEY.FIRST_NAME, DBConstants.KEY.MIDDLE_NAME,
-                DBConstants.KEY.LAST_NAME, DBConstants.KEY.UNIQUE_ID, ChildDBConstants.KEY.ENTRY_POINT, DBConstants.KEY.DOB, DBConstants.KEY.DATE_REMOVED
-        });
 
-        map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
-                DBConstants.KEY.BASE_ENTITY_ID,
-                DBConstants.KEY.FIRST_NAME,
-                DBConstants.KEY.LAST_NAME,
-        });
 
         return map;
     }
