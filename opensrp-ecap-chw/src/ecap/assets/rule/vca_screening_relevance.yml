@@ -254,7 +254,7 @@ actions:
 name: step3_subpop2_toast
 description: subpop2_toast relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no') && step2_consent_check_box.contains('consent_check_box')"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -485,7 +485,7 @@ actions:
 name: step1_agyw_sexually_active
 description: agyw_sexually_active
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18 && step1_gender.contains('female') && (!step1_is_hiv_positive.contains('yes'))"
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -597,7 +597,7 @@ actions:
 name: step1_school
 description: school
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 7"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 4"
 actions:
   - "isRelevant = true"
 ---
