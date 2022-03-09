@@ -540,8 +540,6 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
-        "read_only":"false",
-
         "options": [
           {
             "key": "HIV+",
@@ -562,7 +560,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "This is a required field."
+          "err": "This field id required"
         }
       },
       {

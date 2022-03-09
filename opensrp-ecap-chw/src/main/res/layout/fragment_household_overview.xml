@@ -28,6 +28,8 @@
         app:rd_enable="true"
         app:rd_rippleType="wave" />
 
+
+
     <TextView
         android:id="@+id/overview_section_header"
         android:layout_width="match_parent"
@@ -43,6 +45,7 @@
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 
@@ -255,7 +258,6 @@
 
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/overview_section_header2"
             android:layout_width="match_parent"
@@ -336,7 +338,33 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="left"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_drawable_padding"
+            android:paddingBottom="@dimen/contact_drawable_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:src="@drawable/ic_icon_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/overview_section_header8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp"
+                android:textStyle="italic"
+                android:text="Please Complete Nutrition Screening Using MUAC Scores for each child in the Members Tab"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/mylayout"
             android:visibility="gone"
