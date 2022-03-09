@@ -947,12 +947,8 @@
         "key": "referred_services",
         "type": "label",
         "label_text_style": "bold",
-        "text": "List of Services to be Referred :",
-        "text_color": "#000000",
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
-        }
+        "text": "List of Services to be Referred:",
+        "text_color": "#000099"
       },
       {
         "key": "active_on_treatment_no_list",
