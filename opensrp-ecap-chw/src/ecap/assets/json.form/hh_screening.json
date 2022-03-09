@@ -802,7 +802,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "at_risk_reasons",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV?)",
+        "label": "Are there any reasons you may be at risk for HIV?",
         "options": [
           {
             "key": "yes",
