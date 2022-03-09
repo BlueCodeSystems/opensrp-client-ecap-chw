@@ -2601,7 +2601,7 @@
           "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "value": "^[0-9]{9,10}$",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
