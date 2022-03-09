@@ -115,3 +115,11 @@ priority: 1
 condition: "( step1_agyw_receiving_an_economic_strengthening_intervention != null )"
 actions:
   - "calculation = step1_agyw_receiving_an_economic_strengthening_intervention "
+
+---
+name: step5_caregiver_hiv_status
+description: caregiver_hiv_status
+priority: 1
+condition: " (step1_is_biological_child_of_mother_living_with_hiv.contains('yes')) && (step5_relation.contains('parent'))"
+actions:
+  - "calculation = 'positive'"
