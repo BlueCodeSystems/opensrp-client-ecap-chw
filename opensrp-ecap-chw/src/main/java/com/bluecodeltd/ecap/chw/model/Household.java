@@ -64,13 +64,16 @@ public class Household {
     private String carried_by;
     private String caregiver_education;
     private String marital_status;
-    private  String vl_suppressed;
-    private  String marriage_partner_name;
+    private String vl_suppressed;
+    private String marriage_partner_name;
     private String highest_grade;
     private String spouse_name;
     private String homeaddress;
     private String at_risk_reasons;
     private String reason_for_hiv_risk;
+    private String editedby_number;
+    private String edit_date;
+    private String edited_by;
 
     public String getMarital_status() {
         return marital_status;
@@ -624,5 +627,29 @@ public class Household {
 
     public void setReason_for_hiv_risk(String reason_for_hiv_risk) {
         this.reason_for_hiv_risk = reason_for_hiv_risk;
+    }
+
+    public String getEditedby_number() {
+        return editedby_number;
+    }
+
+    public void setEditedby_number(String editedby_number) {
+        this.editedby_number = editedby_number;
+    }
+
+    public String getEdit_date() {
+        return edit_date;
+    }
+
+    public void setEdit_date(String edit_date) {
+        this.edit_date = edit_date;
+    }
+
+    public String getEdited_by() {
+        return edited_by;
+    }
+
+    public void setEdited_by(String edited_by) {
+        this.edited_by = edited_by;
     }
 }
