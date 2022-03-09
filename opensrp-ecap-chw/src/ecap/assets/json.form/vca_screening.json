@@ -2493,28 +2493,6 @@
         }
       },
       {
-        "key": "caregiver_sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_sex",
-        "type": "native_radio",
-        "label": "Caregiver's Gender",
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
         "key": "caregiver_birth_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -2541,17 +2519,80 @@
         }
       },
       {
+        "key": "caregiver_sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_sex",
+        "type": "native_radio",
+        "label": "Caregiver's Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relation",
+        "type": "native_radio",
+        "label": "Relationship to Child",
+        "options": [
+          {
+            "key": "parent",
+            "text": "Parent"
+          },
+          {
+            "key": "guardian",
+            "text": "Guardian"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "caregiver_hiv_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
-        "type": "spinner",
-        "hint": "Caregiver's HIV Status",
-        "values": [
-          "HIV+",
-          "HIV-",
-          "Unknown",
-          "Status not required based on risk assessment"
+        "type": "native_radio",
+        "label": "Caregiver's HIV Status",
+        "options": [
+          {
+            "key": "positive",
+            "text": "Positive"
+          },
+          {
+            "key": "negative",
+            "text": "Negative"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment"
+          }
         ],
         "v_required": {
           "value": true,
@@ -2563,27 +2604,11 @@
               "rules-file": "vca_screening_relevance.yml"
             }
           }
-        }
-      },
-      {
-        "key": "relation",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relation",
-        "type": "spinner",
-        "hint": "Relationship to Child",
-        "values": [
-          "Parent",
-          "Guardian"
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
         },
-        "relevance": {
+        "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
+              "rules-file": "vca_screening_calculation.yml"
             }
           }
         }
