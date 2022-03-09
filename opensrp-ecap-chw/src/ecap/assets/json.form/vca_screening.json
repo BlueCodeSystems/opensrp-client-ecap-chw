@@ -510,7 +510,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_result",
         "type": "native_radio",
-        "label": "What was the screening result",
+        "label": "What was the screening result?",
         "options": [
           {
             "key": "Negative",
@@ -534,7 +534,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_eligibility",
         "type": "native_radio",
-        "label": "Was client initiated for TB Preventive Therapy (TPT)?",
+        "label": "Was the client eligible for TB Preventive Therapy?",
         "options": [
           {
             "key": "yes",
