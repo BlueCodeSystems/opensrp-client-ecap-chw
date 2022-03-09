@@ -954,12 +954,8 @@
         "key": "referred_services",
         "type": "label",
         "label_text_style": "bold",
-        "text": "List of Services to be Referred :",
-        "text_color": "#000000",
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
-        }
+        "text": "List of Services to be Referred:",
+        "text_color": "#000099"
       },
       {
         "key": "active_on_treatment_no_list",
@@ -1379,6 +1375,48 @@
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "edited_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edited_by",
+        "type": "edit_text",
+        "hint": "Record Last Edited By",
+        "look_up": "true",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "edit_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edit_date",
+        "type": "date_picker",
+        "hint": "Date when record was last edited",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today",
+        "max_date": "today",
+        "read_only": "true"
+      },
+      {
+        "key": "editedby_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "editedby_number",
+        "type": "edit_text",
+        "hint": "Contact Phone Number of last person to edit record",
+        "edit_type": "number",
+        "read_only": "true"
       }
     ]
   }
