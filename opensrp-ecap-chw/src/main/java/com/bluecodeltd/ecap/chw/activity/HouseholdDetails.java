@@ -346,6 +346,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     if(caregiverAssessmentModel == null) {
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
 
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(32).put("value", house.getActive_on_treatment());
+
                     }
                     else{
                         indexRegisterForm.put("entity_id", this.caregiverAssessmentModel.getBase_entity_id());

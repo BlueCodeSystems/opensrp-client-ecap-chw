@@ -716,7 +716,7 @@
         "type": "edit_text",
         "hint": "ART Number",
         "read_only": "true",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:active_on_treatment": {
             "type": "string",
