@@ -334,7 +334,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Add Case Plan"
+                    android:text="VCA Case Plan"
                     android:textStyle="italic"
                     />
 
@@ -370,7 +370,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Add new Referral"
+                    android:text="Referral Form"
                     android:textStyle="italic"
                     android:background="#666666"
                     android:textColor="@android:color/white" />
@@ -424,86 +424,6 @@
                     app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/grad"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/grad_fab"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Graduation Assessment"
-                    android:textStyle="italic"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/grad_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/grad_sub"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/grad_fab20"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Grad Assessment(Sub Form)"
-                    android:textStyle="italic"
-                     />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/grad_fab20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
-
-            </RelativeLayout>
-
-
 
             <RelativeLayout
                 android:id="@+id/hiv_assessment"
