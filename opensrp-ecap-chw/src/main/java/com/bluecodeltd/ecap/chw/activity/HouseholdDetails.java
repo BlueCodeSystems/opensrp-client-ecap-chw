@@ -90,7 +90,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver;;
+    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver, grad_form;
     private String childId;
     public String householdId;
     public String countFemales, countMales;
@@ -141,6 +141,7 @@ public class HouseholdDetails extends AppCompatActivity {
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         rscreen = findViewById(R.id.hh_screening);
+        grad_form = findViewById(R.id.grad);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
@@ -769,6 +770,7 @@ public class HouseholdDetails extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             rscreen.setVisibility(View.VISIBLE);
+            grad_form.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
@@ -781,6 +783,7 @@ public class HouseholdDetails extends AppCompatActivity {
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
         rscreen.setVisibility(View.GONE);
+        grad_form.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
         child_form.setVisibility(View.GONE);
