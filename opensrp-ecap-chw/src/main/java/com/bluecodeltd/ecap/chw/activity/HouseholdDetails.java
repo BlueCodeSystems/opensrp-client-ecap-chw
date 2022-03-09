@@ -91,7 +91,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver, grad_form;
-    private String childId;
+    private String childId, childrenCount;
     public String householdId;
     public String countFemales, countMales;
     private UniqueIdRepository uniqueIdRepository;
@@ -249,9 +249,9 @@ public class HouseholdDetails extends AppCompatActivity {
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
 
-        String children = IndexPersonDao.countChildren(householdId);
+        childrenCount = IndexPersonDao.countChildren(householdId);
 
-        childTabCount.setText(children);
+        childTabCount.setText(childrenCount);
 
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
@@ -308,7 +308,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
 
-
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -346,13 +345,15 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     if(caregiverAssessmentModel == null) {
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(32).put("value", house.getActive_on_treatment());
+
                     }
                     else{
                         indexRegisterForm.put("entity_id", this.caregiverAssessmentModel.getBase_entity_id());
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, assessmentMapper.convertValue(caregiverAssessmentModel, Map.class));
                     }
+
                     startFormActivity(indexRegisterForm);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -437,7 +438,6 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-
 
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened,caregiverMapper.convertValue(caregiver, Map.class));
                     startFormActivity(formToBeOpened);
