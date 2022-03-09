@@ -132,17 +132,17 @@ condition: "step1_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes
 actions:
   - "isRelevant = true"
 ---
-name: step3_relationship_other
+name: step2_relationship_other
 description: relationship_other relevance
 priority: 1
-condition: "step3_e_relationship.contains('other')"
+condition: "step2_e_relationship.contains('other')"
 actions:
   - "isRelevant = true"
 ---
-name: step3_marriage_partner_name
+name: step2_marriage_partner_name
 description: marriage_partner_name
 priority: 1
-condition: "step3_marital_status.contains('married') || step3_marital_status.contains('in_relationship') "
+condition: "step2_marital_status.contains('married') || step2_marital_status.contains('in_relationship') "
 actions:
   - "isRelevant = true"
 ---
@@ -153,17 +153,17 @@ condition: "step1_viral_load_results !=''"
 actions:
   - "isRelevant = true"
 ---
-name: step3_relationship_partner_name
+name: step2_relationship_partner_name
 description: relationship_partner_name
 priority: 1
-condition: "step3_marital_status.contains('in_relationship')  "
+condition: "step2_marital_status.contains('in_relationship')  "
 actions:
   - "isRelevant = true"
 ---
-name: step3_marriage_partner_name
+name: step2_marriage_partner_name
 description: marriage_partner_name
 priority: 1
-condition: "step3_marital_status.contains('married')  "
+condition: "step2_marital_status.contains('married')  "
 actions:
   - "isRelevant = true"
 
@@ -175,9 +175,9 @@ condition: "step1_viral_load_results > 1000 "
 actions:
   - "isRelevant = true"
 ---
-name: step3_spouse_name
+name: step2_spouse_name
 description: spouse_name
 priority: 1
-condition: "step3_marital_status.contains('Married') || step3_marital_status.contains('Not Married, but in a Relationship')"
+condition: "step2_marital_status.contains('Married') || step2_marital_status.contains('Not Married, but in a Relationship')"
 actions:
   - "isRelevant = true"
