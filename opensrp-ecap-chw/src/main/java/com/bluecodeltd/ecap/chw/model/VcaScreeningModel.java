@@ -9,7 +9,7 @@ public class VcaScreeningModel {
     private String district;
     private String ward;
     private String health_facility;
-
+    private String screening_location;
     private String partner;
     private String adolescent_first_name;
     private String adolescent_last_name;
@@ -1001,5 +1001,12 @@ public class VcaScreeningModel {
 
     public void setOther_reason(String other_reason) {
         this.other_reason = other_reason;
+    }
+    public String getScreening_location() {
+        return screening_location;
+    }
+
+    public void setScreening_location(String screening_location) {
+        this.screening_location = screening_location;
     }
 }
