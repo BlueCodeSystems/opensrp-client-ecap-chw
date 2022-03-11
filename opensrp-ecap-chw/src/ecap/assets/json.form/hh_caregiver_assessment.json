@@ -64,7 +64,6 @@
         "hint": "Household ID",
         "edit_type": "name"
       },
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -717,7 +716,7 @@
         "type": "edit_text",
         "hint": "ART Number",
         "read_only": "true",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:active_on_treatment": {
             "type": "string",
@@ -951,7 +950,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "documented_12months",
         "type": "native_radio",
-        "label": "Was the primary caregiver documented as virally suppressed (<1000 copies/mL) in the most recent viral load test? ",
+        "label": "Was the primary caregiver documented as virally suppressed? Less than 1000 copies/mL in the most recent viral load test? ",
         "options": [
           {
             "key": "yes",
@@ -1105,12 +1104,6 @@
         "openmrs_entity_id": "household_number",
         "type": "edit_text",
         "hint": "How many members does the household have?",
-        "edit_type": "number",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Please enter a valid number"
-        },
         "relevance": {
           "step1:test_6months": {
             "type": "string",
@@ -1962,7 +1955,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for economic strengthening\nand   Government   Livelihood   support\ninterventions",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
@@ -2019,7 +2012,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for economic strengthening\nand   Government   Livelihood   support\ninterventions",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
@@ -2057,7 +2050,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
@@ -2302,7 +2295,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
@@ -2406,7 +2399,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Conduct   escorted   referral   to   the.appropriate government department (e.g.,\nNational Registration Office, Department of\nSocial Welfare)",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": " ",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
@@ -2506,7 +2499,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for Alcohol and/substance abuse counselling",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
@@ -2524,7 +2517,7 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Provide alcohol and substance abuse counselling in relation to ART Adherence.\n\nNB: ART Adherence must be assessed, and ART adherence counselling provided at every home visit. \n",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "toaster_info_text": " ",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
