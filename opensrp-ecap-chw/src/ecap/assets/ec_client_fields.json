@@ -2115,6 +2115,27 @@
           "json_mapping": {
             "field": "attributes.other_reason"
           }
+        },
+        {
+          "column_name": "edit_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.edit_date"
+          }
+        },
+        {
+          "column_name": "edited_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.edited_by"
+          }
+        },
+        {
+          "column_name": "editedby_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.editedby_number"
+          }
         }
       ]
     },

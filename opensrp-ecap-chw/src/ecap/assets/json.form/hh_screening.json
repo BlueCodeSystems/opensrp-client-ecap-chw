@@ -1412,7 +1412,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "editedby_number",
         "type": "edit_text",
-        "hint": "Contact Phone Number of last person to edit record",
+        "hint": "Contact Number of last person to edit record",
         "edit_type": "number",
         "read_only": "true"
       }

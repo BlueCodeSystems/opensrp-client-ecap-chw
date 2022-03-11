@@ -2643,6 +2643,48 @@
             }
           }
         }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "edited_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edited_by",
+        "type": "edit_text",
+        "hint": "Record Last Edited By",
+        "look_up": "true",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "edit_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edit_date",
+        "type": "date_picker",
+        "hint": "Date when record was last edited",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today",
+        "max_date": "today",
+        "read_only": "true"
+      },
+      {
+        "key": "editedby_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "editedby_number",
+        "type": "edit_text",
+        "hint": "Contact Number of last person to edit record",
+        "edit_type": "number",
+        "read_only": "true"
       }
     ]
   }
