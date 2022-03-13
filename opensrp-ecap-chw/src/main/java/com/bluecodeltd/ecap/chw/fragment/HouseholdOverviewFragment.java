@@ -26,13 +26,13 @@ import java.util.HashMap;
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales,
-            txtFemales, txtNumber, txtName;
-    LinearLayout linearLayout;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales, txtFemales, txtNumber, txtName;
+    LinearLayout linearLayout, muacView;
     Button screenBtn;
     FloatingActionButton fab;
     Household house;
     CaregiverAssessmentModel caregiverAssessmentModel;
+    String nutritionWarning;
 
 
     @SuppressLint("RestrictedApi")
@@ -51,7 +51,9 @@ public class HouseholdOverviewFragment extends Fragment {
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
 
+
         linearLayout = view.findViewById(R.id.llayout);
+        muacView = view.findViewById(R.id.muac_warning);
         screenBtn = view.findViewById(R.id.screenBtn);
 
         fab = getActivity().findViewById(R.id.fabx);
@@ -73,6 +75,23 @@ public class HouseholdOverviewFragment extends Fragment {
 
         house = mymap.get("house");
         caregiverAssessmentModel = vmap.get("vulnerabilities");
+
+       if (caregiverAssessmentModel != null){
+
+           nutritionWarning = caregiverAssessmentModel.getHousehold_eaten_month();
+
+       }
+
+
+        if(nutritionWarning != null && (nutritionWarning.equals("sometimes") || nutritionWarning.equals("warning"))){
+
+            muacView.setVisibility(View.VISIBLE);
+
+        } else {
+
+            muacView.setVisibility(View.GONE);
+
+        }
 
         String is_screened = house.getScreened();
         String incomeSource = house.getFam_source_income();

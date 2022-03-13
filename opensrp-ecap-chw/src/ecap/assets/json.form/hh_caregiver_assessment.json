@@ -1999,8 +1999,8 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
+          "no",
+          "rarely",
           "sometimes",
           "often"
         ]
@@ -2037,10 +2037,10 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
-          "Sometimes (3 to 10 times)",
-          "Often (more than 10 times)"
+          "no",
+          "rarely",
+          "sometimes",
+          "often"
         ]
       },
       {
