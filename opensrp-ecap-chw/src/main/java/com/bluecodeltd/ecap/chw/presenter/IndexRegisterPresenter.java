@@ -153,7 +153,4 @@ public class IndexRegisterPresenter implements IndexRegisterContract.Presenter, 
            getView().startFormActivity(form);
 
    }
-
-
-
 }

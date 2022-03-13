@@ -339,6 +339,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/muac_warning"
             android:orientation="horizontal"
             android:gravity="left"
             android:paddingLeft="@dimen/contact_drawable_padding"
@@ -353,7 +355,6 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/overview_section_header8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
