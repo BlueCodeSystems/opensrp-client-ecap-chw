@@ -150,6 +150,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setReason(getCursorValue(c, "reason"));
             record.setTransfer_reason(getCursorValue(c, "transfer_reason"));
             record.setOther_reason(getCursorValue(c, "other_reason"));
+            record.setScreening_location(getCursorValue(c,"screening_location"));
             return record;
         };
     }
