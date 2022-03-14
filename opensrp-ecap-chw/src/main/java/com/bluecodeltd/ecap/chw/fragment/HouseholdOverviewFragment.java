@@ -18,15 +18,13 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.rey.material.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.widget.AppCompatButton;
-
 import java.util.HashMap;
 
 
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales, txtFemales, txtNumber, txtName;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtMalesBetweenTenAndSeventeen;
     LinearLayout linearLayout, muacView;
     Button screenBtn;
     FloatingActionButton fab;
@@ -46,11 +44,11 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncomeSource = view.findViewById(R.id.income_source);
         txtBeds = view.findViewById(R.id.beds);
         txtMalaria = view.findViewById(R.id.malaria);
-        txtMales = view.findViewById(R.id.males);
+        txtMalesLessThanFive = view.findViewById(R.id.males);
         txtFemales = view.findViewById(R.id.females);
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
-
+        txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
 
         linearLayout = view.findViewById(R.id.llayout);
         muacView = view.findViewById(R.id.muac_warning);
@@ -71,7 +69,8 @@ public class HouseholdOverviewFragment extends Fragment {
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
 
         String females = ( (HouseholdDetails) requireActivity()).countFemales;
-        String males = ( (HouseholdDetails) requireActivity()).countMales;
+        String lessThanFiveMales = ( (HouseholdDetails) requireActivity()).lessThanFiveMales;
+        String betweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).malesBetweenTenAndSevenTeen;
 
         house = mymap.get("house");
         caregiverAssessmentModel = vmap.get("vulnerabilities");
@@ -111,9 +110,15 @@ public class HouseholdOverviewFragment extends Fragment {
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
         txtMalaria.setText(household_member_had_malaria);
-        txtMales.setText(males);
         txtFemales.setText(females);
-        txtMales.setText(males);
+
+        if(lessThanFiveMales != null)
+        {
+            txtMalesLessThanFive.setText(lessThanFiveMales);
+        }
+       if(betweenTenAndSevenTeen != null) {
+           txtMalesBetweenTenAndSeventeen.setText(betweenTenAndSevenTeen);
+       }
         if(emergency_name != null)
         {
             txtName.setText(emergency_name);

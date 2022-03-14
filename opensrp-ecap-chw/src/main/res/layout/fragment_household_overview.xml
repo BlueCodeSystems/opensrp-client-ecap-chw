@@ -210,10 +210,40 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Males in Household" />
+                android:text="Males  less than 5" />
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/males"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Not Set"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="Males Between 10 than 17" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/malesBetweenTenAndSeventeen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"

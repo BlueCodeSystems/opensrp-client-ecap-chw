@@ -70,6 +70,9 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -103,7 +106,9 @@ public class HouseholdDetails extends AppCompatActivity {
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
-
+    List<String> allMalesBirthDates;
+   public String lessThanFiveMales;
+   public String malesBetweenTenAndSevenTeen;
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
 
@@ -168,6 +173,9 @@ public class HouseholdDetails extends AppCompatActivity {
 
         countFemales = IndexPersonDao.countFemales(householdId);
         countMales = IndexPersonDao.countMales(householdId);
+        allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
+        assert allMalesBirthDates != null;
+         countNumberOfMales(allMalesBirthDates);
 
     }
 
@@ -810,6 +818,41 @@ public class HouseholdDetails extends AppCompatActivity {
         household_visitation_caregiver.setVisibility(View.GONE);
     }
 
+    public void countNumberOfMales(List<String> allBirthDates){
+            int totalNumberOfMalesBelowFive = 0;
+            int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
+            DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+            if( allBirthDates != null)
+            {
+            for(int i = 0; i < allBirthDates.size(); i++)
+            {
+                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
+                LocalDate today =LocalDate.now();
+                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                {
+                    totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                }
+                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
+                {
+                    totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
+                 }
+            }
+            }
+
+        lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
+        malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
+
+    }
+
+    public Period getPeriodBetweenDateOfBirthAndNow(LocalDate localDateBirthdate, LocalDate today){
+      return   Period.between(localDateBirthdate, today);
+    }
+
+    public DateTimeFormatter formatDateByPattern(String pattern)
+    {
+        return DateTimeFormatter.ofPattern(pattern);
+    }
 
     public Household getHousehold(String householdId)
     {
