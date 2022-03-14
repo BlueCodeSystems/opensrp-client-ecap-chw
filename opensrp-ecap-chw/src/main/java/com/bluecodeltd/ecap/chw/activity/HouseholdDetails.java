@@ -456,7 +456,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
         Form form = new Form();
         try {
             if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
@@ -503,7 +502,6 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
-
 
 
             if(!jsonFormObject.optString("entity_id").isEmpty()){
@@ -554,6 +552,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+                        break;
+
+                    case "MUAC Score":
+
+                        closeFab();
+                        Toasty.success(HouseholdDetails.this, "MUAC Updated", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
@@ -610,6 +616,19 @@ public class HouseholdDetails extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
+
+                case "MUAC Score":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_muac");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
 
                 case "Family Member":
 
