@@ -1,0 +1,132 @@
+{
+  "count": "1",
+  "encounter_type": "MUAC Score",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "",
+    "fields": [
+      {
+        "key": "muac",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac",
+        "type": "native_radio",
+        "label": "What was the MUAC result of the child?",
+        "options": [
+          {
+            "key": "red",
+            "text": "Red"
+          },
+          {
+            "key": "yellow",
+            "text": "Yellow"
+          },
+          {
+            "key": "green",
+            "text": "Green"
+          }
+        ]
+      },
+      {
+        "key": "toaster_red",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to facility therapeutic feeding using Ready to Use Therapeutic Food (RUTF)",
+        "toaster_type": "warning",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "step1:muac": {
+            "type": "string",
+            "ex": "equalTo(., \"red\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_yellow",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to facility supplementary feeding using high energy protein supplements (HEPS)",
+        "toaster_type": "warning",
+        "toaster_info_text": " ",
+        "toaster_info_title": "",
+        "relevance": {
+          "step1:warning": {
+            "type": "string",
+            "ex": "equalTo(., \"yellow\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_green",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Conduct nutrition counseling and IYCF counselling",
+        "toaster_type": "warning",
+        "toaster_info_text": " ",
+        "toaster_info_title": "",
+        "relevance": {
+          "step1:warning": {
+            "type": "string",
+            "ex": "equalTo(., \"green\")"
+          }
+        }
+      }
+    ]
+  }
+}
