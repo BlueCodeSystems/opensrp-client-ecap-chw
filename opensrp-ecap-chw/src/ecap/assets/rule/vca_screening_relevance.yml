@@ -447,13 +447,6 @@ condition: "(step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_ad
 actions:
   - "isRelevant = true"
 ---
-name: step1_child_tested_for_hiv_with_mother_as_index_client
-description: child_tested_for_hiv_with_mother_as_index_client
-priority: 1
-condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
-actions:
-  - "isRelevant = true"
----
 name: step1_is_mother_currently_on_treatment_wlhiv
 description: is_mother_currently_on_treatment_wlhiv
 priority: 1
