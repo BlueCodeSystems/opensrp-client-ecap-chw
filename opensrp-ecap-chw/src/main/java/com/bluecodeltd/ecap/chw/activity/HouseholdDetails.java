@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CaregiverAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -90,7 +91,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver, grad_form;
+    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form;
     private String childId, childrenCount;
     public String householdId;
     public String countFemales, countMales;
@@ -133,7 +134,6 @@ public class HouseholdDetails extends AppCompatActivity {
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
 
-
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
@@ -148,8 +148,6 @@ public class HouseholdDetails extends AppCompatActivity {
         txtVillage = findViewById(R.id.address1);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
-        //rvisit = findViewById(R.id.hh_visit);
-        //hvisit20 = findViewById(R.id.hh_visit20);
         child_form = findViewById(R.id.child_form);
         household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         mTabLayout =  findViewById(R.id.tabs);
@@ -157,7 +155,7 @@ public class HouseholdDetails extends AppCompatActivity {
         setupViewPager();
         updateTasksTabTitle();
         updateChildTabTitle();
-        //updateCaseplanTitle();
+        updateCaseplanTitle();
         txtDistrict.setText(householdId);
 
         if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
@@ -172,7 +170,6 @@ public class HouseholdDetails extends AppCompatActivity {
         countMales = IndexPersonDao.countMales(householdId);
 
     }
-
 
 
     public HashMap<String, Household> getData() {
@@ -212,7 +209,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
         mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
-        mTabLayout.getTabAt(2).setText("Case plans");
+        mTabLayout.getTabAt(2).setText("CP");
 
     }
 
@@ -224,12 +221,12 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
 
-  /*  private void updateCaseplanTitle() {
+    private void updateCaseplanTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.household_plan_tab_title, null);
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
-        casePlanTabTitle.setText("Case plans");
+        casePlanTabTitle.setText("CP");
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
-        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());        //re-visit query in Dao
+        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());
 
         if (plans > 0)
         {
@@ -238,16 +235,15 @@ public class HouseholdDetails extends AppCompatActivity {
         else{
             casePlanTabCount.setText("0");
         }
-        //change valueOf to plans after query is re-visited
+
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
-    }*/
+    }
 
     private void updateChildTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
-
 
         childrenCount = IndexPersonDao.countChildren(householdId);
 
@@ -297,16 +293,18 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     householdMapper = new ObjectMapper();
 
-                    indexRegisterForm = formUtils.getFormJson("hh_screening");
+                    indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
                     indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
+
+                    indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
 

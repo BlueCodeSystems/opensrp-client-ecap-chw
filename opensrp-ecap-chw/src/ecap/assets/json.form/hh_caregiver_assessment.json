@@ -1999,8 +1999,8 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
+          "no",
+          "rarely",
           "sometimes",
           "often"
         ]
@@ -2027,7 +2027,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten_month",
-        "hint": "In the last  month, did any child/\nadolescent     in the household or\nyourself (if pregnant or HIV-positive)\ngo   a   whole   day   without   eating\nanything   because   there   was   not\nenough to eat?",
+        "hint": "In the last  month, did any child/adolescent in the household \ngo a whole day without eating \n anything because there was not \n enough to eat?",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -2037,10 +2037,10 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
-          "Sometimes (3 to 10 times)",
-          "Often (more than 10 times)"
+          "no",
+          "rarely",
+          "sometimes",
+          "often"
         ]
       },
       {
@@ -2060,100 +2060,6 @@
             }
           }
         }
-      },
-      {
-        "key": "muac",
-        "type": "repeating_group",
-        "reference_edit_text": "",
-        "reference_edit_text_hint": "Number of children \nto determine the MUAC result\nand Pregnant caregiver?",
-        "repeating_group_label": "MUAC result for child",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "muac",
-        "v_required": {
-          "value": false,
-          "err": "Please specify the number of children"
-        },
-        "value": [
-          {
-            "key": "child",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "child",
-            "type": "native_radio",
-            "label": "Child",
-            "options": [
-              {
-                "key": "red",
-                "text": "Red"
-              },
-              {
-                "key": "yellow",
-                "text": "Yellow"
-              },
-              {
-                "key": "green",
-                "text": "Green"
-              }
-            ]
-          },
-          {
-            "key": "toaster_red",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
-            "type": "toaster_notes",
-            "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
-            "toaster_type": "info",
-            "toaster_info_text": "",
-            "toaster_info_title": "Information Toaster Info Title",
-            "relevance": {
-              "step1:child": {
-                "type": "string",
-                "ex": "equalTo(., \"red\")"
-              }
-            }
-          },
-          {
-            "key": "toaster_yellow",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
-            "type": "toaster_notes",
-            "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
-            "toaster_type": "info",
-            "toaster_info_text": " ",
-            "toaster_info_title": "Information Toaster Info Title",
-            "relevance": {
-              "step1:child": {
-                "type": "string",
-                "ex": "equalTo(., \"yellow\")"
-              }
-            }
-          },
-          {
-            "key": "pregnant_caregiver",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "pregnant_caregiver",
-            "type": "native_radio",
-            "label": "Pregnant Caregiver",
-            "options": [
-              {
-                "key": "red",
-                "text": "Red"
-              },
-              {
-                "key": "yellow",
-                "text": "Yellow"
-              },
-              {
-                "key": "green",
-                "text": "Green"
-              }
-            ]
-          }
-        ]
       },
       {
         "key": "toaster_red2",
