@@ -502,6 +502,21 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     formToBeOpened = formUtils.getFormJson("family_member");
 
+                    //Populate Caseworker Name
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+                    String caseworker = sp.getString("caseworker_name", "Anonymous");
+
+                    JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step2"), "caseworker_name");
+
+                    if (ccname != null) {
+                        ccname.remove(JsonFormUtils.VALUE);
+                        try {
+                            ccname.put(JsonFormUtils.VALUE, caseworker);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
                     String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
                     String xId = entityId.replaceFirst("^0+(?!$)", "");

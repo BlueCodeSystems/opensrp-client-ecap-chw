@@ -289,6 +289,16 @@
     "title": "Immunization Status",
     "fields": [
       {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Caseworker Name",
+        "read_only": "true",
+        "edit_type": "name"
+      },
+      {
         "key": "immunization",
         "label": "Has the child received the following vaccinations?",
         "type": "check_box",
