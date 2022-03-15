@@ -31,6 +31,8 @@ public class HouseholdOverviewFragment extends Fragment {
     Household house;
     CaregiverAssessmentModel caregiverAssessmentModel;
     String nutritionWarning;
+    private TextView txtFemalesBetweenTenAndSeventeen;
+    private TextView txtFemalesLessThanFive;
 
 
     @SuppressLint("RestrictedApi")
@@ -45,11 +47,12 @@ public class HouseholdOverviewFragment extends Fragment {
         txtBeds = view.findViewById(R.id.beds);
         txtMalaria = view.findViewById(R.id.malaria);
         txtMalesLessThanFive = view.findViewById(R.id.males);
+        txtFemalesLessThanFive = view.findViewById(R.id.males);
         txtFemales = view.findViewById(R.id.females);
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
         txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
-
+        txtFemalesBetweenTenAndSeventeen = view.findViewById(R.id.femalesBetweenTenAndSeventeen);
         linearLayout = view.findViewById(R.id.llayout);
         muacView = view.findViewById(R.id.muac_warning);
         screenBtn = view.findViewById(R.id.screenBtn);
@@ -71,6 +74,8 @@ public class HouseholdOverviewFragment extends Fragment {
         String females = ( (HouseholdDetails) requireActivity()).countFemales;
         String lessThanFiveMales = ( (HouseholdDetails) requireActivity()).lessThanFiveMales;
         String betweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).malesBetweenTenAndSevenTeen;
+        String lessThanFiveFemales = ( (HouseholdDetails) requireActivity()).lessThanFiveFemales;
+        String femalesBetweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).FemalesBetweenTenAndSevenTeen;
 
         house = mymap.get("house");
         caregiverAssessmentModel = vmap.get("vulnerabilities");
@@ -110,15 +115,27 @@ public class HouseholdOverviewFragment extends Fragment {
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
         txtMalaria.setText(household_member_had_malaria);
-        txtFemales.setText(females);
+
 
         if(lessThanFiveMales != null)
         {
             txtMalesLessThanFive.setText(lessThanFiveMales);
         }
+
+        if(lessThanFiveFemales != null)
+        {
+            txtFemales.setText(lessThanFiveFemales);
+        }
+
+
        if(betweenTenAndSevenTeen != null) {
            txtMalesBetweenTenAndSeventeen.setText(betweenTenAndSevenTeen);
        }
+
+        if(femalesBetweenTenAndSevenTeen != null) {
+            txtFemalesBetweenTenAndSeventeen.setText(betweenTenAndSevenTeen);
+        }
+
         if(emergency_name != null)
         {
             txtName.setText(emergency_name);
