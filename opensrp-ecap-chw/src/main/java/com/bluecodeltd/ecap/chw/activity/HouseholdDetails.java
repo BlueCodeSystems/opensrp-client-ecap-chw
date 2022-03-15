@@ -108,12 +108,13 @@ public class HouseholdDetails extends AppCompatActivity {
     int Rnumber;
     List<String> allMalesBirthDates;
     List<String> allFemalesBirthDates;
-   public String lessThanFiveMales;
-   public String malesBetweenTenAndSevenTeen;
+    List<String> allChildrenBirthDates;
+    public String lessThanFiveMales, malesBetweenTenAndSevenTeen, caregiverTested,
+            lessThanFiveFemales, totalChildren, testedChildren,  allTested, FemalesBetweenTenAndSevenTeen;
+
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
-    public String lessThanFiveFemales;
-    public String FemalesBetweenTenAndSevenTeen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,11 +179,14 @@ public class HouseholdDetails extends AppCompatActivity {
         countMales = IndexPersonDao.countMales(householdId);
         allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
         allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
+        testedChildren = IndexPersonDao.countTestedChildren(householdId);
+        allChildrenBirthDates = IndexPersonDao.getAllChildrenBirthdate(householdId);
         assert allMalesBirthDates != null;
         assert allFemalesBirthDates !=null;
+        assert allChildrenBirthDates !=null;
          countNumberOfMales(allMalesBirthDates);
          countNumberOfFemales(allFemalesBirthDates);
-
+         countNumberofChildren(allChildrenBirthDates);
     }
 
 
@@ -274,13 +278,67 @@ public class HouseholdDetails extends AppCompatActivity {
         switch (id) {
             case R.id.grad:
 
+
+
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("graduation");
 
-                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    //Populate Caregiver Details
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+
+                    //Populate Caseworker Name
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+                    String caseworker = sp.getString("caseworker_name", "Anonymous");
+
+                    JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
+
+                    if (ccname != null) {
+                        ccname.remove(JsonFormUtils.VALUE);
+                        try {
+                            ccname.put(JsonFormUtils.VALUE, caseworker);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    //Count everyone who has been tested
+                    if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
+                        allTested = "no";
+                    } else {
+                        allTested = "yes";
+                    }
+
+                    JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+
+                    if (hiv_status_enrolled != null) {
+                        hiv_status_enrolled.remove(JsonFormUtils.VALUE);
+                        try {
+                            hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //Check if Caregiver Has been Tested
+                    if(house.getCaregiver_hiv_status() != null){
+                        caregiverTested = "yes";
+                    } else {
+                        caregiverTested = "no";
+                    }
+                    JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
+
+                    if (tested != null) {
+                        tested.remove(JsonFormUtils.VALUE);
+                        try {
+                            tested.put(JsonFormUtils.VALUE, caregiverTested);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
                     startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
@@ -890,6 +948,26 @@ public class HouseholdDetails extends AppCompatActivity {
 
         lessThanFiveFemales = String.valueOf(totalNumberOfFemalesBelowFive);
         FemalesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfFemalesBetweenTenAndSeventeen);
+
+    }
+    public void countNumberofChildren(List<String> allBirthDates){
+        int totalNumberOfChildren = 0;
+        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        if( allBirthDates != null)
+        {
+            for(int i = 0; i < allBirthDates.size(); i++)
+            {
+                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
+                LocalDate today =LocalDate.now();
+                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+                {
+                    totalNumberOfChildren = totalNumberOfChildren + 1;
+                }
+            }
+        }
+
+        totalChildren = String.valueOf(totalNumberOfChildren);
 
     }
 
