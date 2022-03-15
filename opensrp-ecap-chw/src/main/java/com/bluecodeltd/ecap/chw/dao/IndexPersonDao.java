@@ -306,4 +306,19 @@ public class IndexPersonDao  extends AbstractDao {
         return children.get(0);
     }
 
+    public static List<String> getAllFemalesBirthdate(String householdID) {
+
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'female' AND household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return null;
+        else{
+            return values;
+        }
+
+    }
 }
