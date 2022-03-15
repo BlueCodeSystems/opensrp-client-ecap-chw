@@ -3,11 +3,9 @@ package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,6 +213,8 @@ public class IndexPersonDao  extends AbstractDao {
         String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' ";
         DataMap<Child> dataMap = c -> {
             return new Child(
+                    getCursorValue(c, "caseworker_name"),
+                    getCursorValue(c, "date_edited"),
                     getCursorValue(c, "vl_check_box"),
                     getCursorValue(c, "landmark"),
                     getCursorValue(c, "client_screened"),

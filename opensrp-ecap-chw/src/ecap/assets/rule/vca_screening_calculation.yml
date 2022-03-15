@@ -161,3 +161,18 @@ priority: 1
 condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
 actions:
   - "calculation = true"
+---
+name: step1_date_edited
+description: date_edited
+priority: 1
+condition: "step1_date_edited == ''"
+actions:
+  - "calculation = helper.getDateToday().toString"
+---
+name: step1_date_edited
+description: date_edited
+priority: 2
+condition: "step1_date_edited != ''"
+actions:
+  - "calculation = helper.getDateToday().toString"
+
