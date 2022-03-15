@@ -107,10 +107,13 @@ public class HouseholdDetails extends AppCompatActivity {
     Random Number;
     int Rnumber;
     List<String> allMalesBirthDates;
+    List<String> allFemalesBirthDates;
    public String lessThanFiveMales;
    public String malesBetweenTenAndSevenTeen;
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
+    public String lessThanFiveFemales;
+    public String FemalesBetweenTenAndSevenTeen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +177,11 @@ public class HouseholdDetails extends AppCompatActivity {
         countFemales = IndexPersonDao.countFemales(householdId);
         countMales = IndexPersonDao.countMales(householdId);
         allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
+        allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
         assert allMalesBirthDates != null;
+        assert allFemalesBirthDates !=null;
          countNumberOfMales(allMalesBirthDates);
+         countNumberOfFemales(allFemalesBirthDates);
 
     }
 
@@ -823,6 +829,32 @@ public class HouseholdDetails extends AppCompatActivity {
 
         lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
         malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
+
+    }
+    public void countNumberOfFemales(List<String> allBirthDates){
+        int totalNumberOfFemalesBelowFive = 0;
+        int totalNumberOfFemalesBetweenTenAndSeventeen =0 ;
+        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        if( allBirthDates != null)
+        {
+            for(int i = 0; i < allBirthDates.size(); i++)
+            {
+                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
+                LocalDate today =LocalDate.now();
+                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                {
+                    totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
+                }
+                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
+                {
+                    totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                }
+            }
+        }
+
+        lessThanFiveFemales = String.valueOf(totalNumberOfFemalesBelowFive);
+        FemalesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfFemalesBetweenTenAndSeventeen);
 
     }
 
