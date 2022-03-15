@@ -60,7 +60,7 @@
           "openmrs_entity": "",
           "openmrs_entity_id": "",
           "type": "toaster_notes",
-          "text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the USAID ECAPII OVC comprehensive program. \n\n The form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
+          "text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the USAID ECAPII OVC comprehensive program. \n\nThe form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
           "toaster_info_text": "",
           "toaster_type": "info"
         },

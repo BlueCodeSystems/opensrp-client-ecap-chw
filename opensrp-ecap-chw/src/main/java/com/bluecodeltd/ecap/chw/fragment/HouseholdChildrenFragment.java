@@ -17,6 +17,7 @@ import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.ChildrenAdapter;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 
@@ -28,6 +29,8 @@ public class HouseholdChildrenFragment extends Fragment {
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<Child> childList = new ArrayList<>();
+    String nutritionWarning, muacScore;
+    CaregiverAssessmentModel caregiverAssessmentModel;
 
     @Nullable
     @Override
@@ -35,13 +38,30 @@ public class HouseholdChildrenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_children, container, false);
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+        HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
 
         Household house = mymap.get("house");
         String houseId = house.getHousehold_id();
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        childList.clear();
+        caregiverAssessmentModel = vmap.get("vulnerabilities");
 
+        if (caregiverAssessmentModel != null){
+            nutritionWarning = caregiverAssessmentModel.getHousehold_eaten_month();
+        }
+
+        if(nutritionWarning != null && (nutritionWarning.equals("sometimes") || nutritionWarning.equals("warning"))){
+
+            muacScore = "1";
+
+        } else {
+
+            muacScore = "0";
+
+        }
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+
+        childList.clear();
 
         childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
 
@@ -49,7 +69,7 @@ public class HouseholdChildrenFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ChildrenAdapter(childList, getContext());
+        recyclerViewadapter = new ChildrenAdapter(childList, getContext(), muacScore);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
