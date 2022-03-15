@@ -266,6 +266,22 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         switch (id) {
+            case R.id.grad:
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("graduation");
+
+                   // CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
             case R.id.myservice:
 
                 try {
