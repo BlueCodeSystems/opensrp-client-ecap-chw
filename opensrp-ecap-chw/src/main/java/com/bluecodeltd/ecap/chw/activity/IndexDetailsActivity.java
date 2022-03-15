@@ -34,7 +34,6 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.GraduationAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -50,7 +49,6 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.GraduationAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
@@ -107,7 +105,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2;
 
     private VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -124,9 +122,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     ObjectMapper oMapper, clientMapper;
     Child child;
 
-    CasePlanModel casePlanModel;
     VcaAssessmentModel vcaAssessmentModel;
-    GraduationAssessmentModel graduationAssessmentModel;
     ReferralModel referralModel;
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
@@ -166,8 +162,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
-        fabGradSub = findViewById(R.id.grad_fab20);
-        fabGrad = findViewById(R.id.grad_fab);
         fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
         fabReferal = findViewById(R.id.refer_to_facility_fab);
         fabCasePlan =  findViewById(R.id.case_plan_fab);
@@ -175,7 +169,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
-        graduationAssessmentModel = GraduationAssessmentDao.getGraduationAssessment(childId);
         referralModel = ReferralDao.getReferral(childId);
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
@@ -188,9 +181,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
-        if(graduationAssessmentModel == null){
-            fabGrad.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
         if(referralModel == null){
             fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
@@ -228,9 +218,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rcase_plan = findViewById(R.id.case_plan);
         referral = findViewById(R.id.referral);
         household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
-        grad = findViewById(R.id.grad);
 
-        grad_sub = findViewById(R.id.grad_sub);
+
         hiv_assessment = findViewById(R.id.hiv_assessment);
         hiv_assessment2 = findViewById(R.id.hiv_assessment2);
 
@@ -261,7 +250,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             vcaAge = getAgeWithoutText(birthdate);
 
 
-        }else {
+        } else {
             txtAge.setText("Not Set");
         }
 
@@ -465,24 +454,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                break;
-
-            case R.id.grad:
-
-                try {
-
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"graduation");
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                break;
-
-            case R.id.grad_sub:
-
-                openFormUsingFormUtils(IndexDetailsActivity.this,"graduation_assessment_sub_for_repeating_fields");
-
                 break;
 
             case R.id.hiv_assessment:
@@ -693,28 +664,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
-                case "OVC Graduation Assessment":
 
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_OVC_GRADUATION);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "Graduation Assessment 0-17 Years":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_GRADUATION_SUB);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
                 case "HIV Risk Assessment Above 15":
 
                     if (fields != null) {
@@ -914,14 +864,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
-                grad.setVisibility(View.VISIBLE);
-                grad_sub.setVisibility(View.VISIBLE);
 
-                if(Integer.parseInt(vcaAge) < 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+
+                if(Integer.parseInt(vcaAge) < 15){
                     hiv_assessment.setVisibility(View.VISIBLE);
                 }
 
-                if(Integer.parseInt(vcaAge) >= 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                if(Integer.parseInt(vcaAge) >= 15){
                     hiv_assessment2.setVisibility(View.VISIBLE);
                 }
 
@@ -943,8 +892,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rcase_plan.setVisibility(View.GONE);
         referral.setVisibility(View.GONE);
         household_visitation_for_vca.setVisibility(View.GONE);
-        grad.setVisibility(View.GONE);
-        grad_sub.setVisibility(View.GONE);
         hiv_assessment.setVisibility(View.GONE);
         hiv_assessment2.setVisibility(View.GONE);
 
@@ -995,21 +942,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
-                }
-
-                break;
-
-            case "graduation":
-
-                if(graduationAssessmentModel == null){
-
-                    //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-
-                } else {
-
-                    formToBeOpened.put("entity_id", this.graduationAssessmentModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationAssessmentModel, Map.class));
                 }
 
             break;

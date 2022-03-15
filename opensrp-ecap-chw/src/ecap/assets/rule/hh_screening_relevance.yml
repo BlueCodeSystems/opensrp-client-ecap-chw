@@ -1,183 +1,182 @@
 ---
-name: step2_subpop1_toast
+name: step3_subpop1_toast
 description: subpop1 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop1')"
+condition: "step2_sub_population.contains('subpop1')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop2_toast
+name: step3_subpop2_toast
 description: subpop2 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop2')"
+condition: "step2_sub_population.contains('subpop2')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop3_toast
+name: step3_subpop3_toast
 description: subpop3 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop3')"
+condition: "step2_sub_population.contains('subpop3')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop4_toast
+name: step3_subpop4_toast
 description: subpop4 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop4')"
+condition: "step2_sub_population.contains('subpop4')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop5_toast
+name: step3_subpop5_toast
 description: subpop5 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop5')"
+condition: "step2_sub_population.contains('subpop5')"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop6_toast
+name: step3_subpop6_toast
 description: subpop6 relevance
 priority: 1
-condition: "step1_sub_population.contains('subpop')"
+condition: "step2_sub_population.contains('subpop')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_hiv_appropriate_treatment
+name: step2_hiv_appropriate_treatment
 description: hiv_hiv_appropriate_treatment relevance
 priority: 1
-condition: "step1_active_on_treatment.contains('no')"
+condition: "step2_active_on_treatment.contains('no')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_hiv_appropriate_treatment_virally_suppressed
+name: step2_hiv_appropriate_treatment_virally_suppressed
 description: hiv_hiv_appropriate_treatment_virally_suppressed relevance
 priority: 1
-condition: "step1_is_caregiver_virally_suppressed('no')"
+condition: "step2_is_caregiver_virally_suppressed('no')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_hiv_appropriate_treatment
+name: step2_hiv_appropriate_treatment
 description: hiv_hiv_appropriate_treatment
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('HIV+')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_active_on_treatment
+name: step2_active_on_treatment
 description: hiv_active_on_treatment
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('HIV+')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_hiv_appropriate_treatment
+name: step2_hiv_appropriate_treatment
 description: hiv_hiv_appropriate_treatment
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('HIV+')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_is_caregiver_virally_suppressed
+name: step2_is_caregiver_virally_suppressed
 description: is_caregiver_virally_suppressed
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('HIV+')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_viral_load_results
+name: step2_viral_load_results
 description: viral_load_results relevance
 priority: 1
-condition: "step1_is_caregiver_virally_suppressed.contains('yes')"
+condition: "step2_is_caregiver_virally_suppressed.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_date_of_last_viral_load
+name: step2_date_of_last_viral_load
 description: date_of_last_viral_load relevance
 priority: 1
-condition: "step1_is_caregiver_virally_suppressed.contains('yes')"
+condition: "step2_is_caregiver_virally_suppressed.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_caregiver_art_number
+name: step2_caregiver_art_number
 description: caregiver_art_number
 priority: 1
-condition: "step1_active_on_treatment.contains('yes')"
+condition: "step2_active_on_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_biological_children
+name: step2_biological_children
 description: enrolled_biological_children relevance
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('HIV+')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_enrolled_pmtct
+name: step2_enrolled_pmtct
 description: enrolled_pmtct relevance
 priority: 1
-condition: "step1_biological_children.contains('yes')"
+condition: "step2_biological_children.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_are_there_any_reasons_you_may_be_at_risk_for_hiv
+name: step2_are_there_any_reasons_you_may_be_at_risk_for_hiv
 description: are_there_any_reasons_you_may_be_at_risk_for_hiv relevance
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV-')"
+condition: "step2_caregiver_hiv_status.contains('HIV-')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_reason_for_hiv_risk
+name: step2_reason_for_hiv_risk
 description: reason_for_hiv_risk relevance
 priority: 1
-condition: "step1_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes')"
+condition: "step2_are_there_any_reasons_you_may_be_at_risk_for_hiv.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
-name: step3_relationship_other
+name: step4_relationship_other
 description: relationship_other relevance
 priority: 1
-condition: "step3_e_relationship.contains('other')"
+condition: "step4_e_relationship.contains('other')"
 actions:
   - "isRelevant = true"
 ---
-name: step3_marriage_partner_name
+name: step4_marriage_partner_name
 description: marriage_partner_name
 priority: 1
-condition: "step3_marital_status.contains('married') || step3_marital_status.contains('in_relationship') "
+condition: "step4_marital_status.contains('married') || step4_marital_status.contains('in_relationship') "
 actions:
   - "isRelevant = true"
 ---
-name: step1_vl_suppressed
+name: step2_vl_suppressed
 description: vl_suppressed
 priority: 1
-condition: "step1_viral_load_results !=''"
+condition: "step2_viral_load_results !=''"
 actions:
   - "isRelevant = true"
 ---
-name: step3_relationship_partner_name
+name: step4_relationship_partner_name
 description: relationship_partner_name
 priority: 1
-condition: "step3_marital_status.contains('in_relationship')  "
+condition: "step4_marital_status.contains('in_relationship')  "
 actions:
   - "isRelevant = true"
 ---
-name: step3_marriage_partner_name
+name: step4_marriage_partner_name
 description: marriage_partner_name
 priority: 1
-condition: "step3_marital_status.contains('married')  "
+condition: "step4_marital_status.contains('married')  "
 actions:
   - "isRelevant = true"
-
 ---
-name: step1_high_viral_toaster
+name: step2_high_viral_toaster
 description: High viral load toaster
 priority: 1
-condition: "step1_viral_load_results > 1000 "
+condition: "step2_viral_load_results > 1000 "
 actions:
   - "isRelevant = true"
 ---
-name: step3_spouse_name
+name: step4_spouse_name
 description: spouse_name
 priority: 1
-condition: "step3_marital_status.contains('Married') || step3_marital_status.contains('Not Married, but in a Relationship')"
+condition: "step4_marital_status.contains('Married') || step4_marital_status.contains('Not Married, but in a Relationship')"
 actions:
   - "isRelevant = true"

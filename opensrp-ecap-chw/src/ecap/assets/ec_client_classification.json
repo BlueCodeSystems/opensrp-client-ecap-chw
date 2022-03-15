@@ -333,7 +333,8 @@
             "field_value": "Household Screening",
             "creates_case": [
               "ec_household",
-              "ec_client_index"
+              "ec_client_index",
+              "ec_caregiver_household_assessment"
             ]
           },
           {
@@ -441,6 +442,13 @@
             "field_value": "Caregiver Assessment",
             "creates_case": [
               "ec_caregiver_household_assessment"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "MUAC Score",
+            "creates_case": [
+              "ec_muac"
             ]
           }
         ]

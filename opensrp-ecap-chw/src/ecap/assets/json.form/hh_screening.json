@@ -1,5 +1,5 @@
 {
-  "count": 2,
+  "count": 4,
   "encounter_type": "Household Screening",
   "entity_id": "",
   "metadata": {
@@ -51,8 +51,54 @@
     }
   },
   "step1": {
-    "title": "Household Screening",
+    "title": "Consent Form",
     "next": "step2",
+    "fields": [
+      {
+        "key": "toaster_notes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "toaster_notes",
+        "type": "toaster_notes",
+        "text": "“The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of VCA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\n• Enrolled in the USAID ECAP II Program\n•  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\n•  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title"
+      },
+      {
+        "key": "purpose",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "text": "This informed consent form is targeted at vulnerable Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n• The client’s ability to decide. \n• Explanation of information needed to make the decision. \n• The client’s understanding of services provided under the USAID ECAP II Program \n• The client’s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title"
+      },
+      {
+        "key": "consent_check_box",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "consent_check_box",
+        "type": "native_radio",
+        "label": "I have read and understood the previous information, or it has been read to me. I was able to ask questions about the program. My questions have been answered to my satisfaction.",
+        "options": [
+          {
+            "key": "consent_check_box",
+            "text": "Yes"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "You need to consent"
+        }
+      }
+    ]
+  },
+  "step2": {
+    "title": "Household Screening",
+    "next": "step3",
     "fields": [
       {
         "key": "instructions",
@@ -188,55 +234,49 @@
         }
       },
       {
-        "key": "info1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Use the Index VCA Screening Form to Edit the VCA Sub Population",
-        "toaster_info_text": "",
-        "toaster_type": "info"
-      },
-      {
         "key": "sub_population",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
-        "read_only": true,
         "type": "check_box",
+        "read_only": true,
         "label": "Sub Population :",
         "options": [
           {
             "key": "subpop1",
             "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": false
+            "value": "false"
           },
           {
             "key": "subpop2",
             "text": "HIV Exposed Infants (HEIs)",
-            "value": false
+            "value": "false"
           },
           {
             "key": "subpop3",
             "text": "Children of Women Living with HIV",
-            "value": false
+            "value": "false"
           },
           {
             "key": "subpop4",
             "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": false
+            "value": "false"
           },
           {
             "key": "subpop5",
             "text": "Survivors of Sexual Violence",
-            "value": false
+            "value": "false"
           },
           {
             "key": "subpop",
             "text": "Children of Female Sex Workers (FSWs)",
-            "value": false
+            "value": "false"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least ONE option here."
+        }
       },
       {
         "key": "facility",
@@ -585,7 +625,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -598,9 +638,9 @@
         "type": "toaster_notes",
         "text": "Refer for appropriate treatment and care services as part of enrollment.",
         "toaster_info_text": "",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "relevance": {
-          "step1:active_on_treatment": {
+          "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -617,7 +657,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         },
@@ -639,7 +679,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -660,7 +700,7 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:active_on_treatment": {
+          "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -694,7 +734,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -712,7 +752,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "relevance": {
-          "step1:active_on_treatment": {
+          "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -746,7 +786,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -775,7 +815,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -788,9 +828,9 @@
         "type": "toaster_notes",
         "text": "Refer to PMTCT as part of enrolment and provide care and support services for the mother infant pair (MIP) using the Community PMTCT register.",
         "toaster_info_text": "",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "relevance": {
-          "step1:enrolled_pmtct": {
+          "step2:enrolled_pmtct": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -818,7 +858,7 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:caregiver_hiv_status": {
+          "step2:caregiver_hiv_status": {
             "type": "string",
             "ex": "equalTo(., \"HIV-\")"
           }
@@ -840,7 +880,7 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:at_risk_reasons": {
+          "step2:at_risk_reasons": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -859,7 +899,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -897,9 +937,9 @@
         "type": "toaster_notes",
         "text": "Refer to appropriate household economic strengthening program/Government Social Protection program at enrollment.",
         "toaster_info_text": "",
-        "toaster_type": "info",
+        "toaster_type": "warning",
         "relevance": {
-          "step1:secure": {
+          "step2:secure": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -941,7 +981,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         },
@@ -971,7 +1011,7 @@
         "toaster_info_text": "",
         "toaster_type": "warning",
         "relevance": {
-          "step1:active_on_treatment": {
+          "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -987,7 +1027,7 @@
         "toaster_info_text": "",
         "toaster_type": "warning",
         "relevance": {
-          "step1:secure": {
+          "step2:secure": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -1003,7 +1043,7 @@
         "toaster_info_text": "",
         "toaster_type": "warning",
         "relevance": {
-          "step1:enrolled_pmtct": {
+          "step2:enrolled_pmtct": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
@@ -1011,7 +1051,170 @@
       }
     ]
   },
-  "step2":{
+  "step3": {
+    "title": "Summary",
+    "next": "step4",
+    "fields": [
+      {
+        "key": "hdx",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hdx",
+        "type": "label",
+        "text": "Information Summary"
+      },
+      {
+        "key": "index_check_box",
+        "value": "yes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "index_check_box",
+        "type": "toaster_notes",
+        "text": "This VCA has been Identified as an Index",
+        "toaster_type": "info",
+        "toaster_info_text": "This VCA has been Identified as an Index",
+        "toaster_info_title": "Index Tracing",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "hidden",
+        "value": "1"
+      },
+      {
+        "key": "screened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "screened",
+        "type": "hidden",
+        "value": "true"
+      },
+      {
+        "key": "subpop1_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1",
+        "value": "true",
+        "type": "toaster_notes",
+        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop6_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop",
+        "value": "true",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop2_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop2",
+        "value": "true",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
+        "toaster_info_text": "HIV Exposed Infant (HEI)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "value": "true",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop4_toast",
+        "value": "true",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop4",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_type": "info",
+        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop5_toast",
+        "value": "true",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "toaster_type": "info",
+        "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "step4":{
     "title":"Household Enrollment",
     "fields":[
       {
@@ -1090,7 +1293,7 @@
           "err": "Please enter a valid  entry type"
         },
         "relevance": {
-          "step3:entry_type": {
+          "step4:entry_type": {
             "type": "string",
             "ex": "equalTo(., \"other\")"
           }
@@ -1151,7 +1354,7 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step2:caregiver_education": {
+          "step4:caregiver_education": {
             "type": "string",
             "ex": "equalTo(., \"highest_grade\")"
           }
@@ -1198,7 +1401,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
@@ -1358,7 +1561,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hh_screening_relevance2.yml"
+              "rules-file": "hh_screening_relevance.yml"
             }
           }
         }
