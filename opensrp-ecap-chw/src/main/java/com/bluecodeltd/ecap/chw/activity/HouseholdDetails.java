@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CaregiverAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -69,6 +70,9 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -90,8 +94,8 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rvisit, rcase_plan, rassessment, rscreen, hvisit20, child_form, household_visitation_caregiver;;
-    private String childId;
+    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form;
+    private String childId, childrenCount;
     public String householdId;
     public String countFemales, countMales;
     private UniqueIdRepository uniqueIdRepository;
@@ -102,9 +106,15 @@ public class HouseholdDetails extends AppCompatActivity {
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
+    List<String> allMalesBirthDates;
+    List<String> allFemalesBirthDates;
+    List<String> allChildrenBirthDates;
+    public String lessThanFiveMales, malesBetweenTenAndSevenTeen, caregiverTested,
+            lessThanFiveFemales, totalChildren, testedChildren,  allTested, FemalesBetweenTenAndSevenTeen;
 
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +143,6 @@ public class HouseholdDetails extends AppCompatActivity {
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
 
-
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
@@ -141,14 +150,13 @@ public class HouseholdDetails extends AppCompatActivity {
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         rscreen = findViewById(R.id.hh_screening);
+        grad_form = findViewById(R.id.grad);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
         txtVillage = findViewById(R.id.address1);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
-        //rvisit = findViewById(R.id.hh_visit);
-        //hvisit20 = findViewById(R.id.hh_visit20);
         child_form = findViewById(R.id.child_form);
         household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         mTabLayout =  findViewById(R.id.tabs);
@@ -156,7 +164,7 @@ public class HouseholdDetails extends AppCompatActivity {
         setupViewPager();
         updateTasksTabTitle();
         updateChildTabTitle();
-        //updateCaseplanTitle();
+        updateCaseplanTitle();
         txtDistrict.setText(householdId);
 
         if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
@@ -169,9 +177,17 @@ public class HouseholdDetails extends AppCompatActivity {
 
         countFemales = IndexPersonDao.countFemales(householdId);
         countMales = IndexPersonDao.countMales(householdId);
-
+        allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
+        allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
+        testedChildren = IndexPersonDao.countTestedChildren(householdId);
+        allChildrenBirthDates = IndexPersonDao.getAllChildrenBirthdate(householdId);
+        assert allMalesBirthDates != null;
+        assert allFemalesBirthDates !=null;
+        assert allChildrenBirthDates !=null;
+         countNumberOfMales(allMalesBirthDates);
+         countNumberOfFemales(allFemalesBirthDates);
+         countNumberofChildren(allChildrenBirthDates);
     }
-
 
 
     public HashMap<String, Household> getData() {
@@ -211,7 +227,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
         mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
-        mTabLayout.getTabAt(2).setText("Case plans");
+        mTabLayout.getTabAt(2).setText("CP");
 
     }
 
@@ -223,12 +239,12 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
 
-  /*  private void updateCaseplanTitle() {
+    private void updateCaseplanTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.household_plan_tab_title, null);
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
-        casePlanTabTitle.setText("Case plans");
+        casePlanTabTitle.setText("CP");
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
-        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());        //re-visit query in Dao
+        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());
 
         if (plans > 0)
         {
@@ -237,9 +253,9 @@ public class HouseholdDetails extends AppCompatActivity {
         else{
             casePlanTabCount.setText("0");
         }
-        //change valueOf to plans after query is re-visited
+
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
-    }*/
+    }
 
     private void updateChildTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
@@ -247,10 +263,9 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
+        childrenCount = IndexPersonDao.countChildren(householdId);
 
-        String children = IndexPersonDao.countChildren(householdId);
-
-        childTabCount.setText(children);
+        childTabCount.setText(childrenCount);
 
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
@@ -261,6 +276,76 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         switch (id) {
+            case R.id.grad:
+
+
+
+                try {
+                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("graduation");
+
+                    //Populate Caregiver Details
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+
+                    //Populate Caseworker Name
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+                    String caseworker = sp.getString("caseworker_name", "Anonymous");
+
+                    JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
+
+                    if (ccname != null) {
+                        ccname.remove(JsonFormUtils.VALUE);
+                        try {
+                            ccname.put(JsonFormUtils.VALUE, caseworker);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    //Count everyone who has been tested
+                    if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
+                        allTested = "no";
+                    } else {
+                        allTested = "yes";
+                    }
+
+                    JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+
+                    if (hiv_status_enrolled != null) {
+                        hiv_status_enrolled.remove(JsonFormUtils.VALUE);
+                        try {
+                            hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //Check if Caregiver Has been Tested
+                    if(house.getCaregiver_hiv_status() != null){
+                        caregiverTested = "yes";
+                    } else {
+                        caregiverTested = "no";
+                    }
+                    JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
+
+                    if (tested != null) {
+                        tested.remove(JsonFormUtils.VALUE);
+                        try {
+                            tested.put(JsonFormUtils.VALUE, caregiverTested);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
             case R.id.myservice:
 
                 try {
@@ -296,17 +381,18 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     householdMapper = new ObjectMapper();
 
-                    indexRegisterForm = formUtils.getFormJson("hh_screening");
+                    indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
                     indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(10).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(9).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
 
+                    indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
 
@@ -345,12 +431,17 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     if(caregiverAssessmentModel == null) {
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
+
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(32).put("value", house.getActive_on_treatment());
+
                     }
                     else{
                         indexRegisterForm.put("entity_id", this.caregiverAssessmentModel.getBase_entity_id());
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, assessmentMapper.convertValue(caregiverAssessmentModel, Map.class));
                     }
+
                     startFormActivity(indexRegisterForm);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -411,6 +502,21 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     formToBeOpened = formUtils.getFormJson("family_member");
 
+                    //Populate Caseworker Name
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+                    String caseworker = sp.getString("caseworker_name", "Anonymous");
+
+                    JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step2"), "caseworker_name");
+
+                    if (ccname != null) {
+                        ccname.remove(JsonFormUtils.VALUE);
+                        try {
+                            ccname.put(JsonFormUtils.VALUE, caseworker);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
                     String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
                     String xId = entityId.replaceFirst("^0+(?!$)", "");
@@ -436,7 +542,6 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
-
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened,caregiverMapper.convertValue(caregiver, Map.class));
                     startFormActivity(formToBeOpened);
 
@@ -454,7 +559,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
         Form form = new Form();
         try {
             if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
@@ -501,7 +605,6 @@ public class HouseholdDetails extends AppCompatActivity {
             }
 
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
-
 
 
             if(!jsonFormObject.optString("entity_id").isEmpty()){
@@ -552,6 +655,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+                        break;
+
+                    case "MUAC Score":
+
+                        closeFab();
+                        Toasty.success(HouseholdDetails.this, "MUAC Updated", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
@@ -608,6 +719,19 @@ public class HouseholdDetails extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
+
+                case "MUAC Score":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_muac");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
 
                 case "Family Member":
 
@@ -769,6 +893,7 @@ public class HouseholdDetails extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             rscreen.setVisibility(View.VISIBLE);
+            grad_form.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
@@ -781,12 +906,94 @@ public class HouseholdDetails extends AppCompatActivity {
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
         rscreen.setVisibility(View.GONE);
+        grad_form.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
         child_form.setVisibility(View.GONE);
         household_visitation_caregiver.setVisibility(View.GONE);
     }
 
+    public void countNumberOfMales(List<String> allBirthDates){
+            int totalNumberOfMalesBelowFive = 0;
+            int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
+            DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+            if( allBirthDates != null)
+            {
+            for(int i = 0; i < allBirthDates.size(); i++)
+            {
+                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
+                LocalDate today =LocalDate.now();
+                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                {
+                    totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                }
+                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
+                {
+                    totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
+                 }
+            }
+            }
+
+        lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
+        malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
+
+    }
+    public void countNumberOfFemales(List<String> allBirthDates){
+        int totalNumberOfFemalesBelowFive = 0;
+        int totalNumberOfFemalesBetweenTenAndSeventeen =0 ;
+        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        if( allBirthDates != null)
+        {
+            for(int i = 0; i < allBirthDates.size(); i++)
+            {
+                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
+                LocalDate today =LocalDate.now();
+                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                {
+                    totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
+                }
+                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
+                {
+                    totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                }
+            }
+        }
+
+        lessThanFiveFemales = String.valueOf(totalNumberOfFemalesBelowFive);
+        FemalesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfFemalesBetweenTenAndSeventeen);
+
+    }
+    public void countNumberofChildren(List<String> allBirthDates){
+        int totalNumberOfChildren = 0;
+        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        if( allBirthDates != null)
+        {
+            for(int i = 0; i < allBirthDates.size(); i++)
+            {
+                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
+                LocalDate today =LocalDate.now();
+                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+                {
+                    totalNumberOfChildren = totalNumberOfChildren + 1;
+                }
+            }
+        }
+
+        totalChildren = String.valueOf(totalNumberOfChildren);
+
+    }
+
+    public Period getPeriodBetweenDateOfBirthAndNow(LocalDate localDateBirthdate, LocalDate today){
+      return   Period.between(localDateBirthdate, today);
+    }
+
+    public DateTimeFormatter formatDateByPattern(String pattern)
+    {
+        return DateTimeFormatter.ofPattern(pattern);
+    }
 
     public Household getHousehold(String householdId)
     {

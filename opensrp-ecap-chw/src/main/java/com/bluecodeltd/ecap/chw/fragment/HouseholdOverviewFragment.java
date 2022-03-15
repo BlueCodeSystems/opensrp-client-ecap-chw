@@ -18,21 +18,21 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.rey.material.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.widget.AppCompatButton;
-
 import java.util.HashMap;
 
 
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMales,
-            txtFemales, txtNumber, txtName;
-    LinearLayout linearLayout;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtMalesBetweenTenAndSeventeen;
+    LinearLayout linearLayout, muacView;
     Button screenBtn;
     FloatingActionButton fab;
     Household house;
     CaregiverAssessmentModel caregiverAssessmentModel;
+    String nutritionWarning;
+    private TextView txtFemalesBetweenTenAndSeventeen;
+    private TextView txtFemalesLessThanFive;
 
 
     @SuppressLint("RestrictedApi")
@@ -46,12 +46,15 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncomeSource = view.findViewById(R.id.income_source);
         txtBeds = view.findViewById(R.id.beds);
         txtMalaria = view.findViewById(R.id.malaria);
-        txtMales = view.findViewById(R.id.males);
+        txtMalesLessThanFive = view.findViewById(R.id.males);
+        txtFemalesLessThanFive = view.findViewById(R.id.males);
         txtFemales = view.findViewById(R.id.females);
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
-
+        txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
+        txtFemalesBetweenTenAndSeventeen = view.findViewById(R.id.femalesBetweenTenAndSeventeen);
         linearLayout = view.findViewById(R.id.llayout);
+        muacView = view.findViewById(R.id.muac_warning);
         screenBtn = view.findViewById(R.id.screenBtn);
 
         fab = getActivity().findViewById(R.id.fabx);
@@ -69,10 +72,30 @@ public class HouseholdOverviewFragment extends Fragment {
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
 
         String females = ( (HouseholdDetails) requireActivity()).countFemales;
-        String males = ( (HouseholdDetails) requireActivity()).countMales;
+        String lessThanFiveMales = ( (HouseholdDetails) requireActivity()).lessThanFiveMales;
+        String betweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).malesBetweenTenAndSevenTeen;
+        String lessThanFiveFemales = ( (HouseholdDetails) requireActivity()).lessThanFiveFemales;
+        String femalesBetweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).FemalesBetweenTenAndSevenTeen;
 
         house = mymap.get("house");
         caregiverAssessmentModel = vmap.get("vulnerabilities");
+
+       if (caregiverAssessmentModel != null){
+
+           nutritionWarning = caregiverAssessmentModel.getHousehold_eaten_month();
+
+       }
+
+
+        if(nutritionWarning != null && (nutritionWarning.equals("sometimes") || nutritionWarning.equals("warning"))){
+
+            muacView.setVisibility(View.VISIBLE);
+
+        } else {
+
+            muacView.setVisibility(View.GONE);
+
+        }
 
         String is_screened = house.getScreened();
         String incomeSource = house.getFam_source_income();
@@ -92,9 +115,27 @@ public class HouseholdOverviewFragment extends Fragment {
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
         txtMalaria.setText(household_member_had_malaria);
-        txtMales.setText(males);
-        txtFemales.setText(females);
-        txtMales.setText(males);
+
+
+        if(lessThanFiveMales != null)
+        {
+            txtMalesLessThanFive.setText(lessThanFiveMales);
+        }
+
+        if(lessThanFiveFemales != null)
+        {
+            txtFemales.setText(lessThanFiveFemales);
+        }
+
+
+       if(betweenTenAndSevenTeen != null) {
+           txtMalesBetweenTenAndSeventeen.setText(betweenTenAndSevenTeen);
+       }
+
+        if(femalesBetweenTenAndSevenTeen != null) {
+            txtFemalesBetweenTenAndSeventeen.setText(betweenTenAndSevenTeen);
+        }
+
         if(emergency_name != null)
         {
             txtName.setText(emergency_name);

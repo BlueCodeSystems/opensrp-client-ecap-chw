@@ -1312,6 +1312,20 @@
           }
         },
         {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
@@ -1865,6 +1879,13 @@
           }
         },
         {
+          "column_name": "screening_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screening_location"
+          }
+        },
+        {
           "column_name": "subpop",
           "type": "Client",
           "json_mapping": {
@@ -2119,6 +2140,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -2602,6 +2637,32 @@
       ]
     },
     {
+      "name": "ec_muac",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "muac",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_caregiver_case_plan_domain",
       "columns": [
         {
@@ -3065,6 +3126,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "date_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_referred"
+          }
+        },
+        {
+          "column_name": "receiving_organization",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.receiving_organization"
           }
         },
         {

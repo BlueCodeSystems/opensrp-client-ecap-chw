@@ -19,7 +19,6 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.Child;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
@@ -27,7 +26,7 @@ public class ProfileOverviewFragment extends Fragment {
     RelativeLayout myview;
     LinearLayout myview2;
     ImageButton imgBtn;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone;
 
@@ -36,6 +35,8 @@ public class ProfileOverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
 
+        txtEditedBy = view.findViewById(R.id.edited_by);
+        txtDateEdited = view.findViewById(R.id.date_last_edited);
         txtArtNumber = view.findViewById(R.id.art_number);
         myview2 = view.findViewById(R.id.mylayout);
         imgBtn = view.findViewById(R.id.arrow_button);
@@ -202,7 +203,8 @@ public class ProfileOverviewFragment extends Fragment {
         txtHiv.setText(childIndex.getCaregiver_hiv_status());
         txtRelation.setText(childIndex.getRelation());
         txtPhone.setText(childIndex.getCaregiver_phone());
-
+        txtEditedBy.setText(childIndex.getCaseworker_name());
+        txtDateEdited.setText(childIndex.getDated_edited());
 
         return view;
 
