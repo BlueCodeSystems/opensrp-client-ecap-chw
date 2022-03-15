@@ -106,15 +106,15 @@ description: fsw_child_tested
 priority: 1
 condition: "( step1_child_tested_for_hiv_with_mother_as_index_client != null )"
 actions:
-  - "calculation = step1_child_tested_for_hiv_with_mother_as_index_client "
+  - "calculation = step1_child_tested_for_hiv_with_mother_as_index_client"
 
 ---
 name: step1_fsw_economic_strengthening_intervention
 description: fsw_economic_strengthening_intervention
 priority: 1
-condition: "( step1_agyw_receiving_an_economic_strengthening_intervention != null )"
+condition: "step1_agyw_receiving_an_economic_strengthening_intervention != null"
 actions:
-  - "calculation = step1_agyw_receiving_an_economic_strengthening_intervention "
+  - "calculation = step1_agyw_receiving_an_economic_strengthening_intervention"
 ---
 name: step3_subpop1_toast
 description: subpop1_toast relevance

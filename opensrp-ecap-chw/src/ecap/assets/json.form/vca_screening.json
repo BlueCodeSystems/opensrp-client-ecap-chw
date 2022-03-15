@@ -383,6 +383,10 @@
           {
             "key": "unknown",
             "text": "Unknown"
+          },
+          {
+            "key": "not_required",
+            "text": "Status not required based on risk assessment"
           }
         ],
         "v_required": {
@@ -1797,13 +1801,6 @@
             "text": "No"
           }
         ],
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        },
         "relevance": {
           "step1:is_the_child_caregiver_an_fsw": {
             "type": "string",
