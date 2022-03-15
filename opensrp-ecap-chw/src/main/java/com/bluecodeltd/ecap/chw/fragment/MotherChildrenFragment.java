@@ -48,7 +48,7 @@ public class MotherChildrenFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ChildrenAdapter(childList, getContext());
+        recyclerViewadapter = new ChildrenAdapter(childList, getContext(), "0");
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 

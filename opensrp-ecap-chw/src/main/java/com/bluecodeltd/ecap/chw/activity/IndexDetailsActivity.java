@@ -866,11 +866,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
 
 
-                if(Integer.parseInt(vcaAge) < 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                if(Integer.parseInt(vcaAge) < 15){
                     hiv_assessment.setVisibility(View.VISIBLE);
                 }
 
-                if(Integer.parseInt(vcaAge) >= 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                if(Integer.parseInt(vcaAge) >= 15){
                     hiv_assessment2.setVisibility(View.VISIBLE);
                 }
 

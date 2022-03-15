@@ -91,6 +91,10 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        },
         "type": "native_radio",
         "label": "In the last 12 months have you been tested for HIV?",
         "options": [
@@ -152,6 +156,10 @@
             "value": false
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        },
         "relevance": {
           "step1:hiv_test": {
             "type": "string",

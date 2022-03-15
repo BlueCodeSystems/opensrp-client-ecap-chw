@@ -1,6 +1,6 @@
 {
-  "count": "1",
-  "encounter_type": "OVC Graduation Assessment",
+  "count": "2",
+  "encounter_type": "Graduation",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -53,102 +53,47 @@
     }
   },
   "step1": {
-    "title": "Graduation_Assessment",
+    "title": "Graduation Assessment",
+    "next": "step2",
     "fields": [
       {
-        "key": "unique_id",
+        "key": "instructions",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "hint": "VCA ID",
-        "edit_type": "name",
-        "read_only": "true"
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "VCA And Family Graduation Benchmark Assessment Form",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "This Form is to be completed by the Case Worker to assess progress made by OVC program beneficiaries and their households to qualify for graduation. The Form is to be administered after 12 months of the beneficiary enrolled on the OVC program.",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "info"
       },
       {
-        "key": "assessment_date_1",
+        "key": "date_assessment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assessment_date_1",
-        "read_only": false,
+        "openmrs_entity_id": "date_assessment",
         "type": "date_picker",
-        "hint": "Date of First Assessment",
+        "hint": "Date of this Assessment",
+        "look_up": "true",
         "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
+        "min_date": "01-01-1900",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Date of Assessment  cannot be empty"
+          "value": true,
+          "err": "This field is required"
         }
       },
       {
-        "key": "assessment_date_2",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assessment_date_2",
-        "read_only": false,
-        "type": "date_picker",
-        "hint": "Date of Second Assessment",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date of Assessment  cannot be empty"
-        }
-      },
-      {
-        "key": "caseworker_firstname",
-        "openmrs_entity_parent": "",
-        "read_only": "false",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_firstname",
+        "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
-        "hint": "Case Worker First Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "caseworker_lastname",
-        "openmrs_entity_parent": "",
-        "read_only": "false",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_lastname",
-        "type": "edit_text",
-        "hint": "Case Worker Last Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "caseworker_nrc",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_nrc",
-        "entity_id": "",
-        "read_only": "false",
-        "type": "edit_text",
-        "hint": "Case Worker NRC number",
-        "v_regex": {
-          "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
-          "err": "Number must take the format of ######/##/#"
-        }
-      },
-      {
-        "key": "name_rcmc_dc",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "name_rcmc_dc",
-        "type": "edit_text",
-        "hint": "Name of RCMC/DC",
+        "hint": "Caseworker Name",
         "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Name of RCMC/DC"
-        }
+        "read_only": true
       },
       {
         "key": "household_id",
@@ -156,74 +101,48 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_id",
         "type": "edit_text",
+        "read_only": "true",
         "hint": "Household ID",
-        "edit_type": "name",
-        "read_only": "false"
+        "edit_type": "name"
       },
       {
-        "key": "date_family_enrolled",
+        "key": "date_enrolled",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_family_enrolled",
-        "read_only": false,
-        "type": "date_picker",
+        "openmrs_entity_id": "date_enrolled",
+        "type": "edit_text",
         "hint": "Date Family enrolled in the project",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Date Family enrolled cannot be empty"
-        }
+        "edit_type": "name",
+        "read_only": true
       },
       {
-        "key": "assessed_graduation",
+        "key": "asmt",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assessed_graduation",
+        "openmrs_entity_id": "asmt",
+        "read_only": true,
         "type": "native_radio",
-        "label": "Has Family been previously assessed for graduation?",
-        "read_only": false,
+        "label": "Has Family previously been assessed for graduation?",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
+            "key": "no",
+            "text": "No"
           },
           {
-            "key": "no",
-            "text": "No",
-            "value": false
+            "key": "yes",
+            "text": "Yes"
           }
         ]
       },
       {
-        "key": "family_date",
+        "key": "previous_asmt_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "family_date",
-        "read_only": false,
-        "type": "date_picker",
-        "hint": "Date",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Date cannot be empty"
-        },
-        "relevance": {
-          "step1:assessed_graduation": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
+        "openmrs_entity_id": "previous_asmt_date",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date of previous assessment",
+        "edit_type": "name"
       },
       {
         "key": "caregiver_name",
@@ -232,12 +151,12 @@
         "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
         "hint": "Caregiver's Full Name",
-        "edit_type": "name",
-        "read_only": "false",
         "look_up": "true",
+        "edit_type": "name",
+        "read_only": true,
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
+          "err": "Name of caregiver can only contain letters"
         }
       },
       {
@@ -247,8 +166,7 @@
         "openmrs_entity_id": "caregiver_sex",
         "type": "native_radio",
         "label": "Caregiver's Gender",
-        "read_only":"false",
-
+        "read_only": true,
         "options": [
           {
             "key": "male",
@@ -258,916 +176,48 @@
             "key": "female",
             "text": "Female"
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "caregiver_age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_age",
-        "type": "edit_text",
-        "hint": "VCA ID",
-        "edit_type": "name",
-        "read_only": "true"
-      },
-      {
-        "key": "caregiver_hiv_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_hiv_status",
-        "type": "native_radio",
-        "label": "Caregiver's HIV Status",
-        "read_only":"false",
-
-        "options": [
-          {
-            "key": "HIV+",
-            "text": "HIV+"
-          },
-          {
-            "key": "HIV-",
-            "text": "HIV-"
-          },
-          {
-            "key": "Unknown",
-            "text": "Unknown"
-          },
-          {
-            "key": "not_required",
-            "text": "Status not required based on risk assessment"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "toaster_a",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "To list all children and adolescents aged 0–17 years of age living in the household and registered in the project, and youth aged 18-20 only if supported by and registered in the project refer to the Graduation Assessment(Sub Form)",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title"
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Know HIV status"
-      },
-      {
-        "key": "enrolled_project",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "enrolled_project",
-        "type": "native_radio",
-        "label": "Has each child and adolescent below 18 years of age in the household; and enrolled in the project, been documented as “HIV status positive,” “HIV status negative,” or “test not required based on HIV risk assessment”?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
         ]
       },
       {
-        "key": "caregiver_household",
+        "key": "caregiver_birth_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_household",
-        "type": "native_radio",
-        "label": "Has the caregiver (parent/guardian) in the household been documented as “HIV status positive,” “HIV status negative,” or “test not required based on HIV risk assessment”?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "toaster_1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 1 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "graduation_assessment.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Virally suppressed"
-      },
-      {
-        "key": "virally_suppressed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "virally_suppressed",
-        "type": "native_radio",
-        "label": "Are all beneficiaries living with HIV (registered in the project) in the home virally suppressed?",
-        "read_only": false,
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "no",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "toaster_2",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 1 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:virally_suppressed": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Knowledgeable about HIV prevention"
-      },
-      {
-        "key": "aged_10_17",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "aged_10_17",
-        "type": "native_radio",
-        "label": "Are there adolescents aged 10–17 in the household?",
-        "read_only": false,
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "n/a",
-            "text": "N/A",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "most_common_hiv_infected_hiv_ways",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "most_common_hiv_infected_hiv_ways",
-        "type": "check_box",
-        "read_only": "false",
-        "label_text_style": "",
-        "label": "Please tell me two of the most common ways children and adolescents become infected with HIV in your community",
-        "options": [
-          {
-            "key": "Unprotected/unsafe Sex with an older partner",
-            "text": "Unprotected/unsafe Sex with an older partner"
-          },
-          {
-            "key": "Sex for money or gifts (having a “sugar daddy” or “blesser”)",
-            "text": "Sex for money or gifts (having a “sugar daddy” or “blesser”)"
-          },
-          {
-            "key": "Starting to have sex in a very young age",
-            "text": "Starting to have sex in a very young age"
-          },
-          {
-            "key": "Being raped or in other way sexually abused",
-            "text": "Being raped or in other way sexually abused"
-          },
-          {
-            "key": "Sex with more than one partner",
-            "text": "Sex with more than one partner"
-          },
-          {
-            "key": "Not using condoms",
-            "text": "Not using condoms"
-          },
-          {
-            "key": "Sex with a partner who has multiple partners",
-            "text": "Sex with a partner who has multiple partners"
-          },
-          {
-            "key": "Mother to Child Transmission",
-            "text": "Mother to Child Transmission"
-          }
-        ],
-        "relevance": {
-          "step1:aged_10_17": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "prevent_reinfection",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "prevent_reinfection",
-        "type": "check_box",
-        "read_only": "false",
-        "label_text_style": "",
-        "label": "Tell me how you can protect yourself against HIV infection/prevent re-infection  ",
-        "options": [
-          {
-            "key": "Abstaining/ waiting to have sex until I get older",
-            "text": "Abstaining/ waiting to have sex until I get older"
-          },
-          {
-            "key": "Using a condom correctly every time I have sex",
-            "text": "Using a condom correctly every time I have sex"
-          },
-          {
-            "key": "Starting to have sex in a very young age",
-            "text": "Starting to have sex in a very young age"
-          },
-          {
-            "key": "Not having sex for money or gifts",
-            "text": "Not having sex for money or gifts"
-          },
-          {
-            "key": "Only having one sexual partner",
-            "text": "Only having one sexual partner"
-          },
-          {
-            "key": "Using PrEP if my partner is HIV positive",
-            "text": "Using PrEP if my partner is HIV positive"
-          }
-        ],
-        "relevance": {
-          "step1:aged_10_17": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "place_for_hiv_prevention",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "place_for_hiv_prevention",
-        "type": "check_box",
-        "read_only": "false",
-        "label_text_style": "",
-        "label": "Tell me one place where HIV prevention support is available?",
-        "options": [
-          {
-            "key": "Condom outlet in the community",
-            "text": "Condom outlet in the community"
-          },
-          {
-            "key": "Health facility",
-            "text": "Health facility"
-          },
-          {
-            "key": "Community Health Workers",
-            "text": "Community Health Workers"
-          },
-          {
-            "key": "Peer educator in School Anti-AIDS Club ",
-            "text": "Peer educator in School Anti-AIDS Club "
-          },
-          {
-            "key": "Parents / guardians",
-            "text": "Parents / guardians"
-          }
-        ],
-        "relevance": {
-          "step1:aged_10_17": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Not undernourished"
-      },
-      {
-        "key": "aged_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "aged_5",
-        "type": "native_radio",
-        "label": "Are there children below 5 years of age registered in the project in the household?",
-        "read_only": false,
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "n/a",
-            "text": "N/A",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "undernourished",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "undernourished",
-        "type": "native_radio",
-        "label": "Is there any child in the family (registered in the project) who is undernourished?",
-        "read_only": false,
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:aged_5": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "toaster_4",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 4 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:undernourished": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Improved financial stability "
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "The following questions should be asked to the guardians"
-      },
-      {
-        "key": "grade_7",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "grade_7",
-        "type": "native_radio",
-        "label": "Were you able to pay for the school fees for the last school year for all children and adolescents in the household in Grade 1 to 7 who are enrolled in the Project, without selling your working capital or tools/ livestock needed to continue to earn new income? Do not answer ‘yes’ if the child/adolescent had their school fee waived by the school or paid by the project?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "medical_costs",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "medical_costs",
-        "type": "native_radio",
-        "label": "Were you able to pay all medical costs in the past 6 months for all children and adolescents in your household, who are enrolled in the Project without selling your working capital or tools/livestock needed to continue to earn new income? Medical costs include medicine on prescription and transport to health facility",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "toaster_5",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 5 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "graduation_assessment.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "additional_question",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "additional_question",
-        "type": "native_radio",
-        "label": "Additional question (not scored for graduation): Was your family able to pay school fees for children enrolled in the Project, above Grade 7 including basic/secondary school and/or vocational training?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "No violence and Sexual Abuse"
-      },
-      {
-        "key": "beaten",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "beaten",
-        "type": "native_radio",
-        "label": "In the past 6 months, have you been beaten, punched, kicked or choked by a spouse or partner, or any other adult belonging to the home?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "punched",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "punched",
-        "type": "native_radio",
-        "label": "In the past 6 months, has any child, adolescent or youth in your household been beaten, punched, kicked, choked, hot water poured on them, tied up, starved etc. by and adult in the home?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "touching_in_sexual",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "touching_in_sexual",
-        "type": "native_radio",
-        "label": "In the past 6 months, are you aware of any child, adolescent or youth in your household being touched in a sexual way or forced to have sex against his or her will? Touching in a sexual way could include fondling, pinching, grabbing, or touching a child, adolescent, or youth on or around his or her sexual body parts.",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "sex_against_your_will",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sex_against_your_will",
-        "type": "native_radio",
-        "label": "In the past 6 months, has anyone (including your spouse or sexual partner) tried to make you have sex against your will? ",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "toaster_6",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 6 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "graduation_assessment.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Not in a child-headed household "
-      },
-      {
-        "key": "under_the_care",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "under_the_care",
-        "type": "native_radio",
-        "label": "During the past 12 months, have all children and adolescents in the household been under the care of a stable adult guardian who lived in the home?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "toaster_7",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 7 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:under_the_care": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Children in school"
-      },
-      {
-        "key": "benchmark_8_question",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "benchmark_8_question",
-        "type": "native_radio",
-        "label": "Are there children or adolescents of school age (Grade 1 to grade 7) in the household?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "N/A",
-            "text": "N/A",
-            "value": false
-          }
-        ]
-      },
-      {
-        "key": "school_age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "school_age",
-        "type": "native_radio",
-        "label": "Are all children and adolescents in the household of school age (Grade 1 to 7) enrolled in school?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:benchmark_8_question": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "attended_school_regularly",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "attended_school_regularly",
-        "type": "native_radio",
-        "label": "Have all children and adolescents in the household enrolled in school attended school regularly over the past year (at least 4 days a week on average)?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:benchmark_8_question": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "school_progress",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "school_progress",
-        "type": "native_radio",
-        "label": "Did all children and adolescents in the household enrolled in school progress to the next grade, from last school year to this school year? In other words, no child or adolescent had to repeat a grade this year, or they graduated from Grade 7?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:benchmark_8_question": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "toaster_8",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Benchmark 8 has been met",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "graduation_assessment.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "benchmark_description",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "benchmark_description",
-        "type": "check_box",
-        "read_only": "false",
-        "label_text_style": "",
-        "label": "Benchmark description (Tick for the benchmark which was passed)",
-        "options": [
-          {
-            "key": "All children, adolescents, and primary guardian in the home know their HIV status",
-            "text": "All children, adolescents, and primary guardian in the home know their HIV status"
-          },
-          {
-            "key": "All HIV positive children, and primary guardian are virally suppressed.",
-            "text": "All HIV positive children, and primary guardian are virally suppressed."
-          },
-          {
-            "key": "All adolescents 12 to 17 have good HIV prevention knowledge.",
-            "text": "All adolescents 12 to 17 have good HIV prevention knowledge."
-          },
-          {
-            "key": "No Children below the age of 5 are under nourished.",
-            "text": "No Children below the age of 5 are under nourished."
-          },
-          {
-            "key": "The family (guardian) is empowered to meet medical and educational needs.",
-            "text": "The family (guardian) is empowered to meet medical and educational needs."
-          },
-          {
-            "key": "No children, adolescents, or primary guardian have experienced violence in their home.",
-            "text": "No children, adolescents, or primary guardian have experienced violence in their home.  "
-          },
-          {
-            "key": "The home in not child headed.",
-            "text": "The home in not child headed."
-          },
-          {
-            "key": "All children in the household aged 6 to at least Grade 7, have progressed from the past year, and attended school at least 4 out of 5 days in average.",
-            "text": "All children in the household aged 6 to at least Grade 7, have progressed from the past year, and attended school at least 4 out of 5 days in average. "
-          },
-          {
-            "key": "None",
-            "text": "None"
-          }
-        ]
-      },
-      {
-        "key": "additional_information",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "additional_information",
-        "type": "normal_edit_text",
-        "hint": "Additional information related to the \n Assessment useful for Child Case Planning",
-        "edit_text_style": "",
-        "v_required": {
-          "value": false,
-          "err": "Additional information"
-        }
-      },
-
-
-      {
-        "key": "caseworker_signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_signature",
-        "type": "check_box",
-        "label": "I hereby confirms that the information I have given is true",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          }
-        ]
-      },
-
-      {
-        "key": "caseworker_date_signed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_date_signed",
+        "openmrs_entity_id": "caregiver_birth_date",
         "type": "date_picker",
-        "hint": "Date Case Worker Signs",
+        "hint": "Caregiver's Date of Birth",
+        "look_up": "true",
+        "read_only": true,
         "expanded": false,
         "duration": {
-          "label": ""
+          "label": "Age"
         },
         "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date Signed"
-        }
-      },
-
+        "max_date": "today"
+      }
+    ]
+  },
+  "step2": {
+    "title": "Benchmark 1: Know HIV status",
+    "next": "step2",
+    "fields": [
       {
-        "key": "rcmc_signature",
+        "key": "hiv_status_enrolled",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "rcmc_signature",
-        "type": "check_box",
-        "label": "I hereby confirms that the information I have given is true",
-        "label_text_style": "italic",
+        "openmrs_entity_id": "hiv_status_enrolled",
+        "type": "native_radio",
+        "read_only": true,
+        "label": "Has each child and adolescent below 18 years of age in the household; and enrolled in the project, been documented as “HIV status positive,” “HIV status negative,” or “test not required based on HIV risk assessment”? ",
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
-            "value": false
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
           }
         ]
-      },
-      {
-        "key": "rcmc_date_signed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "rcmc_date_signed",
-        "type": "date_picker",
-        "hint": "Date RCMC/DC Signs",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date Signed"
-        }
       }
     ]
   }
