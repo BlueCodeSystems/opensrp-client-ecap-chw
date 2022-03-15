@@ -72,6 +72,23 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+    public static List<String> getMalesBirthdates (String householdID){
+
+
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'male' AND household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return null;
+        else{
+            return values;
+        }
+
+
+    }
 
 
     public static String getIndexStatus (String baseEntityID){
@@ -122,7 +139,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT unique_id, base_entity_id, first_name, last_name, adolescent_birthdate FROM ec_client_index WHERE household_id = '"+ householdID +"' ";
+        String sql = "SELECT unique_id, base_entity_id, first_name, last_name, adolescent_birthdate, gender FROM ec_client_index WHERE household_id = '"+ householdID +"' ";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
@@ -188,6 +205,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
+            record.setGender(getCursorValue(c, "gender"));
             return record;
         };
     }
@@ -288,4 +306,19 @@ public class IndexPersonDao  extends AbstractDao {
         return children.get(0);
     }
 
+    public static List<String> getAllFemalesBirthdate(String householdID) {
+
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'female' AND household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return null;
+        else{
+            return values;
+        }
+
+    }
 }

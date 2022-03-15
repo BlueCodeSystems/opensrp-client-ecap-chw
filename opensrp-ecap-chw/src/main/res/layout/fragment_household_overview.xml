@@ -210,10 +210,40 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Males in Household" />
+                android:text="Males  less than 5 years old" />
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/males"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Not Set"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="Males Between 10  and 17 years old" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/malesBetweenTenAndSeventeen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -241,10 +271,40 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:paddingLeft="@dimen/contact_drawable_padding"
-                android:text="Females in Household" />
+                android:text="Females less than 5 years old" />
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/females"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Not Set"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="Females between 10 and 17 years old" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/femalesBetweenTenAndSeventeen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -339,6 +399,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/muac_warning"
             android:orientation="horizontal"
             android:gravity="left"
             android:paddingLeft="@dimen/contact_drawable_padding"
@@ -353,7 +415,6 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/overview_section_header8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

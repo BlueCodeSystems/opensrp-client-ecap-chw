@@ -105,7 +105,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral, household_visitation_caregiver, household_visitation_for_vca, grad, grad_sub,hiv_assessment,hiv_assessment2;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2;
 
     private VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -250,7 +250,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             vcaAge = getAgeWithoutText(birthdate);
 
 
-        }else {
+        } else {
             txtAge.setText("Not Set");
         }
 
@@ -866,11 +866,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
 
 
-                if(Integer.parseInt(vcaAge) < 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                if(Integer.parseInt(vcaAge) < 15){
                     hiv_assessment.setVisibility(View.VISIBLE);
                 }
 
-                if(Integer.parseInt(vcaAge) >= 15 && child.getIs_hiv_positive() != null && !child.getIs_hiv_positive().equals("yes")){
+                if(Integer.parseInt(vcaAge) >= 15){
                     hiv_assessment2.setVisibility(View.VISIBLE);
                 }
 

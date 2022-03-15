@@ -1886,6 +1886,13 @@
           }
         },
         {
+          "column_name": "screening_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screening_location"
+          }
+        },
+        {
           "column_name": "subpop",
           "type": "Client",
           "json_mapping": {
@@ -2618,6 +2625,32 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.comment"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_muac",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "muac",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac"
           }
         }
       ]
