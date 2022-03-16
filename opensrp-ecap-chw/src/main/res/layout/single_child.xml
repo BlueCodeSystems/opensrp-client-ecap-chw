@@ -65,17 +65,37 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <com.rey.material.widget.Button
-        android:id="@+id/muac"
-        android:visibility="gone"
-        android:paddingRight="8dp"
-        android:layout_marginRight="15dp"
-        android:paddingLeft="8dp"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:textColor="#696969"
-        android:background="@drawable/btn_bg"
-        android:text="MUAC"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/muac"
+            android:visibility="gone"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:textColor="#696969"
+            android:background="@drawable/btn_bg"
+            android:text="MUAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <ImageButton
+            android:layout_marginLeft="10dp"
+            android:id="@+id/btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@drawable/grad_bg"
+            android:src="@mipmap/graduation" />
+
+    </LinearLayout>
+
+
 </RelativeLayout>
