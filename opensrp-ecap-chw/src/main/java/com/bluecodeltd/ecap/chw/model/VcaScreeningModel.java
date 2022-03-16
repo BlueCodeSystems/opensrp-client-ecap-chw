@@ -114,6 +114,15 @@ public class VcaScreeningModel {
     private String reason;
     private String transfer_reason;
     private String other_reason;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;
