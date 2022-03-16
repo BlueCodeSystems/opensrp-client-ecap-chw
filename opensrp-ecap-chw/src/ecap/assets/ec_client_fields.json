@@ -784,6 +784,13 @@
           }
         },
         {
+          "column_name": "consent_check_box",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.consent_check_box"
+          }
+        },
+        {
           "column_name": "village",
           "type": "Client",
           "json_mapping": {
