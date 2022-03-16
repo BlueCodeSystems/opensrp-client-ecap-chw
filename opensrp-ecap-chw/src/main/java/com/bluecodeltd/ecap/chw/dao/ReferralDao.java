@@ -76,6 +76,7 @@ public class ReferralDao extends AbstractDao {
             record.setSignature(getCursorValue(c, "signature"));
             record.setCovid_19(getCursorValue(c, "covid_19"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
+            record.setPhone(getCursorValue(c, "phone"));
 
 
             return record;

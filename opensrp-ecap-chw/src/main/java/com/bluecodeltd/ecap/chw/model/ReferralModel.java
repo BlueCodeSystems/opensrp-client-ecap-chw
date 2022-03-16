@@ -53,6 +53,15 @@ public class ReferralModel {
     private String signature;
     private String covid_19;
     private String caseworker_name;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;
