@@ -140,6 +140,7 @@ public class HouseholdDao extends AbstractDao {
             record.setHomeaddress(getCursorValue(c, "homeaddress"));
             record.setAt_risk_reasons(getCursorValue(c, "at_risk_reasons"));
             record.setReason_for_hiv_risk(getCursorValue(c, "reason_for_hiv_risk"));
+            record.setPhone(getCursorValue(c,"phone"));
 
 
             return record;

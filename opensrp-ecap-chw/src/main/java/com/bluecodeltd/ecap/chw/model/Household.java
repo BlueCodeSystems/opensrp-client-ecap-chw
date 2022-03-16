@@ -71,6 +71,15 @@ public class Household {
     private String homeaddress;
     private String at_risk_reasons;
     private String reason_for_hiv_risk;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getMarital_status() {
         return marital_status;
