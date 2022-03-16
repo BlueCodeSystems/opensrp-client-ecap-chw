@@ -86,8 +86,9 @@
 
 
         <ImageButton
+            android:visibility="gone"
             android:layout_marginLeft="10dp"
-            android:id="@+id/btn_id"
+            android:id="@+id/grad_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
