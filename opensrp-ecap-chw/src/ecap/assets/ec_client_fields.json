@@ -805,7 +805,7 @@
           }
         },
         {
-          "column_name": "screening_location",
+          "column_name": "screening_location_home",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.screening_location"
