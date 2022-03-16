@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -142,6 +140,8 @@ public class VcaVisitationDao extends AbstractDao {
             record.setTelephone_number(getCursorValue(c, "telephone_number"));
             record.setSchool_administration_date_signed(getCursorValue(c, "school_administration_date_signed"));
             record.setSchool_administration_signature(getCursorValue(c, "school_administration_signature"));
+            record.setPhone(getCursorValue(c, "phone"));
+
 
 
 

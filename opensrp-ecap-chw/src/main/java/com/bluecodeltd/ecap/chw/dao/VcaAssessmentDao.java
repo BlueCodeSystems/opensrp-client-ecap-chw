@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -64,6 +63,8 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setCaseworker_lastname(getCursorValue(c, "caseworker_lastname"));
             record.setCaseworker_nrc(getCursorValue(c, "caseworker_nrc"));
             record.setDate(getCursorValue(c, "date"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
+            record.setPhone(getCursorValue(c, "phone"));
 
             return record;
         };
