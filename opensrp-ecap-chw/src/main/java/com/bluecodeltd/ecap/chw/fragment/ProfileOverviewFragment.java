@@ -28,7 +28,7 @@ public class ProfileOverviewFragment extends Fragment {
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
-            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone;
+            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone;
 
     @Nullable
     @Override
@@ -37,6 +37,7 @@ public class ProfileOverviewFragment extends Fragment {
 
         txtEditedBy = view.findViewById(R.id.edited_by);
         txtDateEdited = view.findViewById(R.id.date_last_edited);
+        txtcPhone = view.findViewById(R.id.cPhone);
         txtArtNumber = view.findViewById(R.id.art_number);
         myview2 = view.findViewById(R.id.mylayout);
         imgBtn = view.findViewById(R.id.arrow_button);
@@ -205,6 +206,7 @@ public class ProfileOverviewFragment extends Fragment {
         txtPhone.setText(childIndex.getCaregiver_phone());
         txtEditedBy.setText(childIndex.getCaseworker_name());
         txtDateEdited.setText(childIndex.getDated_edited());
+        txtcPhone.setText(childIndex.getPhone());
 
         return view;
 
