@@ -83,6 +83,38 @@
         }
       },
       {
+        "key": "date_edited_check",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited_check",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "hint": "Info Last Edited",
+        "read_only": "true",
+        "look_up": "true",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "visit_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
