@@ -1,10 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
-import com.bluecodeltd.ecap.chw.model.Household;
-import com.bluecodeltd.ecap.chw.model.ReferralModel;
-import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -46,6 +42,7 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setHiv_tb(getCursorValue(c, "hiv_tb"));
             record.setHiv_test_result(getCursorValue(c, "hiv_test_result"));
             record.setDate_of_hiv_test(getCursorValue(c, "date_of_hiv_test"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
 
             return record;
         };
