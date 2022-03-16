@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,9 +83,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
         String dob = child.getAdolescent_birthdate();
+        String memberAge = getAgeWithoutText(dob);
 
         //String caseStatus = child.getCase_status();
         String caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
+
+        if (child.getSchool() != null || child.getIs_hiv_positive().equals("yes") || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)){
+
+            holder.gradBtn.setVisibility(View.VISIBLE);
+        }
 
 
         if(caseStatus != null && caseStatus.equals("1")){
@@ -113,7 +120,6 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         }
 
-        String memberAge = getAgeWithoutText(dob);
 
         // Enable MUAC Button
         if(caseStatus != null && txtMuac.equals("1") && (caseStatus.equals("0") || caseStatus.equals("1") || caseStatus.equals("2"))){
@@ -306,6 +312,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         View colorView;
         RelativeLayout lview;
         Button muacButton;
+        ImageButton gradBtn;
 
         public ViewHolder(View itemView) {
 
@@ -317,6 +324,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             lview = itemView.findViewById(R.id.register_columns);
             colorView = itemView.findViewById(R.id.mycolor);
             muacButton = itemView.findViewById(R.id.muac);
+            gradBtn = itemView.findViewById(R.id.grad_id);
 
         }
 
