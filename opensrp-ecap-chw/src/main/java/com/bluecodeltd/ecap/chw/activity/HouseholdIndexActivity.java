@@ -97,6 +97,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         String code = sp.getString("code", "00000");
         Object obj = sp.getAll();
 
+
         Number = new Random();
         Rnumber = Number.nextInt(100000000);
 
@@ -107,7 +108,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
         try {
             CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));//
-            jsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value",household_id);
+            jsonObject.getJSONObject("step2").getJSONArray("fields").getJSONObject(3).put("value",household_id);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -121,7 +122,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
 
         //******** POPULATE JSON FORM WITH VCA UNIQUE ID ******//
-        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, "step2"), "unique_id");
 
         if (stepOneUniqueId != null) {
             stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);

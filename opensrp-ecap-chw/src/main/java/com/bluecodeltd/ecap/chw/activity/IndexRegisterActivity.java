@@ -252,12 +252,12 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     @Override
     public void startFormActivity(JSONObject jsonObject) {
 
-        oMapper = new ObjectMapper();//
+        oMapper = new ObjectMapper();
         oMapper_hh_screen = new ObjectMapper();
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);//
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
         String code = sp.getString("code", "00000");
-        Object obj = sp.getAll();//
+        Object obj = sp.getAll();
 
         //******** HOUSEHOLD ID ******//
         Number = new Random();

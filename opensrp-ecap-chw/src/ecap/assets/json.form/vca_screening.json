@@ -105,6 +105,38 @@
         "read_only": "true"
       },
       {
+        "key": "date_edited_check",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited_check",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "hint": "Info Last Edited",
+        "read_only": "true",
+        "look_up": "true",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+      }},
+
+      {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -383,6 +415,10 @@
           {
             "key": "unknown",
             "text": "Unknown"
+          },
+          {
+            "key": "not_required",
+            "text": "Status not required based on risk assessment"
           }
         ],
         "v_required": {
@@ -1797,13 +1833,6 @@
             "text": "No"
           }
         ],
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
-            }
-          }
-        },
         "relevance": {
           "step1:is_the_child_caregiver_an_fsw": {
             "type": "string",
