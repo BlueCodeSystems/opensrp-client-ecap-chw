@@ -1581,6 +1581,16 @@
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Caseworker Name",
+        "read_only": "true",
+        "edit_type": "name"
       }
     ]
   }

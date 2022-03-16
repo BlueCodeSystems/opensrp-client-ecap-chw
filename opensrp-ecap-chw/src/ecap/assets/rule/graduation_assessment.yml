@@ -1,0 +1,7 @@
+---
+name: step2_toaster_bench_1
+description: step2_toaster_bench_1
+priority: 1
+condition: "step2_hiv_status_enrolled.contains('yes') && step2_caregiver_hiv_status_enrolled.contains('yes')"
+actions:
+  - "isRelevant = true"

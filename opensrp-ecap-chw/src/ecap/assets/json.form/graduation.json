@@ -106,10 +106,10 @@
         "edit_type": "name"
       },
       {
-        "key": "date_enrolled",
+        "key": "enrollment_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_enrolled",
+        "openmrs_entity_id": "enrollment_date",
         "type": "edit_text",
         "hint": "Date Family enrolled in the project",
         "edit_type": "name",
@@ -198,7 +198,6 @@
   },
   "step2": {
     "title": "Benchmark 1: Know HIV status",
-    "next": "step2",
     "fields": [
       {
         "key": "hiv_status_enrolled",
@@ -218,6 +217,43 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "caregiver_hiv_status_enrolled",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_hiv_status_enrolled",
+        "type": "native_radio",
+        "read_only": true,
+        "label": "Has the caregiver (parent/guardian) in the household been documented as “HIV status positive,” “HIV status negative,” or “test not required based on HIV risk assessment”?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "toaster_bench_1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 1 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "If both questions are answered Yes, Benchmark 1 has been met.",
+        "toaster_info_title": "Benchmark 1",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   }
