@@ -332,13 +332,16 @@
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
-        "value": "Choma Central",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
           "err": "Ward is Required"
+        },
+        "v_regex": {
+          "value": "[A-Za-z0-9\\s]*",
+          "err": "Ward only accepts letters and digits"
         }
       },
       {
@@ -394,6 +397,18 @@
         "v_required": {
           "value": true,
           "err": "Village is Required"
+        }
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark",
+        "v_required": {
+          "value": true,
+          "err": "Nearest landmark is Required"
         }
       },
       {
@@ -1379,11 +1394,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "spouse_name",
         "type": "edit_text",
-        "hint": "Spouse Name",
+        "hint": "Spouse/Partner Name",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter spouse name"
+          "err": "Please enter spouse/partner name"
         },
         "relevance": {
           "rules-engine": {
