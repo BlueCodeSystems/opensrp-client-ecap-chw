@@ -428,10 +428,10 @@
         }
       },
       {
-        "key": "screening_location",
+        "key": "screening_location_home",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_location",
+        "openmrs_entity_id": "screening_location_home",
         "type": "edit_text",
         "hint": "Screening Location",
         "edit_type": "name",

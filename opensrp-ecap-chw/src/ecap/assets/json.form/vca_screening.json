@@ -2129,7 +2129,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop4",
         "type": "hidden",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
         "calculation": {
           "rules-engine": {
             "ex-rules": {

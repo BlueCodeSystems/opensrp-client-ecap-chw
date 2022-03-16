@@ -5,7 +5,7 @@ public class Household {
 
     private String unique_id;
     private String caseworker_name;
-    private String screening_location;
+    private String screening_location_home;
     private String biological_children;
     private String first_name;
     private String last_name;
@@ -128,8 +128,6 @@ public class Household {
         this.approved_by = approved_by;
     }
 
-
-
     public String getAdolescent_village() {
         return adolescent_village;
     }
@@ -137,9 +135,6 @@ public class Household {
     public void setAdolescent_village(String adolescent_village) {
         this.adolescent_village = adolescent_village;
     }
-
-
-
 
 
     public String getSecure() {
@@ -479,11 +474,11 @@ public class Household {
     }
 
     public String getScreening_location() {
-        return screening_location;
+        return screening_location_home;
     }
 
     public void setScreening_location(String screening_location) {
-        this.screening_location = screening_location;
+        this.screening_location_home = screening_location_home;
     }
 
     public String getBiological_children() {
