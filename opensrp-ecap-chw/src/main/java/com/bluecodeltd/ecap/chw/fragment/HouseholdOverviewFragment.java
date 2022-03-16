@@ -47,8 +47,8 @@ public class HouseholdOverviewFragment extends Fragment {
         txtBeds = view.findViewById(R.id.beds);
         txtMalaria = view.findViewById(R.id.malaria);
         txtMalesLessThanFive = view.findViewById(R.id.males);
-        txtFemalesLessThanFive = view.findViewById(R.id.males);
-        txtFemales = view.findViewById(R.id.females);
+        txtFemalesLessThanFive = view.findViewById(R.id.females);
+        //txtFemales = view.findViewById(R.id.females);
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
         txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
@@ -124,7 +124,7 @@ public class HouseholdOverviewFragment extends Fragment {
 
         if(lessThanFiveFemales != null)
         {
-            txtFemales.setText(lessThanFiveFemales);
+            txtFemalesLessThanFive.setText(lessThanFiveFemales);
         }
 
 
@@ -133,7 +133,7 @@ public class HouseholdOverviewFragment extends Fragment {
        }
 
         if(femalesBetweenTenAndSevenTeen != null) {
-            txtFemalesBetweenTenAndSeventeen.setText(betweenTenAndSevenTeen);
+            txtFemalesBetweenTenAndSeventeen.setText(femalesBetweenTenAndSevenTeen);
         }
 
         if(emergency_name != null)
