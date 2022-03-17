@@ -983,6 +983,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "na",
+            "text": "NA"
           }
         ],
         "relevance": {
