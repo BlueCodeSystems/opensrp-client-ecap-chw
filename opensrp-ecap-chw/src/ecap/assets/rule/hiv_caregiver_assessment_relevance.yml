@@ -2,7 +2,7 @@
 name: step1_test_6months
 description: test_6months
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV-')"
+condition: "step1_caregiver_hiv_status.contains('negative')"
 actions:
   - "isRelevant = true"
 ---
@@ -16,21 +16,21 @@ actions:
 name: step1_active_on_treatment
 description: active_on_treatment
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step1_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_appointments
 description: appointments
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step1_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_art_regularly
 description: art_regularly
 priority: 1
-condition: "step1_caregiver_hiv_status.contains('HIV+')"
+condition: "step1_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---

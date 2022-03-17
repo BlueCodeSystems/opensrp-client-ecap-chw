@@ -332,13 +332,16 @@
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
-        "value": "Choma Central",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
           "err": "Ward is Required"
+        },
+        "v_regex": {
+          "value": "[A-Za-z0-9\\s]*",
+          "err": "Ward only accepts letters and digits"
         }
       },
       {
@@ -397,6 +400,18 @@
         }
       },
       {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark",
+        "v_required": {
+          "value": true,
+          "err": "Nearest landmark is Required"
+        }
+      },
+      {
         "key": "screening_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -413,10 +428,10 @@
         }
       },
       {
-        "key": "screening_location",
+        "key": "screening_location_home",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_location",
+        "openmrs_entity_id": "screening_location_home",
         "type": "edit_text",
         "hint": "Screening Location",
         "edit_type": "name",
@@ -579,29 +594,27 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
-        "read_only":"false",
-
         "options": [
           {
-            "key": "HIV+",
-            "text": "HIV+"
+            "key": "positive",
+            "text": "Positive"
           },
           {
-            "key": "HIV-",
-            "text": "HIV-"
+            "key": "negative",
+            "text": "Negative"
           },
           {
-            "key": "Unknown",
+            "key": "unknown",
             "text": "Unknown"
           },
           {
-            "key": "not_required",
+            "key": "status_not_required",
             "text": "Status not required based on risk assessment"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "This is a required field."
+          "err": "This field is Required"
         }
       },
       {
@@ -1379,11 +1392,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "spouse_name",
         "type": "edit_text",
-        "hint": "Spouse Name",
+        "hint": "Spouse/Partner Name",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter spouse name"
+          "err": "Please enter spouse/partner name"
         },
         "relevance": {
           "rules-engine": {
