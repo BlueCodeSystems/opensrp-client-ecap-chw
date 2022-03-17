@@ -5,7 +5,7 @@ public class Household {
 
     private String unique_id;
     private String caseworker_name;
-    private String screening_location;
+    private String screening_location_home;
     private String biological_children;
     private String first_name;
     private String last_name;
@@ -71,6 +71,7 @@ public class Household {
     private String homeaddress;
     private String at_risk_reasons;
     private String reason_for_hiv_risk;
+    private String consent_check_box;
 
     public String getMarital_status() {
         return marital_status;
@@ -128,8 +129,6 @@ public class Household {
         this.approved_by = approved_by;
     }
 
-
-
     public String getAdolescent_village() {
         return adolescent_village;
     }
@@ -137,9 +136,6 @@ public class Household {
     public void setAdolescent_village(String adolescent_village) {
         this.adolescent_village = adolescent_village;
     }
-
-
-
 
 
     public String getSecure() {
@@ -479,11 +475,11 @@ public class Household {
     }
 
     public String getScreening_location() {
-        return screening_location;
+        return screening_location_home;
     }
 
     public void setScreening_location(String screening_location) {
-        this.screening_location = screening_location;
+        this.screening_location_home = screening_location_home;
     }
 
     public String getBiological_children() {
@@ -624,5 +620,12 @@ public class Household {
 
     public void setReason_for_hiv_risk(String reason_for_hiv_risk) {
         this.reason_for_hiv_risk = reason_for_hiv_risk;
+    }
+    public String getConsent_check_box() {
+        return consent_check_box;
+    }
+
+    public void setConsent_check_box(String consent_check_box) {
+        this.consent_check_box = consent_check_box;
     }
 }
