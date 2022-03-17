@@ -662,7 +662,7 @@
           }
         },
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Caregiver ART number is Required"
         }
       },
@@ -696,7 +696,7 @@
           "err": "Viral load can only contain numbers"
         },
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This is a Required field."
         },
         "relevance": {
@@ -758,7 +758,7 @@
           }
         },
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This is a Required field."
         }
       },
