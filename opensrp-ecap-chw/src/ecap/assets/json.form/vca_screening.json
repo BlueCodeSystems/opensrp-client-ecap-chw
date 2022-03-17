@@ -2602,6 +2602,10 @@
           "value": true,
           "err": "Name of caregiver is required"
         },
+        "v_regex": {
+          "value": "[A-Za-z \\s\\.\\-]* [A-Za-z \\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
