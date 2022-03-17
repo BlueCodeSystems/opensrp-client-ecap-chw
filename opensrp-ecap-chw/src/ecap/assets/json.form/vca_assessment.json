@@ -1132,34 +1132,6 @@
         }
       },
       {
-        "key": "vca_response",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_response",
-        "type": "native_radio",
-        "label_text_style": "",
-        "label": "Did the VCA have a YES to at least one of the above questions?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "NO",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_vulnerability_assessment_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "toaster_b",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -1170,9 +1142,10 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:vca_response": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
@@ -1187,9 +1160,10 @@
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:vca_response": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
