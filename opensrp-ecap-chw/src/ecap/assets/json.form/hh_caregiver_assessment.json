@@ -984,6 +984,11 @@
             "key": "no",
             "text": "No"
           }
+        ,
+          {
+            "key": "n/a",
+            "text": "N/A"
+          }
         ],
         "relevance": {
           "step1:caregiver_hiv_status": {
