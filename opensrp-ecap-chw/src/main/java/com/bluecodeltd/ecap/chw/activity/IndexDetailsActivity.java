@@ -153,7 +153,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         childId = getIntent().getExtras().getString("Child");
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
-        
+        child = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexVCA.getGender();
         uniqueId = indexVCA.getUnique_id();
 
@@ -260,7 +260,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtGender.setText(gender.toUpperCase());
         txtChildid.setText("ID : " + indexVCA.getUnique_id());
 
-        child = IndexPersonDao.getChildByBaseId(childId);
+
 
 
         HashMap<String, Child> map = new HashMap<>();
@@ -949,15 +949,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", indexVCA.getIs_on_hiv_treatment());
-
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", child.getIs_on_hiv_treatment());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", child.getDate_started_art());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value",child.getArt_number());
 
                 } else {
 
                     formToBeOpened.put("entity_id", this.vcaAssessmentModel.getBase_entity_id());
-                    vcaAssessmentModel.setVca_art(indexVCA.getIs_on_hiv_treatment());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaAssessmentModel, Map.class));
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
                 }
 
