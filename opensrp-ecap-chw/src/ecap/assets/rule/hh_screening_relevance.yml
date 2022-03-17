@@ -58,28 +58,28 @@ actions:
 name: step2_hiv_appropriate_treatment
 description: hiv_hiv_appropriate_treatment
 priority: 1
-condition: "step2_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
 name: step2_active_on_treatment
 description: hiv_active_on_treatment
 priority: 1
-condition: "step2_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
 name: step2_hiv_appropriate_treatment
 description: hiv_hiv_appropriate_treatment
 priority: 1
-condition: "step2_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
 name: step2_is_caregiver_virally_suppressed
 description: is_caregiver_virally_suppressed
 priority: 1
-condition: "step2_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
@@ -107,7 +107,7 @@ actions:
 name: step2_biological_children
 description: enrolled_biological_children relevance
 priority: 1
-condition: "step2_caregiver_hiv_status.contains('HIV+')"
+condition: "step2_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
 ---
@@ -121,7 +121,7 @@ actions:
 name: step2_are_there_any_reasons_you_may_be_at_risk_for_hiv
 description: are_there_any_reasons_you_may_be_at_risk_for_hiv relevance
 priority: 1
-condition: "step2_caregiver_hiv_status.contains('HIV-')"
+condition: "step2_caregiver_hiv_status.contains('negative')"
 actions:
   - "isRelevant = true"
 ---

@@ -1,10 +1,13 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -27,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -46,7 +50,6 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
-import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
@@ -74,7 +77,6 @@ import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObject;
-import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
@@ -382,6 +384,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 case R.id.vca_screening:
 
                     try {
+
                         openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -920,13 +923,27 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case "vca_screening":
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                //Populate Caseworker Name
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+                String caseworker = sp.getString("phone", "Anonymous");
+
+                JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
+
+                if (ccname != null) {
+                    ccname.remove(JsonFormUtils.VALUE);
+                    try {
+                        ccname.put(JsonFormUtils.VALUE, caseworker);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
 
                 break;
 
 
             case "vca_assessment":
-
                 if(vcaAssessmentModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time

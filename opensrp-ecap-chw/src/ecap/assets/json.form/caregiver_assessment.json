@@ -157,11 +157,11 @@
         "label": "Caregiver's HIV Status",
         "options": [
           {
-            "key": "HIV+",
+            "key": "positive",
             "text": "Yes, status POSITIVE"
           },
           {
-            "key": "HIV-",
+            "key": "negative",
             "text": "Yes, status NEGATIVE"
           },
           {
@@ -208,7 +208,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV-\")"
+            "ex": "equalTo(., \"negative\")"
           }
         }
       },
@@ -367,7 +367,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_12_months",
         "type": "native_radio",
-        "label": "In   the   last   12   months,   have   you   had\nunprotected sex without using a condom with\nsomeone whose HIV status you did not know\nor who was HIV- positive?",
+        "label": "In   the   last   12   months,   have   you   had\nunprotected sex without using a condom with\nsomeone whose HIV status you did not know\nor who was negative positive?",
 
         "text_color": "#000000",
         "exclusive": [
@@ -517,7 +517,7 @@
         "key": "household_enrollment_header",
         "type": "label",
         "label_text_style": "",
-        "text": "ART Assessment for HIV+ Primary Caregiver",
+        "text": "ART Assessment for positive Primary Caregiver",
         "text_color": "#a19a9a"
       },
       {
@@ -551,7 +551,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -621,7 +621,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -673,7 +673,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -730,7 +730,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -767,7 +767,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -867,7 +867,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -919,7 +919,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -971,7 +971,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -1023,7 +1023,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -2169,7 +2169,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten_month",
-        "hint": "In the last  month, did any child/\nadolescent     in the household or\nyourself (if pregnant or HIV-positive)\ngo   a   whole   day   without   eating\nanything   because   there   was   not\nenough to eat?",
+        "hint": "In the last  month, did any child/\nadolescent     in the household or\nyourself (if pregnant or negativepositive)\ngo   a   whole   day   without   eating\nanything   because   there   was   not\nenough to eat?",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -2625,7 +2625,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for Alcohol and/substance abuse\ncounselling.\n\n\n\nIf   Primary   Caregiver   HIV+,   provide\nalcohol and substance abuse counselling\nin relation to ART Adherence\n\n\n\n\nNB: ART Adherence must be assessed,\nand   ART   adherence   counselling\nprovided at every home visit",
+        "text": "Refer for Alcohol and/substance abuse\ncounselling.\n\n\n\nIf   Primary   Caregiver   positive,   provide\nalcohol and substance abuse counselling\nin relation to ART Adherence\n\n\n\n\nNB: ART Adherence must be assessed,\nand   ART   adherence   counselling\nprovided at every home visit",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",

@@ -18,6 +18,24 @@ public class HivRiskAssessmentAbove15Model {
     private String hiv_tb_sti;
     private String hiv_test_result;
     private String date_of_hiv_test;
+    private String caseworker_name;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCaseworker_name() {
+        return caseworker_name;
+    }
+
+    public void setCaseworker_name(String caseworker_name) {
+        this.caseworker_name = caseworker_name;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;
