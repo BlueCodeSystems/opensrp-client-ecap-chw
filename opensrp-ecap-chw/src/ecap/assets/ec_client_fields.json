@@ -784,6 +784,13 @@
           }
         },
         {
+          "column_name": "consent_check_box",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.consent_check_box"
+          }
+        },
+        {
           "column_name": "village",
           "type": "Client",
           "json_mapping": {
@@ -805,7 +812,7 @@
           }
         },
         {
-          "column_name": "screening_location",
+          "column_name": "screening_location_home",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.screening_location"
@@ -1323,6 +1330,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
           }
         },
         {
@@ -2157,10 +2171,16 @@
           }
         },
         {
+
           "column_name": "age",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.age"
+
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
           }
         },
         {
@@ -3143,6 +3163,27 @@
           }
         },
         {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
           "column_name": "receiving_organization",
           "type": "Client",
           "json_mapping": {
@@ -3839,6 +3880,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
           }
         },
         {
@@ -4900,6 +4955,27 @@
           }
         },
         {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
           "column_name": "informed_consent",
           "type": "Client",
           "json_mapping": {
@@ -5035,6 +5111,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
