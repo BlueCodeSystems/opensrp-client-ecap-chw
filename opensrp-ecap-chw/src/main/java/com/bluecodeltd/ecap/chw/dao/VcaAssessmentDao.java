@@ -66,6 +66,7 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setAge(getCursorValue(c,"age"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
+
             return record;
         };
     }

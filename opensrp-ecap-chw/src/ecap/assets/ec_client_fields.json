@@ -3185,6 +3185,7 @@
           }
         },
         {
+
           "column_name": "receiving_organization",
           "type": "Client",
           "json_mapping": {
