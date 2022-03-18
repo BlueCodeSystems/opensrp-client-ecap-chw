@@ -388,7 +388,6 @@ public class VcaAssessmentModel {
     public void setDate(String date) {
         this.date = date;
     }
-
     public String getAge() {
         return age;
     }
@@ -396,6 +395,7 @@ public class VcaAssessmentModel {
     public void setAge(String age) {
         this.age = age;
     }
+
     public String getCaseworker_name() {
         return caseworker_name;
     }
@@ -411,4 +411,5 @@ public class VcaAssessmentModel {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 }

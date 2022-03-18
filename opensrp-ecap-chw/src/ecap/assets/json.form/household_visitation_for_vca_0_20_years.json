@@ -116,6 +116,7 @@
         }
       },
       {
+
         "key": "date_edited_check",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
