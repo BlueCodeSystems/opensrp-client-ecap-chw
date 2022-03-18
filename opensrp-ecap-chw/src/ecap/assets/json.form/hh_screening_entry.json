@@ -594,29 +594,27 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
-        "read_only":"false",
-
         "options": [
           {
-            "key": "HIV+",
-            "text": "HIV+"
+            "key": "positive",
+            "text": "Positive"
           },
           {
-            "key": "HIV-",
-            "text": "HIV-"
+            "key": "negative",
+            "text": "Negative"
           },
           {
-            "key": "Unknown",
+            "key": "unknown",
             "text": "Unknown"
           },
           {
-            "key": "not_required",
+            "key": "status_not_required",
             "text": "Status not required based on risk assessment"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "This is a required field."
+          "err": "This field is Required"
         }
       },
       {

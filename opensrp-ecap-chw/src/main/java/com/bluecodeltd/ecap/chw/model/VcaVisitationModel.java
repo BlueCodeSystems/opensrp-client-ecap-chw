@@ -94,6 +94,15 @@ public class VcaVisitationModel {
     private String telephone_number;
     private String school_administration_date_signed;
     private String school_administration_signature;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;

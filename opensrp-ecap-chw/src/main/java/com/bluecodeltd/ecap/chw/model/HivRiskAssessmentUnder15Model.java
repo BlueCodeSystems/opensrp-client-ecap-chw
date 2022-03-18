@@ -20,6 +20,15 @@ public class HivRiskAssessmentUnder15Model {
     private String hiv_test_result;
     private String date_of_hiv_test;
     private String caseworker_name;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getCaseworker_name() {
         return caseworker_name;

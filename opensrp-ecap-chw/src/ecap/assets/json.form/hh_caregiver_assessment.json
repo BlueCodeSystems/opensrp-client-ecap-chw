@@ -168,15 +168,15 @@
         "label": "Caregiver's HIV Status",
         "options": [
           {
-            "key": "HIV+",
+            "key": "positive",
             "text": "HIV+"
           },
           {
-            "key": "HIV-",
+            "key": "negative",
             "text": "HIV-"
           },
           {
-            "key": "Unknown",
+            "key": "unknown",
             "text": "Unknown"
           },
           {
@@ -375,7 +375,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unprotected",
         "type": "native_radio",
-        "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV- positive? ?",
+        "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV positive? ?",
         "options": [
           {
             "key": "yes",
@@ -866,7 +866,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -890,7 +890,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -964,7 +964,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -983,12 +983,21 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "na",
+            "text": "NA"
+          }
+        ,
+          {
+            "key": "n/a",
+            "text": "N/A"
           }
         ],
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -1032,7 +1041,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -1077,7 +1086,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -1860,7 +1869,7 @@
               {
                 "or": ["other"]
               }
-              ]
+            ]
           }
         }
       },
@@ -2304,7 +2313,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Conduct   escorted   referral   to   the.appropriate government department (e.g.,\nNational Registration Office, Department of\nSocial Welfare)",
+        "text": "Conduct escorted referral to the appropriate government department (e.g.,\nNational Registration Office, Department of\nSocial Welfare)",
         "toaster_type": "warning",
         "toaster_info_text": " ",
         "toaster_info_title": "Information Toaster Info Title",
