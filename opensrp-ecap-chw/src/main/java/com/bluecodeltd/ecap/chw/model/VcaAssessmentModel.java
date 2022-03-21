@@ -40,14 +40,11 @@ public class VcaAssessmentModel {
     private String caseworker_lastname;
     private String caseworker_nrc;
     private String date;
-<<<<<<< HEAD
+
     private String age;
-=======
+    private String age;
     private String caseworker_name;
     private String phone;
->>>>>>> f81d10084576a09c6ed1507252724536af716d17
-
-
     /*  public VcaAssessmentModel(String base_entity_id, String is_hiv_positive, String vca_art, String date_art, String appointment, String taking_art, String months_medication, String viral_load, String documented, String vl_last_result, String art_health_facility, String art_number, String vca_exposed, String biological_mother, String parents_deceased, String siblings_deceased, String tb_symptoms, String child_sick, String rashes, String discharge, String female_sex_worker, String sexually_active, String sex_positive, String sexual_partner, String private_parts, String transactional_sex, String sexually_abused, String past_year, String substance_abuse, String been_married, String given_birth, String currently_pregnant, String vca_response, String eyp_population, String caseworker_firstname, String caseworker_lastname, String caseworker_nrc, String date) {
           this.base_entity_id = base_entity_id;
           this.is_hiv_positive = is_hiv_positive;
@@ -392,15 +389,21 @@ public class VcaAssessmentModel {
     public void setDate(String date) {
         this.date = date;
     }
-
-<<<<<<< HEAD
     public String getAge() {
         return age;
     }
 
     public void setAge(String age) {
         this.age = age;
-=======
+    }
+
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     public String getCaseworker_name() {
         return caseworker_name;
     }
@@ -415,6 +418,7 @@ public class VcaAssessmentModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
->>>>>>> f81d10084576a09c6ed1507252724536af716d17
+
     }
+
 }
