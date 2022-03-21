@@ -79,6 +79,7 @@ public class ReferralDao extends AbstractDao {
             record.setPhone(getCursorValue(c, "phone"));
 
 
+
             return record;
         };
     }

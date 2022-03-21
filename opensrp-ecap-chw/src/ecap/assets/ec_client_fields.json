@@ -2192,6 +2192,13 @@
           }
         },
         {
+          "column_name": "age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.age"
+          }
+        },
+        {
           "column_name": "phone",
           "type": "Client",
           "json_mapping": {
@@ -3199,6 +3206,7 @@
           }
         },
         {
+
           "column_name": "receiving_organization",
           "type": "Client",
           "json_mapping": {
