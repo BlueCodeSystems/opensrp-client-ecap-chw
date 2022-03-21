@@ -1,0 +1,527 @@
+{
+  "count": "3",
+  "encounter_type": "Grad",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Benchmark 2: Virally suppressed",
+    "next": "step2",
+    "fields": [
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Benchmark 2: Virally suppressed",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "This Form is to be completed by the Case Worker to assess progress made by OVC program beneficiaries and their households to qualify for graduation. The Form is to be administered after 12 months of the beneficiary enrolled on the OVC program.",
+        "toaster_info_title": "Benchmark 2: Virally suppressed",
+        "toaster_type": "info"
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "adolescent_birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent_birthdate",
+        "type": "hidden"
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "is_hiv_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_hiv_positive",
+        "read_only": "true",
+        "type": "native_radio",
+        "label": "Is the Child/Adolescent HIV Positive",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
+          },
+          {
+            "key": "not_required",
+            "text": "Status not required based on risk assessment"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "read_only": "true",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "ART Number",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_last_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_last_vl",
+        "type": "date_picker",
+        "hint": "Date of last VL test",
+        "read_only": "true",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "edit_type": "number",
+        "read_only": "true",
+        "hint": "Last VL results",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_calculated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_calculated",
+        "read_only": "true",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "virally_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "virally_suppressed",
+        "type": "native_radio",
+        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "read_only": "true",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_calculation.yml"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "step2": {
+    "title": "Benchmark 3: Knowledgeable about HIV prevention",
+    "next": "step3",
+    "fields": [
+      {
+        "key": "instructions2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions2",
+        "type": "toaster_notes",
+        "text": "Instructions",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Do not read the list of possible answers to the adolescent. They have to come up with the answers by themselves. The idea is to assess if the adolescent has knowledge of HIV risk and prevention, not that he or she gives an answer matching the questionnaire word for word.",
+        "toaster_info_title": "Benchmark 2: Virally suppressed",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "infected_community",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "infected_community",
+        "type": "check_box",
+        "label": "Please tell me two of the most common ways children and adolescents become infected with HIV in your community.",
+        "options": [
+          {
+            "key": "unprotected",
+            "text": "Unprotected/unsafe Sex with an older partner.",
+            "value": "false"
+          },
+          {
+            "key": "sex_money",
+            "text": "Sex for money or gifts (having a “sugar daddy” or “blesser”).",
+            "value": "false"
+          },
+          {
+            "key": "sex_age",
+            "text": "Starting to have sex in a very young age.",
+            "value": "false"
+          },
+          {
+            "key": "raped",
+            "text": "Being raped or in other way sexually abused.",
+            "value": "false"
+          },
+          {
+            "key": "sex_partner",
+            "text": "Sex with more than one partner.",
+            "value": "false"
+          },
+          {
+            "key": "condoms",
+            "text": "Not using condoms.",
+            "value": "false"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "infection_correct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infection_correct",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of correct answers",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "protect_infection",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "protect_infection",
+        "type": "check_box",
+        "label": "Tell me how you can protect yourself against HIV infection/prevent re-infection ",
+        "options": [
+          {
+            "key": "abstaining",
+            "text": "Abstaining/ waiting to have sex until I get older.",
+            "value": "false"
+          },
+          {
+            "key": "condom",
+            "text": "Using a condom correctly every time I have sex.",
+            "value": "false"
+          },
+          {
+            "key": "sex_gift",
+            "text": "Not having sex for money or gifts.",
+            "value": "false"
+          },
+          {
+            "key": "sexual_partner",
+            "text": "Only having one sexual partner.",
+            "value": "false"
+          },
+          {
+            "key": "partner_partner",
+            "text": "Having a partner who does not have other partners.",
+            "value": "false"
+          },
+          {
+            "key": "prep",
+            "text": "Using PrEP if my partner is HIV positive.",
+            "value": "false"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "protect_correct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "protect_correct",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of correct answers",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "prevention_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "prevention_support",
+        "label_info_text": "Ask if he/she knows where to get an HIV test, where to get condoms, where to get advice? Tick if answered at least 2 correctly. ",
+        "label_info_title": "Prevention Support",
+        "type": "check_box",
+        "label": "Tell me one place where HIV prevention support is available?",
+        "options": [
+          {
+            "key": "condom_outlet",
+            "text": "Condom outlet in the community. ",
+            "value": "false"
+          },
+          {
+            "key": "health_facility",
+            "text": "Health facility.",
+            "value": "false"
+          },
+          {
+            "key": "chw",
+            "text": "Community Health Workers.",
+            "value": "false"
+          },
+          {
+            "key": "anti_aids",
+            "text": "Peer educator in School Anti-AIDS Club ",
+            "value": "false"
+          },
+          {
+            "key": "sex_partner",
+            "text": "Sex with more than one partner.",
+            "value": "false"
+          },
+          {
+            "key": "parents_guardians",
+            "text": "Parents / guardians. ",
+            "value": "false"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "prevention_correct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prevention_correct",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of correct answers",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "step3": {
+    "title": "Benchmark 4: Not undernourished",
+    "fields": [
+      {
+        "key": "instructions3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions3",
+        "type": "toaster_notes",
+        "text": "Instructions",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "For all children assess using bipedal oedema test. For a child under the age of 6 months use the under-five card in addition to the bipedal oedema test. For children 6 months to 5 years of age use the MUAC tape. To graduate, the child must have no signs of malnutrition (be in green at the MUAC Tape, OK in the bipedal edema test, under five clinic card showing no malnutrition).",
+        "toaster_info_title": "Benchmark 4: Not undernourished",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "sign_malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sign_malnutrition",
+        "type": "native_radio",
+        "label": "Any Sign of Malnutrition?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
