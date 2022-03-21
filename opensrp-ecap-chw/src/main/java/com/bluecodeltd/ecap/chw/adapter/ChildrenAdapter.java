@@ -91,7 +91,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         String positive = child.getIs_hiv_positive();
 
 
-        if ((school != null && (school.equals("pre_school") || school.equals("primary_school") || school.equals("secondary_school") || school.equals("other"))) || ((positive != null) && child.getIs_hiv_positive().equals("yes")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)){
+        if (((positive != null) && child.getIs_hiv_positive().equals("yes")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)){
 
             holder.gradBtn.setVisibility(View.VISIBLE);
 
@@ -99,6 +99,34 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             holder.gradBtn.setVisibility(View.GONE);
         }
+
+        holder.gradBtn.setOnClickListener(v->{
+
+            FormUtils formUtils = null;
+            try {
+                formUtils = new FormUtils(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            JSONObject formToBeOpened;
+
+            formToBeOpened = formUtils.getFormJson("grad");
+            try {
+                formToBeOpened.getJSONObject("step1").put("title", child.getFirst_name() + " " + child.getLast_name() + " : " + holder.age.getText().toString() + " - " + child.getGender());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (v.getId() == R.id.grad_id) {
+                try {
+                    openFormUsingFormUtils(context, "grad", child, holder.age.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
 
         if(caseStatus != null && caseStatus.equals("1")){
@@ -282,6 +310,14 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     formToBeOpened.put("entity_id", this.muacModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(muacModel, Map.class));
                 }
+
+                break;
+
+            case "grad":
+
+                oMapper = new ObjectMapper();
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(child, Map.class));
 
                 break;
         }
