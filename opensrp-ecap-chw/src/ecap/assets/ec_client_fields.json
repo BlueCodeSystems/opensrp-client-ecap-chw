@@ -2186,8 +2186,7 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.phone"
-
-          }}
+          }
         },
         {
           "column_name": "first_name",
