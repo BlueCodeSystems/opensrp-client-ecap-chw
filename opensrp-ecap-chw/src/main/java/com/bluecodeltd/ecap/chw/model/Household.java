@@ -34,6 +34,7 @@ public class Household {
     private String user_gps;
     private String province;
     private String district;
+    private String ward;
     private String screening_date;
     private String violence_six_months;
     private String children_violence_six_months;
@@ -185,6 +186,14 @@ public class Household {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
     }
 
     public String getScreening_date() {
