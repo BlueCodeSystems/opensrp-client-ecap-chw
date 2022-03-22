@@ -370,9 +370,10 @@
           }
         ],
         "relevance": {
-          "step1:vca_art": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
