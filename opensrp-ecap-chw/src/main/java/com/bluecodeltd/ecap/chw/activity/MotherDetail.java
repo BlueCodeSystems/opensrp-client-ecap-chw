@@ -1,9 +1,12 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,6 +75,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class MotherDetail extends AppCompatActivity {
@@ -91,6 +95,8 @@ public class MotherDetail extends AppCompatActivity {
     private RelativeLayout cLayout, mLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
+    Random Number;
+    int Rnumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -272,15 +278,26 @@ public class MotherDetail extends AppCompatActivity {
 
             case "child":
 
-                UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-                String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
-
-                String xId = entityId.replaceFirst("^0+(?!$)", "");
-                String uId = xId.replace("-", "");
-                vca_id = uId;
-
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", this.commonPersonObjectClient.getColumnmaps().get("household_id"));
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", uId);
+
+                Number = new Random();
+                Rnumber = Number.nextInt(900000000);
+                String newEntityId =  Integer.toString(Rnumber);
+
+
+                //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+                JSONObject stepOneUniqueId = getFieldJSONObject(fields(formToBeOpened, STEP1), "unique_id");
+
+                if (stepOneUniqueId != null) {
+                    stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                    try {
+                        stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
 
                 break;
