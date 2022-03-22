@@ -1,0 +1,63 @@
+---
+name: step2_instructions2
+description: instructions2
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step2_infected_community
+description: infected_community
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step2_infection_correct
+description: infection_correct
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step2_prevention_support
+description: prevention_support
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step2_prevention_correct
+description: prevention_correct
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step2_protect_infection
+description: pprotect_infection
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step2_protect_correct
+description: protect_correct
+priority: 1
+condition: "step1_age > 9 && step1_age < 18"
+actions:
+  - "isRelevant = true"
+---
+name: step3_instructions3
+description: instructions3
+priority: 1
+condition: "step1_age < 6"
+actions:
+  - "isRelevant = true"
+---
+name: step3_sign_malnutrition
+description: sign_malnutrition
+priority: 1
+condition: "step1_age < 6"
+actions:
+  - "isRelevant = true"
