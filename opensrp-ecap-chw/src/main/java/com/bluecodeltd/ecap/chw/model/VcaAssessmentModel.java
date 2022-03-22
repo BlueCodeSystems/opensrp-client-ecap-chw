@@ -396,8 +396,8 @@ public class VcaAssessmentModel {
 
     public void setAge(String age) {
         this.age = age;
-
     }
+
     public String getCaseworker_name() {
         return caseworker_name;
     }
