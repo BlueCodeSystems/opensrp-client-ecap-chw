@@ -485,6 +485,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Populate Caseworker Name
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
                     String caseworker = sp.getString("caseworker_name", "Anonymous");
+                    Object obj = sp.getAll();
+
 
                     JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step2"), "caseworker_name");
 
@@ -517,6 +519,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(obj, Map.class));
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened,caregiverMapper.convertValue(caregiver, Map.class));
                     startFormActivity(formToBeOpened);
 
