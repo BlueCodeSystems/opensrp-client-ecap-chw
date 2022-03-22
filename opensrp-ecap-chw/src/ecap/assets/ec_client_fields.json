@@ -2174,20 +2174,15 @@
           "column_name": "age",
           "type": "Client",
           "json_mapping": {
-
-            "field": "attributes.age",
-
             "field": "attributes.age"
           }
         },
         {
-
           "column_name": "phone",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.phone"
-
-          }}
+          }
         },
         {
           "column_name": "first_name",
