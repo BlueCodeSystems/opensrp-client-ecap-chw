@@ -284,7 +284,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "taking_art",
         "type": "native_radio",
-        "label": "In the past year, has the VCA been taking ART regularly as prescribed?",
+        "label": "In the past year, has the VCA been taking ART regularly as prescribed ?",
         "options": [
           {
             "key": "yes",
@@ -298,9 +298,10 @@
           }
         ],
         "relevance": {
-          "step1:vca_art": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_vulnerability_assessment_relevance.yml"
+            }
           }
         }
       },
