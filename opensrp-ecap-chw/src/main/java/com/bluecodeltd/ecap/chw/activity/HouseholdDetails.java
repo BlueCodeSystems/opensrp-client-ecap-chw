@@ -498,7 +498,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
 
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getHousehold_id());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", house.getHousehold_id());
 
                     Number = new Random();
                     Rnumber = Number.nextInt(900000000);
@@ -627,7 +627,6 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Family Member":
-
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
                         finish();
