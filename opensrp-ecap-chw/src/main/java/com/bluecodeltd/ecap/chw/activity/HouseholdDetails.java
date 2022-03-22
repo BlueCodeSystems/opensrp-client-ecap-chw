@@ -279,12 +279,15 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.grad:
 
 
-
                 try {
                     FormUtils formUtils = new FormUtils(HouseholdDetails.this);
                     JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("graduation");
+
+                    //Populate form details
+                    JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
+                    ftime.put(JsonFormUtils.VALUE, "no");
 
                     //Populate Caregiver Details
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
@@ -294,15 +297,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     String caseworker = sp.getString("caseworker_name", "Anonymous");
 
                     JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
-
-                    if (ccname != null) {
-                        ccname.remove(JsonFormUtils.VALUE);
-                        try {
-                            ccname.put(JsonFormUtils.VALUE, caseworker);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    ccname.put(JsonFormUtils.VALUE, caseworker);
 
                     //Count everyone who has been tested
                     if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
@@ -312,15 +307,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+                    hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
 
-                    if (hiv_status_enrolled != null) {
-                        hiv_status_enrolled.remove(JsonFormUtils.VALUE);
-                        try {
-                            hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
                     //Check if Caregiver Has been Tested
                     if(house.getCaregiver_hiv_status() != null){
                         caregiverTested = "yes";
@@ -328,15 +316,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         caregiverTested = "no";
                     }
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
-
-                    if (tested != null) {
-                        tested.remove(JsonFormUtils.VALUE);
-                        try {
-                            tested.put(JsonFormUtils.VALUE, caregiverTested);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    tested.put(JsonFormUtils.VALUE, caregiverTested);
 
 
                     startFormActivity(indexRegisterForm);
@@ -516,11 +496,6 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-
-                    UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-                    String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
-                    String xId = entityId.replaceFirst("^0+(?!$)", "");
-                    String x = xId.replace("-", "");
 
 
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", house.getHousehold_id());

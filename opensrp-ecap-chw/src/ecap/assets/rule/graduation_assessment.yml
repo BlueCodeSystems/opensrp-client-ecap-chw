@@ -5,3 +5,24 @@ priority: 1
 condition: "step2_hiv_status_enrolled.contains('yes') && step2_caregiver_hiv_status_enrolled.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step6_toaster_bench_5
+description: step3_toaster_bench_5
+priority: 1
+condition: "step3_school_fees.contains('yes') && step3_medical_costs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step2_toaster_bench_1_no
+description: step2_toaster_bench_1_no
+priority: 1
+condition: "!step2_hiv_status_enrolled.contains('yes') || !step2_caregiver_hiv_status_enrolled.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_toaster_bench_5_no
+description: step3_toaster_bench_5_no
+priority: 1
+condition: "!step3_school_fees.contains('yes') || !step3_medical_costs.contains('yes')"
+actions:
+  - "isRelevant = true"

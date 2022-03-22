@@ -152,7 +152,6 @@
             }
           }
       }},
-
       {
         "key": "province",
         "openmrs_entity_parent": "",
@@ -203,13 +202,12 @@
         }
       },
       {
-        "key": "facility",
+        "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
         "hint": "Health Facility",
-        "value": "Choma General Hospital",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
