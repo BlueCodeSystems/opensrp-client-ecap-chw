@@ -296,18 +296,13 @@
       {
         "key": "province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "hint": "Province",
-        "value": "Southern",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": true,
-          "err": "Province is Required"
-        }
+        "look_up": "true"
       },
       {
         "key": "district",
@@ -316,19 +311,14 @@
         "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
-        "value": "Choma",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": true,
-          "err": "District is Required"
-        }
+        "look_up": "true"
       },
       {
         "key": "ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subTown",
         "type": "edit_text",
         "hint": "Ward",
@@ -431,7 +421,7 @@
         "key": "screening_location_home",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_location_home",
+        "openmrs_entity_id": "screening_location",
         "type": "edit_text",
         "hint": "Screening Location",
         "edit_type": "name",

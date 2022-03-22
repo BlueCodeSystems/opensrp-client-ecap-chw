@@ -40,8 +40,6 @@ public class VcaAssessmentModel {
     private String caseworker_lastname;
     private String caseworker_nrc;
     private String date;
-
-    private String age;
     private String age;
     private String caseworker_name;
     private String phone;
@@ -389,13 +387,6 @@ public class VcaAssessmentModel {
     public void setDate(String date) {
         this.date = date;
     }
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
 
 
     public String getAge() {
@@ -404,6 +395,7 @@ public class VcaAssessmentModel {
 
     public void setAge(String age) {
         this.age = age;
+    }
     public String getCaseworker_name() {
         return caseworker_name;
     }

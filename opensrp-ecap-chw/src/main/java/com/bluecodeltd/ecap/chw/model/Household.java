@@ -5,7 +5,7 @@ public class Household {
 
     private String unique_id;
     private String caseworker_name;
-    private String screening_location_home;
+    private String screening_location;
     private String biological_children;
     private String first_name;
     private String last_name;
@@ -32,6 +32,7 @@ public class Household {
     private String household_id;
     private String village;
     private String user_gps;
+    private String province;
     private String district;
     private String screening_date;
     private String violence_six_months;
@@ -72,6 +73,7 @@ public class Household {
     private String at_risk_reasons;
     private String reason_for_hiv_risk;
     private String consent_check_box;
+    private String landmark;
 
     public String getMarital_status() {
         return marital_status;
@@ -168,6 +170,13 @@ public class Household {
 
     public void setVillage(String village) {
         this.village = village;
+    }
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getDistrict() {
@@ -475,11 +484,11 @@ public class Household {
     }
 
     public String getScreening_location() {
-        return screening_location_home;
+        return screening_location;
     }
 
     public void setScreening_location(String screening_location) {
-        this.screening_location_home = screening_location_home;
+        this.screening_location = screening_location;
     }
 
     public String getBiological_children() {
@@ -627,5 +636,13 @@ public class Household {
 
     public void setConsent_check_box(String consent_check_box) {
         this.consent_check_box = consent_check_box;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
     }
 }
