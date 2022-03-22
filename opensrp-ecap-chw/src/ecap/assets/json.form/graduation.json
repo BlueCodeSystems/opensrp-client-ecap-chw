@@ -1,5 +1,5 @@
 {
-  "count": "2",
+  "count": "10",
   "encounter_type": "Graduation",
   "hide_blank_spaces": true,
   "entity_id": "",
@@ -198,6 +198,7 @@
   },
   "step2": {
     "title": "Benchmark 1: Know HIV status",
+    "next": "step3",
     "fields": [
       {
         "key": "hiv_status_enrolled",
@@ -245,7 +246,25 @@
         "type": "toaster_notes",
         "text": "Benchmark 1 has been met.",
         "toaster_type": "positive",
-        "toaster_info_text": "If both questions are answered Yes, Benchmark 1 has been met.",
+        "toaster_info_text": "Benchmark 1 has been met.",
+        "toaster_info_title": "Benchmark 1",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_1_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 1 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 1 has not been met, because both questions have not been answered yes.",
         "toaster_info_title": "Benchmark 1",
         "relevance": {
           "rules-engine": {
@@ -255,6 +274,399 @@
           }
         }
       }
+    ]
+  },
+  "step3": {
+    "title": "Benchmark 2: Virally suppressed ",
+    "next": "step4",
+    "fields": [
+      {
+        "key": "virally_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "virally_suppressed",
+        "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. Answer the questions for each child, adolescent,  youth and primary guardian in the household enrolled in the Project and living with HIV",
+        "label_info_title":"Benchmark 2: Virally suppressed ",
+        "type": "native_radio",
+        "read_only" : true,
+        "label": "Has each beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step4": {
+    "title": "Benchmark 3: Knowledgeable about HIV prevention",
+    "next": "step5",
+    "fields": [
+      {
+        "key": "prevention",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prevention",
+        "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile",
+        "label_info_title":"Benchmark 3: Knowledgeable about HIV prevention",
+        "type": "native_radio",
+        "read_only" : true,
+        "label": "Is Benchmark 3 met?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step5": {
+    "title": "Benchmark 4: Not undernourished",
+    "next": "step6",
+    "fields": [
+      {
+        "key": "undernourished",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "undernourished",
+        "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
+        "label_info_title":"Benchmark 4: Not undernourished",
+        "type": "native_radio",
+        "read_only" : true,
+        "label": "Is Benchmark 4 met?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step6": {
+    "title": "Benchmark 5. Improved financial stability",
+    "next": "step7",
+    "fields": [
+      {
+        "key": "hdd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hdd",
+        "type": "label",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "text": "The following questions should be asked to the guardians"
+      },
+      {
+        "key": "school_fees",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_fees",
+        "type": "native_radio",
+        "label": "Were you able to pay for the school fees for the last school year for all children and adolescents in the household in Grade 1 to 7 who are enrolled in the Project, without selling your working capital or tools/ livestock needed to continue to earn new income? Do not answer ‘yes’ if the child/adolescent had their school fee waived by the school or paid by the project.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "medical_costs",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "medical_costs",
+        "type": "native_radio",
+        "label": "Were you able to pay all medical costs in the past 6 months for all children and adolescents in your household, who are enrolled in the Project without selling your working capital or tools/livestock needed to continue to earn new income? Medical costs include medicine on prescription and transport to health facility.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step7": {
+    "title": "Benchmark 6: No violence and Sexual Abuse",
+    "next": "step8",
+    "fields": [
+      {
+        "key": "record_abuse",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "record_abuse",
+        "type": "native_radio",
+        "label": "Is there any record or evidence that a member of the household has been referred for legal / customary prosecution due to violence in the past six months?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "beaten",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "beaten",
+        "type": "native_radio",
+        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
+        "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
+        "label": "In the past 6 months, have you been beaten, punched, kicked or choked by a spouse or partner, or any other adult belonging to the home?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "caregiver_beaten",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_beaten",
+        "type": "native_radio",
+        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
+        "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
+        "label": "In the past 6 months, have you been beaten, punched, kicked or choked by a spouse or partner, or any other adult belonging to the home?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "child_beaten",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_beaten",
+        "type": "native_radio",
+        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
+        "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
+        "label": "In the past 6 months, has any child, adolescent or youth in your household been beaten, punched, kicked, choked, hot water poured on them, tied up, starved etc. by and adult in the home?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "aware_sexual",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "aware_sexual",
+        "type": "native_radio",
+        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
+        "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
+        "label": "In the past 6 months, has any child, adolescent or youth in your household been beaten, punched, kicked, choked, hot water poured on them, tied up, starved etc. by and adult in the home?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "against_will",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "against_will",
+        "type": "native_radio",
+        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
+        "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
+        "label": "In the past 6 months, has anyone (including your spouse or sexual partner) tried to make you have sex against your will?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step8": {
+    "title": "Benchmark 7: Not in a child-headed household",
+    "next": "step9",
+    "fields": [
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "text": "Question (Do not ask – Use your knowledge)"
+      },
+      {
+        "key": "stable_guardian",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stable_guardian",
+        "type": "native_radio",
+        "label": "During the past 12 months, have all children and adolescents in the household been under the care of a stable adult guardian who lived in the home?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step9": {
+    "title": "Benchmark 8: Children in school",
+    "next": "step10",
+    "fields": [
+      {
+        "key": "children_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "children_in_school",
+        "type": "native_radio",
+        "label": "Are there any children or adolescents of school age (Grade 1 to grade 7) in the household?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "hd2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd2",
+        "type": "label",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "text": "The following questions should be asked to the guardian. "
+      },
+      {
+        "key": "in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "in_school",
+        "type": "native_radio",
+        "label": "Are all children and adolescents in the household of school age (Grade 1 to 7) enrolled in school?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "year_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "year_school",
+        "type": "native_radio",
+        "label": "Have all children and adolescents in the household enrolled in school attended school regularly over the past year (at least 4 days a week on average)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "repeat_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "repeat_school",
+        "type": "native_radio",
+        "label": "Did all children and adolescents in the household enrolled in school progress to the next grade, from last school year to this school year? In other words, no child or adolescent had to repeat a grade this year, or they graduated from Grade 7.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      }
+    ]
+  },
+  "step10": {
+    "title": "SUMMARY ",
+    "fields": [
+      {
+        "key": "additional_information",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "additional_information",
+        "type": "edit_text",
+        "hint": "Additional Useful Information"
+      }
+
     ]
   }
 }
