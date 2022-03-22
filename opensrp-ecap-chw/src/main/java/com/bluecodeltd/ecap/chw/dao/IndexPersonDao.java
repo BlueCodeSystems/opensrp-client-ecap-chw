@@ -213,6 +213,7 @@ public class IndexPersonDao  extends AbstractDao {
     public static DataMap<Child> getChildDataMap() {
         return c -> {
             Child record = new Child();
+            record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setEntity_id(getCursorValue(c, "base_entity_id"));
             record.setFirst_name(getCursorValue(c, "first_name"));
@@ -221,6 +222,10 @@ public class IndexPersonDao  extends AbstractDao {
             record.setGender(getCursorValue(c, "gender"));
             record.setSchool(getCursorValue(c, "school"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
+            record.setHealth_facility(getCursorValue(c, "health_facility"));
+            record.setArt_number(getCursorValue(c, "art_number"));
+            record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
+            record.setVl_last_result(getCursorValue(c, "vl_last_result"));
             return record;
         };
     }
