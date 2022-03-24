@@ -300,6 +300,13 @@ condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_art_number
+description: art_number relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step1_is_on_hiv_treatment.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_is_viral_load_test_results_on_file
 description: is_viral_load_test_results_on_file relevance
 priority: 1
