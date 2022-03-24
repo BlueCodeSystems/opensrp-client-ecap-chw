@@ -292,11 +292,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Home Address",
-        "v_required": {
-          "value": true,
-          "err": "Home Address is Required."
-        }
+        "hint": "Home Address"
       },
       {
         "key": "landmark",

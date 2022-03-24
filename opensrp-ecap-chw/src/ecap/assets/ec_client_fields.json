@@ -798,13 +798,6 @@
           }
         },
         {
-          "column_name": "partners",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partners"
-          }
-        },
-        {
           "column_name": "screening_date",
           "type": "Client",
           "json_mapping": {
@@ -815,7 +808,7 @@
           "column_name": "screening_location_home",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.screening_location"
+            "field": "attributes.screening_location_home"
           }
         },
         {
