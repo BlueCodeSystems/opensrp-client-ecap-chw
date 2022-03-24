@@ -33,6 +33,8 @@ public class Household {
     private String village;
     private String user_gps;
     private String district;
+    private String partner;
+    private String landmark;
     private String screening_date;
     private String violence_six_months;
     private String children_violence_six_months;
@@ -176,6 +178,22 @@ public class Household {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
     }
 
     public String getScreening_date() {
@@ -474,11 +492,11 @@ public class Household {
         this.caregiver_hiv_status = caregiver_hiv_status;
     }
 
-    public String getScreening_location() {
+    public String getScreening_location_home() {
         return screening_location_home;
     }
 
-    public void setScreening_location(String screening_location) {
+    public void setScreening_location_home(String screening_location_home) {
         this.screening_location_home = screening_location_home;
     }
 

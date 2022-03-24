@@ -335,29 +335,24 @@
         "read_only": "false",
         "edit_type": "name",
         "look_up": "true",
-        "v_required": {
-          "value": true,
-          "err": "Ward is Required"
-        },
         "v_regex": {
           "value": "[A-Za-z0-9\\s]*",
           "err": "Ward only accepts letters and digits"
         }
       },
       {
-        "key": "partners",
+        "key": "partner",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners",
+        "openmrs_entity_id": "partner",
         "type": "edit_text",
-        "hint": "Partners",
-        "value": "ZEC",
+        "hint": "Implementing Partner",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Partners is Required"
+          "err": "Partner is Required"
         }
       },
       {
@@ -393,11 +388,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Home Address",
-        "v_required": {
-          "value": true,
-          "err": "Village is Required"
-        }
+        "hint": "Home Address"
       },
       {
         "key": "landmark",
@@ -433,7 +424,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_location_home",
         "type": "edit_text",
-        "hint": "Screening Location",
+        "hint": "Household Screening Location",
         "edit_type": "name",
         "v_regex": {
           "value": "^[a-zA-Z0-9 ]*$",
@@ -707,39 +698,6 @@
           "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-
-        "key": "vl_suppressed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_suppressed",
-        "type": "native_radio",
-        "label": "Are you virally suppressed as of your most recent viral load test?",
-        "options": [
-          {
-            "key": "Less than 1000 copies/ml",
-            "text": "Yes"
-          },
-          {
-            "key": "Above 1000 copies/ml",
-            "text": "No"
-          }
-        ],
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_calculation.yml"
-            }
-          }
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
           }
         }
       },
@@ -1065,22 +1023,11 @@
       },
       {
         "key": "index_check_box",
-        "value": "yes",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "index_check_box",
-        "type": "toaster_notes",
-        "text": "This VCA has been Identified as an Index",
-        "toaster_type": "info",
-        "toaster_info_text": "This VCA has been Identified as an Index",
-        "toaster_info_title": "Index Tracing",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
+        "type": "hidden",
+        "value": "1"
       },
       {
         "key": "case_status",
@@ -1097,6 +1044,14 @@
         "openmrs_entity_id": "screened",
         "type": "hidden",
         "value": "true"
+      },
+      {
+        "key": "is_hiv_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_hiv_positive",
+        "type": "hidden",
+        "value": "yes"
       },
       {
         "key": "subpop1_toast",
@@ -1572,15 +1527,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "contact_number",
         "type": "edit_text",
-        "hint": "Contact Phone Number ",
+        "hint": "Emergency Contact Phone Number ",
         "edit_type": "number",
         "v_numeric": {
           "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,095,096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,095,096, or 097 and must be a total of 10 digits in length"
         }
       },
       {

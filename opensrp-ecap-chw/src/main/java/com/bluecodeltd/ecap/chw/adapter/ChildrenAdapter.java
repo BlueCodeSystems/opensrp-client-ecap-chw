@@ -85,18 +85,20 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         String dob = child.getAdolescent_birthdate();
         String memberAge = getAgeWithoutText(dob);
 
-        //String caseStatus = child.getCase_status();
+
         String caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
-        String school = child.getSchool();
+        String subpop1 = child.getSubpop1();
         String positive = child.getIs_hiv_positive();
+        String artnumber = child.getArt_number();
+        String lastVl = child.getVl_last_result();
 
 
-        if (((positive != null) && child.getIs_hiv_positive().equals("yes")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)){
+
+        if (((positive != null) && child.getIs_hiv_positive().equals("yes")) || ((subpop1 != null) && child.getSubpop1().equals("true")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)) {
 
             holder.gradBtn.setVisibility(View.VISIBLE);
 
         } else {
-
             holder.gradBtn.setVisibility(View.GONE);
         }
 
