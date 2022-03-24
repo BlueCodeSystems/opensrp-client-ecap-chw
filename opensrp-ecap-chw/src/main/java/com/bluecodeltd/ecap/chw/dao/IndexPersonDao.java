@@ -41,7 +41,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countTestedChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "' AND is_hiv_positive IS NOT NULL";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "' AND (is_hiv_positive IS NOT NULL OR subpop1 = 'true')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -226,6 +226,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
+            record.setSubpop1(getCursorValue(c, "subpop1"));
             return record;
         };
     }
