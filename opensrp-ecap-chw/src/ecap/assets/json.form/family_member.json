@@ -1,5 +1,5 @@
 {
-  "count": "3",
+  "count": "4",
   "skip_blank_steps": "true",
   "encounter_type": "Family Member",
   "relational_id": "",
@@ -200,22 +200,6 @@
         }
       },
       {
-        "key": "age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Age",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_calculation.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -312,25 +296,6 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
-        }
-      },
-      {
-        "key": "subpop1_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1_toast",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_member_relevance.yml"
-            }
-          }
         }
       }
     ]
@@ -495,6 +460,7 @@
   },
   "step3": {
     "title": "Caregiver Details",
+    "next": "step4",
     "fields": [
       {
         "key": "caregiver_name",
@@ -572,14 +538,7 @@
         ],
         "v_required": {
           "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
+          "err": "Relationship to child is required"
         }
       },
       {
@@ -598,24 +557,6 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "subpop3_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop3",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "step3:caregiver_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
-          }
         }
       },
       {
@@ -650,22 +591,96 @@
         }
       },
       {
-        "key": "subpop1",
+        "key": "subpop1_toast",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop1",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop3_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
+        }
+      }
+
+    ]
+  },
+  "step4": {
+    "title": "Summary",
+    "fields": [
+      {
+        "key": "subpop3_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop3",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop1_toast_message",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1_toast_message",
+        "type": "toaster_notes",
+        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_type": "info",
+        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
         "type": "native_radio",
-        "value": "true",
+        "value": "1",
         "read_only": true,
-        "label": "VCA Sub Population",
+        "label": "Case Status",
         "options": [
           {
-            "key": "true",
-            "text": "C/ALHIV"
+            "key": "1",
+            "text": "Active"
           },
           {
-            "key": "false",
-            "text": "Other Sub Population"
+            "key": "2",
+            "text": "Inactive"
+          },
+          {
+            "key": "0",
+            "text": "Closed"
           }
         ],
         "relevance": {
