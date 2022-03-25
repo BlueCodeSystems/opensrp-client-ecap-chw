@@ -700,6 +700,7 @@ public class VcaScreeningModel {
         this.caseworker_name = caseworker_name;
     }
 
+
     public String getDate_screened() {
         return date_screened;
     }
@@ -1001,21 +1002,19 @@ public class VcaScreeningModel {
     }
 
     public void setTransfer_reason(String transfer_reason) {
-        this.transfer_reason = transfer_reason;
-    }
+        this.transfer_reason = transfer_reason;}
 
     public String getOther_reason() {
         return other_reason;
     }
-
     public void setOther_reason(String other_reason) {
         this.other_reason = other_reason;
     }
+
     public String getScreening_location() {
         return screening_location;
     }
-
     public void setScreening_location(String screening_location) {
-        this.screening_location = screening_location;
-    }
+        this.screening_location = screening_location;}
+
 }
