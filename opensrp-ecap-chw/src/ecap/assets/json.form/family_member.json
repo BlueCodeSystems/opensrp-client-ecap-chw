@@ -442,11 +442,11 @@
         "openmrs_entity_id": "muac_score",
         "type": "edit_text",
         "hint": "MUAC Score",
-        "edit_type": "numeric",
+        "edit_type": "number",
         "look_up": "true",
         "v_regex": {
-          "value": "[0-9]*",
-          "err": "Enter correct MUAC Score"
+          "value": "^[0-9 ]+(.|,)?[0-9 ]*$",
+          "err": " MUAC Score should be a whole or decimal number"
         },
         "relevance": {
           "rules-engine": {
