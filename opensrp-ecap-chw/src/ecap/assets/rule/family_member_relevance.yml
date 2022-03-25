@@ -31,7 +31,7 @@ actions:
 name: step4_subpop3_toast
 description: subpop3_toast
 priority: 1
-condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive')"
+condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive') && step3_relation.contains('Parent')"
 actions:
   - "isRelevant = true"
 
