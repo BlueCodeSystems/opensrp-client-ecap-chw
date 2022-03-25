@@ -445,7 +445,7 @@
         "edit_type": "numeric",
         "look_up": "true",
         "v_regex": {
-          "value": "[0-9]*",
+
           "err": "Enter correct MUAC Score"
         },
         "relevance": {
