@@ -1,112 +1,44 @@
----
-name: step1_subpop1_toast
-description: subpop1_toast relevance
-priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
-actions:
-  - "isRelevant = true"
----
-name: step3_case_status
-description: step3_case_status relevance
-priority: 1
-condition: "(step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20) || (step3_caregiver_hiv_status.contains('HIV+') && step3_caregiver_sex.contains('female'))"
-actions:
-  - "isRelevant = true"
----
-name: step3_subpop1
-description: subpop1 relevance
-priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop2_toast
-description: subpop2_toast relevance
-priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop2
-description: subpop2 relevance
-priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
-actions:
-  - "isRelevant = true"
+
 ---
 name: step2_immunization
 description: step2_immunization relevance
 priority: 1
-condition: "step1_age < 5"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') <= 5"
 actions:
   - "isRelevant = true"
 ---
 name: step2_child_nut_assessment
 description: step2_child_nut_assessment relevance
 priority: 1
-condition: "step1_age < 5"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') <= 5"
 actions:
   - "isRelevant = true"
 ---
 name: step2_muac_score
 description: step2_muac_score
 priority: 1
-condition: "step1_age < 5"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') <= 5"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop3_toast
-description: subpop3_toast relevance
+name: step4_subpop1_toast_message
+description: subpop1_toast_message
 priority: 1
-condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
+condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
 actions:
   - "isRelevant = true"
 ---
-name: step2_subpop3
-description: subpop3 relevance
+name: step4_subpop3_toast
+description: subpop3_toast
 priority: 1
-condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
+condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive')"
 actions:
   - "isRelevant = true"
+
 ---
-name: step2_subpop4_toast
-description: subpop4_toast relevance
+name: step4_case_status
+description: step3_case_status relevance
 priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop4
-description: subpop4 relevance
-priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop6
-description: subpop6 relevance
-priority: 1
-condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop5_toast
-description: subpop5_toast relevance
-priority: 1
-condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop5
-description: subpop5 relevance
-priority: 1
-condition: "step1_child_ever_experienced_sexual_violence.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step2_subpop6_toast
-description: subpop6_toast relevance
-priority: 1
-condition: "step1_is_the_child_caregiver_an_fsw.contains('yes')"
+condition: "step3_subpop1_toast != null || subpop1_toast != null"
 actions:
   - "isRelevant = true"
