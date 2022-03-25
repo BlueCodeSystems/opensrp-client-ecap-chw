@@ -470,9 +470,10 @@
         "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
-          "step1:is_on_hiv_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
