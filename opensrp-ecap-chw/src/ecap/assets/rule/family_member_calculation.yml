@@ -1,7 +1,17 @@
 ---
-name: step1_myage
-description: Age calculated
+name: step3_subpop1_toast
+description: subpop1_toast
 priority: 1
-condition: 'helper.formatDate(step1_adolescent_birthdate,"y") < 5'
+condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
 actions:
-  - "calculation = 1"
+  - "calculation = true"
+
+---
+name: step3_subpop3_toast
+description: subpop3_toast
+priority: 1
+condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive')"
+actions:
+  - "calculation = true"
+
+
