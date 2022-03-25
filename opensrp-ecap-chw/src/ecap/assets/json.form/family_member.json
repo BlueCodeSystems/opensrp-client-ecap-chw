@@ -200,23 +200,6 @@
         }
       },
       {
-        "key": "age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "age",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Age",
-        "edit_type": "numeric",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "female_sex_worker_calculation.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "gender",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
