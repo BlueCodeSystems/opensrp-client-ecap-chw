@@ -19,3 +19,17 @@ priority: 2
 condition: "step1_viral_load_results > 1000"
 actions:
   - "calculation = 'Above 1000 copies/ml'"
+---
+name: step2_date_edited
+description: date_edited
+priority: 1
+condition: "step2_date_edited == ''"
+actions:
+  - "calculation = helper.getDateToday().toString"
+---
+name: step2_date_edited
+description: date_edited
+priority: 2
+condition: "step2_date_edited != ''"
+actions:
+  - "calculation = helper.getDateToday().toString"
