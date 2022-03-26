@@ -328,6 +328,20 @@ condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_tpt_client_initiated
+description: tpt_client_initiated relevance
+priority: 1
+condition: "tep1_is_hiv_positive.contains('yes') && step1_client_result.contains('Negative')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_tpt_client_eligibility
+description: tpt_client_eligibility relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('yes') && step1_client_result.contains('Negative')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_viral_load_results_on_file
 description: viral_load_results_on_file relevance
 priority: 1

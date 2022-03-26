@@ -182,8 +182,7 @@
         "type": "edit_text",
         "hint": "Ward",
         "read_only": "false",
-        "edit_type": "name",
-        "look_up": "true"
+        "edit_type": "name"
       },
       {
         "key": "screening_location",
@@ -202,15 +201,14 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health Facility",
         "read_only": "true",
-        "edit_type": "name",
-        "look_up": "true"
+        "edit_type": "name"
       },
       {
         "key": "partner",
@@ -593,9 +591,10 @@
           }
         ],
         "relevance": {
-          "step1:client_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -617,9 +616,10 @@
           }
         ],
         "relevance": {
-          "step1:tpt_client_eligibility": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1874,23 +1874,6 @@
         }
       },
       {
-        "key": "caregiver_phone",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_phone",
-        "type": "edit_text",
-        "hint": "Caregiver's Phone Number",
-        "edit_type": "number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
         "key": "date_screened",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1904,19 +1887,6 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
-        }
-      },
-      {
-        "key": "approved_by",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "approved_by",
-        "type": "edit_text",
-        "hint": "Approved By",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
         }
       }
     ]
@@ -2743,7 +2713,6 @@
           }
         }
       },
-
       {
         "key": "caregiver_phone",
         "openmrs_entity_parent": "",

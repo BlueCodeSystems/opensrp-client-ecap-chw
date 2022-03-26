@@ -357,10 +357,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -378,10 +378,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -770,10 +770,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -794,7 +794,7 @@
           "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.subTown"
+            "field": "attributes.ward"
           }
         },
         {
@@ -1368,10 +1368,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -2301,10 +2301,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -2372,11 +2372,11 @@
           }
         },
         {
-          "column_name": "art_health_facility",
+          "column_name": "art_facility",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "art_health_facility"
+            "concept": "art_facility"
           }
         },
         {
@@ -2916,10 +2916,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -3001,10 +3001,10 @@
           }
         },
         {
-          "column_name": "art_health_facility",
+          "column_name": "art_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_health_facility"
+            "field": "attributes.art_facility"
           }
         },
         {
@@ -3644,10 +3644,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -4001,10 +4001,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -4921,10 +4921,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -5017,10 +5017,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -5176,10 +5176,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
