@@ -8,7 +8,7 @@ public class VcaScreeningModel {
     private String province;
     private String district;
     private String ward;
-    private String health_facility;
+    private String facility;
     private String screening_location;
     private String partner;
     private String adolescent_first_name;
@@ -172,13 +172,6 @@ public class VcaScreeningModel {
         this.ward = ward;
     }
 
-    public String getHealth_facility() {
-        return health_facility;
-    }
-
-    public void setHealth_facility(String health_facility) {
-        this.health_facility = health_facility;
-    }
 
     public String getPartner() {
         return partner;
@@ -1017,4 +1010,11 @@ public class VcaScreeningModel {
     public void setScreening_location(String screening_location) {
         this.screening_location = screening_location;}
 
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
 }
