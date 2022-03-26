@@ -222,7 +222,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setGender(getCursorValue(c, "gender"));
             record.setSchool(getCursorValue(c, "school"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
-            record.setHealth_facility(getCursorValue(c, "health_facility"));
+            record.setFacility(getCursorValue(c, "facility"));
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
@@ -279,7 +279,7 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "caregiver_hiv_status"),
                     getCursorValue(c, "relation"),
                     getCursorValue(c, "caregiver_phone"),
-                    getCursorValue(c, "health_facility"),
+                    getCursorValue(c, "facility"),
                     getCursorValue(c, "gender"),
                     getCursorValue(c, "relational_id"),
                     getCursorValue(c, "index_check_box"),

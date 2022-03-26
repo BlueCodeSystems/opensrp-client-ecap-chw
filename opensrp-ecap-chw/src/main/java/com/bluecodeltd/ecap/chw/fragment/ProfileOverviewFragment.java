@@ -123,8 +123,8 @@ public class ProfileOverviewFragment extends Fragment {
             txtArtNumber.setText("N/A");
         }
 
-        if (childIndex.getHealth_facility() != null){
-            txtFacility.setText(childIndex.getHealth_facility());
+        if (childIndex.getFacility() != null){
+            txtFacility.setText(childIndex.getFacility());
         } else {
             txtFacility.setText("N/A");
         }
