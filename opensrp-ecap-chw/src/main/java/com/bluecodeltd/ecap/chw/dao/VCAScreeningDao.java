@@ -43,7 +43,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setProvince(getCursorValue(c, "province"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setWard(getCursorValue(c, "ward"));
-            record.setHealth_facility(getCursorValue(c, "health_facility"));
+            record.setFacility(getCursorValue(c, "facility"));
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setViral_load_results_on_file(getCursorValue(c, "viral_load_results_on_file"));
             record.setIs_tb_screening_results_on_file(getCursorValue(c, "is_tb_screening_results_on_file"));
