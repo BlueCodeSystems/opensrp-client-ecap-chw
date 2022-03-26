@@ -74,6 +74,8 @@ public class Household {
     private String at_risk_reasons;
     private String reason_for_hiv_risk;
     private String consent_check_box;
+    private String info_editedby;
+    private String phone;
 
     public String getMarital_status() {
         return marital_status;
@@ -645,5 +647,12 @@ public class Household {
 
     public void setConsent_check_box(String consent_check_box) {
         this.consent_check_box = consent_check_box;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
