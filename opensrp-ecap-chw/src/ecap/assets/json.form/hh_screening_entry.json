@@ -861,7 +861,7 @@
         "relevance": {
           "step2:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV-\")"
+            "ex": "equalTo(., \"negative\")"
           }
         }
       },
