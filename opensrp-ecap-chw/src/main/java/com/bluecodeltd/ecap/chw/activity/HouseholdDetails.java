@@ -369,8 +369,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
                     indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop5());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop());
+                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop5());
 
                     indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 

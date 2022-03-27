@@ -169,10 +169,10 @@
         ]
       },
       {
-        "key": "vca_art",
+        "key": "is_on_hiv_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_art",
+        "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
         "label": "Is the VCA on ART?",
         "options": [
@@ -205,17 +205,17 @@
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
-          "step1:vca_art": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
           }
         }
       },
       {
-        "key": "date_art",
+        "key": "date_started_art",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_art",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_started_art",
         "type": "date_picker",
         "hint": "When was the VCA initiated on ART?",
         "expanded": false,
@@ -229,11 +229,11 @@
           "err": "When was the VCA initiated on ART"
         },
         "relevance": {
-        "step1:vca_art": {
-          "type": "string",
-          "ex": "equalTo(., \"yes\")"
+          "step1:is_on_hiv_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
-      }
       },
       {
         "key": "appointment",
@@ -255,7 +255,7 @@
           }
         ],
         "relevance": {
-          "step1:vca_art": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -344,7 +344,7 @@
           "err": "Months of medications "
         },
         "relevance": {
-          "step1:vca_art": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -464,7 +464,7 @@
           "err": "Error"
         },
         "relevance": {
-          "step1:vca_art": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -479,7 +479,7 @@
         "read_only": "false",
         "hint": "ART Number",
         "relevance": {
-          "step1:vca_art": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1205,7 +1205,7 @@
           }
         ],
         "relevance": {
-          "step1:vca_art": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }

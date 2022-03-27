@@ -27,7 +27,7 @@ public class VcaAssessmentDao extends AbstractDao {
             VcaAssessmentModel record = new VcaAssessmentModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
-            record.setVca_art(getCursorValue(c, "vca_art"));
+            record.setIs_on_hiv_treatment(getCursorValue(c, "is_on_hiv_treatment"));
             record.setDate_art(getCursorValue(c, "date_art"));
             record.setAppointment(getCursorValue(c, "appointment"));
             record.setTaking_art(getCursorValue(c, "taking_art"));

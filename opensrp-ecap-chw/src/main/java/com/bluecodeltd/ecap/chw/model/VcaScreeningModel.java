@@ -56,7 +56,7 @@ public class VcaScreeningModel {
     private String agyw_having_sex_with_older_men;
     private String agyw_transactional_sex;
     private String agyw_engaged_in_transactional_sex;
-    private String agwy_engaged_in_sex_work;
+    private String agyw_engaged_in_sex_work;
     private String agyw_food_or_economically_insecure;
     private String agyw_marry_early;
     private String agyw_give_birth_before_the_age_of_18;
@@ -73,6 +73,8 @@ public class VcaScreeningModel {
     private String other_child_clinical_care_services_received;
     private String is_the_child_caregiver_an_fsw;
     private String fsw_prevention_intervention;
+    private String fsw_child_tested;
+    private String fsw_child_positive;
     private String fsw_economic_strengthening_intervention;
     private String caseworker_name;
     private String date_screened;
@@ -541,21 +543,7 @@ public class VcaScreeningModel {
         this.agyw_engaged_in_transactional_sex = agyw_engaged_in_transactional_sex;
     }
 
-    public String getAgwy_engaged_in_sex_work() {
-        return agwy_engaged_in_sex_work;
-    }
 
-    public void setAgwy_engaged_in_sex_work(String agwy_engaged_in_sex_work) {
-        this.agwy_engaged_in_sex_work = agwy_engaged_in_sex_work;
-    }
-
-    public String getAgyw_food_or_economically_insecure() {
-        return agyw_food_or_economically_insecure;
-    }
-
-    public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
-        this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
-    }
 
     public String getAgyw_marry_early() {
         return agyw_marry_early;
@@ -1016,5 +1004,37 @@ public class VcaScreeningModel {
 
     public void setFacility(String facility) {
         this.facility = facility;
+    }
+
+    public String getFsw_child_tested() {
+        return fsw_child_tested;
+    }
+
+    public void setFsw_child_tested(String fsw_child_tested) {
+        this.fsw_child_tested = fsw_child_tested;
+    }
+
+    public String getFsw_child_positive() {
+        return fsw_child_positive;
+    }
+
+    public void setFsw_child_positive(String fsw_child_positive) {
+        this.fsw_child_positive = fsw_child_positive;
+    }
+
+    public String getAgyw_engaged_in_sex_work() {
+        return agyw_engaged_in_sex_work;
+    }
+
+    public void setAgyw_engaged_in_sex_work(String agyw_engaged_in_sex_work) {
+        this.agyw_engaged_in_sex_work = agyw_engaged_in_sex_work;
+    }
+
+    public String getAgyw_food_or_economically_insecure() {
+        return agyw_food_or_economically_insecure;
+    }
+
+    public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
+        this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
     }
 }

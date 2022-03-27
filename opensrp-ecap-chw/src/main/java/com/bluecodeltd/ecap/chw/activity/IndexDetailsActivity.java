@@ -949,9 +949,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", child.getIs_on_hiv_treatment());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", child.getDate_started_art());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value",child.getArt_number());
+
 
                 } else {
 

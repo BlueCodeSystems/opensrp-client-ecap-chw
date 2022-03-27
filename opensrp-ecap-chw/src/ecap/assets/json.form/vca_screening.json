@@ -1240,7 +1240,7 @@
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
         "type": "check_box",
         "label": "Is AGYW using any of these HIV/pregnancy prevention methods?",
@@ -1370,7 +1370,7 @@
         }
       },
       {
-        "key": "agwy_engaged_in_sex_work",
+        "key": "agyw_engaged_in_sex_work",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_engaged_in_sex_work",
@@ -1830,7 +1830,7 @@
       {
         "key": "fsw_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fsw_economic_strengthening_intervention",
         "type": "native_radio",
         "label": "Is the Adolescent and caregiver receiving any economic strengthening intervention?",
