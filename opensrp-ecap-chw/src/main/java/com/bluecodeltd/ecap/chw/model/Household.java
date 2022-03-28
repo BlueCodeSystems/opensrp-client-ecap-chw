@@ -76,6 +76,7 @@ public class Household {
     private String consent_check_box;
     private String info_editedby;
     private String phone;
+    private String date_edited;
     private String ward;
 
     public String getMarital_status() {
@@ -655,6 +656,14 @@ public class Household {
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
     }
 
     public String getWard() {
