@@ -95,7 +95,6 @@
           "err": "Name of Person can  only contain letters"
         }
       },
-
       {
         "key": "phone",
         "openmrs_entity_parent": "",
@@ -175,6 +174,7 @@
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
         "label": "Is the VCA on ART?",
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -212,6 +212,20 @@
         }
       },
       {
+        "key": "date_last_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_last_vl",
+        "type": "hidden"
+      },
+      {
+        "key": "date_hiv_known",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_hiv_known",
+        "type": "hidden"
+      },
+      {
         "key": "date_started_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -222,6 +236,7 @@
         "duration": {
           "label": ""
         },
+        "read_only": true,
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -327,21 +342,25 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "months_medication",
-        "type": "spinner",
-        "hint": "How many months of medications are typically received from the facility?",
-        "values": [
-          "0<3 months",
-          "3-5 months",
-          "6+ months"
-        ],
-        "keys": [
-          "0<3 months",
-          "3-5 months",
-          "6+ months"
+        "type": "native_radio",
+        "label": "How many months of medications are typically received from the facility?",
+        "options": [
+          {
+            "key": "less_months",
+            "text": "0<3 months"
+          },
+          {
+            "key": "3-5months",
+            "text": "3-5 months"
+          },
+          {
+            "key": "more_6months",
+            "text": "6+ months"
+          }
         ],
         "v_required": {
-          "value": false,
-          "err": "Months of medications "
+          "value": true,
+          "err": "This field is required"
         },
         "relevance": {
           "step1:is_on_hiv_treatment": {
@@ -357,6 +376,8 @@
         "openmrs_entity_id": "viral_load",
         "type": "native_radio",
         "label": "Has the VCA had a viral load test in the past 12 months?",
+        "value": "yes",
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -382,17 +403,10 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
-        "type": "spinner",
+        "type": "edit_text",
+        "edit_type": "number",
         "hint": "Last VL results",
-        "values": [
-          "Less than 1000 copies/ml",
-          "Above 1000 copies/ml"
-        ],
-        "keys": [
-          "Less than 1000 copies/ml",
-          "Above 1000 copies/ml"
-        ],
-        "read_only": false,
+        "read_only": true,
         "relevance": {
           "step1:viral_load": {
             "type": "string",
@@ -400,7 +414,6 @@
           }
         }
       },
-
       {
         "key": "toaster_g",
         "openmrs_entity_parent": "",
@@ -450,18 +463,21 @@
           }
         }
       },
-
       {
         "key": "art_health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
-        "hint": "Health Facility",
+        "hint": "ART Health Facility",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",
           "err": "Error"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
         },
         "relevance": {
           "step1:is_on_hiv_treatment": {
@@ -476,8 +492,12 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "read_only": "false",
         "hint": "ART Number",
+        "read_only": true,
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        },
         "relevance": {
           "step1:is_on_hiv_treatment": {
             "type": "string",
@@ -485,8 +505,6 @@
           }
         }
       },
-
-
       {
         "key": "hiv_test",
         "openmrs_entity_parent": "",
@@ -522,7 +540,6 @@
           }
         }
       },
-
       {
         "key": "vca_exposed",
         "openmrs_entity_parent": "",
@@ -558,7 +575,6 @@
           }
         }
       },
-
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -576,7 +592,6 @@
           }
         }
       },
-
       {
         "key": "toaster_age",
         "openmrs_entity_parent": "",
@@ -817,7 +832,6 @@
           }
         }
       },
-
       {
         "key": "toaster_direct_questions",
         "openmrs_entity_parent": "",
@@ -1170,38 +1184,43 @@
         }
       },
       {
-        "key": "eyp_population",
+        "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "eyp_population",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": "false",
-        "label_text_style": "",
-        "label": "ECAP Sub-population based on assessment",
+        "read_only": "true",
+        "label": "Sub-populations based on assessment",
         "options": [
           {
             "key": "subpop1",
-            "text": "Child/Adolescent Living with HIV (C/ALHIV)"
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
+            "value": "false"
           },
           {
             "key": "subpop2",
-            "text": "HIV-Exposed Infant (HEI), (for child 0-2 years old)"
+            "text": "HIV Exposed Infants (HEIs)",
+            "value": "false"
           },
           {
             "key": "subpop3",
-            "text": "Children of People Living with HIV"
+            "text": "Children of Women Living with HIV",
+            "value": "false"
           },
           {
-            "key": "subpop",
-            "text": "Children of Female Sex Worker"
-          },
-          {
-            "key": "subpop6",
-            "text": "Girls at risk of HIV infection (at-risk AGYW)"
+            "key": "subpop4",
+            "text": "Adolescent Girls and Young Women (AGYW)",
+            "value": "false"
           },
           {
             "key": "subpop5",
-            "text": "Children/adolescent who has experienced sexual violence/gender-based violence"
+            "text": "Survivors of Sexual Violence",
+            "value": "false"
+          },
+          {
+            "key": "subpop",
+            "text": "Children of Female Sex Workers (FSWs)",
+            "value": "false"
           }
         ],
         "relevance": {
