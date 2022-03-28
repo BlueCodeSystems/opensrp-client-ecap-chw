@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtMalesBetweenTenAndSeventeen;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen;
     LinearLayout linearLayout, muacView;
     Button screenBtn;
     FloatingActionButton fab;
@@ -51,6 +51,9 @@ public class HouseholdOverviewFragment extends Fragment {
         //txtFemales = view.findViewById(R.id.females);
         txtName = view.findViewById(R.id.emergency_name);
         txtNumber = view.findViewById(R.id.emergency_number);
+        txtPhone = view.findViewById(R.id.h_phone);
+        txtDate  = view.findViewById(R.id.h_date);
+        txtEdited_by = view.findViewById(R.id.h_edited_by);
         txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
         txtFemalesBetweenTenAndSeventeen = view.findViewById(R.id.femalesBetweenTenAndSeventeen);
         linearLayout = view.findViewById(R.id.llayout);
@@ -111,6 +114,10 @@ public class HouseholdOverviewFragment extends Fragment {
         String emergency_name = house.getEmergency_name();
         String contact_number = house.getContact_number();
 
+        String phone = house.getPhone();
+        String date_edited = house.getDate_edited();
+        String edited_by = house.getCaseworker_name();
+
         txtIncome.setText(income);
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
@@ -143,6 +150,19 @@ public class HouseholdOverviewFragment extends Fragment {
         if(contact_number != null)
         {
             txtNumber.setText(contact_number);
+        }
+
+        if(phone != null)
+        {
+            txtPhone.setText(phone);
+        }
+        if(date_edited != null)
+        {
+            txtDate.setText(date_edited);
+        }
+        if(edited_by != null)
+        {
+            txtEdited_by.setText(edited_by);
         }
 
 
