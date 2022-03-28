@@ -114,7 +114,6 @@
         "type": "edit_text",
         "hint": "Caregiver's Full Name"
       },
-
       {
         "key": "household_id",
         "openmrs_entity_parent": "",

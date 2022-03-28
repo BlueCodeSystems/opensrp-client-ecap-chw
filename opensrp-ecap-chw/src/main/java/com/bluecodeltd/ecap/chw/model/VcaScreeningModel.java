@@ -86,6 +86,12 @@ public class VcaScreeningModel {
     private String subpop3_toast;
     private String subpop4_toast;
     private String subpop5_toast;
+    private String subpop1;
+    private String subpop;
+    private String subpop2;
+    private String subpop3;
+    private String subpop4;
+    private String subpop5;
     private String first_name;
     private String last_name;
     private String gender;
@@ -1036,5 +1042,53 @@ public class VcaScreeningModel {
 
     public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
         this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
+    }
+
+    public String getSubpop1() {
+        return subpop1;
+    }
+
+    public void setSubpop1(String subpop1) {
+        this.subpop1 = subpop1;
+    }
+
+    public String getSubpop() {
+        return subpop;
+    }
+
+    public void setSubpop(String subpop) {
+        this.subpop = subpop;
+    }
+
+    public String getSubpop2() {
+        return subpop2;
+    }
+
+    public void setSubpop2(String subpop2) {
+        this.subpop2 = subpop2;
+    }
+
+    public String getSubpop3() {
+        return subpop3;
+    }
+
+    public void setSubpop3(String subpop3) {
+        this.subpop3 = subpop3;
+    }
+
+    public String getSubpop4() {
+        return subpop4;
+    }
+
+    public void setSubpop4(String subpop4) {
+        this.subpop4 = subpop4;
+    }
+
+    public String getSubpop5() {
+        return subpop5;
+    }
+
+    public void setSubpop5(String subpop5) {
+        this.subpop5 = subpop5;
     }
 }

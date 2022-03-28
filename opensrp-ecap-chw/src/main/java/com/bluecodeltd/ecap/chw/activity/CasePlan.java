@@ -94,7 +94,7 @@ public class CasePlan extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        if (recyclerViewadapter.getItemCount() > 0 && domainList.size() > 0){
 
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
@@ -163,9 +163,6 @@ public class CasePlan extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
-                is_edit_mode = true;
-            }
 
             try {
 
@@ -175,7 +172,7 @@ public class CasePlan extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, false);
 
                 Toasty.success(CasePlan.this, "Form Saved", Toast.LENGTH_LONG, true).show();
                 finish();
@@ -195,12 +192,7 @@ public class CasePlan extends AppCompatActivity {
 
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
 
-            String entityId = formJsonObject.optString("entity_id");
-
-            if(entityId.isEmpty()){
-                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-            }
-
+            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 

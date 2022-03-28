@@ -2580,7 +2580,7 @@
       ]
     },
     {
-      "name": "ec_case_plan_domain",
+      "name": "ec_vca_case_plan_domain",
       "columns": [
         {
           "column_name": "base_entity_id",

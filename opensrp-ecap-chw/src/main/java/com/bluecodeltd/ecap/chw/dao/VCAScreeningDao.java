@@ -120,6 +120,12 @@ public class VCAScreeningDao extends AbstractDao {
             record.setSubpop3_toast(getCursorValue(c, "subpop3_toast"));
             record.setSubpop4_toast(getCursorValue(c, "subpop4_toast"));
             record.setSubpop5_toast(getCursorValue(c, "subpop5_toast"));
+            record.setSubpop1(getCursorValue(c, "subpop1"));
+            record.setSubpop2(getCursorValue(c, "subpop2"));
+            record.setSubpop3(getCursorValue(c, "subpop3"));
+            record.setSubpop4(getCursorValue(c, "subpop4"));
+            record.setSubpop5(getCursorValue(c, "subpop5"));
+            record.setSubpop(getCursorValue(c, "subpop"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setGender(getCursorValue(c, "gender"));
