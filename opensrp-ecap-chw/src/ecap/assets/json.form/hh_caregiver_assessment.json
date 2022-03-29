@@ -521,6 +521,160 @@
         }
       },
       {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": " INTIMATE PARTNER VIOLENCE SCREENING"
+      },
+      {
+        "key": "last_year",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_year",
+        "type": "native_radio",
+        "label": "Within the last year, have you been hit,   slapped,   kicked   or   otherwise\nphysically hurt by your partner or\nsomeone important?",
+        "label_text_style": "",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "last_year_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV programs and/or Victim Support Unit",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:last_year": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "relation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "relation",
+        "type": "native_radio",
+        "label": "Are you in a relationship in which you\nhave   been   physically   hurt   or\nthreatened by your partner?",
+        "label_text_style": "",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "relation_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV\nprograms",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:relation": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "partner_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner_caregiver",
+        "type": "native_radio",
+        "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
+        "label_text_style": "",
+        "text_color": "#000000",
+        "exclusive": [
+          "Yes"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "You're required to check the box"
+        }
+      },
+      {
+        "key": "partner_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer and escort to STOP GBV \nprograms and to the health facility for PrEP \ninitiation",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:partner_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "hd4",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -534,7 +688,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "read_only": "false",
+        "read_only": "true",
         "label": "Is the primary Caregiver on ART?",
         "options": [
           {
@@ -716,7 +870,6 @@
           }
         }
       },
-
       {
         "key": "viral_load_12months",
         "openmrs_entity_parent": "",
@@ -735,10 +888,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -769,7 +921,7 @@
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
         "hint": "Result of most recent viral load test.",
-        "read_only": "false",
+        "read_only": "true",
         "relevance": {
           "step1:viral_load_12months": {
             "type": "string",
@@ -784,7 +936,7 @@
         "openmrs_entity_id": "date_of_last_viral_load",
         "type": "edit_text",
         "hint": "Date of last viral load test",
-        "read_only": "false",
+        "read_only": "true",
         "relevance": {
           "step1:viral_load_12months": {
             "type": "string",
@@ -834,9 +986,9 @@
           },
           {
             "key": "na",
-            "text": "NA"
+            "text": "N/A"
           }
-         ],
+        ],
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
@@ -941,161 +1093,6 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "1",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "health_label",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": " INTIMATE PARTNER VIOLENCE SCREENING"
-      },
-      {
-        "key": "last_year",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_year",
-        "type": "native_radio",
-        "label": "Within the last year, have you been hit,   slapped,   kicked   or   otherwise\nphysically hurt by your partner or\nsomeone important?",
-        "label_text_style": "",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "last_year_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and escort to STOP GBV programs and/or Victim Support Unit",
-        "toaster_type": "info",
-        "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:last_year": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "relation",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "relation",
-        "type": "native_radio",
-        "label": "Are you in a relationship in which you\nhave   been   physically   hurt   or\nthreatened by your partner?",
-        "label_text_style": "",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "relation_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and escort to STOP GBV\nprograms",
-        "toaster_type": "info",
-        "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:relation": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "partner_caregiver",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_caregiver",
-        "type": "native_radio",
-        "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
-        "label_text_style": "",
-        "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        }
-      },
-      {
-        "key": "partner_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Refer and escort to STOP GBV \nprograms and to the health facility for PrEP \ninitiation",
-        "toaster_type": "info",
-        "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
-        "relevance": {
-          "step1:partner_caregiver": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-
       {
         "key": "hd5",
         "openmrs_entity_parent": "",
