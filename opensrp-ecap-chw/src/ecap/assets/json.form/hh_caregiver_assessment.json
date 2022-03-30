@@ -709,6 +709,13 @@
         }
       },
       {
+        "key": "date_of_last_viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "hidden"
+      },
+      {
         "key": "caregiver_art_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
