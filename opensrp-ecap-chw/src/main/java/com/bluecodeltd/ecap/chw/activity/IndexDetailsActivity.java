@@ -870,14 +870,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
 
+                if(Integer.parseInt(vcaAge) > 1){
+                    if(Integer.parseInt(vcaAge) < 15){
+                        hiv_assessment.setVisibility(View.VISIBLE);
+                    }
 
-                if(Integer.parseInt(vcaAge) < 15){
-                    hiv_assessment.setVisibility(View.VISIBLE);
+                    if(Integer.parseInt(vcaAge) >= 15){
+                        hiv_assessment2.setVisibility(View.VISIBLE);
+                    }
                 }
 
-                if(Integer.parseInt(vcaAge) >= 15){
-                    hiv_assessment2.setVisibility(View.VISIBLE);
-                }
 
             }
             else{
