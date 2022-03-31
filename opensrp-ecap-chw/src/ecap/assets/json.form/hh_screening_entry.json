@@ -469,10 +469,6 @@
         "type": "edit_text",
         "hint": "Household Screening Location",
         "edit_type": "name",
-        "v_regex": {
-          "value": "^[a-zA-Z0-9 ]*$",
-          "err": "Screening location  only take numbers,letters and spaces"
-        },
         "v_required": {
           "value": true,
           "err": "Screening Location is Required"

@@ -191,10 +191,7 @@
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
         "hint": "Screening Location",
-        "v_regex": {
-          "value": "^[a-zA-Z0-9 ]*$",
-          "err": "Screening location  only take numbers,letters and spaces"
-        },
+        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "Required"

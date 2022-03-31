@@ -834,9 +834,9 @@
           },
           {
             "key": "na",
-            "text": "NA"
+            "text": "N/A"
           }
-         ],
+        ],
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
