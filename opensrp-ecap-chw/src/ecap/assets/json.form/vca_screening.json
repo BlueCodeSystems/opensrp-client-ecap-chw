@@ -437,7 +437,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent currently on HIV treatment?",
+        "label": "Is the Child/Adolescent currently on HIV treatment (ART)?",
         "options": [
           {
             "key": "yes",
@@ -2301,6 +2301,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_check_box",
         "type": "native_radio",
+        "hidden": "true",
         "label": "Is the child currently on ART?",
         "text_color": "#000000",
         "exclusive": [
@@ -2356,7 +2357,7 @@
           "err": "Required"
         },
         "relevance": {
-          "step4:art_check_box": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
