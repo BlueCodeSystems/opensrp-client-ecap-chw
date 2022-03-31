@@ -230,6 +230,12 @@
         "openmrs_entity_id": "date_started_art",
         "type": "date_picker",
         "hint": "When was the VCA initiated on ART?",
+        "relevance": {
+          "step1:is_on_hiv_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
         "expanded": false,
         "duration": {
           "label": ""
