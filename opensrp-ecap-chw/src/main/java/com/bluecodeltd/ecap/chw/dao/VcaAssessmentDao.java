@@ -58,7 +58,7 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setGiven_birth(getCursorValue(c, "given_birth"));
             record.setCurrently_pregnant(getCursorValue(c, "currently_pregnant"));
             record.setVca_response(getCursorValue(c, "vca_response"));
-            record.setEyp_population(getCursorValue(c, "eyp_population"));
+            record.setSub_population(getCursorValue(c, "sub_population"));
             record.setCaseworker_firstname(getCursorValue(c, "caseworker_firstname"));
             record.setCaseworker_lastname(getCursorValue(c, "caseworker_lastname"));
             record.setCaseworker_nrc(getCursorValue(c, "caseworker_nrc"));
@@ -66,6 +66,7 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setAge(getCursorValue(c,"age"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
+            record.setDate_started_art(getCursorValue(c, "date_started_art"));
 
             return record;
         };
