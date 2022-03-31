@@ -151,7 +151,7 @@
         "openmrs_entity_id": "is_hiv_positive",
         "type": "native_radio",
         "label": "HIV status",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -174,7 +174,7 @@
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
         "label": "Is the VCA on ART?",
-        "read_only": false,
+        "read_only": true,
         "options": [
           {
             "key": "yes",
@@ -234,7 +234,7 @@
         "duration": {
           "label": ""
         },
-        "read_only": false,
+        "read_only": true,
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
