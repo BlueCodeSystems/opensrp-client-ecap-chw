@@ -458,7 +458,7 @@
       {
         "key": "art_health_facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
         "hint": "ART Health Facility",
@@ -1178,7 +1178,7 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
         "read_only": "true",
@@ -1186,33 +1186,32 @@
         "options": [
           {
             "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": "false"
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
+
           },
           {
             "key": "subpop2",
-            "text": "HIV Exposed Infants (HEIs)",
-            "value": "false"
+            "text": "HIV Exposed Infants (HEIs)"
+
           },
           {
             "key": "subpop3",
-            "text": "Children of Women Living with HIV",
-            "value": "false"
+            "text": "Children of Women Living with HIV"
+
           },
           {
             "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
+            "text": "Adolescent Girls and Young Women (AGYW)"
           },
           {
             "key": "subpop5",
-            "text": "Survivors of Sexual Violence",
-            "value": "false"
+            "text": "Survivors of Sexual Violence"
+
           },
           {
             "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
-            "value": "false"
+            "text": "Children of Female Sex Workers (FSWs)"
+
           }
         ],
         "relevance": {
