@@ -37,7 +37,6 @@
         android:theme="@style/ChwTheme"
         tools:replace="android:theme">
         <activity
-            android:noHistory="true"
             android:label="VCA Case Plan"
             android:name=".activity.CasePlan"
             android:exported="true" />

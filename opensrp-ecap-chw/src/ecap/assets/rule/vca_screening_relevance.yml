@@ -475,6 +475,13 @@ condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_mother_art_number_wlhiv
+description: mother_art_number_wlhiv
+priority: 1
+condition: "step1_is_biological_child_of_mother_living_with_hiv.contains('yes') && step1_is_mother_currently_on_treatment_wlhiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_is_mother_adhering_to_treatment_wlhiv
 description: is_mother_adhering_to_treatment_wlhiv
 priority: 1
