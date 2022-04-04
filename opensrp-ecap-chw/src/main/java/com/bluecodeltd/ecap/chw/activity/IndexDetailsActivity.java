@@ -1010,18 +1010,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "case_plan":
 
-                if(vcaCasePlanModel == null){
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
-                    //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+             /*   if(vcaCasePlanModel == null){
 
                 } else {
-
                     formToBeOpened.put("entity_id", this.vcaCasePlanModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaCasePlanModel, Map.class));
 
-                }
+                }*/
 
                 break;
 
@@ -1057,7 +1055,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
     }
-
 
         startFormActivity(formToBeOpened);
     }

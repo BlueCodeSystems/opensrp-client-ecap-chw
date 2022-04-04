@@ -1104,9 +1104,10 @@
         "hint": "Mothers' ART Number",
         "edit_type": "name",
         "relevance": {
-          "step1:is_mother_currently_on_treatment_wlhiv": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
