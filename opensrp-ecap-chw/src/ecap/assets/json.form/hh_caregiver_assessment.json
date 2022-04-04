@@ -2055,23 +2055,24 @@
         ]
       },
       {
-        "key": "toaster_eaten_month",
+        "key": "toaster27",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
-        "toaster_type": "warning",
+        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
         "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
+        "text_color": "#000000",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
       },
+
       {
         "key": "toaster_red2",
         "openmrs_entity_parent": "",
@@ -2121,26 +2122,26 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
-          "Sometimes (3 to 10 times)",
-          "Often (more than 10 times)"
+          "no",
+          "rarely",
+          "sometimes",
+          "often"
         ]
       },
       {
-        "key": "toaster_lack_resources",
+        "key": "toaster28",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
-        "toaster_type": "info",
         "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
+        "text_color": "#000000",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
@@ -2160,26 +2161,26 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
-          "Sometimes (3 to 10 times)",
-          "Often (more than 10 times)"
+          "no",
+          "rarely",
+          "sometimes",
+          "often"
         ]
       },
       {
-        "key": "toaster_limited_variety",
+        "key": "toaster29",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
-        "toaster_type": "info",
-        "toaster_info_text": " ",
-        "toaster_info_title": "Information Toaster Info Title",
+        "toaster_info_text": "",
+        "text_color": "#000000",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
@@ -2199,26 +2200,26 @@
           "Often (more than 10 times)"
         ],
         "keys": [
-          "No",
-          "Rarely (once or twice)",
-          "Sometimes (3 to 10 times)",
-          "Often (more than 10 times)"
+          "no",
+          "rarely",
+          "sometimes",
+          "often"
         ]
       },
       {
-        "key": "toaster_night_hungry",
+        "key": "toaster30",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
-        "toaster_type": "warning",
         "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
+        "text_color": "#000000",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
@@ -2276,7 +2277,7 @@
         "openmrs_entity_id": "other_obvious_issues",
         "type": "edit_text",
         "hint": "Record obvious issues here",
-        "edit_type": "name",
+        "edit_type": "",
         "v_required": {
           "value": "false",
           "err": "Required"
@@ -2284,7 +2285,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
@@ -2370,6 +2371,49 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_question",
         "type": "check_box",
+        "read_only": "false",
+        "label_info_text": "Indicate ‘Yes’ by ticking the appropriate boxes",
+        "label_info_title": "Tip",
+        "label": "Since you responded ‘Yes’ to the above question(s)",
+        "options": [
+          {
+            "key": "q1",
+            "text": "Have you ever ridden in a CAR driven\nby someone (including yourself) who was\n“high” or had been using alcohol or drugs?"
+          },
+          {
+            "key": "Do you ever use alcohol or drugs to RELAX, feel better about yourself, or fit in?",
+            "text": "Do you ever use alcohol or drugs to\nRELAX, feel better about yourself, or fit in?"
+
+          },
+          {
+            "key": "q3",
+            "text": "Do you ever FORGET things you did while using alcohol or drugs?"
+
+          },
+          {
+            "key": "q4",
+            "text": "Do your FAMILY or FRIENDS ever tell you\nthat you should cut down on your drinking or\ndrug use? "
+
+          },
+          {
+            "key": "q5",
+            "text": "Have you ever gotten into TROUBLE\nwhile you were using alcohol or drugs?"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "toaster_caregiver_vulnerability.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "q",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_question",
+        "type": "check_box",
         "label_text_style": "",
         "label_info_text": "Indicate ‘Yes’ by ticking the appropriate boxes",
         "label_info_title": "Tip",
@@ -2410,37 +2454,37 @@
         }
       },
       {
-        "key": "toaster_question",
+        "key": "toaster31",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Refer for Alcohol and/substance abuse counselling",
-        "toaster_type": "warning",
         "toaster_info_text": "",
-        "toaster_info_title": "Information Toaster Info Title",
+        "text_color": "#000000",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
       },
       {
-        "key": "toaster_positive",
+        "key": "toaster32",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "Provide alcohol and substance abuse counselling in relation to ART Adherence.\n\nNB: ART Adherence must be assessed, and ART adherence counselling provided at every home visit. \n",
+        "toaster_info_text": "",
+        "text_color": "#000000",
         "toaster_type": "warning",
-        "toaster_info_text": " ",
-        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
+              "rules-file": "toaster_caregiver_vulnerability.yml"
             }
           }
         }
