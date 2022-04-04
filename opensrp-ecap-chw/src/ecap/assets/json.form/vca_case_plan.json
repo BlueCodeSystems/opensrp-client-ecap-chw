@@ -114,7 +114,6 @@
         "type": "edit_text",
         "hint": "Caregiver's Full Name"
       },
-
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
@@ -363,8 +362,8 @@
             "min_date": "today",
             "max_date": "today + 100y",
             "v_required": {
-              "value": false,
-              "err": "Due Date"
+              "value": true,
+              "err": "This field is required"
             }
           },
           {

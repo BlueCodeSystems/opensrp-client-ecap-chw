@@ -2150,6 +2150,13 @@
           }
         },
         {
+          "column_name": "date_started_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_started_art"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -2168,6 +2175,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "is_on_hiv_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_on_hiv_treatment"
           }
         },
         {
@@ -2372,6 +2386,13 @@
           }
         },
         {
+          "column_name": "art_health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_health_facility"
+          }
+        },
+        {
           "column_name": "art_facility",
           "type": "Event",
           "json_mapping": {
@@ -2542,10 +2563,10 @@
           }
         },
         {
-          "column_name": "eyp_population",
+          "column_name": "sub_population",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.eyp_population"
+            "field": "attributes.sub_population"
           }
         },
         {
@@ -2580,7 +2601,7 @@
       ]
     },
     {
-      "name": "ec_case_plan_domain",
+      "name": "ec_vca_case_plan_domain",
       "columns": [
         {
           "column_name": "base_entity_id",

@@ -38,7 +38,8 @@ public class ChildCasePlanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_childcaseplans, container, false);
 
-        String childId  = ( (IndexDetailsActivity) requireActivity()).uniqueId;
+        String childId  = ((IndexDetailsActivity) requireActivity()).uniqueId;
+        String hivStatus = ((IndexDetailsActivity) requireActivity()).is_hiv_positive;
 
         recyclerView = view.findViewById(R.id.planrecyclerView);
         linearLayout = view.findViewById(R.id.visit_container);
@@ -49,7 +50,7 @@ public class ChildCasePlanFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new CasePlanAdapter(casePlanList, getContext());
+        recyclerViewadapter = new CasePlanAdapter(casePlanList, getContext(), hivStatus);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 

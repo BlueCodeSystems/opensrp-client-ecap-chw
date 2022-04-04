@@ -45,6 +45,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -57,6 +58,7 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.VcaCasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -103,7 +105,7 @@ import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabVisitation, fabReferal, fabCasePlan, fabAssessment;
+    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
@@ -129,6 +131,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
+    VcaCasePlanModel vcaCasePlanModel;
 
 
     public VCAModel client;
@@ -175,6 +178,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
+        vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -194,6 +198,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
         if(vcaVisitationModel == null){
             fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
+        }
+        if(vcaCasePlanModel == null){
+            fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
         if(gender.equals("male")){
@@ -511,20 +518,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
                 if(encounterType.equals("VCA Case Plan"))
                 {
-                    String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+
+                    JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                    String dateId = cpdate.optString("value");
                     openVcaCasplanToAddVulnarabilities(dateId);
                 }
                 else {
 
-                    finish();
-                    startActivity(getIntent());
+
                 }
             } catch (Exception e) {
                 Timber.e(e);
             }
 
         }
-
+        finish();
+        startActivity(getIntent());
     }
 
     private void openVcaCasplanToAddVulnarabilities(String dateId) {
@@ -868,14 +877,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
 
+                if(Integer.parseInt(vcaAge) > 1){
+                    if(Integer.parseInt(vcaAge) < 15){
+                        hiv_assessment.setVisibility(View.VISIBLE);
+                    }
 
-                if(Integer.parseInt(vcaAge) < 15){
-                    hiv_assessment.setVisibility(View.VISIBLE);
+                    if(Integer.parseInt(vcaAge) >= 15){
+                        hiv_assessment2.setVisibility(View.VISIBLE);
+                    }
                 }
 
-                if(Integer.parseInt(vcaAge) >= 15){
-                    hiv_assessment2.setVisibility(View.VISIBLE);
-                }
 
             }
             else{
@@ -919,7 +930,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         switch (formName) {
 
             case "case_status":
-            case "case_plan":
             case "vca_screening":
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
@@ -949,9 +959,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).put("value", child.getIs_on_hiv_treatment());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", child.getDate_started_art());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(16).put("value",child.getArt_number());
+
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(0).put("value", indexVCA.getSubpop1());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(1).put("value", indexVCA.getSubpop2());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(2).put("value", indexVCA.getSubpop3());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(3).put("value", indexVCA.getSubpop4());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(5).put("value", indexVCA.getSubpop());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(4).put("value", indexVCA.getSubpop5());
+
 
                 } else {
 
@@ -993,6 +1008,21 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
+            case "case_plan":
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+
+             /*   if(vcaCasePlanModel == null){
+
+                } else {
+                    formToBeOpened.put("entity_id", this.vcaCasePlanModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaCasePlanModel, Map.class));
+
+                }*/
+
+                break;
+
             case "hiv_risk_assessment_under_15_years":
 
                 if(hivRiskAssessmentUnder15Model == null){
@@ -1025,7 +1055,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
     }
-
 
         startFormActivity(formToBeOpened);
     }

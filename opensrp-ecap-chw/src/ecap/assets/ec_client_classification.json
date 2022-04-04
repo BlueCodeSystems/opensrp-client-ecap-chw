@@ -355,7 +355,7 @@
             "field": "eventType",
             "field_value": "Domain",
             "creates_case": [
-              "ec_case_plan_domain"
+              "ec_vca_case_plan_domain"
             ]
           },
           {
