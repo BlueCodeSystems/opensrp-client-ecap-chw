@@ -901,7 +901,7 @@
         "key": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses",
+        "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "type": "native_radio",
         "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
         "options": [
@@ -925,7 +925,7 @@
         "key": "child_been_screened_for_malnutrition_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_been_screened_for_malnutrition",
+        "openmrs_entity_id": "child_been_screened_for_malnutrition_hei",
         "type": "native_radio",
         "label": "Has the child (6 months and above) been screened for malnutrition?",
         "options": [
@@ -950,7 +950,7 @@
         "key": "child_gets_drugs_to_prevent_tb_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
+        "openmrs_entity_id": "child_gets_drugs_to_prevent_tb_hei",
         "type": "native_radio",
         "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
         "options": [
