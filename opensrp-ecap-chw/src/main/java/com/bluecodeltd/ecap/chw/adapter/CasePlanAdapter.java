@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 
@@ -28,20 +29,20 @@ import java.util.List;
 public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHolder>{
 
     Context context;
-
     List<CasePlanModel> caseplans;
+    String hivStatus;
 
-    public CasePlanAdapter(List<CasePlanModel> caseplans, Context context){
+    public CasePlanAdapter(List<CasePlanModel> caseplans, Context context, String hivStatus){
 
         super();
 
         this.caseplans = caseplans;
         this.context = context;
+        this.hivStatus = hivStatus;
     }
 
     @Override
     public CasePlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_plan, parent, false);
 
@@ -60,9 +61,13 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
 
+        String vulnerabilities = CasePlanDao.countVulnerabilities(casePlan.getUnique_id(), casePlan.getCase_plan_date());
+
+        holder.txtVulnerabilities.setText(vulnerabilities + " Vulnerabilities");
+
         try {
             Date thedate = new SimpleDateFormat("dd-MM-yyyy").parse(casePlan.getCase_plan_date());
-            String month = (String) DateFormat.format("M", thedate); // 6
+            String month = (String) DateFormat.format("M", thedate);
             int m = Integer.parseInt(month);
 
 
@@ -96,6 +101,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                 Intent i = new Intent(context, CasePlan.class);
                 i.putExtra("childId",  casePlan.getUnique_id());
                 i.putExtra("dateId",  casePlan.getCase_plan_date());
+                i.putExtra("hivStatus",  hivStatus);
                 context.startActivity(i);
 
             }
@@ -112,11 +118,10 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtCaseDate, txtQuarter, txtCasePlanStatus;
+        TextView txtCaseDate, txtQuarter, txtCasePlanStatus, txtVulnerabilities;
 
         LinearLayout linearLayout;
 
-        ImageView expMore, expLess;
 
         public ViewHolder(View itemView) {
 
@@ -126,6 +131,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             txtCaseDate  = itemView.findViewById(R.id.case_date);
             txtQuarter = itemView.findViewById(R.id.quarter);
             txtCasePlanStatus = itemView.findViewById(R.id.case_plan_status);
+            txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
 
         }
 
