@@ -145,7 +145,8 @@ public class HouseholdDao extends AbstractDao {
             record.setConsent_check_box(getCursorValue(c, "consent_check_box"));
             record.setCaregiver_phone(getCursorValue(c, "caregiver_phone"));
             record.setWard(getCursorValue(c, "ward"));
-
+            record.setPhone(getCursorValue(c, "phone"));
+            record.setDate_edited(getCursorValue(c, "date_edited"));
 
             return record;
         };

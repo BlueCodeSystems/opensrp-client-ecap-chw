@@ -56,7 +56,7 @@ public class VcaScreeningModel {
     private String agyw_having_sex_with_older_men;
     private String agyw_transactional_sex;
     private String agyw_engaged_in_transactional_sex;
-    private String agwy_engaged_in_sex_work;
+    private String agyw_engaged_in_sex_work;
     private String agyw_food_or_economically_insecure;
     private String agyw_marry_early;
     private String agyw_give_birth_before_the_age_of_18;
@@ -73,6 +73,8 @@ public class VcaScreeningModel {
     private String other_child_clinical_care_services_received;
     private String is_the_child_caregiver_an_fsw;
     private String fsw_prevention_intervention;
+    private String fsw_child_tested;
+    private String fsw_child_positive;
     private String fsw_economic_strengthening_intervention;
     private String caseworker_name;
     private String date_screened;
@@ -84,6 +86,12 @@ public class VcaScreeningModel {
     private String subpop3_toast;
     private String subpop4_toast;
     private String subpop5_toast;
+    private String subpop1;
+    private String subpop;
+    private String subpop2;
+    private String subpop3;
+    private String subpop4;
+    private String subpop5;
     private String first_name;
     private String last_name;
     private String gender;
@@ -541,21 +549,7 @@ public class VcaScreeningModel {
         this.agyw_engaged_in_transactional_sex = agyw_engaged_in_transactional_sex;
     }
 
-    public String getAgwy_engaged_in_sex_work() {
-        return agwy_engaged_in_sex_work;
-    }
 
-    public void setAgwy_engaged_in_sex_work(String agwy_engaged_in_sex_work) {
-        this.agwy_engaged_in_sex_work = agwy_engaged_in_sex_work;
-    }
-
-    public String getAgyw_food_or_economically_insecure() {
-        return agyw_food_or_economically_insecure;
-    }
-
-    public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
-        this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
-    }
 
     public String getAgyw_marry_early() {
         return agyw_marry_early;
@@ -1016,5 +1010,85 @@ public class VcaScreeningModel {
 
     public void setFacility(String facility) {
         this.facility = facility;
+    }
+
+    public String getFsw_child_tested() {
+        return fsw_child_tested;
+    }
+
+    public void setFsw_child_tested(String fsw_child_tested) {
+        this.fsw_child_tested = fsw_child_tested;
+    }
+
+    public String getFsw_child_positive() {
+        return fsw_child_positive;
+    }
+
+    public void setFsw_child_positive(String fsw_child_positive) {
+        this.fsw_child_positive = fsw_child_positive;
+    }
+
+    public String getAgyw_engaged_in_sex_work() {
+        return agyw_engaged_in_sex_work;
+    }
+
+    public void setAgyw_engaged_in_sex_work(String agyw_engaged_in_sex_work) {
+        this.agyw_engaged_in_sex_work = agyw_engaged_in_sex_work;
+    }
+
+    public String getAgyw_food_or_economically_insecure() {
+        return agyw_food_or_economically_insecure;
+    }
+
+    public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
+        this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
+    }
+
+    public String getSubpop1() {
+        return subpop1;
+    }
+
+    public void setSubpop1(String subpop1) {
+        this.subpop1 = subpop1;
+    }
+
+    public String getSubpop() {
+        return subpop;
+    }
+
+    public void setSubpop(String subpop) {
+        this.subpop = subpop;
+    }
+
+    public String getSubpop2() {
+        return subpop2;
+    }
+
+    public void setSubpop2(String subpop2) {
+        this.subpop2 = subpop2;
+    }
+
+    public String getSubpop3() {
+        return subpop3;
+    }
+
+    public void setSubpop3(String subpop3) {
+        this.subpop3 = subpop3;
+    }
+
+    public String getSubpop4() {
+        return subpop4;
+    }
+
+    public void setSubpop4(String subpop4) {
+        this.subpop4 = subpop4;
+    }
+
+    public String getSubpop5() {
+        return subpop5;
+    }
+
+    public void setSubpop5(String subpop5) {
+        this.subpop5 = subpop5;
     }
 }

@@ -90,7 +90,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setAgyw_having_sex_with_older_men(getCursorValue(c, "agyw_having_sex_with_older_men"));
             record.setAgyw_transactional_sex(getCursorValue(c, "agyw_transactional_sex"));
             record.setAgyw_engaged_in_transactional_sex(getCursorValue(c, "agyw_engaged_in_transactional_sex"));
-            record.setAgwy_engaged_in_sex_work(getCursorValue(c, "agwy_engaged_in_sex_work"));
+            record.setAgyw_engaged_in_sex_work(getCursorValue(c, "agyw_engaged_in_sex_work"));
             record.setAgyw_food_or_economically_insecure(getCursorValue(c, "agyw_food_or_economically_insecure"));
             record.setAgyw_marry_early(getCursorValue(c, "agyw_marry_early"));
             record.setAgyw_give_birth_before_the_age_of_18(getCursorValue(c, "agyw_give_birth_before_the_age_of_18"));
@@ -106,6 +106,8 @@ public class VCAScreeningDao extends AbstractDao {
             record.setChild_clinical_care_services_received_other(getCursorValue(c, "child_clinical_care_services_received_other"));
             record.setOther_child_clinical_care_services_received(getCursorValue(c, "other_child_clinical_care_services_received"));
             record.setIs_the_child_caregiver_an_fsw(getCursorValue(c, "is_the_child_caregiver_an_fsw"));
+            record.setFsw_child_tested(getCursorValue(c, "fsw_child_tested"));
+            record.setFsw_child_positive(getCursorValue(c, "fsw_child_positive"));
             record.setFsw_prevention_intervention(getCursorValue(c, "fsw_prevention_intervention"));
             record.setFsw_economic_strengthening_intervention(getCursorValue(c, "fsw_economic_strengthening_intervention"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
@@ -118,6 +120,12 @@ public class VCAScreeningDao extends AbstractDao {
             record.setSubpop3_toast(getCursorValue(c, "subpop3_toast"));
             record.setSubpop4_toast(getCursorValue(c, "subpop4_toast"));
             record.setSubpop5_toast(getCursorValue(c, "subpop5_toast"));
+            record.setSubpop1(getCursorValue(c, "subpop1"));
+            record.setSubpop2(getCursorValue(c, "subpop2"));
+            record.setSubpop3(getCursorValue(c, "subpop3"));
+            record.setSubpop4(getCursorValue(c, "subpop4"));
+            record.setSubpop5(getCursorValue(c, "subpop5"));
+            record.setSubpop(getCursorValue(c, "subpop"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setGender(getCursorValue(c, "gender"));

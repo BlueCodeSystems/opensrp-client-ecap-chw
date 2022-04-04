@@ -1,6 +1,9 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -63,7 +66,7 @@ public class CasePlan extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
-    String childId, caseDate;
+    String childId, caseDate, hivStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +79,9 @@ public class CasePlan extends AppCompatActivity {
 
         childId = getIntent().getExtras().getString("childId");
         caseDate = getIntent().getExtras().getString("dateId");
+        hivStatus = getIntent().getExtras().getString("hivStatus");
 
         fetchData();
-
 
     }
 
@@ -94,7 +97,7 @@ public class CasePlan extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        if (recyclerViewadapter.getItemCount() > 0 && domainList.size() > 0){
 
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
@@ -117,6 +120,17 @@ public class CasePlan extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("domain");
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
+
+                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                    cId.put("value",childId);
+
+                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                    cDate.put("value", caseDate);
+
+                    if(!hivStatus.equals("yes")){
+                        JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
+                        domainType.remove(0);
+                    }
 
                     startFormActivity(indexRegisterForm);
 
@@ -163,9 +177,6 @@ public class CasePlan extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
-                is_edit_mode = true;
-            }
 
             try {
 
@@ -175,17 +186,18 @@ public class CasePlan extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(CasePlan.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
                 finish();
                 startActivity(getIntent());
 
             } catch (Exception e) {
                 Timber.e(e);
             }
-
         }
+        finish();
+        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -195,12 +207,7 @@ public class CasePlan extends AppCompatActivity {
 
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
 
-            String entityId = formJsonObject.optString("entity_id");
-
-            if(entityId.isEmpty()){
-                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-            }
-
+            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 

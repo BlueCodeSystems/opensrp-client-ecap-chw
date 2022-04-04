@@ -4,7 +4,7 @@ public class VcaAssessmentModel {
 
     private String base_entity_id;
     private String is_hiv_positive;
-    private String vca_art;
+    private String is_on_hiv_treatment;
     private String date_art;
     private String appointment;
     private String taking_art;
@@ -35,11 +35,12 @@ public class VcaAssessmentModel {
     private String given_birth;
     private String currently_pregnant;
     private String vca_response;
-    private String eyp_population;
+    private String sub_population;
     private String caseworker_firstname;
     private String caseworker_lastname;
     private String caseworker_nrc;
     private String date;
+    private String date_started_art;
 
     private String age;
     private String caseworker_name;
@@ -101,12 +102,12 @@ public class VcaAssessmentModel {
         this.is_hiv_positive = is_hiv_positive;
     }
 
-    public String getVca_art() {
-        return vca_art;
+    public String getDate_started_art() {
+        return date_started_art;
     }
 
-    public void setVca_art(String vca_art) {
-        this.vca_art = vca_art;
+    public void setDate_started_art(String date_started_art) {
+        this.date_started_art = date_started_art;
     }
 
     public String getDate_art() {
@@ -349,12 +350,12 @@ public class VcaAssessmentModel {
         this.vca_response = vca_response;
     }
 
-    public String getEyp_population() {
-        return eyp_population;
+    public String getSub_population() {
+        return sub_population;
     }
 
-    public void setEyp_population(String eyp_population) {
-        this.eyp_population = eyp_population;
+    public void setSub_population(String sub_population) {
+        this.sub_population = sub_population;
     }
 
     public String getCaseworker_firstname() {
@@ -415,4 +416,11 @@ public class VcaAssessmentModel {
 
     }
 
+    public String getIs_on_hiv_treatment() {
+        return is_on_hiv_treatment;
+    }
+
+    public void setIs_on_hiv_treatment(String is_on_hiv_treatment) {
+        this.is_on_hiv_treatment = is_on_hiv_treatment;
+    }
 }

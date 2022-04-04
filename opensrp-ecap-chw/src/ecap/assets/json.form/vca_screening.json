@@ -191,10 +191,7 @@
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
         "hint": "Screening Location",
-        "v_regex": {
-          "value": "^[a-zA-Z0-9 ]*$",
-          "err": "Screening location  only take numbers,letters and spaces"
-        },
+        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "Required"
@@ -440,7 +437,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent currently on HIV treatment?",
+        "label": "Is the Child/Adolescent currently on HIV treatment (ART)?",
         "options": [
           {
             "key": "yes",
@@ -904,7 +901,7 @@
         "key": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses",
+        "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "type": "native_radio",
         "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
         "options": [
@@ -928,7 +925,7 @@
         "key": "child_been_screened_for_malnutrition_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_been_screened_for_malnutrition",
+        "openmrs_entity_id": "child_been_screened_for_malnutrition_hei",
         "type": "native_radio",
         "label": "Has the child (6 months and above) been screened for malnutrition?",
         "options": [
@@ -953,7 +950,7 @@
         "key": "child_gets_drugs_to_prevent_tb_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
+        "openmrs_entity_id": "child_gets_drugs_to_prevent_tb_hei",
         "type": "native_radio",
         "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
         "options": [
@@ -1107,9 +1104,10 @@
         "hint": "Mothers' ART Number",
         "edit_type": "name",
         "relevance": {
-          "step1:is_mother_currently_on_treatment_wlhiv": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
@@ -1240,7 +1238,7 @@
       {
         "key": "hiv_or_pregnancy_prevention_method_used",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
         "type": "check_box",
         "label": "Is AGYW using any of these HIV/pregnancy prevention methods?",
@@ -1370,7 +1368,7 @@
         }
       },
       {
-        "key": "agwy_engaged_in_sex_work",
+        "key": "agyw_engaged_in_sex_work",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_engaged_in_sex_work",
@@ -1830,7 +1828,7 @@
       {
         "key": "fsw_economic_strengthening_intervention",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fsw_economic_strengthening_intervention",
         "type": "native_radio",
         "label": "Is the Adolescent and caregiver receiving any economic strengthening intervention?",
@@ -2304,6 +2302,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_check_box",
         "type": "native_radio",
+        "hidden": "true",
         "label": "Is the child currently on ART?",
         "text_color": "#000000",
         "exclusive": [
@@ -2359,7 +2358,7 @@
           "err": "Required"
         },
         "relevance": {
-          "step4:art_check_box": {
+          "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }

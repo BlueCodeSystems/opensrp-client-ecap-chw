@@ -27,7 +27,7 @@ public class VcaAssessmentDao extends AbstractDao {
             VcaAssessmentModel record = new VcaAssessmentModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
-            record.setVca_art(getCursorValue(c, "vca_art"));
+            record.setIs_on_hiv_treatment(getCursorValue(c, "is_on_hiv_treatment"));
             record.setDate_art(getCursorValue(c, "date_art"));
             record.setAppointment(getCursorValue(c, "appointment"));
             record.setTaking_art(getCursorValue(c, "taking_art"));
@@ -58,7 +58,7 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setGiven_birth(getCursorValue(c, "given_birth"));
             record.setCurrently_pregnant(getCursorValue(c, "currently_pregnant"));
             record.setVca_response(getCursorValue(c, "vca_response"));
-            record.setEyp_population(getCursorValue(c, "eyp_population"));
+            record.setSub_population(getCursorValue(c, "sub_population"));
             record.setCaseworker_firstname(getCursorValue(c, "caseworker_firstname"));
             record.setCaseworker_lastname(getCursorValue(c, "caseworker_lastname"));
             record.setCaseworker_nrc(getCursorValue(c, "caseworker_nrc"));
@@ -66,6 +66,7 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setAge(getCursorValue(c,"age"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
+            record.setDate_started_art(getCursorValue(c, "date_started_art"));
 
             return record;
         };
