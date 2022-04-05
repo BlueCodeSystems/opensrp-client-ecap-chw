@@ -1983,20 +1983,34 @@
       },
 
       {
-        "key": "health_label",
+        "key": "schooled_label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Schooled Section"
+        "text": "Schooled Section",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
-        "key": "health_label",
+        "key": "attendance_label",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "School Attendance Section"
+        "text": "School Attendance Section",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
 
       {
@@ -2188,12 +2202,19 @@
       },
 
       {
-        "key": "label",
+        "key": "grade_progression",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Progression to the next Grade"
+        "text": "Progression to the next Grade",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
       },
       {
         "key": "verified_by_school",
