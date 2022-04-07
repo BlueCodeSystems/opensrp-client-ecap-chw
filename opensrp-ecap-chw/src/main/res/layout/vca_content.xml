@@ -409,7 +409,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Household Visitation"
+                    android:text="Follow-up Visitation"
                     android:textStyle="italic"
                      />
 
