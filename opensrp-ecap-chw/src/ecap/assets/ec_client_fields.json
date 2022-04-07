@@ -3540,10 +3540,24 @@
           }
         },
         {
+          "column_name": "provider_phone1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.provider_phone1"
+          }
+        },
+        {
           "column_name": "date_of_service2",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_of_service2"
+          }
+        },
+        {
+          "column_name": "provider_phone2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.provider_phone2"
           }
         },
         {
@@ -3554,10 +3568,24 @@
           }
         },
         {
+          "column_name": "provider_phone3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.provider_phone3"
+          }
+        },
+        {
           "column_name": "date_of_service4",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_of_service4"
+          }
+        },
+        {
+          "column_name": "provider_phone4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.provider_phone4"
           }
         },
         {

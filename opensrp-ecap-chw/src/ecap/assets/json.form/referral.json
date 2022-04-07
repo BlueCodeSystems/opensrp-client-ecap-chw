@@ -630,6 +630,23 @@
         }
       },
       {
+        "key": "provider_phone1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "provider_phone1",
+        "type": "edit_text",
+        "hint": "Provider Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
         "key": "safety_services",
         "type": "label",
         "label_text_style": "bold",
@@ -721,6 +738,23 @@
         }
       },
       {
+        "key": "provider_phone2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "provider_phone2",
+        "type": "edit_text",
+        "hint": "Provider Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
         "key": "schooled_services",
         "type": "label",
         "label_text_style": "bold",
@@ -809,6 +843,23 @@
         "v_required": {
           "value": false,
           "err": "Date a service is provided is required"
+        }
+      },
+      {
+        "key": "provider_phone3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "provider_phone3",
+        "type": "edit_text",
+        "hint": "Provider Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -908,6 +959,23 @@
         "v_required": {
           "value": false,
           "err": "Date a service is provided is required"
+        }
+      },
+      {
+        "key": "provider_phone4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "provider_phone4",
+        "type": "edit_text",
+        "hint": "Provider Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       }
     ]

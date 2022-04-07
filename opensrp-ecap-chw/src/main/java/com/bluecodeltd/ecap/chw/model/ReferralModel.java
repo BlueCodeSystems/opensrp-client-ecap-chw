@@ -47,9 +47,46 @@ public class ReferralModel {
     private String last_name;
     private String job_title;
     private String date_of_service1;
+
+    public String getProvider_phone1() {
+        return provider_phone1;
+    }
+
+    public void setProvider_phone1(String provider_phone1) {
+        this.provider_phone1 = provider_phone1;
+    }
+
+    public String getProvider_phone2() {
+        return provider_phone2;
+    }
+
+    public void setProvider_phone2(String provider_phone2) {
+        this.provider_phone2 = provider_phone2;
+    }
+
+    public String getProvider_phone3() {
+        return provider_phone3;
+    }
+
+    public void setProvider_phone3(String provider_phone3) {
+        this.provider_phone3 = provider_phone3;
+    }
+
+    public String getProvider_phone4() {
+        return provider_phone4;
+    }
+
+    public void setProvider_phone4(String provider_phone4) {
+        this.provider_phone4 = provider_phone4;
+    }
+
+    private String provider_phone1;
     private String date_of_service2;
+    private String provider_phone2;
     private String date_of_service3;
+    private String provider_phone3;
     private String date_of_service4;
+    private String provider_phone4;
     private String signature;
     private String covid_19;
     private String caseworker_name;
