@@ -157,10 +157,10 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health Facility",
         "read_only": "true",
@@ -258,6 +258,26 @@
     "next": "step3",
     "fields": [
       {
+        "key": "instructions_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "Questions do not apply to this VCA. Proceed.",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Questions do not apply to this VCA. Proceed.",
+        "toaster_info_title": "Benchmark 3: Knowledgeable about HIV prevention",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "instructions2",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -280,7 +300,7 @@
       {
         "key": "infected_community",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "infected_community",
         "type": "check_box",
         "label": "Please tell me two of the most common ways children and adolescents become infected with HIV in your community.",

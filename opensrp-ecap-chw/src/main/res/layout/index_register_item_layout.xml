@@ -86,6 +86,17 @@
             android:paddingTop="@dimen/register_list_top_bottom_padding">
 
             <ImageView
+                android:onClick="onClick"
+                android:visibility="visible"
+                android:id="@+id/index_warning"
+                android:src="@drawable/ic_icon_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="2dp"
+                />
+
+            <ImageView
                 android:visibility="visible"
                 android:id="@+id/index_icon"
                 android:src="@mipmap/sidemenu_index"

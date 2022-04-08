@@ -119,6 +119,7 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
         Map<String, String[]> map = new HashMap<>();
 
         map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
                 DBConstants.KEY.UNIQUE_ID
@@ -137,6 +138,29 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
 
 
+        return map;
+    }
+
+    @Override
+    public Map<String, String[]> getFTSSortMap() {
+        Map<String, String[]> map = new HashMap<>();
+
+        map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                DBConstants.KEY.UNIQUE_ID,
+                DBConstants.KEY.FIRST_NAME,
+                DBConstants.KEY.LAST_NAME,
+        });
+
+        map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
+                "caregiver_name",
+                "household_id"
+        });
+
+        map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                "caregiver_name",
+                "household_id"
+        });
         return map;
     }
 

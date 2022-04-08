@@ -450,6 +450,13 @@
             "creates_case": [
               "ec_muac"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Grad",
+            "creates_case": [
+              "ec_grad"
+            ]
           }
         ]
       }
