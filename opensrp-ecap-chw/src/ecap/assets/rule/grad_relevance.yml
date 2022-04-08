@@ -6,6 +6,13 @@ condition: "step1_age > 9 && step1_age < 18"
 actions:
   - "isRelevant = true"
 ---
+name: step2_instructions_a
+description: instructions_a
+priority: 1
+condition: "!(step1_age > 9 && step1_age < 18)"
+actions:
+  - "isRelevant = true"
+---
 name: step2_infected_community
 description: infected_community
 priority: 1

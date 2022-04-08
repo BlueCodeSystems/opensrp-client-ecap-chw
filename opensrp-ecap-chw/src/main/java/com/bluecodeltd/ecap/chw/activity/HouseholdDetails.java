@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
@@ -102,7 +103,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public Household house;
     Caregiver caregiver;
     Child child;
-    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper;
+    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, gradMapper;
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
@@ -274,63 +275,102 @@ public class HouseholdDetails extends AppCompatActivity {
     public void onClick(View v) {
         int id = v.getId();
 
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(HouseholdDetails.this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject indexRegisterForm;
 
         switch (id) {
-            case R.id.grad:
 
 
-                try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
+           /* case R.id.grad:
 
-                    indexRegisterForm = formUtils.getFormJson("graduation");
+                graduationMapper = new ObjectMapper();
 
-                    //Populate form details
-                    JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
-                    ftime.put(JsonFormUtils.VALUE, "no");
+                indexRegisterForm = formUtils.getFormJson("graduation");
 
-                    //Populate Caregiver Details
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                if (graduationModel == null) {
 
-                    //Populate Caseworker Name
-                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
-                    String caseworker = sp.getString("caseworker_name", "Anonymous");
+                    try {
 
-                    JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
-                    ccname.put(JsonFormUtils.VALUE, caseworker);
+                        //Populate form details
+                        JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
+                        try {
+                            ftime.put(JsonFormUtils.VALUE, "no");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                    //Count everyone who has been tested
-                    if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
-                        allTested = "no";
-                    } else {
-                        allTested = "yes";
+                        //Populate Caregiver Details
+                        try {
+                            CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        //Populate Caseworker Name
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+                        String caseworker = sp.getString("caseworker_name", "Anonymous");
+
+                        JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
+                        try {
+                            ccname.put(JsonFormUtils.VALUE, caseworker);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        //Count everyone who has been tested
+                        if (Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)) {
+                            allTested = "no";
+                        } else {
+                            allTested = "yes";
+                        }
+
+                        JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+                        try {
+                            hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        //Check if Caregiver Has been Tested
+                        if (house.getCaregiver_hiv_status() != null) {
+                            caregiverTested = "yes";
+                        } else {
+                            caregiverTested = "no";
+                        }
+                        JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
+                        try {
+                            tested.put(JsonFormUtils.VALUE, caregiverTested);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
                     }
-
-                    JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
-                    hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-
-                    //Check if Caregiver Has been Tested
-                    if(house.getCaregiver_hiv_status() != null){
-                        caregiverTested = "yes";
-                    } else {
-                        caregiverTested = "no";
+                } else {
+                    try {
+                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
-                    tested.put(JsonFormUtils.VALUE, caregiverTested);
-
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, gradMapper.convertValue(graduationModel, Map.class));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-                break;
+
+
+                break;*/
 
             case R.id.myservice:
 
                 try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
 
@@ -352,8 +392,6 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.hh_screening:
 
                 try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
 
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -365,12 +403,14 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(0).put("value", house.getSubpop1());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(1).put("value", house.getSubpop2());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(2).put("value", house.getSubpop3());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(3).put("value", house.getSubpop4());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(5).put("value", house.getSubpop());
-                    indexRegisterForm.getJSONObject("step2").getJSONArray("fields").getJSONObject(12).getJSONArray("options").getJSONObject(4).put("value", house.getSubpop5());
+                    JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
+
+                    subPopulation.getJSONObject(0).put("value", house.getSubpop1());
+                    subPopulation.getJSONObject(1).put("value", house.getSubpop2());
+                    subPopulation.getJSONObject(2).put("value", house.getSubpop3());
+                    subPopulation.getJSONObject(3).put("value", house.getSubpop4());
+                    subPopulation.getJSONObject(5).put("value", house.getSubpop());
+                    subPopulation.getJSONObject(4).put("value", house.getSubpop5());
 
                     indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
@@ -385,8 +425,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.hcase_plan:
                 try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
@@ -402,8 +440,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.cassessment:
                 try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
 
                     assessmentMapper = new ObjectMapper();
 
@@ -430,11 +466,9 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.household_visitation_caregiver:
                 try {
-                    FormUtils formUtils = new FormUtils(HouseholdDetails.this);
-                    JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("household_visitation_for_caregiver");
-                    //openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_caregiver");
+
                     CaregiverHouseholdvisitationModel householdVisitationCaregiver = new CaregiverHouseholdvisitationModel();
                     if(caregiver.getCaregiver_hiv_status().equals("HIV+"))
                     {
@@ -472,15 +506,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 try {
 
-                    FormUtils formUtils = null;
-                    try {
-                        formUtils = new FormUtils(this);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    JSONObject formToBeOpened;
-
-                    formToBeOpened = formUtils.getFormJson("family_member");
+                    indexRegisterForm = formUtils.getFormJson("family_member");
 
                     //Populate Caseworker Name
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
@@ -488,7 +514,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     Object obj = sp.getAll();
 
 
-                    JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step2"), "caseworker_name");
+                    JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caseworker_name");
 
                     if (ccname != null) {
                         ccname.remove(JsonFormUtils.VALUE);
@@ -500,7 +526,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
 
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", house.getHousehold_id());
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", house.getHousehold_id());
 
                     Number = new Random();
                     Rnumber = Number.nextInt(900000000);
@@ -508,7 +534,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-                    JSONObject stepOneUniqueId = getFieldJSONObject(fields(formToBeOpened, STEP1), "unique_id");
+                    JSONObject stepOneUniqueId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
 
                     if (stepOneUniqueId != null) {
                         stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
@@ -519,9 +545,9 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(obj, Map.class));
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,caregiverMapper.convertValue(caregiver, Map.class));
-                    startFormActivity(formToBeOpened);
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(obj, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(caregiver, Map.class));
+                    startFormActivity(indexRegisterForm);
 
 
                 } catch (Exception e) {
@@ -640,6 +666,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "MUAC Updated", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+                        break;
+
+                    case "Grad":
+
+                        closeFab();
+                        Toasty.success(HouseholdDetails.this, "Form Updated", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
@@ -767,6 +801,18 @@ public class HouseholdDetails extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable. EC_CAREGIVER_VISITATION);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+                case "Grad":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_GRAD);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

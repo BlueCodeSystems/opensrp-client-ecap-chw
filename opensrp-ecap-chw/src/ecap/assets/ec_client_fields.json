@@ -1305,6 +1305,13 @@
       "name": "ec_client_index",
       "columns": [
         {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -2718,6 +2725,74 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.muac"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_grad",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "infected_community",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.infected_community"
+          }
+        },
+        {
+          "column_name": "infection_correct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.infection_correct"
+          }
+        },
+        {
+          "column_name": "protect_infection",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.protect_infection"
+          }
+        },
+        {
+          "column_name": "prevention_support",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prevention_support"
+          }
+        },
+        {
+          "column_name": "prevention_correct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prevention_correct"
+          }
+        },
+        {
+          "column_name": "sign_malnutrition",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sign_malnutrition"
           }
         }
       ]

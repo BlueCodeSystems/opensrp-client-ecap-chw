@@ -93,6 +93,7 @@ public class Constants extends CoreConstants {
         String EC_HOUSEHOLD = "ec_household";
         String EC_VCA_CASE_PLAN = "ec_vca_case_plan";
         String EC_VCA_CASE_PLAN_DOMAIN = "ec_vca_case_plan_domain";
+        String EC_GRAD = "ec_grad";
         String EC_CAREGIVER_PLAN_DOMAIN = "ec_caregiver_case_plan_domain";
         String EC_MOTHER_INDEX = "ec_mother_index";
         String EC_POPULATION = "ec_sub_population";
