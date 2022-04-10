@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 
+import org.json.JSONException;
 import org.smartregister.view.contract.Village;
 
 public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
@@ -25,7 +26,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private View myStatus;
 
-    private final ImageView index_icon_layout, visitLayout, caseplan_layout;
+    private final ImageView index_icon_layout, visitLayout, caseplan_layout, warningIcon;
 
     public IndexRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -36,9 +37,14 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         myStatus = itemView.findViewById(R.id.mystatusx);
         visitLayout = itemView.findViewById(R.id.index_visit);
         gender_age = itemView.findViewById(R.id.gender_age);
+        warningIcon = itemView.findViewById(R.id.index_warning);
+
     }
 
-    public void setupViews(String family, String village, int plans, int visits, String is_index, String status, String gender, String age){
+
+
+
+    public void setupViews(String family, String village, int plans, int visits, String is_index, String status, String gender, String age, String is_screened){
 
         familyNameTextView.setText(family);
         villageTextView.setText(village);
@@ -71,6 +77,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             visitLayout.setVisibility(View.VISIBLE);
         } else {
             visitLayout.setVisibility(View.GONE);
+        }
+
+
+        if(is_screened != null && is_screened.equals("true")){
+            warningIcon.setVisibility(View.GONE);
         }
 
     }

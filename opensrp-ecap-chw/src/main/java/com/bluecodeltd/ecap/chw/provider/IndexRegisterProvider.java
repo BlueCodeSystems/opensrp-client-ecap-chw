@@ -1,6 +1,8 @@
 package com.bluecodeltd.ecap.chw.provider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
@@ -34,11 +37,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
-public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder>, View.OnClickListener {
+public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder> {
 
     private final Context context;
     private View.OnClickListener onClickListener;
     private View.OnClickListener paginationViewHandler;
+
 
     public IndexRegisterProvider(Context context, View.OnClickListener onClickListener, View.OnClickListener paginationViewHandler) {
         this.context = context;
@@ -55,6 +59,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
+        String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
         String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true);
 
         String age = getAge(birthdate);
@@ -67,14 +72,17 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         String status = IndexPersonDao.getIndexStatus(BaseEntityId);
 
+        String is_screened = HouseholdDao.checkIfScreened(household_id);
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, visits, is_index, status, gender, age);
+
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, visits, is_index, status, gender, age, is_screened);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
+        indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
 
-
-
     }
+
+
     private String getAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
@@ -162,8 +170,4 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     }
 
 
-    @Override
-    public void onClick(View view) {
-
-    }
 }

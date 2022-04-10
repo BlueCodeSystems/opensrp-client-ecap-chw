@@ -267,9 +267,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtGender.setText(gender.toUpperCase());
         txtChildid.setText("ID : " + indexVCA.getUnique_id());
 
-
-
-
         HashMap<String, Child> map = new HashMap<>();
 
         map.put("Child",child);

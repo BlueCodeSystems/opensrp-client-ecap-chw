@@ -6,6 +6,13 @@ condition: "step2_sub_population.contains('subpop1')"
 actions:
   - "isRelevant = true"
 ---
+name: step3_is_hiv_positive
+description: step3_is_hiv_positive relevancce
+priority: 1
+condition: "step2_sub_population.contains('subpop1')"
+actions:
+  - "isRelevant = true"
+---
 name: step3_subpop2_toast
 description: subpop2 relevance
 priority: 1

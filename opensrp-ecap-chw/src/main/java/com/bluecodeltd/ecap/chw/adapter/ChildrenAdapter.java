@@ -13,15 +13,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,8 +53,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     List<Child> children;
     String txtMuac;
+    GradModel gradModel;
     MuacModel muacModel, cModel;
-    ObjectMapper oMapper;
+    ObjectMapper oMapper, gradMapper;
 
 
     public ChildrenAdapter(List<Child> children, Context context, String txtMuac){
@@ -100,6 +104,19 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         } else {
             holder.gradBtn.setVisibility(View.GONE);
+        }
+
+        //Initialize Graduation Button
+        gradModel = GradDao.getGrad(child.getUnique_id());
+
+        if(gradModel == null){
+            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+
+        } else {
+            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg2));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
+
         }
 
         holder.gradBtn.setOnClickListener(v->{
@@ -283,7 +300,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     public void openFormUsingFormUtils(Context context, String formName, Child child, String myage) throws JSONException {
 
-
+        oMapper = new ObjectMapper();
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -298,10 +315,12 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         switch (formName) {
 
+
+
             case "muac":
 
                 muacModel = MuacDao.getMuac(child.getUnique_id());
-                oMapper = new ObjectMapper();
+
 
                 if(muacModel == null){
 
@@ -317,9 +336,19 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             case "grad":
 
-                oMapper = new ObjectMapper();
+             gradMapper = new ObjectMapper();
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(child, Map.class));
+
+                if(gradModel == null){
+
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(child, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.gradModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, gradMapper.convertValue(gradModel, Map.class));
+                }
+
 
                 break;
         }
