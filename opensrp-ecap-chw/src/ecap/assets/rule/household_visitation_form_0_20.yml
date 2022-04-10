@@ -245,6 +245,27 @@ condition: "(step1_current_calendar == 1 && step1_verified_by_school == 1 || ste
 actions:
   - "isRelevant = true"
 ---
+name: step1_grade_progression
+description: grade_progression
+priority: 1
+condition: "step1_age >  5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_schooled_label
+description: schooled_label
+priority: 1
+condition: "step1_age >  5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_attendance_label
+description: attendance_label
+priority: 1
+condition: "step1_age >  5"
+actions:
+  - "isRelevant = true"
+---
 name: step1_currently_in_school
 description: currently_in_school
 priority: 1

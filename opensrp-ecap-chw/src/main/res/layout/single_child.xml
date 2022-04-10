@@ -86,6 +86,7 @@
 
 
         <ImageButton
+            android:tint="@color/colorGreen"
             android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:id="@+id/grad_id"
