@@ -292,6 +292,9 @@
         "hint": "Child's Date of birth",
         "min_date": "today-19y",
         "max_date": "today",
+        "duration": {
+          "label": "Age"
+        },
         "v_required": {
           "value": true,
           "err": "Please enter Birth Date"
