@@ -12,6 +12,15 @@ public class Caregiver {
     private String active_on_treatment;
     private String caregiver_art_number;
     private String relation;
+    private String ward;
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
 
     public String getCaregiver_name() {
         return caregiver_name;

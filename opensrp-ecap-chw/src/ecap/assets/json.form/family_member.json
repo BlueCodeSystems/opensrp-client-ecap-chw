@@ -193,6 +193,9 @@
         "max_date": "today",
         "min_date": "today-100y",
         "hint": "Date of birth",
+        "duration": {
+          "label": "Age"
+        },
         "v_required": {
           "value": true,
           "err": "Date of birth is Required"
