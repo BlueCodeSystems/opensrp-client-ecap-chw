@@ -127,11 +127,12 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 "caregiver_name",
-                "household_id"
+                "ec_household.household_id"
 
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                "hid",
                 "caregiver_name",
                 "household_id"
         });

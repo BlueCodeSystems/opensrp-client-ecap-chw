@@ -302,6 +302,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                "hid",
                 "caregiver_name",
                 "household_id"
         });

@@ -300,7 +300,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "Sub Population",
+            "field_value": "Mother FSW",
             "creates_case": [
               "ec_client_index",
               "ec_household"

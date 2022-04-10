@@ -103,7 +103,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public Household house;
     Caregiver caregiver;
     Child child;
-    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, gradMapper;
+    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
@@ -139,6 +139,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         house = getHousehold(householdId);
 
+
         caregiver = CaregiverDao.getCaregiver(householdId);
 
         oMapper = new ObjectMapper();
@@ -151,7 +152,7 @@ public class HouseholdDetails extends AppCompatActivity {
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         rscreen = findViewById(R.id.hh_screening);
-        grad_form = findViewById(R.id.grad);
+        grad_form = findViewById(R.id.graduation);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
@@ -286,87 +287,53 @@ public class HouseholdDetails extends AppCompatActivity {
         switch (id) {
 
 
-           /* case R.id.grad:
+            case R.id.graduation:
 
-                graduationMapper = new ObjectMapper();
+                try {
 
-                indexRegisterForm = formUtils.getFormJson("graduation");
+                    oMapper = new ObjectMapper();
 
-                if (graduationModel == null) {
+                    indexRegisterForm = formUtils.getFormJson("graduation");
 
-                    try {
 
-                        //Populate form details
-                        JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
-                        try {
-                            ftime.put(JsonFormUtils.VALUE, "no");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
 
-                        //Populate Caregiver Details
-                        try {
-                            CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    //Populate form details
+                    JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
+                    ftime.put(JsonFormUtils.VALUE, "no");
 
-                        //Populate Caseworker Name
-                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
-                        String caseworker = sp.getString("caseworker_name", "Anonymous");
+                    //Populate Caregiver Details
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
 
-                        JSONObject ccname = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
-                        try {
-                            ccname.put(JsonFormUtils.VALUE, caseworker);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
-                        //Count everyone who has been tested
-                        if (Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)) {
-                            allTested = "no";
-                        } else {
-                            allTested = "yes";
-                        }
-
-                        JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
-                        try {
-                            hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Check if Caregiver Has been Tested
-                        if (house.getCaregiver_hiv_status() != null) {
-                            caregiverTested = "yes";
-                        } else {
-                            caregiverTested = "no";
-                        }
-                        JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
-                        try {
-                            tested.put(JsonFormUtils.VALUE, caregiverTested);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
+                    //Count everyone who has been tested
+                    if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
+                        allTested = "no";
+                    } else {
+                        allTested = "yes";
                     }
-                } else {
-                    try {
-                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                    JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+                    hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
+
+                    //Check if Caregiver Has been Tested
+                    if(house.getCaregiver_hiv_status() != null){
+                        caregiverTested = "yes";
+                    } else {
+                        caregiverTested = "no";
                     }
-                    try {
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, gradMapper.convertValue(graduationModel, Map.class));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
+                    tested.put(JsonFormUtils.VALUE, caregiverTested);
+
+
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
 
-                break;*/
+                break;
 
             case R.id.myservice:
 
@@ -533,7 +500,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     String newEntityId =  Integer.toString(Rnumber);
 
 
-                    //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+                    //******** POPULATE JSON FORM WITH VCA UNIQUE ID ******//
                     JSONObject stepOneUniqueId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
 
                     if (stepOneUniqueId != null) {
