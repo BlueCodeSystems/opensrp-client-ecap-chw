@@ -25,10 +25,9 @@ public class HouseholdIndexFragmentPresenter implements HouseholdIndexFragmentCo
     @Override
     public void initializeQueries(String s) {
 
-        String households = Constants.EcapClientTable.EC_HOUSEHOLD;
 
         String countSelect = "SELECT COUNT(*) FROM ec_household WHERE household_id IS NOT NULL";
-        String mainSelect = "SELECT ec_household.*, ec_household.id AS _id, ec_client_index.unique_id FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE unique_id IS NOT NULL AND ec_household.caregiver_name IS NOT NULL AND ec_household.household_id IS NOT NULL GROUP BY ec_household.household_id";
+        String mainSelect = "SELECT ec_household.*, ec_household.household_id AS hid, ec_household.id AS _id FROM ec_household WHERE ec_household.caregiver_name IS NOT NULL AND ec_household.household_id IS NOT NULL";
 
         getView().initializeQueryParams("ec_household", countSelect, mainSelect);
         getView().initializeAdapter();
