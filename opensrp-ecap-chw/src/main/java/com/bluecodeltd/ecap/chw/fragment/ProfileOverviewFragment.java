@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,9 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.Child;
 
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
@@ -86,6 +89,12 @@ public class ProfileOverviewFragment extends Fragment {
         assert subpop4 != null;
         assert subpop5 != null;
         assert subpop6 != null;
+
+        long timestamp = Long.parseLong(childIndex.getLast_interacted_with());
+
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String date_time = DateFormat.format("dd-MM-yyyy HH:mm:ss", cal).toString();
 
         if(childIndex.getDate_started_art() != null){
             myview.setVisibility(View.VISIBLE);
@@ -205,7 +214,7 @@ public class ProfileOverviewFragment extends Fragment {
         txtRelation.setText(childIndex.getRelation());
         txtPhone.setText(childIndex.getCaregiver_phone());
         txtEditedBy.setText(childIndex.getCaseworker_name());
-        txtDateEdited.setText(childIndex.getDated_edited());
+        txtDateEdited.setText(date_time);
         txtcPhone.setText(childIndex.getPhone());
 
         return view;

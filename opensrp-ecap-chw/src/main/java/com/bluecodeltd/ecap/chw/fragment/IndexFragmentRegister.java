@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class IndexFragmentRegister extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
 
+    AlertDialog.Builder builder;
 
     @Override
     protected void initializePresenter() {
@@ -80,7 +83,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
         filterSortLayout.setVisibility(View.GONE);
 
-
+        builder = new AlertDialog.Builder(getActivity());
     }
 
     @Override
@@ -100,7 +103,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected String getDefaultSortQuery() {
-        return null;
+        return "last_interacted_with DESC ";
     }
 
     @Override
@@ -108,12 +111,34 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     }
 
+
     @Override
     protected void onViewClicked(View view) {
-        CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
-        String childId = client.getColumnmaps().get("unique_id");
+
+        if(view.getId() == R.id.index_warning){
+
+            builder.setMessage("\u2022  Household has not been Screened");
+            builder.setNegativeButton("OK", (dialog, id) -> {
+                //  Action for 'NO' Button
+                dialog.cancel();
+
+            });
+
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("Alert");
+            alert.show();
+
+        } else if (view.getId() == R.id.register_columns){
+
+            CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
+            String childId = client.getColumnmaps().get("unique_id");
 
             goToIndexDetailActivity(childId,client);
+        }
+
+
 
     }
 
