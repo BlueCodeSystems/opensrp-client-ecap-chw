@@ -127,15 +127,6 @@
         "look_up": "true"
       },
       {
-        "key": "landmark",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "landmark",
-        "type": "edit_text",
-        "read_only": true,
-        "hint": "Nearest Landmark"
-      },
-      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -157,6 +148,14 @@
           "value": false,
           "err": "Please enter the home address"
         }
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark"
       },
       {
         "key": "caregiver_phone",
