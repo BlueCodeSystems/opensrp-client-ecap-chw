@@ -133,7 +133,6 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
-                "hid",
                 "caregiver_name",
                 "household_id"
         });
