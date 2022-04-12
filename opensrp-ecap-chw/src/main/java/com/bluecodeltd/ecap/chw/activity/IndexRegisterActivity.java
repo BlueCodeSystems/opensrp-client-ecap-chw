@@ -346,7 +346,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     public void gotToChildProfile(String id){
         Intent intent = new Intent(this,IndexDetailsActivity.class);
-        //Addedd for trying to clear previous data
+
         intent.putExtra("Child",id);
         Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
         startActivity(intent);

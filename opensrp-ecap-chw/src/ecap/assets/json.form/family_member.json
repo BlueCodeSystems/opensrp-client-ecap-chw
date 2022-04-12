@@ -111,6 +111,15 @@
         "look_up": "true"
       },
       {
+        "key": "homeaddress",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "homeaddress",
+        "type": "edit_text",
+        "read_only": true,
+        "hint": "Home Address"
+      },
+      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

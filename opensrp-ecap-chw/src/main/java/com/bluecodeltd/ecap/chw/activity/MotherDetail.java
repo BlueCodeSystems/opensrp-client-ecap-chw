@@ -277,7 +277,9 @@ public class MotherDetail extends AppCompatActivity {
                 break;
 
             case "child":
-
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MotherDetail.this);
+                Object obj = sp.getAll();
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(obj, Map.class));
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", this.commonPersonObjectClient.getColumnmaps().get("household_id"));
 
                 Number = new Random();

@@ -97,7 +97,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
 
     @Override
     protected String getDefaultSortQuery() {
-        return null;
+        return "last_interacted_with DESC ";
     }
 
     @Override

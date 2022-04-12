@@ -492,8 +492,18 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
+                    //******** POPULATE JSON FORM WITH VCA UNIQUE ID ******//
+                    JSONObject stepOneHouseholdId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
 
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(5).put("value", house.getHousehold_id());
+                    if (stepOneHouseholdId != null) {
+                        stepOneHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                        try {
+                            stepOneHouseholdId.put(JsonFormUtils.VALUE, house.getHousehold_id());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
 
                     Number = new Random();
                     Rnumber = Number.nextInt(900000000);
