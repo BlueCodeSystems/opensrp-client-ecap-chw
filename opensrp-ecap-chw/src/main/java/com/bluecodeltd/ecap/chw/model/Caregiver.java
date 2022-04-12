@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class Caregiver {
 
+    private String homeaddress;
+    private String landmark;
     private String caregiver_name;
     private String caregiver_sex;
     private String caregiver_nrc;
@@ -100,5 +102,21 @@ public class Caregiver {
 
     public void setCaregiver_nrc(String caregiver_nrc) {
         this.caregiver_nrc = caregiver_nrc;
+    }
+
+    public String getHomeaddress() {
+        return homeaddress;
+    }
+
+    public void setHomeaddress(String homeaddress) {
+        this.homeaddress = homeaddress;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
     }
 }

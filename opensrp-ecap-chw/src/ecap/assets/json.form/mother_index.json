@@ -72,6 +72,70 @@
         "spacer_height": "15dp"
       },
       {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stateProvince",
+        "type": "edit_text",
+        "hint": "Province",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "countyDistrict",
+        "type": "edit_text",
+        "hint": "District",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "read_only": "false",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
+        "type": "edit_text",
+        "hint": "Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "read_only": true,
+        "hint": "Nearest Landmark"
+      },
+      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

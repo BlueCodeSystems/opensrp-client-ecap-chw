@@ -98,7 +98,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected String getMainCondition() {
-        return "is_closed != 1";
+        return "is_closed != 1 AND household_id IS NOT NULL";
     }
 
     @Override

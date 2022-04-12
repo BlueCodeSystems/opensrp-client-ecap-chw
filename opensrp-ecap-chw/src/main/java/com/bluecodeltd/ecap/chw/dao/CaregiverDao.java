@@ -10,7 +10,7 @@ public class CaregiverDao extends AbstractDao {
 
     public static Caregiver getCaregiver (String householdID) {
 
-        String sql = "SELECT caregiver_name, ward, caregiver_nrc, caregiver_sex, caregiver_birth_date, caregiver_phone, caregiver_hiv_status, caregiver_art_number, active_on_treatment, relation FROM ec_household WHERE ec_household.household_id = '" + householdID + "' ";
+        String sql = "SELECT homeaddress, landmark, caregiver_name, ward, caregiver_nrc, caregiver_sex, caregiver_birth_date, caregiver_phone, caregiver_hiv_status, caregiver_art_number, active_on_treatment, relation FROM ec_household WHERE ec_household.household_id = '" + householdID + "' ";
 
         List<Caregiver> values = AbstractDao.readData(sql, getCaregiverMap());
 
@@ -23,6 +23,8 @@ public class CaregiverDao extends AbstractDao {
 
             Caregiver record = new Caregiver();
 
+            record.setHomeaddress(getCursorValue(c, "homeaddress"));
+            record.setLandmark(getCursorValue(c, "landmark"));
             record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setWard(getCursorValue(c, "ward"));
             record.setCaregiver_nrc(getCursorValue(c, "caregiver_nrc"));

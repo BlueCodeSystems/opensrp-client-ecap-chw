@@ -108,10 +108,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
+    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2;
 
-    private VcaScreeningModel indexVCA;
+    public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
