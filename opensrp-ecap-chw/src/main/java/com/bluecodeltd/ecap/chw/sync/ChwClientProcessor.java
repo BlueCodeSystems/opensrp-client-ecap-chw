@@ -26,15 +26,5 @@ public class ChwClientProcessor extends CoreClientProcessor {
         return instance;
     }
 
-    @Override
-    public void processEvents(ClientClassification clientClassification, Table vaccineTable, Table serviceTable, EventClient eventClient, Event event, String eventType) throws Exception {
-        try {
-            if (eventClient != null && eventClient.getEvent() != null) {
-                //super.processEvents(clientClassification, vaccineTable, serviceTable, eventClient, event, eventType);
-                processEvent(eventClient.getEvent(), eventClient.getClient(), clientClassification);
-            }
-        } catch (Exception exception) {
-            Timber.e(exception);
-        }
-    }
+
 }

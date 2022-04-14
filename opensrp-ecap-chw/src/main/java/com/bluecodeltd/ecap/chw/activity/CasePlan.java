@@ -189,8 +189,7 @@ public class CasePlan extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, false);
 
                 Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                finish();
-                startActivity(getIntent());
+
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -309,5 +308,15 @@ public class CasePlan extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    /*    Intent i = new Intent(CasePlan.this, IndexDetailsActivity.class);
+        i.putExtra("childId",  childId);
+        i.putExtra("dateId",  caseDate);
+        i.putExtra("hivStatus",  hivStatus);
+        startActivity(i);*/
+
+    }
 
 }

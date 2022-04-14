@@ -4,6 +4,13 @@
       "name": "ec_mother_index",
       "columns": [
         {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -18,17 +25,66 @@
           }
         },
         {
-          "column_name": "physical_address",
+          "column_name": "partner",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.physical_address"
+            "field": "attributes.partner"
           }
         },
         {
-          "column_name": "screening_date",
+          "column_name": "homeaddress",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.screening_date"
+            "field": "attributes.homeaddress"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.province"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.countyDistrict"
+          }
+        },
+        {
+          "column_name": "ward",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "landmark",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.landmark"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
+          }
+        },
+        {
+          "column_name": "mother_screening_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_screening_date"
+          }
+        },
+        {
+          "column_name": "screening_location_home",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.screening_location_home"
           }
         },
         {
@@ -795,6 +851,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
           }
         },
         {

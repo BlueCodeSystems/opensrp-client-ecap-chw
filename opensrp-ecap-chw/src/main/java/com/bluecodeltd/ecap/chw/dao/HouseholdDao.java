@@ -12,7 +12,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static String checkIfScreened (String household_id) {
 
-        String sql = "SELECT screened FROM ec_household WHERE household_id = '" + household_id + "'";
+        String sql = "SELECT screened FROM ec_household WHERE household_id IS NOT NULL AND household_id = '" + household_id + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "screened");
 

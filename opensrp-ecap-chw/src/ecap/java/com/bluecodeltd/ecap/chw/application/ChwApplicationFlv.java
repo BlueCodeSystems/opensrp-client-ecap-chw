@@ -122,7 +122,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.LAST_INTERACTED_WITH,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
-                DBConstants.KEY.UNIQUE_ID
+                DBConstants.KEY.UNIQUE_ID,
+                "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
@@ -132,7 +133,6 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
-                "hid",
                 "caregiver_name",
                 "household_id"
         });
@@ -151,14 +151,17 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+                "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "caregiver_name",
                 "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "caregiver_name",
                 "household_id"
         });
