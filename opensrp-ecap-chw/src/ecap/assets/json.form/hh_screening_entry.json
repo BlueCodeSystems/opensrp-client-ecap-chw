@@ -179,15 +179,7 @@
         "type": "edit_text",
         "hint": "Caseworker Phone",
         "edit_type": "number",
-        "read_only": true,
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
+        "read_only": true
       },
       {
         "key": "date_edited",
@@ -451,7 +443,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_date",
         "type": "date_picker",
-        "hint": "Date of screening",
+        "hint": "Date of household screening",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",

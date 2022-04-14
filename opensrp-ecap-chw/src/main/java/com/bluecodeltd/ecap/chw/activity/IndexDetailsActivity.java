@@ -108,10 +108,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive;
+    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2;
 
-    private VcaScreeningModel indexVCA;
+    public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
@@ -932,18 +932,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 //Populate Caseworker Name
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                String caseworker = sp.getString("phone", "Anonymous");
+                String caseworkername = sp.getString("phone", "Anonymous");
 
                 JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
 
                 if (ccname != null) {
                     ccname.remove(JsonFormUtils.VALUE);
                     try {
-                        ccname.put(JsonFormUtils.VALUE, caseworker);
+                        ccname.put(JsonFormUtils.VALUE, caseworkername);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
 
                 formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
 

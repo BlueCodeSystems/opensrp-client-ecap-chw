@@ -6,6 +6,20 @@ condition: "step3_first_name == ''"
 actions:
   - "calculation = step1_adolescent_first_name"
 ---
+name: step5_caregiver_hiv_status
+description: step5_caregiver_hiv_status
+priority: 1
+condition: "step1_positive_mother.contains('yes') || step1_is_biological_child_of_mother_living_with_hiv.contains('yes')"
+actions:
+  - "calculation = 'positive'"
+---
+name: step5_caregiver_hiv_status
+description: step5_caregiver_hiv_status
+priority: 2
+condition: "!(step1_positive_mother.contains('yes') || step1_is_biological_child_of_mother_living_with_hiv.contains('yes'))"
+actions:
+  - "calculation = ''"
+---
 name: step3_last_name
 description: Child's Last Name
 priority: 1

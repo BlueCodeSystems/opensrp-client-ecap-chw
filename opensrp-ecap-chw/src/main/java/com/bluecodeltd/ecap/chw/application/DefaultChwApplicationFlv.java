@@ -270,6 +270,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+                "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
@@ -279,6 +280,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "caregiver_name",
                 "household_id"
         });
@@ -294,15 +296,17 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+                "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "caregiver_name",
                 "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
-                "hid",
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "caregiver_name",
                 "household_id"
         });

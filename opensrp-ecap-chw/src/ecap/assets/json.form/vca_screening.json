@@ -190,7 +190,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
-        "hint": "Screening Location",
+        "hint": "VCA Screening Location",
         "edit_type": "name",
         "v_required": {
           "value": true,

@@ -30,7 +30,7 @@
     <string name="all_households"> Household Register</string>
     <string name="all_Vcas"> VCAs</string>
     <string name="all_benefeciaries"> Case Plans</string>
-    <string name="facility_ovc_register"> VCA Index Register</string>
+    <string name="facility_ovc_register" translatable="false"> VCA Index Register</string>
     <string name="mother_index_register">Mother Index Register</string>
     <string name="household_index_register">Household Register</string>
     <string name="all_indexes"> Indexes</string>
