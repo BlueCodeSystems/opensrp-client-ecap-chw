@@ -130,8 +130,6 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
-
-
     }
 
     @Override

@@ -96,13 +96,13 @@ public class HouseholdDetails extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form;
-    private String childId, childrenCount;
+    private String childrenCount;
     public String householdId;
     public String countFemales, countMales;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
     Caregiver caregiver;
-    Child child;
+
     ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
     CommonPersonObjectClient household;
     Random Number;
@@ -127,15 +127,11 @@ public class HouseholdDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
 
-        childId = getIntent().getExtras().getString("childId");
         householdId = getIntent().getExtras().getString("householdId");
 
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
 
-        if(childId != null){
-            child = IndexPersonDao.getChildByBaseId(childId);
-        }
 
         house = getHousehold(householdId);
 
@@ -286,7 +282,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
         switch (id) {
 
-
             case R.id.graduation:
 
                 try {
@@ -362,13 +357,39 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    Object obj = prefs.getAll();
+                    String caseworkerphone = prefs.getString("phone", "Anonymous");
+                    String caseworkername = prefs.getString("name", "Anonymous");
+
+
 
                     householdMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
                     indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
+
+
+                    JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step2"), "phone");
+                    if (cphone != null) {
+                        cphone.remove(JsonFormUtils.VALUE);
+                        try {
+                            cphone.put(JsonFormUtils.VALUE, caseworkerphone);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    JSONObject caseworker_name_object = getFieldJSONObject(fields(indexRegisterForm, "step4"), "caseworker_name");
+                    if (caseworker_name_object != null) {
+                        caseworker_name_object.remove(JsonFormUtils.VALUE);
+                        try {
+                            caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //caseworker_name
+
 
                     JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
 
@@ -602,17 +623,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
-
-
-                try {
-                    String  uniqueId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).optString("value");
-                    childId = uniqueId;
-                    getUniqueIdRepository().close(uniqueId);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
                 switch (EncounterType) {
 
