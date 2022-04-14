@@ -246,6 +246,7 @@ public class MotherDetail extends AppCompatActivity {
                     intent.putExtra("householdId",  commonPersonObjectClient.getColumnmaps().get("household_id"));
                     startActivity(intent);
 
+
                 }
 
                 break;

@@ -51,7 +51,7 @@ public class MotherOverviewFragment extends Fragment {
         mother = mymap.get("mother");
 
         txtHouseholdId.setText(mother.getColumnmaps().get("household_id"));
-        txtAddress.setText(mother.getColumnmaps().get("physical_address"));
+        txtAddress.setText(mother.getColumnmaps().get("homeaddress"));
         txtPhone.setText(mother.getColumnmaps().get("caregiver_phone"));
         txtTreatment.setText(mother.getColumnmaps().get("active_on_treatment"));
         txtArt.setText(mother.getColumnmaps().get("caregiver_art_number"));

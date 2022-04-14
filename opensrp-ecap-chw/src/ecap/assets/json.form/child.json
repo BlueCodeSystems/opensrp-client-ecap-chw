@@ -139,10 +139,10 @@
         "look_up": "true"
       },
       {
-        "key": "physical_address",
+        "key": "homeaddress",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "physical_address",
+        "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
         "read_only": "true",
         "hint": "Home Address",
@@ -151,6 +151,14 @@
           "value": false,
           "err": "Please enter the home address"
         }
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark"
       },
       {
         "key": "caregiver_phone",
@@ -168,23 +176,6 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "screening_date",
-        "read_only": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_date",
-        "type": "date_picker",
-        "hint": "Date referred to OVC program for tracing",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the home address"
         }
       },
       {
@@ -244,10 +235,10 @@
         "type": "native_radio",
         "label": "Mothers' HIV Status",
         "read_only": true,
-        "value": "HIV+",
+        "value": "positive",
         "options": [
           {
-            "key": "HIV+",
+            "key": "positive",
             "text": "HIV+"
           }
         ]
@@ -563,14 +554,28 @@
         ]
       },
       {
-        "key": "subpop1_toast",
+        "key": "subpop1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop1",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop1_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop1_toast",
         "value": "true",
         "type": "toaster_notes",
         "text": "This VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -588,7 +593,7 @@
         "value": "true",
         "type": "toaster_notes",
         "text": "This VCA will be enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
-        "toaster_type": "positive",
+        "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (WLHIV)",
         "toaster_info_title": "Sub Population"
       }

@@ -71,11 +71,12 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
+
       {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
         "read_only": "true",
@@ -121,7 +122,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partner",
         "type": "edit_text",
-        "hint": "Partner",
+        "hint": "Implementing Partner",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
@@ -137,10 +138,10 @@
         "edit_type": "name"
       },
       {
-        "key": "physical_address",
+        "key": "homeaddress",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "physical_address",
+        "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
         "hint": "Home Address",
         "edit_type": "name",
@@ -175,10 +176,10 @@
         }
       },
       {
-        "key": "screening_date",
+        "key": "mother_screening_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_date",
+        "openmrs_entity_id": "mother_screening_date",
         "type": "date_picker",
         "hint": "Date referred to OVC program for tracing",
         "look_up": "true",
@@ -213,10 +214,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_sex",
-        "type": "edit_text",
-        "hint": "Gender",
-        "value":"Female",
-        "read_only": "true"
+        "type": "hidden",
+        "value":"female"
       },
       {
         "key": "caregiver_birth_date",
@@ -245,10 +244,10 @@
         "type": "native_radio",
         "label": "Mothers' HIV Status",
         "read_only": true,
-        "value": "HIV+",
+        "value": "positive",
         "options": [
           {
-            "key": "HIV+",
+            "key": "positive",
             "text": "HIV+"
           }
         ]
@@ -269,13 +268,7 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "step1:caregiver_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"HIV+\")"
-          }
-        }
+        ]
       },
       {
         "key": "caregiver_art_number",
