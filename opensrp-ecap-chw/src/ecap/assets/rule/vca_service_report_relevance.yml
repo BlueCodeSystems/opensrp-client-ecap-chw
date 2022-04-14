@@ -5,3 +5,59 @@ priority: 1
 condition: "step1_vca_services_children.contains('other')"
 actions:
   - "isRelevant = true"
+---
+name: step1_calhiv
+description: clahiv relevance
+priority: 1
+condition: "step1_services.contains('child_adolescent')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_number
+description: art_number relevance
+priority: 1
+condition: "step1_calhiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_health_facility
+description: art_health_facility relevance
+priority: 1
+condition: "step1_calhiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_last_vl
+description: date_last_vl relevance
+priority: 1
+condition: "step1_calhiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vl_last_result
+description: vl_last_result relevance
+priority: 1
+condition: "step1_calhiv.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vca_services_children
+description: vca_services_children relevance
+priority: 1
+condition: "step1_services.contains('child_adolescent')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_services_caregiver
+description: services_caregiver relevance
+priority: 1
+condition: "step1_services.contains('caregiver')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vca_services_household
+description: vca_services_household relevance
+priority: 1
+condition: "step1_services.contains('household')"
+actions:
+  - "isRelevant = true"
