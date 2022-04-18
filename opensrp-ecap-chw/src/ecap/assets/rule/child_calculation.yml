@@ -5,3 +5,10 @@ priority: 1
 condition: "step1_is_hiv_positive.contains('yes')"
 actions:
   - "calculation = true"
+---
+name: step2_subpop1
+description: step2_subpop1 calculation
+priority: 1
+condition: "step2_is_hiv_positive.contains('yes')"
+actions:
+  - "calculation = true"

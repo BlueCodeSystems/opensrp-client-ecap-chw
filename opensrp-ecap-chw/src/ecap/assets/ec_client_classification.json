@@ -326,7 +326,8 @@
             "field_value": "Mother Register",
             "creates_case": [
               "ec_mother_index",
-              "ec_household"
+              "ec_household",
+              "ec_client_index"
             ]
           },
           {
