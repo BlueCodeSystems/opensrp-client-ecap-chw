@@ -273,7 +273,6 @@ public class MotherDetail extends AppCompatActivity {
 
                 formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
                 formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
 
                 break;
 

@@ -117,6 +117,15 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                 }
             }
 
+            Number = new Random();
+            Rnumber = Number.nextInt(900000000);
+            String uId =  Integer.toString(Rnumber);
+
+
+            //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+            JSONObject stepTwoUniqueId = getFieldJSONObject(fields(jsonObject, "step2"), "unique_id");
+            stepTwoUniqueId.put(JsonFormUtils.VALUE, uId);
+
 
 
         } catch (JSONException e) {

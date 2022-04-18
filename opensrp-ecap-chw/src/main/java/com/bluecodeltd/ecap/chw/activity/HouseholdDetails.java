@@ -358,14 +358,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworkerphone = prefs.getString("phone", "Anonymous");
-                    String caseworkername = prefs.getString("name", "Anonymous");
+                    String caseworkername = prefs.getString("caseworker_name", "Anonymous");
 
 
 
                     householdMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
-                    indexRegisterForm.put("entity_id", this.house.getBase_entity_id());
+                    indexRegisterForm.put("entity_id", this.house.getBid());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
 

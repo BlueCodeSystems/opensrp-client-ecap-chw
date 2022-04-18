@@ -55,13 +55,6 @@ condition: "step3_gender == ''"
 actions:
   - "calculation = step1_adolescent_gender"
 ---
-name: step3_index_check_box
-description: index_check_box
-priority: 1
-condition: "!step3_subpop1_toast.contains('') || !step3_subpop3_toast.contains('') || !step3_subpop4_toast.contains('') || !step3_subpop5_toast.contains('') || !step3_subpop6_toast.contains('') || !step3_subpop2_toast.contains('')"
-actions:
-  - "calculation = 'yes'"
----
 name: step1_age_calculated
 description: Age calculated
 priority: 1
