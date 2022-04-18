@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -26,6 +27,8 @@ import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class HouseholdIndexFragment extends BaseRegisterFragment implements HouseholdIndexFragmentContract.View{
 
@@ -108,18 +111,18 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
     protected void onViewClicked(View view) {
 
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
-        String childId = client.getColumnmaps().get("unique_id");
-        goToIndexDetailActivity(childId, client);
+        goToIndexDetailActivity(client);
 
     }
 
-    protected void goToIndexDetailActivity(String childId, CommonPersonObjectClient client) {
+    protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
-        Intent intent = new Intent(getActivity(), HouseholdDetails.class);
-        intent.putExtra("childId",  childId);
-        intent.putExtra("householdId",  client.getColumnmaps().get("household_id"));
-        intent.putExtra("household",  client);
-        startActivity(intent);
+
+            Intent intent = new Intent(getActivity(), HouseholdDetails.class);
+            intent.putExtra("householdId",  client.getColumnmaps().get("hid"));
+            intent.putExtra("household",  client);
+            startActivity(intent);
+
     }
     @Override
     public void showNotFoundPopup(String s) {

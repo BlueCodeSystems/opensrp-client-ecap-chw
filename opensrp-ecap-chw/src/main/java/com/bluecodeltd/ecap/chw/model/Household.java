@@ -29,6 +29,7 @@ public class Household {
     private String viral_load_results;
     private String date_of_last_viral_load;
     private String base_entity_id;
+    private String bid;
     private String household_id;
     private String village;
     private String user_gps;
@@ -672,5 +673,13 @@ public class Household {
 
     public void setWard(String ward) {
         this.ward = ward;
+    }
+
+    public String getBid() {
+        return bid;
+    }
+
+    public void setBid(String bid) {
+        this.bid = bid;
     }
 }
