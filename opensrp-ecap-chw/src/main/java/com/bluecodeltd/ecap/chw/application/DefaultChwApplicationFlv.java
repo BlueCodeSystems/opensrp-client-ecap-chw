@@ -275,14 +275,16 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
+                "index_check_box",
                 "caregiver_name",
                 "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
+                "index_check_box",
                 "caregiver_name",
-                "household_id"
+                "hid"
         });
         return map;
     }
@@ -301,14 +303,16 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
+                "index_check_box",
                 "caregiver_name",
                 "household_id"
         });
 
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
+                "index_check_box",
                 "caregiver_name",
-                "household_id"
+                "hid"
         });
         return map;
     }
