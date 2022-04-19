@@ -78,6 +78,8 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
             interactor.saveRegistration(eventClients, isEditMode);
             baseId = eventClients.get(0).getClient().getBaseEntityId();
 
+
+
         } catch (Exception e) {
             Timber.e(e);
         }

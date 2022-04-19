@@ -331,7 +331,7 @@ actions:
 name: step1_tpt_client_initiated
 description: tpt_client_initiated relevance
 priority: 1
-condition: "tep1_is_hiv_positive.contains('yes') && step1_client_result.contains('Negative')"
+condition: "step1_tpt_client_eligibility.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
