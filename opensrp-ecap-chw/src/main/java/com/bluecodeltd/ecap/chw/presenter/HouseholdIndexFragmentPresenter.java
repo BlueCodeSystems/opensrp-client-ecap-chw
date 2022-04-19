@@ -27,7 +27,7 @@ public class HouseholdIndexFragmentPresenter implements HouseholdIndexFragmentCo
 
 
         String countSelect = "SELECT COUNT(*) FROM ec_household WHERE household_id IS NOT NULL";
-        String mainSelect = "SELECT ec_household.*, ec_household.household_id AS hid, ec_household.id AS _id FROM ec_household WHERE ec_household.caregiver_name IS NOT NULL AND ec_household.household_id IS NOT NULL AND facility IS NOT NULL";
+        String mainSelect = "SELECT ec_household.*, ec_household.household_id AS hid, ec_household.id AS _id FROM ec_household";
 
         getView().initializeQueryParams("ec_household", countSelect, mainSelect);
         getView().initializeAdapter();

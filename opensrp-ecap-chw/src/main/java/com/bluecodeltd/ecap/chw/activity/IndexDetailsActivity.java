@@ -932,18 +932,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 //Populate Caseworker Name
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                String caseworker = sp.getString("phone", "Anonymous");
+                String caseworkername = sp.getString("phone", "Anonymous");
 
                 JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
 
                 if (ccname != null) {
                     ccname.remove(JsonFormUtils.VALUE);
                     try {
-                        ccname.put(JsonFormUtils.VALUE, caseworker);
+                        ccname.put(JsonFormUtils.VALUE, caseworkername);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
 
                 formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
 
