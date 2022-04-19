@@ -205,14 +205,9 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
-        "read_only": "",
         "type": "edit_text",
         "hint": "ART Number",
         "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "ART Number"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -225,11 +220,10 @@
         "key": "art_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_health_facility",
+        "openmrs_entity_id": "art_facility",
         "type": "edit_text",
         "hint": "Name of ART Clinic",
         "edit_type": "name",
-        "look_up": "true",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -243,9 +237,48 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_last_vl",
-        "read_only": "true",
         "type": "date_picker",
-        "hint": "Date of next VL test",
+        "hint": "Date of last Viral Load test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_service_report_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "hint": "Viral Load Result ",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Viral Load Result "
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_service_report_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_next_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "date_next_vl",
+        "type": "date_picker",
+        "hint": "Date of next Viral Load test",
         "expanded": false,
         "duration": {
           "label": ""
@@ -265,53 +298,12 @@
         }
       },
       {
-        "key": "vl_last_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "vl_last_result",
-        "read_only": "true",
-        "type": "edit_text",
-        "hint": "Viral Load Result ",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Viral Load Result "
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_service_report_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "vl_next_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "vl_next_result",
-        "type": "edit_text",
-        "hint": "VL next results",
-        "read_only": true,
-        "v_regex": {
-          "value": "[0-9]*",
-          "err": "Last VL results must be an integer"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_service_report_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "child_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "spinner",
-        "hint": "Level of MMD for child ",
+        "hint": "Level of MMD for child",
         "values": [
           "Less than 3 month",
           "Between 3-5 months",
@@ -326,11 +318,10 @@
         }
       },
       {
-        "key": "date_next_vl",
+        "key": "date_next_drugpick",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "date_next_vl",
-        "read_only": "true",
+        "openmrs_entity_id": "date_next_drugpick",
         "type": "date_picker",
         "hint": "Date of Next Drug Pick up",
         "expanded": false,
@@ -501,7 +492,7 @@
             "openmrs_entity_id": ""
           },
           {
-            "key": "Other",
+            "key": "other",
             "text": "Other Specify",
             "text_size": "18px",
             "value": "false",
@@ -524,7 +515,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_service_children",
         "type": "edit_text",
-        "hint": "Specify other",
+        "hint": "Specify any other service provided to Child/Adolescent",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -558,7 +549,6 @@
           }
         }
       },
-
       {
         "key": "services_caregiver",
         "openmrs_entity_parent": "",
@@ -658,7 +648,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_service_caregiver",
         "type": "edit_text",
-        "hint": "Specify other",
+        "hint": "Specify any other service provided to Caregiver",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -768,7 +758,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "other_service_household",
         "type": "edit_text",
-        "hint": "Specify other",
+        "hint": "Specify any other service provided to Household",
         "edit_type": "name",
         "v_required": {
           "value": false,
