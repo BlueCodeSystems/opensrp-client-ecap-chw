@@ -34,10 +34,12 @@ import android.widget.Toast;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -95,8 +97,10 @@ public class MotherDetail extends AppCompatActivity {
     private RelativeLayout cLayout, mLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
+    public Household family;
     Random Number;
     int Rnumber;
+    ObjectMapper householdMapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,8 @@ public class MotherDetail extends AppCompatActivity {
 
         //Refresh activity using Intent
         refresh = getIntent().getExtras().getString("1");
+
+        family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
 
         motherName.setText(commonPersonObjectClient.getColumnmaps().get("caregiver_name"));
         String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
@@ -271,8 +277,11 @@ public class MotherDetail extends AppCompatActivity {
 
             case "mother_index":
 
+                householdMapper = new ObjectMapper();
+
                 formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
                 formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(family, Map.class));
 
                 break;
 

@@ -2475,25 +2475,16 @@
         "label": "Is the child on MMD?",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "exclusive": [
-          "Yes"
-        ],
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
-            "value": false
+            "text": "Yes"
           },
           {
             "key": "no",
-            "text": "No",
-            "value": false
+            "text": "No"
           }
         ],
-        "v_required": {
-          "value": false,
-          "err": "You're required to check the box"
-        },
         "relevance": {
           "step4:art_check_box": {
             "type": "string",
