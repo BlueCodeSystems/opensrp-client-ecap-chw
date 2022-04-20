@@ -551,7 +551,14 @@
             "key": "0",
             "text": "Closed"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "subpop1",
