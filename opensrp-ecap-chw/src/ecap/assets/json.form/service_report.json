@@ -56,6 +56,16 @@
     "title": "Case Worker Service Report",
     "fields": [
       {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Caseworker Name",
+        "read_only": "true",
+        "edit_type": "name"
+      },
+      {
         "key": "art_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -682,7 +692,6 @@
           }
         }
       },
-
       {
         "key": "vca_services_household",
         "openmrs_entity_parent": "",
@@ -792,7 +801,6 @@
           }
         }
       },
-
       {
         "key": "caseworker_date_signed",
         "openmrs_entity_parent": "",
