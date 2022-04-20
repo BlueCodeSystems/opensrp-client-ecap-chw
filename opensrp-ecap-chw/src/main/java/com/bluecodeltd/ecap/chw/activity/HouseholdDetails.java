@@ -360,8 +360,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     String caseworkerphone = prefs.getString("phone", "Anonymous");
                     String caseworkername = prefs.getString("caseworker_name", "Anonymous");
 
-
-
                     householdMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
@@ -542,6 +540,7 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(obj, Map.class));
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(caregiver, Map.class));

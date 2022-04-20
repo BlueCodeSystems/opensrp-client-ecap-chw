@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
@@ -54,6 +55,7 @@ import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdJsonFormUtils;
 import org.smartregister.opd.utils.OpdUtils;
 import org.smartregister.repository.UniqueIdRepository;
+import org.smartregister.util.FormUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
@@ -266,14 +268,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         String household_id = code + "/" + xId;
 
 
-        //******** VCA ID *********//
-      /*  UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
-        String entityId = uniqueId != null ? uniqueId.getOpenmrsId() : "";
-        String newEntityId  = entityId.replaceFirst("^0+(?!$)", "");
-
-        if (StringUtils.isNotBlank(entityId)) {
-            newEntityId = entityId.replace("-", "");
-        }*/
         Number = new Random();
         Rnumber = Number.nextInt(900000000);
         String newEntityId =  Integer.toString(Rnumber);
@@ -334,14 +328,110 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
                     showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
-                    uniqueId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                    uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
+                    //JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
 
                     gotToChildProfile(uniqueId);
+                } else if (Constants.EcapEncounterType.FSW.equalsIgnoreCase(
+                        jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+
+
+                    String age = getFieldJSONObject(fields(jsonFormObject, STEP1), "age").optString("value");
+                    String children = getFieldJSONObject(fields(jsonFormObject, STEP1), "children_under18").optString("value");
+
+
+                    if (Integer.parseInt(age) > 19 && children.equals("yes")){
+
+                        openForm("hh_screening_entry", jsonFormObject);
+
+
+                    } else if (Integer.parseInt(age) > 10 && Integer.parseInt(age) < 18) {
+
+                        openForm("vca_screening", jsonFormObject);
+
+                    } else {
+                        Toasty.error(this, "This FSW Cannot be enrolled into the program", Toast.LENGTH_LONG, true).show();
+                    }
+
+
+
                 }
             } catch (JSONException e) {
                 Timber.e(e);
             }
         }
+    }
+
+    public void openForm(String formName, JSONObject jsonFormObject){
+
+        org.smartregister.util.FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(IndexRegisterActivity.this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+        Object obj = sp.getAll();
+
+
+        String fname = getFieldJSONObject(fields(jsonFormObject, STEP1), "first_name").optString("value");
+        String lname = getFieldJSONObject(fields(jsonFormObject, STEP1), "last_name").optString("value");
+        String dob = getFieldJSONObject(fields(jsonFormObject, STEP1), "adolescent_birthdate").optString("value");
+        String hh_id = getFieldJSONObject(fields(jsonFormObject, STEP1), "household_id").optString("value");
+        String u_id = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
+        String gender = "female";
+        String sexually_active = "yes";
+
+        JSONObject indexRegisterForm = formUtils.getFormJson(formName);
+
+        if (formName.equals("vca_screening")){
+
+            JSONObject hh_idObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+            JSONObject unique_idObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+            JSONObject first_name = getFieldJSONObject(fields(indexRegisterForm, STEP1), "first_name");
+            JSONObject last_name = getFieldJSONObject(fields(indexRegisterForm, STEP1), "last_name");
+            JSONObject vca_dob = getFieldJSONObject(fields(indexRegisterForm, STEP1), "adolescent_birthdate");
+            JSONObject vca_gender = getFieldJSONObject(fields(indexRegisterForm, STEP1), "gender");
+            JSONObject agyActive = getFieldJSONObject(fields(indexRegisterForm, STEP1), "agyw_sexually_active");
+
+            try {
+                CoreJsonFormUtils.populateJsonForm(jsonFormObject,oMapper.convertValue(obj, Map.class));
+                hh_idObject.put(JsonFormUtils.VALUE, hh_id);
+                unique_idObject.put(JsonFormUtils.VALUE, u_id);
+                first_name.put(JsonFormUtils.VALUE, fname);
+                last_name.put(JsonFormUtils.VALUE, lname);
+                vca_dob.put(JsonFormUtils.VALUE, dob);
+                vca_gender.put(JsonFormUtils.VALUE, gender);
+                agyActive.put(JsonFormUtils.VALUE, sexually_active);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            JSONObject hh_idObject = getFieldJSONObject(fields(indexRegisterForm, STEP2), "household_id");
+            JSONObject unique_idObject = getFieldJSONObject(fields(indexRegisterForm, STEP2), "unique_id");
+            JSONObject cc_name = getFieldJSONObject(fields(indexRegisterForm, STEP2), "caregiver_name");
+            JSONObject cc_dob = getFieldJSONObject(fields(indexRegisterForm, STEP2), "caregiver_birth_date");
+            JSONObject cc_sex = getFieldJSONObject(fields(indexRegisterForm, STEP2), "caregiver_sex");
+
+            try {
+                CoreJsonFormUtils.populateJsonForm(jsonFormObject,oMapper.convertValue(obj, Map.class));
+                hh_idObject.put(JsonFormUtils.VALUE, hh_id);
+                unique_idObject.put(JsonFormUtils.VALUE, u_id);
+                cc_name.put(JsonFormUtils.VALUE, fname + " " + lname);
+                cc_dob.put(JsonFormUtils.VALUE, dob);
+                cc_sex.put(JsonFormUtils.VALUE, gender);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        startFormActivity(indexRegisterForm);
+
     }
 
     public void gotToChildProfile(String id){

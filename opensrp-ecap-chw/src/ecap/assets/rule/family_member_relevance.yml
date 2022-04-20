@@ -41,6 +41,13 @@ condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status
 actions:
   - "isRelevant = true"
 ---
+name: step4_subpop5_toast
+description: subpop5_toast
+priority: 1
+condition: "step3_child_ever_experienced_sexual_violence.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+actions:
+  - "isRelevant = true"
+---
 name: step4_subpop2_toast
 description: subpop2_toast
 priority: 1
