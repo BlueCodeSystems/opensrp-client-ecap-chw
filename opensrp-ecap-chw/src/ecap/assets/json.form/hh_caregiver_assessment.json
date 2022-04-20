@@ -776,7 +776,7 @@
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
         "hint": "Result of most recent viral load test.",
-        "read_only": "true",
+        "read_only": "false",
         "relevance": {
           "step1:viral_load_12months": {
             "type": "string",
@@ -789,9 +789,18 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_of_last_viral_load",
-        "type": "edit_text",
-        "hint": "Date of last viral load test",
-        "read_only": "true",
+        "type": "date_picker",
+        "hint": "Date of last VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": ""
+        },
         "relevance": {
           "step1:viral_load_12months": {
             "type": "string",

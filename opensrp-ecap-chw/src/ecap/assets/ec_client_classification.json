@@ -425,6 +425,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Hiv Assessment For Caregiver",
+            "creates_case": [
+              "ec_caregiver_hiv_assessment"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "HIV Risk Assessment Above 15",
             "creates_case": [
               "ec_hiv_assessment_above_15"
