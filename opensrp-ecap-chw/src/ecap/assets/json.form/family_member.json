@@ -350,10 +350,10 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
         "type": "toaster_notes",
-        "text": "Questions here do not apply to this child. Please Proceed.",
+        "text": "Questions on immunization do not apply to this family member. Please Proceed.",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "Questions on Immunization do not apply to this family member. Proceed.",
+        "toaster_info_text": "Questions on Immunization do not apply to this family member. Please Proceed.",
         "toaster_info_title": "Benchmark 3: Knowledgeable about HIV prevention",
         "toaster_type": "warning",
         "relevance": {
@@ -363,16 +363,6 @@
             }
           }
         }
-      },
-      {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Caseworker Name",
-        "read_only": "true",
-        "edit_type": "name"
       },
       {
         "key": "immunization",
@@ -620,6 +610,35 @@
         }
       },
       {
+        "key": "child_ever_experienced_sexual_violence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_ever_experienced_sexual_violence",
+        "type": "native_radio",
+        "label": "Has the child/adolescent ever experienced sexual violence?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "subpop1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -666,6 +685,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop4",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "subpop5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5",
         "type": "hidden",
         "calculation": {
           "rules-engine": {
@@ -734,6 +767,24 @@
         }
       },
       {
+        "key": "subpop5_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop5_toast",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "toaster_type": "info",
+        "toaster_info_text": "AChildren/Adolescents who are Survivors of Sexual Violence",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "subpop1_toast_message",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -784,6 +835,16 @@
             }
           }
         }
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Caseworker Name",
+        "read_only": "true",
+        "edit_type": "name"
       }
     ]
   }
