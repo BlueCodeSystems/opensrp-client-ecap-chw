@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.HouseholdCasePlanActivity;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
@@ -56,9 +57,13 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
         final CasePlanModel casePlan = caseplans.get(position);
 
         holder.setIsRecyclable(false);
-
+        String vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(casePlan.getUnique_id(),casePlan.getCase_plan_date());
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
+         if (vulnerabilities != null)
+         {
+             holder.txtVulnerabilities.setText(vulnerabilities + " Vulnerabilities");
+         }
 
         try {
             Date thedate = new SimpleDateFormat("dd-MM-yyyy").parse(casePlan.getCase_plan_date());
@@ -113,7 +118,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtCaseDate, txtQuarter, txtCasePlanStatus;
+        TextView txtCaseDate, txtQuarter, txtCasePlanStatus,txtVulnerabilities;
 
         LinearLayout linearLayout;
 
@@ -127,6 +132,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
             txtCaseDate  = itemView.findViewById(R.id.case_date);
             txtQuarter = itemView.findViewById(R.id.quarter);
             txtCasePlanStatus = itemView.findViewById(R.id.case_plan_status);
+            txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
 
         }
 
