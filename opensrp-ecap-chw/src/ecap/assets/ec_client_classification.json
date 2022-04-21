@@ -390,7 +390,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "Case Worker Service Report",
+            "field_value": "Service Report",
             "creates_case": [
               "ec_service_report"
             ]

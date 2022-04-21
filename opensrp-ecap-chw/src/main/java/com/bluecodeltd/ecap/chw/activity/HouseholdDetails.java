@@ -669,6 +669,13 @@ public class HouseholdDetails extends AppCompatActivity {
                         String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
+
+                    case "Service Report":
+                        closeFab();
+                        Toasty.success(HouseholdDetails.this, "Service Record Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+                        break;
                 }
 
 
@@ -800,6 +807,17 @@ public class HouseholdDetails extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_GRAD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Service Report":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_SERVICE);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
