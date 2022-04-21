@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CaregiverAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
+import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -41,9 +42,9 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
-import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,7 +61,6 @@ import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.domain.UniqueId;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -95,7 +95,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form;
+    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
     private String childrenCount;
     public String householdId;
     public String countFemales, countMales;
@@ -115,6 +115,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
+    CaregiverHivAssessmentModel caregiverHivAssessmentModel;
 
 
     @Override
@@ -131,7 +132,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
-
+        caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
 
         house = getHousehold(householdId);
 
@@ -149,6 +150,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
+        chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
@@ -488,6 +490,26 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
+            case R.id.hiv_assessment_caregiver:
+                try {
+
+                    indexRegisterForm = formUtils.getFormJson("hh_hiv_assessment_caregiver");
+                    if (caregiverHivAssessmentModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        indexRegisterForm.put("entity_id", this.caregiverHivAssessmentModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(caregiverHivAssessmentModel, Map.class));
+                    }
+
+                    startFormActivity(indexRegisterForm);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
             case R.id.child_form:
 
                 try {
@@ -798,6 +820,17 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     break;
+                case "Hiv Assessment For Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HIV_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
                 case "Grad":
 
                     if (fields != null) {
@@ -908,6 +941,7 @@ public class HouseholdDetails extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             rscreen.setVisibility(View.VISIBLE);
             grad_form.setVisibility(View.VISIBLE);
+            chivAssessment.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
@@ -920,6 +954,7 @@ public class HouseholdDetails extends AppCompatActivity {
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
         rscreen.setVisibility(View.GONE);
+        chivAssessment.setVisibility(View.GONE);
         grad_form.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
