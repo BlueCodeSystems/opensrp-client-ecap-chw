@@ -684,6 +684,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Grad":
+                    case "Hiv Assessment For Caregiver":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Form Updated", Toast.LENGTH_LONG, true).show();
@@ -695,6 +696,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
+
                 }
 
 
