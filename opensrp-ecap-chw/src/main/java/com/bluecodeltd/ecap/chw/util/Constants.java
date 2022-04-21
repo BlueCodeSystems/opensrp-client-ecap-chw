@@ -111,5 +111,6 @@ public class Constants extends CoreConstants {
         String EC_HIV_ASSESSMENT_ABOVE_15 = "ec_hiv_assessment_above_15";
         String EC_HIV_ASSESSMENT_BELOW_15 = "ec_hiv_assessment_below_15";
         String EC_CAREGIVER_VISITATION = "ec_household_visitation_for_caregiver";
+        String EC_CAREGIVER_HIV_ASSESSMENT = "ec_caregiver_hiv_assessment";
     }
 }
