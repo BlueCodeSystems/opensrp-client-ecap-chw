@@ -39,6 +39,7 @@ import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
@@ -75,7 +76,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     private UniqueIdRepository uniqueIdRepository;
     Random Number;
     int Rnumber;
-    private String uniqueId;
+    private String uniqueId, hid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,9 +330,22 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
                     uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
-                    //JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
 
                     gotToChildProfile(uniqueId);
+
+                } else if(Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
+                        jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))){
+
+                    RegisterParams registerParam = new RegisterParams();
+                    registerParam.setEditMode(false);
+                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
+                    showProgressDialog(R.string.saving_dialog_title);
+                    indexRegisterPresenter().saveForm(jsonString, registerParam);
+
+                    hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");
+
+                    goToHouseholdProfile(hid);
+
                 } else if (Constants.EcapEncounterType.FSW.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
@@ -352,8 +366,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     } else {
                         Toasty.error(this, "This FSW Cannot be enrolled into the program", Toast.LENGTH_LONG, true).show();
                     }
-
-
 
                 }
             } catch (JSONException e) {
@@ -416,6 +428,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             JSONObject cc_dob = getFieldJSONObject(fields(indexRegisterForm, STEP2), "caregiver_birth_date");
             JSONObject cc_sex = getFieldJSONObject(fields(indexRegisterForm, STEP2), "caregiver_sex");
 
+
             try {
                 CoreJsonFormUtils.populateJsonForm(jsonFormObject,oMapper.convertValue(obj, Map.class));
                 hh_idObject.put(JsonFormUtils.VALUE, hh_id);
@@ -423,6 +436,9 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                 cc_name.put(JsonFormUtils.VALUE, fname + " " + lname);
                 cc_dob.put(JsonFormUtils.VALUE, dob);
                 cc_sex.put(JsonFormUtils.VALUE, gender);
+                JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
+                subPopulation.getJSONObject(5).put("value", "true");
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -436,8 +452,14 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     public void gotToChildProfile(String id){
         Intent intent = new Intent(this,IndexDetailsActivity.class);
-
         intent.putExtra("Child",id);
+        Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
+        startActivity(intent);
+    }
+
+    public void goToHouseholdProfile(String id){
+        Intent intent = new Intent(this,HouseholdDetails.class);
+        intent.putExtra("householdId", id);
         Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
         startActivity(intent);
     }
