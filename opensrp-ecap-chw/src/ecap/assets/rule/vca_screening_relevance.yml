@@ -660,6 +660,6 @@ actions:
 name: step1_child_mmd
 description: child_mmd
 priority: 1
-condition: "step4:art_check_box.contains('yes')"
+condition: "step4:art_check_box.contains('yes') "
 actions:
   - "isRelevant = true"
