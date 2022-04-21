@@ -331,7 +331,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             case "grad":
 
-             gradMapper = new ObjectMapper();
+                gradMapper = new ObjectMapper();
 
 
                 if(gradModel == null){
