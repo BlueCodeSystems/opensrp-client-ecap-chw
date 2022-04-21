@@ -101,8 +101,6 @@
         android:layout_height="1dp"/>
 
     <TextView
-        android:padding="8dp"
-        android:background="@drawable/rounded_corner"
         android:id="@+id/vulnerabilities"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,8 +108,10 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:text="3 Vulnerabilities"
+        android:background="@drawable/rounded_corner"
+        android:padding="8dp"
+        android:text="0 Vulnerabilities"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:textSize="14dp" />
+        android:textSize="14dp"
+        android:textStyle="bold" />
 </RelativeLayout>
