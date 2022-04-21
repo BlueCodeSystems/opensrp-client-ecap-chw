@@ -127,7 +127,7 @@ public class CasePlan extends AppCompatActivity {
                     JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
                     cDate.put("value", caseDate);
 
-                    if(!hivStatus.equals("yes")){
+                    if(hivStatus == null || !hivStatus.equals("yes")){
                         JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
                         domainType.remove(0);
                     }
