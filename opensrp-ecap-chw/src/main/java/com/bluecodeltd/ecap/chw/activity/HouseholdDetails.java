@@ -38,6 +38,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.HouseholdServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
@@ -218,6 +219,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter.addFragment(new HouseholdChildrenFragment());
         mPagerAdapter.addFragment(new HouseholdCasePlanFragment());
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
+        mPagerAdapter.addFragment(new HouseholdServicesFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
 
@@ -226,6 +228,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
         mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
         mTabLayout.getTabAt(2).setText("CP");
+        mTabLayout.getTabAt(4).setText(getString(R.string.fragment_services));
 
     }
 
