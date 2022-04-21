@@ -5262,6 +5262,158 @@
       ]
     },
     {
+      "name": "ec_caregiver_hiv_assessment",
+      "columns": [
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "informed_consent",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.informed_consent"
+          }
+        },
+        {
+          "column_name": "hiv_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "on_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.on_art"
+          }
+        },
+        {
+          "column_name": "start_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.start_date"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "symptoms",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.symptoms"
+          }
+        },
+        {
+          "column_name": "private_parts",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.private_parts"
+          }
+        },
+        {
+          "column_name": "exposed_to_HIV",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.exposed_to_HIV"
+          }
+        },
+        {
+          "column_name": "unprotected_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unprotected_sex"
+          }
+        },
+        {
+          "column_name": "pregnant_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pregnant_breastfeeding"
+          }
+        },
+        {
+          "column_name": "hiv_tb_sti",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_tb_sti"
+          }
+        },
+        {
+          "column_name": "hiv_test_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test_result"
+          }
+        },
+        {
+          "column_name": "date_of_hiv_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_hiv_test"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_hiv_assessment_above_15",
       "columns": [
         {
@@ -5269,6 +5421,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
           }
         },
         {
