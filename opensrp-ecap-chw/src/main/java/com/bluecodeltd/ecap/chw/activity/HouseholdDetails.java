@@ -362,8 +362,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     String caseworkerphone = prefs.getString("phone", "Anonymous");
                     String caseworkername = prefs.getString("caseworker_name", "Anonymous");
 
-
-
                     householdMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
@@ -565,6 +563,12 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
+                    if(house.getSubpop().equals("true")){
+                        JSONObject fswObect = getFieldJSONObject(fields(indexRegisterForm, STEP1), "fsw");
+                        fswObect.put(JsonFormUtils.VALUE, "yes");
+                    }
+
+
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(obj, Map.class));
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(caregiver, Map.class));
                     startFormActivity(indexRegisterForm);
@@ -680,6 +684,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Grad":
+                    case "Hiv Assessment For Caregiver":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Form Updated", Toast.LENGTH_LONG, true).show();
@@ -691,6 +696,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
+
                 }
 
 

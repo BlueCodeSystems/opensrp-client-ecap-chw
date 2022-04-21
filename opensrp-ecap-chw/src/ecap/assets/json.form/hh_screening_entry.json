@@ -51,7 +51,7 @@
     }
   },
   "step1": {
-    "title": "Consent Form",
+    "title": "Household Screening Consent",
     "next": "step2",
     "fields": [
       {
@@ -324,7 +324,6 @@
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
         "hint": "Health Facility",
-        "value": "Choma General Hospital",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
@@ -340,7 +339,6 @@
         "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "hint": "Province",
-        "value": "Southern",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
@@ -356,7 +354,6 @@
         "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
-        "value": "Choma",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
