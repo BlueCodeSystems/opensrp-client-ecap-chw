@@ -1,16 +1,107 @@
 ---
-name: step3_subpop1_toast
-description: subpop1_toast
+name: step3_subpop1
+description: subpop1
 priority: 1
 condition: "step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20"
 actions:
   - "calculation = true"
 ---
-name: step3_subpop3_toast
-description: subpop3_toast
+name: step3_subpop1
+description: subpop1
+priority: 2
+condition: "!(step1_is_hiv_positive.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 20)"
+actions:
+  - "calculation = false"
+---
+name: step3_subpop2
+description: subpop2
 priority: 1
-condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive') && step3_relation.contains('Parent')"
+condition: "((!step1_is_hiv_positive.contains('yes')) && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 3)"
 actions:
   - "calculation = true"
+---
+name: step3_subpop2
+description: subpop2
+priority: 2
+condition: "!(!step1_is_hiv_positive.contains('yes') && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 3)"
+actions:
+  - "calculation = false"
+---
+name: step3_subpop3
+description: subpop3
+priority: 1
+condition: "step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive') && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+actions:
+  - "calculation = true"
+---
+name: step3_subpop3
+description: subpop3
+priority: 2
+condition: "!(step3_caregiver_sex.contains('female') && step3_caregiver_hiv_status.contains('positive') && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+actions:
+  - "calculation = false"
+---
+name: step3_subpop4
+description: subpop4
+priority: 1
+condition: "step1_agyw_sexually_active.contains('yes')"
+actions:
+  - "calculation = true"
+---
+name: step3_subpop4
+description: subpop4
+priority: 2
+condition: "!step1_agyw_sexually_active.contains('yes')"
+actions:
+  - "calculation = false"
+---
+name: step3_subpop5
+description: subpop5
+priority: 1
+condition: "step3_child_ever_experienced_sexual_violence.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+actions:
+  - "calculation = true"
+---
+name: step3_subpop5
+description: subpop5
+priority: 2
+condition: "!(step3_child_ever_experienced_sexual_violence.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+actions:
+  - "calculation = false"
+---
+name: step3_subpop
+description: subpop
+priority: 1
+condition: "step1_fsw.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+actions:
+  - "calculation = true"
+---
+name: step3_subpop
+description: subpop
+priority: 2
+condition: "!(step1_fsw.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+actions:
+  - "calculation = true"
+---
+name: step4_case_status
+description: step4_case_status
+priority: 2
+condition: "step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true"
+actions:
+  - "calculation = '1'"
+---
+name: step4_case_status
+description: step4_case_status
+priority: 3
+condition: "!(step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true)"
+actions:
+  - "calculation = '3'"
+---
+name: step4_case_status
+description: step4_case_status
+priority: 1
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 19"
+actions:
+  - "calculation = '3'"
 
 

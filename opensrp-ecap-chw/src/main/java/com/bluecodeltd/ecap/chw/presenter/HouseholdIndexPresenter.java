@@ -41,7 +41,6 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     private HouseholdIndexContract.View view;
     private HouseholdIndexContract.Model model;
     private HouseholdIndexContract.Interactor interactor;
-    private String baseId;
     private String uniqueId;
     String householdId;
     private UniqueIdRepository uniqueIdRepository;
@@ -90,7 +89,6 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
                 return;
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
-            baseId = eventClientList.get(0).getClient().getBaseEntityId();
             householdId = (String) eventClientList.get(0).getClient().getAttribute("household_id");
             uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
 
@@ -153,7 +151,7 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
             }
 
             getUniqueIdRepository().close(uniqueId);
-            gotHouseholdProfile(baseId);
+            gotHouseholdProfile();
         }
     }
     @NonNull
@@ -165,9 +163,8 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     }
 
 
-    public void gotHouseholdProfile(String id){
+    public void gotHouseholdProfile(){
         Intent intent = new Intent(getView().getContext(), HouseholdDetails.class);
-        intent.putExtra("childId",  uniqueId);
         intent.putExtra("householdId",householdId);
         Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
         getView().startActivity(intent);
