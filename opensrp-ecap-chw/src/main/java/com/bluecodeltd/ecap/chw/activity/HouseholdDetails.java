@@ -541,6 +541,11 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
+                    if(house.getSubpop().equals("true")){
+                        JSONObject fswObect = getFieldJSONObject(fields(indexRegisterForm, STEP1), "fsw");
+                        fswObect.put(JsonFormUtils.VALUE, "yes");
+                    }
+
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(obj, Map.class));
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(caregiver, Map.class));

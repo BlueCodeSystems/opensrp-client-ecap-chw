@@ -69,17 +69,31 @@ condition: "!(step3_child_ever_experienced_sexual_violence.contains('yes') && he
 actions:
   - "calculation = false"
 ---
+name: step3_subpop
+description: subpop
+priority: 1
+condition: "step1_fsw.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18"
+actions:
+  - "calculation = true"
+---
+name: step3_subpop
+description: subpop
+priority: 2
+condition: "!(step1_fsw.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
+actions:
+  - "calculation = true"
+---
 name: step4_case_status
 description: step4_case_status
 priority: 2
-condition: "step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true"
+condition: "step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true"
 actions:
   - "calculation = '1'"
 ---
 name: step4_case_status
 description: step4_case_status
 priority: 3
-condition: "!(step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true)"
+condition: "!(step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true)"
 actions:
   - "calculation = '3'"
 ---

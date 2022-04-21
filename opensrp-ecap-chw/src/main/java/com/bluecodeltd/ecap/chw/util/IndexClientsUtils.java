@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.client.utils.constants.JsonFormConstants;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -47,8 +48,18 @@ public class IndexClientsUtils {
 
             FormTag formTag = getFormTag();
 
+            String table = "";
+
+            if(encounterType.equals("Sub Population")){
+                table = CoreConstants.TABLE_NAME.EC_CLIENT_INDEX;
+            } else if (encounterType.equals("Household Screening")){
+                table = CoreConstants.TABLE_NAME.EC_HOUSEHOLD;
+            } else if(encounterType.equals("Mother Register")) {
+                table = CoreConstants.TABLE_NAME.EC_MOTHER_INDEX;
+            }
+
             Event childEvent = JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                    encounterType, Constants.EcapClientTable.EC_MOTHER_INDEX);
+                    encounterType, table);
             tagSyncMetadata(childEvent);
 
             Client childClient = JsonFormUtils.createBaseClient(fields, formTag, entityId);
