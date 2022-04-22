@@ -33,6 +33,13 @@ public class ChildCasePlanFragment extends Fragment {
     private ArrayList<CasePlanModel> casePlanList = new ArrayList<>();
     private LinearLayout linearLayout;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setAdapter(recyclerViewadapter);
+        recyclerViewadapter.notifyDataSetChanged();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

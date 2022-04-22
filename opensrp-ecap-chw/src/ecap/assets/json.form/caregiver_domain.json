@@ -193,8 +193,6 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today",
-        "max_date": "today + 100y",
         "v_required": {
           "value": true,
           "err": "Due Date"
