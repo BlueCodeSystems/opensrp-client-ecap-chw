@@ -446,6 +446,7 @@
     <string name="fragment_children">Children</string>
     <string name="fragment_members">Members</string>
     <string name="fragment_housevisits">Visits</string>
+    <string name="fragment_services">Services</string>
     <string name="fragment_visits">Submitted Forms</string>
     <string name="quarter_two">2nd Quarter</string>
     <string name="quarter_three">3rd Quarter</string>
