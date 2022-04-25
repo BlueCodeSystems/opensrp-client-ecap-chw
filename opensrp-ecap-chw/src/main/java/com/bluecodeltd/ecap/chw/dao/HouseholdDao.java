@@ -102,6 +102,7 @@ public class HouseholdDao extends AbstractDao {
             record.setDistrict(getCursorValue(c, "district"));
             record.setPartner(getCursorValue(c, "partner"));
             record.setLandmark(getCursorValue(c, "landmark"));
+            record.setMother_screening_date(getCursorValue(c, "mother_screening_date"));
             record.setScreening_date(getCursorValue(c, "screening_date"));
             record.setScreening_location_home(getCursorValue(c, "screening_location_home"));
             record.setViolence_six_months(getCursorValue(c, "violence_six_months"));
@@ -146,6 +147,8 @@ public class HouseholdDao extends AbstractDao {
             record.setConsent_check_box(getCursorValue(c, "consent_check_box"));
             record.setCaregiver_phone(getCursorValue(c, "caregiver_phone"));
             record.setWard(getCursorValue(c, "ward"));
+            record.setProvince(getCursorValue(c, "province"));
+            record.setFacility(getCursorValue(c, "facility"));
             record.setPhone(getCursorValue(c, "phone"));
             record.setDate_edited(getCursorValue(c, "date_edited"));
 

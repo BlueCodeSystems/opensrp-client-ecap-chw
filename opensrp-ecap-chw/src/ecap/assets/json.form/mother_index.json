@@ -77,7 +77,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "province",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "hint": "Province",
         "read_only": "true",
