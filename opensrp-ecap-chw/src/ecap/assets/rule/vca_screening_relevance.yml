@@ -656,3 +656,10 @@ priority: 1
 condition: "step1_vl_last_result.contains('Less than 1000 copies/ml') || step1_vl_last_result.contains('Above 1000 copies/ml')"
 actions:
   - "isRelevant = true"
+---
+name: step4_child_mmd
+description: child_mmd
+priority: 1
+condition: "step4_art_check_box.contains('yes')"
+actions:
+  - "isRelevant = true"
