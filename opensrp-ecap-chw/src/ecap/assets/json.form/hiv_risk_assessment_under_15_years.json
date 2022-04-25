@@ -57,6 +57,20 @@
     "title": "HIV Risk Assessment For 15 Years And Below",
     "fields": [
       {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Household ID is Required"
+        }
+      },
+      {
         "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -189,7 +203,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "on_art",
         "type": "native_radio",
-        "label": "Are you on Art?",
+        "label": "Are you on ART?",
         "options": [
           {
             "key": "yes",
@@ -302,8 +316,6 @@
           }
         }
       },
-
-
       {
         "key": "deceased_parents",
         "openmrs_entity_parent": "",
@@ -328,7 +340,6 @@
           }
         }
       },
-
       {
         "key": "tb_symptoms",
         "openmrs_entity_parent": "",
