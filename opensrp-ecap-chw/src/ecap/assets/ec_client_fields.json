@@ -875,6 +875,13 @@
           }
         },
         {
+          "column_name": "mother_screening_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_screening_date"
+          }
+        },
+        {
           "column_name": "screening_date",
           "type": "Client",
           "json_mapping": {

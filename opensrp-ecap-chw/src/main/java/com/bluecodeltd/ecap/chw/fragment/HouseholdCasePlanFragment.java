@@ -40,7 +40,6 @@ public class HouseholdCasePlanFragment extends Fragment {
         Household house = ( (HouseholdDetails) requireActivity()).house;
         recyclerView = view.findViewById(R.id.householdRecycler);
         linearLayout = view.findViewById(R.id.household_visit_container);
-
         householdCasePlanList.addAll(HouseholdDao.getCasePlansById(householdId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
@@ -59,5 +58,12 @@ public class HouseholdCasePlanFragment extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setAdapter(recyclerViewadapter);
+        recyclerViewadapter.notifyDataSetChanged();
     }
 }
