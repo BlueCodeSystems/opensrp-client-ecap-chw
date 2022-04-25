@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Hiv Assessment For Caregiver",
+    "title": "HIV Assessment For Caregiver",
     "fields": [
       {
         "key": "household_id",

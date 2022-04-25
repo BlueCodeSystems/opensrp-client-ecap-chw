@@ -442,7 +442,6 @@
             "field_value": "HIV Risk Assessment Below 15",
             "creates_case": [
               "ec_hiv_assessment_below_15"
-
             ]
           },
           {
