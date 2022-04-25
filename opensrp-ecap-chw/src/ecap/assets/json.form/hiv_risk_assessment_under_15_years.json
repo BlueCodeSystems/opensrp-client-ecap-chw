@@ -80,7 +80,6 @@
           "err": "Name of Person can  only contain letters"
         }
       },
-
       {
         "key": "phone",
         "openmrs_entity_parent": "",
@@ -227,10 +226,10 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health facility",
         "relevance": {

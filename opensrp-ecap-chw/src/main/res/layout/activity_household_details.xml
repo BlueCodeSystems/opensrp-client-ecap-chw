@@ -393,7 +393,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Hiv Assessment For Caregiver"
+                    android:text="HIV Assessment For Caregiver"
                     android:textStyle="italic"
                     android:textColor="@color/white" />
 
