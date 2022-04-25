@@ -43,6 +43,8 @@ public class HivAssessmentAbove15Dao extends AbstractDao {
             record.setDate_of_hiv_test(getCursorValue(c, "date_of_hiv_test"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
+            record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
 
             return record;
         };
