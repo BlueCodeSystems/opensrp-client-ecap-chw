@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.pinlogin.PinLogger;
 import com.bluecodeltd.ecap.chw.pinlogin.PinLoginUtil;
 import com.bluecodeltd.ecap.chw.presenter.LoginPresenter;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.github.javiersantos.appupdater.AppUpdater;
 import com.google.gson.Gson;
 
 import org.smartregister.family.util.Constants;
@@ -73,6 +74,9 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         //Sentry.captureMessage("testing SDK setup");
         txtUsername = findViewById(R.id.login_user_name_edit_text);
         txtPassword = findViewById(R.id.login_password_edit_text);
+
+        AppUpdater appUpdater = new AppUpdater(this);
+        appUpdater.start();
 
     }
 

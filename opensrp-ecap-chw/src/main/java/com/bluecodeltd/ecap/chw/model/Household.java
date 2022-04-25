@@ -37,6 +37,7 @@ public class Household {
     private String partner;
     private String landmark;
     private String screening_date;
+    private String mother_screening_date;
     private String violence_six_months;
     private String children_violence_six_months;
     private String enrolled_pmtct;
@@ -79,6 +80,8 @@ public class Household {
     private String phone;
     private String date_edited;
     private String ward;
+    private String province;
+    private String facility;
 
     public String getMarital_status() {
         return marital_status;
@@ -681,5 +684,29 @@ public class Household {
 
     public void setBid(String bid) {
         this.bid = bid;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
+
+    public String getMother_screening_date() {
+        return mother_screening_date;
+    }
+
+    public void setMother_screening_date(String mother_screening_date) {
+        this.mother_screening_date = mother_screening_date;
     }
 }
