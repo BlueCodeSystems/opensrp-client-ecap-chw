@@ -2845,6 +2845,13 @@
           }
         },
         {
+          "column_name": "protect_correct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.protect_correct"
+          }
+        },
+        {
           "column_name": "prevention_support",
           "type": "Client",
           "json_mapping": {
