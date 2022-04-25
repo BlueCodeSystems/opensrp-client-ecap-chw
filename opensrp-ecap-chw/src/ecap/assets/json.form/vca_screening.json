@@ -2486,9 +2486,10 @@
           }
         ],
         "relevance": {
-          "step4:art_check_box": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
