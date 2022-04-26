@@ -1,0 +1,273 @@
+---
+name: step1_dateCovidProvided
+description: date
+priority: 1
+condition: "step1_covid_19.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateCD4Provided
+description: date
+priority: 1
+condition: "step1_cd4.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateHivAdherenceProvided
+description: date
+priority: 1
+condition: "step1_hiv_adherence.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateHivCounselingProvided
+description: date
+priority: 1
+condition: "step1_hiv_counseling_testing.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_datePostGbvProvided
+description: date
+priority: 1
+condition: "step1_post_gbv.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateSubstanceAbuseProvided
+description: date
+priority: 1
+condition: "step1_substance_abuse.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateTBScreeningProvided
+description: date
+priority: 1
+condition: "step1_tb_screening.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateSupplementaryProvided
+description: date
+priority: 1
+condition: "step1_supplementary.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_datePlanningProvided
+description: date
+priority: 1
+condition: "step1_f_planning.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateInsecticideProvided
+description: date
+priority: 1
+condition: "step1_insecticide.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateTreatmentProvided
+description: date
+priority: 1
+condition: "step1_hiv_aids_treatment.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateHealthProvided
+description: date
+priority: 1
+condition: "step1_f_w_health.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateHealthProvided
+description: date
+priority: 1
+condition: "step1_f_w_health.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateVmmcProvided
+description: date
+priority: 1
+condition: "step1_vmmc.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateImmunizationProvided
+description: date
+priority: 1
+condition: "step1_immunization.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateCondomProvided
+description: date
+priority: 1
+condition: "step1_condom.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateCareProvided
+description: date
+priority: 1
+condition: "step1_routine_care.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateEmergencyProvided
+description: date
+priority: 1
+condition: "step1_emergency_care.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateAgeCounsellingProvided
+description: date
+priority: 1
+condition: "step1_age_counselling.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateTreatmentCareProvided
+description: date
+priority: 1
+condition: "step1_h_treatment_care.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_datePmtctProvided
+description: date
+priority: 1
+condition: "step1_pmtct.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateHygienceProvided
+description: date
+priority: 1
+condition: "step1_hygiene_counselling.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_datePlhaProvided
+description: date
+priority: 1
+condition: "step1_plha.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateViralLoadProvided
+description: date
+priority: 1
+condition: "step1_viral_load.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_otherHealth
+description: date
+priority: 1
+condition: "step1_other_health_services.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateInfectionProvided
+description: date
+priority: 1
+condition: "step1_transmitted_infections.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_datePrepProvided
+description: date
+priority: 1
+condition: "step1_prep.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateFacilityProvided
+description: date
+priority: 1
+condition: "step1_care_facility.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateTraumaProvided
+description: date
+priority: 1
+condition: "step1_post_violence_trauma.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateAssistanceProvided
+description: date
+priority: 1
+condition: "step1_legal_assistance.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateOtherSafetyProvided
+description: date
+priority: 1
+condition: "step1_other_safety_services.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateUniformsProvided
+description: date
+priority: 1
+condition: "step1_vca_uniforms_books.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateEnrollmentProvided
+description: date
+priority: 1
+condition: "step1_re_enrollment.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateBursariesProvided
+description: date
+priority: 1
+condition: "step1_bursaries.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateSchooledProvided
+description: date
+priority: 1
+condition: "step1_other_schooled_services.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateCashProvided
+description: date
+priority: 1
+condition: "step1_cash_transfer.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateSupportProvided
+description: date
+priority: 1
+condition: "step1_cash_support.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateSecurityProvided
+description: date
+priority: 1
+condition: "step1_food_security.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dateStabilityProvided
+description: date
+priority: 1
+condition: "step1_other_stability_services.contains('provided')"
+actions:
+  - "isRelevant = true"
