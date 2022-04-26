@@ -111,7 +111,8 @@ public class HouseholdDetails extends AppCompatActivity {
     List<String> allFemalesBirthDates;
     List<String> allChildrenBirthDates;
     public String lessThanFiveMales, malesBetweenTenAndSevenTeen, caregiverTested,
-            lessThanFiveFemales, totalChildren, testedChildren,  allTested, FemalesBetweenTenAndSevenTeen;
+            lessThanFiveFemales, totalChildren, testedChildren, testedChildrenabove15,
+            allTested, FemalesBetweenTenAndSevenTeen;
 
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
@@ -179,7 +180,6 @@ public class HouseholdDetails extends AppCompatActivity {
         countMales = IndexPersonDao.countMales(householdId);
         allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
         allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
-        testedChildren = IndexPersonDao.countTestedChildren(householdId);
         allChildrenBirthDates = IndexPersonDao.getAllChildrenBirthdate(householdId);
         assert allMalesBirthDates != null;
         assert allFemalesBirthDates !=null;
@@ -286,6 +286,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.graduation:
 
+                testedChildren = IndexPersonDao.countTestedChildren(householdId);
+                testedChildrenabove15 = IndexPersonDao.countTestedAbove15Children(householdId);
+                int sumtested = Integer.parseInt(testedChildren) +  Integer.parseInt(testedChildrenabove15);
+
                 try {
 
                     oMapper = new ObjectMapper();
@@ -304,7 +308,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //Count everyone who has been tested
-                    if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
+                    if(sumtested < Integer.parseInt(totalChildren)){
                         allTested = "no";
                     } else {
                         allTested = "yes";
@@ -313,11 +317,11 @@ public class HouseholdDetails extends AppCompatActivity {
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
                     hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
 
-                    //Check if Caregiver Has been Tested
-                    if(house.getCaregiver_hiv_status() != null){
-                        caregiverTested = "yes";
-                    } else {
+                    //Check if Caregiver Has been Tested using HIV Assessment
+                    if(caregiverHivAssessmentModel == null || caregiverHivAssessmentModel.getHiv_status() == null || caregiverHivAssessmentModel.getHiv_status().equals("never_tested")){
                         caregiverTested = "no";
+                    } else {
+                        caregiverTested = "yes";
                     }
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);
@@ -563,7 +567,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
                     }
 
-                    if(house.getSubpop().equals("true")){
+                    if(house.getSubpop() != null && house.getSubpop().equals("true")){
                         JSONObject fswObect = getFieldJSONObject(fields(indexRegisterForm, STEP1), "fsw");
                         fswObect.put(JsonFormUtils.VALUE, "yes");
                     }

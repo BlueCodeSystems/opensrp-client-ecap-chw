@@ -431,7 +431,7 @@ z
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="Household Graduation Assessment"
+                    android:text="Graduation Benchmark Assessment"
                     android:textStyle="italic"
                     />
 

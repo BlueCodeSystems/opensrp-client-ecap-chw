@@ -20,6 +20,8 @@ public class HivRiskAssessmentAbove15Model {
     private String date_of_hiv_test;
     private String caseworker_name;
     private String phone;
+    private String unique_id;
+    private String household_id;
 
     public String getPhone() {
         return phone;
@@ -163,5 +165,21 @@ public class HivRiskAssessmentAbove15Model {
 
     public void setDate_of_hiv_test(String date_of_hiv_test) {
         this.date_of_hiv_test = date_of_hiv_test;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 }

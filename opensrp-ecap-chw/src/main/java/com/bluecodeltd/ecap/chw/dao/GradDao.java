@@ -13,9 +13,6 @@ public class GradDao extends AbstractDao {
 
         String sql = "SELECT ec_grad.*, ec_client_index.adolescent_birthdate, ec_client_index.is_hiv_positive, ec_client_index.art_number, ec_client_index.facility, ec_client_index.date_last_vl, ec_client_index.vl_last_result FROM ec_grad JOIN ec_client_index ON ec_grad.unique_id = ec_client_index.unique_id WHERE ec_grad.unique_id = '" + vcaID + "'";
 
-
-
-
         List<GradModel> values = AbstractDao.readData(sql, getGradModelMap());
 
         if (values.size() == 0) {
