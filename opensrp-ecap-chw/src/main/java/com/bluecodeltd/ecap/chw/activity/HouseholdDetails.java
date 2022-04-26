@@ -96,9 +96,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
-    private String childrenCount;
-    public String householdId;
-    public String countFemales, countMales;
+    public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
     Caregiver caregiver;
@@ -290,6 +288,10 @@ public class HouseholdDetails extends AppCompatActivity {
                 testedChildrenabove15 = IndexPersonDao.countTestedAbove15Children(householdId);
                 int sumtested = Integer.parseInt(testedChildren) +  Integer.parseInt(testedChildrenabove15);
 
+
+                virally_suppressed = IndexPersonDao.countSuppressedChildren(householdId);
+                positiveChildren = IndexPersonDao.countPositiveChildren(householdId);
+
                 try {
 
                     oMapper = new ObjectMapper();
@@ -323,8 +325,20 @@ public class HouseholdDetails extends AppCompatActivity {
                     } else {
                         caregiverTested = "yes";
                     }
+
+
+                    if(Integer.parseInt(virally_suppressed) < Integer.parseInt(positiveChildren)){
+
+                        virally_suppressed = "no";
+                    } else {
+                        virally_suppressed = "yes";
+                    }
+
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);
+
+                    JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
+                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
 
                     startFormActivity(indexRegisterForm);
