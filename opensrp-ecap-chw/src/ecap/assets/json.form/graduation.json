@@ -300,6 +300,42 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "toaster_bench_2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 2 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "Benchmark 2 has been met.",
+        "toaster_info_title": "Benchmark 2",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_2_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 2 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 2 has not been met, because both questions have not been answered yes.",
+        "toaster_info_title": "Benchmark 2",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   },
