@@ -9,4 +9,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceReportDao extends AbstractDao {
+
 }

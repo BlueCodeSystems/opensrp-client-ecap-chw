@@ -3061,6 +3061,13 @@
           }
         },
         {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
           "column_name": "art_date",
           "type": "Event",
           "json_mapping": {
@@ -3069,17 +3076,31 @@
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "caregiver_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.first_name"
+            "field": "attributes.caregiver_name"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.last_name"
+            "field": "identifiers.household_id"
+          }
+        },
+        {
+          "column_name": "bfirst_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.bfirst_name"
+          }
+        },
+        {
+          "column_name": "blast_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.blast_name"
           }
         },
         {
