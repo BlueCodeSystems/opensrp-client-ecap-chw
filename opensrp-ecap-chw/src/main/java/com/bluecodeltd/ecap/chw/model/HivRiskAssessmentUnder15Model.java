@@ -7,7 +7,7 @@ public class HivRiskAssessmentUnder15Model {
     private String hiv_test;
     private String on_art;
     private String start_date;
-    private String health_facility;
+    private String facility;
     private String art_number;
     private String biological_mother;
     private String deceased_parents;
@@ -21,6 +21,8 @@ public class HivRiskAssessmentUnder15Model {
     private String date_of_hiv_test;
     private String caseworker_name;
     private String phone;
+    private String household_id;
+    private String unique_id;
 
     public String getPhone() {
         return phone;
@@ -78,13 +80,6 @@ public class HivRiskAssessmentUnder15Model {
         this.start_date = start_date;
     }
 
-    public String getHealth_facility() {
-        return health_facility;
-    }
-
-    public void setHealth_facility(String health_facility) {
-        this.health_facility = health_facility;
-    }
 
     public String getArt_number() {
         return art_number;
@@ -172,5 +167,29 @@ public class HivRiskAssessmentUnder15Model {
 
     public void setDate_of_hiv_test(String date_of_hiv_test) {
         this.date_of_hiv_test = date_of_hiv_test;
+    }
+
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }

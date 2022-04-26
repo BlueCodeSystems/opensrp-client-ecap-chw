@@ -875,6 +875,13 @@
           }
         },
         {
+          "column_name": "mother_screening_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_screening_date"
+          }
+        },
+        {
           "column_name": "screening_date",
           "type": "Client",
           "json_mapping": {
@@ -2835,6 +2842,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.protect_infection"
+          }
+        },
+        {
+          "column_name": "protect_correct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.protect_correct"
           }
         },
         {
@@ -5092,6 +5106,13 @@
     {
       "name": "ec_hiv_assessment_below_15",
       "columns": [
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
         {
           "column_name": "unique_id",
           "type": "Client",

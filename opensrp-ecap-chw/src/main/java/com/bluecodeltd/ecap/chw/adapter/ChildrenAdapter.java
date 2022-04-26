@@ -105,8 +105,6 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         } else {
             holder.gradBtn.setVisibility(View.GONE);
         }
-
-        //Initialize Graduation Button
         gradModel = GradDao.getGrad(child.getUnique_id());
 
         if(gradModel == null){
@@ -335,9 +333,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 break;
 
             case "grad":
-
-             gradMapper = new ObjectMapper();
-
+                //Initialize Graduation Button
+                gradModel = GradDao.getGrad(child.getUnique_id());
 
                 if(gradModel == null){
 
@@ -346,7 +343,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 } else {
 
                     formToBeOpened.put("entity_id", this.gradModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, gradMapper.convertValue(gradModel, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(gradModel, Map.class));
                 }
 
 

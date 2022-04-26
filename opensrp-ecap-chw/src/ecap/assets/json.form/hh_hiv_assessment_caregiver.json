@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "HIV Risk Assessment Above 15",
+  "encounter_type": "Hiv Assessment For Caregiver",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {
@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Adolescents aged 15+ and adult caregivers",
+    "title": "HIV Assessment For Caregiver",
     "fields": [
       {
         "key": "household_id",
@@ -62,21 +62,7 @@
         "type": "edit_text",
         "read_only": "true",
         "hint": "Household ID",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Household ID is Required"
-        }
-      },
-      {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "hint": "VCA ID",
-        "edit_type": "name",
-        "read_only": "true"
+        "edit_type": "name"
       },
       {
         "key": "caseworker_name",
@@ -92,7 +78,6 @@
           "err": "Name of Person can  only contain letters"
         }
       },
-
       {
         "key": "phone",
         "openmrs_entity_parent": "",

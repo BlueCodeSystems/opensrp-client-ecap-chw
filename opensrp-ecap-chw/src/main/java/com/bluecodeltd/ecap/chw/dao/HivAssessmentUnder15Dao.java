@@ -30,7 +30,7 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setHiv_test(getCursorValue(c, "hiv_test"));
             record.setOn_art(getCursorValue(c, "on_art"));
             record.setStart_date(getCursorValue(c, "start_date"));
-            record.setHealth_facility(getCursorValue(c, "health_facility"));
+            record.setFacility(getCursorValue(c, "facility"));
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setBiological_mother(getCursorValue(c, "biological_mother"));
             record.setDeceased_parents(getCursorValue(c, "deceased_parents"));
@@ -44,6 +44,8 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setDate_of_hiv_test(getCursorValue(c, "date_of_hiv_test"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setUnique_id(getCursorValue(c, "unique_id"));
 
             return record;
         };

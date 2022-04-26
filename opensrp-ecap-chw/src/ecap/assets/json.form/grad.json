@@ -283,7 +283,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions2",
         "type": "toaster_notes",
-        "text": "Instructions",
+        "text": "Benchmark 3 Instructions",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_info_text": "Do not read the list of possible answers to the adolescent. They have to come up with the answers by themselves. The idea is to assess if the adolescent has knowledge of HIV risk and prevention, not that he or she gives an answer matching the questionnaire word for word.",
@@ -307,33 +307,27 @@
         "options": [
           {
             "key": "unprotected",
-            "text": "Unprotected/unsafe Sex with an older partner.",
-            "value": "false"
+            "text": "Unprotected/unsafe Sex with an older partner."
           },
           {
             "key": "sex_money",
-            "text": "Sex for money or gifts (having a “sugar daddy” or “blesser”).",
-            "value": "false"
+            "text": "Sex for money or gifts (having a “sugar daddy” or “blesser”)."
           },
           {
             "key": "sex_age",
-            "text": "Starting to have sex in a very young age.",
-            "value": "false"
+            "text": "Starting to have sex in a very young age."
           },
           {
             "key": "raped",
-            "text": "Being raped or in other way sexually abused.",
-            "value": "false"
+            "text": "Being raped or in other way sexually abused."
           },
           {
             "key": "sex_partner",
-            "text": "Sex with more than one partner.",
-            "value": "false"
+            "text": "Sex with more than one partner."
           },
           {
             "key": "condoms",
-            "text": "Not using condoms.",
-            "value": "false"
+            "text": "Not using condoms."
           }
         ],
         "relevance": {
@@ -363,40 +357,34 @@
       {
         "key": "protect_infection",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "protect_infection",
         "type": "check_box",
         "label": "Tell me how you can protect yourself against HIV infection/prevent re-infection ",
         "options": [
           {
             "key": "abstaining",
-            "text": "Abstaining/ waiting to have sex until I get older.",
-            "value": "false"
+            "text": "Abstaining/ waiting to have sex until I get older."
           },
           {
             "key": "condom",
-            "text": "Using a condom correctly every time I have sex.",
-            "value": "false"
+            "text": "Using a condom correctly every time I have sex."
           },
           {
             "key": "sex_gift",
-            "text": "Not having sex for money or gifts.",
-            "value": "false"
+            "text": "Not having sex for money or gifts."
           },
           {
             "key": "sexual_partner",
-            "text": "Only having one sexual partner.",
-            "value": "false"
+            "text": "Only having one sexual partner."
           },
           {
             "key": "partner_partner",
-            "text": "Having a partner who does not have other partners.",
-            "value": "false"
+            "text": "Having a partner who does not have other partners."
           },
           {
             "key": "prep",
-            "text": "Using PrEP if my partner is HIV positive.",
-            "value": "false"
+            "text": "Using PrEP if my partner is HIV positive."
           }
         ],
         "relevance": {
@@ -426,7 +414,7 @@
       {
         "key": "prevention_support",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "prevention_support",
         "label_info_text": "Ask if he/she knows where to get an HIV test, where to get condoms, where to get advice? Tick if answered at least 2 correctly. ",
         "label_info_title": "Prevention Support",
@@ -435,33 +423,27 @@
         "options": [
           {
             "key": "condom_outlet",
-            "text": "Condom outlet in the community. ",
-            "value": "false"
+            "text": "Condom outlet in the community. "
           },
           {
             "key": "health_facility",
-            "text": "Health facility.",
-            "value": "false"
+            "text": "Health facility."
           },
           {
             "key": "chw",
-            "text": "Community Health Workers.",
-            "value": "false"
+            "text": "Community Health Workers."
           },
           {
             "key": "anti_aids",
-            "text": "Peer educator in School Anti-AIDS Club ",
-            "value": "false"
+            "text": "Peer educator in School Anti-AIDS Club "
           },
           {
             "key": "sex_partner",
-            "text": "Sex with more than one partner.",
-            "value": "false"
+            "text": "Sex with more than one partner."
           },
           {
             "key": "parents_guardians",
-            "text": "Parents / guardians. ",
-            "value": "false"
+            "text": "Parents / guardians. "
           }
         ],
         "relevance": {

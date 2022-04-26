@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CaregiverAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
+import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -38,13 +39,12 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
-import com.bluecodeltd.ecap.chw.fragment.HouseholdServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
-import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,7 +61,6 @@ import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.domain.UniqueId;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -96,10 +95,8 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form;
-    private String childrenCount;
-    public String householdId;
-    public String countFemales, countMales;
+    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
+    public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
     Caregiver caregiver;
@@ -112,10 +109,12 @@ public class HouseholdDetails extends AppCompatActivity {
     List<String> allFemalesBirthDates;
     List<String> allChildrenBirthDates;
     public String lessThanFiveMales, malesBetweenTenAndSevenTeen, caregiverTested,
-            lessThanFiveFemales, totalChildren, testedChildren,  allTested, FemalesBetweenTenAndSevenTeen;
+            lessThanFiveFemales, totalChildren, testedChildren, testedChildrenabove15,
+            allTested, FemalesBetweenTenAndSevenTeen;
 
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
+    CaregiverHivAssessmentModel caregiverHivAssessmentModel;
 
 
     @Override
@@ -132,7 +131,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
-
+        caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
 
         house = getHousehold(householdId);
 
@@ -150,6 +149,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
+        chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
@@ -178,7 +178,6 @@ public class HouseholdDetails extends AppCompatActivity {
         countMales = IndexPersonDao.countMales(householdId);
         allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
         allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
-        testedChildren = IndexPersonDao.countTestedChildren(householdId);
         allChildrenBirthDates = IndexPersonDao.getAllChildrenBirthdate(householdId);
         assert allMalesBirthDates != null;
         assert allFemalesBirthDates !=null;
@@ -219,7 +218,6 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter.addFragment(new HouseholdChildrenFragment());
         mPagerAdapter.addFragment(new HouseholdCasePlanFragment());
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
-        mPagerAdapter.addFragment(new HouseholdServicesFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
 
@@ -228,7 +226,6 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
         mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
         mTabLayout.getTabAt(2).setText("CP");
-        mTabLayout.getTabAt(4).setText(getString(R.string.fragment_services));
 
     }
 
@@ -287,6 +284,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.graduation:
 
+                testedChildren = IndexPersonDao.countTestedChildren(householdId);
+                testedChildrenabove15 = IndexPersonDao.countTestedAbove15Children(householdId);
+                int sumtested = Integer.parseInt(testedChildren) +  Integer.parseInt(testedChildrenabove15);
+
+
+                virally_suppressed = IndexPersonDao.countSuppressedChildren(householdId);
+                positiveChildren = IndexPersonDao.countPositiveChildren(householdId);
+
                 try {
 
                     oMapper = new ObjectMapper();
@@ -305,7 +310,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //Count everyone who has been tested
-                    if(Integer.parseInt(testedChildren) < Integer.parseInt(totalChildren)){
+                    if(sumtested < Integer.parseInt(totalChildren)){
                         allTested = "no";
                     } else {
                         allTested = "yes";
@@ -314,14 +319,26 @@ public class HouseholdDetails extends AppCompatActivity {
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
                     hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
 
-                    //Check if Caregiver Has been Tested
-                    if(house.getCaregiver_hiv_status() != null){
-                        caregiverTested = "yes";
-                    } else {
+                    //Check if Caregiver Has been Tested using HIV Assessment
+                    if(caregiverHivAssessmentModel == null || caregiverHivAssessmentModel.getHiv_status() == null || caregiverHivAssessmentModel.getHiv_status().equals("never_tested")){
                         caregiverTested = "no";
+                    } else {
+                        caregiverTested = "yes";
                     }
+
+
+                    if(Integer.parseInt(virally_suppressed) < Integer.parseInt(positiveChildren)){
+
+                        virally_suppressed = "no";
+                    } else {
+                        virally_suppressed = "yes";
+                    }
+
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);
+
+                    JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
+                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
 
                     startFormActivity(indexRegisterForm);
@@ -362,8 +379,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworkerphone = prefs.getString("phone", "Anonymous");
                     String caseworkername = prefs.getString("caseworker_name", "Anonymous");
-
-
 
                     householdMapper = new ObjectMapper();
 
@@ -493,6 +508,26 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
+            case R.id.hiv_assessment_caregiver:
+                try {
+
+                    indexRegisterForm = formUtils.getFormJson("hh_hiv_assessment_caregiver");
+                    if (caregiverHivAssessmentModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        indexRegisterForm.put("entity_id", this.caregiverHivAssessmentModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(caregiverHivAssessmentModel, Map.class));
+                    }
+
+                    startFormActivity(indexRegisterForm);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
             case R.id.child_form:
 
                 try {
@@ -545,6 +580,12 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
+                    if(house.getSubpop() != null && house.getSubpop().equals("true")){
+                        JSONObject fswObect = getFieldJSONObject(fields(indexRegisterForm, STEP1), "fsw");
+                        fswObect.put(JsonFormUtils.VALUE, "yes");
+                    }
+
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(obj, Map.class));
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(caregiver, Map.class));
@@ -661,6 +702,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Grad":
+                    case "Hiv Assessment For Caregiver":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Form Updated", Toast.LENGTH_LONG, true).show();
@@ -673,12 +715,6 @@ public class HouseholdDetails extends AppCompatActivity {
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
 
-                    case "Service Report":
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "Service Record Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
                 }
 
 
@@ -804,23 +840,23 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     break;
+                case "Hiv Assessment For Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HIV_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
                 case "Grad":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_GRAD);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "Service Report":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_SERVICE);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -925,6 +961,7 @@ public class HouseholdDetails extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             rscreen.setVisibility(View.VISIBLE);
             grad_form.setVisibility(View.VISIBLE);
+            chivAssessment.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
@@ -937,6 +974,7 @@ public class HouseholdDetails extends AppCompatActivity {
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
         rscreen.setVisibility(View.GONE);
+        chivAssessment.setVisibility(View.GONE);
         grad_form.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
