@@ -42,6 +42,7 @@ public class GradDao extends AbstractDao {
             record.setPrevention_support(getCursorValue(c, "prevention_support"));
             record.setPrevention_correct(getCursorValue(c, "prevention_correct"));
             record.setSign_malnutrition(getCursorValue(c, "sign_malnutrition"));
+            record.setProtect_correct(getCursorValue(c, "protect_correct"));
 
             return record;
         };
