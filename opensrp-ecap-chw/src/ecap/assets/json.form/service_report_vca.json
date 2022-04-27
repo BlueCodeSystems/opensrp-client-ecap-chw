@@ -159,6 +159,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "services",
         "type": "native_radio",
+        "value":"child_adolescent",
         "label": "Please select who you are providing service for",
         "label_text_style": "italic",
         "options": [
