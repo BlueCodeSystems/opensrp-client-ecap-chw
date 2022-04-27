@@ -6,41 +6,39 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
-import com.bluecodeltd.ecap.chw.adapter.DomainPlanAdapter;
+import com.bluecodeltd.ecap.chw.adapter.HouseholdServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -54,54 +52,62 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class CasePlan extends AppCompatActivity {
-
+public class HouseholdServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<CasePlanModel> domainList = new ArrayList<>();
-    private Button domainBtn, domainBtn2;
-    String childId, caseDate, hivStatus;
+    private ArrayList<FamilyServiceModel> familyServiceList = new ArrayList<>();
+    private LinearLayout linearLayout;
+    private TextView cname, hh_id;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_case_plan);
+        setContentView(R.layout.activity_household_service);
 
-        recyclerView = findViewById(R.id.domainrecyclerView);
-        domainBtn = findViewById(R.id.domainBtn);
-        domainBtn2 = findViewById(R.id.domainBtn2);
+        toolbar = findViewById(R.id.toolbarx);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        NavigationMenu.getInstance(this, null, toolbar);
 
-        childId = getIntent().getExtras().getString("childId");
-        caseDate = getIntent().getExtras().getString("dateId");
-        hivStatus = getIntent().getExtras().getString("hivStatus");
+        recyclerView = findViewById(R.id.hhrecyclerView);
+        linearLayout = findViewById(R.id.service_container);
+        cname = findViewById(R.id.caregiver_name);
+        hh_id = findViewById(R.id.hhid);
 
-        fetchData();
+        String intent_householdId = getIntent().getExtras().getString("householdId");
+        String intent_cname = getIntent().getExtras().getString("cname");
 
-    }
+        hh_id.setText(intent_householdId);
+        cname.setText(intent_cname);
 
-    public void fetchData(){
+        familyServiceList.addAll(HouseholdDao.getServicesByHousehold(intent_householdId));
 
-        domainList.addAll(IndexPersonDao.getDomainsById(childId, caseDate));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(CasePlan.this);
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this);
+        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0 && domainList.size() > 0){
+        if (recyclerViewadapter.getItemCount() > 0){
 
-            domainBtn.setVisibility(View.GONE);
-            domainBtn2.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setAdapter(recyclerViewadapter);
+        recyclerViewadapter.notifyDataSetChanged();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -110,27 +116,17 @@ public class CasePlan extends AppCompatActivity {
 
 
         switch (id) {
-            case R.id.domainBtn:
-            case R.id.domainBtn2:
+            case R.id.services1:
 
                 try {
-                    FormUtils formUtils = new FormUtils(CasePlan.this);
+                    FormUtils formUtils = new FormUtils(this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("domain");
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
+                    indexRegisterForm = formUtils.getFormJson("service_report_household");
 
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",childId);
+                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                    cId.put("value",hh_id.getText().toString());
 
-                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                    cDate.put("value", caseDate);
-
-                    if(hivStatus == null || !hivStatus.equals("yes")){
-                        JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
-                        domainType.remove(0);
-                    }
 
                     startFormActivity(indexRegisterForm);
 
@@ -146,12 +142,12 @@ public class CasePlan extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName("Vulnerability Identified");
+        form.setName("Service Report");
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
         form.setSaveLabel(getString(R.string.submit));
-        form.setNavigationBackground(R.color.primary);
+        form.setActionBarBackground(R.color.dark_grey);
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -166,17 +162,8 @@ public class CasePlan extends AppCompatActivity {
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
-            boolean is_edit_mode = false;
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
-
-            JSONObject jsonFormObject = null;
-            try {
-                jsonFormObject = new JSONObject(jsonString);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
 
             try {
 
@@ -188,7 +175,7 @@ public class CasePlan extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
 
 
             } catch (Exception e) {
@@ -213,20 +200,14 @@ public class CasePlan extends AppCompatActivity {
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            switch (encounterType) {
-                case "Domain":
+            FormTag formTag = getFormTag();
+            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
+            tagSyncMetadata(event);
+            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+            return new ChildIndexEventClient(event, client);
 
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN_DOMAIN);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
 
-            }
+
         } catch (JSONException e) {
             Timber.e(e);
         }
@@ -307,6 +288,5 @@ public class CasePlan extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-
 
 }
