@@ -3057,7 +3057,7 @@
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.base_entity_id"
+            "field": "baseEntityId"
           }
         },
         {

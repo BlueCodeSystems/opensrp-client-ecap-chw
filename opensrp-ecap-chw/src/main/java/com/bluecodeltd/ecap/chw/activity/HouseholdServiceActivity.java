@@ -93,7 +93,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, this);
+        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
@@ -156,14 +156,27 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
+            boolean is_edit_mode = false;
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
+            JSONObject jsonFormObject = null;
+            try {
+                jsonFormObject = new JSONObject(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            if(!jsonFormObject.optString("entity_id").isEmpty()){
+                is_edit_mode = true;
+            }
 
             try {
 
@@ -173,7 +186,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode);
 
                 Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
 

@@ -2,9 +2,9 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class FamilyServiceModel {
 
-    private String services, service_household, service_caregiver,  date,
-            household_id, base_entity_id, other_service_caregiver,
-            other_service_household;
+    private String  services, services_household, services_caregiver,  date,
+            household_id, base_entity_id, other_services_caregiver,
+            other_services_household;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -31,38 +31,6 @@ public class FamilyServiceModel {
         this.date = date;
     }
 
-    public String getService_caregiver() {
-        return service_caregiver;
-    }
-
-    public void setService_caregiver(String service_caregiver) {
-        this.service_caregiver = service_caregiver;
-    }
-
-    public String getService_household() {
-        return service_household;
-    }
-
-    public void setService_household(String service_household) {
-        this.service_household = service_household;
-    }
-
-    public String getOther_service_caregiver() {
-        return other_service_caregiver;
-    }
-
-    public void setOther_service_caregiver(String other_service_caregiver) {
-        this.other_service_caregiver = other_service_caregiver;
-    }
-
-    public String getOther_service_household() {
-        return other_service_household;
-    }
-
-    public void setOther_service_household(String other_service_household) {
-        this.other_service_household = other_service_household;
-    }
-
 
     public String getServices() {
         return services;
@@ -70,5 +38,37 @@ public class FamilyServiceModel {
 
     public void setServices(String services) {
         this.services = services;
+    }
+
+    public String getServices_household() {
+        return services_household;
+    }
+
+    public void setServices_household(String services_household) {
+        this.services_household = services_household;
+    }
+
+    public String getServices_caregiver() {
+        return services_caregiver;
+    }
+
+    public void setServices_caregiver(String services_caregiver) {
+        this.services_caregiver = services_caregiver;
+    }
+
+    public String getOther_services_caregiver() {
+        return other_services_caregiver;
+    }
+
+    public void setOther_services_caregiver(String other_services_caregiver) {
+        this.other_services_caregiver = other_services_caregiver;
+    }
+
+    public String getOther_services_household() {
+        return other_services_household;
+    }
+
+    public void setOther_services_household(String other_services_household) {
+        this.other_services_household = other_services_household;
     }
 }
