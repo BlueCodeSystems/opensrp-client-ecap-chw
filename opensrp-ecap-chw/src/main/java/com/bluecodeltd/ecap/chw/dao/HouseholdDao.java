@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
@@ -30,6 +31,48 @@ public class HouseholdDao extends AbstractDao {
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
 
         return values.get(0);
+
+    }
+
+    public static List<FamilyServiceModel> getServicesByHousehold(String householdId) {
+
+        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "'";
+
+        List<FamilyServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
+    public static DataMap<FamilyServiceModel> getServiceModelMap() {
+        return c -> {
+
+            FamilyServiceModel record = new FamilyServiceModel();
+            record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setDate(getCursorValue(c, "date"));
+            record.setServices_caregiver(getCursorValue(c, "services_caregiver"));
+            record.setServices_household(getCursorValue(c, "services_household"));
+            record.setOther_services_caregiver(getCursorValue(c, "other_service_caregiver"));
+            record.setOther_services_household(getCursorValue(c, "other_service_household"));
+            record.setServices(getCursorValue(c, "services"));
+
+
+            return record;
+        };
+    }
+
+    public static List<FamilyServiceModel> getSingleReport(String id) {
+
+        String sql = "SELECT * FROM ec_household_service_report WHERE base_entity_id = '" + id + "'";
+
+        List<FamilyServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
 
     }
 
