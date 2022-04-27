@@ -6,6 +6,20 @@ condition: "step2_hiv_status_enrolled.contains('yes') && step2_caregiver_hiv_sta
 actions:
   - "isRelevant = true"
 ---
+name: step3_toaster_bench_2
+description: step3_toaster_bench_2
+priority: 1
+condition: "step3_virally_suppressed.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_toaster_bench_2_no
+description: step3_toaster_bench_2_no
+priority: 1
+condition: "step3_virally_suppressed.contains('no')"
+actions:
+  - "isRelevant = true"
+---
 name: step6_toaster_bench_5
 description: step3_toaster_bench_5
 priority: 1

@@ -35,16 +35,18 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/ChwTheme"
-        tools:replace="android:theme"
-        >
+        tools:replace="android:theme">
         <activity
-            android:label="VCA Case Plan"
+            android:name=".activity.HouseholdServiceActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.CasePlan"
-            android:exported="true" />
+            android:exported="true"
+            android:label="VCA Case Plan" />
         <activity
-            android:label="Caregiver Case Plan"
             android:name=".activity.HouseholdCasePlanActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Caregiver Case Plan" />
         <activity
             android:name=".activity.Profile"
             android:exported="true" />

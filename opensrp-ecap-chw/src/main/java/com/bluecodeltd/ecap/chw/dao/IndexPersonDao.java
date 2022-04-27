@@ -54,6 +54,36 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
+    public static String countPositiveChildren(String householdID){
+
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "' AND is_hiv_positive IS NOT NULL AND is_hiv_positive = 'yes'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+    public static String countSuppressedChildren(String householdID){
+
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "' AND CAST(vl_last_result as integer) < 1000";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
+
     public static String countTestedAbove15Children(String householdID){
 
         String sql = "SELECT COUNT(*) AS childrenCount FROM ec_hiv_assessment_above_15 WHERE household_id = '" + householdID + "' AND hiv_test IS NOT NULL AND hiv_test != 'never_tested'";
