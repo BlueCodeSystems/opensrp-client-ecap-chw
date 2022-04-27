@@ -137,6 +137,25 @@
         }
       },
       {
+        "key": "date_referred",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_referred",
+        "type": "date_picker",
+        "hint": " Date Referred",
+
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide date referred"
+        }
+      },
+      {
         "key": "health_services",
         "type": "label",
         "label_text_style": "bold",
@@ -157,14 +176,35 @@
         "label": "Covid 19",
         "options": [
           {
-            "key": "Provided",
-            "text": "Provided"
-          },
-          {
             "key": "Referred",
             "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateCovidProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateCovidProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide date referred"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "cd4",
@@ -177,14 +217,35 @@
         "label": "CD4",
         "options": [
           {
-            "key": "Provided",
-            "text": "Provided"
-          },
-          {
             "key": "Referred",
             "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateCD4Provided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateCD4Provided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "hiv_adherence",
@@ -207,6 +268,27 @@
         ]
       },
       {
+        "key": "dateHivAdherenceProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateHivAdherenceProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "hiv_counseling_testing",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -223,6 +305,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateHivCounselingProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateHivCounselingProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "post_gbv",
@@ -243,6 +346,27 @@
         ]
       },
       {
+        "key": "datePostGbvProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "datePostGbvProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "substance_abuse",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -259,6 +383,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateSubstanceAbuseProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateSubstanceAbuseProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "tb_screening",
@@ -279,6 +424,27 @@
         ]
       },
       {
+        "key": "dateTBScreeningProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateTBScreeningProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "supplementary",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -295,6 +461,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateSupplementaryProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateSupplementaryProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "prep",
@@ -315,6 +502,27 @@
         ]
       },
       {
+        "key": "datePrepProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "datePrepProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "f_planning",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -331,6 +539,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "datePlanningProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "datePlanningProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "insecticide",
@@ -351,6 +580,27 @@
         ]
       },
       {
+        "key": "dateInsecticideProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateInsecticideProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "hiv_aids_treatment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -367,6 +617,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateTreatmentProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateTreatmentProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "f_w_health",
@@ -387,6 +658,27 @@
         ]
       },
       {
+        "key": "dateHealthProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateHealthProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "vmmc",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -403,6 +695,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateVmmcProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateVmmcProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "immunization",
@@ -423,6 +736,27 @@
         ]
       },
       {
+        "key": "dateImmunizationProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateImmunizationProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "condom",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -439,6 +773,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateCondomProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateCondomProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "routine_care",
@@ -459,6 +814,27 @@
         ]
       },
       {
+        "key": "dateCareProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateCareProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "emergency_care",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -475,6 +851,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateEmergencyProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateEmergencyProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "age_counselling",
@@ -495,6 +892,27 @@
         ]
       },
       {
+        "key": "dateAgeCounsellingProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateAgeCounsellingProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "h_treatment_care",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -511,6 +929,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateTreatmentCareProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateTreatmentCareProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "pmtct",
@@ -531,6 +970,27 @@
         ]
       },
       {
+        "key": "datePmtctProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "datePmtctProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "hygiene_counselling",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -547,6 +1007,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateHygienceProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateHygienceProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "transmitted_infections",
@@ -567,6 +1048,27 @@
         ]
       },
       {
+        "key": "dateInfectionProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateInfectionProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "plha",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -583,6 +1085,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "datePlhaProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "datePlhaProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "viral_load",
@@ -603,32 +1126,87 @@
         ]
       },
       {
+        "key": "dateViralLoadProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateViralLoadProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "other_health_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_health_services",
-        "type": "edit_text",
-        "hint": "If Other health service or education, Specify: "
+        "label": "Other health service or education",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
       },
       {
-        "key": "date_of_service1",
+        "key": "specify_education",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_service1",
-        "type": "date_picker",
-        "hint": " Date a Service is Provided",
-
-        "expanded": false,
-        "duration": {
-          "label": ""
+        "openmrs_entity_id": "specify_education",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other health service or education",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "otherHealth",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "otherHealth",
+        "type": "date_picker",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Date a service is provided is required"
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
         }
       },
+
       {
         "key": "safety_services",
         "type": "label",
@@ -658,6 +1236,27 @@
         ]
       },
       {
+        "key": "dateFacilityProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateFacilityProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "post_violence_trauma",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -674,6 +1273,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateTraumaProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateTraumaProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "legal_assistance",
@@ -694,30 +1314,84 @@
         ]
       },
       {
+        "key": "dateAssistanceProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateAssistanceProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "other_safety_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_safety_services",
-        "type": "edit_text",
-        "hint": "If Other Protection Legal Service, Specify:"
+        "label": "Other Protection Legal Service",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
       },
       {
-        "key": "date_of_service2",
+        "key": "specify_safety",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_service2",
-        "type": "date_picker",
-        "hint": " Date a Service is Provided",
-
-        "expanded": false,
-        "duration": {
-          "label": ""
+        "openmrs_entity_id": "specify_safety",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other Protection Legal Services",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "dateOtherSafetyProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateOtherSafetyProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Date a service is provided is required"
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -749,6 +1423,27 @@
         ]
       },
       {
+        "key": "dateUniformsProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateUniformsProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "re_enrollment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -765,6 +1460,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateEnrollmentProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateEnrollmentProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "bursaries",
@@ -785,30 +1501,84 @@
         ]
       },
       {
+        "key": "dateBursariesProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateBursariesProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "other_schooled_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_schooled_services",
-        "type": "edit_text",
-        "hint": "If Other Education Support, Specify:"
+        "label": "Other Education Support",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
       },
       {
-        "key": "date_of_service3",
+        "key": "specify_school",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_service3",
-        "type": "date_picker",
-        "hint": " Date a Service is Provided",
-
-        "expanded": false,
-        "duration": {
-          "label": ""
+        "openmrs_entity_id": "specify_school",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other Education Support",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "dateSchooledProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateSchooledProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Date a service is provided is required"
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -840,6 +1610,27 @@
         ]
       },
       {
+        "key": "dateCashProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateCashProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "cash_support",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -856,6 +1647,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "dateSupportProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateSupportProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "food_security",
@@ -876,38 +1688,84 @@
         ]
       },
       {
+        "key": "dateSecurityProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateSecurityProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "other_stability_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_stability_services",
-        "type": "edit_text",
-        "hint": "If Other economic strengthening, Specify:"
+        "label": "Other economic strengthening",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
       },
       {
-        "key": "follow_up",
+        "key": "specify_stability",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "follow_up",
+        "openmrs_entity_id": "specify_stability",
         "type": "edit_text",
-        "hint": "Follow-up Required, Specify:"
-      },
-      {
-        "key": "date_of_service4",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_service4",
-        "type": "date_picker",
-        "hint": " Date a Service is Provided",
-
-        "expanded": false,
-        "duration": {
-          "label": ""
+        "read_only": "false",
+        "hint": "Specify other economic strengthening",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "dateStabilityProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateStabilityProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Date a service is provided is required"
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
         }
       }
     ]
