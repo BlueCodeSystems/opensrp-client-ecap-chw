@@ -83,13 +83,6 @@ condition: "step1_f_w_health.contains('provided')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_dateHealthProvided
-description: date
-priority: 1
-condition: "step1_f_w_health.contains('provided')"
-actions:
-  - "isRelevant = true"
----
 name: step1_dateVmmcProvided
 description: date
 priority: 1
@@ -251,7 +244,7 @@ condition: "step1_cash_transfer.contains('provided')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_dateSupportProvided
+name: step1_dateCashProvided
 description: date
 priority: 1
 condition: "step1_cash_support.contains('provided')"
@@ -269,5 +262,33 @@ name: step1_dateStabilityProvided
 description: date
 priority: 1
 condition: "step1_other_stability_services.contains('provided')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_specify_education
+description: date
+priority: 1
+condition: "step1_other_health_services.contains('referred')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_specify_safety
+description: date
+priority: 1
+condition: "step1_other_safety_services.contains('referred')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_specify_school
+description: date
+priority: 1
+condition: "step1_other_schooled_services.contains('referred')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_specify_stability
+description: date
+priority: 1
+condition: "step1_other_stability_services.contains('referred')"
 actions:
   - "isRelevant = true"

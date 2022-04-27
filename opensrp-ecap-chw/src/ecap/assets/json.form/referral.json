@@ -151,7 +151,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "Provide date referred"
         }
       },
@@ -1165,6 +1165,27 @@
         ]
       },
       {
+        "key": "specify_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "specify_education",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other health service or education",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "otherHealth",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1330,6 +1351,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "specify_safety",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "specify_safety",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other Protection Legal Services",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "dateOtherSafetyProvided",
@@ -1498,6 +1540,27 @@
         ]
       },
       {
+        "key": "specify_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "specify_school",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other Education Support",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "dateSchooledProvided",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1662,6 +1725,27 @@
             "text": "Provided"
           }
         ]
+      },
+      {
+        "key": "specify_stability",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "specify_stability",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Specify other economic strengthening",
+        "edit_type": "",
+        "v_required": {
+          "value": true,
+          "err": "Specify Other"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "dateStabilityProvided",
