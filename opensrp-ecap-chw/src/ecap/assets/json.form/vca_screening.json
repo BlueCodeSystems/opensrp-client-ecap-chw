@@ -2485,9 +2485,11 @@
             "text": "No"
           }
         ],
-        "rules-engine": {
-          "ex-rules": {
-            "rules-file": "vca_screening_relevance.yml"
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
