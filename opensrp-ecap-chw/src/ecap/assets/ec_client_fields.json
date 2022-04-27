@@ -3061,6 +3061,13 @@
           }
         },
         {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
           "column_name": "relational_id",
           "type": "Client",
           "json_mapping": {
@@ -3068,38 +3075,10 @@
           }
         },
         {
-          "column_name": "province",
+          "column_name": "caseworker_name",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "adolescent_village",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.adolescent_village"
-          }
-        },
-        {
-          "column_name": "facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.facility"
-          }
-        },
-        {
-          "column_name": "partners",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partners"
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -3111,38 +3090,10 @@
           }
         },
         {
-          "column_name": "caseworker_firstname",
+          "column_name": "caregiver_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caseworker_firstname"
-          }
-        },
-        {
-          "column_name": "caseworker_lastname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_lastname"
-          }
-        },
-        {
-          "column_name": "caseworker_code",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_code"
-          }
-        },
-        {
-          "column_name": "household_firstname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_firstname"
-          }
-        },
-        {
-          "column_name": "household_surname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_surname"
+            "field": "attributes.caregiver_name"
           }
         },
         {
@@ -3153,17 +3104,31 @@
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "bfirst_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.first_name"
+            "field": "attributes.bfirst_name"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "blast_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.last_name"
+            "field": "attributes.blast_name"
+          }
+        },
+        {
+          "column_name": "services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services"
+          }
+        },
+        {
+          "column_name": "calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.calhiv"
           }
         },
         {
@@ -3197,11 +3162,11 @@
           }
         },
         {
-          "column_name": "vl_next_result",
+          "column_name": "date_next_vl",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "vl_next_result"
+            "concept": "date_next_vl"
           }
         },
         {
@@ -3212,18 +3177,32 @@
           }
         },
         {
-          "column_name": "date_next_vl",
+          "column_name": "date_next_drugpick",
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "date_next_vl"
+            "concept": "date_next_drugpick"
           }
         },
         {
-          "column_name": "vca_services_children",
+          "column_name": "vca_service1",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.vca_services_children"
+            "field": "attributes.vca_service1"
+          }
+        },
+        {
+          "column_name": "vca_service2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_service2"
+          }
+        },
+        {
+          "column_name": "vca_service3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_service3"
           }
         },
         {
@@ -3280,6 +3259,14 @@
           "type": "Client",
           "json_mapping": {
             "field": "identifiers.household_id_household"
+          }
+        },
+        {
+          "column_name": "vl_next_result",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "vl_next_result"
           }
         },
         {
