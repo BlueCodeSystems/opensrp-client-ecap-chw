@@ -109,9 +109,9 @@
                         android:paddingTop="0dp"
                         android:paddingEnd="@dimen/profile_btn_registration_info_padding"
                         android:paddingBottom="0dp"
-                        android:text="Service Report"
+                        android:text="Service Reports"
                         android:textAllCaps="false"
-                        tools:text="Service Report" />
+                        tools:text="Service Reports" />
 
                 </LinearLayout>
 

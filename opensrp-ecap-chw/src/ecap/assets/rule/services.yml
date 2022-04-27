@@ -1,0 +1,14 @@
+---
+name: step1_other_service_caregiver
+description: step1_other_service_caregiver
+priority: 1
+condition: "step1_services_caregiver.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_service_household
+description: step1_other_service_household
+priority: 1
+condition: "step1_services_household.contains('other')"
+actions:
+  - "isRelevant = true"

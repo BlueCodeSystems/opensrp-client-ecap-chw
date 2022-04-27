@@ -352,7 +352,12 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.myservice:
 
-                try {
+                Intent intent = new Intent(this, HouseholdServiceActivity.class);
+                intent.putExtra("householdId",  txtDistrict.getText().toString());
+                intent.putExtra("cname",  cname.getText().toString());
+                startActivity(intent);
+
+           /*     try {
 
                     indexRegisterForm = formUtils.getFormJson("service_report");
 
@@ -361,7 +366,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
                 break;
 
             case R.id.fabx:

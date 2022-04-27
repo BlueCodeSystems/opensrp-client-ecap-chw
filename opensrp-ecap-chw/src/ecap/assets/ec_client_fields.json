@@ -3051,193 +3051,34 @@
       ]
     },
     {
-      "name": "ec_service_report",
+      "name": "ec_household_service_report",
       "columns": [
         {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "baseEntityId"
-          }
-        },
-        {
-          "column_name": "relational_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "relationships.family"
-          }
-        },
-        {
-          "column_name": "province",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "addresses.stateProvince"
-          }
-        },
-        {
-          "column_name": "adolescent_village",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.adolescent_village"
-          }
-        },
-        {
-          "column_name": "facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.facility"
-          }
-        },
-        {
-          "column_name": "partners",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partners"
-          }
-        },
-        {
-          "column_name": "art_date",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "art_date"
-          }
-        },
-        {
-          "column_name": "caseworker_firstname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_firstname"
-          }
-        },
-        {
-          "column_name": "caseworker_lastname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_lastname"
-          }
-        },
-        {
-          "column_name": "caseworker_code",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_code"
-          }
-        },
-        {
-          "column_name": "household_firstname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_firstname"
-          }
-        },
-        {
-          "column_name": "household_surname",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_surname"
+            "field": "attributes.base_entity_id"
           }
         },
         {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "identifiers.household_id"
+            "field": "attributes.household_id"
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.first_name"
+            "field": "attributes.date"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "services",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.last_name"
-          }
-        },
-        {
-          "column_name": "art_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_number"
-          }
-        },
-        {
-          "column_name": "art_facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_facility"
-          }
-        },
-        {
-          "column_name": "date_last_vl",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "date_last_vl"
-          }
-        },
-        {
-          "column_name": "vl_last_result",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "vl_last_result"
-          }
-        },
-        {
-          "column_name": "vl_next_result",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "vl_next_result"
-          }
-        },
-        {
-          "column_name": "child_mmd",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child_mmd"
-          }
-        },
-        {
-          "column_name": "date_next_vl",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "date_next_vl"
-          }
-        },
-        {
-          "column_name": "vca_services_children",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vca_services_children"
-          }
-        },
-        {
-          "column_name": "other_service_children",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.other_service_children"
-          }
-        },
-        {
-          "column_name": "adolescents_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "identifiers.adolescents_id"
+            "field": "attributes.services"
           }
         },
         {
@@ -3248,6 +3089,13 @@
           }
         },
         {
+          "column_name": "services_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services_household"
+          }
+        },
+        {
           "column_name": "other_service_caregiver",
           "type": "Client",
           "json_mapping": {
@@ -3255,63 +3103,10 @@
           }
         },
         {
-          "column_name": "caregiver_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "identifiers.caregiver_id"
-          }
-        },
-        {
-          "column_name": "vca_services_household",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vca_services_household"
-          }
-        },
-        {
           "column_name": "other_service_household",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.other_service_household"
-          }
-        },
-        {
-          "column_name": "household_id_household",
-          "type": "Client",
-          "json_mapping": {
-            "field": "identifiers.household_id_household"
-          }
-        },
-        {
-          "column_name": "caseworker_date_signed",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "caseworker_date_signed"
-          }
-        },
-        {
-          "column_name": "case_worker_signature",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "case_worker_signature"
-          }
-        },
-        {
-          "column_name": "primary_caregiver_date_signed",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "primary_caregiver_date_signed"
-          }
-        },
-        {
-          "column_name": "primary_caregiver_signature",
-          "type": "Event",
-          "json_mapping": {
-            "field": "obs.fieldCode",
-            "concept": "primary_caregiver_signature"
           }
         }
       ]
