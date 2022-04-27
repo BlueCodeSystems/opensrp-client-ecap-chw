@@ -55,13 +55,46 @@ public class ReferralModel {
     private String caseworker_name;
     private String phone;
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    private String dateCovidProvided;
+    private String dateCD4Provided;
+    private String dateHivAdherenceProvided;
+    private String dateHivCounselingProvided;
+    private String datePostGbvProvided;
+    private String dateSubstanceAbuseProvided;
+    private String dateTBScreeningProvided;
+    private String dateSupplementaryProvided;
+    private String datePlanningProvided;
+    private String dateInsecticideProvided;
+    private String dateTreatmentProvided;
+    private String dateVmmcProvided;
+    private String dateImmunizationProvided;
+    private String dateCondomProvided;
+    private String dateCareProvided;
+    private String dateEmergencyProvided;
+    private String dateAgeCounsellingProvided;
+    private String dateTreatmentCareProvided;
+    private String datePmtctProvided;
+    private String dateHygienceProvided;
+    private String datePlhaProvided;
+    private String dateViralLoadProvided;
+    private String otherHealth;
+    private String dateInfectionProvided;
+    private String datePrepProvided;
+    private String dateFacilityProvided;
+    private String dateTraumaProvided;
+    private String dateAssistanceProvided;
+    private String dateOtherSafetyProvided;
+    private String dateUniformsProvided;
+    private String dateEnrollmentProvided;
+    private String dateBursariesProvided;
+    private String dateSchooledProvided;
+    private String dateCashProvided;
+    private String dateSecurityProvided;
+    private String dateStabilityProvided;
+    private String specify_education;
+    private String specify_safety;
+    private String specify_school;
+    private String specify_stability;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -469,5 +502,333 @@ public class ReferralModel {
 
     public void setCaseworker_name(String caseworker_name) {
         this.caseworker_name = caseworker_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDateCovidProvided() {
+        return dateCovidProvided;
+    }
+
+    public void setDateCovidProvided(String dateCovidProvided) {
+        this.dateCovidProvided = dateCovidProvided;
+    }
+
+    public String getDateCD4Provided() {
+        return dateCD4Provided;
+    }
+
+    public void setDateCD4Provided(String dateCD4Provided) {
+        this.dateCD4Provided = dateCD4Provided;
+    }
+
+    public String getDateHivAdherenceProvided() {
+        return dateHivAdherenceProvided;
+    }
+
+    public void setDateHivAdherenceProvided(String dateHivAdherenceProvided) {
+        this.dateHivAdherenceProvided = dateHivAdherenceProvided;
+    }
+
+    public String getDateHivCounselingProvided() {
+        return dateHivCounselingProvided;
+    }
+
+    public void setDateHivCounselingProvided(String dateHivCounselingProvided) {
+        this.dateHivCounselingProvided = dateHivCounselingProvided;
+    }
+
+    public String getDatePostGbvProvided() {
+        return datePostGbvProvided;
+    }
+
+    public void setDatePostGbvProvided(String datePostGbvProvided) {
+        this.datePostGbvProvided = datePostGbvProvided;
+    }
+
+    public String getDateSubstanceAbuseProvided() {
+        return dateSubstanceAbuseProvided;
+    }
+
+    public void setDateSubstanceAbuseProvided(String dateSubstanceAbuseProvided) {
+        this.dateSubstanceAbuseProvided = dateSubstanceAbuseProvided;
+    }
+
+    public String getDateTBScreeningProvided() {
+        return dateTBScreeningProvided;
+    }
+
+    public void setDateTBScreeningProvided(String dateTBScreeningProvided) {
+        this.dateTBScreeningProvided = dateTBScreeningProvided;
+    }
+
+    public String getDateSupplementaryProvided() {
+        return dateSupplementaryProvided;
+    }
+
+    public void setDateSupplementaryProvided(String dateSupplementaryProvided) {
+        this.dateSupplementaryProvided = dateSupplementaryProvided;
+    }
+
+    public String getDatePlanningProvided() {
+        return datePlanningProvided;
+    }
+
+    public void setDatePlanningProvided(String datePlanningProvided) {
+        this.datePlanningProvided = datePlanningProvided;
+    }
+
+    public String getDateInsecticideProvided() {
+        return dateInsecticideProvided;
+    }
+
+    public void setDateInsecticideProvided(String dateInsecticideProvided) {
+        this.dateInsecticideProvided = dateInsecticideProvided;
+    }
+
+    public String getDateTreatmentProvided() {
+        return dateTreatmentProvided;
+    }
+
+    public void setDateTreatmentProvided(String dateTreatmentProvided) {
+        this.dateTreatmentProvided = dateTreatmentProvided;
+    }
+
+    public String getDateVmmcProvided() {
+        return dateVmmcProvided;
+    }
+
+    public void setDateVmmcProvided(String dateVmmcProvided) {
+        this.dateVmmcProvided = dateVmmcProvided;
+    }
+
+    public String getDateImmunizationProvided() {
+        return dateImmunizationProvided;
+    }
+
+    public void setDateImmunizationProvided(String dateImmunizationProvided) {
+        this.dateImmunizationProvided = dateImmunizationProvided;
+    }
+
+    public String getDateCondomProvided() {
+        return dateCondomProvided;
+    }
+
+    public void setDateCondomProvided(String dateCondomProvided) {
+        this.dateCondomProvided = dateCondomProvided;
+    }
+
+    public String getDateCareProvided() {
+        return dateCareProvided;
+    }
+
+    public void setDateCareProvided(String dateCareProvided) {
+        this.dateCareProvided = dateCareProvided;
+    }
+
+    public String getDateEmergencyProvided() {
+        return dateEmergencyProvided;
+    }
+
+    public void setDateEmergencyProvided(String dateEmergencyProvided) {
+        this.dateEmergencyProvided = dateEmergencyProvided;
+    }
+
+    public String getDateAgeCounsellingProvided() {
+        return dateAgeCounsellingProvided;
+    }
+
+    public void setDateAgeCounsellingProvided(String dateAgeCounsellingProvided) {
+        this.dateAgeCounsellingProvided = dateAgeCounsellingProvided;
+    }
+
+    public String getDateTreatmentCareProvided() {
+        return dateTreatmentCareProvided;
+    }
+
+    public void setDateTreatmentCareProvided(String dateTreatmentCareProvided) {
+        this.dateTreatmentCareProvided = dateTreatmentCareProvided;
+    }
+
+    public String getDatePmtctProvided() {
+        return datePmtctProvided;
+    }
+
+    public void setDatePmtctProvided(String datePmtctProvided) {
+        this.datePmtctProvided = datePmtctProvided;
+    }
+
+    public String getDateHygienceProvided() {
+        return dateHygienceProvided;
+    }
+
+    public void setDateHygienceProvided(String dateHygienceProvided) {
+        this.dateHygienceProvided = dateHygienceProvided;
+    }
+
+    public String getDatePlhaProvided() {
+        return datePlhaProvided;
+    }
+
+    public void setDatePlhaProvided(String datePlhaProvided) {
+        this.datePlhaProvided = datePlhaProvided;
+    }
+
+    public String getDateViralLoadProvided() {
+        return dateViralLoadProvided;
+    }
+
+    public void setDateViralLoadProvided(String dateViralLoadProvided) {
+        this.dateViralLoadProvided = dateViralLoadProvided;
+    }
+
+    public String getOtherHealth() {
+        return otherHealth;
+    }
+
+    public void setOtherHealth(String otherHealth) {
+        this.otherHealth = otherHealth;
+    }
+
+    public String getDateInfectionProvided() {
+        return dateInfectionProvided;
+    }
+
+    public void setDateInfectionProvided(String dateInfectionProvided) {
+        this.dateInfectionProvided = dateInfectionProvided;
+    }
+
+    public String getDatePrepProvided() {
+        return datePrepProvided;
+    }
+
+    public void setDatePrepProvided(String datePrepProvided) {
+        this.datePrepProvided = datePrepProvided;
+    }
+
+    public String getDateFacilityProvided() {
+        return dateFacilityProvided;
+    }
+
+    public void setDateFacilityProvided(String dateFacilityProvided) {
+        this.dateFacilityProvided = dateFacilityProvided;
+    }
+
+    public String getDateTraumaProvided() {
+        return dateTraumaProvided;
+    }
+
+    public void setDateTraumaProvided(String dateTraumaProvided) {
+        this.dateTraumaProvided = dateTraumaProvided;
+    }
+
+    public String getDateAssistanceProvided() {
+        return dateAssistanceProvided;
+    }
+
+    public void setDateAssistanceProvided(String dateAssistanceProvided) {
+        this.dateAssistanceProvided = dateAssistanceProvided;
+    }
+
+    public String getDateOtherSafetyProvided() {
+        return dateOtherSafetyProvided;
+    }
+
+    public void setDateOtherSafetyProvided(String dateOtherSafetyProvided) {
+        this.dateOtherSafetyProvided = dateOtherSafetyProvided;
+    }
+
+    public String getDateUniformsProvided() {
+        return dateUniformsProvided;
+    }
+
+    public void setDateUniformsProvided(String dateUniformsProvided) {
+        this.dateUniformsProvided = dateUniformsProvided;
+    }
+
+    public String getDateEnrollmentProvided() {
+        return dateEnrollmentProvided;
+    }
+
+    public void setDateEnrollmentProvided(String dateEnrollmentProvided) {
+        this.dateEnrollmentProvided = dateEnrollmentProvided;
+    }
+
+    public String getDateBursariesProvided() {
+        return dateBursariesProvided;
+    }
+
+    public void setDateBursariesProvided(String dateBursariesProvided) {
+        this.dateBursariesProvided = dateBursariesProvided;
+    }
+
+    public String getDateSchooledProvided() {
+        return dateSchooledProvided;
+    }
+
+    public void setDateSchooledProvided(String dateSchooledProvided) {
+        this.dateSchooledProvided = dateSchooledProvided;
+    }
+
+    public String getDateCashProvided() {
+        return dateCashProvided;
+    }
+
+    public void setDateCashProvided(String dateCashProvided) {
+        this.dateCashProvided = dateCashProvided;
+    }
+
+    public String getDateSecurityProvided() {
+        return dateSecurityProvided;
+    }
+
+    public void setDateSecurityProvided(String dateSecurityProvided) {
+        this.dateSecurityProvided = dateSecurityProvided;
+    }
+
+    public String getDateStabilityProvided() {
+        return dateStabilityProvided;
+    }
+
+    public void setDateStabilityProvided(String dateStabilityProvided) {
+        this.dateStabilityProvided = dateStabilityProvided;
+    }
+
+    public String getSpecify_education() {
+        return specify_education;
+    }
+
+    public void setSpecify_education(String specify_education) {
+        this.specify_education = specify_education;
+    }
+
+    public String getSpecify_safety() {
+        return specify_safety;
+    }
+
+    public void setSpecify_safety(String specify_safety) {
+        this.specify_safety = specify_safety;
+    }
+
+    public String getSpecify_school() {
+        return specify_school;
+    }
+
+    public void setSpecify_school(String specify_school) {
+        this.specify_school = specify_school;
+    }
+
+    public String getSpecify_stability() {
+        return specify_stability;
+    }
+
+    public void setSpecify_stability(String specify_stability) {
+        this.specify_stability = specify_stability;
     }
 }

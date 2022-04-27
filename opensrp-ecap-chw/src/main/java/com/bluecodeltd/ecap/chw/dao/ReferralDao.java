@@ -7,7 +7,7 @@ import org.smartregister.dao.AbstractDao;
 import java.util.List;
 
 public class ReferralDao extends AbstractDao {
-    public static ReferralModel getReferral (String vcaID) {
+    public static ReferralModel getReferral(String vcaID) {
 
         String sql = "SELECT * FROM ec_referral WHERE unique_id = '" + vcaID + "' ";
 
@@ -77,7 +77,45 @@ public class ReferralDao extends AbstractDao {
             record.setCovid_19(getCursorValue(c, "covid_19"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
-
+            record.setDateCovidProvided(getCursorValue(c, "dateCovidProvided"));
+            record.setDateCD4Provided(getCursorValue(c, "dateCD4Provided"));
+            record.setReceiving_organization(getCursorValue(c, "dateHivAdherenceProvided"));
+            record.setDateHivCounselingProvided(getCursorValue(c, "dateHivCounselingProvided"));
+            record.setDatePostGbvProvided(getCursorValue(c, "datePostGbvProvided"));
+            record.setDateSubstanceAbuseProvided(getCursorValue(c, "dateSubstanceAbuseProvided"));
+            record.setDateTBScreeningProvided(getCursorValue(c, "dateTBScreeningProvided"));
+            record.setDateSupplementaryProvided(getCursorValue(c, "dateSupplementaryProvided"));
+            record.setDatePlanningProvided(getCursorValue(c, "datePlanningProvided"));
+            record.setDateInsecticideProvided(getCursorValue(c, "dateInsecticideProvided"));
+            record.setDateTreatmentProvided(getCursorValue(c, "dateTreatmentProvided"));
+            record.setDateVmmcProvided(getCursorValue(c, "dateVmmcProvided"));
+            record.setDateImmunizationProvided(getCursorValue(c, "dateImmunizationProvided"));
+            record.setDateCondomProvided(getCursorValue(c, "dateCondomProvided"));
+            record.setDateCareProvided(getCursorValue(c, "dateCareProvided"));
+            record.setDateEmergencyProvided(getCursorValue(c, "dateEmergencyProvided"));
+            record.setDateAgeCounsellingProvided(getCursorValue(c, "dateAgeCounsellingProvided"));
+            record.setDateTreatmentCareProvided(getCursorValue(c, "dateTreatmentCareProvided"));
+            record.setDatePmtctProvided(getCursorValue(c, "datePmtctProvided"));
+            record.setDateHygienceProvided(getCursorValue(c, "dateHygienceProvided"));
+            record.setDateViralLoadProvided(getCursorValue(c, "dateViralLoadProvided"));
+            record.setOtherHealth(getCursorValue(c, "otherHealth"));
+            record.setDateInfectionProvided(getCursorValue(c, "dateInfectionProvided"));
+            record.setDatePrepProvided(getCursorValue(c, "datePrepProvided"));
+            record.setTransmitted_infections(getCursorValue(c, "dateFacilityProvided"));
+            record.setDateTraumaProvided(getCursorValue(c, "dateTraumaProvided"));
+            record.setDateAssistanceProvided(getCursorValue(c, "dateAssistanceProvided"));
+            record.setDateOtherSafetyProvided(getCursorValue(c, "dateOtherSafetyProvided"));
+            record.setDateUniformsProvided(getCursorValue(c, "dateUniformsProvided"));
+            record.setDateEnrollmentProvided(getCursorValue(c, "dateEnrollmentProvided"));
+            record.setDateBursariesProvided(getCursorValue(c, "dateBursariesProvided"));
+            record.setDateSchooledProvided(getCursorValue(c, "dateSchooledProvided"));
+            record.setDateCashProvided(getCursorValue(c, "dateCashProvided"));
+            record.setDateSecurityProvided(getCursorValue(c, "dateSecurityProvided"));
+            record.setDateStabilityProvided(getCursorValue(c, "dateStabilityProvided"));
+            record.setSpecify_education(getCursorValue(c, "specify_education"));
+            record.setSpecify_safety(getCursorValue(c, "specify_safety"));
+            record.setSpecify_school(getCursorValue(c, "specify_school"));
+            record.setSpecify_stability(getCursorValue(c, "specify_stability"));
 
 
             return record;
