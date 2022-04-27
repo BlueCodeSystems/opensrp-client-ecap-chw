@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
@@ -13,18 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
+import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.client.utils.domain.Form;
+import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.util.FormUtils;
 
 import java.text.ParseException;
@@ -39,6 +46,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     Context context;
     List<FamilyServiceModel> services;
     ObjectMapper oMapper;
+
 
     public HouseholdServiceAdapter(List<FamilyServiceModel> services, Context context){
 
@@ -73,7 +81,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
             JSONArray jsonArray = null;
             try {
-                jsonArray = new JSONArray(service.getService_caregiver());
+                jsonArray = new JSONArray(service.getServices_caregiver());
 
                 String[] strArr = new String[jsonArray.length()];
 
@@ -90,7 +98,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
             JSONArray jsonArray = null;
             try {
-                jsonArray = new JSONArray(service.getService_household());
+                jsonArray = new JSONArray(service.getServices_household());
 
                 String[] strArr = new String[jsonArray.length()];
 
@@ -116,12 +124,11 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                JSONObject formToBeOpened;
 
-                formToBeOpened = formUtils.getFormJson("service_report_household");
 
                 try {
-                    openFormUsingFormUtils(context, "service_report_household");
+                    openFormUsingFormUtils(context, "service_report_household", service);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -130,9 +137,11 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         });
     }
 
-    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, FamilyServiceModel service) throws JSONException {
 
         oMapper = new ObjectMapper();
+
+
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -143,12 +152,31 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("read_only", true);
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only", true);
 
-      /*  formToBeOpened.put("entity_id", this.muacModel.getBase_entity_id());
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(muacModel, Map.class));
+        formToBeOpened.put("entity_id", service.getBase_entity_id());
 
-        startFormActivity(formToBeOpened);*/
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
+
+        startFormActivity(formToBeOpened);
+
+    }
+
+    public void startFormActivity(JSONObject jsonObject) {
+
+        Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        Form form = new Form();
+
+        form.setWizard(false);
+        form.setHideSaveLabel(true);
+        form.setNextLabel("");
+
+        intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        ((HouseholdServiceActivity) context).startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
 
     }
 
