@@ -354,7 +354,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 try {
 
-                    indexRegisterForm = formUtils.getFormJson("service_report");
+                    indexRegisterForm = formUtils.getFormJson("service_report_household");
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
