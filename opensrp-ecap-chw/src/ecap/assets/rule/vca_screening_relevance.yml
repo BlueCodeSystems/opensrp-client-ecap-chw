@@ -664,9 +664,9 @@ condition: "step1_vl_last_result.contains('Less than 1000 copies/ml') || step1_v
 actions:
   - "isRelevant = true"
 ---
-name: step1_child_mmd
+name: step4_child_mmd
 description: child_mmd
 priority: 1
-condition: "step4:art_check_box.contains('yes') "
+condition: "step4_art_check_box.contains('yes')"
 actions:
   - "isRelevant = true"

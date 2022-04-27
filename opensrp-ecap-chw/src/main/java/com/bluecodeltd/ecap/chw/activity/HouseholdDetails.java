@@ -95,7 +95,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
+    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
@@ -156,6 +156,7 @@ public class HouseholdDetails extends AppCompatActivity {
         txtVillage = findViewById(R.id.address1);
         rassessment = findViewById(R.id.cassessment);
         rcase_plan = findViewById(R.id.hcase_plan);
+        refferal = findViewById(R.id.h_referral);
         child_form = findViewById(R.id.child_form);
         household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         mTabLayout =  findViewById(R.id.tabs);
@@ -438,6 +439,20 @@ public class HouseholdDetails extends AppCompatActivity {
                 try {
 
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
+
+                    //TODO
+                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.h_referral:
+                try {
+
+                    indexRegisterForm = formUtils.getFormJson("referral");
 
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
@@ -833,6 +848,18 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     break;
+                case "Referral":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
                 case "Household Visitation For Caregiver":
 
                     if (fields != null) {
@@ -969,6 +996,7 @@ public class HouseholdDetails extends AppCompatActivity {
             chivAssessment.setVisibility(View.VISIBLE);
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
+            refferal.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
             household_visitation_caregiver.setVisibility(View.VISIBLE);
 
@@ -983,6 +1011,7 @@ public class HouseholdDetails extends AppCompatActivity {
         grad_form.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
+        refferal.setVisibility(View.GONE);
         child_form.setVisibility(View.GONE);
         household_visitation_caregiver.setVisibility(View.GONE);
     }
