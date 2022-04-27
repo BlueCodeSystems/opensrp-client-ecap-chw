@@ -95,7 +95,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
+    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
