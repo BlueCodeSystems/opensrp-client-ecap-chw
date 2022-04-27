@@ -390,9 +390,9 @@
           },
           {
             "field": "eventType",
-            "field_value": "Case Worker Service Report",
+            "field_value": "Household Service Report",
             "creates_case": [
-              "ec_service_report"
+              "ec_household_service_report"
             ]
           },
           {
