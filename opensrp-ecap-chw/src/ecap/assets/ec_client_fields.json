@@ -2272,14 +2272,11 @@
           "column_name": "age",
           "type": "Client",
           "json_mapping": {
-
             "field": "attributes.age",
-
             "field": "attributes.age"
           }
         },
         {
-
           "column_name": "phone",
           "type": "Client",
           "json_mapping": {
@@ -3369,7 +3366,6 @@
           }
         },
         {
-
           "column_name": "receiving_organization",
           "type": "Client",
           "json_mapping": {
@@ -3657,66 +3653,297 @@
           }
         },
         {
-          "column_name": "follow_up",
+          "column_name": "dateCovidProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.follow_up"
+            "field": "attributes.dateCovidProvided"
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "dateCD4Provided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.first_name"
+            "field": "attributes.dateCD4Provided"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "dateHivAdherenceProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.last_name"
+            "field": "attributes.dateHivAdherenceProvided"
           }
         },
         {
-          "column_name": "job_title",
+          "column_name": "dateHivCounselingProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.job_title"
+            "field": "attributes.dateHivCounselingProvided"
           }
         },
         {
-          "column_name": "date_of_service1",
+          "column_name": "datePostGbvProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service1"
+            "field": "attributes.datePostGbvProvided"
           }
         },
         {
-          "column_name": "date_of_service2",
+          "column_name": "dateSubstanceAbuseProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service2"
+            "field": "attributes.dateSubstanceAbuseProvided"
           }
         },
         {
-          "column_name": "date_of_service3",
+          "column_name": "dateTBScreeningProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service3"
+            "field": "attributes.dateTBScreeningProvided"
           }
         },
         {
-          "column_name": "date_of_service4",
+          "column_name": "dateSupplementaryProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_service4"
+            "field": "attributes.dateSupplementaryProvided"
           }
         },
         {
-          "column_name": "signature",
+          "column_name": "datePlanningProvided",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.signature"
+            "field": "attributes.datePlanningProvided"
+          }
+        },
+        {
+          "column_name": "dateInsecticideProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateInsecticideProvided"
+          }
+        },
+        {
+          "column_name": "dateTreatmentProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateTreatmentProvided"
+          }
+        },
+        {
+          "column_name": "dateHealthProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateHealthProvided"
+          }
+        },
+        {
+          "column_name": "dateVmmcProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateVmmcProvided"
+          }
+        },
+        {
+          "column_name": "dateImmunizationProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateImmunizationProvided"
+          }
+        },
+        {
+          "column_name": "dateCondomProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateCondomProvided"
+          }
+        },
+        {
+          "column_name": "dateCareProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateCareProvided"
+          }
+        },
+        {
+          "column_name": "dateEmergencyProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateEmergencyProvided"
+          }
+        },
+        {
+          "column_name": "dateAgeCounsellingProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateAgeCounsellingProvided"
+          }
+        },
+        {
+          "column_name": "dateTreatmentCareProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateTreatmentCareProvided"
+          }
+        },
+        {
+          "column_name": "datePmtctProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.datePmtctProvided"
+          }
+        },
+        {
+          "column_name": "dateHygienceProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateHygienceProvided"
+          }
+        },
+        {
+          "column_name": "datePlhaProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.datePlhaProvided"
+          }
+        },
+        {
+          "column_name": "dateViralLoadProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateViralLoadProvided"
+          }
+        },
+        {
+          "column_name": "otherHealth",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.otherHealth"
+          }
+        },
+        {
+          "column_name": "dateInfectionProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateInfectionProvided"
+          }
+        },
+        {
+          "column_name": "datePrepProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.datePrepProvided"
+          }
+        },
+        {
+          "column_name": "dateFacilityProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateFacilityProvided"
+          }
+        },
+        {
+          "column_name": "dateTraumaProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateTraumaProvided"
+          }
+        },
+        {
+          "column_name": "dateAssistanceProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateAssistanceProvided"
+          }
+        },
+        {
+          "column_name": "dateOtherSafetyProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateOtherSafetyProvided"
+          }
+        },
+        {
+          "column_name": "dateUniformsProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateUniformsProvided"
+          }
+        },
+        {
+          "column_name": "dateEnrollmentProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateEnrollmentProvided"
+          }
+        },
+        {
+          "column_name": "dateBursariesProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateBursariesProvided"
+          }
+        },
+        {
+          "column_name": "dateSchooledProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateSchooledProvided"
+          }
+        },
+        {
+          "column_name": "dateCashProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateCashProvided"
+          }
+        },
+        {
+          "column_name": "dateSupportProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateSupportProvided"
+          }
+        },
+        {
+          "column_name": "dateSecurityProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateSecurityProvided"
+          }
+        },
+        {
+          "column_name": "dateStabilityProvided",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateStabilityProvided"
+          }
+        },
+        {
+          "column_name": "specify_education",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.specify_education"
+          }
+        },
+        {
+          "column_name": "specify_safety",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.specify_safety"
+          }
+        },
+        {
+          "column_name": "specify_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.specify_school"
+          }
+        },
+        {
+          "column_name": "specify_stability",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.specify_stability"
           }
         }
       ]
@@ -3773,7 +4000,6 @@
             "field": "attributes.date_art"
           }
         },
-
         {
           "column_name": "art_appointment",
           "type": "Client",
@@ -3844,7 +4070,6 @@
             "field": "attributes.visit_hiv_test"
           }
         },
-
         {
           "column_name": "referred_for_testing",
           "type": "Client",
@@ -4020,7 +4245,6 @@
             "field": "attributes.manager_date_signed"
           }
         },
-
         {
           "column_name": "school_administration_name",
           "type": "Client",

@@ -992,8 +992,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
 
             case "referral":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
-                if(referralModel == null){
+                //Populate Caseworker Name
+                SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+                String caseworkerphone = cp.getString("phone", "Anonymous");
+
+                JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
+
+                if (cphone  != null) {
+                    cphone .remove(JsonFormUtils.VALUE);
+                    try {
+                        cphone .put(JsonFormUtils.VALUE, caseworkerphone);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+              /*  if(referralModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
@@ -1003,7 +1019,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     formToBeOpened.put("entity_id", this.referralModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referralModel, Map.class));
                 }
-
+*/
                 break;
 
             case "case_plan":
