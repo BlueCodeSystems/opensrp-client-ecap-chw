@@ -16,6 +16,7 @@ public class GradModel {
     private String protect_infection;
     private String prevention_support;
     private String prevention_correct;
+    private String protect_correct;
     private String sign_malnutrition;
 
     public String getBase_entity_id() {
@@ -136,5 +137,13 @@ public class GradModel {
 
     public void setVl_last_result(String vl_last_result) {
         this.vl_last_result = vl_last_result;
+    }
+
+    public String getProtect_correct() {
+        return protect_correct;
+    }
+
+    public void setProtect_correct(String protect_correct) {
+        this.protect_correct = protect_correct;
     }
 }
