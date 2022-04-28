@@ -2863,6 +2863,13 @@
           }
         },
         {
+          "column_name": "correct",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.correct"
+          }
+        },
+        {
           "column_name": "sign_malnutrition",
           "type": "Client",
           "json_mapping": {
