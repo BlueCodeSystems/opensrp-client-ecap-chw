@@ -22,6 +22,21 @@ public class GradDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static String bench3Answers(String householdID){
+
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_grad WHERE household_id = '" + householdID + "' AND CAST(correct as integer) = 1";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
 
     public static DataMap<GradModel> getGradModelMap() {
         return c -> {

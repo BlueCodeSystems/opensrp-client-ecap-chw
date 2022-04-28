@@ -62,6 +62,13 @@ condition: "step1_age < 6"
 actions:
   - "isRelevant = true"
 ---
+name: step2_correct
+description: step2_correct
+priority: 1
+condition: "step2_prevention_correct > 1 && step2_protect_correct > 1 && step2_infection_correct > 1"
+actions:
+  - "isRelevant = true"
+---
 name: step3_sign_malnutrition
 description: sign_malnutrition
 priority: 1
