@@ -26,3 +26,17 @@ priority: 1
 condition: "step1_adolescent_birthdate == true"
 actions:
   - "calculation = helper.formatDate(step1_adolescent_birthdate,'y')"
+---
+name: step2_correct
+description: step2_correct
+priority: 1
+condition: "step2_prevention_correct > 1 && step2_protect_correct > 1 && step2_infection_correct > 1"
+actions:
+  - "calculation = 1"
+---
+name: step2_correct
+description: step2_correct
+priority: 2
+condition: "!(step2_prevention_correct > 1 && step2_protect_correct > 1 && step2_infection_correct > 1)"
+actions:
+  - "calculation = 0"
