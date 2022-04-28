@@ -37,12 +37,10 @@ public class GraduationAssessmentDao extends AbstractDao {
             record.setCaseworker_nrc(getCursorValue(c, "caseworker_nrc"));
             record.setName_rcmc_dc(getCursorValue(c, "name_rcmc_dc"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
-
             record.setFamily_date(getCursorValue(c, "family_date"));
             record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setCaregiver_sex(getCursorValue(c, "caregiver_sex"));
             record.setCaregiver_age(getCursorValue(c, "caregiver_age"));
-
             record.setEnrolled_project(getCursorValue(c, "enrolled_project"));
             record.setCaregiver_household(getCursorValue(c, "caregiver_household"));
             record.setHiv_status(getCursorValue(c, "hiv_status"));

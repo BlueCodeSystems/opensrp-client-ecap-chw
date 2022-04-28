@@ -20,6 +20,20 @@ condition: "step3_virally_suppressed.contains('no')"
 actions:
   - "isRelevant = true"
 ---
+name: step4_toaster_bench_3
+description: step4_toaster_bench_3
+priority: 1
+condition: "step4_prevention.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step4_toaster_bench_3_no
+description: step4_toaster_bench_3_no
+priority: 1
+condition: "step4_prevention.contains('no')"
+actions:
+  - "isRelevant = true"
+---
 name: step6_toaster_bench_5
 description: step3_toaster_bench_5
 priority: 1
