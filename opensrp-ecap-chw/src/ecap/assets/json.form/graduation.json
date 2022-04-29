@@ -399,6 +399,26 @@
             }
           }
         }
+      },
+      {
+        "key": "instructions_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "hidden",
+        "text": "Questions on immunization do not apply to this family member. Please Proceed.",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "Questions on Immunization do not apply to this family member. Please Proceed.",
+        "toaster_info_title": "Benchmark 3: Knowledgeable about HIV prevention",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
       }
     ]
   },
@@ -492,26 +512,6 @@
         "openmrs_entity_id": "record_abuse",
         "type": "native_radio",
         "label": "Is there any record or evidence that a member of the household has been referred for legal / customary prosecution due to violence in the past six months?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "beaten",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "beaten",
-        "type": "native_radio",
-        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
-        "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
-        "label": "In the past 6 months, have you been beaten, punched, kicked or choked by a spouse or partner, or any other adult belonging to the home?",
         "options": [
           {
             "key": "yes",

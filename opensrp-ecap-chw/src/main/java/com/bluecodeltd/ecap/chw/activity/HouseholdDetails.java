@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static com.vijay.jsonwizard.utils.FormUtils.getJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
@@ -315,17 +316,23 @@ public class HouseholdDetails extends AppCompatActivity {
                     int answered = Integer.parseInt(bench3);
                     int childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
 
-                    if(answered < childrenabove10to17){
+                    if(childrenabove10to17 > 0){
+                        if(answered == 0){
 
-                        JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
-                        hiv_status_enrolled.put(JsonFormUtils.VALUE, "no");
+                            JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
+                            hiv_status_enrolled.put(JsonFormUtils.VALUE, "no");
 
+                        } else {
+                            JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
+                            hiv_status_enrolled.put(JsonFormUtils.VALUE, "yes");
+                        }
                     } else {
-
-                        JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
-                        hiv_status_enrolled.put(JsonFormUtils.VALUE, "yes");
-
+                            indexRegisterForm.getJSONObject("step4").getJSONArray("fields").remove(0);
                     }
+
+
+
+
 
 
                     //Count everyone who has been tested
