@@ -2317,7 +2317,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "You're required check the ART number check box"
+          "err": "You're required to check the ART number check box"
         },
         "calculation": {
           "rules-engine": {

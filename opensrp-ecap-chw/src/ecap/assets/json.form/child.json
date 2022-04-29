@@ -534,31 +534,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
-        "type": "native_radio",
-        "value": "1",
-        "read_only": true,
-        "label": "Case Status",
-        "options": [
-          {
-            "key": "1",
-            "text": "Active"
-          },
-          {
-            "key": "2",
-            "text": "Inactive"
-          },
-          {
-            "key": "0",
-            "text": "Closed"
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_member_relevance.yml"
-            }
-          }
-        }
+        "type": "hidden",
+        "value": "1"
       },
       {
         "key": "subpop1",
