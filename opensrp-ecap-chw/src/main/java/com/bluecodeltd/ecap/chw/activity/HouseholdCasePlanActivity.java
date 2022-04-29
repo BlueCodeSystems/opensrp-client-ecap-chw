@@ -158,15 +158,16 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
-                Toasty.success(HouseholdCasePlanActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-                finish();
-                startActivity(getIntent());
+                Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+
 
             } catch (Exception e) {
                 Timber.e(e);
             }
 
         }
+        finish();
+        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
