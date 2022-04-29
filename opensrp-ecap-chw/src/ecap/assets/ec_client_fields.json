@@ -4203,7 +4203,7 @@
           "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.facility"
+            "field": "attributes.health_facility"
           }
         },
         {
