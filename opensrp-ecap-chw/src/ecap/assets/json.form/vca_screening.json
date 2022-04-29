@@ -274,7 +274,7 @@
         "duration": {
           "label": "Age"
         },
-        "min_date": "today-19y",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": true,
