@@ -30,8 +30,8 @@ public class GradDao extends AbstractDao {
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        if (values == null || values.size() == 0)
-            return "0";
+        if (values == null)
+            return null;
 
         return values.get(0);
 
