@@ -244,7 +244,7 @@ condition: "step1_cash_transfer.contains('provided')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_dateCashProvided
+name: step1_dateSupportProvided
 description: date
 priority: 1
 condition: "step1_cash_support.contains('provided')"
