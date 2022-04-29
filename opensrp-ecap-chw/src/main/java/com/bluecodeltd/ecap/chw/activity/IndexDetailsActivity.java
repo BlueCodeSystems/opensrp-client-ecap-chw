@@ -869,10 +869,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             if (is_screened != null && is_screened.equals("true")){
 
-                rassessment.setVisibility(View.VISIBLE);
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
+
+                if(indexVCA.getIs_hiv_positive() != null){
+                    rassessment.setVisibility(View.VISIBLE);
+                }
 
                 if(Integer.parseInt(vcaAge) > 1){
                     if(Integer.parseInt(vcaAge) < 15){
