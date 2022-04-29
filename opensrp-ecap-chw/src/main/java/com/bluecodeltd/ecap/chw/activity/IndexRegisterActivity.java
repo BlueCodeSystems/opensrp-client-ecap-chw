@@ -453,6 +453,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     public void gotToChildProfile(String id){
         Intent intent = new Intent(this,IndexDetailsActivity.class);
         intent.putExtra("Child",id);
+        finish();
+        startActivity(getIntent());
         Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
         startActivity(intent);
     }
