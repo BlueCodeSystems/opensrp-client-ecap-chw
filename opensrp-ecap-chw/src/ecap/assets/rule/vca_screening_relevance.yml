@@ -167,13 +167,6 @@ condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.con
 actions:
   - "isRelevant = true"
 ---
-name: step4_child_mmd
-description: child_mmd
-priority: 1
-condition: "step4_art_check_box.contains('yes')"
-actions:
-  - "isRelevant = true"
----
 name: step4_date_next_vl
 description: date_next_vl relevance
 priority: 1
@@ -183,13 +176,6 @@ actions:
 ---
 name: step4_vl_next_result
 description: vl_next_result relevance
-priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step4_child_mmd
-description: child_mmd relevance
 priority: 1
 condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes')"
 actions:
@@ -667,6 +653,6 @@ actions:
 name: step4_child_mmd
 description: child_mmd
 priority: 1
-condition: "step4_art_check_box.contains('yes')"
+condition: "step1_is_on_hiv_treatment.contains('yes')"
 actions:
   - "isRelevant = true"

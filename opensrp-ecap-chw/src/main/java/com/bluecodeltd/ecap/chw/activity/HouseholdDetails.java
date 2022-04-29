@@ -331,10 +331,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
 
-
-
-
-
                     //Count everyone who has been tested
                     if(sumtested < Integer.parseInt(totalChildren)){
                         allTested = "no";
@@ -383,16 +379,6 @@ public class HouseholdDetails extends AppCompatActivity {
                 intent.putExtra("cname",  cname.getText().toString());
                 startActivity(intent);
 
-           /*     try {
-
-                    indexRegisterForm = formUtils.getFormJson("service_report");
-
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
                 break;
 
             case R.id.fabx:
@@ -747,10 +733,11 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Grad":
+                    case "Household Visitation For Caregiver":
                     case "Hiv Assessment For Caregiver":
 
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "Form Updated", Toast.LENGTH_LONG, true).show();
+                        Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
