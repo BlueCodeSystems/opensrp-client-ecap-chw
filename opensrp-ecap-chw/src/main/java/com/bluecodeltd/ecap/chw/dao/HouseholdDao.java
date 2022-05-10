@@ -59,7 +59,6 @@ public class HouseholdDao extends AbstractDao {
             record.setOther_services_household(getCursorValue(c, "other_service_household"));
             record.setServices(getCursorValue(c, "services"));
 
-
             return record;
         };
     }

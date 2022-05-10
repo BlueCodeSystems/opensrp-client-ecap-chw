@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
@@ -21,14 +22,14 @@ import android.widget.Toast;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
 import com.bluecodeltd.ecap.chw.adapter.HouseholdServiceAdapter;
+import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
+import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -56,20 +57,21 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class HouseholdServiceActivity extends AppCompatActivity {
+public class VcaServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<FamilyServiceModel> familyServiceList = new ArrayList<>();
+    private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView cname, hh_id;
+    private TextView vcaname, hh_id;
 
     private Toolbar toolbar;
+    public String hivstatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_household_service);
+        setContentView(R.layout.activity_vca_service);
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
@@ -78,23 +80,23 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.hhrecyclerView);
         linearLayout = findViewById(R.id.service_container);
-        cname = findViewById(R.id.caregiver_name);
+        vcaname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
 
-        String intent_householdId = getIntent().getExtras().getString("householdId");
-        String intent_cname = getIntent().getExtras().getString("cname");
+        String intent_vcaid = getIntent().getExtras().getString("vcaid");
+        String intent_cname = getIntent().getExtras().getString("vcaname");
+        hivstatus = getIntent().getExtras().getString("hivstatus");
 
+        hh_id.setText(intent_vcaid);
+        vcaname.setText(intent_cname);
 
-        hh_id.setText(intent_householdId);
-        cname.setText(intent_cname);
+        familyServiceList.addAll(IndexPersonDao.getServicesByVCAID(intent_vcaid));
 
-        familyServiceList.addAll(HouseholdDao.getServicesByHousehold(intent_householdId));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
+        recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
@@ -103,7 +105,6 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             linearLayout.setVisibility(View.GONE);
         }
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -123,10 +124,13 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("service_report_household");
+                    indexRegisterForm = formUtils.getFormJson("service_report_vca");
 
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
                     cId.put("value",hh_id.getText().toString());
+
+                    JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                    hiv.put("value",hivstatus);
 
 
                     startFormActivity(indexRegisterForm);
@@ -155,7 +159,6 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -189,7 +192,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
-                Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
 
 
             } catch (Exception e) {
@@ -211,7 +214,6 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
-
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             FormTag formTag = getFormTag();
@@ -219,8 +221,6 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             tagSyncMetadata(event);
             Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
             return new ChildIndexEventClient(event, client);
-
-
 
         } catch (JSONException e) {
             Timber.e(e);
@@ -268,9 +268,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     Timber.e(e);
                 }
             }
-
         };
-
 
         try {
             AppExecutors appExecutors = new AppExecutors();
