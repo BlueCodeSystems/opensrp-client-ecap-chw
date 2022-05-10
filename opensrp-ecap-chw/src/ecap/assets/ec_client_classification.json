@@ -397,6 +397,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "VCA Service Report",
+            "creates_case": [
+              "ec_vca_service_report"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Household Visitation For Caregiver",
             "creates_case": [
               "ec_household_visitation_for_caregiver"

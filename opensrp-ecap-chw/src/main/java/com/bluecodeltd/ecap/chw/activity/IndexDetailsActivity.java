@@ -133,21 +133,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
 
-
     public VCAModel client;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vca_content);
 
-
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
@@ -164,14 +159,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
         is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
         is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
 
-
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
         fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
         fabReferal = findViewById(R.id.refer_to_facility_fab);
         fabCasePlan =  findViewById(R.id.case_plan_fab);
         fabAssessment = findViewById(R.id.fabAssessment);
-
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         referralModel = ReferralDao.getReferral(childId);
@@ -429,13 +422,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case R.id.myservice:
 
-                try {
-
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"service_report");
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Intent intent2 = new Intent(this, VcaServiceActivity.class);
+                intent2.putExtra("vcaid",  indexVCA.getHousehold_id());
+                intent2.putExtra("hivstatus",  indexVCA.getIs_hiv_positive());
+                intent2.putExtra("vcaname",  txtName.getText().toString());
+                startActivity(intent2);
 
                 break;
 

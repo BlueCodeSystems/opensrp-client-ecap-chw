@@ -37,6 +37,9 @@
         android:theme="@style/ChwTheme"
         tools:replace="android:theme">
         <activity
+            android:name=".activity.VcaServiceActivity"
+            android:theme="@style/ChwTheme.NoActionBar"/>
+        <activity
             android:name=".activity.HouseholdServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

@@ -6,9 +6,23 @@ condition: "step1_services_caregiver.contains('other')"
 actions:
   - "isRelevant = true"
 ---
+name: step1_other_service
+description: step1_other_service
+priority: 1
+condition: "step1_services.contains('other')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_other_service_household
 description: step1_other_service_household
 priority: 1
 condition: "step1_services_household.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_services
+description: step1_other_service
+priority: 1
+condition: "step1_services.contains('other')"
 actions:
   - "isRelevant = true"
