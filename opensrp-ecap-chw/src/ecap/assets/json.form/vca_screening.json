@@ -2410,7 +2410,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "Please enter date Referred"
+          "err": "This field is Required"
         },
         "relevance": {
           "step4:vl_check_box": {

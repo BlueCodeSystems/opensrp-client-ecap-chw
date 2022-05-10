@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                       <!--     <Button
+                            <Button
                                 android:onClick="onClick"
                                 android:id="@+id/myservice"
                                 android:layout_width="wrap_content"
@@ -151,9 +151,9 @@
                                 android:paddingTop="0dp"
                                 android:paddingEnd="@dimen/profile_btn_registration_info_padding"
                                 android:paddingBottom="0dp"
-                                android:text="Service Report"
+                                android:text="Service Reports"
                                 android:textAllCaps="false"
-                                tools:text="Service Report" />-->
+                                tools:text="Service Reports" />
 
                             <Button
                                 android:layout_marginLeft="10dp"
@@ -169,7 +169,7 @@
                                 android:paddingBottom="0dp"
                                 android:text="Household Profile"
                                 android:textAllCaps="false"
-                                tools:text="Service Report" />
+                                tools:text="Household Profile" />
 
                         </LinearLayout>
 
