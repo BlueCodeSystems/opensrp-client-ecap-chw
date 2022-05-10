@@ -44,6 +44,7 @@ import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.evernote.android.job.JobManager;
+import com.onesignal.OneSignal;
 import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.domain.Form;
 
@@ -112,6 +113,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     private RequestQueue mRequestQueue;
 
     public static final String TAG = ChwApplication.class.getSimpleName();
+    private static final String ONESIGNAL_APP_ID = "a074b7f3-c15f-4838-8fd3-6974c6adee87";
 
 
     public static Flavor getApplicationFlavor() {
@@ -210,6 +212,13 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         context = Context.getInstance();
         context.updateApplicationContext(getApplicationContext());
         context.updateCommonFtsObject(getCommonFtsObject());
+
+        // Enable verbose OneSignal logging to debug issues if needed.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
 
         //Necessary to determine the right form to pick from assets
         CoreConstants.JSON_FORM.setLocaleAndAssetManager(ChwApplication.getCurrentLocale(),
