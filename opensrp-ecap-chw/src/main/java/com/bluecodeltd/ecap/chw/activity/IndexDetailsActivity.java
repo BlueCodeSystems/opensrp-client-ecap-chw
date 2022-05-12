@@ -5,6 +5,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -122,6 +123,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     private UniqueIdRepository uniqueIdRepository;
+    public String gender;
 
     ObjectMapper oMapper, clientMapper;
     Child child;
@@ -134,6 +136,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaCasePlanModel vcaCasePlanModel;
 
     public VCAModel client;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +150,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
+
+        builder = new AlertDialog.Builder(IndexDetailsActivity.this);
 
         childId = getIntent().getExtras().getString("Child");
 
@@ -1080,32 +1085,61 @@ public class IndexDetailsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.call:
                 String caregiverPhoneNumber = child.getCaregiver_phone();
-                if(!caregiverPhoneNumber.equals(""))
-                {
-                    Toast.makeText(getApplicationContext(),"Calling Caregiver...",Toast.LENGTH_LONG).show();
+                if (!caregiverPhoneNumber.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
 
                     Intent callIntent = new Intent(Intent.ACTION_DIAL);
                     callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
                     startActivity(callIntent);
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(),"No number for caregiver found",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
                 }
 
                 return true;
             case R.id.case_status:
 
                 try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_status");
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
+
+            case R.id.delete_record:
+
+
+                if(txtGender.getText().toString().equals("MALE")){
+                    gender = "his";
+                } else {
+                    gender = "her";
+                }
+
+                builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
+
+                }).setPositiveButton("YES",((dialogInterface, i) -> {
+                    IndexPersonDao.deleteRecord(uniqueId);
+                    IndexPersonDao.deleteRecordfromSearch(uniqueId);
+
+                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                    super.onBackPressed();
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
+
+
+                break;
+
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

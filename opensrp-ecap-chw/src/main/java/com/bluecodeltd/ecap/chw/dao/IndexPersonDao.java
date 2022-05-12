@@ -25,6 +25,18 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
+    public static void deleteRecord (String vcaID) {
+
+        String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE unique_id = '" + vcaID + "'";
+        updateDB(sql);
+    }
+
+    public static void deleteRecordfromSearch (String vcaID) {
+
+        String sql = "UPDATE ec_client_index_search SET is_closed = '1' WHERE unique_id = '" + vcaID + "'";
+        updateDB(sql);
+    }
+
 
     public static String countChildren(String householdID){
 
@@ -231,7 +243,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' ";
+        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' AND is_closed = '0'";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
