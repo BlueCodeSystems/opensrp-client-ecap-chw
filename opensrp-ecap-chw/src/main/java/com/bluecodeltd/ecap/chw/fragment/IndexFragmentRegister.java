@@ -98,7 +98,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected String getMainCondition() {
-        return "case_status != '3'";
+        return "case_status != '3' AND is_closed != '1'";
     }
 
     @Override
