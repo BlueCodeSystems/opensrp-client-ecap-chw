@@ -82,6 +82,8 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         if(is_screened != null && is_screened.equals("true")){
             warningIcon.setVisibility(View.GONE);
+        } else {
+            warningIcon.setVisibility(View.VISIBLE);
         }
 
     }

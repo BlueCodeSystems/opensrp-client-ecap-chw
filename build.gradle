@@ -77,9 +77,18 @@ subprojects {
     ext.androidAnnotationsVersion = '3.0.1'
     ext.androidAnnotationsAPIVersion = '3.0.1'
 
- /*   // Improve build server performance by allowing disabling of pre-dexing
+    project.ext {
+        if (project.hasProperty('preDexEnable')) {
+            project.ext.preDexLibs = project.properties['preDexEnable'].equals('true')
+        } else {
+            project.ext.preDexLibs = true // pre dexing should be true by default
+        }
+
+        println('PREDEX ' + (project.ext.preDexLibs ? 'ENABLED' : 'DISABLED')) // goes to build log or console output
+    }
+    // Improve build server performance by allowing disabling of pre-dexing
     // (see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.)
-    project.plugins.whenPluginAdded { plugin ->
+/*    project.plugins.whenPluginAdded { plugin ->
         if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
             project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
         } else  {
