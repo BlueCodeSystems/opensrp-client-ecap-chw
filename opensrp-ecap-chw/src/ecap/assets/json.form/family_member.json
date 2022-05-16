@@ -156,10 +156,6 @@
             "text": "Household Member"
           }
         ],
-        "v_required": {
-          "value": true,
-          "err": "Please choose member type"
-        }
       },
       {
         "key": "first_name",
@@ -226,7 +222,11 @@
             "key": "female",
             "text": "Female"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "school",

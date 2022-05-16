@@ -1107,7 +1107,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.delete_record:
+     /*       case R.id.delete_record:
 
 
                 if(txtGender.getText().toString().equals("MALE")){
@@ -1136,7 +1136,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 alert.show();
 
 
-                break;
+                break;*/
 
         }
         return super.onOptionsItemSelected(item);
