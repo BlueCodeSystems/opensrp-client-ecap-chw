@@ -133,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="No Services have been Provided"
+                    android:text="No Service Reports have been added"
                     android:textSize="20dp" />
 
             </LinearLayout>
