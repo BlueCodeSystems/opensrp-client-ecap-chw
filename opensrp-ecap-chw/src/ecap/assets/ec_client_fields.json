@@ -18,6 +18,13 @@
           }
         },
         {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
@@ -382,6 +389,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "identifiers.opensrp_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -809,6 +823,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -1393,6 +1414,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -2692,6 +2720,13 @@
           }
         },
         {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
           "column_name": "case_plan_date",
           "type": "Client",
           "json_mapping": {
@@ -2896,6 +2931,13 @@
           }
         },
         {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
@@ -2999,6 +3041,20 @@
           }
         },
         {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "case_plan_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_date"
+          }
+        },
+        {
           "column_name": "case_plan_date",
           "type": "Client",
           "json_mapping": {
@@ -3069,6 +3125,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -3151,6 +3214,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -3854,6 +3924,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -5702,6 +5779,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
           }
         },
         {

@@ -26,6 +26,7 @@ public class CaregiverAssessmentDao extends AbstractDao {
 
             CaregiverAssessmentModel record = new CaregiverAssessmentModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setCasework_name(getCursorValue(c, "casework_name"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setHousehold_type(getCursorValue(c, "household_type"));
             record.setMonthly_expenses(getCursorValue(c, "monthly_expenses"));

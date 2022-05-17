@@ -93,6 +93,19 @@
           "value": "true",
           "err": "You need to consent"
         }
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "hint": "Carried out by",
+        "read_only": "true",
+        "type": "hidden",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
       }
     ]
   },

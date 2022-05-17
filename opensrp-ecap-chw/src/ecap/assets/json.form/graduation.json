@@ -90,10 +90,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Caseworker Name",
-        "edit_type": "name",
-        "read_only": true
+        "hint": "Carried out by",
+        "read_only": "true",
+        "type": "hidden",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
       },
       {
         "key": "household_id",

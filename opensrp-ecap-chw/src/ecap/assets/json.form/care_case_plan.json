@@ -87,6 +87,19 @@
         "read_only": "true"
       },
       {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "hint": "Carried out by",
+        "read_only": "true",
+        "type": "hidden",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

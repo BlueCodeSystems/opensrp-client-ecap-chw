@@ -86,9 +86,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
-        "hint": "Edited By",
+        "hint": "Carried out by",
         "read_only": "true",
-        "edit_type": "name",
+        "type": "hidden",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Name of Person can  only contain letters"
@@ -518,11 +518,11 @@
         "options": [
           {
             "key": "hiv_negative",
-            "text": "HIV negative"
+            "text": "HIV Negative"
           },
           {
             "key": "hiv_positive",
-            "text": "hiv_positive"
+            "text": "HIV Positive"
           }
         ],
         "relevance": {

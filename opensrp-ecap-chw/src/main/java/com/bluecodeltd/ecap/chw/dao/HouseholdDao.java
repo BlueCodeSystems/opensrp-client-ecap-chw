@@ -52,6 +52,7 @@ public class HouseholdDao extends AbstractDao {
             FamilyServiceModel record = new FamilyServiceModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setDate(getCursorValue(c, "date"));
             record.setServices_caregiver(getCursorValue(c, "services_caregiver"));
             record.setServices_household(getCursorValue(c, "services_household"));

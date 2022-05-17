@@ -64,6 +64,7 @@ public class CaregiverAssessmentModel {
     private String not_registered;
     private String questions;
     private String caregiver_question;
+    private String casework_name;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -559,5 +560,13 @@ public class CaregiverAssessmentModel {
 
     public void setCaregiver_question(String caregiver_question) {
         this.caregiver_question = caregiver_question;
+    }
+
+    public String getCasework_name() {
+        return casework_name;
+    }
+
+    public void setCasework_name(String casework_name) {
+        this.casework_name = casework_name;
     }
 }

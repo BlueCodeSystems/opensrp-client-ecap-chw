@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -87,6 +86,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setDate(getCursorValue(c, "date"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setArt_clinic(getCursorValue(c, "art_clinic"));
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));

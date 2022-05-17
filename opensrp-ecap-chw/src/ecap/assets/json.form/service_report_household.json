@@ -65,6 +65,20 @@
         "edit_type": "name"
       },
       {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "",
+        "read_only": "true",
+        "type": "hidden",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
         "key": "date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

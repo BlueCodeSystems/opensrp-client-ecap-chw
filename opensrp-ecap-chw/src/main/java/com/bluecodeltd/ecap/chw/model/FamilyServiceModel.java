@@ -4,7 +4,7 @@ public class FamilyServiceModel {
 
     private String  services, services_household, services_caregiver,  date,
             household_id, base_entity_id, other_services_caregiver,
-            other_services_household;
+            other_services_household,caseworker_name;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -70,5 +70,14 @@ public class FamilyServiceModel {
 
     public void setOther_services_household(String other_services_household) {
         this.other_services_household = other_services_household;
+
+    }
+
+    public String getCaseworker_name() {
+        return caseworker_name;
+    }
+
+    public void setCaseworker_name(String caseworker_name) {
+        this.caseworker_name = caseworker_name;
     }
 }

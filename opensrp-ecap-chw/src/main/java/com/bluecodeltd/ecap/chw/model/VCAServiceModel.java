@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.model;
 public class VCAServiceModel {
 
     private String base_entity_id, unique_id, date, art_clinic, date_last_vl, vl_last_result, date_next_vl,
-            child_mmd, level_mmd, services, other_service;
+            child_mmd, level_mmd, services, other_service, caseworker_name;
 
     public String getDate() {
         return date;
@@ -91,5 +91,13 @@ public class VCAServiceModel {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getCaseworker_name() {
+        return caseworker_name;
+    }
+
+    public void setCaseworker_name(String caseworker_name) {
+        this.caseworker_name = caseworker_name;
     }
 }
