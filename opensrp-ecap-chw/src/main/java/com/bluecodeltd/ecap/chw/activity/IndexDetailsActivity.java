@@ -397,42 +397,64 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case R.id.assessment:
 
-
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if(indexVCA.getDate_screened() != null){
+                    try {
+                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
+
 
                 break;
             case R.id.case_plan:
 
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
+                if(indexVCA.getDate_screened() != null){
+                    try {
+                        openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
+
                 break;
             case R.id.referral:
 
-                try {
+                if(indexVCA.getDate_screened() != null){
 
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
+                    try {
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
+
+
                 break;
 
             case R.id.myservice:
 
-                Intent intent2 = new Intent(this, VcaServiceActivity.class);
-                intent2.putExtra("vcaid",  indexVCA.getHousehold_id());
-                intent2.putExtra("hivstatus",  indexVCA.getIs_hiv_positive());
-                intent2.putExtra("vcaname",  txtName.getText().toString());
-                startActivity(intent2);
+                if(indexVCA.getDate_screened() != null) {
 
+                    Intent intent2 = new Intent(this, VcaServiceActivity.class);
+                    intent2.putExtra("vcaid", indexVCA.getHousehold_id());
+                    intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
+                    intent2.putExtra("vcaname", txtName.getText().toString());
+                    startActivity(intent2);
+                }
+                else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
                 break;
 
             case R.id.household_profile:
@@ -450,22 +472,36 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case R.id.household_visitation_for_vca:
 
-                try {
+                if(indexVCA.getDate_screened() != null) {
+                    try {
 
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
+                        openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
+
+
                 break;
 
             case R.id.hiv_assessment:
-                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_risk_assessment_under_15_years");
 
+                if(indexVCA.getDate_screened() != null) {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
+                } else {
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
                 break;
 
             case R.id.hiv_assessment2:
-                openFormUsingFormUtils(IndexDetailsActivity.this,"hiv_risk_assessment_above_15_years");
+                if(indexVCA.getDate_screened() != null) {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
+                }else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
                 break;
 
         }
@@ -515,9 +551,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
                     String dateId = cpdate.optString("value");
                     openVcaCasplanToAddVulnarabilities(dateId);
+
                 }
                 else {
-
+                    finish();
+                    startActivity(getIntent());
 
                 }
             } catch (Exception e) {
@@ -525,8 +563,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
 
         }
-        finish();
-        startActivity(getIntent());
+
     }
 
     private void openVcaCasplanToAddVulnarabilities(String dateId) {
@@ -1107,7 +1144,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.delete_record:
+     /*       case R.id.delete_record:
 
 
                 if(txtGender.getText().toString().equals("MALE")){
@@ -1136,7 +1173,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 alert.show();
 
 
-                break;
+                break;*/
 
         }
         return super.onOptionsItemSelected(item);

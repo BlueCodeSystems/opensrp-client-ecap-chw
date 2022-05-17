@@ -12,9 +12,9 @@
         android:id="@+id/case_status"
         android:title="De-Registration"
         app:showAsAction="never"/>
-    <item
+<!--    <item
         android:id="@+id/delete_record"
         android:title="Delete VCA"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
 </menu>

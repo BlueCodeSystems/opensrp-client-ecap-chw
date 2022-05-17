@@ -146,6 +146,10 @@
             "type": "string",
             "ex": "equalTo(., \"caregiver\")"
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
         }
       },
       {
@@ -207,6 +211,10 @@
             "type": "string",
             "ex": "equalTo(., \"household\")"
           }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
         }
       },
       {
