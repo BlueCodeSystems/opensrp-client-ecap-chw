@@ -91,7 +91,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         String artnumber = child.getArt_number();
         String lastVl = child.getVl_last_result();
 
-
+        if(child.getIndex_check_box() != null && child.getIndex_check_box().equals("1")){
+            holder.is_index.setVisibility(View.VISIBLE);
+        } else {
+            holder.is_index.setVisibility(View.GONE);
+        }
 
         if (artnumber != null && ((positive != null) && child.getIs_hiv_positive().equals("yes")) || ((subpop1 != null) && child.getSubpop1().equals("true")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)) {
 
@@ -374,7 +378,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView fullName, age;
+        TextView fullName, age, is_index;
         View colorView;
         RelativeLayout lview;
         Button muacButton;
@@ -391,6 +395,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             colorView = itemView.findViewById(R.id.mycolor);
             muacButton = itemView.findViewById(R.id.muac);
             gradBtn = itemView.findViewById(R.id.grad_id);
+            is_index = itemView.findViewById(R.id.index_icon);
 
         }
 

@@ -73,6 +73,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/index_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/rounded_corner_index"
+            android:padding="8dp"
+            android:text="Index"
+            android:textColor="@color/dark_grey_text"
+            android:textSize="12dp"
+            />
+
         <com.rey.material.widget.Button
             android:id="@+id/muac"
             android:visibility="gone"

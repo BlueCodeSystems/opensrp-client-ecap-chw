@@ -15,12 +15,15 @@ import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.github.javiersantos.appupdater.AppUpdater;
 import com.rey.material.widget.Button;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
+import org.smartregister.domain.FetchStatus;
 import org.smartregister.family.util.DBConstants;
+import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.util.Utils;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
@@ -84,7 +87,14 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         filterSortLayout.setVisibility(View.GONE);
 
         builder = new AlertDialog.Builder(getActivity());
+
+      /*  if (!isSyncing()){
+            AppUpdater appUpdater = new AppUpdater(getActivity());
+            appUpdater.start();
+        }*/
     }
+
+
 
     @Override
     public void setUniqueID(String s) {
@@ -137,9 +147,6 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
             goToIndexDetailActivity(childId,client);
         }
-
-
-
     }
 
     protected void goToIndexDetailActivity(String childId, CommonPersonObjectClient client) {
@@ -161,8 +168,31 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
+
+
     }
 
+    @Override
+    protected boolean isSyncing() {
+        return super.isSyncing();
+    }
 
+    @Override
+    protected void onResumption() {
 
+            super.onResumption();
+
+    }
+
+    @Override
+    public void onSyncComplete(FetchStatus fetchStatus) {
+        if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
+            Utils.showShortToast(getActivity(), getString(org.smartregister.chw.core.R.string.sync_complete));
+            getActivity().recreate();
+            AppUpdater appUpdater = new AppUpdater(getActivity());
+            appUpdater.start();
+        } else {
+            super.onSyncComplete(fetchStatus);
+        }
+    }
 }

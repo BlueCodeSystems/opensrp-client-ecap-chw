@@ -1952,8 +1952,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "index_check_box",
-        "type": "hidden",
-        "value": "1"
+        "type": "hidden"
       },
       {
         "key": "case_status",
@@ -2707,14 +2706,6 @@
         "type": "edit_text",
         "hint": "Caregiver's Phone Number",
         "edit_type": "number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "^[0-9]{9,10}$",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
