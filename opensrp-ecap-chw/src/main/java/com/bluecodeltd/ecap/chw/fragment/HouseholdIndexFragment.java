@@ -117,7 +117,6 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     protected void goToIndexDetailActivity(CommonPersonObjectClient client) {
 
-
             Intent intent = new Intent(getActivity(), HouseholdDetails.class);
             intent.putExtra("householdId",  client.getColumnmaps().get("hid"));
             intent.putExtra("household",  client);

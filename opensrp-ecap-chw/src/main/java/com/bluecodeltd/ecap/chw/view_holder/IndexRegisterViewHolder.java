@@ -26,7 +26,8 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private View myStatus;
 
-    private final ImageView index_icon_layout, visitLayout, caseplan_layout, warningIcon;
+    private final ImageView  visitLayout, caseplan_layout, warningIcon;
+    private final TextView index_icon_layout;
 
     public IndexRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -40,8 +41,6 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         warningIcon = itemView.findViewById(R.id.index_warning);
 
     }
-
-
 
 
     public void setupViews(String family, String village, int plans, int visits, String is_index, String status, String gender, String age, String is_screened){
@@ -58,9 +57,9 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             myStatus.setBackgroundColor(0xffffa500);
         }
 
-        if (is_index != null){
+        if (is_index != null && is_index.equals("1")){
 
-            index_icon_layout.setVisibility(View.GONE);
+            index_icon_layout.setVisibility(View.VISIBLE);
         } else {
 
             index_icon_layout.setVisibility(View.GONE);

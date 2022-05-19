@@ -876,6 +876,14 @@
         }
       },
       {
+        "key": "index_check_box",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "index_check_box",
+        "type": "hidden",
+        "value": "0"
+      },
+      {
         "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
