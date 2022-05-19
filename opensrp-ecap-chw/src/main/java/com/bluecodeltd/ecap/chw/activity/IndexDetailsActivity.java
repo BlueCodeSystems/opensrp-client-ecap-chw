@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.AlertDialog;
@@ -136,7 +137,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaCasePlanModel vcaCasePlanModel;
 
     public VCAModel client;
-    AlertDialog.Builder builder;
+    AlertDialog.Builder builder, screeningBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,14 +153,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
 
         builder = new AlertDialog.Builder(IndexDetailsActivity.this);
+        screeningBuilder = new AlertDialog.Builder(IndexDetailsActivity.this);
 
         childId = getIntent().getExtras().getString("Child");
+        String hhIntent = getIntent().getExtras().getString("fromHousehold");
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
         String gender = indexVCA.getGender();
         uniqueId = indexVCA.getUnique_id();
-
 
         is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
         is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
@@ -244,6 +246,29 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         int page = getIntent().getIntExtra("tab",0);
         mViewPager.setCurrentItem(page);
+
+
+
+        if(hhIntent.equals("123")){
+            builder.setMessage("Continue with VCA Screening for " + txtName.getText().toString() + "?");
+            builder.setNegativeButton("Later", (dialog, id) -> {
+                //  Action for 'NO' Button
+                dialog.cancel();
+
+            }).setPositiveButton("Proceed",((dialogInterface, i) -> {
+                try {
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }));
+
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("VCA Screening");
+            alert.show();
+        }
     }
 
 
@@ -624,6 +649,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
+                case "Member Sub Population":
                 case "Sub Population":
 
                     if (fields != null) {
@@ -979,6 +1005,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
+                if(!indexVCA.getIndex_check_box().equals("1")){
+                    formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
+                    formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
 
 

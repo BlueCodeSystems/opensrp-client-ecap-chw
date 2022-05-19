@@ -74,10 +74,6 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         //Sentry.captureMessage("testing SDK setup");
         txtUsername = findViewById(R.id.login_user_name_edit_text);
         txtPassword = findViewById(R.id.login_password_edit_text);
-
-        AppUpdater appUpdater = new AppUpdater(this);
-        appUpdater.start();
-
     }
 
     @Override

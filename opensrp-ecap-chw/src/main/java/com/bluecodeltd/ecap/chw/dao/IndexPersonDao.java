@@ -318,6 +318,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
             record.setSubpop1(getCursorValue(c, "subpop1"));
+            record.setIndex_check_box(getCursorValue(c, "index_check_box"));
             return record;
         };
     }
