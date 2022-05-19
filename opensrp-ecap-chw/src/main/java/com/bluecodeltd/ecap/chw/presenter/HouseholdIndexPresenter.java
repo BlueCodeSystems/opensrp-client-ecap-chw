@@ -1,5 +1,9 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.util.JsonFormUtils.STEP1;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -90,7 +94,8 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
             }
             interactor.saveRegistration(eventClientList, jsonString, registerParams, this);
             householdId = (String) eventClientList.get(0).getClient().getAttribute("household_id");
-            uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+            uniqueId = getFieldJSONObject(fields(formJsonObject, "step2"), "unique_id").optString("value");
+           // uniqueId = formJsonObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
 
 
         } catch (Exception e) {
@@ -151,7 +156,8 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
             }
 
             getUniqueIdRepository().close(uniqueId);
-            gotHouseholdProfile();
+            //gotHouseholdProfile();
+            gotToChildProfile(uniqueId);
         }
     }
     @NonNull
@@ -166,6 +172,16 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     public void gotHouseholdProfile(){
         Intent intent = new Intent(getView().getContext(), HouseholdDetails.class);
         intent.putExtra("householdId",householdId);
+        getView().finish();
+        getView().startActivity(getView().getIntent());
+        Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();
+        getView().startActivity(intent);
+    }
+
+    public void gotToChildProfile(String id){
+        Intent intent = new Intent(getView().getContext(),IndexDetailsActivity.class);
+        intent.putExtra("Child",id);
+        intent.putExtra("fromHousehold","123");
         getView().finish();
         getView().startActivity(getView().getIntent());
         Toasty.success(getView(), "Form Saved", Toast.LENGTH_LONG, true).show();

@@ -527,7 +527,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (fetchedLoad) {
             Timber.v("Sync complete scheduling");
-            startProcessing();
+            //startProcessing();
             fetchedLoad = false;
         }
     }

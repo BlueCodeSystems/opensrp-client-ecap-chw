@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP4;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
@@ -119,6 +121,17 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         Number = new Random();
         Rnumber = Number.nextInt(900000000);
         String newEntityId =  Integer.toString(Rnumber);
+
+        //******** POPULATE AS INDEX VCA ******//
+        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP3), "index_check_box");
+
+        if (indexCheckObject != null) {
+            try {
+                indexCheckObject.put(JsonFormUtils.VALUE, "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
 
         //******** POPULATE JSON FORM WITH VCA UNIQUE ID ******//
