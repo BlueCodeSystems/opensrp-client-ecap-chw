@@ -156,7 +156,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
         "read_only": "true",
@@ -260,7 +260,11 @@
             "key": "female",
             "text": "Female"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
       },
       {
         "key": "adolescent_birthdate",

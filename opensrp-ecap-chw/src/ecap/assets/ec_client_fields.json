@@ -836,7 +836,7 @@
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "addresses.stateProvince"
+            "field": "attributes.province"
           }
         },
         {
@@ -1427,7 +1427,7 @@
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.stateProvince"
+            "field": "attributes.province"
           }
         },
         {
