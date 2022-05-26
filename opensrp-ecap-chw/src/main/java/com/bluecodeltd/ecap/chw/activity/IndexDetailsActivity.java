@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.AlertDialog;
@@ -578,6 +577,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
                     String dateId = cpdate.optString("value");
                     openVcaCasplanToAddVulnarabilities(dateId);
+                    finish();
+                    startActivity(getIntent());
 
                 }
                 else {
