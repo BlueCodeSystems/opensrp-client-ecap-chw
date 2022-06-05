@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class CasePlanModel implements Serializable {
 
+    private String base_entity_id;
     private String unique_id;
     private String case_plan_date;
     private String case_plan_status;
@@ -120,5 +121,13 @@ public class CasePlanModel implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getBase_entity_id() {
+        return base_entity_id;
+    }
+
+    public void setBase_entity_id(String base_entity_id) {
+        this.base_entity_id = base_entity_id;
     }
 }

@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -132,19 +133,18 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
     public void startFormActivity(JSONObject jsonObject) {
 
-        Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();
-
         form.setWizard(false);
+        form.setName("Service Report");
         form.setHideSaveLabel(true);
-        form.setNextLabel("");
-
-        intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-
+        form.setNextLabel("Next");
+        form.setPreviousLabel("Previous");
+        form.setSaveLabel("Submit");
+        form.setActionBarBackground(R.color.dark_grey);
+        Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
-        ((VcaServiceActivity) context).startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
-
+        ((Activity) context).startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
 

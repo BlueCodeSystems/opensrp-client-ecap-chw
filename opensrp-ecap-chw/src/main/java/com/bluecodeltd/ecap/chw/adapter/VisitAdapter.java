@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
@@ -17,17 +18,28 @@ import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.client.utils.domain.Form;
+import org.smartregister.family.util.JsonFormUtils;
+import org.smartregister.util.FormUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
 
     Context context;
 
     List<VcaVisitationModel> visits;
+    ObjectMapper oMapper;
 
     public VisitAdapter(List<VcaVisitationModel> visits, Context context){
 
@@ -61,10 +73,70 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             if (v.getId() == R.id.itemm) {
 
+                try {
 
+                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
+        holder.editme.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.edit_me) {
+
+                try {
+
+                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+    public void openFormUsingFormUtils(Context context, String formName, VcaVisitationModel visit) throws JSONException {
+
+        oMapper = new ObjectMapper();
+
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject formToBeOpened;
+
+        formToBeOpened = formUtils.getFormJson(formName);
+
+        formToBeOpened.put("entity_id", visit.getBase_entity_id());
+
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
+
+        startFormActivity(formToBeOpened);
+
+    }
+
+    public void startFormActivity(JSONObject jsonObject) {
+
+        Form form = new Form();
+        form.setWizard(false);
+        form.setName("Follow Up Visitation");
+        form.setHideSaveLabel(true);
+        form.setNextLabel("Next");
+        form.setPreviousLabel("Previous");
+        form.setSaveLabel("Submit");
+        form.setActionBarBackground(R.color.dark_grey);
+        Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        ((Activity) context).startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
     }
 
     @Override
@@ -78,6 +150,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         TextView txtDate;
 
         LinearLayout linearLayout;
+        ImageView editme;
 
         public ViewHolder(View itemView) {
 
@@ -85,6 +158,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             linearLayout = itemView.findViewById(R.id.itemm);
             txtDate  = itemView.findViewById(R.id.date);
+            editme = itemView.findViewById(R.id.edit_me);
 
         }
 
