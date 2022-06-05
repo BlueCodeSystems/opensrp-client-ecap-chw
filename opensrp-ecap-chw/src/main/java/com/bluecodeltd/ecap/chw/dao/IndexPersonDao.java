@@ -282,6 +282,7 @@ public class IndexPersonDao  extends AbstractDao {
         return c -> {
 
             CasePlanModel record = new CasePlanModel();
+            record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setCase_plan_date(getCursorValue(c, "case_plan_date"));
             record.setCase_plan_status(getCursorValue(c, "case_plan_status"));
