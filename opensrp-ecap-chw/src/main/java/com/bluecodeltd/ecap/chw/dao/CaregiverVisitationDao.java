@@ -1,12 +1,40 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
+import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CaregiverVisitationDao extends AbstractDao {
+
+
+    public static List<CaregiverVisitationModel> getVisitsByID(String householdID) {
+
+        String sql = "SELECT * FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "' ";
+
+        List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
+    public static int countVisits(String householdID){
+
+        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "visitCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
+
     public static CaregiverVisitationModel getCaregiverVisitation (String householdID) {
 
         String sql = "SELECT * FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "' ";
@@ -27,6 +55,7 @@ public class CaregiverVisitationDao extends AbstractDao {
             CaregiverVisitationModel record = new CaregiverVisitationModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setVisit_date(getCursorValue(c, "visit_date"));
             record.setCaregiver_hiv_status(getCursorValue(c, "caregiver_hiv_status"));
             record.setCaregiver_art(getCursorValue(c, "caregiver_art"));
             record.setClinical_care(getCursorValue(c, "clinical_care"));

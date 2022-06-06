@@ -3857,6 +3857,13 @@
           }
         },
         {
+          "column_name": "visit_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.visit_date"
+          }
+        },
+        {
           "column_name": "caregiver_hiv_status",
           "type": "Client",
           "json_mapping": {
