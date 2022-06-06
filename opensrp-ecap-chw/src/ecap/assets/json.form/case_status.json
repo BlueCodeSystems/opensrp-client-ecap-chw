@@ -120,6 +120,10 @@
           "label": "Reason for Closing Case",
           "options": [
             {
+              "key": "Wrong Entry",
+              "text": "Wrong Entry"
+            },
+            {
               "key": "Transferred to other OVC program",
               "text": "Transferred to other OVC program"
             },
