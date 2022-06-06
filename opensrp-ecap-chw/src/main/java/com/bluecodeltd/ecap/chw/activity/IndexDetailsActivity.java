@@ -202,7 +202,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
-        if(gender.equals("male")){
+        if( gender != null && gender.equals("male")){
 
             toolbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
             myAppbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
