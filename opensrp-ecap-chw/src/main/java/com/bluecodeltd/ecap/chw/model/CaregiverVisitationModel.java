@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class CaregiverVisitationModel {
     private String base_entity_id;
+    private String visit_date;
     private String household_id;
     private String caregiver_hiv_status;
     private String caregiver_art;
@@ -53,6 +54,14 @@ public class CaregiverVisitationModel {
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getVisit_date() {
+        return visit_date;
+    }
+
+    public void setVisit_date(String visit_date) {
+        this.visit_date = visit_date;
     }
 
     public String getHousehold_id() {

@@ -37,6 +37,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
@@ -236,7 +237,14 @@ public class HouseholdDetails extends AppCompatActivity {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText(this.getString(R.string.visits));
-        visitTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = CaregiverVisitationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+
+
+
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
 
@@ -522,13 +530,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         householdVisitationCaregiver.setCaregiver_hiv_status("status_not_required");
                     }
                     householdVisitationCaregiver.setCaregiver_art(caregiver.getActive_on_treatment());
-                    if (caregiverVisitationModel == null) {
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
-                    }
-                    else {
-                        indexRegisterForm.put("entity_id", this.caregiverVisitationModel.getBase_entity_id());
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(caregiverVisitationModel, Map.class));
-                    }
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
 
