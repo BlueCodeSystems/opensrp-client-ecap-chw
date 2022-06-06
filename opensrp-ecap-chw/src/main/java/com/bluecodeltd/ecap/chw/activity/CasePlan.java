@@ -206,7 +206,12 @@ public class CasePlan extends AppCompatActivity {
 
             String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
 
-            String entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            String entityId = formJsonObject.optString("entity_id");
+
+            if(entityId.isEmpty()){
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 

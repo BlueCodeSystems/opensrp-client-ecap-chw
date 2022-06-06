@@ -479,6 +479,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     public void goToHouseholdProfile(String id){
         Intent intent = new Intent(this,HouseholdDetails.class);
         intent.putExtra("householdId", id);
+        intent.putExtra("fromHousehold","000");
         Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
         startActivity(intent);
     }

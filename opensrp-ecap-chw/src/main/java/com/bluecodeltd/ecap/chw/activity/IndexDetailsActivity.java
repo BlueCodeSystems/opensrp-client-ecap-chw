@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.AlertDialog;
@@ -160,7 +159,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
-        String gender = indexVCA.getGender();
+        gender = indexVCA.getGender();
         uniqueId = indexVCA.getUnique_id();
 
         is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
@@ -249,13 +248,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
 
-        if(hhIntent.equals("123")){
-            builder.setMessage("Continue with VCA Screening for " + txtName.getText().toString() + "?");
+        if(hhIntent != null && hhIntent.equals("123")){
+            builder.setMessage("Continue with VCA Screening for " + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
             builder.setNegativeButton("Later", (dialog, id) -> {
                 //  Action for 'NO' Button
+                getIntent().removeExtra("fromHousehold");
                 dialog.cancel();
 
             }).setPositiveButton("Proceed",((dialogInterface, i) -> {
+                getIntent().removeExtra("fromHousehold");
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
                 } catch (JSONException e) {
@@ -576,6 +577,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
                     String dateId = cpdate.optString("value");
                     openVcaCasplanToAddVulnarabilities(dateId);
+                    finish();
+                    startActivity(getIntent());
 
                 }
                 else {
