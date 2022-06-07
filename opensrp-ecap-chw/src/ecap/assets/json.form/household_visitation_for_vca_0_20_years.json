@@ -55,7 +55,6 @@
   "step1": {
     "title": "Household Visitation For VCA 0-20 years",
     "fields": [
-
       {
         "key": "unique_id",
         "openmrs_entity_parent": "",
@@ -96,7 +95,6 @@
           "err": "Name of Person can  only contain letters"
         }
       },
-
       {
         "key": "phone",
         "openmrs_entity_parent": "",
@@ -116,7 +114,6 @@
         }
       },
       {
-
         "key": "date_edited_check",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -204,7 +201,6 @@
           }
         ]
       },
-
       {
         "key": "child_art",
         "openmrs_entity_parent": "",
@@ -257,7 +253,6 @@
           }
         }
       },
-
       {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
@@ -422,7 +417,6 @@
           }
         }
       },
-
       {
         "key": "six_months",
         "openmrs_entity_parent": "",
@@ -449,7 +443,6 @@
           }
         }
       },
-
       {
         "key": "toaster_a",
         "openmrs_entity_parent": "",
@@ -467,7 +460,6 @@
           }
         }
       },
-
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
@@ -523,10 +515,6 @@
           }
         }
       },
-
-
-
-
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -543,7 +531,6 @@
           }
         }
       },
-
       {
         "key": "visits",
         "openmrs_entity_parent": "",
@@ -622,7 +609,6 @@
           }
         }
       },
-
       {
         "key": "hiv_risk",
         "openmrs_entity_parent": "",
@@ -683,8 +669,6 @@
           }
         }
       },
-
-
       {
         "key": "hiv_assessment",
         "openmrs_entity_parent": "",
@@ -711,7 +695,6 @@
           }
         }
       },
-
       {
         "key": "toaster_b",
         "openmrs_entity_parent": "",
@@ -729,8 +712,6 @@
           }
         }
       },
-
-
       {
         "key": "referred_facility",
         "openmrs_entity_parent": "",
@@ -757,7 +738,6 @@
           }
         }
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -766,7 +746,6 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -775,7 +754,6 @@
         "type": "label",
         "text": "HIV Exposed Infant (VCA aged 24 months and below) Section"
       },
-
       {
         "key": "eid_test",
         "openmrs_entity_parent": "",
@@ -987,8 +965,6 @@
           }
         }
       },
-
-
       {
         "key": "against_hiv_risk",
         "openmrs_entity_parent": "",
@@ -1015,7 +991,6 @@
           }
         }
       },
-
       {
         "key": "referred_health_facility",
         "openmrs_entity_parent": "",
@@ -1094,9 +1069,6 @@
           }
         }
       },
-
-
-
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1226,7 +1198,6 @@
           }
         }
       },
-
       {
         "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
@@ -1254,7 +1225,6 @@
           }
         }
       },
-
       {
         "key": "heps_a",
         "openmrs_entity_parent": "",
@@ -1282,7 +1252,6 @@
           }
         }
       },
-
       {
         "key": "muac_other_a",
         "openmrs_entity_parent": "",
@@ -1300,7 +1269,6 @@
           }
         }
       },
-
       {
         "key": "muac_measurement_b",
         "openmrs_entity_parent": "",
@@ -1472,7 +1440,6 @@
           }
         ]
       },
-
       {
         "key": "neglected_child_exploitation",
         "openmrs_entity_parent": "",
@@ -1582,8 +1549,6 @@
         "type": "label",
         "text": "Physical Violence Section"
       },
-
-
       {
         "key": "signs_of_violence",
         "openmrs_entity_parent": "",
@@ -1759,8 +1724,6 @@
           }
         }
       },
-
-
       {
         "key": "child_ever_experienced_sexual_violence",
         "openmrs_entity_parent": "",
@@ -1836,7 +1799,6 @@
           }
         }
       },
-
       {
         "key": "parenting_intervention",
         "openmrs_entity_parent": "",
@@ -1880,7 +1842,6 @@
           }
         }
       },
-
       {
         "key": "health_label",
         "openmrs_entity_parent": "",
@@ -1889,7 +1850,6 @@
         "type": "label",
         "text": "Psychosocial Protection"
       },
-
       {
         "key": "child_psychosocial",
         "openmrs_entity_parent": "",
@@ -1981,7 +1941,6 @@
           }
         }
       },
-
       {
         "key": "schooled_label",
         "openmrs_entity_parent": "",
@@ -2012,7 +1971,6 @@
           }
         }
       },
-
       {
         "key": "currently_in_school",
         "openmrs_entity_parent": "",
@@ -2079,7 +2037,6 @@
           }
         }
       },
-
       {
         "key": "verified_by_school_days",
         "openmrs_entity_parent": "",
@@ -2097,7 +2054,6 @@
           }
         }
       },
-
       {
         "key": "challenges_barriers",
         "openmrs_entity_parent": "",
@@ -2125,7 +2081,6 @@
           }
         }
       },
-
       {
         "key": "not_in_school",
         "openmrs_entity_parent": "",
@@ -2152,7 +2107,6 @@
           }
         }
       },
-
       {
         "key": "child_household",
         "openmrs_entity_parent": "",
@@ -2200,7 +2154,6 @@
           }
         }
       },
-
       {
         "key": "grade_progression",
         "openmrs_entity_parent": "",
@@ -2376,60 +2329,6 @@
           }
         ]
       },
-
-
-
-      {
-        "key": "manager_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "manager_name",
-        "type": "edit_text",
-        "hint": "Verified by Case Worker Supervisor ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": false,
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "manager_date_signed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "manager_date_signed",
-        "type": "date_picker",
-        "hint": "Date Case Worker Signs",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date Signed"
-        }
-      },
-      {
-        "key": "manager_signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "manager_signature",
-        "type": "check_box",
-        "label": "I hereby confirms that the information I have given is true",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          }
-        ]
-      },
-
-
       {
         "key": "school_administration_name",
         "openmrs_entity_parent": "",
@@ -2523,7 +2422,6 @@
           }
         }
       }
-
     ]
   }
 }

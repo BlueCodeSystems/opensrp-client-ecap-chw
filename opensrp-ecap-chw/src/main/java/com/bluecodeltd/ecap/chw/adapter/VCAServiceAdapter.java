@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
-import com.bluecodeltd.ecap.chw.activity.VcaServiceActivity;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -121,7 +119,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("read_only", true);
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
 
         formToBeOpened.put("entity_id", service.getBase_entity_id());
 
