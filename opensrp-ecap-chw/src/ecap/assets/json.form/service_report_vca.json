@@ -56,6 +56,7 @@
         "openmrs_entity_id": "date",
         "type": "date_picker",
         "hint": "Date when Service/s Provided",
+        "read_only": true,
         "v_required": {
           "value": true,
           "err": "This field is required"
