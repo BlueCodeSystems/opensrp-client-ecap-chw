@@ -139,7 +139,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).remove("read_only");
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
