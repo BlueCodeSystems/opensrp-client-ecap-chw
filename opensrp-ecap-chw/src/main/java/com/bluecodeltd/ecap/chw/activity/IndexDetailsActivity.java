@@ -105,6 +105,10 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -300,6 +304,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
 
+
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
@@ -473,7 +478,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(indexVCA.getDate_screened() != null) {
 
                     Intent intent2 = new Intent(this, VcaServiceActivity.class);
-                    intent2.putExtra("vcaid", indexVCA.getHousehold_id());
+                    intent2.putExtra("vcaid", indexVCA.getUnique_id());
                     intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
                     intent2.putExtra("vcaname", txtName.getText().toString());
                     startActivity(intent2);
@@ -569,26 +574,40 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, is_edit_mode);
               //  getUniqueIdRepository().close(uniqueId);
 
-
-                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
                 if(encounterType.equals("VCA Case Plan"))
                 {
 
                     JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
                     String dateId = cpdate.optString("value");
+                    finish();
+                    startActivity(getIntent());
                     openVcaCasplanToAddVulnarabilities(dateId);
+
+
+                }
+                if(encounterType.equals("Household Visitation Form 0-20 years"))
+                {
                     finish();
                     startActivity(getIntent());
 
                 }
-                else {
+                if(encounterType.equals("Member Sub Population"))
+                {
                     finish();
                     startActivity(getIntent());
 
                 }
+                if(encounterType.equals("Sub Population"))
+                {
+                    finish();
+                    startActivity(getIntent());
+                }
+                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
             } catch (Exception e) {
                 Timber.e(e);
             }
+
 
         }
 
@@ -1047,18 +1066,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 case "household_visitation_for_vca_0_20_years":
 
-                if(vcaVisitationModel == null){
-
-                    //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-
-                } else {
-
-                    formToBeOpened.put("entity_id", this.vcaVisitationModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vcaVisitationModel, Map.class));
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-                }
                 break;
 
             case "referral":
@@ -1213,10 +1221,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
 
     }
+
 }
