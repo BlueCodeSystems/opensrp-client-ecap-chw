@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.CasePlan;
-import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
-import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.GradDao;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
-import com.bluecodeltd.ecap.chw.dao.MuacDao;
-import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
-import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -34,9 +24,6 @@ import org.smartregister.client.utils.domain.Form;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.util.FormUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -152,8 +139,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         formToBeOpened = formUtils.getFormJson(formName);
 
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only", true);
-
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
