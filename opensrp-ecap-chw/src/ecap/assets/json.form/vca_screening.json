@@ -2710,6 +2710,10 @@
         "type": "edit_text",
         "hint": "Caregiver's Phone Number",
         "edit_type": "number",
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
