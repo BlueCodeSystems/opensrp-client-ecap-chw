@@ -160,7 +160,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         childId = getIntent().getExtras().getString("Child");
         String hhIntent = getIntent().getExtras().getString("fromHousehold");
-        String csIntent = getIntent().getExtras().getString("fromHousehold");
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
