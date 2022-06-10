@@ -602,6 +602,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     finish();
                     startActivity(getIntent());
                 }
+                if(encounterType.equals("Sub Population"))
+                {
+                    finish();
+                    startActivity(getIntent());
+                }
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
