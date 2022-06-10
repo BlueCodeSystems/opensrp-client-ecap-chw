@@ -160,6 +160,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         childId = getIntent().getExtras().getString("Child");
         String hhIntent = getIntent().getExtras().getString("fromHousehold");
+        String csIntent = getIntent().getExtras().getString("fromHousehold");
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
@@ -259,7 +260,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 getIntent().removeExtra("fromHousehold");
                 dialog.cancel();
 
-            }).setPositiveButton("Proceed",((dialogInterface, i) -> {
+            }).setPositiveButton( "Proceed",((dialogInterface, i) -> {
                 getIntent().removeExtra("fromHousehold");
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
@@ -616,6 +617,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
+        i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
         startActivity(i);
     }
 
