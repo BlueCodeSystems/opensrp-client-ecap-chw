@@ -259,7 +259,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 getIntent().removeExtra("fromHousehold");
                 dialog.cancel();
 
-            }).setPositiveButton("Proceed",((dialogInterface, i) -> {
+            }).setPositiveButton( "Proceed",((dialogInterface, i) -> {
                 getIntent().removeExtra("fromHousehold");
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
@@ -595,7 +595,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 {
                     finish();
                     startActivity(getIntent());
-
                 }
                 if(encounterType.equals("Sub Population"))
                 {
@@ -617,6 +616,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
+        i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
         startActivity(i);
     }
 
