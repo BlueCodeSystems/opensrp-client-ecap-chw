@@ -137,6 +137,10 @@
             "text": "Child or caregiver referred to health, legal or other services"
           },
           {
+            "key": "we_services_caregiver",
+            "text": "Caregiver received WE support services"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
@@ -169,35 +173,6 @@
             "ex-rules": {
               "rules-file": "services.yml"
             }
-          }
-        }
-      },
-      {
-        "key": "we_services",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "we_services",
-        "type": "native_radio",
-        "label": "Please indicate if Caregiver is linked to WE Services",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "no",
-            "text": "No"
-          },
-          {
-            "key": "yes",
-            "text": "Yes"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
-        },
-        "relevance": {
-          "step1:services": {
-            "type": "string",
-            "ex": "equalTo(., \"caregiver\")"
           }
         }
       },
