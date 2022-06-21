@@ -74,11 +74,11 @@
         "options": [
           {
             "key": "initial",
-            "text": "Initial"
+            "text": "Initial(Static)"
           },
           {
             "key": "subsequent",
-            "text": "Subsequent"
+            "text": "Subsequent(Active)"
           }
         ],
         "v_required": {
@@ -97,13 +97,13 @@
         "edit_type": "name"
       },
       {
-        "key": "vca_id",
+        "key": "caregiver_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_id",
+        "openmrs_entity_id": "caregiver_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "VCA ID",
+        "hint": "Caregiver ID",
         "edit_type": "name"
       },
       {
@@ -162,16 +162,16 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_member_in_period",
         "type": "native_radio",
-        "label": "Was Participant a member a WE group at some point during the reporting month?",
+        "label": "Was Participant a member of a WE group at some point during the reporting month?",
         "label_text_style": "italic",
         "options": [
           {
-            "key": "no",
-            "text": "No"
-          },
-          {
             "key": "yes",
             "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -195,16 +195,16 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loan_in_period",
         "type": "native_radio",
-        "label": "Was Participant a member of a WE group at some point during the reporting month?",
+        "label": "Did Participant take a loan during the reporting month?",
         "label_text_style": "italic",
         "options": [
           {
-            "key": "no",
-            "text": "No"
-          },
-          {
             "key": "yes",
             "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -216,9 +216,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_member_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -245,9 +245,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -261,9 +261,9 @@
         "hint": "What is the value of the first loan taken?",
         "edit_type": "name",
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -277,9 +277,9 @@
         "hint": "What is the value of the second loan taken?",
         "edit_type": "name",
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loans_taken_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"2\")"
           }
         }
       },
@@ -312,7 +312,7 @@
           },
           {
             "key": "no",
-            "text": "Yes"
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -324,9 +324,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -345,7 +345,7 @@
           },
           {
             "key": "no",
-            "text": "Yes"
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -357,9 +357,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loans_taken_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"2\")"
           }
         }
       },
@@ -378,7 +378,7 @@
           },
           {
             "key": "no",
-            "text": "Yes"
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -390,9 +390,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -411,7 +411,7 @@
           },
           {
             "key": "no",
-            "text": "Yes"
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -423,9 +423,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loans_taken_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"2\")"
           }
         }
       },
@@ -456,9 +456,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -489,9 +489,9 @@
           "err": "This is a Required field."
         },
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loans_taken_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"2\")"
           }
         }
       },
@@ -505,9 +505,9 @@
         "hint": "What type of IGA did you start with your first loan?",
         "edit_type": "name",
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -521,9 +521,9 @@
         "hint": "What type of IGA did you start with your second loan?",
         "edit_type": "name",
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loans_taken_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"2\")"
           }
         }
       },
@@ -537,9 +537,9 @@
         "hint": "What did you use your first loan for?(Excluding school fees, medical expenses and IGAs)",
         "edit_type": "name",
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loan_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -553,9 +553,9 @@
         "hint": "What did you use your second loan for?(Excluding school fees, medical expenses and IGAs)",
         "edit_type": "name",
         "relevance": {
-          "step1:data_collection": {
+          "step1:we_loans_taken_in_period": {
             "type": "string",
-            "ex": "equalTo(., \"subsequent\")"
+            "ex": "equalTo(., \"2\")"
           }
         }
       },
