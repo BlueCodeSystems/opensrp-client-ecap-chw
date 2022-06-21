@@ -98,7 +98,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
+    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
@@ -152,6 +152,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
+        we_service_caregiver = findViewById(R.id.we_service_caregiver);
         chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
@@ -450,7 +451,20 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
+            case R.id.we_service_caregiver:
+                try {
 
+                    indexRegisterForm = formUtils.getFormJson("we_services_caregiver");
+
+                    //TODO
+                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
 
             case R.id.hcase_plan:
                 try {
@@ -1011,6 +1025,7 @@ public class HouseholdDetails extends AppCompatActivity {
             refferal.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
             household_visitation_caregiver.setVisibility(View.VISIBLE);
+            we_service_caregiver.setVisibility(View.VISIBLE);
 
         }
     }
@@ -1026,6 +1041,7 @@ public class HouseholdDetails extends AppCompatActivity {
         refferal.setVisibility(View.GONE);
         child_form.setVisibility(View.GONE);
         household_visitation_caregiver.setVisibility(View.GONE);
+        we_service_caregiver.setVisibility(View.GONE);
     }
 
     public void countNumberOfMales(List<String> allBirthDates){
