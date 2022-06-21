@@ -1,16 +1,9 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,17 +13,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.HouseholdServiceAdapter;
 import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -63,10 +60,12 @@ public class VcaServiceActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView vcaname, hh_id;
+    private TextView vcaname,hh_id;
+
+    private Button hh_services_link;
 
     private Toolbar toolbar;
-    public String hivstatus;
+    public String hivstatus, household_id,c_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +81,20 @@ public class VcaServiceActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.service_container);
         vcaname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
+        hh_services_link = findViewById(R.id.hh_service_link);
+        HouseholdLinkFromVca();
 
         String intent_vcaid = getIntent().getExtras().getString("vcaid");
         String intent_cname = getIntent().getExtras().getString("vcaname");
         hivstatus = getIntent().getExtras().getString("hivstatus");
+        household_id = getIntent().getExtras().getString("hh_id");
+        c_name = getIntent().getExtras().getString("vcaname");
+
+
 
         hh_id.setText(intent_vcaid);
         vcaname.setText(intent_cname);
+
 
         familyServiceList.addAll(IndexPersonDao.getServicesByVCAID(intent_vcaid));
 
@@ -304,4 +310,19 @@ public class VcaServiceActivity extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
+    public void HouseholdLinkFromVca(){
+
+        hh_services_link.setOnClickListener(v->{
+
+            if (v.getId() == R.id.hh_service_link) {
+
+                Intent i = new Intent(this, HouseholdServiceActivity.class);
+                i.putExtra("householdId", household_id);
+                i.putExtra("cname", c_name);
+                startActivity(i);
+
+            }
+
+        });
+    }
 }

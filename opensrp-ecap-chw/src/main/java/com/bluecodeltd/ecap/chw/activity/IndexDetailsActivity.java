@@ -460,6 +460,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(indexVCA.getDate_screened() != null) {
 
                     Intent intent2 = new Intent(this, VcaServiceActivity.class);
+                    intent2.putExtra("hh_id", indexVCA.getHousehold_id());
                     intent2.putExtra("vcaid", indexVCA.getUnique_id());
                     intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
                     intent2.putExtra("vcaname", txtName.getText().toString());
@@ -1047,7 +1048,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             break;
 
                 case "household_visitation_for_vca_0_20_years":
-
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 break;
 

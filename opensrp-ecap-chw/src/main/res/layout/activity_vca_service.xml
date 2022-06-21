@@ -138,7 +138,28 @@
 
             </LinearLayout>
 
+
+
         </RelativeLayout>
+
+        <com.rey.material.widget.Button
+            android:id="@+id/hh_service_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#218CC5"
+            android:onClick="onClick"
+            android:padding="8dp"
+            android:text="View Household Services"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:visibility="visible"
+            app:rd_enable="true"
+            app:rd_rippleType="wave" />
 
         <com.rey.material.widget.Button
             android:layout_alignParentBottom="true"
@@ -158,6 +179,7 @@
             app:rd_enable="true"
             app:rd_rippleType="wave"
             />
+
 
     </RelativeLayout>
 
