@@ -3198,6 +3198,39 @@
       ]
     },
     {
+      "name": "ec_we_services_caregiver",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "caregiver_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_id"
+          }
+        },
+        {
+          "column_name": "date_joined_we",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_joined_we"
+          }
+        }
+        ]
+    },
+    {
       "name": "ec_referral",
       "columns": [
         {
