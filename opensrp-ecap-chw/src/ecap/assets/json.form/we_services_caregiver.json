@@ -55,12 +55,12 @@
     "title": "WE Monitoring Form",
     "fields": [
       {
-        "key": "label1",
+        "key": "hd1",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "label1",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
         "type": "label",
-        "hint": "Part 1"
+        "text": "Part 1"
       },
       {
         "key": "data_collection",
@@ -92,7 +92,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "participant_name",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Participant Name",
         "edit_type": "name"
       },
@@ -102,7 +102,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_id",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Caregiver ID",
         "edit_type": "name"
       },
@@ -112,7 +112,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_group_no",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "WE Group Number",
         "edit_type": "name"
       },
@@ -122,7 +122,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_group_name",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "WE Group Name",
         "edit_type": "name"
       },
