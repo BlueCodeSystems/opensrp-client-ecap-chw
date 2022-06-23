@@ -411,6 +411,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "WE Services Caregiver",
+            "creates_case": [
+              "ec_we_services_caregiver"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "WE Services VCA",
+            "creates_case": [
+              "ec_we_services_vca"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Household Visitation For Caregiver",
             "creates_case": [
               "ec_household_visitation_for_caregiver"
