@@ -55,14 +55,6 @@
     "title": "WE Monitoring Form",
     "fields": [
       {
-        "key": "hd1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Part 1"
-      },
-      {
         "key": "data_collection",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -85,6 +77,14 @@
           "value": true,
           "err": "This is a Required field."
         }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Part 1"
       },
       {
         "key": "participant_name",
@@ -284,12 +284,12 @@
         }
       },
       {
-        "key": "label2",
+        "key": "hd2",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "label2",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd2",
         "type": "label",
-        "hint": "Part 2",
+        "text": "Part 2",
         "relevance": {
           "step1:data_collection": {
             "type": "string",
