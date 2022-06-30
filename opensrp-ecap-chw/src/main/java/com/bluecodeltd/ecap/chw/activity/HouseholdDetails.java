@@ -104,6 +104,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
+    public WeServiceCaregiverModel weServiceCaregiverModel;
     Caregiver caregiver;
 
     ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
@@ -120,8 +121,6 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
-
-    WeServiceCaregiverModel weServiceCaregiverModel;
 
 
     @Override
@@ -202,6 +201,10 @@ public class HouseholdDetails extends AppCompatActivity {
         return  populateMapWithHouse(house);
     }
 
+    public HashMap<String, WeServiceCaregiverModel> getWeServices() {
+        return populateMapWithWeServicesCaregiverModel(weServiceCaregiverModel);
+    }
+
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
@@ -212,6 +215,13 @@ public class HouseholdDetails extends AppCompatActivity {
         HashMap<String, Household> householdHashMap= new HashMap<>();
         householdHashMap.put("house",houseToAdd);
         return householdHashMap;
+    }
+
+    public HashMap<String,WeServiceCaregiverModel> populateMapWithWeServicesCaregiverModel(WeServiceCaregiverModel weServicesToAdd)
+    {
+        HashMap<String, WeServiceCaregiverModel> weServiceCaregiverModelHashMap= new HashMap<>();
+        weServiceCaregiverModelHashMap.put("we services",weServicesToAdd);
+        return weServiceCaregiverModelHashMap;
     }
 
     public HashMap<String, CaregiverAssessmentModel> populateMapWithVulnerabilities(CaregiverAssessmentModel vToAdd)
@@ -738,7 +748,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "WE Services - Caregiver":
 
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "WE form Saved", Toast.LENGTH_LONG, true).show();
+                        Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
@@ -1203,5 +1213,10 @@ public class HouseholdDetails extends AppCompatActivity {
     public Household getHousehold(String householdId)
     {
         return HouseholdDao.getHousehold(householdId);
+    }
+
+    public WeServiceCaregiverModel getWeServiceCaregiverModel(String householdId)
+    {
+        return WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
     }
 }
