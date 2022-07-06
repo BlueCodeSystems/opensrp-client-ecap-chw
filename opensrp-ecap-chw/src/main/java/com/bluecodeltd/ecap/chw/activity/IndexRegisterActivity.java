@@ -4,14 +4,11 @@ import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
-import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP4;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,29 +25,22 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
-import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
-import com.bluecodeltd.ecap.chw.presenter.ChwAllClientRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
-import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
-import org.smartregister.chw.referral.R.id;
 import org.smartregister.client.utils.domain.Form;
-import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.domain.UniqueId;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
@@ -348,7 +338,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
                     uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
 
-                    gotToChildProfile(uniqueId);
+                   gotToChildProfile(uniqueId);
 
                 } else if(Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))){
@@ -470,6 +460,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     public void gotToChildProfile(String id){
         Intent intent = new Intent(this,IndexDetailsActivity.class);
         intent.putExtra("Child",id);
+        intent.putExtra("fromIndex","321");
         finish();
         startActivity(getIntent());
         Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
