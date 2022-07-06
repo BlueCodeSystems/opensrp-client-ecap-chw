@@ -500,6 +500,20 @@
             "creates_case": [
               "ec_grad"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Child Safety Plan",
+            "creates_case": [
+              "ec_child_safely_plan"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Child Safety Actions",
+            "creates_case": [
+              "ec_child_safely_actions"
+            ]
           }
         ]
       }
