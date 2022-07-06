@@ -111,11 +111,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment,fabWeServicesVca;
+    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,weServicesVca;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan;
 
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -162,6 +162,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         childId = getIntent().getExtras().getString("Child");
         String hhIntent = getIntent().getExtras().getString("fromHousehold");
+        if(hhIntent == null){
+            hhIntent = getIntent().getExtras().getString("fromIndex");
+        }
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
@@ -234,8 +237,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
 
 
+
         hiv_assessment = findViewById(R.id.hiv_assessment);
         hiv_assessment2 = findViewById(R.id.hiv_assessment2);
+        childPlan = findViewById(R.id.childPlan);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -252,30 +257,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         int page = getIntent().getIntExtra("tab",0);
         mViewPager.setCurrentItem(page);
 
+createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
 
 
-        if(hhIntent != null && hhIntent.equals("123")){
-            builder.setMessage("Continue with VCA Screening for " + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
-            builder.setNegativeButton("Later", (dialog, id) -> {
-                //  Action for 'NO' Button
-                getIntent().removeExtra("fromHousehold");
-                dialog.cancel();
-
-            }).setPositiveButton( "Proceed",((dialogInterface, i) -> {
-                getIntent().removeExtra("fromHousehold");
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }));
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("VCA Screening");
-            alert.show();
-        }
     }
 
 
@@ -480,6 +464,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(indexVCA.getDate_screened() != null) {
 
                     Intent intent2 = new Intent(this, VcaServiceActivity.class);
+                    intent2.putExtra("hh_id", indexVCA.getHousehold_id());
                     intent2.putExtra("vcaid", indexVCA.getUnique_id());
                     intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
                     intent2.putExtra("vcaname", txtName.getText().toString());
@@ -536,12 +521,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
-            case R.id.we_service:
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
-                }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+            case R.id.childPlan:
+                Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
+                i.putExtra("vca_id", indexVCA.getUnique_id());
+                i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
+                startActivity(i);
                 break;
 
         }
@@ -799,6 +783,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+                case "Child Safety Plan":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -962,6 +958,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
+                childPlan.setVisibility(View.VISIBLE);
+
 
                 if(indexVCA.getIs_hiv_positive() != null){
                     rassessment.setVisibility(View.VISIBLE);
@@ -976,8 +974,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         hiv_assessment2.setVisibility(View.VISIBLE);
                     }
                 }
-
-
             }
             else{
 
@@ -998,6 +994,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         household_visitation_for_vca.setVisibility(View.GONE);
         hiv_assessment.setVisibility(View.GONE);
         hiv_assessment2.setVisibility(View.GONE);
+        childPlan.setVisibility(View.GONE);
+
 
     }
 
@@ -1024,19 +1022,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 //Populate Caseworker Name
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                String caseworkername = sp.getString("phone", "Anonymous");
-
-                JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
-
-                if (ccname != null) {
-                    ccname.remove(JsonFormUtils.VALUE);
-                    try {
-                        ccname.put(JsonFormUtils.VALUE, caseworkername);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                populateCaseworkerPhoneAndName(formToBeOpened);
 
                 if(!indexVCA.getIndex_check_box().equals("1")){
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
@@ -1074,27 +1060,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
             break;
 
                 case "household_visitation_for_vca_0_20_years":
-
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 break;
 
             case "referral":
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
-                //Populate Caseworker Name
-                SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                String caseworkerphone = cp.getString("phone", "Anonymous");
-
-                JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
-
-                if (cphone  != null) {
-                    cphone .remove(JsonFormUtils.VALUE);
-                    try {
-                        cphone .put(JsonFormUtils.VALUE, caseworkerphone);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                populateCaseworkerPhoneAndName(formToBeOpened);
 
               /*  if(referralModel == null){
 
@@ -1154,6 +1127,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 break;
 
+            case "child_safety_plan":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                populateCaseworkerPhoneAndName(formToBeOpened);
+break;
 
     }
 
@@ -1237,5 +1214,73 @@ public class IndexDetailsActivity extends AppCompatActivity {
         this.finish();
 
     }
+ public void createDialogForScreening(String entryPoint, String message){
+        if(entryPoint != null ) {
+            if (entryPoint.equals("123") && is_screened.equals("false")) {
 
+                builder.setMessage(message + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
+                builder.setNegativeButton("Later", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    getIntent().removeExtra("fromHousehold");
+                    dialog.cancel();
+
+                }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
+                    getIntent().removeExtra("fromHousehold");
+                    try {
+                        openFormUsingFormUtils(IndexDetailsActivity.this, "vca_screening");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }));
+                buildDialog();
+
+            } else if (entryPoint.equals("321") && is_screened.equals("false")) {
+                builder.setMessage(Constants.EcapConstants.POP_UP_DIALOG_MESSAGE_FOR_HOUSEHOLD + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
+                builder.setNegativeButton("Later", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    getIntent().removeExtra("fromIndex");
+                    dialog.cancel();
+
+                }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
+                    getIntent().removeExtra("fromIndex");
+                    try {
+                        Intent intent = new Intent(this, HouseholdDetails.class);
+                        intent.putExtra("childId", child.getUnique_id());
+                        intent.putExtra("householdId", child.getHousehold_id());
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
+                buildDialog();
+            }
+
+        }
+
+
+ }
+ public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
+     SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+     String caseworkerphone = cp.getString("phone", "Anonymous");
+
+     JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
+
+     if (cphone  != null) {
+         cphone .remove(JsonFormUtils.VALUE);
+         try {
+             cphone .put(JsonFormUtils.VALUE, caseworkerphone);
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+     }
+
+ }
+
+    public void buildDialog(){
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("VCA Screening");
+        alert.show();
+    }
 }
