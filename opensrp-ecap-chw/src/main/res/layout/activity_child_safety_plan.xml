@@ -116,7 +116,7 @@
                 android:layout_height="match_parent" />
 
             <LinearLayout
-                android:id="@+id/service_container"
+                android:id="@+id/child_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -133,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="No Service Reports have been added"
+                    android:text="No Child Safe Plans have been added"
                     android:textSize="20dp" />
 
             </LinearLayout>
@@ -143,42 +143,25 @@
         </RelativeLayout>
 
         <com.rey.material.widget.Button
-            android:id="@+id/hh_service_link"
+            android:id="@+id/child_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="#218CC5"
             android:onClick="onClick"
             android:padding="8dp"
-            android:text="View Household Services"
+            android:text="Add Child Safe Plan"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:visibility="visible"
             app:rd_enable="true"
             app:rd_rippleType="wave" />
-
-        <com.rey.material.widget.Button
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:visibility="visible"
-            android:layout_margin="10dp"
-            android:id="@+id/services1"
-            android:onClick="onClick"
-            android:background="#218CC5"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Service Report"
-            android:textColor="@android:color/white"
-            android:textAllCaps="false"
-            app:rd_enable="true"
-            app:rd_rippleType="wave"
-            />
 
 
     </RelativeLayout>

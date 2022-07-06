@@ -7,6 +7,7 @@ import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,17 +16,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
+import com.bluecodeltd.ecap.chw.adapter.ChildSafetyPlanAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.ChildSafetyPlanDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.ChildSafetyPlanModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -54,23 +56,22 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class VcaServiceActivity extends AppCompatActivity {
+public class ChildSafetyPlanActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
+    private ArrayList<ChildSafetyPlanModel> childSafetyPlanList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView vcaname,hh_id;
 
-    private Button hh_services_link;
-
     private Toolbar toolbar;
-    public String hivstatus, household_id,c_name;
+    public String hivstatus, household_id, intent_vcaid;
+    private Button child_plan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vca_service);
+        setContentView(R.layout.activity_child_safety_plan);
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
@@ -78,31 +79,25 @@ public class VcaServiceActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
 
         recyclerView = findViewById(R.id.hhrecyclerView);
-        linearLayout = findViewById(R.id.service_container);
+        linearLayout = findViewById(R.id.child_container);
         vcaname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
-        hh_services_link = findViewById(R.id.hh_service_link);
-        HouseholdLinkFromVca();
+        child_plan = findViewById(R.id.child_plan);
 
-        String intent_vcaid = getIntent().getExtras().getString("vcaid");
-        String intent_cname = getIntent().getExtras().getString("vcaname");
-        hivstatus = getIntent().getExtras().getString("hivstatus");
-        household_id = getIntent().getExtras().getString("hh_id");
-        c_name = getIntent().getExtras().getString("vcaname");
+        intent_vcaid = getIntent().getExtras().getString("vca_id");
+        String intent_cname = getIntent().getExtras().getString("vca_name");
 
 
-
-        hh_id.setText(intent_vcaid);
+        hh_id.setText("VCA ID : " + intent_vcaid);
         vcaname.setText(intent_cname);
 
+        childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
 
-        familyServiceList.addAll(IndexPersonDao.getServicesByVCAID(intent_vcaid));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ChildSafetyPlanActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
+        recyclerViewadapter = new ChildSafetyPlanAdapter(childSafetyPlanList, ChildSafetyPlanActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
@@ -124,19 +119,16 @@ public class VcaServiceActivity extends AppCompatActivity {
 
 
         switch (id) {
-            case R.id.services1:
+            case R.id.child_plan:
 
                 try {
                     FormUtils formUtils = new FormUtils(this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("service_report_vca");
-
+                    indexRegisterForm = formUtils.getFormJson("child_safety_plan");
+                    populateCaseworkerPhoneAndName(indexRegisterForm);
                     JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",hh_id.getText().toString());
-
-                    JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                    hiv.put("value",hivstatus);
+                    cId.put("value",intent_vcaid);
 
 
                     startFormActivity(indexRegisterForm);
@@ -153,7 +145,7 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName("Service Report");
+        form.setName("Child Safety Plan");
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
@@ -172,21 +164,10 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
-            boolean is_edit_mode = false;
+
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
-            try {
-                jsonFormObject = new JSONObject(jsonString);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
-                is_edit_mode = true;
-            }
 
             try {
 
@@ -196,9 +177,9 @@ public class VcaServiceActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
 
 
             } catch (Exception e) {
@@ -227,7 +208,7 @@ public class VcaServiceActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
+            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
             tagSyncMetadata(event);
             Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
             return new ChildIndexEventClient(event, client);
@@ -309,20 +290,35 @@ public class VcaServiceActivity extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+    public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
+        SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(ChildSafetyPlanActivity.this);
+        String caseworkerphone = cp.getString("phone", "Anonymous");
 
-    public void HouseholdLinkFromVca(){
+        JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
 
-        hh_services_link.setOnClickListener(v->{
-
-            if (v.getId() == R.id.hh_service_link) {
-
-                Intent i = new Intent(this, HouseholdServiceActivity.class);
-                i.putExtra("householdId", household_id);
-                i.putExtra("cname", c_name);
-                startActivity(i);
-
+        if (cphone  != null) {
+            cphone .remove(JsonFormUtils.VALUE);
+            try {
+                cphone .put(JsonFormUtils.VALUE, caseworkerphone);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+        }
 
-        });
+        //Populate Caseworker Name
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ChildSafetyPlanActivity.this);
+        String caseworker = sp.getString("caseworker_name", "Anonymous");
+
+        JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step1"), "caseworker_name");
+
+        if (ccname != null) {
+            ccname.remove(JsonFormUtils.VALUE);
+            try {
+                ccname.put(JsonFormUtils.VALUE, caseworker);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

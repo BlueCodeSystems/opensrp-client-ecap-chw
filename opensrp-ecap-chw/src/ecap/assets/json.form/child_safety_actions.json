@@ -1,0 +1,131 @@
+{
+  "validate_on_submit": true,
+  "count": "1",
+  "encounter_type": "Child Safety Actions",
+  "entity_id": "",
+  "relational_id": "",
+  "form_version": "0.0.1",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Child Safety Actions",
+    "fields": [
+      {
+        "key": "initial_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "initial_date",
+        "type": "date_picker",
+        "hint": "Initial Intake Date",
+        "expanded": false,
+        "read_only": true,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": false,
+          "err": "Initial Intake Date"
+        }
+      },
+      {
+        "key": "safety_threats",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safety_threats",
+        "type": "edit_text",
+        "hint": "What are the specific concerns related to child safety?\nDescribe safety threats."
+      },
+      {
+        "key": "safety_action",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safety_action",
+        "type": "edit_text",
+        "hint": "SAFETY ACTIONS:\nWhat specific actions have or will have to be taken to provide immediate child protection?",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_safety_plan.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "safety_protection",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safety_protection",
+        "type": "edit_text",
+        "hint": "ABILITY TO IMMEDIATELY PROTECT:\nHow do these actions directly provide child protection?",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_safety_plan.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "safety_plans",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safety_plans",
+        "type": "edit_text",
+        "hint": "MONITORING PLANS:\nHow will these actions be confirmed",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_safety_plan.yml"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

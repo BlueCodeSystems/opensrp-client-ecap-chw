@@ -382,6 +382,25 @@
         }
       },
       {
+        "key": "schoolName",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "schoolName",
+        "type": "edit_text",
+        "hint": "Name of School",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "School name can only contain letters"
+        },
+        "relevance": {
+          "step1:school": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
