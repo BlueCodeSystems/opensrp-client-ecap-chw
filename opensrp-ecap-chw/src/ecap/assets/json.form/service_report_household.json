@@ -137,6 +137,10 @@
             "text": "Child or caregiver referred to health, legal or other services"
           },
           {
+            "key": "we_services_caregiver",
+            "text": "Caregiver received WE support services"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
