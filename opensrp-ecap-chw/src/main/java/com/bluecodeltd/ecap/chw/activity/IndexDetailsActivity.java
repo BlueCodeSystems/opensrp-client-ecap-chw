@@ -111,11 +111,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
+    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment,fabWeServicesVca;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,weServicesVca;
 
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -532,6 +532,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.hiv_assessment2:
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
+                }else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
+            case R.id.we_service:
+                if(indexVCA.getDate_screened() != null) {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
                 }else{
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
