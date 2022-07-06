@@ -1,0 +1,170 @@
+{
+  "validate_on_submit": true,
+  "count": "1",
+  "encounter_type": "Child Safety Plan",
+  "entity_id": "",
+  "relational_id": "",
+  "form_version": "0.0.1",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Child Safety Plan",
+    "fields": [
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Edited By",
+        "read_only": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Caseworker Phone",
+        "edit_type": "number",
+        "read_only": true,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "date_edited_check",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited_check",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "hint": "Info Last Edited",
+        "read_only": "true",
+        "look_up": "true",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "initial_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "initial_date",
+        "type": "date_picker",
+        "max_date": "today",
+        "min_date": "today-100y",
+        "hint": "Initial Intake Date",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": true,
+          "err": "Initial intake date is required"
+        }
+      },
+      {
+        "key": "completion_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "completion_date",
+        "type": "date_picker",
+        "hint": "Date of Completion",
+        "max_date": "today",
+        "min_date": "today-100y",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": false,
+          "err": "Date of Completion"
+        }
+      }
+    ]
+  }
+}

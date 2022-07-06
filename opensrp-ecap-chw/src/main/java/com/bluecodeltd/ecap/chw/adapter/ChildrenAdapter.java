@@ -244,6 +244,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     if(Integer.parseInt(memberAge) < 20){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
+                        intent.putExtra("fromIndex", "321");
                         intent.putExtra("Child",  child.getUnique_id());
                         context.startActivity(intent);
 

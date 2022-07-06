@@ -9,23 +9,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -33,7 +27,6 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -54,68 +47,48 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class VcaServiceActivity extends AppCompatActivity {
+public class ChildSafetyPlanActions extends AppCompatActivity {
+
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
-    private LinearLayout linearLayout;
-    private TextView vcaname,hh_id;
-
-    private Button hh_services_link;
-
-    private Toolbar toolbar;
-    public String hivstatus, household_id,c_name;
+    private ArrayList<ChildSafetyActionModel> actionList = new ArrayList<>();
+    private Button actionBtn, actionBtn2;
+    String childId, actionDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vca_service);
+        setContentView(R.layout.activity_child_safety_actions);
 
-        toolbar = findViewById(R.id.toolbarx);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        NavigationMenu.getInstance(this, null, toolbar);
+        recyclerView = findViewById(R.id.actionrecyclerView);
+        actionBtn = findViewById(R.id.actionBtn);
+        actionBtn2 = findViewById(R.id.actionBtn2);
 
-        recyclerView = findViewById(R.id.hhrecyclerView);
-        linearLayout = findViewById(R.id.service_container);
-        vcaname = findViewById(R.id.caregiver_name);
-        hh_id = findViewById(R.id.hhid);
-        hh_services_link = findViewById(R.id.hh_service_link);
-        HouseholdLinkFromVca();
+//        childId = getIntent().getExtras().getString("childId");
+//        actionDate = getIntent().getExtras().getString("dateId");
 
-        String intent_vcaid = getIntent().getExtras().getString("vcaid");
-        String intent_cname = getIntent().getExtras().getString("vcaname");
-        hivstatus = getIntent().getExtras().getString("hivstatus");
-        household_id = getIntent().getExtras().getString("hh_id");
-        c_name = getIntent().getExtras().getString("vcaname");
+       // fetchData();
 
-
-
-        hh_id.setText(intent_vcaid);
-        vcaname.setText(intent_cname);
-
-
-        familyServiceList.addAll(IndexPersonDao.getServicesByVCAID(intent_vcaid));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+
+    public void fetchData(){
+
+      //  actionList.addAll(ChildSafetyActionDao.getChildSafetyActionModel(childId, actionDate));
+
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ChildSafetyPlanActions.this);
+//////        recyclerView.setHasFixedSize(true);
+//////        recyclerView.setLayoutManager(eLayoutManager);
+//////        recyclerView.setItemAnimator(new DefaultItemAnimator());
+////        //recyclerViewadapter = new DomainPlanAdapter(actionList, ChildSafetyPlanActions.this);
+////        recyclerView.setAdapter(recyclerViewadapter);
+////        recyclerViewadapter.notifyDataSetChanged();
+//
+//        if (recyclerViewadapter.getItemCount() > 0 && actionList.size() > 0){
+//
+//            actionBtn.setVisibility(View.GONE);
+//            actionBtn2.setVisibility(View.VISIBLE);
+//        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -124,20 +97,22 @@ public class VcaServiceActivity extends AppCompatActivity {
 
 
         switch (id) {
-            case R.id.services1:
+            case R.id.actionBtn:
+            case R.id.actionBtn2:
 
                 try {
-                    FormUtils formUtils = new FormUtils(this);
+                    FormUtils formUtils = new FormUtils(ChildSafetyPlanActions.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("service_report_vca");
+                    indexRegisterForm = formUtils.getFormJson("child_safety_actions");
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
+                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", actionDate);
 
                     JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",hh_id.getText().toString());
+                    cId.put("value",childId);
 
-                    JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                    hiv.put("value",hivstatus);
-
+                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                    cDate.put("value", actionDate);
 
                     startFormActivity(indexRegisterForm);
 
@@ -153,20 +128,21 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName("Service Report");
+        form.setName("Safety Plan");
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
         form.setSaveLabel(getString(R.string.submit));
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setNavigationBackground(R.color.primary);
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -184,10 +160,6 @@ public class VcaServiceActivity extends AppCompatActivity {
             }
 
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
-                is_edit_mode = true;
-            }
-
             try {
 
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
@@ -196,9 +168,9 @@ public class VcaServiceActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
 
 
             } catch (Exception e) {
@@ -222,16 +194,26 @@ public class VcaServiceActivity extends AppCompatActivity {
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
-            tagSyncMetadata(event);
-            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-            return new ChildIndexEventClient(event, client);
+            switch (encounterType) {
+                case "Domain":
 
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN_DOMAIN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+            }
         } catch (JSONException e) {
             Timber.e(e);
         }
@@ -255,7 +237,8 @@ public class VcaServiceActivity extends AppCompatActivity {
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
                     if (isEditMode) {
-                        JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -277,7 +260,9 @@ public class VcaServiceActivity extends AppCompatActivity {
                     Timber.e(e);
                 }
             }
+
         };
+
 
         try {
             AppExecutors appExecutors = new AppExecutors();
@@ -310,19 +295,5 @@ public class VcaServiceActivity extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
-    public void HouseholdLinkFromVca(){
 
-        hh_services_link.setOnClickListener(v->{
-
-            if (v.getId() == R.id.hh_service_link) {
-
-                Intent i = new Intent(this, HouseholdServiceActivity.class);
-                i.putExtra("householdId", household_id);
-                i.putExtra("cname", c_name);
-                startActivity(i);
-
-            }
-
-        });
-    }
 }
