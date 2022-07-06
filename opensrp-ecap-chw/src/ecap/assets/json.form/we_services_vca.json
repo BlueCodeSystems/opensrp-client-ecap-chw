@@ -1,0 +1,665 @@
+{
+  "count": "1",
+  "encounter_type": "WE Services VCA",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "WE Monitoring Form",
+    "fields": [
+      {
+        "key": "label1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "label1",
+        "type": "label",
+        "hint": "Part 1"
+      },
+      {
+        "key": "data_collection",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "data_collection",
+        "type": "native_radio",
+        "value": "initial",
+        "label": "Initial or Subsequent WE data collection",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "initial",
+            "text": "Initial(Static)"
+          },
+          {
+            "key": "subsequent",
+            "text": "Subsequent(Active)"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "participant_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "participant_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Participant Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "caregiver_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Caregiver ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "we_group_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_group_no",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "WE Group Number",
+        "edit_type": "name"
+      },
+      {
+        "key": "we_group_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_group_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "WE Group Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "date_joined_we",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_joined_we",
+        "type": "date_picker",
+        "hint": "Date when Participant joined WE",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "reporting_month",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reporting_month",
+        "type": "date_picker",
+        "hint": "Reporting month/year (not month of data collection)",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:data_collection": {
+            "type": "string",
+            "ex": "equalTo(., \"subsequent\")"
+          }
+        }
+      },
+      {
+        "key": "we_member_in_period",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_member_in_period",
+        "type": "native_radio",
+        "label": "Was Participant a member of a WE group at some point during the reporting month?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:data_collection": {
+            "type": "string",
+            "ex": "equalTo(., \"subsequent\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan_in_period",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan_in_period",
+        "type": "native_radio",
+        "label": "Did Participant take a loan during the reporting month?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_member_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loans_taken_in_period",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loans_taken_in_period",
+        "type": "native_radio",
+        "label": "Number of WE loans taken by participant in period",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "1",
+            "text": "1"
+          },
+          {
+            "key": "2",
+            "text": "2"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan_value1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan_value1",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "What is the value of the first loan taken?",
+        "edit_type": "name",
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan_value2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan_value2",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "What is the value of the second loan taken?",
+        "edit_type": "name",
+        "relevance": {
+          "step1:we_loans_taken_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"2\")"
+          }
+        }
+      },
+      {
+        "key": "label2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "label2",
+        "type": "label",
+        "hint": "Part 2",
+        "relevance": {
+          "step1:data_collection": {
+            "type": "string",
+            "ex": "equalTo(., \"subsequent\")"
+          }
+        }
+      },
+      {
+        "key": "we_loans1_on_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loans1_on_school",
+        "type": "native_radio",
+        "label": "Did you use any of the first loan funds to pay for school fees?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loans2_on_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loans2_on_school",
+        "type": "native_radio",
+        "label": "Did you use any of the second loan funds to pay for school fees?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loans_taken_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"2\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan1_on_medical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan1_on_medical",
+        "type": "native_radio",
+        "label": "Did you use any of the first loan funds to pay for medical expenses?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan2_on_medical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan2_on_medical",
+        "type": "native_radio",
+        "label": "Did you use any of the second loan funds to pay for medical expenses?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loans_taken_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"2\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan1_on_iga",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan1_on_iga",
+        "type": "native_radio",
+        "label": "Did you use the first loan to start an IGA?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "Yes"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan2_on_iga",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan2_on_iga",
+        "type": "native_radio",
+        "label": "Did you use the second loan to start an IGA?",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "Yes"
+          },
+          {
+            "key": "unknown",
+            "text": "I don't know/No answer"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:we_loans_taken_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"2\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan1_iga_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan1_iga_type",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "What type of IGA did you start with your first loan?",
+        "edit_type": "name",
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan2_iga_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan2_iga_type",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "What type of IGA did you start with your second loan?",
+        "edit_type": "name",
+        "relevance": {
+          "step1:we_loans_taken_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"2\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan1_use",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan1_use",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "What did you use your first loan for?(Excluding school fees, medical expenses and IGAs)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:we_loan_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "we_loan2_use",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_loan2_use",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "What did you use your second loan for?(Excluding school fees, medical expenses and IGAs)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:we_loans_taken_in_period": {
+            "type": "string",
+            "ex": "equalTo(., \"2\")"
+          }
+        }
+      },
+      {
+        "key": "sold_items",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sold_items",
+        "label": "Tick any of the items(productive assets) below that you had to sell",
+        "label_info_text": "Tick (x) items that you had to sell.",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "bicycle",
+            "text": "Bicycle"
+          },
+          {
+            "key": "oxcart",
+            "text": "Ox-Cart"
+          },
+          {
+            "key": "plough",
+            "text": "Plough"
+          },
+          {
+            "key": "harrow",
+            "text": "Ox-Drawn Harrow"
+          },
+          {
+            "key": "hammer_mill",
+            "text": "Hammer Mill"
+          },
+          {
+            "key": "treadle_pump",
+            "text": "Treadle Pump"
+          },
+          {
+            "key": "canoe_boat",
+            "text": "Canoe/Boat"
+          },
+          {
+            "key": "fishing_net",
+            "text": "Fishing Net"
+          },
+          {
+            "key": "axe",
+            "text": "Axe"
+          },
+          {
+            "key": "hoe",
+            "text": "Hoe"
+          },
+          {
+            "key": "cattle",
+            "text": "Cattle"
+          },
+          {
+            "key": "sheep",
+            "text": "Sheep"
+          },
+          {
+            "key": "pigs",
+            "text": "Pigs"
+          },
+          {
+            "key": "poultry",
+            "text": "Poultry"
+          },
+          {
+            "key": "other",
+            "text": "Other: Specify"
+          }
+        ],
+        "relevance": {
+          "step1:data_collection": {
+            "type": "string",
+            "ex": "equalTo(., \"subsequent\")"
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "other_sold_item",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_sold_item",
+        "type": "edit_text",
+        "hint": "Specify any other productive asset that was sold",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
