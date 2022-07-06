@@ -143,23 +143,25 @@
         </RelativeLayout>
 
         <com.rey.material.widget.Button
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:visibility="visible"
-            android:layout_margin="10dp"
             android:id="@+id/child_plan"
-            android:onClick="onClick"
-            android:background="#218CC5"
-            android:padding="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Child Safe Plan Actions"
-            android:textColor="@android:color/white"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#218CC5"
+            android:onClick="onClick"
+            android:padding="8dp"
+            android:text="Add Child Safe Plan"
             android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:visibility="visible"
             app:rd_enable="true"
-            app:rd_rippleType="wave"
-            />
+            app:rd_rippleType="wave" />
 
 
     </RelativeLayout>
