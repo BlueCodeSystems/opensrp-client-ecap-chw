@@ -6186,6 +6186,188 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_child_safely_plan",
+      "columns": [
+
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+
+        {
+          "column_name": "initial_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initial_date"
+          }
+        },
+        {
+          "column_name": "completion_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.completion_date"
+          }
+        },
+        {
+          "column_name": "safety_threats",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_threats"
+          }
+        },
+        {
+          "column_name": "safety_action",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_action"
+          }
+        },
+        {
+          "column_name": "safety_protection",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_protection"
+          }
+        },
+        {
+          "column_name": "safety_plans",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_plans"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_child_safely_actions",
+      "columns": [
+
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+
+        {
+          "column_name": "initial_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initial_date"
+          }
+        },
+        {
+          "column_name": "completion_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.completion_date"
+          }
+        },
+        {
+          "column_name": "safety_threats",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_threats"
+          }
+        },
+        {
+          "column_name": "safety_action",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_action"
+          }
+        },
+        {
+          "column_name": "safety_protection",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_protection"
+          }
+        },
+        {
+          "column_name": "safety_plans",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safety_plans"
+          }
+        }
+      ]
     }
   ]
 }

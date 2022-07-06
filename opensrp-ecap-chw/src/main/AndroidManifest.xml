@@ -41,6 +41,12 @@
             android:name=".activity.VcaServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar"/>
         <activity
+            android:name=".activity.ChildSafetyPlanActivity"
+            android:theme="@style/ChwTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.ChildSafetyPlanActions"
+            android:theme="@style/ChwTheme.NoActionBar"/>
+        <activity
             android:name=".activity.HouseholdServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
