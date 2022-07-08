@@ -3222,6 +3222,90 @@
           "json_mapping": {
             "field": "attributes.we_loan_value2"
           }
+        },
+        {
+          "column_name": "we_loans1_on_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans1_on_school"
+          }
+        },
+        {
+          "column_name": "we_loans2_on_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans2_on_school"
+          }
+        },
+        {
+          "column_name": "we_loans1_on_medical",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans1_on_medical"
+          }
+        },
+        {
+          "column_name": "we_loans2_on_medical",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans2_on_medical"
+          }
+        },
+        {
+          "column_name": "we_loan1_on_iga",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan1_on_iga"
+          }
+        },
+        {
+          "column_name": "we_loan2_on_iga",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan2_on_iga"
+          }
+        },
+        {
+          "column_name": "we_loan1_iga_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan1_iga_type"
+          }
+        },
+        {
+          "column_name": "we_loan2_iga_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan2_iga_type"
+          }
+        },
+        {
+          "column_name": "we_loan1_use",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan1_use"
+          }
+        },
+        {
+          "column_name": "we_loan2_use",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan2_use"
+          }
+        },
+        {
+          "column_name": "sold_items",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sold_items"
+          }
+        },
+        {
+          "column_name": "other_sold_item",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_sold_item"
+          }
         }
       ]
     },
@@ -3324,6 +3408,90 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.we_loan_value2"
+          }
+        },
+        {
+          "column_name": "we_loans1_on_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans1_on_school"
+          }
+        },
+        {
+          "column_name": "we_loans2_on_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans2_on_school"
+          }
+        },
+        {
+          "column_name": "we_loans1_on_medical",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans1_on_medical"
+          }
+        },
+        {
+          "column_name": "we_loans2_on_medical",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loans2_on_medical"
+          }
+        },
+        {
+          "column_name": "we_loan1_on_iga",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan1_on_iga"
+          }
+        },
+        {
+          "column_name": "we_loan2_on_iga",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan2_on_iga"
+          }
+        },
+        {
+          "column_name": "we_loan1_iga_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan1_iga_type"
+          }
+        },
+        {
+          "column_name": "we_loan2_iga_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan2_iga_type"
+          }
+        },
+        {
+          "column_name": "we_loan1_use",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan1_use"
+          }
+        },
+        {
+          "column_name": "we_loan2_use",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_loan2_use"
+          }
+        },
+        {
+          "column_name": "sold_items",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sold_items"
+          }
+        },
+        {
+          "column_name": "other_sold_item",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_sold_item"
           }
         }
       ]
