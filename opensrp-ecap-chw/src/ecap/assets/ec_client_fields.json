@@ -6188,7 +6188,7 @@
       ]
     },
     {
-      "name": "ec_child_safely_plan",
+      "name": "ec_child_safety_plan",
       "columns": [
 
         {
@@ -6279,28 +6279,15 @@
       ]
     },
     {
-      "name": "ec_child_safely_actions",
+      "name": "ec_child_safety_actions",
       "columns": [
 
-        {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_id"
-          }
-        },
+
         {
           "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
-          }
-        },
-        {
-          "column_name": "caseworker_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_name"
           }
         },
         {
@@ -6311,32 +6298,10 @@
           }
         },
         {
-          "column_name": "phone",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.phone"
-          }
-        },
-        {
-          "column_name": "date_edited",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_edited"
-          }
-        },
-
-        {
           "column_name": "initial_date",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.initial_date"
-          }
-        },
-        {
-          "column_name": "completion_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.completion_date"
           }
         },
         {

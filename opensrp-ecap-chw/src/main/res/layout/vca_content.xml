@@ -535,10 +535,11 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+                    app:srcCompat="@drawable/child_safety_plan" />
 
             </RelativeLayout>
         </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
