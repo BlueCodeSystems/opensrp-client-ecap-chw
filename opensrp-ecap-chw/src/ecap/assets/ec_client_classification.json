@@ -505,14 +505,14 @@
             "field": "eventType",
             "field_value": "Child Safety Plan",
             "creates_case": [
-              "ec_child_safely_plan"
+              "ec_child_safety_plan"
             ]
           },
           {
             "field": "eventType",
             "field_value": "Child Safety Actions",
             "creates_case": [
-              "ec_child_safely_actions"
+              "ec_child_safety_actions"
             ]
           }
         ]
