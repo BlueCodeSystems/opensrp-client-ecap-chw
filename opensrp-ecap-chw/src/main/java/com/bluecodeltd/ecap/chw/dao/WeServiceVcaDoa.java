@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -10,7 +9,7 @@ import java.util.List;
 public class WeServiceVcaDoa extends AbstractDao {
     public static WeServiceVcaModel getWeServiceVca (String householdID) {
 
-        String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "' ";
+        String sql = "SELECT * FROM ec_we_services_vca WHERE household_id = '" + householdID + "' ";
 
         List<WeServiceVcaModel> values = AbstractDao.readData(sql, getWeServiceVcaMap());
 

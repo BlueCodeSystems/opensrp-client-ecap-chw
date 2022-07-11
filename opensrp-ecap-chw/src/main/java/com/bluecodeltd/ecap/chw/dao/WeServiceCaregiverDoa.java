@@ -9,7 +9,7 @@ import java.util.List;
 public class WeServiceCaregiverDoa extends AbstractDao {
     public static WeServiceCaregiverModel getWeServiceCaregiver (String householdID) {
 
-        String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "' ";
+        String sql = "SELECT * FROM ec_we_services_caregiver WHERE household_id = '" + householdID + "' ";
 
         List<WeServiceCaregiverModel> values = AbstractDao.readData(sql, getWeServiceCaregiverMap());
 
@@ -17,8 +17,6 @@ public class WeServiceCaregiverDoa extends AbstractDao {
             return null;
         }
 
-
-        //return values.get(0);
         return values.get(0);
     }
 
