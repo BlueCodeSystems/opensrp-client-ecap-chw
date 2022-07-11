@@ -49,5 +49,4 @@ public class WeServiceCaregiverDoa extends AbstractDao {
             return record;
         };
     }
-
 }
