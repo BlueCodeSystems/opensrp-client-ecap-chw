@@ -20,6 +20,62 @@ condition: "step3_virally_suppressed.contains('no')"
 actions:
   - "isRelevant = true"
 ---
+name: step6_toaster_bench_5
+description: step6_toaster_bench_5
+priority: 1
+condition: "step6_school_fees.contains('yes') && step6_medical_costs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_toaster_bench_5_no
+description: step6_toaster_bench_5_no
+priority: 1
+condition: "step6_school_fees.contains('no') || step6_medical_costs.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_toaster_bench_4
+description: step5_toaster_bench_4
+priority: 1
+condition: "step5_undernourished.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_toaster_bench_4_no
+description: step5_toaster_bench_4_no
+priority: 1
+condition: "step5_undernourished.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_toaster_bench_7
+description: step6_toaster_bench_7
+priority: 1
+condition: "step5_undernourished.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_toaster_bench_4_no
+description: step5_toaster_bench_4_no
+priority: 1
+condition: "step5_undernourished.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_bench_6
+description: step7_toaster_bench_6
+priority: 1
+condition: "step7_record_abuse.contains('no') && step7_caregiver_beaten.contains('no') && step7_child_beaten.contains('no') && step7_aware_sexual.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_bench_6_no
+description: step7_toaster_bench_6_no
+priority: 1
+condition: "step7_record_abuse.contains('yes') || step7_caregiver_beaten.contains('yes') || step7_child_beaten.contains('yes') || step7_aware_sexual.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step4_toaster_bench_3
 description: step4_toaster_bench_3
 priority: 1
