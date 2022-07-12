@@ -110,3 +110,17 @@ priority: 1
 condition: "!step3_school_fees.contains('yes') || !step3_medical_costs.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step9_toaster_bench_8
+description: step8_toaster_bench_8
+priority: 1
+condition: "step9_in_school.contains('yes') && step9_year_school.contains('yes') && step9_repeat_school.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step9_toaster_bench_8_no
+description: toaster_bench_8
+priority: 1
+condition: "step9_in_school.contains('no') || step9_year_school.contains('no') || step9_repeat_school.contains('no')"
+actions:
+  - "isRelevant = true"
