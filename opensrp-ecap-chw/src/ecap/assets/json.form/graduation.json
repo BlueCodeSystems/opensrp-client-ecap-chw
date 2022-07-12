@@ -390,7 +390,7 @@
         "type": "toaster_notes",
         "text": "Benchmark 3 has not been met.",
         "toaster_type": "problem",
-        "toaster_info_text": "Benchmark 3 has not been met, because both questions have not been answered yes.",
+        "toaster_info_text": "Benchmark 3 has not been met. Please Refer to the Graduation Icon in the list of Household Members in the Household Profile",
         "toaster_info_title": "Benchmark 3",
         "relevance": {
           "rules-engine": {
@@ -405,17 +405,17 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
-        "type": "hidden",
-        "text": "Questions on immunization do not apply to this family member. Please Proceed.",
+        "type": "toaster_notes",
+        "text": "Questions do not apply to this family. Please proceed.",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "Questions on Immunization do not apply to this family member. Please Proceed.",
+        "toaster_info_text": "Questions do not apply to this family. Please proceed.",
         "toaster_info_title": "Benchmark 3: Knowledgeable about HIV prevention",
         "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "family_member_relevance.yml"
+              "rules-file": "graduation_assessment.yml"
             }
           }
         }
@@ -434,7 +434,6 @@
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
         "type": "native_radio",
-        "read_only" : true,
         "label": "Is Benchmark 4 met?",
         "options": [
           {
@@ -446,6 +445,42 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "toaster_bench_4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 4 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "Benchmark 4 has been met.",
+        "toaster_info_title": "Benchmark 4",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_4_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 4 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 4 has not been met, because some children in the family (registered in the project) are undernourished,",
+        "toaster_info_title": "Benchmark 4",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   },
@@ -498,6 +533,42 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "toaster_bench_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 5 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "Benchmark 5 has been met.",
+        "toaster_info_title": "Benchmark 5",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_5_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 5 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 5 has not been met, because both questions have not been answered yes.",
+        "toaster_info_title": "Benchmark 5",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   },
@@ -602,6 +673,42 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "toaster_bench_6",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 6 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "Benchmark 6 has been met.",
+        "toaster_info_title": "Benchmark 6",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_6_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 6 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 6 has not been met, because Questions 6.1, 6.2, 6.3, are all answered 'no', or there is sign of violence in the household in the past 6 months.",
+        "toaster_info_title": "Benchmark 6",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   },
@@ -636,6 +743,42 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "toaster_bench_7",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 7 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "Benchmark 7 has been met.",
+        "toaster_info_title": "Benchmark 7",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_7_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 7 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 7 has not been met",
+        "toaster_info_title": "Benchmark 7",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   },

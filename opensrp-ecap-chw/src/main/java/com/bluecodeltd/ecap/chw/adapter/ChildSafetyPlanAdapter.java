@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,10 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
 
         holder.linearLayout.setOnClickListener(v -> {
             Intent i = new Intent(context, ChildSafetyPlanActions.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("child_ID",plan.getUnique_id());
+            bundle.putString("action_date",plan.getInitial_date());
+            i.putExtras(bundle);
             context.startActivity(i);
         });
     }

@@ -49,7 +49,7 @@ public class HouseholdChildrenFragment extends Fragment {
             nutritionWarning = caregiverAssessmentModel.getHousehold_eaten_month();
         }
 
-        if(nutritionWarning != null && (nutritionWarning.equals("sometimes") || nutritionWarning.equals("warning"))){
+        if(nutritionWarning != null && (nutritionWarning.equals("sometimes") || nutritionWarning.equals("Rarely (once or twice)"))){
 
             muacScore = "1";
 

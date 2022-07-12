@@ -12,12 +12,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.adapter.ChildSafetyActionAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.ChildSafetyActionDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -64,31 +67,31 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         recyclerView = findViewById(R.id.actionrecyclerView);
         actionBtn = findViewById(R.id.actionBtn);
         actionBtn2 = findViewById(R.id.actionBtn2);
+        Bundle bundle = getIntent().getExtras();
+        childId = bundle.getString("child_ID");
+        actionDate = bundle.getString("action_date");
 
-//        childId = getIntent().getExtras().getString("childId");
-//        actionDate = getIntent().getExtras().getString("dateId");
-
-       // fetchData();
+        fetchData();
 
     }
 
     public void fetchData(){
 
-      //  actionList.addAll(ChildSafetyActionDao.getChildSafetyActionModel(childId, actionDate));
+        actionList.addAll(ChildSafetyActionDao.getActionsById(childId, actionDate));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ChildSafetyPlanActions.this);
-//////        recyclerView.setHasFixedSize(true);
-//////        recyclerView.setLayoutManager(eLayoutManager);
-//////        recyclerView.setItemAnimator(new DefaultItemAnimator());
-////        //recyclerViewadapter = new DomainPlanAdapter(actionList, ChildSafetyPlanActions.this);
-////        recyclerView.setAdapter(recyclerViewadapter);
-////        recyclerViewadapter.notifyDataSetChanged();
-//
-//        if (recyclerViewadapter.getItemCount() > 0 && actionList.size() > 0){
-//
-//            actionBtn.setVisibility(View.GONE);
-//            actionBtn2.setVisibility(View.VISIBLE);
-//        }
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewadapter = new ChildSafetyActionAdapter(actionList, ChildSafetyPlanActions.this);
+        recyclerView.setAdapter(recyclerViewadapter);
+        recyclerViewadapter.notifyDataSetChanged();
+
+        if (recyclerViewadapter.getItemCount() > 0 && actionList.size() > 0){
+
+            actionBtn.setVisibility(View.GONE);
+            actionBtn2.setVisibility(View.VISIBLE);
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -104,15 +107,16 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
                     FormUtils formUtils = new FormUtils(ChildSafetyPlanActions.this);
                     JSONObject indexRegisterForm;
 
-                    indexRegisterForm = formUtils.getFormJson("child_safety_actions");
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
+                    indexRegisterForm = formUtils.getFormJson("child_safety_action");
+
+                   // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", actionDate);
 
                     JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
                     cId.put("value",childId);
 
-                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                    cDate.put("value", actionDate);
+                   // JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                   // cDate.put("value", actionDate);
 
                     startFormActivity(indexRegisterForm);
 
@@ -128,7 +132,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName("Safety Plan");
+        form.setName("Safety Plan Actions");
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
@@ -172,7 +176,6 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
                 Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
 
-
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -201,12 +204,12 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Domain":
+                case "Child Safety Actions":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN_DOMAIN);
+                                encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_ACTION);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -294,6 +297,5 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-
 
 }
