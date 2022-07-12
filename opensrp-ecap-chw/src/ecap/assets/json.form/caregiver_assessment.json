@@ -2169,7 +2169,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten_month",
-        "hint": "In the last  month, did any child/\nadolescent     in the household or\nyourself (if pregnant or negativepositive)\ngo   a   whole   day   without   eating\nanything   because   there   was   not\nenough to eat?",
+        "hint": "In the last  month, did any child/\nadolescent in the household or\nyourself (if pregnant or negative, positive)\ngo a whole day without eating\nanything because there was not\nenough to eat?",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
