@@ -46,6 +46,7 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
@@ -79,6 +80,7 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -121,7 +123,7 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
-
+    private ArrayList<Child> childList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +141,7 @@ public class HouseholdDetails extends AppCompatActivity {
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
         caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
+
 
         house = getHousehold(householdId);
 
@@ -338,7 +341,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Populate for Benchmark 3
                     String bench3 = GradDao.bench3Answers(householdId);
                     int answered = Integer.parseInt(bench3);
-                    int childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
+                    Integer childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
+                    indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value","1");
 
                     if(childrenabove10to17 > 0){
                         if(answered == 0){
@@ -350,8 +354,12 @@ public class HouseholdDetails extends AppCompatActivity {
                             JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
                             hiv_status_enrolled.put(JsonFormUtils.VALUE, "yes");
                         }
-                    } else {
+
+                    } else  {
+                        indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value", "1");
                             indexRegisterForm.getJSONObject("step4").getJSONArray("fields").remove(0);
+                            //Because Index 0 has been removed, index 3 becomes index 2
+
                     }
 
 
@@ -386,6 +394,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
                     suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
+                    //Check nutrition status
+                    //1. Get all children unique ids in this household
 
                     startFormActivity(indexRegisterForm);
 
