@@ -53,6 +53,24 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
+    public static String countAllChildren(){
+
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index ";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0) {
+            return "0";
+        }else
+        {
+            return values.get(0);
+        }
+
+
+    }
+
     public static String countTestedChildren(String householdID){
 
         String sql = "SELECT COUNT(*) AS childrenCount FROM ec_hiv_assessment_below_15 WHERE household_id = '" + householdID + "' AND hiv_test IS NOT NULL AND hiv_test != 'never_tested'";
@@ -423,6 +441,106 @@ public class IndexPersonDao  extends AbstractDao {
         }
         return children.get(0);
     }
+    public static List<Child> getAllChildrenSubpops(){
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index ";
+        DataMap<Child> dataMap = c -> {
+            return new Child(
+                    getCursorValue(c, "last_interacted_with"),
+                    getCursorValue(c, "phone"),
+                    getCursorValue(c, "caseworker_name"),
+                    getCursorValue(c, "date_edited"),
+                    getCursorValue(c, "vl_check_box"),
+                    getCursorValue(c, "landmark"),
+                    getCursorValue(c, "client_screened"),
+                    getCursorValue(c, "client_result"),
+                    getCursorValue(c, "tpt_client_eligibility"),
+                    getCursorValue(c, "tpt_client_initiated"),
+                    getCursorValue(c, "case_status"),
+                    getCursorValue(c, "reason"),
+                    getCursorValue(c, "other_reason"),
+                    getCursorValue(c, "base_entity_id"),
+                    getCursorValue(c, "household_id"),
+                    getCursorValue(c, "unique_id"),
+                    getCursorValue(c, "first_name"),
+                    getCursorValue(c, "last_name"),
+                    getCursorValue(c, "adolescent_gender"),
+                    getCursorValue(c, "adolescent_birthdate"),
+                    getCursorValue(c, "subpop1"),
+                    getCursorValue(c, "subpop2"),
+                    getCursorValue(c, "subpop3"),
+                    getCursorValue(c, "subpop4"),
+                    getCursorValue(c, "subpop5"),
+                    getCursorValue(c, "subpop"),
+                    getCursorValue(c, "is_biological_child_of_mother_living_with_hiv"),
+                    getCursorValue(c, "date_referred"),
+                    getCursorValue(c, "date_enrolled"),
+                    getCursorValue(c, "art_check_box"),
+                    getCursorValue(c, "art_number"),
+                    getCursorValue(c, "date_started_art"),
+                    getCursorValue(c, "date_last_vl"),
+                    getCursorValue(c, "date_next_vl"),
+                    getCursorValue(c, "vl_last_result"),
+                    getCursorValue(c, "vl_suppressed"),
+                    getCursorValue(c, "child_mmd"),
+                    getCursorValue(c, "level_mmd"),
+                    getCursorValue(c, "caregiver_name"),
+                    getCursorValue(c, "caregiver_birth_date"),
+                    getCursorValue(c, "caregiver_sex"),
+                    getCursorValue(c, "caregiver_hiv_status"),
+                    getCursorValue(c, "relation"),
+                    getCursorValue(c, "caregiver_phone"),
+                    getCursorValue(c, "facility"),
+                    getCursorValue(c, "gender"),
+                    getCursorValue(c, "relational_id"),
+                    getCursorValue(c, "index_check_box"),
+                    getCursorValue(c, "date_removed"),
+                    getCursorValue(c, "acceptance"),
+                    getCursorValue(c, "date_screened"),
+                    getCursorValue(c, "date_hiv_known"),
+                    getCursorValue(c, "is_hiv_positive"),
+                    getCursorValue(c, "is_on_hiv_treatment"),
+                    getCursorValue(c, "adolescent_first_name"),
+                    getCursorValue(c, "adolescent_last_name"),
+                    getCursorValue(c, "province"),
+                    getCursorValue(c, "district"),
+                    getCursorValue(c, "ward"),
+                    getCursorValue(c, "village"),
+                    getCursorValue(c, "partner"),
+                    getCursorValue(c, "is_viral_load_test_results_on_file"),
+                    getCursorValue(c, "is_tb_screening_results_on_file"),
+                    getCursorValue(c, "screened_for_malnutrition"),
+                    getCursorValue(c, "gets_tb_preventive_therapy"),
+                    getCursorValue(c, "takes_drugs_to_prevent_other_diseases"),
+                    getCursorValue(c, "less_3"),
+                    getCursorValue(c, "positive_mother"),
+                    getCursorValue(c, "is_mother_currently_on_treatment"),
+                    getCursorValue(c, "mother_art_number"),
+                    getCursorValue(c, "is_mother_adhering_to_treatment"),
+                    getCursorValue(c, "is_mother_virally_suppressed"),
+                    getCursorValue(c, "is_child_hiv_positive"),
+                    getCursorValue(c, "child_receiving_breastfeeding"),
+                    getCursorValue(c, "child_tested_for_hiv_inline_with_guidelines"),
+                    getCursorValue(c, "receives_drugs_to_prevent_hiv_and_other_illnesses"),
+                    getCursorValue(c, "child_been_screened_for_malnutrition"),
+                    getCursorValue(c, "child_gets_drugs_to_prevent_tb"),
+                    getCursorValue(c, "child_enrolled_in_early_childhood_development_program"),
+                    getCursorValue(c, "school"),
+                    getCursorValue(c, "other_school"),
+                    getCursorValue(c, "caregiver_nrc"),
+                    getCursorValue(c, "vl_next_result"),
+                    getCursorValue(c, "physical_address"),
+                    getCursorValue(c, "date_offered_enrollment")
+
+            );
+        };
+        List <Child> children =  AbstractDao.readData(sql, dataMap);
+        if (children == null) {
+            return null;
+        }
+        return children;
+    }
+
+
 
     public static List<String> getAllFemalesBirthdate(String householdID) {
 

@@ -29,17 +29,18 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:name=".application.ChwApplication"
         android:allowBackup="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/ChwTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+
         <activity
             android:name=".activity.VcaServiceActivity"
-            android:theme="@style/ChwTheme.NoActionBar"/>
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -51,6 +52,12 @@
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
             android:label="Caregiver Case Plan" />
+
+        <activity
+            android:name=".activity.DashboardActivity"
+            android:exported="true"
+            android:theme="@style/ChwTheme.NoActionBar"
+            android:label="Reports" />
         <activity
             android:name=".activity.Profile"
             android:exported="true" />
