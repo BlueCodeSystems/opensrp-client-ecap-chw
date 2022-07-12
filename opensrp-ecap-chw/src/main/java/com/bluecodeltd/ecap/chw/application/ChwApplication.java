@@ -19,6 +19,7 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.FpRegisterActivity;
@@ -401,6 +402,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.INDEX_REGISTER_ACTIVITY, IndexRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.BENEFICIARIES_REGISTER_ACTIVITY, BeneficiariesRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.IDENTIFICATION_REGISTER_ACTIVITY, IdentificationRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.DASHBOARD_ACTIVITY, DashboardActivity.class);
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRALS_REGISTER_ACTIVITY, ReferralRegisterActivity.class);
         }
