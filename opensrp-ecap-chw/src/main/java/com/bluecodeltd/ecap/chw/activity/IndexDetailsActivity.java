@@ -44,6 +44,7 @@ import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
+import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
@@ -141,6 +142,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
 
+
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
 
@@ -187,6 +189,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
+        weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
+
+
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -1105,8 +1110,16 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 */
                 break;
             case "we_services_vca":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                if(weServiceVcaModel == null){
 
+                    //Pulls data for populating from indexchild when adding data for the very first time
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+
+                } else {
+
+                    formToBeOpened.put("entity_id", this.weServiceVcaModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(weServiceVcaModel, Map.class));
+                }
                 break;
 
             case "case_plan":

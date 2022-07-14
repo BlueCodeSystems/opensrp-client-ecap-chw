@@ -1,13 +1,14 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class WeServiceVcaModel {
-
     private String base_entity_id;
-    private String household_id;
-    private String participant_name;
-    private String vca_id;
-    private String date_joined_we;
+    private String unique_id;
     private String we_group_no;
+    private String we_group_name;
+    private String household_id;
+    private String data_collection;
+    private String date_joined_we;
+    private String participant_name;
     private String reporting_month;
     private String we_member_in_period;
     private String we_loan_in_period;
@@ -34,6 +35,30 @@ public class WeServiceVcaModel {
         this.base_entity_id = base_entity_id;
     }
 
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
+    }
+
+    public String getWe_group_no() {
+        return we_group_no;
+    }
+
+    public void setWe_group_no(String we_group_no) {
+        this.we_group_no = we_group_no;
+    }
+
+    public String getWe_group_name() {
+        return we_group_name;
+    }
+
+    public void setWe_group_name(String we_group_name) {
+        this.we_group_name = we_group_name;
+    }
+
     public String getHousehold_id() {
         return household_id;
     }
@@ -42,20 +67,12 @@ public class WeServiceVcaModel {
         this.household_id = household_id;
     }
 
-    public String getParticipant_name() {
-        return participant_name;
+    public String getData_collection() {
+        return data_collection;
     }
 
-    public void setParticipant_name(String participant_name) {
-        this.participant_name = participant_name;
-    }
-
-    public String getVca_id() {
-        return vca_id;
-    }
-
-    public void setVca_id(String vca_id) {
-        this.vca_id = vca_id;
+    public void setData_collection(String data_collection) {
+        this.data_collection = data_collection;
     }
 
     public String getDate_joined_we() {
@@ -66,12 +83,12 @@ public class WeServiceVcaModel {
         this.date_joined_we = date_joined_we;
     }
 
-    public String getWe_group_no() {
-        return we_group_no;
+    public String getParticipant_name() {
+        return participant_name;
     }
 
-    public void setWe_group_no(String we_group_no) {
-        this.we_group_no = we_group_no;
+    public void setParticipant_name(String participant_name) {
+        this.participant_name = participant_name;
     }
 
     public String getReporting_month() {
