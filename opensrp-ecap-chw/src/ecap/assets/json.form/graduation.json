@@ -755,10 +755,9 @@
         "toaster_info_text": "Benchmark 7 has been met.",
         "toaster_info_title": "Benchmark 7",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "graduation_assessment.yml"
-            }
+          "step8:stable_guardian": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -773,10 +772,9 @@
         "toaster_info_text": "Benchmark 7 has not been met",
         "toaster_info_title": "Benchmark 7",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "graduation_assessment.yml"
-            }
+          "step8:stable_guardian": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
           }
         }
       }
@@ -867,6 +865,42 @@
             "text": "No"
           }
         ]
+      },
+      {
+        "key": "toaster_bench_8",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 8 has been met.",
+        "toaster_type": "positive",
+        "toaster_info_text": "Benchmark 8 has been met.",
+        "toaster_info_title": "Benchmark 8",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_bench_8_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Benchmark 8 has not been met.",
+        "toaster_type": "problem",
+        "toaster_info_text": "Benchmark 8 has not been met",
+        "toaster_info_title": "Benchmark 8",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
       }
     ]
   },
