@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.ReferralModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReferralDao extends AbstractDao {
@@ -20,12 +21,24 @@ public class ReferralDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<ReferralModel> getReferralsByID(String childID) {
+
+        String sql = "SELECT * FROM ec_referral WHERE unique_id = '" + childID + "' ORDER BY date_referred DESC ";
+
+        List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static DataMap<ReferralModel> getReferralModelMap() {
         return c -> {
 
             ReferralModel record = new ReferralModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setUnique_id(getCursorValue(c,"unique_id"));
             record.setDate_referred(getCursorValue(c, "date_referred"));
             record.setReceiving_organization(getCursorValue(c, "receiving_organization"));
             record.setCd4(getCursorValue(c, "cd4"));
@@ -79,7 +92,7 @@ public class ReferralDao extends AbstractDao {
             record.setPhone(getCursorValue(c, "phone"));
             record.setDateCovidProvided(getCursorValue(c, "dateCovidProvided"));
             record.setDateCD4Provided(getCursorValue(c, "dateCD4Provided"));
-            record.setReceiving_organization(getCursorValue(c, "dateHivAdherenceProvided"));
+            record.setDateHivAdherenceProvided(getCursorValue(c, "dateHivAdherenceProvided"));
             record.setDateHivCounselingProvided(getCursorValue(c, "dateHivCounselingProvided"));
             record.setDatePostGbvProvided(getCursorValue(c, "datePostGbvProvided"));
             record.setDateSubstanceAbuseProvided(getCursorValue(c, "dateSubstanceAbuseProvided"));
@@ -121,5 +134,6 @@ public class ReferralDao extends AbstractDao {
             return record;
         };
     }
+
 
 }
