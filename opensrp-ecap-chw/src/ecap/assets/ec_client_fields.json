@@ -3203,10 +3203,10 @@
           }
         },
         {
-          "column_name": "we_member_in_period",
+          "column_name": "we_loans_taken_in_period",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.we_member_in_period"
+            "field": "attributes.we_loans_taken_in_period"
           }
         },
         {
@@ -3383,10 +3383,10 @@
           }
         },
         {
-          "column_name": "we_member_in_period",
+          "column_name": "we_loans_taken_in_period",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.we_member_in_period"
+            "field": "attributes.we_loans_taken_in_period"
           }
         },
         {

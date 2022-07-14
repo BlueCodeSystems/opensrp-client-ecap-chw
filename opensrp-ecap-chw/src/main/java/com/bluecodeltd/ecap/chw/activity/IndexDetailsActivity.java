@@ -115,7 +115,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
 
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -241,6 +241,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hiv_assessment = findViewById(R.id.hiv_assessment);
         hiv_assessment2 = findViewById(R.id.hiv_assessment2);
         childPlan = findViewById(R.id.childPlan);
+        weServicesVca = findViewById(R.id.we_services_vca);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -521,6 +522,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
+
+            case R.id.we_services_vca:
+                if(indexVCA.getDate_screened() != null) {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
+                }else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
             case R.id.childPlan:
                 Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
                 i.putExtra("vca_id", indexVCA.getUnique_id());
@@ -707,6 +716,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_REFERRAL);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "WE Services VCA":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_WE_SERVICES_VCA);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -959,6 +980,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
                 childPlan.setVisibility(View.VISIBLE);
+                weServicesVca.setVisibility(View.VISIBLE);
 
 
                 if(indexVCA.getIs_hiv_positive() != null){
@@ -995,6 +1017,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         hiv_assessment.setVisibility(View.GONE);
         hiv_assessment2.setVisibility(View.GONE);
         childPlan.setVisibility(View.GONE);
+        weServicesVca.setVisibility(View.GONE);
 
 
     }
@@ -1080,6 +1103,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referralModel, Map.class));
                 }
 */
+                break;
+            case "we_services_vca":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+
                 break;
 
             case "case_plan":
