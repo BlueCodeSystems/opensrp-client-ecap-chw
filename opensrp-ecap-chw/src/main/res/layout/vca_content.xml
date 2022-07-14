@@ -154,6 +154,21 @@
                                 android:text="Service Reports"
                                 android:textAllCaps="false"
                                 tools:text="Service Reports" />
+                            <Button
+                                android:layout_marginLeft="10dp"
+                                android:onClick="onClick"
+                                android:id="@+id/show_referrals"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:background="@drawable/transparent_white_button"
+                                android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                                android:paddingTop="0dp"
+                                android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                                android:paddingBottom="0dp"
+                                android:text="Referrals"
+                                android:textAllCaps="false"
+                                tools:text="Referrals" />
 
                             <Button
                                 android:layout_marginLeft="10dp"
@@ -170,6 +185,9 @@
                                 android:text="Household Profile"
                                 android:textAllCaps="false"
                                 tools:text="Household Profile" />
+
+
+
 
                         </LinearLayout>
 
