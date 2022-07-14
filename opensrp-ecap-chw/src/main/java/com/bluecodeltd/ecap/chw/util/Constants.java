@@ -115,6 +115,7 @@ public class Constants extends CoreConstants {
         String EC_CHILD_SAFETY_PLAN = "ec_child_safety_plan";
         String EC_WE_SERVICES_CAREGIVER = "ec_we_services_caregiver";
         String EC_CHILD_SAFETY_ACTION = "ec_child_safety_actions";
+        String EC_WE_SERVICES_VCA = "ec_we_services_vca";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";
