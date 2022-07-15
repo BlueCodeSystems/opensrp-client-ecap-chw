@@ -3168,10 +3168,10 @@
           }
         },
         {
-          "column_name": "caregiver_id",
+          "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_id"
+            "field": "attributes.unique_id"
           }
         },
         {
@@ -3186,6 +3186,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.we_group_no"
+          }
+        },
+        {
+          "column_name": "we_group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_group_name"
           }
         },
         {
@@ -3359,13 +3366,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_joined_we"
-          }
-        },
-        {
-          "column_name": "we_group_no",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.we_group_no"
           }
         },
         {

@@ -106,7 +106,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
-    public WeServiceCaregiverModel weServiceCaregiverModel;
+    //public WeServiceCaregiverModel weServiceCaregiverModel;
     Caregiver caregiver;
 
     ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
@@ -123,6 +123,7 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
+    WeServiceCaregiverModel weServiceCaregiverModel;
     private ArrayList<Child> childList = new ArrayList<>();
 
     @Override
@@ -144,7 +145,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         house = getHousehold(householdId);
-
 
         caregiver = CaregiverDao.getCaregiver(householdId);
 
@@ -204,14 +204,14 @@ public class HouseholdDetails extends AppCompatActivity {
         return  populateMapWithHouse(house);
     }
 
-    public HashMap<String, WeServiceCaregiverModel> getWeServices() {
-        return populateMapWithWeServicesCaregiverModel(weServiceCaregiverModel);
-    }
 
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
 
+    public HashMap<String, WeServiceCaregiverModel> getWeServiceCaregiver() {
+        return  populateMapWithWeServicesCaregiverModel(weServiceCaregiverModel);
+    }
 
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {
@@ -476,20 +476,6 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.we_service_caregiver:
-                try {
-
-                    indexRegisterForm = formUtils.getFormJson("we_services_caregiver");
-
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
 
             case R.id.hcase_plan:
                 try {
@@ -598,6 +584,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
+
             case R.id.child_form:
 
                 try {
@@ -666,6 +653,25 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                break;
+            case R.id.we_service_caregiver:
+                try {
+
+                    indexRegisterForm = formUtils.getFormJson("we_services_caregiver");
+                    if (weServiceCaregiverModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        indexRegisterForm.put("entity_id", this.weServiceCaregiverModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(weServiceCaregiverModel, Map.class));
+                    }
+
+                    startFormActivity(indexRegisterForm);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
         }
@@ -755,7 +761,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         finish();
                         startActivity(getIntent());
                         break;
-                    case "WE Services - Caregiver":
+                    case "WE Services Caregiver":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
@@ -953,7 +959,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     break;
-                case "WE Services - Caregiver":
+                case "WE Services Caregiver":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -1229,4 +1235,5 @@ public class HouseholdDetails extends AppCompatActivity {
     {
         return WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
     }
+
 }
