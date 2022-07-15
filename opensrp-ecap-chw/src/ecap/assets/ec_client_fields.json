@@ -3154,6 +3154,13 @@
           }
         },
         {
+          "column_name": "data_collection",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.data_collection"
+          }
+        },
+        {
           "column_name": "participant_name",
           "type": "Client",
           "json_mapping": {
@@ -3327,6 +3334,13 @@
           }
         },
         {
+          "column_name": "data_collection",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.data_collection"
+          }
+        },
+        {
           "column_name": "participant_name",
           "type": "Client",
           "json_mapping": {
@@ -3334,10 +3348,10 @@
           }
         },
         {
-          "column_name": "vca_id",
+          "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.vca_id"
+            "field": "attributes.unique_id"
           }
         },
         {
