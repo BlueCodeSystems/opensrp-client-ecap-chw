@@ -57,12 +57,12 @@ import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
-import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaCasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -474,6 +474,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 else{
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
+                break;
+            case R.id.show_referrals:
+
+
+                Intent showReferrals = new Intent(IndexDetailsActivity.this, ShowReferralsActivity.class);
+                    Bundle referral = new Bundle();
+                    referral.putString("childId",child.getUnique_id());
+                    referral.putString("name",child.getAdolescent_first_name()+ "  " +child.getAdolescent_last_name());
+                    showReferrals.putExtras(referral);
+//                    referral.putString("date",child.getDate_referred());
+//                showReferrals.putExtra("childId",  child.getUnique_id());
+//                showReferrals.putExtra("householdId",  child.getHousehold_id());
+                // intent.putExtra("household",  child.getHousehold_id());
+
+                startActivity(showReferrals);
+
+
                 break;
 
             case R.id.household_profile:
