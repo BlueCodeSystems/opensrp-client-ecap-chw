@@ -2797,6 +2797,152 @@
       ]
     },
     {
+      "name": "ec_graduation",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.base_entity_id"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "date_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_assessment"
+          }
+        },
+        {
+          "column_name": "previous_asmt_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.previous_asmt_date"
+          }
+        },
+        {
+          "column_name": "virally_suppressed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.virally_suppressed"
+          }
+        },
+        {
+          "column_name": "prevention",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prevention"
+          }
+        },
+        {
+          "column_name": "undernourished",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.undernourished"
+          }
+        },
+        {
+          "column_name": "school_fees",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.school_fees"
+          }
+        },
+        {
+          "column_name": "medical_costs",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.medical_costs"
+          }
+        },
+        {
+          "column_name": "record_abuse",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.record_abuse"
+          }
+        },
+        {
+          "column_name": "caregiver_beaten",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_beaten"
+          }
+        },
+        {
+          "column_name": "child_beaten",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_beaten"
+          }
+        },
+        {
+          "column_name": "aware_sexual",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.aware_sexual"
+          }
+        },
+        {
+          "column_name": "against_will",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.against_will"
+          }
+        },
+        {
+          "column_name": "stable_guardian",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_guardian"
+          }
+        },
+        {
+          "column_name": "children_in_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.children_in_school"
+          }
+        },
+        {
+          "column_name": "in_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.in_school"
+          }
+        },
+        {
+          "column_name": "year_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.year_school"
+          }
+        },
+        {
+          "column_name": "repeat_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_school"
+          }
+        }
+
+      ]
+    },
+    {
       "name": "ec_grad",
       "columns": [
         {

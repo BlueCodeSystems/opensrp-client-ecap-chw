@@ -1107,24 +1107,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 case "household_visitation_for_vca_0_20_years":
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-                break;
 
-            case "referral":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-
-                populateCaseworkerPhoneAndName(formToBeOpened);
-
-              /*  if(referralModel == null){
-
-                    //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-
-                } else {
-
-                    formToBeOpened.put("entity_id", this.referralModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referralModel, Map.class));
-                }
-*/
                 break;
             case "we_services_vca":
                 if(weServiceVcaModel == null){
@@ -1185,9 +1168,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case "child_safety_plan":
+            case "referral":
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
-break;
+            break;
 
     }
 
