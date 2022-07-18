@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
@@ -47,6 +48,7 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
@@ -124,6 +126,8 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
     WeServiceCaregiverModel weServiceCaregiverModel;
+    GraduationModel graduationModel;
+
     private ArrayList<Child> childList = new ArrayList<>();
 
     @Override
@@ -142,6 +146,7 @@ public class HouseholdDetails extends AppCompatActivity {
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
         caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
+        graduationModel = GraduationDao.getGraduation(householdId);
 
 
         house = getHousehold(householdId);
@@ -325,11 +330,9 @@ public class HouseholdDetails extends AppCompatActivity {
                 try {
 
                     oMapper = new ObjectMapper();
+                    graduationMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("graduation");
-
-
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
 
                     //Populate form details
                     JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
@@ -337,6 +340,13 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     //Populate Caregiver Details
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+
+                    if(graduationModel != null) {
+
+                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, graduationMapper.convertValue(graduationModel, Map.class));
+
+                    }
 
                     //Populate for Benchmark 3
                     String bench3 = GradDao.bench3Answers(householdId);
@@ -361,7 +371,6 @@ public class HouseholdDetails extends AppCompatActivity {
                             //Because Index 0 has been removed, index 3 becomes index 2
 
                     }
-
 
                     //Count everyone who has been tested
                     if(sumtested < Integer.parseInt(totalChildren)){
@@ -394,8 +403,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
                     suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
-                    //Check nutrition status
-                    //1. Get all children unique ids in this household
 
                     startFormActivity(indexRegisterForm);
 
@@ -785,6 +792,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Grad":
+                    case "Graduation":
                     case "Household Visitation For Caregiver":
                     case "Hiv Assessment For Caregiver":
 
@@ -959,7 +967,22 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     break;
-                case "WE Services Caregiver":
+
+
+                case "Graduation":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_GRADUATION);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+                case "WE Services - Caregiver":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
