@@ -95,6 +95,8 @@ public class ReferralModel {
     private String specify_safety;
     private String specify_school;
     private String specify_stability;
+    private String unique_id;
+
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -102,6 +104,14 @@ public class ReferralModel {
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 
     public String getDate_referred() {
