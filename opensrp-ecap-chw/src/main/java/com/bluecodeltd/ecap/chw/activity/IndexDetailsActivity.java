@@ -44,6 +44,7 @@ import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
+import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
@@ -62,6 +63,7 @@ import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaCasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -114,7 +116,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
 
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -134,10 +136,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     VcaAssessmentModel vcaAssessmentModel;
     ReferralModel referralModel;
+    WeServiceVcaModel weServiceVcaModel;
     HivRiskAssessmentAbove15Model hivRiskAssessmentAbove15Model;
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
+
 
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
@@ -185,6 +189,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
+        weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
+
+
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -235,8 +242,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
 
 
+
         hiv_assessment = findViewById(R.id.hiv_assessment);
         hiv_assessment2 = findViewById(R.id.hiv_assessment2);
+        childPlan = findViewById(R.id.childPlan);
+        weServicesVca = findViewById(R.id.we_services_vca);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -470,6 +480,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
+            case R.id.show_referrals:
+
+
+                Intent showReferrals = new Intent(IndexDetailsActivity.this, ShowReferralsActivity.class);
+                    Bundle referral = new Bundle();
+                    referral.putString("childId",child.getUnique_id());
+                    referral.putString("name",child.getAdolescent_first_name()+ "  " +child.getAdolescent_last_name());
+                    showReferrals.putExtras(referral);
+//                    referral.putString("date",child.getDate_referred());
+//                showReferrals.putExtra("childId",  child.getUnique_id());
+//                showReferrals.putExtra("householdId",  child.getHousehold_id());
+                // intent.putExtra("household",  child.getHousehold_id());
+
+                startActivity(showReferrals);
+
+
+                break;
 
             case R.id.household_profile:
 
@@ -516,6 +543,20 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }else{
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
+                break;
+
+            case R.id.we_services_vca:
+                if(indexVCA.getDate_screened() != null) {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
+                }else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
+            case R.id.childPlan:
+                Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
+                i.putExtra("vca_id", indexVCA.getUnique_id());
+                i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
+                startActivity(i);
                 break;
 
         }
@@ -703,6 +744,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     }
                     break;
 
+                case "WE Services VCA":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_WE_SERVICES_VCA);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
                 case "VCA Assessment":
 
                     if (fields != null) {
@@ -768,6 +821,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Child Safety Plan":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -936,6 +1001,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
+                childPlan.setVisibility(View.VISIBLE);
+                weServicesVca.setVisibility(View.VISIBLE);
+
 
                 if(indexVCA.getIs_hiv_positive() != null){
                     rassessment.setVisibility(View.VISIBLE);
@@ -950,8 +1018,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         hiv_assessment2.setVisibility(View.VISIBLE);
                     }
                 }
-
-
             }
             else{
 
@@ -972,6 +1038,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         household_visitation_for_vca.setVisibility(View.GONE);
         hiv_assessment.setVisibility(View.GONE);
         hiv_assessment2.setVisibility(View.GONE);
+        childPlan.setVisibility(View.GONE);
+        weServicesVca.setVisibility(View.GONE);
+
 
     }
 
@@ -998,19 +1067,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 //Populate Caseworker Name
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                String caseworkername = sp.getString("phone", "Anonymous");
-
-                JSONObject ccname = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
-
-                if (ccname != null) {
-                    ccname.remove(JsonFormUtils.VALUE);
-                    try {
-                        ccname.put(JsonFormUtils.VALUE, caseworkername);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                populateCaseworkerPhoneAndName(formToBeOpened);
 
                 if(!indexVCA.getIndex_check_box().equals("1")){
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
@@ -1050,37 +1107,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 case "household_visitation_for_vca_0_20_years":
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+
                 break;
-
-            case "referral":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-
-                //Populate Caseworker Name
-                SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                String caseworkerphone = cp.getString("phone", "Anonymous");
-
-                JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
-
-                if (cphone  != null) {
-                    cphone .remove(JsonFormUtils.VALUE);
-                    try {
-                        cphone .put(JsonFormUtils.VALUE, caseworkerphone);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-              /*  if(referralModel == null){
+            case "we_services_vca":
+                if(weServiceVcaModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
                 } else {
 
-                    formToBeOpened.put("entity_id", this.referralModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referralModel, Map.class));
+                    formToBeOpened.put("entity_id", this.weServiceVcaModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(weServiceVcaModel, Map.class));
                 }
-*/
                 break;
 
             case "case_plan":
@@ -1128,6 +1167,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 break;
 
+            case "child_safety_plan":
+            case "referral":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                populateCaseworkerPhoneAndName(formToBeOpened);
+            break;
 
     }
 
@@ -1254,6 +1298,22 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         }
 
+
+ }
+ public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
+     SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+     String caseworkerphone = cp.getString("phone", "Anonymous");
+
+     JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
+
+     if (cphone  != null) {
+         cphone .remove(JsonFormUtils.VALUE);
+         try {
+             cphone .put(JsonFormUtils.VALUE, caseworkerphone);
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+     }
 
  }
 
