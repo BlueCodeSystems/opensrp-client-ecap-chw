@@ -451,5 +451,7 @@
     <string name="quarter_three">3rd Quarter</string>
     <string name="quarter_four">4th Quarter</string>
     <string name="quarter_one">1st Quarter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,0 +1,21 @@
+---
+name: step1_safety_action
+description: action
+priority: 1
+condition: "step1_safety_threats != '' "
+actions:
+  - "isRelevant = true"
+---
+name: step1_safety_protection
+description: protection
+priority: 1
+condition: "step1_safety_action != '' "
+actions:
+  - "isRelevant = true"
+---
+name: step1_safety_plans
+description: plans
+priority: 1
+condition: "step1_safety_protection != '' "
+actions:
+  - "isRelevant = true"

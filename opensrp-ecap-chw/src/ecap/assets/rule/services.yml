@@ -26,3 +26,10 @@ priority: 1
 condition: "step1_services.contains('other')"
 actions:
   - "isRelevant = true"
+---
+name: step1_other_sold_item
+description: step1_other_sold_item
+priority: 1
+condition: "step1_sold_items.contains('other')"
+actions:
+  - "isRelevant = true"
