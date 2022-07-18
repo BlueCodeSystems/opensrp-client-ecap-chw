@@ -2807,13 +2807,6 @@
           }
         },
         {
-          "column_name": "caseworker_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.caseworker_name"
-          }
-        },
-        {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
@@ -2938,8 +2931,14 @@
           "json_mapping": {
             "field": "attributes.repeat_school"
           }
+        },
+        {
+          "column_name": "additional_information",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.additional_information"
+          }
         }
-
       ]
     },
     {
