@@ -97,7 +97,6 @@
                                 android:textColor="@color/white" />
 
 
-
                         </LinearLayout>
 
 
@@ -117,6 +116,19 @@
 
         </com.google.android.material.appbar.AppBarLayout>
     </RelativeLayout>
+
+    <Switch
+        android:id="@+id/information_switch"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:minHeight="48dp"
+        android:showText="true"
+        android:text="Filter"
+        android:textOff="All"
+        android:textOn="caseworker"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <LinearLayout
         android:layout_width="match_parent"

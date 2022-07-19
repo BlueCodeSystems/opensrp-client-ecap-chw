@@ -42,6 +42,23 @@ public class HouseholdDao extends AbstractDao {
 
     }
 
+    public static String countNumberOfHouseholdsByCaseworkerPhone ( String caseworkerPhoneNumber)
+    {
+
+        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "phone");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if(values != null && values.size() > 0 ){
+            return values.get(0);
+        } else {
+            return "0";
+        }
+
+    }
+
 
 
     public static Household getHousehold (String householdID) {
