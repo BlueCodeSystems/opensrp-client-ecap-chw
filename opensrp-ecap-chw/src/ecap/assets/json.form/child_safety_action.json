@@ -124,10 +124,57 @@
       {
         "key": "safety_plans",
         "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "MONITORING PLANS: How will these actions be confirmed",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_safety_plan.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "stateWhen",
+        "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "safety_plans",
+        "openmrs_entity_id": "stateWhen",
         "type": "edit_text",
-        "hint": "MONITORING PLANS:\nHow will these actions be confirmed",
+        "hint": "State When",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_safety_plan.yml"
+            }
+          }
+        }
+
+      },
+      {
+        "key": "frequency",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "frequency",
+        "type": "edit_text",
+        "hint": "State Frequency",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_safety_plan.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "who",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "who",
+        "type": "edit_text",
+        "input_type": "name",
+        "hint": "By Who",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
