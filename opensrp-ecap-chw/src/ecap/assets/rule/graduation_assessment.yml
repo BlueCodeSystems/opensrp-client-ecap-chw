@@ -48,10 +48,17 @@ condition: "step5_undernourished.contains('no')"
 actions:
   - "isRelevant = true"
 ---
-name: step6_toaster_bench_7
-description: step6_toaster_bench_7
+name: step8_toaster_bench_7
+description: step8_toaster_bench_7
 priority: 1
-condition: "step5_undernourished.contains('yes')"
+condition: "step8_stable_guardian.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step8_toaster_bench_7_no
+description: step8_toaster_bench_7_no
+priority: 1
+condition: "step8_stable_guardian.contains('no')"
 actions:
   - "isRelevant = true"
 ---

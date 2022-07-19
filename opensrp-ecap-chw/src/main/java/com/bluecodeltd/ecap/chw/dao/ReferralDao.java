@@ -32,6 +32,7 @@ public class ReferralDao extends AbstractDao {
         return values;
 
     }
+
     public static List<ReferralModel> getReferralsByHouseholdID(String hh_ID) {
 
         String sql = "SELECT * FROM ec_referral WHERE household_id = '" + hh_ID + "' ORDER BY date_referred DESC ";
@@ -43,6 +44,7 @@ public class ReferralDao extends AbstractDao {
         return values;
 
     }
+
 
     public static DataMap<ReferralModel> getReferralModelMap() {
         return c -> {
