@@ -59,15 +59,9 @@ public class ShowReferralsActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private TextView vcaname, hh_id, txtReferral,txtBold;
     private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<ReferralModel> referralList = new ArrayList<>();
-    private LinearLayout linearLayout;
-    private TextView vcaname,hh_id;
 
-    private Toolbar toolbar;
-    public String hivstatus, household_id, intent_vcaid;
-    private Button child_plan;
+
+    public String hivstatus;
 
 
     @Override
@@ -97,17 +91,9 @@ public class ShowReferralsActivity extends AppCompatActivity {
         txtReferral.setText("No referrals have been added for " +intent_cname);
 
 
-//        child_plan = findViewById(R.id.child_plan);
-//
-        Bundle bundle = getIntent().getExtras();
         intent_vcaid = bundle.getString("childId");
-        String intent_cname = bundle.getString("name");
-//
-//
         hh_id.setText("VCA ID : " + intent_vcaid);
         vcaname.setText(intent_cname);
-//
-
 
         referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowReferralsActivity.this);
@@ -196,24 +182,25 @@ public class ShowReferralsActivity extends AppCompatActivity {
                 entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
 
 
-            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+                JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
 
-            JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+                JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            switch (encounterType) {
-                case "Referral":
+                switch (encounterType) {
+                    case "Referral":
 
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
+                        if (fields != null) {
+                            FormTag formTag = getFormTag();
+                            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                    encounterType, Constants.EcapClientTable.EC_REFERRAL);
+                            tagSyncMetadata(event);
+                            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                            return new ChildIndexEventClient(event, client);
+                        }
+                        break;
 
+                }
             }
         } catch (JSONException e) {
             Timber.e(e);
