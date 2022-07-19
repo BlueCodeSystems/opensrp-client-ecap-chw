@@ -17,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.ShowReferralsAdapter;
+import com.bluecodeltd.ecap.chw.adapter.ShowHouseholdReferralsAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -49,8 +48,7 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class ShowReferralsActivity extends AppCompatActivity {
-
+public class ShowHouseholdReferralsActivity extends AppCompatActivity {
 
     public String household_id, intent_vcaid;
     RecyclerView.Adapter recyclerViewadapter;
@@ -59,22 +57,11 @@ public class ShowReferralsActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private TextView vcaname, hh_id, txtReferral,txtBold;
     private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<ReferralModel> referralList = new ArrayList<>();
-    private LinearLayout linearLayout;
-    private TextView vcaname,hh_id;
-
-    private Toolbar toolbar;
-    public String hivstatus, household_id, intent_vcaid;
-    private Button child_plan;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_referrals);
-
+        setContentView(R.layout.activity_show_household_referrals);
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -85,36 +72,23 @@ public class ShowReferralsActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.child_container);
         vcaname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
-
         txtReferral = findViewById(R.id.txtNoReferral);
 
         Bundle bundle = getIntent().getExtras();
-        intent_vcaid = bundle.getString("childId");
-        String intent_cname = bundle.getString("name");
+        intent_vcaid = bundle.getString("householdId");
+        String intent_cname = bundle.getString("householdName");
 
-        hh_id.setText("VCA ID : " + intent_vcaid);
-        vcaname.setText(intent_cname);
-        txtReferral.setText("No referrals have been added for " +intent_cname);
-
-
-//        child_plan = findViewById(R.id.child_plan);
-//
-        Bundle bundle = getIntent().getExtras();
-        intent_vcaid = bundle.getString("childId");
-        String intent_cname = bundle.getString("name");
-//
-//
-        hh_id.setText("VCA ID : " + intent_vcaid);
-        vcaname.setText(intent_cname);
-//
+        hh_id.setText("Household ID : " + intent_vcaid);
+        vcaname.setText(intent_cname+ " " +"Household");
+        txtReferral.setText("No referrals have been added for " +intent_cname+ " " +"household");
 
 
-        referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowReferralsActivity.this);
+        referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_vcaid));
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowHouseholdReferralsActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ShowReferralsAdapter(referralList, ShowReferralsActivity.this);
+        recyclerViewadapter = new ShowHouseholdReferralsAdapter(referralList, ShowHouseholdReferralsActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
@@ -170,7 +144,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(ShowReferralsActivity.this, "Referral Updated", Toast.LENGTH_LONG, true).show();
+                Toasty.success(ShowHouseholdReferralsActivity.this, "Referral Updated", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -180,9 +154,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-
-    public ChildIndexEventClient processRegistration(String jsonString){
-
+    public ChildIndexEventClient processRegistration(String jsonString) {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
@@ -191,9 +163,9 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
             String entityId = formJsonObject.optString("entity_id");
 
-
             if (entityId.isEmpty()) {
                 entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
 
 
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
@@ -288,9 +260,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         return formTag;
     }
 
-
     public AllSharedPreferences getAllSharedPreferences() {
-
         return ChwApplication.getInstance().getContext().allSharedPreferences();
     }
 
