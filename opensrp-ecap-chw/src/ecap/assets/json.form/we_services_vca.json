@@ -97,23 +97,23 @@
         "edit_type": "name"
       },
       {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "VCA ID",
+        "edit_type": "name"
+      },
+      {
         "key": "participant_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "participant_name",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Participant Name",
-        "edit_type": "name"
-      },
-      {
-        "key": "vca_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "VCA ID",
         "edit_type": "name"
       },
       {
@@ -122,7 +122,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_group_no",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "WE Group Number",
         "edit_type": "name"
       },
@@ -132,7 +132,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_group_name",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "WE Group Name",
         "edit_type": "name"
       },
