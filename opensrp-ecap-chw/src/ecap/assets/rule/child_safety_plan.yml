@@ -20,7 +20,7 @@ condition: "step1_safety_protection != '' "
 actions:
   - "isRelevant = true"
 ---
-name: step1_when
+name: step1_stateWhen
 description: plans
 priority: 1
 condition: "step1_safety_protection != '' "
@@ -30,7 +30,7 @@ actions:
 name: step1_frequency
 description: plans
 priority: 1
-condition: "step1_when != '' "
+condition: "step1_stateWhen != '' "
 actions:
   - "isRelevant = true"
 ---
