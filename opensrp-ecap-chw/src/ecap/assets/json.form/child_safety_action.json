@@ -126,8 +126,11 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "label",
-        "text": "MONITORING PLANS: How will these actions be confirmed",
+        "type": "toaster_notes",
+        "text": "To know how these actions for monitoring plans will be confirmed kindly state  when, frequency and who",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "Information Toaster Info Title",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
