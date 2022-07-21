@@ -171,7 +171,7 @@ public class HouseholdOverviewFragment extends Fragment {
             screenBtn.setVisibility(View.GONE);
             fab.setVisibility(View.VISIBLE);
             housetitle.setVisibility(View.VISIBLE);
-            linearLayout.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.VISIBLE); 
 
         } else if (is_screened == null) {
 
