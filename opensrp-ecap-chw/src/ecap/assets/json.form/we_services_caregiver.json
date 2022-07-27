@@ -107,16 +107,6 @@
         "edit_type": "name"
       },
       {
-        "key": "caregiver_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_id",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Caregiver ID",
-        "edit_type": "name"
-      },
-      {
         "key": "we_group_no",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
