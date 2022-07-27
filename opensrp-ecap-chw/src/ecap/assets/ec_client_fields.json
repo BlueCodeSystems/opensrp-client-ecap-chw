@@ -3309,7 +3309,7 @@
           "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.unique_id"
+            "field": "attributes.caregiver_id"
           }
         },
         {
@@ -3324,13 +3324,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.we_group_no"
-          }
-        },
-        {
-          "column_name": "we_group_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.we_group_name"
           }
         },
         {
@@ -3507,6 +3500,13 @@
           }
         },
         {
+          "column_name": "we_group_no",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_group_no"
+          }
+        },
+        {
           "column_name": "we_group_name",
           "type": "Client",
           "json_mapping": {
@@ -3649,13 +3649,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
-          }
-        },
-        {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_id"
           }
         },
         {
@@ -6606,70 +6599,9 @@
       ]
     },
     {
-      "name": "ec_household_service_report",
-      "columns": [
-
-        {
-          "column_name": "services",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.services"
-          }
-        },
-        {
-          "column_name": "services_household",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.services_household"
-          }
-        },
-        {
-          "column_name": "services_caregiver",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.services_caregiver"
-          }
-        },
-        {
-          "column_name": "date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date"
-          }
-        },
-        {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_id"
-          }
-        },
-        {
-          "column_name": "base_entity_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "baseEntityId"
-          }
-        },
-        {
-          "column_name": "other_services_caregiver",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.other_services_caregiver"
-          }
-        },
-        {
-          "column_name": "other_services_household",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.other_services_household"
-          }
-        }
-      ]
-    },
-    {
       "name": "ec_child_safety_plan",
       "columns": [
+
         {
           "column_name": "household_id",
           "type": "Client",
@@ -6760,6 +6692,8 @@
     {
       "name": "ec_child_safety_actions",
       "columns": [
+
+
         {
           "column_name": "unique_id",
           "type": "Client",
@@ -6807,27 +6741,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.safety_plans"
-          }
-        },
-        {
-          "column_name": "stateWhen",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.stateWhen"
-          }
-        },
-        {
-          "column_name": "frequency",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.frequency"
-          }
-        },
-        {
-          "column_name": "who",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.who"
           }
         }
       ]
