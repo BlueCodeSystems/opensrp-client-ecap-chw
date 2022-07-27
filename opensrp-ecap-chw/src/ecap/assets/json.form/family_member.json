@@ -59,7 +59,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "province",
+        "openmrs_entity_id": "stateProvince",
         "type": "edit_text",
         "hint": "Province",
         "read_only": "true",
@@ -118,15 +118,6 @@
         "type": "edit_text",
         "read_only": true,
         "hint": "Home Address"
-      },
-      {
-        "key": "landmark",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "landmark",
-        "type": "edit_text",
-        "hint": "Nearest Landmark",
-        "read_only": true
       },
       {
         "key": "household_id",

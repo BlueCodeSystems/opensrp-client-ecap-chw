@@ -51,18 +51,15 @@ import timber.log.Timber;
 
 public class ShowReferralsActivity extends AppCompatActivity {
 
-
-    public String household_id, intent_vcaid;
-    RecyclerView.Adapter recyclerViewadapter;
     private RecyclerView recyclerView;
-    private final ArrayList<ReferralModel> referralList = new ArrayList<>();
+    RecyclerView.Adapter recyclerViewadapter;
+    private ArrayList<ReferralModel> referralList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView vcaname, hh_id, txtReferral,txtBold;
+    private TextView vcaname,hh_id;
+
     private Toolbar toolbar;
-
-
-    public String hivstatus;
-
+    public String hivstatus, household_id, intent_vcaid;
+    private Button child_plan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +76,16 @@ public class ShowReferralsActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.child_container);
         vcaname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
-
-        txtReferral = findViewById(R.id.txtNoReferral);
-
+//        child_plan = findViewById(R.id.child_plan);
+//
         Bundle bundle = getIntent().getExtras();
         intent_vcaid = bundle.getString("childId");
         String intent_cname = bundle.getString("name");
-
+//
+//
         hh_id.setText("VCA ID : " + intent_vcaid);
         vcaname.setText(intent_cname);
-        txtReferral.setText("No referrals have been added for " +intent_cname);
-
-
-        intent_vcaid = bundle.getString("childId");
-        hh_id.setText("VCA ID : " + intent_vcaid);
-        vcaname.setText(intent_cname);
+//
 
         referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowReferralsActivity.this);
@@ -104,7 +96,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0) {
+        if (recyclerViewadapter.getItemCount() > 0){
 
             linearLayout.setVisibility(View.GONE);
         }
@@ -166,9 +158,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-
     public ChildIndexEventClient processRegistration(String jsonString){
-
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
@@ -177,30 +167,29 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
             String entityId = formJsonObject.optString("entity_id");
 
-
-            if (entityId.isEmpty()) {
-                entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-
-
-                JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+            if(entityId.isEmpty()){
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
 
 
-                JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
-                switch (encounterType) {
-                    case "Referral":
 
-                        if (fields != null) {
-                            FormTag formTag = getFormTag();
-                            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                    encounterType, Constants.EcapClientTable.EC_REFERRAL);
-                            tagSyncMetadata(event);
-                            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                            return new ChildIndexEventClient(event, client);
-                        }
-                        break;
+            JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-                }
+            switch (encounterType) {
+                case "Referral":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -275,9 +264,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         return formTag;
     }
 
-
-    public AllSharedPreferences getAllSharedPreferences() {
-
+    public AllSharedPreferences getAllSharedPreferences () {
         return ChwApplication.getInstance().getContext().allSharedPreferences();
     }
 

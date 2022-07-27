@@ -97,16 +97,6 @@
         "edit_type": "name"
       },
       {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Caregiver ID",
-        "edit_type": "name"
-      },
-      {
         "key": "participant_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -114,6 +104,16 @@
         "type": "edit_text",
         "read_only": "false",
         "hint": "Participant Name",
+        "edit_type": "name"
+      },
+      {
+        "key": "caregiver_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_id",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Caregiver ID",
         "edit_type": "name"
       },
       {
