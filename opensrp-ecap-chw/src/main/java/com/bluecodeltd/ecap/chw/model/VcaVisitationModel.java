@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.model;
 public class VcaVisitationModel {
 
     private String base_entity_id;
+    private String unique_id;
     private String age;
     private String visit_date;
     private String is_hiv_positive;
@@ -110,6 +111,14 @@ public class VcaVisitationModel {
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 
     public String getAge() {
