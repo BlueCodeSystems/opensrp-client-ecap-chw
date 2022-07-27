@@ -2281,55 +2281,6 @@
         }
       },
       {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Case Worker Name ",
-        "edit_type": "name",
-        "look_up": "true",
-        "read_only": false,
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        }
-      },
-      {
-        "key": "caseworker_date_signed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_date_signed",
-        "type": "date_picker",
-        "hint": "Date Case Worker Signs",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": false,
-          "err": "Date Signed"
-        }
-      },
-      {
-        "key": "caseworker_signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_signature",
-        "type": "check_box",
-        "label": "I hereby confirms that the information I have given is true",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          }
-        ]
-      },
-      {
         "key": "school_administration_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

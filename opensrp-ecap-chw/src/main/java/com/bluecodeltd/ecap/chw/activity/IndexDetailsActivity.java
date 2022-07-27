@@ -1002,7 +1002,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
                 childPlan.setVisibility(View.VISIBLE);
-                weServicesVca.setVisibility(View.VISIBLE);
+
 
 
                 if(indexVCA.getIs_hiv_positive() != null){
@@ -1017,6 +1017,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     if(Integer.parseInt(vcaAge) >= 15){
                         hiv_assessment2.setVisibility(View.VISIBLE);
                     }
+
+
+                }
+
+                if(Integer.parseInt(vcaAge) > 18){
+                    weServicesVca.setVisibility(View.VISIBLE);
                 }
             }
             else{
