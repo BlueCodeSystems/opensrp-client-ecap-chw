@@ -44,9 +44,6 @@ public class ChildSafetyActionDao extends AbstractDao {
             record.setSafety_plans(getCursorValue(c, "safety_plans"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setInitial_date(getCursorValue(c,"initial_date"));
-            record.setStateWhen(getCursorValue(c, "stateWhen"));
-            record.setFrequency(getCursorValue(c, "frequency"));
-            record.setWho(getCursorValue(c,"who"));
             record.setUnique_id(getCursorValue(c,"unique_id"));
 
             return record;
