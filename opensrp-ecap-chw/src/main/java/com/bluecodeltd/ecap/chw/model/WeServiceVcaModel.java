@@ -8,7 +8,6 @@ public class WeServiceVcaModel {
     private String household_id;
     private String data_collection;
     private String date_joined_we;
-    private String participant_name;
     private String reporting_month;
     private String we_member_in_period;
     private String we_loan_in_period;
@@ -81,14 +80,6 @@ public class WeServiceVcaModel {
 
     public void setDate_joined_we(String date_joined_we) {
         this.date_joined_we = date_joined_we;
-    }
-
-    public String getParticipant_name() {
-        return participant_name;
-    }
-
-    public void setParticipant_name(String participant_name) {
-        this.participant_name = participant_name;
     }
 
     public String getReporting_month() {
