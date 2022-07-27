@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -34,15 +35,17 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_family) {
-            if (context instanceof IndexRegisterActivity) {
-                BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
-                baseRegisterActivity.switchToBaseFragment();
+            if (context instanceof DashboardActivity) {
+//                BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
+//                baseRegisterActivity.switchToBaseFragment();
             } else {
-                Intent intent = new Intent(context, IndexRegisterActivity.class);
-                intent.putExtra("username", "");
-                intent.putExtra("password", "");
+//                Intent intent = new Intent(context, IndexRegisterActivity.class);
+//                intent.putExtra("username", "");
+//                intent.putExtra("password", "");
+//                context.startActivity(intent);
+//                context.finish();
+                Intent intent = new Intent(context,DashboardActivity.class);
                 context.startActivity(intent);
-                context.finish();
             }
         } else if (item.getItemId() == R.id.action_scan_qr) {
             BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
