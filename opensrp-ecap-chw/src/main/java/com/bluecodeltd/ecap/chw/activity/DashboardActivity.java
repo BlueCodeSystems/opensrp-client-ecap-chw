@@ -350,7 +350,7 @@ public class DashboardActivity extends AppCompatActivity {
         loadingDataProgressBar.setVisibility(View.INVISIBLE);
         allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
         allVcasCount.setText(IndexPersonDao.countAllChildren());
-      //  lastUpdated.setText(String.valueOf(dtf.format(localTime)));
+        lastUpdated.setText(String.valueOf(dtf.format(localTime)));
     }
 
     private void getCreds(String token){

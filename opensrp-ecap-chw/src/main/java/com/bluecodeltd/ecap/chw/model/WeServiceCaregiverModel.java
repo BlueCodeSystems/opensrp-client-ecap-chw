@@ -37,19 +37,6 @@ public class WeServiceCaregiverModel {
         this.household_id = household_id;
     }
 
-
-    public String getUnique_id() {
-        return unique_id;
-    }
-
-        return caregiver_id;
-    }
-
-    public void setCaregiver_id(String caregiver_id) {
-
-        this.caregiver_id = caregiver_id;
-    }
-
     public String getDate_joined_we() {
 
         return date_joined_we;

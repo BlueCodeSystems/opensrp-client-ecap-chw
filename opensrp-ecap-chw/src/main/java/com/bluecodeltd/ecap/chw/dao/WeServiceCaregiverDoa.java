@@ -26,7 +26,6 @@ public class WeServiceCaregiverDoa extends AbstractDao {
             WeServiceCaregiverModel record = new WeServiceCaregiverModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
-            record.setCaregiver_id(getCursorValue(c, "caregiver_id"));
             record.setDate_joined_we(getCursorValue(c, "date_joined_we"));
             record.setReporting_month(getCursorValue(c, "reporting_month"));
             record.setWe_member_in_period(getCursorValue(c, "we_member_in_period"));
