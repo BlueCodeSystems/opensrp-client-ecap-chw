@@ -154,6 +154,21 @@
                                 android:text="Service Reports"
                                 android:textAllCaps="false"
                                 tools:text="Service Reports" />
+                            <Button
+                                android:layout_marginLeft="10dp"
+                                android:onClick="onClick"
+                                android:id="@+id/show_referrals"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:background="@drawable/transparent_white_button"
+                                android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                                android:paddingTop="0dp"
+                                android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                                android:paddingBottom="0dp"
+                                android:text="Referrals"
+                                android:textAllCaps="false"
+                                tools:text="Referrals" />
 
                             <Button
                                 android:layout_marginLeft="10dp"
@@ -170,6 +185,9 @@
                                 android:text="Household Profile"
                                 android:textAllCaps="false"
                                 tools:text="Household Profile" />
+
+
+
 
                         </LinearLayout>
 
@@ -464,6 +482,44 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/we_services_vca"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/we_service"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp"
+                    android:text="WE Services"
+                    android:textStyle="italic"
+                    />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/we_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/hiv_assessment2"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
@@ -501,8 +557,45 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/childPlan"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/child_plan_form"
+                    android:background="#666666"
+                    android:textColor="@android:color/white"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp"
+                    android:text="Child Safety Plan"
+                    android:textStyle="italic"
+                    />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/child_plan_form"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add"  />
+
+            </RelativeLayout>
         </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"

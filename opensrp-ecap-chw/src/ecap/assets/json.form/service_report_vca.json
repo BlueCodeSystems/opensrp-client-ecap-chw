@@ -255,7 +255,12 @@
           {
             "key": "Project-filed report of suspected abuse to child protection office, police or other local authority",
             "text": "Project-filed report of suspected abuse to child protection office, police or other local authority"
-          },          {
+          },
+          {
+            "key": "we_services_vca",
+            "text": "Child received WE support services"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }

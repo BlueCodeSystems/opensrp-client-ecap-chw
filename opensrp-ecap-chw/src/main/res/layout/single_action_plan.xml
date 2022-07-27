@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/register_columns"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:elevation="20dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/itemm"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/primary"
+            android:orientation="vertical">
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/typex"
+                style="@style/CustomFontTextViewStyle.ClientList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="ACTION"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:id="@+id/qlayout"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/statusx"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                style="@style/CustomFontTextViewStyle.ClientList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="Action Plan"
+                android:textColor="@color/text_black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/initial_date"
+                style="@style/CustomFontTextViewStyle.ClientList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="Due : 12/09/2022"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/edit_me"
+        android:tint="#696969"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="45dp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/expand_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/baseline_expand_more_24"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/expand_less"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/baseline_expand_less_24" />
+
+    <View
+        android:layout_below="@+id/itemm"
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/expandable"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_below="@+id/itemm"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Safety Threats"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/safetyThreats"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Safety Action"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/safetyAction"
+                android:layout_weight="1"
+                android:text="yhs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Safety Protection"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/safetyProtection"
+                android:layout_weight="1"
+                android:text="DGHHDSGBVU JHB jyhgshgfuis fsjhisujhf sfiuhsiouho0sigK"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="When"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/when"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Frequency"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/frequency"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Who"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/who"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

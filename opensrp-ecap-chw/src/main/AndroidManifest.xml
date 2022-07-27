@@ -39,8 +39,22 @@
         tools:replace="android:theme">
 
         <activity
+            android:name=".activity.ShowHouseholdReferralsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ShowReferralsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.VcaServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
+
+        <activity
+            android:name=".activity.ChildSafetyPlanActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ChildSafetyPlanActions"
+            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name=".activity.HouseholdServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
