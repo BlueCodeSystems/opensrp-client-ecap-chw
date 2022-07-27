@@ -3306,14 +3306,7 @@
           }
         },
         {
-          "column_name": "participant_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.participant_name"
-          }
-        },
-        {
-          "column_name": "caregiver_id",
+          "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_id"
@@ -3483,13 +3476,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.data_collection"
-          }
-        },
-        {
-          "column_name": "participant_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.participant_name"
           }
         },
         {

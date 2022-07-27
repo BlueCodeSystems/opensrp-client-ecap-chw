@@ -4,8 +4,9 @@ public class WeServiceCaregiverModel {
 
     private String base_entity_id;
     private String household_id;
-    private String participant_name;
-    private String caregiver_id;
+    private String we_group_name;
+    private String unique_id;
+    private String data_collection;
     private String date_joined_we;
     private String we_group_no;
     private String reporting_month;
@@ -36,15 +37,10 @@ public class WeServiceCaregiverModel {
         this.household_id = household_id;
     }
 
-    public String getParticipant_name() {
-        return participant_name;
-    }
 
-    public void setParticipant_name(String participant_name) {
-        this.participant_name = participant_name;
+    public String getUnique_id() {
+        return unique_id;
     }
-
-    public String getCaregiver_id() {
 
         return caregiver_id;
     }
