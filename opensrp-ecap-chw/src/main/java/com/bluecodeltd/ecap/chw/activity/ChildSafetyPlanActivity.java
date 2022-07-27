@@ -109,12 +109,8 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
-        recyclerViewadapter = new ChildSafetyPlanAdapter(childSafetyPlanList, ChildSafetyPlanActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
-
-
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -164,26 +160,14 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
-            boolean is_edit_mode = false;
+
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
-            try {
-                jsonFormObject = new JSONObject(jsonString);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
-
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
-                is_edit_mode = true;
-            }
 
             try {
 
@@ -193,24 +177,17 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, false);
 
-                    JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "initial_date");
-                    String dateId = cpdate.optString("value");
-                    openChildSafetyPlanAction(dateId);
-                if(encounterType.equals("Child Safety Plan"))
-                {
-
-
-                }
+                Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
 
 
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-      //  finish();
-      //  startActivity(getIntent());
+        finish();
+        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -344,17 +321,4 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         }
 
     }
-    public void openChildSafetyPlanAction(String dateId) {
-
-        Intent i = new Intent(ChildSafetyPlanActivity.this, ChildSafetyPlanActions.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("child_ID", intent_vcaid);
-        bundle.putString("action_date",dateId);
-        i.putExtras(bundle);
-        startActivity(i);
-        Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
-
-
-    }
-
 }

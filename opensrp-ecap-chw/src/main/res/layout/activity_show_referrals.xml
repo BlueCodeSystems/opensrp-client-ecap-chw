@@ -130,7 +130,6 @@
                     android:src="@drawable/no_referral" />
 
                 <TextView
-                    android:id="@+id/txtNoReferral"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
