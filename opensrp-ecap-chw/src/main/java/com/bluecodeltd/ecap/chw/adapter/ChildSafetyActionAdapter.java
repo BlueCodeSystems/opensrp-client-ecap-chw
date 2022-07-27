@@ -63,7 +63,9 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
         holder.txtSafetyThreats.setText(plan.getSafety_threats());
         holder.txtSafetyAction.setText(plan.getSafety_action());
         holder.txtSafetyProtection.setText(plan.getSafety_protection());
-        holder.txtSafetyPlans.setText(plan.getSafety_plans());
+        holder.txtWhen.setText(plan.getStateWhen());
+        holder.txtFrequency.setText(plan.getFrequency());
+        holder.txtWho.setText(plan.getWho());
         holder.txtActionDate.setText("Date Created : " + plan.getInitial_date());
 
 
@@ -166,7 +168,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView  txtSafetyThreats,txtSafetyAction,txtSafetyProtection,txtSafetyPlans,txtActionDate;
+        TextView  txtSafetyThreats,txtSafetyAction,txtSafetyProtection,txtWhen,txtFrequency,txtWho,txtActionDate;
 
         LinearLayout linearLayout, exPandableView;
 
@@ -184,7 +186,9 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
             txtSafetyThreats = itemView.findViewById(R.id.safetyThreats);
             txtSafetyAction = itemView.findViewById(R.id.safetyAction);
             txtSafetyProtection = itemView.findViewById(R.id.safetyProtection);
-            txtSafetyPlans = itemView.findViewById(R.id.safetyPlans);
+            txtWhen = itemView.findViewById(R.id.when);
+            txtFrequency = itemView.findViewById(R.id.frequency);
+            txtWho = itemView.findViewById(R.id.who);
             txtActionDate = itemView.findViewById(R.id.initial_date);
 
         }
@@ -197,3 +201,4 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
     }
 
 }
+
