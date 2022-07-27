@@ -3306,13 +3306,6 @@
           }
         },
         {
-          "column_name": "participant_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.participant_name"
-          }
-        },
-        {
           "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
@@ -3490,13 +3483,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.data_collection"
-          }
-        },
-        {
-          "column_name": "participant_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.participant_name"
           }
         },
         {
