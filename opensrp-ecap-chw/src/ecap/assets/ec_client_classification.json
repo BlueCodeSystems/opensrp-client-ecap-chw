@@ -411,6 +411,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "WE Services Caregiver",
+            "creates_case": [
+              "ec_we_services_caregiver"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "WE Services VCA",
+            "creates_case": [
+              "ec_we_services_vca"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Household Visitation For Caregiver",
             "creates_case": [
               "ec_household_visitation_for_caregiver"
@@ -425,16 +439,9 @@
           },
           {
             "field": "eventType",
-            "field_value": "OVC Graduation Assessment",
+            "field_value": "Graduation",
             "creates_case": [
-              "ec_ovc_graduation"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Graduation Assessment Sub Form",
-            "creates_case": [
-              "ec_graduation_assessment_sub_form"
+              "ec_graduation"
             ]
           },
           {
@@ -485,6 +492,20 @@
             "field_value": "Grad",
             "creates_case": [
               "ec_grad"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Child Safety Plan",
+            "creates_case": [
+              "ec_child_safety_plan"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Child Safety Actions",
+            "creates_case": [
+              "ec_child_safety_actions"
             ]
           }
         ]

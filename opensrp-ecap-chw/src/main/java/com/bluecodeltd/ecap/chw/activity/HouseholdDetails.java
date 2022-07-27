@@ -2,7 +2,6 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static com.vijay.jsonwizard.utils.FormUtils.getJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
@@ -35,9 +34,10 @@ import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
@@ -45,10 +45,15 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
+import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -77,6 +82,7 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -98,10 +104,11 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment;
+    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
+    //public WeServiceCaregiverModel weServiceCaregiverModel;
     Caregiver caregiver;
 
     ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
@@ -118,7 +125,10 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverAssessmentModel caregiverAssessmentModel;
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
+    WeServiceCaregiverModel weServiceCaregiverModel;
+    GraduationModel graduationModel;
 
+    private ArrayList<Child> childList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,12 +142,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
         householdId = getIntent().getExtras().getString("householdId");
 
+        weServiceCaregiverModel = WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
         caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
+        graduationModel = GraduationDao.getGraduation(householdId);
+
 
         house = getHousehold(householdId);
-
 
         caregiver = CaregiverDao.getCaregiver(householdId);
 
@@ -152,6 +164,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
+        we_service_caregiver = findViewById(R.id.we_service_caregiver);
         chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
@@ -196,16 +209,27 @@ public class HouseholdDetails extends AppCompatActivity {
         return  populateMapWithHouse(house);
     }
 
+
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
 
+    public HashMap<String, WeServiceCaregiverModel> getWeServiceCaregiver() {
+        return  populateMapWithWeServicesCaregiverModel(weServiceCaregiverModel);
+    }
 
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {
         HashMap<String, Household> householdHashMap= new HashMap<>();
         householdHashMap.put("house",houseToAdd);
         return householdHashMap;
+    }
+
+    public HashMap<String,WeServiceCaregiverModel> populateMapWithWeServicesCaregiverModel(WeServiceCaregiverModel weServicesToAdd)
+    {
+        HashMap<String, WeServiceCaregiverModel> weServiceCaregiverModelHashMap= new HashMap<>();
+        weServiceCaregiverModelHashMap.put("we services",weServicesToAdd);
+        return weServiceCaregiverModelHashMap;
     }
 
     public HashMap<String, CaregiverAssessmentModel> populateMapWithVulnerabilities(CaregiverAssessmentModel vToAdd)
@@ -306,11 +330,9 @@ public class HouseholdDetails extends AppCompatActivity {
                 try {
 
                     oMapper = new ObjectMapper();
+                    graduationMapper = new ObjectMapper();
 
                     indexRegisterForm = formUtils.getFormJson("graduation");
-
-
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
 
                     //Populate form details
                     JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
@@ -319,10 +341,18 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Populate Caregiver Details
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
 
+                    if(graduationModel != null) {
+
+                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, graduationMapper.convertValue(graduationModel, Map.class));
+
+                    }
+
                     //Populate for Benchmark 3
                     String bench3 = GradDao.bench3Answers(householdId);
                     int answered = Integer.parseInt(bench3);
-                    int childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
+                    Integer childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
+                    indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value","1");
 
                     if(childrenabove10to17 > 0){
                         if(answered == 0){
@@ -334,10 +364,13 @@ public class HouseholdDetails extends AppCompatActivity {
                             JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
                             hiv_status_enrolled.put(JsonFormUtils.VALUE, "yes");
                         }
-                    } else {
-                            indexRegisterForm.getJSONObject("step4").getJSONArray("fields").remove(0);
-                    }
 
+                    } else  {
+                        indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value", "1");
+                            indexRegisterForm.getJSONObject("step4").getJSONArray("fields").remove(0);
+                            //Because Index 0 has been removed, index 3 becomes index 2
+
+                    }
 
                     //Count everyone who has been tested
                     if(sumtested < Integer.parseInt(totalChildren)){
@@ -388,6 +421,15 @@ public class HouseholdDetails extends AppCompatActivity {
                 startActivity(intent);
 
                 break;
+            case R.id.householdReferrals:
+
+                Intent showReferrals = new Intent(HouseholdDetails.this, ShowHouseholdReferralsActivity.class);
+                Bundle referral = new Bundle();
+                referral.putString("householdId",house.getHousehold_id());
+                referral.putString("householdName",house.getCaregiver_name());
+                showReferrals.putExtras(referral);
+
+                startActivity(showReferrals);
 
             case R.id.fabx:
 
@@ -451,7 +493,6 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
 
-
             case R.id.hcase_plan:
                 try {
 
@@ -469,7 +510,7 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.h_referral:
                 try {
 
-                    indexRegisterForm = formUtils.getFormJson("referral");
+                    indexRegisterForm = formUtils.getFormJson("household_referral");
 
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
@@ -559,6 +600,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
                 break;
 
+
             case R.id.child_form:
 
                 try {
@@ -627,6 +669,25 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                break;
+            case R.id.we_service_caregiver:
+                try {
+
+                    indexRegisterForm = formUtils.getFormJson("we_services_caregiver");
+                    if (weServiceCaregiverModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        indexRegisterForm.put("entity_id", this.weServiceCaregiverModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(weServiceCaregiverModel, Map.class));
+                    }
+
+                    startFormActivity(indexRegisterForm);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
         }
@@ -716,6 +777,13 @@ public class HouseholdDetails extends AppCompatActivity {
                         finish();
                         startActivity(getIntent());
                         break;
+                    case "WE Services Caregiver":
+
+                        closeFab();
+                        Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+                        break;
 
                     case "Family Member":
                         closeFab();
@@ -733,6 +801,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Grad":
+                    case "Graduation":
                     case "Household Visitation For Caregiver":
                     case "Hiv Assessment For Caregiver":
 
@@ -908,6 +977,33 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
+
+                case "Graduation":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_GRADUATION);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+                case "WE Services - Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_WE_SERVICES_CAREGIVER);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -1011,6 +1107,7 @@ public class HouseholdDetails extends AppCompatActivity {
             refferal.setVisibility(View.VISIBLE);
             child_form.setVisibility(View.VISIBLE);
             household_visitation_caregiver.setVisibility(View.VISIBLE);
+            we_service_caregiver.setVisibility(View.VISIBLE);
 
         }
     }
@@ -1026,6 +1123,7 @@ public class HouseholdDetails extends AppCompatActivity {
         refferal.setVisibility(View.GONE);
         child_form.setVisibility(View.GONE);
         household_visitation_caregiver.setVisibility(View.GONE);
+        we_service_caregiver.setVisibility(View.GONE);
     }
 
     public void countNumberOfMales(List<String> allBirthDates){
@@ -1164,4 +1262,10 @@ public class HouseholdDetails extends AppCompatActivity {
     {
         return HouseholdDao.getHousehold(householdId);
     }
+
+    public WeServiceCaregiverModel getWeServiceCaregiverModel(String householdId)
+    {
+        return WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
+    }
+
 }

@@ -13,11 +13,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.CasePlan;
-import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.activity.ChildSafetyPlanActions;
+import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,61 +29,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.ViewHolder>{
+public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyActionAdapter.ViewHolder>{
 
     Context context;
 
-    List<CasePlanModel> caseplans;
+    List<ChildSafetyActionModel> action_plan;
 
     ObjectMapper oMapper;
 
-    public DomainPlanAdapter(ArrayList<CasePlanModel> caseplans, Context context){
+    public ChildSafetyActionAdapter(ArrayList<ChildSafetyActionModel> action_plan, Context context){
 
         super();
 
-        this.caseplans = caseplans;
+        this.action_plan = action_plan;
         this.context = context;
     }
 
     @Override
-    public DomainPlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChildSafetyActionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_domain, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_action_plan, parent, false);
 
-        DomainPlanAdapter.ViewHolder viewHolder = new DomainPlanAdapter.ViewHolder(v);
+        ChildSafetyActionAdapter.ViewHolder viewHolder = new ChildSafetyActionAdapter.ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DomainPlanAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ChildSafetyActionAdapter.ViewHolder holder, final int position) {
 
-        final CasePlanModel casePlan = caseplans.get(position);
+        final ChildSafetyActionModel plan = action_plan.get(position);
 
-        holder.txtType.setText(casePlan.getType());
-        holder.txtVulnerability.setText(casePlan.getVulnerability());
-        holder.txtGoal.setText(casePlan.getGoal());
-        holder.txtServices.setText(casePlan.getServices());
-        holder.txtServicesReferred.setText(casePlan.getService_referred());
-        holder.txtInstitution.setText(casePlan.getInstitution());
-        holder.txtDueDate.setText("Due Date : " + casePlan.getDue_date());
+        holder.txtSafetyThreats.setText(plan.getSafety_threats());
+        holder.txtSafetyAction.setText(plan.getSafety_action());
+        holder.txtSafetyProtection.setText(plan.getSafety_protection());
+        holder.txtWhen.setText(plan.getStateWhen());
+        holder.txtFrequency.setText(plan.getFrequency());
+        holder.txtWho.setText(plan.getWho());
+        holder.txtActionDate.setText("Date Created : " + plan.getInitial_date());
 
-
-        if(casePlan.getStatus().equals(("C"))){
-
-            holder.txtStatus.setText("Complete");
-
-        } else if(casePlan.getStatus().equals(("P"))) {
-
-            holder.txtStatus.setText("In Progress");
-
-        } else if(casePlan.getStatus().equals(("D"))) {
-
-            holder.txtStatus.setText("Delayed");
-
-        }
-
-        holder.txtComment.setText(casePlan.getComment());
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -111,10 +94,10 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             if (v.getId() == R.id.edit_me) {
 
                 try {
-                    if(context instanceof CasePlan){
-                        openFormUsingFormUtils(context, "domain", casePlan);
+                    if(context instanceof ChildSafetyPlanActions){
+                        openFormUsingFormUtils(context, "child_safety_action", plan);
                     } else {
-                        openFormUsingFormUtils(context, "caregiver_domain", casePlan);
+                        openFormUsingFormUtils(context, "caregiver_domain", plan);
                     }
 
 
@@ -136,7 +119,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, CasePlanModel caseplan) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, ChildSafetyActionModel caseplan) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -152,7 +135,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 
         formToBeOpened.put("entity_id", caseplan.getBase_entity_id());
 
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only",true);
+//        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only",true);
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(caseplan, Map.class));
 
@@ -180,13 +163,12 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     @Override
     public int getItemCount() {
 
-        return caseplans.size();
+        return action_plan.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtType, txtVulnerability,txtCasePlanStatus,
-                txtGoal, txtServices, txtServicesReferred, txtInstitution, txtDueDate, txtStatus, txtComment;
+        TextView  txtSafetyThreats,txtSafetyAction,txtSafetyProtection,txtWhen,txtFrequency,txtWho,txtActionDate;
 
         LinearLayout linearLayout, exPandableView;
 
@@ -201,16 +183,13 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             expMore = itemView.findViewById(R.id.expand_more);
             linearLayout = itemView.findViewById(R.id.itemm);
             exPandableView = itemView.findViewById(R.id.expandable);
-            txtType = itemView.findViewById(R.id.typex);
-            txtVulnerability = itemView.findViewById(R.id.vulnerability);
-            txtGoal = itemView.findViewById(R.id.goal);
-            txtServices = itemView.findViewById(R.id.services);
-            txtServicesReferred = itemView.findViewById(R.id.services_referred);
-            txtInstitution = itemView.findViewById(R.id.institution);
-            txtDueDate = itemView.findViewById(R.id.due_date);
-            txtStatus = itemView.findViewById(R.id.statusx);
-            txtComment = itemView.findViewById(R.id.comment);
-
+            txtSafetyThreats = itemView.findViewById(R.id.safetyThreats);
+            txtSafetyAction = itemView.findViewById(R.id.safetyAction);
+            txtSafetyProtection = itemView.findViewById(R.id.safetyProtection);
+            txtWhen = itemView.findViewById(R.id.when);
+            txtFrequency = itemView.findViewById(R.id.frequency);
+            txtWho = itemView.findViewById(R.id.who);
+            txtActionDate = itemView.findViewById(R.id.initial_date);
 
         }
 
@@ -222,3 +201,4 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     }
 
 }
+

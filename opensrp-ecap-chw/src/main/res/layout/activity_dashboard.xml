@@ -117,22 +117,43 @@
         </com.google.android.material.appbar.AppBarLayout>
     </RelativeLayout>
 
-    <Switch
-        android:id="@+id/information_switch"
+    <RelativeLayout
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:gravity="left"
-        android:minHeight="48dp"
-        android:showText="true"
-        android:text="Filter"
-        android:textOff="All"
-        android:textOn="caseworker"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Filter"
+            android:textStyle="bold" />
+
+        <Switch
+            android:id="@+id/information_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="left"
+            android:showText="true"
+            android:textOff="All"
+            android:textOn="Me"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </LinearLayout>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -141,7 +162,6 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
             app:cardCornerRadius="4dp">
 
             <TextView
@@ -167,7 +187,7 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+
             app:cardCornerRadius="4dp">
 
             <TextView
@@ -193,7 +213,6 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
             app:cardCornerRadius="4dp">
 
             <TextView

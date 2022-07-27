@@ -1,7 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.MuacModel;
-import com.bluecodeltd.ecap.chw.model.ReferralModel;
 
 import org.smartregister.dao.AbstractDao;
 

@@ -95,6 +95,7 @@ public class Constants extends CoreConstants {
         String EC_VCA_CASE_PLAN = "ec_vca_case_plan";
         String EC_VCA_CASE_PLAN_DOMAIN = "ec_vca_case_plan_domain";
         String EC_GRAD = "ec_grad";
+        String EC_GRADUATION = "ec_graduation";
         String EC_CAREGIVER_PLAN_DOMAIN = "ec_caregiver_case_plan_domain";
         String EC_MOTHER_INDEX = "ec_mother_index";
         String EC_POPULATION = "ec_sub_population";
@@ -112,6 +113,10 @@ public class Constants extends CoreConstants {
         String EC_HIV_ASSESSMENT_BELOW_15 = "ec_hiv_assessment_below_15";
         String EC_CAREGIVER_VISITATION = "ec_household_visitation_for_caregiver";
         String EC_CAREGIVER_HIV_ASSESSMENT = "ec_caregiver_hiv_assessment";
+        String EC_CHILD_SAFETY_PLAN = "ec_child_safety_plan";
+        String EC_WE_SERVICES_CAREGIVER = "ec_we_services_caregiver";
+        String EC_CHILD_SAFETY_ACTION = "ec_child_safety_actions";
+        String EC_WE_SERVICES_VCA = "ec_we_services_vca";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";
