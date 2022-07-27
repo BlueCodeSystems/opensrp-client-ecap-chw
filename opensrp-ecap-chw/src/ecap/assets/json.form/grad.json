@@ -231,7 +231,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "virally_suppressed",
         "type": "native_radio",
-        "read_only": true,
         "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)?",
         "options": [
           {
@@ -243,36 +242,12 @@
             "text": "No"
           }
         ],
+        "read_only": "true",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
               "rules-file": "grad_calculation.yml"
             }
-          }
-        },
-        "relevance": {
-          "step1:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "negative_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "negative_toaster",
-        "type": "toaster_notes",
-        "text": "This benchmark does not apply for HIV negative VCA",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_text": "Benchmark does not apply to this VCA. Proceed.",
-        "toaster_info_title": "HIV negative benchmark",
-        "toaster_type": "warning",
-        "relevance": {
-          "step1:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
           }
         }
       }

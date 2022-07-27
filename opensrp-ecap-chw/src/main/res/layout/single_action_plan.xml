@@ -214,56 +214,12 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="When"
+                android:text="Safety Plans"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/when"
-                android:layout_weight="1"
-                android:text="yhs dgbdfbhdh"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Frequency"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/frequency"
-                android:layout_weight="1"
-                android:text="yhs dgbdfbhdh"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Who"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/who"
+                android:id="@+id/safetyPlans"
                 android:layout_weight="1"
                 android:text="yhs dgbdfbhdh"
                 android:layout_width="0dip"
