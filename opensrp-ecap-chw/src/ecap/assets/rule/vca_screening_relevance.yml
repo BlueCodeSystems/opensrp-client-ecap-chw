@@ -611,7 +611,7 @@ actions:
 name: step1_school
 description: school
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 4"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 4 "
 actions:
   - "isRelevant = true"
 ---
@@ -654,5 +654,13 @@ name: step4_child_mmd
 description: child_mmd
 priority: 1
 condition: "step1_is_on_hiv_treatment.contains('yes')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_schoolName
+description: schoolName
+priority: 1
+condition: "step1_school.contains('pre_school') || step1_school.contains('primary_school') || step1_school.contains('secondary_school') "
 actions:
   - "isRelevant = true"
