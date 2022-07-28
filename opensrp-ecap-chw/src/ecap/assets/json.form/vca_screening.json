@@ -368,7 +368,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_school",
         "type": "edit_text",
-        "hint": "School",
+        "hint": "Other specify",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -394,9 +394,10 @@
           "err": "School name can only contain letters"
         },
         "relevance": {
-          "step1:school": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
           }
         }
       },
