@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
@@ -10,6 +11,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
+
+    public static void deleteRecord (String id, List<Child> children) {
+
+        for (int i = 0; i < children.size(); i++) {
+
+            Child child = children.get(i);
+
+            String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + child.getBase_entity_id() + "'";
+            updateDB(sql);
+        }
+
+        String sql = "UPDATE ec_household SET is_closed = '1' WHERE base_entity_id = '" + id + "'";
+        updateDB(sql);
+
+    }
+
+    public static void deleteRecordfromSearch (String id, List<Child> children) {
+
+        for (int i = 0; i < children.size(); i++) {
+
+            Child child = children.get(i);
+
+            String sql = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + child.getBase_entity_id() + "'";
+            updateDB(sql);
+        }
+
+        String sql = "UPDATE ec_household_search SET is_closed = '1' WHERE object_id = '" + id + "'";
+        updateDB(sql);
+
+        String sql2 = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + id + "'";
+        updateDB(sql2);
+    }
 
     public static String checkIfScreened (String household_id) {
 

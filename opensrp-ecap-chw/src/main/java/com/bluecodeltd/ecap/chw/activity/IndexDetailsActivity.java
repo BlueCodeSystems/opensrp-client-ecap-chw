@@ -1218,7 +1218,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
                 break;
 
-     /*       case R.id.delete_record:
+            case R.id.delete_record:
 
 
                 if(txtGender.getText().toString().equals("MALE")){
@@ -1233,8 +1233,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     dialog.cancel();
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    IndexPersonDao.deleteRecord(uniqueId);
-                    IndexPersonDao.deleteRecordfromSearch(uniqueId);
+                    IndexPersonDao.deleteRecord(child.getBase_entity_id());
+                    IndexPersonDao.deleteRecordfromSearch(child.getBase_entity_id());
 
                     Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
                     super.onBackPressed();
@@ -1247,7 +1247,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 alert.show();
 
 
-                break;*/
+                break;
 
         }
         return super.onOptionsItemSelected(item);
