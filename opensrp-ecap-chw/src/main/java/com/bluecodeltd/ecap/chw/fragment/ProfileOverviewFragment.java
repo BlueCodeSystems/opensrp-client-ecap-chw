@@ -31,7 +31,7 @@ public class ProfileOverviewFragment extends Fragment {
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
-            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone;
+            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool;
 
     @Nullable
     @Override
@@ -56,6 +56,7 @@ public class ProfileOverviewFragment extends Fragment {
         txtArtCheckbox = view.findViewById(R.id.is_art);
         txtDateStartedArt = view.findViewById(R.id.art_date);
         txtVlLastDate = view.findViewById(R.id.date_last_vl);
+        txtSchool = view.findViewById(R.id.school);
 
         txtVlResult = view.findViewById(R.id.last_vl_result);
         txtIsSuppressed = view.findViewById(R.id.vl_suppressed);
@@ -143,6 +144,14 @@ public class ProfileOverviewFragment extends Fragment {
         } else {
             txtReferred.setText("N/A");
         }
+
+
+        if (childIndex.getSchoolName() != null){
+            txtSchool.setText(childIndex.getSchoolName());
+        } else {
+            txtSchool.setText("N/A");
+        }
+
 
         if (childIndex.getDate_enrolled()!= null){
             txtEnrolled.setText(childIndex.getDate_enrolled());

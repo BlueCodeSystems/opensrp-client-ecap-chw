@@ -448,7 +448,8 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "caregiver_nrc"),
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
-                    getCursorValue(c, "date_offered_enrollment")
+                    getCursorValue(c, "date_offered_enrollment"),
+                    getCursorValue(c, "school_name")
 
             );
         };
@@ -546,7 +547,8 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "caregiver_nrc"),
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
-                    getCursorValue(c, "date_offered_enrollment")
+                    getCursorValue(c, "date_offered_enrollment"),
+                    getCursorValue(c, "school_name")
 
             );
         };
@@ -644,7 +646,8 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "caregiver_nrc"),
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
-                    getCursorValue(c, "date_offered_enrollment")
+                    getCursorValue(c, "date_offered_enrollment"),
+                    getCursorValue(c, "school_name")
 
             );
         };
