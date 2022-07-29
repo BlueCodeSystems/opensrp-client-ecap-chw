@@ -7,10 +7,15 @@ import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -110,6 +115,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public Household house;
     public WeServiceCaregiverModel weServiceCaregiverModel;
     Caregiver caregiver;
+    AlertDialog.Builder builder, screeningBuilder;
 
     ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
     CommonPersonObjectClient household;
@@ -140,15 +146,17 @@ public class HouseholdDetails extends AppCompatActivity {
 
         householdId = getIntent().getExtras().getString("householdId");
 
+        childList.addAll(IndexPersonDao.getFamilyChildren(householdId));
+
         weServiceCaregiverModel = WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
         caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
         caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
         graduationModel = GraduationDao.getGraduation(householdId);
 
+        builder = new AlertDialog.Builder(HouseholdDetails.this);
 
         house = getHousehold(householdId);
-
 
         caregiver = CaregiverDao.getCaregiver(householdId);
 
@@ -1249,5 +1257,66 @@ public class HouseholdDetails extends AppCompatActivity {
     public WeServiceCaregiverModel getWeServiceCaregiverModel(String householdId)
     {
         return WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.household_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.call:
+                String caregiverPhoneNumber = house.getCaregiver_phone();
+                if (!caregiverPhoneNumber.equals("")) {
+
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                    startActivity(callIntent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                }
+
+                return true;
+
+
+            case R.id.delete_record:
+
+                builder.setMessage("You are about to delete this household and all its forms.");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
+
+                }).setPositiveButton("YES",((dialogInterface, i) -> {
+                    HouseholdDao.deleteRecord(house.getBase_entity_id(), childList);
+                    HouseholdDao.deleteRecordfromSearch(house.getBase_entity_id(), childList);
+
+                    Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                    super.onBackPressed();
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
+
+
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void buildDialog(){
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("VCA Screening");
+        alert.show();
     }
 }

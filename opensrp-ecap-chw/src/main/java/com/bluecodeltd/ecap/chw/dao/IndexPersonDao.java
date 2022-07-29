@@ -27,13 +27,13 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static void deleteRecord (String vcaID) {
 
-        String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE unique_id = '" + vcaID + "'";
+        String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + vcaID + "'";
         updateDB(sql);
     }
 
     public static void deleteRecordfromSearch (String vcaID) {
 
-        String sql = "UPDATE ec_client_index_search SET is_closed = '1' WHERE unique_id = '" + vcaID + "'";
+        String sql = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + vcaID + "'";
         updateDB(sql);
     }
 
