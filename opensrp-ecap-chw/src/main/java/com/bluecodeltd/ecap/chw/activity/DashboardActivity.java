@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import java.time.LocalDate;
@@ -38,6 +39,8 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -45,6 +48,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 
@@ -83,6 +87,7 @@ public class DashboardActivity extends AppCompatActivity {
     String phone = "";
     private final int FIVE_SECONDS = 2000;
     Runnable runnable;
+    ArrayList<Integer> colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +115,14 @@ public class DashboardActivity extends AppCompatActivity {
         String username = extras.getString("username");
         String password = extras.getString("password");
         dtf = DateTimeFormatter.ofPattern("HH:mm");
+       colors = new ArrayList<Integer>();
+
+        colors.add(Color.parseColor("#9B51E0"));
+        colors.add(Color.parseColor("#E84AE0"));
+        colors.add(Color.parseColor("#BF51E0"));
+        colors.add(Color.parseColor("#D338A0"));
+        colors.add(Color.parseColor("#DA617E"));
+        colors.add(Color.parseColor("#FBA1B7")  );
         if (username != null && password != null) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
             String code = sp.getString("code", "0000");
@@ -171,6 +184,8 @@ public class DashboardActivity extends AppCompatActivity {
         }
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+        set1.setColors(colors);
+        set1.setColors(colors);
         dataSets.add(set1);
 
         BarData data = new BarData(dataSets);
@@ -188,11 +203,14 @@ public class DashboardActivity extends AppCompatActivity {
             values.add(new BarEntry(x, y));
         }
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
+        set1.setColors(ColorTemplate.MATERIAL_COLORS);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
 
+
         BarData data = new BarData(dataSets);
+
         data.setValueFormatter(new MyValueFormatter());
 
 
@@ -208,11 +226,34 @@ public class DashboardActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return SUBPOPS[(int) value];
+                //return SUBPOPS[(int) value];
+                return "";
             }
         });
 
         chart.getXAxis().setDrawGridLines(false);
+        Legend l = chart.getLegend();
+
+        l.getEntries();
+
+       // l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+
+        l.setYEntrySpace(10f);
+        LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#9B51E0"));
+        LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#E84AE0"));
+        LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#BF51E0"));
+        LegendEntry l4=new LegendEntry("AGYW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#D338A0"));
+        LegendEntry l5=new LegendEntry("CSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
+        LegendEntry l6=new LegendEntry("FSW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#FBA1B7"));
+        l.setCustom(new LegendEntry[]{l1,l2,l3,l4,l5,l6});
+       // l.setWordWrapEnabled(true);
+
+       // LegendEntry l1=new LegendEntry("Male",Legend.LegendForm.CIRCLE,10f,2f,null,Color.YELLOW);
+       // LegendEntry l2=new LegendEntry("Female", Legend.LegendForm.CIRCLE,10f,2f,null,Color.RED);
+
+      //  l.setCustom(new LegendEntry[]{l1,l2});
+
+        l.setEnabled(true);
 
         YAxis axisLeft = chart.getAxisLeft();
         axisLeft.setGranularity(10f);
