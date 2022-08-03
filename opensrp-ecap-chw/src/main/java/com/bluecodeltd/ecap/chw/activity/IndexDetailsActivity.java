@@ -115,7 +115,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
+    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
 
     public VcaScreeningModel indexVCA;
@@ -1220,32 +1220,30 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.delete_record:
 
+                    if(txtGender.getText().toString().equals("MALE")){
+                        gender = "his";
+                    } else {
+                        gender = "her";
+                    }
 
-                if(txtGender.getText().toString().equals("MALE")){
-                    gender = "his";
-                } else {
-                    gender = "her";
-                }
+                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
+                    builder.setNegativeButton("NO", (dialog, id) -> {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
 
-                builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-                builder.setNegativeButton("NO", (dialog, id) -> {
-                    //  Action for 'NO' Button
-                    dialog.cancel();
+                    }).setPositiveButton("YES",((dialogInterface, i) -> {
+                        IndexPersonDao.deleteRecord(child.getBase_entity_id());
+                        IndexPersonDao.deleteRecordfromSearch(child.getBase_entity_id());
 
-                }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    IndexPersonDao.deleteRecord(child.getBase_entity_id());
-                    IndexPersonDao.deleteRecordfromSearch(child.getBase_entity_id());
+                        Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                        super.onBackPressed();
+                    }));
 
-                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                    super.onBackPressed();
-                }));
-
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                //Setting the title manually
-                alert.setTitle("Alert");
-                alert.show();
-
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Alert");
+                    alert.show();
 
                 break;
 
@@ -1307,7 +1305,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
  }
  public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
      SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-     String caseworkerphone = cp.getString("phone", "Anonymous");
+     caseworkerphone = cp.getString("phone", "Anonymous");
 
      JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
 

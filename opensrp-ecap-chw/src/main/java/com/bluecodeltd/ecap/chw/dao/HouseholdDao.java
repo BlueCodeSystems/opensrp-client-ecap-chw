@@ -42,6 +42,8 @@ public class HouseholdDao extends AbstractDao {
 
         String sql2 = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + id + "'";
         updateDB(sql2);
+
+
     }
 
     public static String checkIfScreened (String household_id) {

@@ -78,11 +78,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     }
 
 
-
-
-
-
-
     @Override
     protected void initializePresenter() {
         this.presenter = new IndexRegisterPresenter(this);
