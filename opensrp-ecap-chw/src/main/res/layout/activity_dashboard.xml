@@ -179,7 +179,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="15dp"
                 android:gravity="bottom|center"
-                android:text="Number of VCas" />
+                android:text="VCAs" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -205,7 +205,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="15dp"
                 android:gravity="bottom|center"
-                android:text="Number of Households" />
+                android:text=" Households" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
