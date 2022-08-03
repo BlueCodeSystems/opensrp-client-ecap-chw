@@ -15,6 +15,8 @@
     <item
         android:id="@+id/delete_record"
         android:title="Delete VCA"
-        app:showAsAction="never"/>
+        android:icon="@drawable/baseline_delete_white_24"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
 
 </menu>
