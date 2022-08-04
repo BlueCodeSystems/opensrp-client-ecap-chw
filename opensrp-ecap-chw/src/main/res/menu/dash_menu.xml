@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/refresh"
-        android:title="Call Caregiver"
-        android:icon="@drawable/refresh"
+        android:title="Refresh"
+        android:icon="@drawable/menu_vertical"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 <!--    <item
         android:id="@+id/delete_record"
         android:title="Delete VCA"
