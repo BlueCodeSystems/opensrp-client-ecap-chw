@@ -115,7 +115,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, subpop_1;
+    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
 
     public VcaScreeningModel indexVCA;
@@ -1092,7 +1092,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(0).put("value", indexVCA.getSubpop1());
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(1).put("value", indexVCA.getSubpop2());
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(2).put("value", indexVCA.getSubpop3());
@@ -1194,18 +1193,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.call:
-                String caregiverPhoneNumber = child.getCaregiver_phone();
-                if (!caregiverPhoneNumber.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
+            switch (item.getItemId()) {
+                case R.id.call:
+                    String caregiverPhoneNumber = child.getCaregiver_phone();
+                    if (!caregiverPhoneNumber.equals("")) {
+                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
 
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                    startActivity(callIntent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
-                }
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                        startActivity(callIntent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    }
 
                 return true;
             case R.id.case_status:
@@ -1219,36 +1218,34 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
                 break;
 
-     /*       case R.id.delete_record:
+            case R.id.delete_record:
 
+                    if(txtGender.getText().toString().equals("MALE")){
+                        gender = "his";
+                    } else {
+                        gender = "her";
+                    }
 
-                if(txtGender.getText().toString().equals("MALE")){
-                    gender = "his";
-                } else {
-                    gender = "her";
-                }
+                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
+                    builder.setNegativeButton("NO", (dialog, id) -> {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
 
-                builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-                builder.setNegativeButton("NO", (dialog, id) -> {
-                    //  Action for 'NO' Button
-                    dialog.cancel();
+                    }).setPositiveButton("YES",((dialogInterface, i) -> {
+                        IndexPersonDao.deleteRecord(child.getBase_entity_id());
+                        IndexPersonDao.deleteRecordfromSearch(child.getBase_entity_id());
 
-                }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    IndexPersonDao.deleteRecord(uniqueId);
-                    IndexPersonDao.deleteRecordfromSearch(uniqueId);
+                        Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                        super.onBackPressed();
+                    }));
 
-                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                    super.onBackPressed();
-                }));
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Alert");
+                    alert.show();
 
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                //Setting the title manually
-                alert.setTitle("Alert");
-                alert.show();
-
-
-                break;*/
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -1308,7 +1305,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
  }
  public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
      SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-     String caseworkerphone = cp.getString("phone", "Anonymous");
+     caseworkerphone = cp.getString("phone", "Anonymous");
 
      JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
 

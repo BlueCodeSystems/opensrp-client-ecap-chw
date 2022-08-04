@@ -94,7 +94,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     protected String getMainCondition() {
-        return "is_closed != 1";
+        return "is_closed != '1'";
     }
 
     @Override
