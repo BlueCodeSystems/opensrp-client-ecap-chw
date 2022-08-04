@@ -76,7 +76,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final int MAX_Y_VALUE = 50;
     private static final int MIN_Y_VALUE = 5;
     private static final String SET_LABEL = "Sub populations";
-    private static final String[] SUBPOPS = { "CALHIV", " HEI", " CWLHIV", "AGYW", "CSV", "FSW"};
+    private static final String[] SUBPOPS = { "CALHIV", " HEI", " CWLHIV", "AGYW", "C/ASSV", "FSW"};
     private BarChart chart;
     Handler handler = new Handler();
     List<Child> allChildren;
@@ -93,7 +93,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -243,7 +242,7 @@ public class DashboardActivity extends AppCompatActivity {
         LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#E84AE0"));
         LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#BF51E0"));
         LegendEntry l4=new LegendEntry("AGYW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#D338A0"));
-        LegendEntry l5=new LegendEntry("CSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
+        LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
         LegendEntry l6=new LegendEntry("FSW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#FBA1B7"));
         l.setCustom(new LegendEntry[]{l1,l2,l3,l4,l5,l6});
        // l.setWordWrapEnabled(true);
