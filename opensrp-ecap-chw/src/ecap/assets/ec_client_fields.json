@@ -6749,6 +6749,27 @@
           "json_mapping": {
             "field": "attributes.safety_plans"
           }
+        },
+        {
+          "column_name": "stateWhen",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stateWhen"
+          }
+        },
+        {
+          "column_name": "frequency",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.frequency"
+          }
+        },
+        {
+          "column_name": "who",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.who"
+          }
         }
       ]
     }
