@@ -109,14 +109,14 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("child_safety_action");
 
-                   // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
+                    // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
                     indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", actionDate);
 
                     JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
                     cId.put("value",childId);
 
-                   // JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                   // cDate.put("value", actionDate);
+                    // JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                    // cDate.put("value", actionDate);
 
                     startFormActivity(indexRegisterForm);
 
