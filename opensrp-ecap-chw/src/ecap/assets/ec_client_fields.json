@@ -1508,7 +1508,7 @@
           }
         },
         {
-          "column_name": "school_name",
+          "column_name": "schoolName",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.schoolName"
@@ -3656,6 +3656,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
           }
         },
         {

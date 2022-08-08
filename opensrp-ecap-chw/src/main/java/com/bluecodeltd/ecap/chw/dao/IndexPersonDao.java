@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -449,7 +448,9 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
                     getCursorValue(c, "date_offered_enrollment"),
-                    getCursorValue(c, "school_name")
+//                    getCursorValue(c, "school_name"),
+                    getCursorValue(c, "schoolName")
+
 
             );
         };
