@@ -37,24 +37,21 @@
         android:theme="@style/ChwTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-
-        <activity
-            android:name=".activity.ShowReferralsActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ShowHouseholdReferralsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.ShowReferralsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.VcaServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".activity.ChildSafetyPlanActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ChildSafetyPlanActions"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".activity.HouseholdServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -66,12 +63,11 @@
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
             android:label="Caregiver Case Plan" />
-
         <activity
             android:name=".activity.DashboardActivity"
             android:exported="true"
-            android:theme="@style/ChwTheme.NoActionBar"
-            android:label="Reports" />
+            android:label="Reports"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.Profile"
             android:exported="true" />

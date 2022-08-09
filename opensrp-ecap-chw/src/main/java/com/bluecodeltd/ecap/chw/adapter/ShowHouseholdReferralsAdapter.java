@@ -60,7 +60,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(showReferrals.getDate_referred());
+        holder.txtDate.setText(showReferrals.getReferred_date());
 
         holder.linearLayout.setOnClickListener(v -> {
 

@@ -202,10 +202,6 @@
             "text": "Family received material support"
           },
           {
-            "key": "Child or caregiver referred to health legal or other services",
-            "text": "Child or caregiver referred to health, legal or other services"
-          },
-          {
             "key": "other",
             "text": "Other: Specify"
           }
