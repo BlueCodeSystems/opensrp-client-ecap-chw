@@ -502,7 +502,7 @@ public class Child implements Serializable {
         this.schoolName = schoolName;
     }
 
-    @SerializedName("school_name")
+    @SerializedName("schoolName")
     @Expose
     private String schoolName;
 
@@ -529,6 +529,7 @@ public class Child implements Serializable {
     @SerializedName("other_school")
     @Expose
     private String other_school;
+
 
     public String getVl_next_result() {
         return vl_next_result;

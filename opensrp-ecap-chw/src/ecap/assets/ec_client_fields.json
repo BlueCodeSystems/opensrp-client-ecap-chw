@@ -3680,10 +3680,10 @@
           }
         },
         {
-          "column_name": "date_referred",
+          "column_name": "referred_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_referred"
+            "field": "attributes.referred_date"
           }
         },
         {
@@ -6608,6 +6608,68 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_question"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_household_service_report",
+      "columns": [
+
+        {
+          "column_name": "services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services"
+          }
+        },
+        {
+          "column_name": "services_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services_household"
+          }
+        },
+        {
+          "column_name": "services_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services_caregiver"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "other_services_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_services_caregiver"
+          }
+        },
+        {
+          "column_name": "other_services_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_services_household"
           }
         }
       ]

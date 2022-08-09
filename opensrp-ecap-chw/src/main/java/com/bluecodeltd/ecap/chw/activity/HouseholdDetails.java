@@ -2,7 +2,6 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static com.vijay.jsonwizard.utils.FormUtils.getJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
@@ -43,7 +42,6 @@ import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
@@ -52,13 +50,13 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
-import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.GraduationModel;
-import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
+import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -428,6 +426,16 @@ public class HouseholdDetails extends AppCompatActivity {
                 startActivity(intent);
 
                 break;
+            case R.id.householdReferrals:
+
+                Intent showReferrals = new Intent(HouseholdDetails.this, ShowHouseholdReferralsActivity.class);
+                Bundle referral = new Bundle();
+                referral.putString("householdId",house.getHousehold_id());
+                referral.putString("householdName",house.getCaregiver_name());
+                showReferrals.putExtras(referral);
+
+                startActivity(showReferrals);
+                break;
 
             case R.id.fabx:
 
@@ -522,7 +530,7 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.h_referral:
                 try {
 
-                    indexRegisterForm = formUtils.getFormJson("referral");
+                    indexRegisterForm = formUtils.getFormJson("household_referral");
 
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
