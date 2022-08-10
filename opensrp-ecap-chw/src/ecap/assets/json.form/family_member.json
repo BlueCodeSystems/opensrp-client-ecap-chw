@@ -59,7 +59,7 @@
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
         "read_only": "true",
@@ -139,6 +139,16 @@
         "hint": "VCA ID",
         "edit_type": "name"
       },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark",
+        "read_only": true
+      },
+
       {
         "key": "member_type",
         "openmrs_entity_parent": "",
@@ -344,6 +354,24 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "fsw",
         "type": "hidden"
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "hidden",
+        "hint": "Caseworker Phone",
+        "edit_type": "number",
+        "read_only": true,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
       }
     ]
   },

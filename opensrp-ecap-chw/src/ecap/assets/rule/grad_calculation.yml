@@ -9,7 +9,7 @@ actions:
 name: step1_virally_suppressed
 description: virally_suppressed
 priority: 1
-condition: "step1_vl_last_result < 1000 && step1_date_calculated < 13"
+condition: "(step1_vl_last_result < 1000 && step1_date_calculated < 13) && step1_is_hiv_positive.contains('yes')"
 actions:
   - "calculation = 'yes'"
 ---
@@ -40,3 +40,10 @@ priority: 2
 condition: "!(step2_prevention_correct > 1 && step2_protect_correct > 1 && step2_infection_correct > 1)"
 actions:
   - "calculation = 0"
+---
+name: step2_correct
+description: step2_correct
+priority: 1
+condition: "step1_prevention_correct "
+actions:
+  - "calculation = 1"
