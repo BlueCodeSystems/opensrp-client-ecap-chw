@@ -33,13 +33,26 @@ public class ReferralDao extends AbstractDao {
 
     }
 
+    public static List<ReferralModel> getReferralsByHouseholdID(String hh_ID) {
+
+        String sql = "SELECT * FROM ec_referral WHERE household_id = '" + hh_ID + "' ORDER BY date_referred DESC ";
+
+        List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
+
     public static DataMap<ReferralModel> getReferralModelMap() {
         return c -> {
 
             ReferralModel record = new ReferralModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setUnique_id(getCursorValue(c,"unique_id"));
-            record.setDate_referred(getCursorValue(c, "date_referred"));
+            record.setReferred_date(getCursorValue(c, "referred_date"));
             record.setReceiving_organization(getCursorValue(c, "receiving_organization"));
             record.setCd4(getCursorValue(c, "cd4"));
             record.setHiv_adherence(getCursorValue(c, "hiv_adherence"));
@@ -129,6 +142,8 @@ public class ReferralDao extends AbstractDao {
             record.setSpecify_safety(getCursorValue(c, "specify_safety"));
             record.setSpecify_school(getCursorValue(c, "specify_school"));
             record.setSpecify_stability(getCursorValue(c, "specify_stability"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+
 
 
             return record;

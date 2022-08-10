@@ -111,7 +111,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
 
         } else {
-            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg2));
+//            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg2));
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
         }

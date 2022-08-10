@@ -200,7 +200,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "services",
-        "label": "Type of Caregiver Service(s)",
+        "label": "Type of VCA Service (s)",
         "label_info_text": "Tick (x) Services Provided for Caregivers",
         "type": "check_box",
         "options": [

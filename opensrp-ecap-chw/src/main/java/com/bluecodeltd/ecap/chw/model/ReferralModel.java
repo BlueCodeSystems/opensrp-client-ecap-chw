@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.model;
 public class ReferralModel {
 
     private String base_entity_id;
-    private String date_referred;
+    private String referred_date;
     private String receiving_organization;
     private String cd4;
     private String hiv_adherence;
@@ -96,6 +96,7 @@ public class ReferralModel {
     private String specify_school;
     private String specify_stability;
     private String unique_id;
+    private String household_id;
 
 
     public String getBase_entity_id() {
@@ -106,20 +107,12 @@ public class ReferralModel {
         this.base_entity_id = base_entity_id;
     }
 
-    public String getUnique_id() {
-        return unique_id;
+    public String getReferred_date() {
+        return referred_date;
     }
 
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
-    }
-
-    public String getDate_referred() {
-        return date_referred;
-    }
-
-    public void setDate_referred(String date_referred) {
-        this.date_referred = date_referred;
+    public void setReferred_date(String referred_date) {
+        this.referred_date = referred_date;
     }
 
     public String getReceiving_organization() {
@@ -840,5 +833,21 @@ public class ReferralModel {
 
     public void setSpecify_stability(String specify_stability) {
         this.specify_stability = specify_stability;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 }
