@@ -1216,10 +1216,12 @@ public class HouseholdDetails extends AppCompatActivity {
                 LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
                 LocalDate today =LocalDate.now();
                 Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+
+                if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
                 {
                     totalNumberOfChildren = totalNumberOfChildren + 1;
                 }
+
             }
         }
 

@@ -138,13 +138,6 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "grad_relevance.yml"
-            }
-          }
         }
       },
       {
