@@ -85,15 +85,15 @@ actions:
 ---
 name: step4_case_status
 description: step4_case_status
-priority: 2
+priority: 1
 condition: "step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true"
 actions:
   - "calculation = '1'"
 ---
 name: step4_case_status
 description: step4_case_status
-priority: 3
-condition: "!(step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true)"
+priority: 1
+condition: "step3_subpop1 != true && step3_subpop2 != true && step3_subpop3 != true && step3_subpop4 != true && step3_subpop5 != true && step3_subpop != true"
 actions:
   - "calculation = '3'"
 ---
