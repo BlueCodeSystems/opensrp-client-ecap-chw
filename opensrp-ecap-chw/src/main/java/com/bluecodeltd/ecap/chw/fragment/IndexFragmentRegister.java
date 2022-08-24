@@ -1,13 +1,12 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -16,13 +15,11 @@ import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.github.javiersantos.appupdater.AppUpdater;
-import com.rey.material.widget.Button;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.domain.FetchStatus;
-import org.smartregister.family.util.DBConstants;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.util.Utils;
 import org.smartregister.view.customcontrols.CustomFontTextView;
@@ -30,8 +27,6 @@ import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class IndexFragmentRegister extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
 
@@ -108,9 +103,8 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected String getMainCondition() {
-        return "case_status != '3' AND is_closed != '1'";
+        return "case_status != '3' AND is_closed != '1' AND subpop1 = 'true' OR subpop2 = 'true' OR subpop3 = 'true' OR subpop4 = 'true' OR subpop5 = 'true' OR subpop = 'true' ";
     }
-
     @Override
     protected String getDefaultSortQuery() {
         return "last_interacted_with DESC ";
