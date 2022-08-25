@@ -3,12 +3,12 @@ package com.bluecodeltd.ecap.chw.model;
 public class WeServiceCaregiverModel {
 
     private String base_entity_id;
-    private String household_id;
-    private String we_group_name;
-    private String unique_id;
     private String data_collection;
-    private String date_joined_we;
+    private String household_id;
+    private String participant_name;
     private String we_group_no;
+    private String we_group_name;
+    private String date_joined_we;
     private String reporting_month;
     private String we_member_in_period;
     private String we_loan_in_period;
@@ -27,34 +27,36 @@ public class WeServiceCaregiverModel {
     private String sold_items;
     private String other_sold_item;
 
-    public String getHousehold_id() {
-
-        return household_id;
-    }
-
-    public void setHousehold_id(String household_id) {
-
-        this.household_id = household_id;
-    }
-
-    public String getDate_joined_we() {
-
-        return date_joined_we;
-    }
-
-    public void setDate_joined_we(String date_joined_we) {
-
-        this.date_joined_we = date_joined_we;
-    }
-
     public String getBase_entity_id() {
-
         return base_entity_id;
     }
 
     public void setBase_entity_id(String base_entity_id) {
-
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getData_collection() {
+        return data_collection;
+    }
+
+    public void setData_collection(String data_collection) {
+        this.data_collection = data_collection;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getParticipant_name() {
+        return participant_name;
+    }
+
+    public void setParticipant_name(String participant_name) {
+        this.participant_name = participant_name;
     }
 
     public String getWe_group_no() {
@@ -63,6 +65,22 @@ public class WeServiceCaregiverModel {
 
     public void setWe_group_no(String we_group_no) {
         this.we_group_no = we_group_no;
+    }
+
+    public String getWe_group_name() {
+        return we_group_name;
+    }
+
+    public void setWe_group_name(String we_group_name) {
+        this.we_group_name = we_group_name;
+    }
+
+    public String getDate_joined_we() {
+        return date_joined_we;
+    }
+
+    public void setDate_joined_we(String date_joined_we) {
+        this.date_joined_we = date_joined_we;
     }
 
     public String getReporting_month() {
