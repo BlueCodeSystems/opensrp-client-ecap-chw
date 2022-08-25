@@ -104,18 +104,19 @@ public class HouseholdDetails extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
     private TextView childTabCount;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab,fabCaregiverAssessement;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
-    public WeServiceCaregiverModel weServiceCaregiverModel;
+
+
     Caregiver caregiver;
     AlertDialog.Builder builder, screeningBuilder;
 
-    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
+    ObjectMapper oMapper, householdMapper, caregiverMapper,weServiceMapper, assessmentMapper, graduationMapper;
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
@@ -130,6 +131,7 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
     GraduationModel graduationModel;
+    WeServiceCaregiverModel weServiceCaregiverModel;
     private ArrayList<Child> childList = new ArrayList<>();
 
     @Override
@@ -160,12 +162,17 @@ public class HouseholdDetails extends AppCompatActivity {
 
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
+        weServiceMapper = new ObjectMapper();
+
+
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+
+
 
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
@@ -187,6 +194,7 @@ public class HouseholdDetails extends AppCompatActivity {
         updateChildTabTitle();
         updateCaseplanTitle();
         txtDistrict.setText(householdId);
+
 
         if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
 
@@ -503,15 +511,22 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("we_services_caregiver");
 
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    if (weServiceCaregiverModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, weServiceMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        indexRegisterForm.put("entity_id", this.weServiceCaregiverModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, weServiceMapper.convertValue(weServiceCaregiverModel, Map.class));
+                    }
+
                     startFormActivity(indexRegisterForm);
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
+
 
             case R.id.hcase_plan:
                 try {
@@ -777,7 +792,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         finish();
                         startActivity(getIntent());
                         break;
-                    case "WE Services - Caregiver":
+                    case "WE Services Caregiver":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
@@ -990,7 +1005,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
-                case "WE Services - Caregiver":
+                case "WE Services Caregiver":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
