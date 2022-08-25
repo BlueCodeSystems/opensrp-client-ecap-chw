@@ -3299,13 +3299,6 @@
           }
         },
         {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_id"
-          }
-        },
-        {
           "column_name": "data_collection",
           "type": "Client",
           "json_mapping": {
@@ -3313,17 +3306,17 @@
           }
         },
         {
-          "column_name": "unique_id",
+          "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_id"
+            "field": "attributes.household_id"
           }
         },
         {
-          "column_name": "date_joined_we",
+          "column_name": "participant_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_joined_we"
+            "field": "attributes.participant_name"
           }
         },
         {
@@ -3331,6 +3324,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.we_group_no"
+          }
+        },
+        {
+          "column_name": "we_group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_group_name"
+          }
+        },
+        {
+          "column_name": "date_joined_we",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_joined_we"
           }
         },
         {
