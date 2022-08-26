@@ -183,10 +183,14 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText("N/A");
         }
 
-        if (childIndex.getVl_suppressed() != null){
-            txtIsSuppressed.setText(childIndex.getVl_suppressed());
+        String suppressed = childIndex.getVl_last_result();
+        Integer.parseInt(suppressed);
+
+        Integer i = Integer.parseInt(suppressed);
+        if (i < 1000){
+            txtIsSuppressed.setText("yes");
         } else {
-            txtIsSuppressed.setText("N/A");
+            txtIsSuppressed.setText("no");
         }
 
         if (childIndex.getDate_next_vl() != null){
