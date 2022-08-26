@@ -54,7 +54,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countAllChildren(){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index ";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE is_closed = 0";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
