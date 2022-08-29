@@ -533,6 +533,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
+
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
@@ -846,6 +847,7 @@ public class HouseholdDetails extends AppCompatActivity {
         Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
         i.putExtra("unique_id",  house.getUnique_id());
         i.putExtra("householdId",  house.getHousehold_id());
+        i.putExtra("status",house.getCaregiver_hiv_status());
         i.putExtra("dateId",  dateId);
         startActivity(i);
     }
