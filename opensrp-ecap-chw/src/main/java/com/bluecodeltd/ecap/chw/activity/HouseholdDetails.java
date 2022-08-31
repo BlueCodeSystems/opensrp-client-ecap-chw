@@ -104,7 +104,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
     private TextView childTabCount;
-    private FloatingActionButton fab,fabCaregiverAssessement;
+    private FloatingActionButton fab,callFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
@@ -164,7 +164,11 @@ public class HouseholdDetails extends AppCompatActivity {
         caregiverMapper = new ObjectMapper();
         weServiceMapper = new ObjectMapper();
 
+        callFab = findViewById(R.id.callFab);
 
+        if(caregiverAssessmentModel.getHousehold_type() == null){
+            callFab.setImageResource(android.R.drawable.ic_input_add);
+        }
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -566,6 +570,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("hh_caregiver_assessment");
 
                     if(caregiverAssessmentModel == null) {
+
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
 
                         indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(32).put("value", house.getActive_on_treatment());
