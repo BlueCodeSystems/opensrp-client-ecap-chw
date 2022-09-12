@@ -4,19 +4,14 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
-import com.bluecodeltd.ecap.chw.activity.MotherDetail;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexFragmentContract;
-import com.bluecodeltd.ecap.chw.contract.MotherIndexFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexFragmentPresenter;
-import com.bluecodeltd.ecap.chw.presenter.MotherIndexFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.HouseholdRegisterProvider;
-import com.bluecodeltd.ecap.chw.provider.MotherRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
@@ -27,8 +22,6 @@ import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
-
-import es.dmoral.toasty.Toasty;
 
 public class HouseholdIndexFragment extends BaseRegisterFragment implements HouseholdIndexFragmentContract.View{
 
@@ -94,7 +87,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     protected String getMainCondition() {
-        return "is_closed != '1'";
+        return "(is_closed = 0)";
     }
 
     @Override

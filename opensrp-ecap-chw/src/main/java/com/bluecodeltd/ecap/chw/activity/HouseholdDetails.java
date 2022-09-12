@@ -166,9 +166,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
         callFab = findViewById(R.id.callFab);
 
-        if(caregiverAssessmentModel.getHousehold_type() == null){
-            callFab.setImageResource(android.R.drawable.ic_input_add);
+        try{
+            if(caregiverAssessmentModel.getHousehold_type() == null){
+                callFab.setImageResource(android.R.drawable.ic_input_add);
+            }
+        } catch (Exception e){
+
         }
+
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
