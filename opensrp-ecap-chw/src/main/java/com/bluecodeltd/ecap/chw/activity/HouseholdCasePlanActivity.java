@@ -2,7 +2,6 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.DomainPlanAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -55,7 +53,8 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
-    String householdId, caseDate,uniqueId;
+    String householdId, caseDate,uniqueId, hivStatus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +64,11 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.household_domainrecyclerView);
         domainBtn = findViewById(R.id.household_domainBtn);
         domainBtn2 = findViewById(R.id.household_domainBtn2);
-
+        Bundle bundle = getIntent().getExtras();
         householdId = getIntent().getExtras().getString("householdId");
         caseDate = getIntent().getExtras().getString("dateId");
         uniqueId = getIntent().getExtras().getString("unique_id");
+        hivStatus = getIntent().getStringExtra("status");
 
         fetchData();
         domainBtn.setOnClickListener(new View.OnClickListener() {
@@ -291,9 +291,15 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             JSONObject indexRegisterForm;
 
             indexRegisterForm = formUtils.getFormJson("caregiver_domain");
+
+            if(hivStatus.trim().equals("negative")){
+                indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).getJSONArray("options").remove(0);
+            }
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", uniqueId);
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", householdId);
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", caseDate);
+
+
 
             startFormActivity(indexRegisterForm);
 

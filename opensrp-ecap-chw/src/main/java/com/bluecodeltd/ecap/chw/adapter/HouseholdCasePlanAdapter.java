@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.HouseholdCasePlanActivity;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
@@ -101,6 +100,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
                 Intent i = new Intent(context, HouseholdCasePlanActivity.class);
                 i.putExtra("unique_id",  house.getUnique_id());
                 i.putExtra("householdId",  house.getHousehold_id());
+                i.putExtra("status", house.getCaregiver_hiv_status());
                 i.putExtra("dateId",  casePlan.getCase_plan_date());
                 context.startActivity(i);
 
