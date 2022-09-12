@@ -81,19 +81,12 @@ description: subpop
 priority: 2
 condition: "!(step1_fsw.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 18)"
 actions:
-  - "calculation = true"
+  - "calculation = false"
 ---
 name: step4_case_status
 description: step4_case_status
 priority: 2
-condition: "step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true"
-actions:
-  - "calculation = '1'"
----
-name: step4_case_status
-description: step4_case_status
-priority: 3
-condition: "!(step3_subpop1 == true || step3_subpop2 == true || step3_subpop3 == true || step3_subpop4 == true || step3_subpop5 == true || step3_subpop == true)"
+condition: "(step3_subpop1 != true) && (step3_subpop2 != true ) && (step3_subpop3 != true) && (step3_subpop4 != true) && (step3_subpop5 != true) && (step3_subpop != true)"
 actions:
   - "calculation = '3'"
 ---
@@ -103,5 +96,21 @@ priority: 1
 condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 19"
 actions:
   - "calculation = '3'"
+
+---
+name: step4_case_status
+description: step4_case_status
+priority: 1
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') > 19"
+actions:
+  - "calculation = '3'"
+
+---
+name: step4_case_status
+description: step4_case_status
+priority: 3
+condition: "(step3_subpop1 == true ) || (step3_subpop2 == true ) || (step3_subpop3 == true) || (step3_subpop4 == true) || (step3_subpop5 == true) || (step3_subpop == true)"
+actions:
+  - "calculation = '1'"
 
 

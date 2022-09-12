@@ -27,14 +27,14 @@ import org.smartregister.util.FormUtils;
 import java.util.List;
 import java.util.Map;
 
-public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdapter.ViewHolder> {
+public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHouseholdReferralsAdapter.ViewHolder> {
 
     Context context;
 
     List<ReferralModel> referrals;
     ObjectMapper oMapper;
 
-    public ShowReferralsAdapter(List<ReferralModel> referrals, Context context){
+    public ShowHouseholdReferralsAdapter(List<ReferralModel> referrals, Context context){
 
         super();
 
@@ -43,18 +43,18 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
     }
 
     @Override
-    public ShowReferralsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ShowHouseholdReferralsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_referral, parent, false);
 
-        ShowReferralsAdapter.ViewHolder viewHolder = new ShowReferralsAdapter.ViewHolder(v);
+        ShowHouseholdReferralsAdapter.ViewHolder viewHolder = new ShowHouseholdReferralsAdapter.ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ShowReferralsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ShowHouseholdReferralsAdapter.ViewHolder holder, final int position) {
 
         final ReferralModel showReferrals = referrals.get(position);
 
@@ -68,7 +68,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
                 try {
 
-                    openFormUsingFormUtils(context, "referral", showReferrals);
+                    openFormUsingFormUtils(context, "household_referral", showReferrals);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -82,7 +82,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
                 try {
 
-                    openFormUsingFormUtils(context, "referral", showReferrals);
+                    openFormUsingFormUtils(context, "household_referral", showReferrals);
 
 
                 } catch (JSONException e) {

@@ -63,7 +63,7 @@ public class HouseholdDao extends AbstractDao {
     }
     public static String countNumberoFHouseholds () {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true'";
+        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = 0";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
 

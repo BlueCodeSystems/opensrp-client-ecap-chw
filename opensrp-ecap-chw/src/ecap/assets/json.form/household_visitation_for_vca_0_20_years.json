@@ -2028,7 +2028,7 @@
         "type": "edit_text",
         "hint": "Days missed as reported by OVC/Caregiver",
         "edit_type": "number",
-        "read_only": "true",
+        "read_only": "false",
         "look_up": "true",
         "relevance": {
           "step1:currently_in_school": {
