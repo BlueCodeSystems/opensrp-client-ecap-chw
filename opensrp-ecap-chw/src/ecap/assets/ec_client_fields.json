@@ -1508,7 +1508,7 @@
           }
         },
         {
-          "column_name": "school_name",
+          "column_name": "schoolName",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.schoolName"
@@ -3299,13 +3299,6 @@
           }
         },
         {
-          "column_name": "household_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.household_id"
-          }
-        },
-        {
           "column_name": "data_collection",
           "type": "Client",
           "json_mapping": {
@@ -3313,17 +3306,17 @@
           }
         },
         {
-          "column_name": "unique_id",
+          "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_id"
+            "field": "attributes.household_id"
           }
         },
         {
-          "column_name": "date_joined_we",
+          "column_name": "participant_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_joined_we"
+            "field": "attributes.participant_name"
           }
         },
         {
@@ -3331,6 +3324,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.we_group_no"
+          }
+        },
+        {
+          "column_name": "we_group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_group_name"
+          }
+        },
+        {
+          "column_name": "date_joined_we",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_joined_we"
           }
         },
         {
@@ -3659,6 +3666,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -3673,10 +3687,10 @@
           }
         },
         {
-          "column_name": "date_referred",
+          "column_name": "referred_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_referred"
+            "field": "attributes.referred_date"
           }
         },
         {
@@ -6606,6 +6620,68 @@
       ]
     },
     {
+      "name": "ec_household_service_report",
+      "columns": [
+
+        {
+          "column_name": "services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services"
+          }
+        },
+        {
+          "column_name": "services_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services_household"
+          }
+        },
+        {
+          "column_name": "services_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.services_caregiver"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "other_services_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_services_caregiver"
+          }
+        },
+        {
+          "column_name": "other_services_household",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_services_household"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_child_safety_plan",
       "columns": [
 
@@ -6748,6 +6824,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.safety_plans"
+          }
+        },
+        {
+          "column_name": "stateWhen",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stateWhen"
+          }
+        },
+        {
+          "column_name": "frequency",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.frequency"
+          }
+        },
+        {
+          "column_name": "who",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.who"
           }
         }
       ]

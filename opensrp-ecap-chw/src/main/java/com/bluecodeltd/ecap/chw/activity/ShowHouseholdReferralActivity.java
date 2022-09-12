@@ -1,35 +1,34 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.vijay.jsonwizard.utils.FormUtils.fields;
-import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
-import static org.smartregister.util.JsonFormUtils.STEP1;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.ChildSafetyActionAdapter;
+import com.bluecodeltd.ecap.chw.adapter.ShowHouseholdReferralsAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.ChildSafetyActionDao;
+import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
+import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -40,7 +39,6 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,81 +48,53 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class ChildSafetyPlanActions extends AppCompatActivity {
+public class ShowHouseholdReferralActivity extends AppCompatActivity {
 
-
-    private RecyclerView recyclerView;
+    public String household_id, intent_vcaid;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<ChildSafetyActionModel> actionList = new ArrayList<>();
-    private Button actionBtn, actionBtn2;
-    String childId, actionDate;
+    private RecyclerView recyclerView;
+    private final ArrayList<ReferralModel> referralList = new ArrayList<>();
+    private LinearLayout linearLayout;
+    private TextView vcaname, hh_id, txtReferral,txtBold;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_child_safety_actions);
+        setContentView(R.layout.activity_show_household_referrals);
+        toolbar = findViewById(R.id.toolbarx);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        NavigationMenu.getInstance(this, null, toolbar);
 
-        recyclerView = findViewById(R.id.actionrecyclerView);
-        actionBtn = findViewById(R.id.actionBtn);
-        actionBtn2 = findViewById(R.id.actionBtn2);
+
+        recyclerView = findViewById(R.id.referralRecyclerView);
+        linearLayout = findViewById(R.id.child_container);
+        vcaname = findViewById(R.id.caregiver_name);
+        hh_id = findViewById(R.id.hhid);
+        txtReferral = findViewById(R.id.txtNoReferral);
+
         Bundle bundle = getIntent().getExtras();
-        childId = bundle.getString("child_ID");
-        actionDate = bundle.getString("action_date");
+        intent_vcaid = bundle.getString("householdId");
+        String intent_cname = bundle.getString("householdName");
 
-        fetchData();
+        hh_id.setText("Household ID : " + intent_vcaid);
+        vcaname.setText(intent_cname+ " " +"Household");
+        txtReferral.setText("No referrals have been added for " +intent_cname+ " " +"household");
 
-    }
 
-    public void fetchData(){
-
-        actionList.addAll(ChildSafetyActionDao.getActionsById(childId, actionDate));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ChildSafetyPlanActions.this);
+        referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_vcaid));
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowHouseholdReferralActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ChildSafetyActionAdapter(actionList, ChildSafetyPlanActions.this);
+        recyclerViewadapter = new ShowHouseholdReferralsAdapter(referralList, ShowHouseholdReferralActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0 && actionList.size() > 0){
+        if (recyclerViewadapter.getItemCount() > 0) {
 
-            actionBtn.setVisibility(View.GONE);
-            actionBtn2.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    public void onClick(View v) {
-        int id = v.getId();
-
-
-        switch (id) {
-            case R.id.actionBtn:
-            case R.id.actionBtn2:
-
-                try {
-                    FormUtils formUtils = new FormUtils(ChildSafetyPlanActions.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("child_safety_action");
-
-                    // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", actionDate);
-
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",childId);
-
-                    // JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                    // cDate.put("value", actionDate);
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                break;
+            linearLayout.setVisibility(View.GONE);
         }
     }
 
@@ -132,7 +102,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName("Safety Plan Actions");
+        form.setName("Referral Form");
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
@@ -174,7 +144,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(ShowHouseholdReferralActivity.this, "Referral Updated", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -184,7 +154,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    public ChildIndexEventClient processRegistration(String jsonString){
+    public ChildIndexEventClient processRegistration(String jsonString) {
 
         try {
             JSONObject formJsonObject = new JSONObject(jsonString);
@@ -193,8 +163,8 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
             String entityId = formJsonObject.optString("entity_id");
 
-            if(entityId.isEmpty()){
-                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            if (entityId.isEmpty()) {
+                entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
 
@@ -204,14 +174,14 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Child Safety Actions":
+                case "Referral":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_ACTION);
+                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
                         tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
@@ -290,12 +260,11 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         return formTag;
     }
 
-    public AllSharedPreferences getAllSharedPreferences () {
+    public AllSharedPreferences getAllSharedPreferences() {
         return ChwApplication.getInstance().getContext().allSharedPreferences();
     }
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-
 }

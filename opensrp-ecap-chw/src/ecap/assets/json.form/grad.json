@@ -235,7 +235,8 @@
         "options": [
           {
             "key": "yes",
-            "text": "Yes"
+            "text": "Yes",
+            "value": true
           },
           {
             "key": "no",
@@ -243,6 +244,13 @@
           }
         ],
         "read_only": "true",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_relevance.yml"
+            }
+          }
+        },
         "calculation": {
           "rules-engine": {
             "ex-rules": {

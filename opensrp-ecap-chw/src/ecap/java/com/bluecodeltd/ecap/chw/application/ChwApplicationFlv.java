@@ -1,10 +1,8 @@
 package com.bluecodeltd.ecap.chw.application;
 
-import org.smartregister.chw.core.utils.ChildDBConstants;
-import org.smartregister.chw.core.utils.CoreConstants;
-import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
 
 import java.util.HashMap;
@@ -124,7 +122,14 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.LAST_NAME,
                 DBConstants.KEY.UNIQUE_ID,
                 "household_id",
-                "case_status"
+                "case_status",
+                "subpop1",
+                "subpop2",
+                "subpop3",
+                "subpop4",
+                "subpop5",
+                "subpop"
+
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
@@ -155,7 +160,13 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
                 "household_id",
-                "case_status"
+                "case_status",
+                "subpop1",
+                "subpop2",
+                "subpop3",
+                "subpop4",
+                "subpop5",
+                "subpop"
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{

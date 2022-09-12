@@ -2,7 +2,6 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static com.vijay.jsonwizard.utils.FormUtils.getJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
@@ -43,7 +42,6 @@ import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
@@ -52,13 +50,13 @@ import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment;
 import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
-import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.GraduationModel;
-import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
+import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -106,18 +104,19 @@ public class HouseholdDetails extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
     private TextView childTabCount;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab,fabCaregiverAssessement;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
-    public WeServiceCaregiverModel weServiceCaregiverModel;
+
+
     Caregiver caregiver;
     AlertDialog.Builder builder, screeningBuilder;
 
-    ObjectMapper oMapper, householdMapper, caregiverMapper, assessmentMapper, graduationMapper;
+    ObjectMapper oMapper, householdMapper, caregiverMapper,weServiceMapper, assessmentMapper, graduationMapper;
     CommonPersonObjectClient household;
     Random Number;
     int Rnumber;
@@ -132,6 +131,7 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverVisitationModel caregiverVisitationModel;
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
     GraduationModel graduationModel;
+    WeServiceCaregiverModel weServiceCaregiverModel;
     private ArrayList<Child> childList = new ArrayList<>();
 
     @Override
@@ -162,12 +162,17 @@ public class HouseholdDetails extends AppCompatActivity {
 
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
+        weServiceMapper = new ObjectMapper();
+
+
 
         fab = findViewById(R.id.fabx);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+
+
 
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
@@ -189,6 +194,7 @@ public class HouseholdDetails extends AppCompatActivity {
         updateChildTabTitle();
         updateCaseplanTitle();
         txtDistrict.setText(householdId);
+
 
         if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
 
@@ -428,6 +434,16 @@ public class HouseholdDetails extends AppCompatActivity {
                 startActivity(intent);
 
                 break;
+            case R.id.householdReferrals:
+
+                Intent showReferrals = new Intent(HouseholdDetails.this, ShowHouseholdReferralsActivity.class);
+                Bundle referral = new Bundle();
+                referral.putString("householdId",house.getHousehold_id());
+                referral.putString("householdName",house.getCaregiver_name());
+                showReferrals.putExtras(referral);
+
+                startActivity(showReferrals);
+                break;
 
             case R.id.fabx:
 
@@ -495,15 +511,22 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("we_services_caregiver");
 
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
+                    if (weServiceCaregiverModel == null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, weServiceMapper.convertValue(house, Map.class));
+                    }
+                    else {
+                        indexRegisterForm.put("entity_id", this.weServiceCaregiverModel.getBase_entity_id());
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, weServiceMapper.convertValue(weServiceCaregiverModel, Map.class));
+                    }
+
                     startFormActivity(indexRegisterForm);
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
+
 
             case R.id.hcase_plan:
                 try {
@@ -522,7 +545,7 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.h_referral:
                 try {
 
-                    indexRegisterForm = formUtils.getFormJson("referral");
+                    indexRegisterForm = formUtils.getFormJson("household_referral");
 
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
@@ -769,7 +792,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         finish();
                         startActivity(getIntent());
                         break;
-                    case "WE Services - Caregiver":
+                    case "WE Services Caregiver":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
@@ -982,7 +1005,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
-                case "WE Services - Caregiver":
+                case "WE Services Caregiver":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -1208,10 +1231,12 @@ public class HouseholdDetails extends AppCompatActivity {
                 LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
                 LocalDate today =LocalDate.now();
                 Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+
+                if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
                 {
                     totalNumberOfChildren = totalNumberOfChildren + 1;
                 }
+
             }
         }
 

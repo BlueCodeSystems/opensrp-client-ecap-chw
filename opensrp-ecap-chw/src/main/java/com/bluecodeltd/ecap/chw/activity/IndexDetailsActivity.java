@@ -1075,7 +1075,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
 
-                if(!indexVCA.getIndex_check_box().equals("1")){
+                if(indexVCA.getIndex_check_box() != null && !indexVCA.getIndex_check_box().equals("1")){
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
                     formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
