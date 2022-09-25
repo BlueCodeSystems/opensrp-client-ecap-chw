@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 
+import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
@@ -28,12 +29,14 @@ public class IndexPersonDao  extends AbstractDao {
 
         String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + vcaID + "'";
         updateDB(sql);
+
     }
 
     public static void deleteRecordfromSearch (String vcaID) {
 
         String sql = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + vcaID + "'";
         updateDB(sql);
+
     }
 
 
@@ -71,7 +74,7 @@ public class IndexPersonDao  extends AbstractDao {
     }
     public static String countAllChildrenByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' ";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -461,7 +464,7 @@ public class IndexPersonDao  extends AbstractDao {
         return children.get(0);
     }
     public static List<Child> getAllChildrenSubpops(){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE is_closed = '0'";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
@@ -560,7 +563,7 @@ public class IndexPersonDao  extends AbstractDao {
         return children;
     }
     public static List<Child> getAllChildrenSubpopsByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),

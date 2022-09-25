@@ -1329,7 +1329,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     dialog.cancel();
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    HouseholdDao.deleteRecord(house.getBase_entity_id(), childList);
+                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
                     HouseholdDao.deleteRecordfromSearch(house.getBase_entity_id(), childList);
 
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
