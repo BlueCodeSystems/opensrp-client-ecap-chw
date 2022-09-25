@@ -347,11 +347,6 @@ public class DashboardActivity extends AppCompatActivity {
                 }
 
 
-
-
-
-
-
             }
 
             totalSubpops.add(subpopOne); //CALHIV

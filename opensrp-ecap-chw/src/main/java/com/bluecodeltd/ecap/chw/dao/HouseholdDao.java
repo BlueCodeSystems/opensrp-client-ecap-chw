@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
@@ -12,7 +13,8 @@ import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
 
-    public static void deleteRecord (String id, List<Child> children) {
+
+    public static void deleteRecord (String hhId, String id, List<Child> children) {
 
         for (int i = 0; i < children.size(); i++) {
 
@@ -20,10 +22,15 @@ public class HouseholdDao extends AbstractDao {
 
             String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + child.getBase_entity_id() + "'";
             updateDB(sql);
+
+
         }
 
         String sql = "UPDATE ec_household SET is_closed = '1' WHERE base_entity_id = '" + id + "'";
         updateDB(sql);
+
+        String sql2 = "UPDATE ec_household SET is_closed = '1' WHERE household_id = '" + hhId + "'";
+        updateDB(sql2);
 
     }
 
@@ -42,7 +49,6 @@ public class HouseholdDao extends AbstractDao {
 
         String sql2 = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + id + "'";
         updateDB(sql2);
-
 
     }
 
@@ -63,7 +69,7 @@ public class HouseholdDao extends AbstractDao {
     }
     public static String countNumberoFHouseholds () {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = 0";
+        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = '0'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
 
@@ -80,7 +86,7 @@ public class HouseholdDao extends AbstractDao {
     public static String countNumberOfHouseholdsByCaseworkerPhone ( String caseworkerPhoneNumber)
     {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "'";
+        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "phone");
 
