@@ -42,7 +42,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE is_closed != 1 AND household_id = '" + householdID + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
