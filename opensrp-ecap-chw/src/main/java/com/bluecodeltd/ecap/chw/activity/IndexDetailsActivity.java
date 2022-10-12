@@ -625,6 +625,21 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     finish();
                     startActivity(getIntent());
                 }
+                if(encounterType.equals("VCA Assessment"))
+                {
+                    finish();
+                    startActivity(getIntent());
+                }
+                if(encounterType.equals("HIV Risk Assessment Above 15"))
+                {
+                    finish();
+                    startActivity(getIntent());
+                }
+                if(encounterType.equals("HIV Risk Assessment Below 15"))
+                {
+                    finish();
+                    startActivity(getIntent());
+                }
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
