@@ -97,13 +97,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.is_index.setVisibility(View.GONE);
         }
 
-        if (artnumber != null && ((positive != null) && child.getIs_hiv_positive().equals("yes")) || ((subpop1 != null) && child.getSubpop1().equals("true")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)) {
+//        if (artnumber != null && ((positive != null) && child.getIs_hiv_positive().equals("yes")) || ((subpop1 != null) && child.getSubpop1().equals("true")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)) {
+//
+//            holder.gradBtn.setVisibility(View.VISIBLE);
+//
+//        } else {
+//            holder.gradBtn.setVisibility(View.GONE);
+//        }
+        isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child,memberAge));
 
-            holder.gradBtn.setVisibility(View.VISIBLE);
-
-        } else {
-            holder.gradBtn.setVisibility(View.GONE);
-        }
         gradModel = GradDao.getGrad(child.getUnique_id());
 
         if(gradModel == null){
@@ -377,7 +379,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         return children.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView fullName, age, is_index;
         View colorView;
@@ -390,8 +392,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             super(itemView);
 
 
-            fullName  = itemView.findViewById(R.id.familyNameTextView);
-            age  =  itemView.findViewById(R.id.child_age);
+            fullName = itemView.findViewById(R.id.familyNameTextView);
+            age = itemView.findViewById(R.id.child_age);
             lview = itemView.findViewById(R.id.register_columns);
             colorView = itemView.findViewById(R.id.mycolor);
             muacButton = itemView.findViewById(R.id.muac);
@@ -405,5 +407,45 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         public void onClick(View v) {
 
         }
+
+
+
     }
+
+    public Boolean isEligibleForEnrollment(Child child, String memberAge) {
+        Boolean check = null;
+//
+            if(checkAgeEligibility(memberAge)) {
+                if (child.getIs_hiv_positive().equals("yes") || child.getSubpop1() != null ||
+                        child.getSubpop3() != null || child.getSubpop4() != null ||
+                        child.getSubpop5() != null || child.getSubpop6() != null) {
+                    check = true;
+//                return false;
+                } else {
+                    check = false;
+
+                }
+            }
+//        return true;
+        return check;
+        }
+
+
+    public void isGraduationButtonToBeDisplayed(ViewHolder holder,Boolean check){
+        if(check !=null && check) {
+        holder.gradBtn.setVisibility(View.VISIBLE);
+    } else {
+            holder.gradBtn.setVisibility(View.GONE);
+        }
+}
+
+public Boolean checkAgeEligibility(String age)
+{
+    if(Integer.parseInt(age) <= 2)
+    {
+        return false;
+    }
+
+    return true;
+}
 }
