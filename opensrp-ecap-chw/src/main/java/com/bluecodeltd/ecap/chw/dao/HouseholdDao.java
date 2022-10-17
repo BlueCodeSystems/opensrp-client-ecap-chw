@@ -32,9 +32,12 @@ public class HouseholdDao extends AbstractDao {
         String sql2 = "UPDATE ec_household SET is_closed = '1' WHERE household_id = '" + hhId + "'";
         updateDB(sql2);
 
+        String sql3 = "UPDATE ec_mother_index SET is_closed = '1' WHERE household_id = '" + hhId + "'";
+        updateDB(sql3);
+
     }
 
-    public static void deleteRecordfromSearch (String id, List<Child> children) {
+    public static void deleteRecordfromSearch (String hhId, String id, List<Child> children) {
 
         for (int i = 0; i < children.size(); i++) {
 
@@ -49,6 +52,9 @@ public class HouseholdDao extends AbstractDao {
 
         String sql2 = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + id + "'";
         updateDB(sql2);
+
+        String sql3 = "UPDATE ec_mother_index_search SET is_closed = '1' WHERE household_id = '" + hhId + "'";
+        updateDB(sql3);
 
     }
 

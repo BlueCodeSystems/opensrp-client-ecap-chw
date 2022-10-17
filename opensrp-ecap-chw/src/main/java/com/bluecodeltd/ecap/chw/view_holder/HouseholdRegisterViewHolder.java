@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.view_holder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,53 +37,63 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         homeIcon = itemView.findViewById(R.id.home_icon);
     }
 
-    public void setupViews(String family, String village, List<String> genderList, String screened, List<String> birthdateList, Context context){
+    public void setupViews(String family, String isClosed, String village, List<String> genderList, String screened, List<String> birthdateList, Context context){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
+        if(isClosed.equals("0")){
+            if (screened != null){
 
-        if (screened != null){
+                homeIcon.setImageResource(R.mipmap.ic_home_active);
+            } else {
 
-            homeIcon.setImageResource(R.mipmap.ic_home_active);
+                homeIcon.setImageResource(R.mipmap.ic_home);
+            }
         } else {
 
             homeIcon.setImageResource(R.mipmap.ic_home);
+            homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
         }
+
+
 
         //This prevents Duplication of Icons
         hLayout.removeAllViews();
 
+        if(isClosed.equals("0")){
+            for(int i=0; i < genderList.size(); i++) {
 
-        for(int i=0; i < genderList.size(); i++) {
+                String myage = getAgeWithoutText(birthdateList.get(i));
+                int age = Integer.parseInt(myage);
 
-            String myage = getAgeWithoutText(birthdateList.get(i));
-            int age = Integer.parseInt(myage);
+                ImageView image = new ImageView(context);
 
-            ImageView image = new ImageView(context);
+                LinearLayout.LayoutParams params =  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            LinearLayout.LayoutParams params =  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.CENTER;
+                params.width = 40;
+                params.height = 40;
+                image.setLayoutParams(params);
 
-            params.gravity = Gravity.CENTER;
-            params.width = 40;
-            params.height = 40;
-            image.setLayoutParams(params);
+                if (genderList.get(i).equals("male") && age < 20){
 
-            if (genderList.get(i).equals("male") && age < 20){
+                    image.setImageResource(R.mipmap.ic_boy_child);
 
-                image.setImageResource(R.mipmap.ic_boy_child);
+                } else if(genderList.get(i).equals("female") && age < 20) {
 
-            } else if(genderList.get(i).equals("female") && age < 20) {
+                    image.setImageResource(R.mipmap.ic_girl_child);
 
-                image.setImageResource(R.mipmap.ic_girl_child);
+                } else {
+                    image.setImageResource(R.drawable.ic_person_black_24dp);
+                    image.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+                }
 
-            } else {
-                image.setImageResource(R.drawable.ic_person_black_24dp);
-                image.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+                hLayout.addView(image);
+
             }
-
-            hLayout.addView(image);
-
         }
+
+
     }
 
     private String getAgeWithoutText(String birthdate){
