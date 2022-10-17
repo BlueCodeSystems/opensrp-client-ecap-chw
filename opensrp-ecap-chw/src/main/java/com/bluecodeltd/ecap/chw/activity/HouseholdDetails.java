@@ -103,7 +103,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public ViewPager mViewPager;
     private Toolbar toolbar;
     private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
-    private TextView childTabCount;
+    public TextView childTabCount;
     private FloatingActionButton fab,callFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
@@ -1330,7 +1330,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
                     HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
-                    HouseholdDao.deleteRecordfromSearch(house.getBase_entity_id(), childList);
+                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
 
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
                     super.onBackPressed();

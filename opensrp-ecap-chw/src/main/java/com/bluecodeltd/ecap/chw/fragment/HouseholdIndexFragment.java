@@ -1,14 +1,17 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.HouseholdRegisterProvider;
@@ -22,6 +25,8 @@ import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class HouseholdIndexFragment extends BaseRegisterFragment implements HouseholdIndexFragmentContract.View{
 
@@ -87,7 +92,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     protected String getMainCondition() {
-        return "is_closed != '1'";
+        return "is_closed <> '1'";
     }
 
     @Override
@@ -104,7 +109,14 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
     protected void onViewClicked(View view) {
 
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
-        goToIndexDetailActivity(client);
+
+        String isClosed = client.getColumnmaps().get("is_closed");
+
+         if(isClosed.equals("1")){
+             Toasty.warning(getActivity(), "This household has been deleted", Toast.LENGTH_LONG, true).show();
+         } else {
+             goToIndexDetailActivity(client);
+         }
 
     }
 
