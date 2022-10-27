@@ -33,3 +33,83 @@ priority: 1
 condition: "step1_sold_items.contains('other')"
 actions:
   - "isRelevant = true"
+
+---
+name: step1_health_services
+description: step1_health_services
+priority: 1
+condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_schooled_services
+description: step1_schooled_services
+priority: 1
+condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_safe_services
+description: step1_safe_services
+priority: 1
+condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_stable_services
+description: step1_safe_services
+priority: 1
+condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_hh_level_services
+description: step1_other_hh_level_services
+priority: 1
+condition: "step1_services.contains('household') "
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_other_health_services
+description: step1_other_health_services
+priority: 1
+condition: "step1_health_services.contains('other')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_other_schooled_services
+description: step1_other_schooled_service
+priority: 1
+condition: "step1_schooled_services.contains('other')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_other_safe_services
+description: step1_other_safe_services
+priority: 1
+condition: "step1_safe_services.contains('other')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_other_stable_services
+description: step1_other_stable_services
+priority: 1
+condition: "step1_stable_services.contains('other')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_other_hh_level_services
+description: step1_other_hh_level_services
+priority: 1
+condition: "step1_hh_level_services.contains('other')"
+actions:
+  - "isRelevant = true"

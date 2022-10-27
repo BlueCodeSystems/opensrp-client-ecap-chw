@@ -415,7 +415,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     public Boolean isEligibleForEnrollment(Child child, String memberAge) {
         Boolean check = null;
 //
-            if(checkAgeEligibility(memberAge)) {
+//            if(checkAgeEligibility(memberAge)) {
                 if (child.getIs_hiv_positive().equals("yes") || child.getSubpop1() != null ||
                         child.getSubpop3() != null || child.getSubpop4() != null ||
                         child.getSubpop5() != null || child.getSubpop6() != null) {
@@ -425,7 +425,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     check = false;
 
                 }
-            }
+         //   }
 //        return true;
         return check;
         }

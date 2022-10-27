@@ -62,44 +62,46 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(service.getDate());
+//        holder.txtServices.setText("household");
         holder.txtserviceType.setText(service.getServices());
+        //holder.txtserviceType.setText(service.getServices());
 
-        if(service.getServices().equals("caregiver")){
-
-            JSONArray jsonArray = null;
-            try {
-                jsonArray = new JSONArray(service.getServices_caregiver());
-
-                String[] strArr = new String[jsonArray.length()];
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    strArr[i] = jsonArray.getString(i);
-                }
-
-                holder.txtServices.setText(strArr.length + " Services");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-            JSONArray jsonArray = null;
-            try {
-                jsonArray = new JSONArray(service.getServices_household());
-
-                String[] strArr = new String[jsonArray.length()];
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    strArr[i] = jsonArray.getString(i);
-                }
-
-                holder.txtServices.setText(strArr.length + " Services");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
+//        if(service.getServices().equals("caregiver")){
+//
+//            JSONArray jsonArray = null;
+//            try {
+//                jsonArray = new JSONArray(service.getServices_caregiver());
+//
+//                String[] strArr = new String[jsonArray.length()];
+//
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    strArr[i] = jsonArray.getString(i);
+//                }
+//
+//                holder.txtServices.setText(strArr.length + " Services");
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//
+//            JSONArray jsonArray = null;
+//            try {
+//                jsonArray = new JSONArray(service.getServices_household());
+//
+//                String[] strArr = new String[jsonArray.length()];
+//
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    strArr[i] = jsonArray.getString(i);
+//                }
+//
+//                holder.txtServices.setText(strArr.length + " Services");
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
 
         holder.linearLayout.setOnClickListener(v -> {
 
