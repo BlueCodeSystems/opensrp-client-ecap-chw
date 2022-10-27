@@ -1,7 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 
-import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
@@ -132,6 +131,12 @@ public class IndexPersonDao  extends AbstractDao {
             record.setLevel_mmd(getCursorValue(c, "level_mmd"));
             record.setServices(getCursorValue(c, "services"));
             record.setOther_service(getCursorValue(c, "other_service"));
+            record.setSchooled_services(getCursorValue(c,"schooled_services"));
+            record.setOther_schooled_services(getCursorValue(c,"other_schooled_services"));
+            record.setStable_services(getCursorValue(c,"stable_services"));
+            record.setOther_stable_services(getCursorValue(c,"other_stable_services"));
+            record.setSafe_services(getCursorValue(c,"safe_services"));
+            record.setOther_safe_services(getCursorValue(c,"other_safe_services"));
 
             return record;
         };

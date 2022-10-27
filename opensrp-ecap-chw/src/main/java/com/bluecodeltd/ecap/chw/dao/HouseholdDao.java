@@ -142,6 +142,17 @@ public class HouseholdDao extends AbstractDao {
             record.setOther_services_caregiver(getCursorValue(c, "other_service_caregiver"));
             record.setOther_services_household(getCursorValue(c, "other_service_household"));
             record.setServices(getCursorValue(c, "services"));
+            record.setSchooled_services(getCursorValue(c,"schooled_services"));
+            record.setOther_schooled_services(getCursorValue(c,"other_schooled_services"));
+            record.setSafe_services(getCursorValue(c,"safe_services"));
+            record.setOther_safe_services(getCursorValue(c,"other_safe_services"));
+            record.setStable_services(getCursorValue(c,"stable_services"));
+            record.setOther_stable_services(getCursorValue(c,"other_stable_services"));
+            record.setHh_level_services(getCursorValue(c,"hh_level_services"));
+            record.setOther_hh_level_services(getCursorValue(c,"other_hh_level_services"));
+            record.setHealth_services(getCursorValue(c,"health_services"));
+            record.setOther_health_services(getCursorValue(c,"other_health_services"));
+
 
             return record;
         };
