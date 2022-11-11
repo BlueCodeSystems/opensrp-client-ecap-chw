@@ -289,8 +289,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
         visitTabCount.setText(String.valueOf(visits));
 
-
-
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
 
