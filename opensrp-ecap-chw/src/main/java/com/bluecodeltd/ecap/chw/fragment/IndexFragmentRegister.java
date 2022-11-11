@@ -103,7 +103,8 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected String getMainCondition() {
-        return "case_status != '3' AND is_closed != '1' AND (subpop1 = 'true' OR subpop2 = 'true' OR subpop3 = 'true' OR subpop4 = 'true' OR subpop5 = 'true' OR subpop = 'true')";
+        return "case_status > 0 AND is_closed = 0 ";
+        //return "case_status != '3' AND is_closed != '1' AND (subpop1 = 'true' OR subpop2 = 'true' OR subpop3 = 'true' OR subpop4 = 'true' OR subpop5 = 'true' OR subpop = 'true')";
     }
     @Override
     protected String getDefaultSortQuery() {

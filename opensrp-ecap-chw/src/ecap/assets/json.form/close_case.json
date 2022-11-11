@@ -1,0 +1,133 @@
+{
+  "count": "1",
+  "encounter_type": "Archive VCA",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "",
+    "fields": [
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "OVC De-Registration Form",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the USAID ECAPII OVC comprehensive program. The form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "info"
+      },
+      {
+        "key": "case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_status",
+        "type": "native_radio",
+        "label": "VCA Case record status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Closed"
+          }
+        ]
+      },
+      {
+        "key": "reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reason",
+        "type": "native_radio",
+        "label": "Reason for Closing Case",
+        "options": [
+          {
+            "key": "Wrong Entry",
+            "text": "Wrong Entry"
+          },
+          {
+            "key": "Transferred to other OVC program",
+            "text": "Transferred to other OVC program"
+          },
+          {
+            "key": "Exited without graduation",
+            "text": "Exited without graduation"
+          },
+
+          {
+            "key": "Lost to follow up",
+            "text": "Lost to follow-up"
+          },
+          {
+            "key": "Aging without transition plan",
+            "text": "Aging without transition plan"
+          },
+          {
+            "key": "Moved (Relocated)",
+            "text": "Moved (Relocated)"
+          },
+          {
+            "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
+            "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select Reason for Closing Case"
+        }
+      }
+    ]
+  }
+}
