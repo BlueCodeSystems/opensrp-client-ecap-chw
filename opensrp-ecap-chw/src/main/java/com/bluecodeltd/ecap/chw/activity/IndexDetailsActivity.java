@@ -420,7 +420,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.assessment:
 
-                if(indexVCA.getDate_screened() != null){
+                if(indexVCA.getDate_screened() != null && Integer.parseInt(vcaAge) > 18){
                     try {
                         openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
                     } catch (Exception e) {

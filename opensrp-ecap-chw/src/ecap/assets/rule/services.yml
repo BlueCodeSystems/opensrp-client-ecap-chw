@@ -38,7 +38,7 @@ actions:
 name: step1_health_services
 description: step1_health_services
 priority: 1
-condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+condition: "step1_services.contains('caregiver')"
 actions:
   - "isRelevant = true"
 
@@ -46,7 +46,7 @@ actions:
 name: step1_schooled_services
 description: step1_schooled_services
 priority: 1
-condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+condition: "step1_services.contains('caregiver')"
 actions:
   - "isRelevant = true"
 
@@ -54,7 +54,7 @@ actions:
 name: step1_safe_services
 description: step1_safe_services
 priority: 1
-condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+condition: "step1_services.contains('caregiver')"
 actions:
   - "isRelevant = true"
 
@@ -62,7 +62,7 @@ actions:
 name: step1_stable_services
 description: step1_safe_services
 priority: 1
-condition: "step1_services.contains('caregiver') || step1_services.contains('household') "
+condition: "step1_services.contains('caregiver')"
 actions:
   - "isRelevant = true"
 
