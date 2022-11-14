@@ -207,7 +207,11 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
 
                 JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "initial_date");
                 String dateId = cpdate.optString("value");
-                openChildSafetyPlanAction(dateId);
+                finish();
+                startActivity(getIntent());
+                Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
+
+                //openChildSafetyPlanAction(dateId);
 //                if(encounterType.equals("Child Safety Plan"))
 //                {
 //
@@ -360,12 +364,14 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
 
     public void openChildSafetyPlanAction(String dateId) {
 
-        Intent i = new Intent(ChildSafetyPlanActivity.this, ChildSafetyPlanActions.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("child_ID", intent_vcaid);
-        bundle.putString("action_date",dateId);
-        i.putExtras(bundle);
-        startActivity(i);
+//        Intent i = new Intent(ChildSafetyPlanActivity.this, ChildSafetyPlanActions.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("child_ID", intent_vcaid);
+//        bundle.putString("action_date",dateId);
+//        i.putExtras(bundle);
+//        startActivity(i);
+        finish();
+        startActivity(getIntent());
         Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
 
 
