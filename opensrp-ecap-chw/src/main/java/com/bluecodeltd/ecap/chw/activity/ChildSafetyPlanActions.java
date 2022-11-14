@@ -180,11 +180,19 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
             }
         }
         Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
-        startActivity(new Intent(ChildSafetyPlanActions.this,ChildSafetyPlanActivity.class));
+        goBackToSafetyPlan();
 
 
 
 
+
+
+    }
+
+    private void goBackToSafetyPlan() {
+        Intent i = new Intent(ChildSafetyPlanActions.this,ChildSafetyPlanActivity.class);
+        i.putExtra("vca_id",childId);
+        startActivity(i);
 
     }
 
