@@ -1368,6 +1368,13 @@
           "json_mapping": {
             "field": "attributes.is_hiv_positive"
           }
+        },
+        {
+          "column_name": "is_biological",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_biological"
+          }
         }
       ]
     },

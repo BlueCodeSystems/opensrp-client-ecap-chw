@@ -615,17 +615,51 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relation",
-        "type": "spinner",
-        "hint": "Relationship to Child",
-        "values": [
-          "Parent",
-          "Guardian"
+        "type": "native_radio",
+        "label": "Relationship to child",
+        "options": [
+          {
+            "key": "parent",
+            "text": "Parent"
+          },
+          {
+            "key": "guardian",
+            "text": "Guardian"
+          }
         ],
         "v_required": {
           "value": true,
           "err": "Relationship to child is required"
         }
       },
+      {
+        "key": "is_biological",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_biological",
+        "type": "native_radio",
+        "label": "Is biological parent",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }},
       {
         "key": "caregiver_phone",
         "openmrs_entity_parent": "",
@@ -668,7 +702,7 @@
         "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "family_member_relevance.yml"
+              "rules-file": "family_member_calculation.yml"
             }
           }
         }
