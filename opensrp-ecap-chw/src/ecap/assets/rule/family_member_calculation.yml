@@ -16,14 +16,14 @@ actions:
 name: step3_subpop2
 description: subpop2
 priority: 1
-condition: "((!step1_is_hiv_positive.contains('yes')) && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 3)"
+condition: " step3_caregiver_hiv_status.contains('positive') && step3_is_biological.contains('yes')  && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "calculation = true"
 ---
 name: step3_subpop2
 description: subpop2
 priority: 2
-condition: "!(!step1_is_hiv_positive.contains('yes') && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 3)"
+condition: "!step3_caregiver_hiv_status.contains('positive') && !step3_is_biological.contains('yes')"
 actions:
   - "calculation = false"
 ---
