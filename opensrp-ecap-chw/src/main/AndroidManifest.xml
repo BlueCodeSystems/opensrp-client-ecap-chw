@@ -38,6 +38,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
+            android:name=".activity.NotificationActivity"
+            android:theme="@style/ChwTheme.NoActionBar"
+             />
+        <activity
             android:name=".activity.ShowHouseholdReferralsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

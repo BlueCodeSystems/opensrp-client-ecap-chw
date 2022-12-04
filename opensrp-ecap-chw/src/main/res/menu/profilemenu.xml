@@ -7,4 +7,12 @@
         android:title="My Profile"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_notifications"
+        android:icon="@drawable/ic_notification"
+        android:title="Notification"
+        android:enabled="false"
+        app:actionLayout="@layout/custom_action_item_layout"
+        app:showAsAction="always"/>
+
 </menu>

@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -25,8 +27,10 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
+import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
@@ -52,6 +56,7 @@ import org.smartregister.util.FormUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,11 +74,20 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     Random Number;
     int Rnumber;
     private String uniqueId, hid;
+    TextView textCartItemCount;
+    int mCartItemCount = 0;
+    private ArrayList<VcaVisitationModel> notificationsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationMenu.getInstance(this, null, null);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+        String phone = sp.getString("phone", "anonymous");
+
+        notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
+        mCartItemCount = notificationsList.size();
 
     }
 
@@ -380,23 +394,40 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.profilemenu, menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.action_notifications);
+
+        View actionView = menuItem.getActionView();
+        textCartItemCount =  actionView.findViewById(R.id.notification_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(v -> onOptionsItemSelected(menuItem));
+
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        item.setVisible(true);
+        item.setEnabled(false);
         // Handle item selection
         switch (item.getItemId()) {
-
 
             case R.id.user:
 
                 Intent i = new Intent(this, Profile.class);
                 startActivity(i);
 
+                break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.action_notifications:
+
+                Intent i2 = new Intent(this, NotificationActivity.class);
+                startActivity(i2);
+
+                return true;
         }
+        return super.onOptionsItemSelected(item);
     }
     public UniqueIdRepository getUniqueIdRepository() {
         if (uniqueIdRepository == null) {
@@ -404,5 +435,21 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         }
         return uniqueIdRepository;
     }
+    private void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
 
 }
