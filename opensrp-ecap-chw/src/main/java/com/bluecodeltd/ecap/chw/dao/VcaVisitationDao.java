@@ -70,6 +70,7 @@ public class VcaVisitationDao extends AbstractDao {
         return c -> {
 
             VcaVisitationModel record = new VcaVisitationModel();
+            record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setBirthdate(getCursorValue(c, "birthdate"));

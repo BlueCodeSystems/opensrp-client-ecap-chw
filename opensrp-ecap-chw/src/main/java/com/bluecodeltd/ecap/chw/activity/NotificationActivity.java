@@ -41,7 +41,8 @@ public class NotificationActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Final HIV Status Visits");
         NavigationMenu.getInstance(this, null, toolbar);
 
         recyclerView = findViewById(R.id.myrecyclerView);

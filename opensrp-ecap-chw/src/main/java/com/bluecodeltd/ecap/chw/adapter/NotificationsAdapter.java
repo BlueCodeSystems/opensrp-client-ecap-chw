@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.CasePlan;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
+import org.smartregister.util.FormUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +61,13 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         final VcaVisitationModel visit = visits.get(position);
 
         holder.setIsRecyclable(false);
+
+       /* holder.linearLayout.setOnClickListener(v -> {
+
+            Intent i = new Intent(context, IndexDetailsActivity.class);
+            i.putExtra("childId",  visit.getUnique_id());
+            context.startActivity(i);
+        });*/
 
         String inputDate = visit.getBirthdate().substring(0, 5);
         String yearPart = "-" + String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
@@ -105,6 +116,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return false;
 
     }
+
+
 
     @Override
     public int getItemCount() {
