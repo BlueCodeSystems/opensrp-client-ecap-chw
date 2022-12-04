@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -35,6 +36,24 @@ public class VcaVisitationDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static List<VcaVisitationModel> getVisitsByCaseWorkerPhone(String casePhone) {
+
+        String sql = "SELECT ec_household_visitation_for_vca_0_20_years.unique_id,  MAX(ec_household_visitation_for_vca_0_20_years.visit_date) AS visit_date,  " +
+                "ec_client_index.first_name,  ec_client_index.last_name, ec_client_index.subpop2 AS hei, ec_client_index.adolescent_birthdate AS birthdate " +
+                "FROM ec_household_visitation_for_vca_0_20_years LEFT JOIN ec_client_index ON " +
+                "ec_household_visitation_for_vca_0_20_years.unique_id = ec_client_index.unique_id WHERE " +
+                "ec_household_visitation_for_vca_0_20_years.phone = '" + casePhone + "' AND ec_client_index.subpop2 = 'true' GROUP BY " +
+                "ec_household_visitation_for_vca_0_20_years.unique_id";
+
+        List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
+
     public static List<VcaVisitationModel> getVisitsByID(String childID) {
 
         String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + childID + "' ORDER BY visit_date DESC ";
@@ -51,6 +70,10 @@ public class VcaVisitationDao extends AbstractDao {
         return c -> {
 
             VcaVisitationModel record = new VcaVisitationModel();
+            record.setFirst_name(getCursorValue(c, "first_name"));
+            record.setLast_name(getCursorValue(c, "last_name"));
+            record.setBirthdate(getCursorValue(c, "birthdate"));
+            record.setHei(getCursorValue(c, "hei"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setAge(getCursorValue(c, "age"));
             record.setVisit_date(getCursorValue(c, "visit_date"));
