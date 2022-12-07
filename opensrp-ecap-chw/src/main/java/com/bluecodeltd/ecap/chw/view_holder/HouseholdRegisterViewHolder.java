@@ -42,7 +42,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         villageTextView.setText(village);
 
         if(isClosed.equals("0")){
-            if (screened != null){
+            if (screened != null && screened.equals("true")){
 
                 homeIcon.setImageResource(R.mipmap.ic_home_active);
             } else {
