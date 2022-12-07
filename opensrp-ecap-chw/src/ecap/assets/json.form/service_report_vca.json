@@ -324,11 +324,7 @@
             "key": "other",
             "text": "Other Specify"
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
-        }
+        ]
       },
       {
         "key": "other_schooled_services",
