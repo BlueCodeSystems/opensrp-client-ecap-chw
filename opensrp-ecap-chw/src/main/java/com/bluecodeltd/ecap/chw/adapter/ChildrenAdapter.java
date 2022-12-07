@@ -75,8 +75,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     @Override
     public void onBindViewHolder(ChildrenAdapter.ViewHolder holder, final int position) {
 
-        final Child child = children.get(position);
-
+        final String childUniqueID = children.get(position).getUnique_id();
+        Child child  = IndexPersonDao.getChildByBaseId(childUniqueID);
 
         holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
 
@@ -243,7 +243,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     String subpop3 = child.getSubpop3();
                     assert subpop3 != null;
 
-                    if(Integer.parseInt(memberAge) < 20 && isEligibleForEnrollment(child,memberAge)){
+                    if(!(Integer.parseInt(memberAge) > 19) && isEligibleForEnrollment(child,memberAge)){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
@@ -251,7 +251,6 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                         context.startActivity(intent);
 
                     } else if (!isEligibleForEnrollment(child,memberAge)){
-
                         Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
 
                     }else {
@@ -418,8 +417,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         Boolean check = null;
 //
 //            if(checkAgeEligibility(memberAge)) {
-                if (child.getIs_hiv_positive().equals("yes") || (child.getSubpop1() != null && !child.getSubpop1().equals("false")) ||
-                        (child.getSubpop3() != null && !child.getSubpop3().equals("false") ) || (child.getSubpop4() != null && !child.getSubpop4().equals("false")) ||
+                if ((child.getIs_hiv_positive().equals("yes")) || (child.getSubpop1() != null && !child.getSubpop1().equals("false")) || (child.getSubpop2() != null && !child.getSubpop2().equals("false")) ||
+                        (child.getSubpop3() != null && !child.getSubpop3().equals("false")) || (child.getSubpop4() != null && !child.getSubpop4().equals("false")) ||
                         (child.getSubpop5() != null && !child.getSubpop5().equals("false")) || (child.getSubpop6() != null && !child.getSubpop6().equals("false"))) {
                     check = true;
 //                return false;
