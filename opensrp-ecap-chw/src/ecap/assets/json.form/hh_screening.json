@@ -350,7 +350,7 @@
         "type": "edit_text",
         "hint": "Partners",
         "value": "ZEC",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
