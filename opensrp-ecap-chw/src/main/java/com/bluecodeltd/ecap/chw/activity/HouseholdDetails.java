@@ -270,6 +270,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOffscreenPageLimit(2);
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
