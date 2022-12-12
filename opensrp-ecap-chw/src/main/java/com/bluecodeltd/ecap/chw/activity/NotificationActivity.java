@@ -30,7 +30,7 @@ public class NotificationActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<VcaVisitationModel> notificationsList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView cname, hh_id;
+
 
     private Toolbar toolbar;
 

@@ -337,6 +337,13 @@ dependencies {
     implementation 'io.sentry:sentry-android:5.1.2'
     //Custom Toast
     implementation 'com.github.GrenderG:Toasty:1.5.2'
+    //SwipeToRefresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
+    //GSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     //Material Icons
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
