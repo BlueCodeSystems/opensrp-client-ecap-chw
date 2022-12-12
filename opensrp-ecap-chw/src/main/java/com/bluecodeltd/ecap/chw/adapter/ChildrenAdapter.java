@@ -98,13 +98,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.is_index.setVisibility(View.GONE);
         }
 
-//        if (artnumber != null && ((positive != null) && child.getIs_hiv_positive().equals("yes")) || ((subpop1 != null) && child.getSubpop1().equals("true")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)) {
-//
-//            holder.gradBtn.setVisibility(View.VISIBLE);
-//
-//        } else {
-//            holder.gradBtn.setVisibility(View.GONE);
-//        }
+
         isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child));
 
         gradModel = GradDao.getGrad(child.getUnique_id());
@@ -114,7 +108,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
 
         } else {
-//            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg2));
+
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
         }
@@ -144,8 +138,6 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 }
             }
         });
-
-
 
 
         if(caseStatus != null && caseStatus.equals("1")){
@@ -245,7 +237,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     String subpop3 = child.getSubpop3();
                     assert subpop3 != null;
 
-                    if(!(Integer.parseInt(memberAge) > 19) && isEligibleForEnrollment(child)){
+                    if((Integer.parseInt(memberAge) < 18) || isEligibleForEnrollment(child)){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");

@@ -29,18 +29,20 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:name=".application.ChwApplication"
         android:allowBackup="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/ChwTheme"
-        android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
+            android:name=".activity.FlagActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.NotificationActivity"
-            android:theme="@style/ChwTheme.NoActionBar"
-             />
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ShowHouseholdReferralsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />

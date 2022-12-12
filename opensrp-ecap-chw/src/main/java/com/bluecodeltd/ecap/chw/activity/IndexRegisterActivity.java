@@ -422,7 +422,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
             case R.id.action_notifications:
 
-                Intent i2 = new Intent(this, NotificationActivity.class);
+                Intent i2 = new Intent(this, FlagActivity.class);
                 startActivity(i2);
 
                 return true;
