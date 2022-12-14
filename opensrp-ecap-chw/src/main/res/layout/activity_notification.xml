@@ -28,7 +28,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbarx"
+                    android:id="@+id/toolbarnotifications"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:background="#696969"

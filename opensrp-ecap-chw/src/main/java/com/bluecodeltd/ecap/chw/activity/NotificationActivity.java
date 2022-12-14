@@ -39,9 +39,8 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = findViewById(R.id.toolbarnotifications);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("Final HIV Status Visits");
         NavigationMenu.getInstance(this, null, toolbar);
 
