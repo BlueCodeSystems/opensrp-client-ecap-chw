@@ -38,6 +38,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -88,6 +89,7 @@ public class DashboardActivity extends AppCompatActivity {
     private final int FIVE_SECONDS = 2000;
     Runnable runnable;
     ArrayList<Integer> colors;
+    AppUpdater appUpdater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,10 @@ public class DashboardActivity extends AppCompatActivity {
         String username = extras.getString("username");
         String password = extras.getString("password");
         dtf = DateTimeFormatter.ofPattern("HH:mm");
-       colors = new ArrayList<Integer>();
+        colors = new ArrayList<Integer>();
+
+        appUpdater = new AppUpdater(DashboardActivity.this);
+        appUpdater.start();
 
         colors.add(Color.parseColor("#9B51E0"));
         colors.add(Color.parseColor("#E84AE0"));
@@ -386,6 +391,9 @@ public class DashboardActivity extends AppCompatActivity {
         allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
         allVcasCount.setText(IndexPersonDao.countAllChildren());
         lastUpdated.setText(String.valueOf(dtf.format(localTime)));
+
+        appUpdater.start();
+
     }
 
     private void getCreds(String token){
