@@ -64,21 +64,21 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         holder.txtserviceType.setText("For VCA");
 
 
-        JSONArray jsonArray = null;
-            try {
-                jsonArray = new JSONArray(service.getServices());
-
-                String[] strArr = new String[jsonArray.length()];
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    strArr[i] = jsonArray.getString(i);
-                }
-
-                holder.txtServices.setText(strArr.length + " Services");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//        JSONArray jsonArray = null;
+//            try {
+//                jsonArray = new JSONArray(service.getServices());
+//
+//                String[] strArr = new String[jsonArray.length()];
+//
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    strArr[i] = jsonArray.getString(i);
+//                }
+//
+//                holder.txtServices.setText(strArr.length + " Services");
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
 
         holder.linearLayout.setOnClickListener(v -> {

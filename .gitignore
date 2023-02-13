@@ -12,6 +12,7 @@ gen/
 out/
 target/
 local.properties
+github.properties
 classes/
 tmp/
 project.properties

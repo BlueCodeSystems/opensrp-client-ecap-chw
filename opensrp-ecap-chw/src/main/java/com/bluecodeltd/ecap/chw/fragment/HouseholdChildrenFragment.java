@@ -23,6 +23,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class HouseholdChildrenFragment extends Fragment {
 
@@ -31,6 +32,7 @@ public class HouseholdChildrenFragment extends Fragment {
     private ArrayList<Child> childList = new ArrayList<>();
     String nutritionWarning, muacScore;
     CaregiverAssessmentModel caregiverAssessmentModel;
+    String houseId;
 
     @Nullable
     @Override
@@ -41,7 +43,7 @@ public class HouseholdChildrenFragment extends Fragment {
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
 
         Household house = mymap.get("house");
-        String houseId = house.getHousehold_id();
+       houseId = house.getHousehold_id();
 
         caregiverAssessmentModel = vmap.get("vulnerabilities");
 
@@ -78,4 +80,22 @@ public class HouseholdChildrenFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    reloadChildrenList(houseId);
+    }
+
+
+    public void reloadChildrenList(String houseId) {
+        childList.clear();
+
+        childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
+        recyclerView.setAdapter(recyclerViewadapter);
+        recyclerViewadapter.notifyDataSetChanged();
+
+       String childrenCount = ((HouseholdDetails) requireActivity()).childrenCount = IndexPersonDao.countChildren(houseId);
+
+        ((HouseholdDetails) requireActivity()).childTabCount.setText(childrenCount);
+    }
 }

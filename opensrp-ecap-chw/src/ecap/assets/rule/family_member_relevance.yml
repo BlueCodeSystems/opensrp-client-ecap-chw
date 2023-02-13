@@ -51,7 +51,7 @@ actions:
 name: step4_subpop2_toast
 description: subpop2_toast
 priority: 1
-condition: "!step1_is_hiv_positive.contains('yes') && step3_relation.contains('Parent') && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "step3_caregiver_hiv_status.contains('positive') && step3_is_biological.contains('yes')  && helper.formatDate(step1_adolescent_birthdate,'y') < 3"
 actions:
   - "isRelevant = true"
 ---
@@ -66,5 +66,13 @@ name: step1_agyw_sexually_active
 description: agyw_sexually_active
 priority: 1
 condition: "(helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step3_is_biological
+description: is_biological
+priority: 1
+condition: "step3_relation.contains('parent')"
 actions:
   - "isRelevant = true"

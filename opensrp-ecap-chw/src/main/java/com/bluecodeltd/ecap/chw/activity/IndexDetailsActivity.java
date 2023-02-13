@@ -596,41 +596,45 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
-              //  getUniqueIdRepository().close(uniqueId);
 
-                if(encounterType.equals("VCA Case Plan"))
-                {
+                switch (encounterType) {
+                    case "VCA Case Plan":
 
-                    JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                    String dateId = cpdate.optString("value");
-                    finish();
-                    startActivity(getIntent());
-                    openVcaCasplanToAddVulnarabilities(dateId);
+                        JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                        String dateId = cpdate.optString("value");
+                        finish();
+                        startActivity(getIntent());
+                        openVcaCasplanToAddVulnarabilities(dateId);
 
+                        break;
+
+                    case "Household Visitation Form 0-20 years":
+                    case "Member Sub Population":
+                    case "Sub Population":
+                    case "VCA Assessment":
+                    case "HIV Risk Assessment Above 15":
+                    case "HIV Risk Assessment Below 15":
+
+                        finish();
+                        startActivity(getIntent());
+
+                        break;
+                    case "Case Record Status":
+
+                        finish();
+                        startActivity(getIntent());
+                        Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                        startActivity(i);
+
+                        break;
 
                 }
-                if(encounterType.equals("Household Visitation Form 0-20 years"))
-                {
-                    finish();
-                    startActivity(getIntent());
 
-                }
-                if(encounterType.equals("Member Sub Population"))
-                {
-                    finish();
-                    startActivity(getIntent());
-                }
-                if(encounterType.equals("Sub Population"))
-                {
-                    finish();
-                    startActivity(getIntent());
-                }
                 Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
             }
-
 
         }
 

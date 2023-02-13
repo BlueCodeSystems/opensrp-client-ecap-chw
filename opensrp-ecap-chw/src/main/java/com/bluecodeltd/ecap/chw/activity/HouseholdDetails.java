@@ -103,8 +103,8 @@ public class HouseholdDetails extends AppCompatActivity {
     public ViewPager mViewPager;
     private Toolbar toolbar;
     private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
-    private TextView childTabCount;
-    private FloatingActionButton fab,fabCaregiverAssessement;
+    public TextView childTabCount;
+    private FloatingActionButton fab,callFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
@@ -164,6 +164,15 @@ public class HouseholdDetails extends AppCompatActivity {
         caregiverMapper = new ObjectMapper();
         weServiceMapper = new ObjectMapper();
 
+        callFab = findViewById(R.id.callFab);
+
+        try{
+            if(caregiverAssessmentModel.getHousehold_type() == null){
+                callFab.setImageResource(android.R.drawable.ic_input_add);
+            }
+        } catch (Exception e){
+
+        }
 
 
         fab = findViewById(R.id.fabx);
@@ -261,6 +270,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOffscreenPageLimit(2);
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
@@ -279,8 +289,6 @@ public class HouseholdDetails extends AppCompatActivity {
         int visits = CaregiverVisitationDao.countVisits(householdId);
 
         visitTabCount.setText(String.valueOf(visits));
-
-
 
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
@@ -533,6 +541,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
+
                     //TODO
                     // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
@@ -565,6 +574,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("hh_caregiver_assessment");
 
                     if(caregiverAssessmentModel == null) {
+
                         CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
 
                         indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(32).put("value", house.getActive_on_treatment());
@@ -846,6 +856,7 @@ public class HouseholdDetails extends AppCompatActivity {
         Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
         i.putExtra("unique_id",  house.getUnique_id());
         i.putExtra("householdId",  house.getHousehold_id());
+        i.putExtra("status",house.getCaregiver_hiv_status());
         i.putExtra("dateId",  dateId);
         startActivity(i);
     }
@@ -1317,8 +1328,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     dialog.cancel();
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    HouseholdDao.deleteRecord(house.getBase_entity_id(), childList);
-                    HouseholdDao.deleteRecordfromSearch(house.getBase_entity_id(), childList);
+                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
+                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
 
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
                     super.onBackPressed();

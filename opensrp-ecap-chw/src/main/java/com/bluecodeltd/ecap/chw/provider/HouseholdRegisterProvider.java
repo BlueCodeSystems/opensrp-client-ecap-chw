@@ -56,15 +56,18 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
         String householdId = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", false);
         String caregiver_Name = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+        String is_closed = Utils.getValue(personObjectClient.getColumnmaps(), "is_closed", true);
 
         List<String> genderList = IndexPersonDao.getGenders(householdId);
         List<String> ageList = IndexPersonDao.getAges(householdId);
         String is_screened = HouseholdDao.checkIfScreened(householdId);
 
 
-        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", householdId, genderList, is_screened, ageList, context);
+        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", is_closed, householdId, genderList, is_screened, ageList, context);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
+        householdRegisterViewHolder.itemView.findViewById(R.id.register_columns).setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
+
     }
 
 

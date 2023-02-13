@@ -100,45 +100,61 @@
         }
       },
       {
-        "key": "services_caregiver",
+        "key": "health_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "services_caregiver",
-        "label": "Type of Caregiver Service(s)",
-        "label_info_text": "Tick (x) Services Provided for Caregivers",
+        "openmrs_entity_id": "health_services",
+        "label": "HIV/HEALTHY ",
+        "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided",
         "type": "check_box",
         "options": [
           {
-            "key": "HIV adherence support",
-            "text": "HIV adherence support"
+            "key": "Age-appropriate HIV treatment literacy",
+            "text": "Age-appropriate HIV treatment literacy"
           },
           {
-            "key": "Conducted HIV testing/accompanied to Health Facility for HIV test",
-            "text": "Conducted HIV testing/accompanied to Health Facility for HIV test"
+            "key": "Age-appropriate counselling",
+            "text": "Age-appropriate counselling"
           },
           {
-            "key": "Child/caregiver receive post-violence child/trauma counselling",
-            "text": "Child/caregiver receive post-violence child/trauma counselling"
+            "key": "HIV disclosure support",
+            "text": "HIV disclosure support"
           },
           {
-            "key": "Project-filed report of suspected abuse to child protection office, police or other local authority",
-            "text": "Project-filed report of suspected abuse to child protection office, police or other \nlocal authority"
+            "key": "Tracked developmental milestones",
+            "text": "Tracked developmental milestones"
           },
           {
-            "key": "Family received cash support ",
-            "text": "Family received cash support "
+            "key": "Age-appropriate HIV prevention support ",
+            "text": "Age-appropriate HIV prevention support "
           },
           {
-            "key": "Family received material support",
-            "text": "Family received material support"
+            "key": "Provided condoms",
+            "text": "Provided condoms"
           },
           {
-            "key": "Child or caregiver referred to health legal or other services",
-            "text": "Child or caregiver referred to health, legal or other services"
+            "key": "Conducted HIV testing/accompanied to health facility for testing",
+            "text": "Conducted HIV testing/accompanied to health facility for testing"
           },
           {
-            "key": "we_services_caregiver",
-            "text": "Caregiver received WE support services"
+            "key": "Conducted/facilitated VL Sample Collection",
+            "text": "Conducted/facilitated VL Sample Collection"
+          },
+          {
+            "key": "Lost to follow up tracing",
+            "text": "Lost to follow up tracing"
+          },
+          {
+            "key": "Appointment reminders",
+            "text": "Appointment reminders"
+          },
+          {
+            "key": "ART and other drugs collection or delivery",
+            "text": "ART and other drugs collection /delivery  "
+          },
+          {
+            "key": "COVID Messaging",
+            "text": "COVID Messaging"
           },
           {
             "key": "other",
@@ -146,14 +162,31 @@
           }
         ],
         "relevance": {
-          "step1:services": {
-            "type": "string",
-            "ex": "equalTo(., \"caregiver\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
           }
-        },
+        }
+      },
+      {
+        "key": "other_health_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_health_services",
+        "type": "edit_text",
+        "hint": "Specify any other HIV/HEALTH service provided",
+        "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "This is a Required field."
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
         }
       },
       {
@@ -177,53 +210,262 @@
         }
       },
       {
-        "key": "services_household",
+        "key": "schooled_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "services_household",
-        "label": "Type of Household Service(s)",
-        "label_info_text": "Tick (x) Services Provided for a Household",
+        "openmrs_entity_id": "schooled_services",
+        "label": "SCHOOLED ",
+        "label_info_text": "Tick (x) schooled  Services Provided",
         "type": "check_box",
         "options": [
           {
-            "key": "Household hygiene counselling and WASH messaging",
-            "text": "Household hygiene counselling and WASH messaging"
+            "key": "Child received school uniform",
+            "text": "Child received school uniform"
           },
           {
-            "key": "Family psycho-social support for family conflict mitigation ",
-            "text": "Family psycho-social support for family conflict mitigation "
+            "key": "Child received school shoes",
+            "text": "Child received school shoes"
           },
           {
-            "key": "Family received cash support ",
-            "text": "Family received cash support "
+            "key": "Child received schoolbooks and other materials",
+            "text": "Child received schoolbooks and other materials (pencils, pens etc)"
+          },
+          {
+            "key": "Child received bursary, tuition or school fees from ECAPII",
+            "text": "Child received bursary, tuition or school fees from ECAPII"
+          },
+          {
+            "key": "Child received assistance for re-enrollment",
+            "text": "Child received assistance for re-enrollment"
+          },
+          {
+            "key": "Post violence trauma counselling",
+            "text": "Post violence trauma counselling"
+          },
+          {
+            "key": "Child provided a report of suspected abuse to child protection office police or other local authority",
+            "text": "Child provided a report of suspected abuse to child protection office,police or other local authority"
+          },
+          {
+            "key": "Received regular assistance or support with homework",
+            "text": "Received regular assistance/ support with homework (e.g., homework club participation)"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_schooled_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_schooled_services",
+        "type": "edit_text",
+        "hint": "Specify any other schooled service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "safe_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safe_services",
+        "label": "SAFE ",
+        "label_info_text": "Tick (x) SAFE Services Provided",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "Safety plan developed",
+            "text": "Safety plan developed"
+          },
+          {
+            "key": " Family/case conferencing to prevent occurrence of child abuse or neglect",
+            "text": " Family/case conferencing to prevent occurrence of child abuse/neglect"
+          },
+          {
+            "key": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation",
+            "text": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation etc."
+          },
+          {
+            "key": "Emergency shelter or Care facility",
+            "text": "Emergency shelter or Care facility"
+          },
+          {
+            "key": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)",
+            "text": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_safe_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_safe_services",
+        "type": "edit_text",
+        "hint": "Specify any other safe service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "stable_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stable_services",
+        "label": "STABLE ",
+        "label_info_text": "Tick (x) stable Services Provided",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "Linked to WE Program",
+            "text": "Linked to WE Program"
+          },
+          {
+            "key": "Linked to other savings group",
+            "text": "Linked to other savings group"
+          },
+          {
+            "key": "Financial literacy training",
+            "text": "Financial literacy training"
+          },
+          {
+            "key": "Business/Entrepreneurship skills training",
+            "text": "Business/Entrepreneurship skills training"
+          },
+          {
+            "key": "Agribusiness training",
+            "text": "Agribusiness training"
+          },
+          {
+            "key": "Linkages to formal financial institutions (banks, credit unions etc)",
+            "text": "Linkages to formal financial institutions (banks, credit unions etc)"
+          },
+          {
+            "key": "Numeracy training",
+            "text": "Numeracy training"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_stable_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_stable_services",
+        "type": "edit_text",
+        "hint": "Specify any other stable service provided ",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "hh_level_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_level_services",
+        "label": " HH LEVEL SERVICES ",
+        "label_info_text": "Tick (x) other hh level services Services Provided",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "Household hygiene counselling and WASH",
+            "text": "Household hygiene counselling and WASH"
+          },
+          {
+            "key": "Family or psychosocial support for family conflict mitigation",
+            "text": "Family/psychosocial support for family conflict mitigation"
+          },
+          {
+            "key": "Family received cash support",
+            "text": "Family received cash support"
           },
           {
             "key": "Family received material support",
             "text": "Family received material support"
           },
           {
+            "key": "Linked to evidence-based parenting intervention to prevent HIV and sexual violence to their children (e.g. Chimwemwe program)",
+            "text": "Linked to evidence-based parenting intervention to prevent HIV and sexual violence to their children (e.g. Chimwemwe program)"
+          },
+          {
             "key": "other",
-            "text": "Other: Specify"
+            "text": "Other Specify"
           }
         ],
         "relevance": {
-          "step1:services": {
-            "type": "string",
-            "ex": "equalTo(., \"household\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
           }
-        },
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
         }
       },
       {
-        "key": "other_service_household",
+        "key": "other_hh_level_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "other_service_household",
+        "openmrs_entity_id": "other_hh_level_services",
         "type": "edit_text",
-        "hint": "Specify any other service provided to Household",
+        "hint": "Specify any other hh level  service provided",
         "edit_type": "name",
         "v_required": {
           "value": true,

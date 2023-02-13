@@ -349,8 +349,8 @@
         "openmrs_entity_id": "partners",
         "type": "edit_text",
         "hint": "Partners",
-        "value": "ZEC",
-        "read_only": "true",
+        "value": "ZCCB",
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {

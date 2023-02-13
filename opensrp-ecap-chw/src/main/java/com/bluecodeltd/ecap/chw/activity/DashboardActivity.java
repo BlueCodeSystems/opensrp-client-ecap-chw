@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +39,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -88,6 +90,7 @@ public class DashboardActivity extends AppCompatActivity {
     private final int FIVE_SECONDS = 2000;
     Runnable runnable;
     ArrayList<Integer> colors;
+    AppUpdater appUpdater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +117,10 @@ public class DashboardActivity extends AppCompatActivity {
         String username = extras.getString("username");
         String password = extras.getString("password");
         dtf = DateTimeFormatter.ofPattern("HH:mm");
-       colors = new ArrayList<Integer>();
+        colors = new ArrayList<Integer>();
+
+        appUpdater = new AppUpdater(DashboardActivity.this);
+        appUpdater.start();
 
         colors.add(Color.parseColor("#9B51E0"));
         colors.add(Color.parseColor("#E84AE0"));
@@ -347,11 +353,6 @@ public class DashboardActivity extends AppCompatActivity {
                 }
 
 
-
-
-
-
-
             }
 
             totalSubpops.add(subpopOne); //CALHIV
@@ -391,13 +392,18 @@ public class DashboardActivity extends AppCompatActivity {
         allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
         allVcasCount.setText(IndexPersonDao.countAllChildren());
         lastUpdated.setText(String.valueOf(dtf.format(localTime)));
+
+        appUpdater.start();
+
     }
 
     private void getCreds(String token){
 
+        Log.i("chobela_token ", "chobela_token" + token);
+
         String tag_string_creds = "req_creds";
 
-        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/userinfo";
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/userinfo";
         StringRequest
                 stringRequest
                 = new StringRequest(
@@ -481,7 +487,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         String tag_string_req = "req_login";
 
-        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/token";
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/token";
         StringRequest
                 stringRequest
                 = new StringRequest(

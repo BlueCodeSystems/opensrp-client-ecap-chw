@@ -3,7 +3,55 @@ package com.bluecodeltd.ecap.chw.model;
 public class VCAServiceModel {
 
     private String base_entity_id, unique_id, date, art_clinic, date_last_vl, vl_last_result, date_next_vl,
-            child_mmd, level_mmd, services, other_service;
+            child_mmd, level_mmd, services, other_service,schooled_services,other_schooled_services,safe_services,other_safe_services,stable_services,other_stable_services;
+
+    public String getSchooled_services() {
+        return schooled_services;
+    }
+
+    public void setSchooled_services(String schooled_services) {
+        this.schooled_services = schooled_services;
+    }
+
+    public String getOther_schooled_services() {
+        return other_schooled_services;
+    }
+
+    public void setOther_schooled_services(String other_schooled_services) {
+        this.other_schooled_services = other_schooled_services;
+    }
+
+    public String getSafe_services() {
+        return safe_services;
+    }
+
+    public void setSafe_services(String safe_services) {
+        this.safe_services = safe_services;
+    }
+
+    public String getOther_safe_services() {
+        return other_safe_services;
+    }
+
+    public void setOther_safe_services(String other_safe_services) {
+        this.other_safe_services = other_safe_services;
+    }
+
+    public String getStable_services() {
+        return stable_services;
+    }
+
+    public void setStable_services(String stable_services) {
+        this.stable_services = stable_services;
+    }
+
+    public String getOther_stable_services() {
+        return other_stable_services;
+    }
+
+    public void setOther_stable_services(String other_stable_services) {
+        this.other_stable_services = other_stable_services;
+    }
 
     public String getDate() {
         return date;
@@ -81,8 +129,8 @@ public class VCAServiceModel {
         return other_service;
     }
 
-    public void setOther_service(String other_service) {
-        this.other_service = other_service;
+    public void setOther_service(String other_health_services) {
+        this.other_service = other_health_services;
     }
 
     public String getUnique_id() {

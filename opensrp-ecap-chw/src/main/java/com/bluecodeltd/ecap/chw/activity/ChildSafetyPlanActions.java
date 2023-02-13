@@ -174,14 +174,26 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, false);
 
-                Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
+        Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
+        goBackToSafetyPlan();
+
+
+
+
+
+
+    }
+
+    private void goBackToSafetyPlan() {
+        Intent i = new Intent(ChildSafetyPlanActions.this,ChildSafetyPlanActivity.class);
+        i.putExtra("vca_id",childId);
+        startActivity(i);
+
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){

@@ -2,6 +2,11 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class VcaVisitationModel {
 
+    private String unique_id;
+    private String first_name;
+    private String last_name;
+    private String birthdate;
+    private String hei;
     private String base_entity_id;
     private String age;
     private String visit_date;
@@ -838,5 +843,45 @@ public class VcaVisitationModel {
 
     public void setSchool_administration_signature(String school_administration_signature) {
         this.school_administration_signature = school_administration_signature;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getHei() {
+        return hei;
+    }
+
+    public void setHei(String hei) {
+        this.hei = hei;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }
