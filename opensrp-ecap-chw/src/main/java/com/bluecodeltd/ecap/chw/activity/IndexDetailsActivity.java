@@ -819,6 +819,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
 
 
+                case "Sub Population Edit":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
                 case "Case Record Status":
 
                     if (fields != null) {
@@ -1236,8 +1248,36 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         dialog.cancel();
 
                     }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        IndexPersonDao.deleteRecord(child.getBase_entity_id());
-                        IndexPersonDao.deleteRecordfromSearch(child.getBase_entity_id());
+                        FormUtils formUtils = null;
+                        try {
+                            formUtils = new FormUtils(this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        child.setDeleted("1");
+                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+                            try {
+                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+
+                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                                if (childIndexEventClient == null) {
+                                    return;
+                                }
+                                saveRegistration(childIndexEventClient,true);
+
+
+                            } catch (Exception e) {
+                                Timber.e(e);
+                            }
+
+
 
                         Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
                         super.onBackPressed();
