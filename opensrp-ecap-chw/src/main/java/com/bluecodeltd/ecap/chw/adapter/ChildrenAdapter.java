@@ -276,10 +276,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                         intent.putExtra("Child",  child.getUnique_id());
                         context.startActivity(intent);
 
-                    } else if (!isEligibleForEnrollment(child)){
+                    } /*else if (!isEligibleForEnrollment(child)){
                         Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
 
-                    }else {
+                    }*/else {
                         Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
                     }
 
