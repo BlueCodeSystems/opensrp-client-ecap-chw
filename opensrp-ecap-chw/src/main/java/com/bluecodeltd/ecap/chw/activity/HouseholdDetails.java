@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -111,7 +112,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
-
+    public ArrayList houseHoldsContainingSameId;
 
     Caregiver caregiver;
     AlertDialog.Builder builder, screeningBuilder;
@@ -917,7 +918,47 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
+                case "Sub Population":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+
+                case "Sub Population Edit":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+
                 case "Household Screening":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+
+                case "Household Screening Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -1073,7 +1114,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    Timber.e(e);
+                    Timber.e(e.getMessage());
                 }
             }
 
@@ -1095,6 +1136,63 @@ public class HouseholdDetails extends AppCompatActivity {
     private ECSyncHelper getECSyncHelper() {
         return ChwApplication.getInstance().getEcSyncHelper();
     }
+    public boolean saveRegistrationForHouseholdEditing(ChildIndexEventClient newHouseholdIndexEventClient, boolean isEditMode, String encounterType,ChildIndexEventClient oldIndex) {
+
+        Runnable runnable = () -> {
+
+            Event event = newHouseholdIndexEventClient.getEvent();
+            Client client = newHouseholdIndexEventClient.getClient();
+
+            Client olDclient = oldIndex.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                    JSONObject existingClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(olDclient));
+
+                    if (isEditMode) {
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                } catch (Exception e) {
+                    Timber.e(e.getMessage());
+                }
+            }
+
+        };
+
+
+        try {
+            AppExecutors appExecutors = new AppExecutors();
+            appExecutors.diskIO().execute(runnable);
+            return true;
+        } catch (Exception exception) {
+            Timber.e(exception);
+            return false;
+        }
+
+
+    }
+
 
     public FormTag getFormTag() {
         FormTag formTag = new FormTag();
@@ -1328,9 +1426,24 @@ public class HouseholdDetails extends AppCompatActivity {
                     dialog.cancel();
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
-                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
 
+//                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
+//                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
+
+                    try {
+                       houseHoldsContainingSameId = (ArrayList) HouseholdDao.getDuplicatedHousehold(householdId);
+                       if(houseHoldsContainingSameId != null || houseHoldsContainingSameId.size() > 0 )
+                       {
+                           for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
+                           {
+                               Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+                               changeHouseholdStatus(householdToDelete);
+                           }
+                       }
+                     deleteFamilyChildren(householdId);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
                     super.onBackPressed();
                 }));
@@ -1346,6 +1459,66 @@ public class HouseholdDetails extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void changeHouseholdStatus(Household house) throws Exception {
+
+        //open household screening form
+        FormUtils formUtils = null;
+        formUtils = new FormUtils(this);
+        JSONObject hhScreeningForm = formUtils.getFormJson("hh_edit");
+        house.setStatus("1");
+        CoreJsonFormUtils.populateJsonForm(hhScreeningForm, new ObjectMapper().convertValue(house, Map.class));
+        hhScreeningForm.put("entity_id", house.getBase_entity_id());
+        Log.d("Household JSON RESULTS", hhScreeningForm.toString());
+
+        try {
+
+            ChildIndexEventClient childIndexEventClient = processRegistration(hhScreeningForm.toString());
+            if (childIndexEventClient == null) {
+                return;
+            }
+            saveRegistration(childIndexEventClient,true,"Household Screening Edit");
+           // saveRegistrationForHouseholdEditing(childIndexEventClient, true, "Household Screening",oldIndexEventClient);
+
+
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+    }
+    public void deleteFamilyChildren(String HouseholdID) throws Exception {
+        //get all family children
+        List<Child> allChildren = IndexPersonDao.getFamilyChildren(householdId);
+        FormUtils formUtils = null;
+        formUtils = new FormUtils(this);
+        if(allChildren != null && allChildren.size() > 0)
+        {
+            for( int i = 0; i < allChildren.size(); i++)
+            {
+                Child child = allChildren.get(i);
+                child.setDeleted("1");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true,"Family Member");
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+            }
+        }
+
+
     }
 
     public void buildDialog(){

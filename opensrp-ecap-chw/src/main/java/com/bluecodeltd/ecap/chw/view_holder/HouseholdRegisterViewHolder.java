@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -41,7 +42,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
-        if(isClosed.equals("0")){
+        if(HouseholdDao.getHouseholdByBaseId(isClosed).getStatus() == null || !HouseholdDao.getHouseholdByBaseId(isClosed).getStatus().equals("1") ){
             if (screened != null && screened.equals("true")){
 
                 homeIcon.setImageResource(R.mipmap.ic_home_active);
@@ -60,7 +61,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         //This prevents Duplication of Icons
         hLayout.removeAllViews();
 
-        if(isClosed.equals("0")){
+        if( isClosed!=null && isClosed.equals("0")){
             for(int i=0; i < genderList.size(); i++) {
 
                 String myage = getAgeWithoutText(birthdateList.get(i));

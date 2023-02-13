@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
@@ -75,7 +74,7 @@ public class HouseholdDao extends AbstractDao {
     }
     public static String countNumberoFHouseholds () {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = '0'";
+        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND status IS NULL OR status != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
 
@@ -107,16 +106,50 @@ public class HouseholdDao extends AbstractDao {
     }
 
 
+    public static List<Household> getDuplicatedHousehold (String householdID) {
 
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE  ec_household.household_id  = '" + householdID + "'";
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+
+        if (values == null || values.size() == 0) {
+            return new ArrayList<>();
+        } else {
+            return values;
+        }
+
+
+
+    }
     public static Household getHousehold (String householdID) {
 
-        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' AND ec_client_index.index_check_box = '1'";
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household  WHERE ec_household.household_id = '" + householdID + "'";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+        if (values == null || values.size() == 0)
+        {
+            return new Household();
+        }
 
         return values.get(0);
 
     }
+    public static Household getHouseholdByBaseId (String baseID) {
+
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE ec_household.base_entity_id = '" + baseID + "'" ;
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+
+
+        if (values == null || values.size() == 0)
+        {
+            return new Household();
+        }
+
+        return values.get(0);
+
+    }
+
 
     public static List<FamilyServiceModel> getServicesByHousehold(String householdId) {
 
@@ -289,6 +322,7 @@ public class HouseholdDao extends AbstractDao {
             record.setFacility(getCursorValue(c, "facility"));
             record.setPhone(getCursorValue(c, "phone"));
             record.setDate_edited(getCursorValue(c, "date_edited"));
+            record.setStatus(getCursorValue(c, "status"));
 
             return record;
         };

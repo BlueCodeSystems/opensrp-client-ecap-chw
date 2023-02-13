@@ -812,6 +812,13 @@
           }
         },
         {
+          "column_name": "status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status"
+          }
+        },
+        {
           "column_name": "date_edited",
           "type": "Client",
           "json_mapping": {
@@ -1393,6 +1400,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "deleted",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.deleted"
           }
         },
         {
