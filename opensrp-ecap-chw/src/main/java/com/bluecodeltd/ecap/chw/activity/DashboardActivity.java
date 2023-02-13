@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -398,9 +399,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void getCreds(String token){
 
+        Log.i("chobela_token ", "chobela_token" + token);
+
         String tag_string_creds = "req_creds";
 
-        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/userinfo";
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/userinfo";
         StringRequest
                 stringRequest
                 = new StringRequest(
@@ -484,7 +487,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         String tag_string_req = "req_login";
 
-        String url = "https://keycloak.who.bluecodeltd.com/auth/realms/anc-stage/protocol/openid-connect/token";
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/token";
         StringRequest
                 stringRequest
                 = new StringRequest(

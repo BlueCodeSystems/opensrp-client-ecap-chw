@@ -368,7 +368,7 @@ public class IndexPersonDao  extends AbstractDao {
 
 
     public static Child getChildByBaseId(String UID){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' AND (adolescent_first_name IS NOT NULL OR adolescent_last_name IS NOT NULL OR adolescent_birthdate IS NOT NULL)";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
@@ -463,9 +463,10 @@ public class IndexPersonDao  extends AbstractDao {
             );
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
-        if (children == null) {
+        if (children == null || children.isEmpty()) {
             return null;
         }
+
         return children.get(0);
     }
     public static List<Child> getAllChildrenSubpops(){
