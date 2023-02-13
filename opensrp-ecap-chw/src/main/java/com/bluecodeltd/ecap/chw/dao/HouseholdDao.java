@@ -125,6 +125,7 @@ public class HouseholdDao extends AbstractDao {
 
         String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household  WHERE ec_household.household_id = '" + householdID + "'";
 
+
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
         if (values == null || values.size() == 0)
         {

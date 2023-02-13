@@ -52,6 +52,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     GradModel gradModel;
     MuacModel muacModel, cModel;
     ObjectMapper oMapper, gradMapper;
+    String dob;
+    String caseStatus;
 
 
     public ChildrenAdapter(List<Child> children, Context context, String txtMuac){
@@ -79,29 +81,59 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         final String childUniqueID = children.get(position).getUnique_id();
         Child child  = IndexPersonDao.getChildByBaseId(childUniqueID);
 
-        holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
+        try{
+
+            if(child.getFirst_name() == null || child.getLast_name() == null){
+                holder.fullName.setText("");
+            } else {
+                holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
+            }
+        } catch (NullPointerException e) {
+            holder.fullName.setText("");
+        }
 
 
-        String dob = child.getAdolescent_birthdate();
+        try{
+
+            dob = child.getAdolescent_birthdate();
+
+        } catch (NullPointerException e) {
+
+            dob = "01-01-2005";
+        }
+
+
+
         String memberAge = getAgeWithoutText(dob);
 
 
-        String caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
-        String subpop1 = child.getSubpop1();
-        String positive = child.getIs_hiv_positive();
-        String artnumber = child.getArt_number();
-        String lastVl = child.getVl_last_result();
+        try{
+            caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
+        } catch(NullPointerException e) {
+            caseStatus = "1";
+        }
 
-        if(child.getIndex_check_box() != null && child.getIndex_check_box().equals("1")){
-            holder.is_index.setVisibility(View.VISIBLE);
-        } else {
+        try{
+            if(child.getIndex_check_box() != null && child.getIndex_check_box().equals("1")){
+                holder.is_index.setVisibility(View.VISIBLE);
+            } else {
+                holder.is_index.setVisibility(View.GONE);
+            }
+        } catch(NullPointerException e) {
             holder.is_index.setVisibility(View.GONE);
         }
 
 
+
+
         isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child));
 
-        gradModel = GradDao.getGrad(child.getUnique_id());
+        try{
+            gradModel = GradDao.getGrad(child.getUnique_id());
+        } catch (NullPointerException e) {
+
+        }
+
 
         if(gradModel == null){
             holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
