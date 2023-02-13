@@ -110,7 +110,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static Household getHousehold (String householdID) {
 
-        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' AND ec_client_index.index_check_box = '1'";
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE ec_household.household_id = '" + householdID + "' LIMIT 1";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
 

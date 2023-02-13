@@ -19,6 +19,7 @@
         android:layout_height="70dp">
 
         <ImageView
+            android:id="@+id/gender_image"
             android:tint="@color/primary"
             android:layout_gravity="center_vertical"
             android:src="@drawable/baseline_woman_black_48"

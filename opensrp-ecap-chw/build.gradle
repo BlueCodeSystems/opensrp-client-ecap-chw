@@ -132,8 +132,8 @@ android {
         applicationId "com.bluecodeltd.chw"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode 9
-        versionName "v5.0.0"
+        versionCode 11
+        versionName "v6.0.0"
         multiDexEnabled true
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
@@ -220,8 +220,8 @@ android {
         }
 
         debug {
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '30'
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '15'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '500'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '3'
             buildConfigField "boolean", "TIME_CHECK", "false"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
@@ -235,7 +235,7 @@ android {
             buildConfigField "int", "STOCK_USAGE_REPORT_MINUTES", '1440'
             buildConfigField "boolean", "USE_UNIFIED_REFERRAL_APPROACH", "true"
             buildConfigField "boolean", "BUILD_FOR_BORESHA_AFYA_SOUTH", "false"
-            testCoverageEnabled true
+          //  testCoverageEnabled true
         }
     }
 
@@ -280,11 +280,11 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 9
-            versionName "v5.0.0"
-            buildConfigField "String", 'opensrp_url', '"https://opensrp.who.bluecodeltd.com/opensrp/"'
+            versionCode 11
+            versionName "v6.0.0"
+            buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
-            buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.who.bluecodeltd.com/opensrp/"'
+            buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String[]", "LOCATION_HIERACHY", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
