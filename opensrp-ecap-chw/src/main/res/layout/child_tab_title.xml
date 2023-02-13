@@ -25,7 +25,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="3dp"
-        android:background="@color/refer_close_red"
+        android:background="@color/colorGreen"
         android:text="0"
         android:textAlignment="center"
         android:textAllCaps="true"

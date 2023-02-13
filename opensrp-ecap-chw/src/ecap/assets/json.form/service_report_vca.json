@@ -199,95 +199,272 @@
         "key": "services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "services",
-        "label": "Type of VCA Service (s)",
-        "label_info_text": "Tick (x) Services Provided for Caregivers",
+        "openmrs_entity_id": "health_services",
+        "label": "HIV/HEALTHY ",
+        "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided for Caregivers",
         "type": "check_box",
         "options": [
           {
-            "key": "Age-appropriate HIV treatment Literacy for child/adolescent",
-            "text": "Age-appropriate HIV treatment Literacy for child/adolescent"
+            "key": "Age-appropriate HIV treatment literacy",
+            "text": "Age-appropriate HIV treatment literacy"
           },
           {
-            "key": "Age-appropriate counselling/HIV disclosure support",
-            "text": "Age-appropriate counselling/HIV disclosure support"
+            "key": "Age-appropriate counselling",
+            "text": "Age-appropriate counselling"
           },
           {
-            "key": "HIV adherence support",
-            "text": "HIV adherence support"
+            "key": "HIV disclosure support",
+            "text": "HIV disclosure support"
           },
           {
-            "key": "Tracked developmental milestones in HIV infected/exposed infants",
-            "text": "Tracked developmental milestones in HIV infected/exposed infants"
+            "key": "Tracked developmental milestones",
+            "text": "Tracked developmental milestones"
           },
           {
-            "key": "Provided age-appropriate HIV prevention support, incl. Condoms",
-            "text": "Provided age-appropriate HIV prevention support, incl. Condoms,"
+            "key": "Age-appropriate HIV prevention support ",
+            "text": "Age-appropriate HIV prevention support "
           },
           {
-            "key": "Conducted HIV testing/accompanied to Health Facility for HIV test",
-            "text": "Conducted HIV testing/accompanied to Health Facility for HIV test"
+            "key": "Provided condoms",
+            "text": "Provided condoms"
           },
           {
-            "key": "Safety plan developed for the child",
-            "text": "Safety plan developed for the child"
+            "key": "Conducted HIV testing/accompanied to health facility for testing",
+            "text": "Conducted HIV testing/accompanied to health facility for testing"
           },
           {
-            "key": "Family/case conferencing to prevent occurrence of child abuse/ neglect",
-            "text": "Family/case conferencing to prevent occurrence of child abuse/ neglect"
+            "key": "Conducted/facilitated VL Sample Collection",
+            "text": "Conducted/facilitated VL Sample Collection"
           },
           {
-            "key": "Child received school uniform, books or other materials",
-            "text": "Child received school uniform, books or other materials"
+            "key": "Lost to follow up tracing",
+            "text": "Lost to follow up tracing"
           },
           {
-            "key": "Child received bursary, tuition, school fees or fee exemption",
-            "text": "Child received bursary, tuition, school fees or fee exemption"
+            "key": "Appointment reminders",
+            "text": "Appointment reminders"
           },
           {
-            "key": "Child received assistance for re-enrolment",
-            "text": "Child received assistance for re-enrolment"
+            "key": "ART and other drugs collection or delivery",
+            "text": "ART and other drugs collection /delivery  "
           },
           {
-            "key": "Child/caregiver receive post-violence child/trauma counselling",
-            "text": "Child/caregiver receive post-violence child/trauma counselling"
-          },
-          {
-            "key": "Project-filed report of suspected abuse to child protection office, police or other local authority",
-            "text": "Project-filed report of suspected abuse to child protection office, police or other local authority"
-          },
-          {
-            "key": "we_services_vca",
-            "text": "Child received WE support services"
+            "key": "COVID Messaging",
+            "text": "COVID Messaging"
           },
           {
             "key": "other",
             "text": "Other Specify"
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
-        }
+        ]
       },
-
       {
         "key": "other_service",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_service",
         "type": "edit_text",
-        "hint": "Specify any other service provided to VCA",
+        "hint": "Specify any other HIV/HEALTH service provided ",
         "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "This field is required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "services.yml"
-            }
+          "step1:services": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }]
+          }
+        }
+      },
+      {
+        "key": "schooled_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "schooled_services",
+        "label": "SCHOOLED ",
+        "label_info_text": "Tick (x) schooled  Services Provided for Caregivers",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "Child received school uniform",
+            "text": "Child received school uniform"
+          },
+          {
+            "key": "Child received school shoes",
+            "text": "Child received school shoes"
+          },
+          {
+            "key": "Child received schoolbooks and other materials",
+            "text": "Child received schoolbooks and other materials (pencils, pens etc)"
+          },
+          {
+            "key": "Child received bursary, tuition or school fees from ECAPII",
+            "text": "Child received bursary, tuition or school fees from ECAPII"
+          },
+          {
+            "key": "Child received assistance for re-enrollment",
+            "text": "Child received assistance for re-enrollment"
+          },
+          {
+            "key": "Post violence trauma counselling",
+            "text": "Post violence trauma counselling"
+          },
+          {
+            "key": "Child provided a report of suspected abuse to child protection office police or other local authority",
+            "text": "Child provided a report of suspected abuse to child protection office,police or other local authority"
+          },
+          {
+            "key": "Received regular assistance or support with homework",
+            "text": "Received regular assistance/ support with homework (e.g., homework club participation)"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ]
+      },
+      {
+        "key": "other_schooled_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_schooled_services",
+        "type": "edit_text",
+        "hint": "Specify any other schooled service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:schooled_services": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }]
+          }
+        }
+      },
+      {
+        "key": "safe_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safe_services",
+        "label": "SAFE ",
+        "label_info_text": "Tick (x) SAFE Services Provided for Caregivers",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "Safety plan developed",
+            "text": "Safety plan developed"
+          },
+          {
+            "key": " Family/case conferencing to prevent occurrence of child abuse or neglect",
+            "text": " Family/case conferencing to prevent occurrence of child abuse/neglect"
+          },
+          {
+            "key": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation",
+            "text": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation etc."
+          },
+          {
+            "key": "Emergency shelter or Care facility",
+            "text": "Emergency shelter or Care facility"
+          },
+          {
+            "key": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)",
+            "text": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ]
+      },
+      {
+        "key": "other_safe_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_safe_services",
+        "type": "edit_text",
+        "hint": "Specify any other safe service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:safe_services": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }]
+          }
+        }
+      },
+
+      {
+        "key": "stable_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stable_services",
+        "label": "STABLE ",
+        "label_info_text": "Tick (x) stable Services Provided for Caregivers",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "Linked to WE Program",
+            "text": "Linked to WE Program"
+          },
+          {
+            "key": "Linked to other savings group",
+            "text": "Linked to other savings group"
+          },
+          {
+            "key": "Financial literacy training",
+            "text": "Financial literacy training"
+          },
+          {
+            "key": "Business/Entrepreneurship skills training",
+            "text": "Business/Entrepreneurship skills training"
+          },
+          {
+            "key": "Agribusiness training",
+            "text": "Agribusiness training"
+          },
+          {
+            "key": "Linkages to formal financial institutions (banks, credit unions etc)",
+            "text": "Linkages to formal financial institutions (banks, credit unions etc)"
+          },
+          {
+            "key": "Numeracy training",
+            "text": "Numeracy training"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ]
+      },
+      {
+        "key": "other_stable_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_stable_services",
+        "type": "edit_text",
+        "hint": "Specify any other stable service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:stable_services": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }]
           }
         }
       }

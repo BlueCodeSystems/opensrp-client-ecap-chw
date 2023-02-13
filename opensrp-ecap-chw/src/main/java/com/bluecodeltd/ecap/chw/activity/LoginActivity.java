@@ -66,6 +66,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     private PinLogger pinLogger = PinLoginUtil.getPinLogger();
     TextView txtUsername, txtPassword;
     boolean connected;
+    private Toast toast;
 
 
     @Override
@@ -129,7 +130,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             String DBNAME = "drishti.db";
             String COPYDBNAME = "chw";
 
-            Toast.makeText(this, R.string.export_db_notification, Toast.LENGTH_SHORT).show();
+            toast.show();
             String currentTimeStamp = new SimpleDateFormat("yyyy-MM-dd-HHmmss", Locale.ENGLISH).format(new Date());
             if (hasPermissions()) {
                 copyDatabase(DBNAME, COPYDBNAME + "-" + currentTimeStamp + ".db", this);

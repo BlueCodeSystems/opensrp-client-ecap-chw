@@ -92,7 +92,7 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
 
     @Override
     protected String getMainCondition() {
-        return "is_closed != 1";
+        return "is_closed <> '1'";
     }
 
     @Override

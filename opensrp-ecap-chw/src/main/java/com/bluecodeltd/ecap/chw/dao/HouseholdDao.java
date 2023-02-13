@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
@@ -12,7 +13,8 @@ import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
 
-    public static void deleteRecord (String id, List<Child> children) {
+
+    public static void deleteRecord (String hhId, String id, List<Child> children) {
 
         for (int i = 0; i < children.size(); i++) {
 
@@ -20,14 +22,22 @@ public class HouseholdDao extends AbstractDao {
 
             String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + child.getBase_entity_id() + "'";
             updateDB(sql);
+
+
         }
 
         String sql = "UPDATE ec_household SET is_closed = '1' WHERE base_entity_id = '" + id + "'";
         updateDB(sql);
 
+        String sql2 = "UPDATE ec_household SET is_closed = '1' WHERE household_id = '" + hhId + "'";
+        updateDB(sql2);
+
+        String sql3 = "UPDATE ec_mother_index SET is_closed = '1' WHERE household_id = '" + hhId + "'";
+        updateDB(sql3);
+
     }
 
-    public static void deleteRecordfromSearch (String id, List<Child> children) {
+    public static void deleteRecordfromSearch (String hhId, String id, List<Child> children) {
 
         for (int i = 0; i < children.size(); i++) {
 
@@ -43,6 +53,8 @@ public class HouseholdDao extends AbstractDao {
         String sql2 = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + id + "'";
         updateDB(sql2);
 
+        String sql3 = "UPDATE ec_mother_index_search SET is_closed = '1' WHERE household_id = '" + hhId + "'";
+        updateDB(sql3);
 
     }
 
@@ -63,7 +75,7 @@ public class HouseholdDao extends AbstractDao {
     }
     public static String countNumberoFHouseholds () {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = 0";
+        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = '0'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
 
@@ -80,7 +92,7 @@ public class HouseholdDao extends AbstractDao {
     public static String countNumberOfHouseholdsByCaseworkerPhone ( String caseworkerPhoneNumber)
     {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "'";
+        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "phone");
 
@@ -98,7 +110,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static Household getHousehold (String householdID) {
 
-        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid, ec_client_index.* FROM ec_household JOIN ec_client_index ON ec_household.household_id = ec_client_index.household_id WHERE ec_household.household_id = '" + householdID + "' AND ec_client_index.index_check_box = '1'";
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE ec_household.household_id = '" + householdID + "' LIMIT 1";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
 
@@ -130,6 +142,17 @@ public class HouseholdDao extends AbstractDao {
             record.setOther_services_caregiver(getCursorValue(c, "other_service_caregiver"));
             record.setOther_services_household(getCursorValue(c, "other_service_household"));
             record.setServices(getCursorValue(c, "services"));
+            record.setSchooled_services(getCursorValue(c,"schooled_services"));
+            record.setOther_schooled_services(getCursorValue(c,"other_schooled_services"));
+            record.setSafe_services(getCursorValue(c,"safe_services"));
+            record.setOther_safe_services(getCursorValue(c,"other_safe_services"));
+            record.setStable_services(getCursorValue(c,"stable_services"));
+            record.setOther_stable_services(getCursorValue(c,"other_stable_services"));
+            record.setHh_level_services(getCursorValue(c,"hh_level_services"));
+            record.setOther_hh_level_services(getCursorValue(c,"other_hh_level_services"));
+            record.setHealth_services(getCursorValue(c,"health_services"));
+            record.setOther_health_services(getCursorValue(c,"other_health_services"));
+
 
             return record;
         };

@@ -101,6 +101,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
+
         if (recyclerViewadapter.getItemCount() > 0){
 
             linearLayout.setVisibility(View.GONE);
@@ -109,8 +110,17 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
-        recyclerViewadapter = new ChildSafetyPlanAdapter(childSafetyPlanList, ChildSafetyPlanActivity.this);
+        ArrayList<ChildSafetyPlanModel> reloadChildSafetyPlanList = new ArrayList<>();
+       // childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
+        reloadChildSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
+        if(reloadChildSafetyPlanList.size() != 0)
+        {
+            recyclerViewadapter = new ChildSafetyPlanAdapter(reloadChildSafetyPlanList, ChildSafetyPlanActivity.this);
+        }else{
+
+            recyclerViewadapter = new ChildSafetyPlanAdapter(childSafetyPlanList, ChildSafetyPlanActivity.this);
+        }
+
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
@@ -197,12 +207,16 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
 
                 JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "initial_date");
                 String dateId = cpdate.optString("value");
-                openChildSafetyPlanAction(dateId);
-                if(encounterType.equals("Child Safety Plan"))
-                {
+                finish();
+                startActivity(getIntent());
+                Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
 
-
-                }
+                //openChildSafetyPlanAction(dateId);
+//                if(encounterType.equals("Child Safety Plan"))
+//                {
+//
+//
+//                }
 
 
             } catch (Exception e) {
@@ -344,14 +358,20 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         }
 
     }
+     public void loopThroughChildrensCaseplansList(){
+
+     }
+
     public void openChildSafetyPlanAction(String dateId) {
 
-        Intent i = new Intent(ChildSafetyPlanActivity.this, ChildSafetyPlanActions.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("child_ID", intent_vcaid);
-        bundle.putString("action_date",dateId);
-        i.putExtras(bundle);
-        startActivity(i);
+//        Intent i = new Intent(ChildSafetyPlanActivity.this, ChildSafetyPlanActions.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("child_ID", intent_vcaid);
+//        bundle.putString("action_date",dateId);
+//        i.putExtras(bundle);
+//        startActivity(i);
+        finish();
+        startActivity(getIntent());
         Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
 
 

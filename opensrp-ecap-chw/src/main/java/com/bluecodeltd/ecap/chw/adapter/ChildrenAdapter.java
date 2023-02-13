@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     GradModel gradModel;
     MuacModel muacModel, cModel;
     ObjectMapper oMapper, gradMapper;
+    String dob;
+    String caseStatus;
 
 
     public ChildrenAdapter(List<Child> children, Context context, String txtMuac){
@@ -75,43 +78,69 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     @Override
     public void onBindViewHolder(ChildrenAdapter.ViewHolder holder, final int position) {
 
-        final Child child = children.get(position);
+        final String childUniqueID = children.get(position).getUnique_id();
+        Child child  = IndexPersonDao.getChildByBaseId(childUniqueID);
+
+        try{
+
+            if(child.getFirst_name() == null || child.getLast_name() == null){
+                holder.fullName.setText("");
+            } else {
+                holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
+            }
+        } catch (NullPointerException e) {
+            holder.fullName.setText("");
+        }
 
 
-        holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
+        try{
+
+            dob = child.getAdolescent_birthdate();
+
+        } catch (NullPointerException e) {
+
+            dob = "01-01-2005";
+        }
 
 
-        String dob = child.getAdolescent_birthdate();
+
         String memberAge = getAgeWithoutText(dob);
 
 
-        String caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
-        String subpop1 = child.getSubpop1();
-        String positive = child.getIs_hiv_positive();
-        String artnumber = child.getArt_number();
-        String lastVl = child.getVl_last_result();
+        try{
+            caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
+        } catch(NullPointerException e) {
+            caseStatus = "1";
+        }
 
-        if(child.getIndex_check_box() != null && child.getIndex_check_box().equals("1")){
-            holder.is_index.setVisibility(View.VISIBLE);
-        } else {
+        try{
+            if(child.getIndex_check_box() != null && child.getIndex_check_box().equals("1")){
+                holder.is_index.setVisibility(View.VISIBLE);
+            } else {
+                holder.is_index.setVisibility(View.GONE);
+            }
+        } catch(NullPointerException e) {
             holder.is_index.setVisibility(View.GONE);
         }
 
-        if (artnumber != null && ((positive != null) && child.getIs_hiv_positive().equals("yes")) || ((subpop1 != null) && child.getSubpop1().equals("true")) || Integer.parseInt(memberAge) < 5 || (Integer.parseInt(memberAge) > 9 && Integer.parseInt(memberAge) < 18)) {
 
-            holder.gradBtn.setVisibility(View.VISIBLE);
 
-        } else {
-            holder.gradBtn.setVisibility(View.GONE);
+
+        isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child));
+
+        try{
+            gradModel = GradDao.getGrad(child.getUnique_id());
+        } catch (NullPointerException e) {
+
         }
-        gradModel = GradDao.getGrad(child.getUnique_id());
+
 
         if(gradModel == null){
             holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
 
         } else {
-//            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg2));
+
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
         }
@@ -141,8 +170,6 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 }
             }
         });
-
-
 
 
         if(caseStatus != null && caseStatus.equals("1")){
@@ -181,8 +208,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             if(cModel != null){
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
-
+                if(Integer.parseInt(getAgeWithoutText(dob)) < 6){
+                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
+                }
 
             } else {
 
@@ -241,17 +269,18 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     String subpop3 = child.getSubpop3();
                     assert subpop3 != null;
 
-                    if(Integer.parseInt(memberAge) < 20){
+                    if((Integer.parseInt(memberAge) < 18) || isEligibleForEnrollment(child)){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
                         intent.putExtra("Child",  child.getUnique_id());
                         context.startActivity(intent);
 
-                    } else {
+                    } else if (!isEligibleForEnrollment(child)){
+                        Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
 
+                    }else {
                         Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
-
                     }
 
                     break;
@@ -259,6 +288,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         });
 
     }
+
+
 
     private String getAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
@@ -377,7 +408,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         return children.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView fullName, age, is_index;
         View colorView;
@@ -390,8 +421,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             super(itemView);
 
 
-            fullName  = itemView.findViewById(R.id.familyNameTextView);
-            age  =  itemView.findViewById(R.id.child_age);
+            fullName = itemView.findViewById(R.id.familyNameTextView);
+            age = itemView.findViewById(R.id.child_age);
             lview = itemView.findViewById(R.id.register_columns);
             colorView = itemView.findViewById(R.id.mycolor);
             muacButton = itemView.findViewById(R.id.muac);
@@ -405,5 +436,50 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         public void onClick(View v) {
 
         }
+
+
+
     }
+
+    public Boolean isEligibleForEnrollment(Child child ) {
+
+        try{
+
+            if ((child.getIs_hiv_positive().equals("yes")) || (child.getSubpop1() != null && child.getSubpop1().equals("true")) || (child.getSubpop2() != null && child.getSubpop2().equals("true")) ||
+                    (child.getSubpop3() != null && child.getSubpop3().equals("true")) || (child.getSubpop4() != null && child.getSubpop4().equals("true")) ||
+                    (child.getSubpop5() != null && child.getSubpop5().equals("true")) || (child.getSubpop6() != null && child.getSubpop6().equals("true"))) {
+
+                return true;
+            }
+
+            return false;
+
+        } catch (NullPointerException exception) {
+
+            Log.e("childrenexeption", exception.getMessage());
+            return false;
+
+        }
+
+
+        }
+
+
+    public void isGraduationButtonToBeDisplayed(ViewHolder holder,Boolean check){
+        if(check !=null && check) {
+        holder.gradBtn.setVisibility(View.VISIBLE);
+    } else {
+            holder.gradBtn.setVisibility(View.GONE);
+        }
+}
+
+public Boolean checkAgeEligibility(String age)
+{
+    if(Integer.parseInt(age) <= 2)
+    {
+        return false;
+    }
+
+    return true;
+}
 }

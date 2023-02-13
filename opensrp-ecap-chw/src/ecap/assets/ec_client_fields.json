@@ -1368,6 +1368,13 @@
           "json_mapping": {
             "field": "attributes.is_hiv_positive"
           }
+        },
+        {
+          "column_name": "is_biological",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_biological"
+          }
         }
       ]
     },
@@ -3276,7 +3283,7 @@
           "column_name": "services",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.services"
+            "field": "attributes.health_services"
           }
         },
         {
@@ -3284,6 +3291,48 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.other_service"
+          }
+        },
+        {
+          "column_name": "schooled_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.schooled_services"
+          }
+        },
+        {
+          "column_name": "other_schooled_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_schooled_services"
+          }
+        },
+        {
+          "column_name": "safe_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_services"
+          }
+        },
+        {
+          "column_name": "other_safe_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_safe_services"
+          }
+        },
+        {
+          "column_name": "stable_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_services"
+          }
+        },
+        {
+          "column_name": "other_stable_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_stable_services"
           }
         }
       ]
@@ -6642,6 +6691,77 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.services_caregiver"
+          }
+        },
+        {
+          "column_name": "health_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_services"
+          }
+        },
+        {
+          "column_name": "other_health_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_health_services"
+          }
+        },
+        {
+          "column_name": "schooled_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.schooled_services"
+          }
+        },
+        {
+          "column_name": "other_schooled_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_schooled_services"
+          }
+        },
+        {
+          "column_name": "safe_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.safe_services"
+          }
+        },
+        {
+          "column_name": "other_safe_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_safe_services"
+          }
+        },
+        {
+          "column_name": "stable_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stable_services"
+          }
+        },
+        {
+          "column_name": "other_stable_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_stable_services"
+          }
+        },
+
+        {
+          "column_name": "hh_level_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_level_services"
+          }
+        },
+        {
+          "column_name": "other_hh_level_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_hh_level_services"
           }
         },
         {

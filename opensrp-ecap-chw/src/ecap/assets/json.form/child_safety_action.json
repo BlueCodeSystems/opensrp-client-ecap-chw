@@ -144,7 +144,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "stateWhen",
-        "type": "edit_text",
+        "type": "date_picker",
+        "expanded": false,
         "hint": "State When",
         "relevance": {
           "rules-engine": {
@@ -160,8 +161,26 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "frequency",
-        "type": "edit_text",
-        "hint": "State Frequency",
+        "type": "native_radio",
+        "label": "State Frequency",
+        "options": [
+          {
+            "key": "daily",
+            "text": "Daily"
+          },
+          {
+            "key": "weekly",
+            "text": "Weekly"
+          },
+          {
+            "key": "monthly",
+            "text": "Monthly"
+          },
+          {
+            "key": "yearly",
+            "text": "Yearly"
+          }
+        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {

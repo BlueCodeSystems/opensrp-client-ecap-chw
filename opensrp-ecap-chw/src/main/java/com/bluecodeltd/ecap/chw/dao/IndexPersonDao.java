@@ -28,18 +28,20 @@ public class IndexPersonDao  extends AbstractDao {
 
         String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + vcaID + "'";
         updateDB(sql);
+
     }
 
     public static void deleteRecordfromSearch (String vcaID) {
 
         String sql = "UPDATE ec_client_index_search SET is_closed = '1' WHERE object_id = '" + vcaID + "'";
         updateDB(sql);
+
     }
 
 
     public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE household_id = '" + householdID + "'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE is_closed != 1 AND household_id = '" + householdID + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -71,7 +73,7 @@ public class IndexPersonDao  extends AbstractDao {
     }
     public static String countAllChildrenByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' ";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -129,6 +131,12 @@ public class IndexPersonDao  extends AbstractDao {
             record.setLevel_mmd(getCursorValue(c, "level_mmd"));
             record.setServices(getCursorValue(c, "services"));
             record.setOther_service(getCursorValue(c, "other_service"));
+            record.setSchooled_services(getCursorValue(c,"schooled_services"));
+            record.setOther_schooled_services(getCursorValue(c,"other_schooled_services"));
+            record.setStable_services(getCursorValue(c,"stable_services"));
+            record.setOther_stable_services(getCursorValue(c,"other_stable_services"));
+            record.setSafe_services(getCursorValue(c,"safe_services"));
+            record.setOther_safe_services(getCursorValue(c,"other_safe_services"));
 
             return record;
         };
@@ -360,7 +368,7 @@ public class IndexPersonDao  extends AbstractDao {
 
 
     public static Child getChildByBaseId(String UID){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' AND (adolescent_first_name IS NOT NULL OR adolescent_last_name IS NOT NULL OR adolescent_birthdate IS NOT NULL)";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
@@ -455,13 +463,14 @@ public class IndexPersonDao  extends AbstractDao {
             );
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
-        if (children == null) {
+        if (children == null || children.isEmpty()) {
             return null;
         }
+
         return children.get(0);
     }
     public static List<Child> getAllChildrenSubpops(){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE is_closed = 0";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
@@ -560,7 +569,7 @@ public class IndexPersonDao  extends AbstractDao {
         return children;
     }
     public static List<Child> getAllChildrenSubpopsByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = 0 ";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
