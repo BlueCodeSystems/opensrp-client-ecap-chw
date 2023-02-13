@@ -41,7 +41,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE is_closed != 1 AND household_id = '" + householdID + "'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE  household_id = '" + householdID + "' AND deleted IS NULL OR deleted != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -56,7 +56,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countAllChildren(){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE is_closed = 0";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE  deleted IS NULL OR deleted != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -73,7 +73,7 @@ public class IndexPersonDao  extends AbstractDao {
     }
     public static String countAllChildrenByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND deleted IS NULL OR deleted != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -285,7 +285,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' AND is_closed = '0'";
+        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' AND deleted  IS NULL OR deleted != '1'";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
@@ -362,6 +362,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
             record.setSubpop1(getCursorValue(c, "subpop1"));
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
+            record.setDeleted(getCursorValue(c, "deleted"));
             return record;
         };
     }

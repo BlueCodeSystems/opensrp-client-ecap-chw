@@ -82,6 +82,7 @@ public class Household {
     private String ward;
     private String province;
     private String facility;
+    private String status;
 
     public String getMarital_status() {
         return marital_status;
@@ -129,6 +130,22 @@ public class Household {
 
     public void setIs_caregiver_virally_suppressed(String is_caregiver_virally_suppressed) {
         this.is_caregiver_virally_suppressed = is_caregiver_virally_suppressed;
+    }
+
+    public String getInfo_editedby() {
+        return info_editedby;
+    }
+
+    public void setInfo_editedby(String info_editedby) {
+        this.info_editedby = info_editedby;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getApproved_by() {

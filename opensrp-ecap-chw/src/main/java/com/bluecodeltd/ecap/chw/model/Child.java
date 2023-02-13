@@ -419,6 +419,9 @@ public class Child implements Serializable {
     @Expose
     private String partner;
 
+    @SerializedName("deleted")
+    @Expose
+    private String deleted;
 
     @SerializedName("is_viral_load_test_results_on_file")
     @Expose
@@ -448,6 +451,14 @@ public class Child implements Serializable {
     @Expose
     private String positive_mother;
 
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
 
     @SerializedName("is_mother_currently_on_treatment")
     @Expose

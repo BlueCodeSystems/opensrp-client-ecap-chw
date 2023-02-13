@@ -128,7 +128,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "subpop3",
                 "subpop4",
                 "subpop5",
-                "subpop"
+                "subpop",
+                "deleted"
 
         });
 
@@ -142,7 +143,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
         map.put(Constants.EcapClientTable.EC_HOUSEHOLD, new String[]{
                 "index_check_box",
                 "caregiver_name",
-                "household_id"
+                "household_id",
+                "status"
         });
 
 
@@ -166,7 +168,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "subpop3",
                 "subpop4",
                 "subpop5",
-                "subpop"
+                "subpop",
+                "deleted"
         });
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
@@ -180,7 +183,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.LAST_INTERACTED_WITH,
                 "index_check_box",
                 "caregiver_name",
-                "hid"
+                "hid",
+                "status"
         });
         return map;
     }
