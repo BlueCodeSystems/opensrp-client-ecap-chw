@@ -43,8 +43,10 @@ import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
@@ -542,9 +544,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
-
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
@@ -843,8 +842,6 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                 }
-
-
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -891,6 +888,19 @@ public class HouseholdDetails extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
+
+                case "Mother Edit":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_index");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
 
                 case "MUAC Score":
 
@@ -1404,6 +1414,13 @@ public class HouseholdDetails extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+
+                break;
+
             case R.id.call:
                 String caregiverPhoneNumber = house.getCaregiver_phone();
                 if (!caregiverPhoneNumber.equals("")) {
@@ -1441,6 +1458,7 @@ public class HouseholdDetails extends AppCompatActivity {
                            }
                        }
                      deleteFamilyChildren(householdId);
+                       deleteMothers(householdId);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -1487,6 +1505,43 @@ public class HouseholdDetails extends AppCompatActivity {
         }
 
     }
+
+
+    public void deleteMothers(String HouseholdID) throws Exception {
+        //get all Mothers
+        List<Mother> allMothers = MotherDao.getMothers(householdId);
+        FormUtils formUtils = null;
+        formUtils = new FormUtils(this);
+        if(allMothers != null && allMothers.size() > 0)
+        {
+            for( int i = 0; i < allMothers.size(); i++)
+            {
+                Mother mother = allMothers.get(i);
+                mother.setDeleted("1");
+                JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
+                CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(mother, Map.class));
+                motherForm.put("entity_id", mother.getBaseEntityID());
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(motherForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true,"Mother Edit");
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+            }
+        }
+
+
+    }
+
+
     public void deleteFamilyChildren(String HouseholdID) throws Exception {
         //get all family children
         List<Child> allChildren = IndexPersonDao.getFamilyChildren(householdId);

@@ -1210,6 +1210,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
             switch (item.getItemId()) {
+                case R.id.refresh:
+                    finish();
+                    startActivity(getIntent());
+
+                    break;
+
                 case R.id.call:
                     String caregiverPhoneNumber = child.getCaregiver_phone();
                     if (!caregiverPhoneNumber.equals("")) {

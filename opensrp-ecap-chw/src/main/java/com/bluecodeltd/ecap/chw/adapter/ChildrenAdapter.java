@@ -269,7 +269,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     String subpop3 = child.getSubpop3();
                     assert subpop3 != null;
 
-                    if((Integer.parseInt(memberAge) < 18) || isEligibleForEnrollment(child)){
+                    if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
@@ -443,7 +443,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     public Boolean isEligibleForEnrollment(Child child ) {
 
-        try{
+        return true;
+
+  /*      try{
 
             if ((child.getIs_hiv_positive().equals("yes")) || (child.getSubpop1() != null && child.getSubpop1().equals("true")) || (child.getSubpop2() != null && child.getSubpop2().equals("true")) ||
                     (child.getSubpop3() != null && child.getSubpop3().equals("true")) || (child.getSubpop4() != null && child.getSubpop4().equals("true")) ||
@@ -460,7 +462,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             return false;
 
         }
-
+*/
 
         }
 
