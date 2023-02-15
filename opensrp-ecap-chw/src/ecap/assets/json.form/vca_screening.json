@@ -1439,14 +1439,7 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
+        ]
       },
       {
         "key": "agyw_marry_early",

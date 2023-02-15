@@ -369,6 +369,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Mother Edit",
+            "creates_case": [
+              "ec_mother_index"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "VCA Case Plan",
             "creates_case": [
               "ec_vca_case_plan"

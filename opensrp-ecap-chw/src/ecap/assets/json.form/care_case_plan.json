@@ -77,16 +77,6 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "hint": "Caregiver ID",
-        "edit_type": "name",
-        "read_only": "true"
-      },
-      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

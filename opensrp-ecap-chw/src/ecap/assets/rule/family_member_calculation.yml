@@ -44,16 +44,9 @@ actions:
 name: step3_subpop4
 description: subpop4
 priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
+condition: "step1_agyw_sexually_active.contains('yes') || step1_agyw_food_or_economically_insecure.contains('yes')"
 actions:
   - "calculation = true"
----
-name: step3_subpop4
-description: subpop4
-priority: 2
-condition: "!step1_agyw_sexually_active.contains('yes')"
-actions:
-  - "calculation = false"
 ---
 name: step3_subpop5
 description: subpop5

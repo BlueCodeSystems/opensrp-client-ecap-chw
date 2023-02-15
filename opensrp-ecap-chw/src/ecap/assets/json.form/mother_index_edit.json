@@ -1,6 +1,6 @@
 {
   "count": "2",
-  "encounter_type": "Mother Register",
+  "encounter_type": "Mother Edit",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -73,10 +73,10 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "is_closed",
+        "key": "deleted",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "is_closed",
+        "openmrs_entity_id": "deleted",
         "type": "hidden"
       },
       {

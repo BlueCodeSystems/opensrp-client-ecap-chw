@@ -349,6 +349,31 @@
         }
       },
       {
+        "key": "agyw_food_or_economically_insecure",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "agyw_food_or_economically_insecure",
+        "type": "native_radio",
+        "label": "Is the AGYW food or economically insecure?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "fsw",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -843,9 +868,10 @@
         "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
         "relevance": {
-          "step1:agyw_sexually_active": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
           }
         }
       },
