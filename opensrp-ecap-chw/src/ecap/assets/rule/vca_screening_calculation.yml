@@ -99,7 +99,6 @@ priority: 2
 condition: "( step4_date_last_vl != null ) && (step4_vl_last_result > -1 && step4_vl_last_result < 1000 )"
 actions:
   - "calculation = helper.addDuration(step4_date_last_vl,'365d')"
-
 ---
 name: step1_fsw_child_tested
 description: fsw_child_tested

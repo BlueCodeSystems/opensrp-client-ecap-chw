@@ -2448,7 +2448,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
-        "edit_type": "number",
         "hint": "Last VL results",
         "relevance": {
           "step4:vl_check_box": {
