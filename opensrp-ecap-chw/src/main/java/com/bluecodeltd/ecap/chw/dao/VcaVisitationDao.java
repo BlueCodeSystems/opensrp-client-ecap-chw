@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -12,7 +11,7 @@ public class VcaVisitationDao extends AbstractDao {
 
     public static int countVisits(String householdID){
 
-        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + householdID + "'";
+        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + householdID + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "visitCount");
 
@@ -56,7 +55,7 @@ public class VcaVisitationDao extends AbstractDao {
 
     public static List<VcaVisitationModel> getVisitsByID(String childID) {
 
-        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + childID + "' ORDER BY visit_date DESC ";
+        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + childID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY visit_date DESC ";
 
         List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
         if (values == null || values.size() == 0)
