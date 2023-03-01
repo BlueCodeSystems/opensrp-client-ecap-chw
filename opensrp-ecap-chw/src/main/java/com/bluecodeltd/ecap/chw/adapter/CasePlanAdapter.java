@@ -1,5 +1,12 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
+import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
+import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
@@ -8,29 +15,48 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.util.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.clientandeventmodel.Client;
+import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.db.EventClient;
+import org.smartregister.domain.tag.FormTag;
+import org.smartregister.family.util.AppExecutors;
+import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.FormUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import timber.log.Timber;
 
 public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHolder>{
 
     Context context;
     List<CasePlanModel> caseplans;
     String hivStatus;
+    AlertDialog.Builder builder;
+
 
     public CasePlanAdapter(List<CasePlanModel> caseplans, Context context, String hivStatus){
 
@@ -107,9 +133,150 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             }
         });
 
+        holder.delete.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("You are about to delete this VCA case plan");
+            builder.setNegativeButton("NO", (dialog, id) -> {
+                //  Action for 'NO' Button
+                dialog.cancel();
+
+            }).setPositiveButton("YES",((dialogInterface, i) -> {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                casePlan.setDelete_status("1");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("case_plan");
+                try {
+                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( casePlan, Map.class));
+                    vcaScreeningForm.put("entity_id", casePlan.getBase_entity_id());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true);
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                if (context instanceof Activity) {
+                    ((Activity) context).finish();
+                }
+
+            }));
+
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("Alert");
+            alert.show();
+        });
+
 
     }
+    public ChildIndexEventClient processRegistration(String jsonString){
 
+        try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
+
+            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+
+            String entityId = formJsonObject.optString("entity_id");
+
+            if(entityId.isEmpty()){
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
+
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+
+
+            JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+
+            switch (encounterType) {
+
+                case "VCA Case Plan":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+
+        return null;
+    }
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+
+        Runnable runnable = () -> {
+
+            Event event = childIndexEventClient.getEvent();
+            Client client = childIndexEventClient.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+
+                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+
+                    if (isEditMode) {
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+
+        };
+
+        try {
+            AppExecutors appExecutors = new AppExecutors();
+            appExecutors.diskIO().execute(runnable);
+            return true;
+        } catch (Exception exception) {
+            Timber.e(exception);
+            return false;
+        }
+    }
+    private ECSyncHelper getECSyncHelper() {
+        return ChwApplication.getInstance().getEcSyncHelper();
+    }
     @Override
     public int getItemCount() {
 
@@ -119,6 +286,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtCaseDate, txtQuarter, txtCasePlanStatus, txtVulnerabilities;
+        ImageView delete;
 
         LinearLayout linearLayout;
 
@@ -132,6 +300,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             txtQuarter = itemView.findViewById(R.id.quarter);
             txtCasePlanStatus = itemView.findViewById(R.id.case_plan_status);
             txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
+            delete = itemView.findViewById(R.id.delete_record);
 
         }
 

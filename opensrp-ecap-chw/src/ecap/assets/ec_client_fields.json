@@ -3191,6 +3191,13 @@
           "json_mapping": {
             "field": "attributes.case_plan_status"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -5360,6 +5367,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_signature"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
