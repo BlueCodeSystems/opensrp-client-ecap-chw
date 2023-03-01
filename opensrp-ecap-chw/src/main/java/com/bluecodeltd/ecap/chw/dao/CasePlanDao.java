@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import android.util.Log;
-
 import org.smartregister.dao.AbstractDao;
 
 import java.util.List;
@@ -10,7 +8,7 @@ public class CasePlanDao extends AbstractDao {
 
     public static int checkCasePlan (String childID) {
 
-        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC";
+        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
