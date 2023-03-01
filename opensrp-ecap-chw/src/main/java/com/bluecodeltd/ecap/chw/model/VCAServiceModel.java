@@ -3,7 +3,15 @@ package com.bluecodeltd.ecap.chw.model;
 public class VCAServiceModel {
 
     private String base_entity_id, unique_id, date, art_clinic, date_last_vl, vl_last_result, date_next_vl,
-            child_mmd, level_mmd, services, other_service,schooled_services,other_schooled_services,safe_services,other_safe_services,stable_services,other_stable_services;
+            child_mmd, level_mmd, services, other_service,schooled_services,other_schooled_services,safe_services,other_safe_services,stable_services,other_stable_services,delete_status;
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
 
     public String getSchooled_services() {
         return schooled_services;
