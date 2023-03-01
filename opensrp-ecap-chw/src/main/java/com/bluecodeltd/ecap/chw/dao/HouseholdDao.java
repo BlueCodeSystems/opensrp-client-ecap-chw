@@ -154,7 +154,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static List<FamilyServiceModel> getServicesByHousehold(String householdId) {
 
-        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "'";
+        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<FamilyServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)

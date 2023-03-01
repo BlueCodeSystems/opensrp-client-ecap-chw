@@ -1,7 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -13,7 +12,7 @@ public class CaregiverVisitationDao extends AbstractDao {
 
     public static List<CaregiverVisitationModel> getVisitsByID(String householdID) {
 
-        String sql = "SELECT * FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "' ";
+        String sql = "SELECT * FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'  AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
         if (values == null || values.size() == 0)
@@ -25,7 +24,7 @@ public class CaregiverVisitationDao extends AbstractDao {
 
     public static int countVisits(String householdID){
 
-        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'";
+        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'  AND (delete_status IS NULL OR delete_status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "visitCount");
 
