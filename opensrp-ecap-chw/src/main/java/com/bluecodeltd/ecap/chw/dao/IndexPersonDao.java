@@ -106,7 +106,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<VCAServiceModel> getServicesByVCAID(String vcaid) {
 
-        String sql = "SELECT * FROM ec_vca_service_report WHERE unique_id = '" + vcaid + "'";
+        String sql = "SELECT * FROM ec_vca_service_report WHERE unique_id = '" + vcaid + "'  AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)
