@@ -3362,6 +3362,13 @@
           "json_mapping": {
             "field": "attributes.other_stable_services"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -4370,6 +4377,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.specify_stability"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
