@@ -47,6 +47,15 @@ public class CaregiverVisitationModel {
     private String school_administration_name;
     private String telephone;
     private String school_administration_date_signed;
+    private String delete_status;
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;

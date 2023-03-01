@@ -4712,6 +4712,13 @@
           "json_mapping": {
             "field": "attributes.school_administration_date_signed"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -6846,6 +6853,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.other_services_household"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
