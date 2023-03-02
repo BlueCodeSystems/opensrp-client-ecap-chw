@@ -147,7 +147,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         holder.delete.setOnClickListener(v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("You are about to delete this household visit ");
+                builder.setMessage("You are about to delete this household service ");
                 builder.setNegativeButton("NO", (dialog, id) -> {
                     //  Action for 'NO' Button
                     dialog.cancel();
