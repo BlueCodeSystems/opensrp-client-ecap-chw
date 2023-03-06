@@ -2802,6 +2802,13 @@
           "json_mapping": {
             "field": "attributes.comment"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -3157,6 +3164,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.comment"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]

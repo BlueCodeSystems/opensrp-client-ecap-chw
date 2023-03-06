@@ -134,6 +134,11 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
 
             }
         });
+        if(vulnerabilities.equals("0")){
+            holder.delete.setVisibility(View.VISIBLE);
+        } else {
+            holder.delete.setVisibility(View.INVISIBLE);
+        }
         holder.delete.setOnClickListener(v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
