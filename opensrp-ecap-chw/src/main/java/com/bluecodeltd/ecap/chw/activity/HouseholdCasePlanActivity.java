@@ -97,7 +97,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new DomainPlanAdapter(domainList, HouseholdCasePlanActivity.this);
+        recyclerViewadapter = new DomainPlanAdapter(domainList, HouseholdCasePlanActivity.this,"caregiver_domain" );
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 

@@ -5,42 +5,34 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
 import com.bluecodeltd.ecap.chw.adapter.DomainPlanAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -54,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -93,7 +84,7 @@ public class CasePlan extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this);
+        recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
