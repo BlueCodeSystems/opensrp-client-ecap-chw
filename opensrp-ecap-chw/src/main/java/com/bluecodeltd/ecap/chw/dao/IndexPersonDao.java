@@ -297,7 +297,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<CasePlanModel> getDomainsById(String childID, String caseDate) {
 
-        String sql = "SELECT * FROM ec_vca_case_plan_domain WHERE unique_id = '" + childID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC";
+        String sql = "SELECT * FROM ec_vca_case_plan_domain WHERE unique_id = '" + childID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
