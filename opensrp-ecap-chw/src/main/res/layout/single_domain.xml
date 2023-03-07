@@ -94,7 +94,7 @@
         android:id="@+id/edit_me"
         android:tint="#696969"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="75dp"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_edit"
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="110dp"
         android:src="@drawable/baseline_expand_more_24"
         android:visibility="visible" />
 
@@ -118,9 +118,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="110dp"
         android:src="@drawable/baseline_expand_less_24" />
-
+    <ImageView
+        android:id="@+id/delete_record"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:tint="#696969"
+        android:layout_centerInParent="true"
+        android:src="@drawable/delete_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <View
         android:layout_below="@+id/itemm"
         android:background="@android:color/darker_gray"
@@ -273,5 +282,7 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
+
 </RelativeLayout>
