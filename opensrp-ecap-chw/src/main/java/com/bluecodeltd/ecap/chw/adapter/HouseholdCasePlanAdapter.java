@@ -71,7 +71,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
     public HouseholdCasePlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_plan, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.household_single_caseplan, parent, false);
 
         HouseholdCasePlanAdapter.ViewHolder viewHolder = new HouseholdCasePlanAdapter.ViewHolder(v);
 
@@ -84,9 +84,10 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
         final CasePlanModel casePlan = caseplans.get(position);
 
         holder.setIsRecyclable(false);
-        String vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(casePlan.getUnique_id(),casePlan.getCase_plan_date());
+        String vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(house.getUnique_id(),casePlan.getCase_plan_date());
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
+
          if (vulnerabilities != null)
          {
              holder.txtVulnerabilities.setText(vulnerabilities + " Vulnerabilities");
