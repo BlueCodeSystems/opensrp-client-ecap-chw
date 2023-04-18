@@ -837,7 +837,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Caregiver Case Plan":
-                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).optString("value");
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
 
