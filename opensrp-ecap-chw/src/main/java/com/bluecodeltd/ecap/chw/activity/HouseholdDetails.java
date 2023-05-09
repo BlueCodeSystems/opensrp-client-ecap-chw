@@ -7,8 +7,11 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +61,7 @@ import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
@@ -457,9 +462,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.fabx:
-
-                animateFAB();
-
+                getGraduationBenchmarkStatus(house.getHousehold_id());
                 break;
 
             case R.id.screenBtn:
@@ -1573,6 +1576,51 @@ public class HouseholdDetails extends AppCompatActivity {
             }
         }
 
+
+    }
+    public void getGraduationBenchmarkStatus(String householdId){
+        GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
+        final String YES = "yes";
+        final String NO = "no";
+
+        boolean isEnrolledInHivProgram = YES.equals(model.getHiv_status_enrolled());
+        boolean isCaregiverEnrolledInHivProgram = YES.equals(model.getCaregiver_hiv_status_enrolled());
+        boolean isVirallySuppressed = YES.equals(model.getVirally_suppressed());
+        boolean isPreventionApplied = YES.equals(model.getPrevention());
+        boolean isUndernourished = YES.equals(model.getUndernourished());
+        boolean hasSchoolFees = YES.equals(model.getSchool_fees());
+        boolean hasMedicalCosts = YES.equals(model.getMedical_costs());
+        boolean isRecordAbuseAbsent = NO.equals(model.getRecord_abuse());
+        boolean isCaregiverBeatenAbsent = NO.equals(model.getCaregiver_beaten());
+        boolean isChildBeatenAbsent = NO.equals(model.getChild_beaten());
+        boolean isAgainstWillAbsent = NO.equals(model.getAgainst_will());
+        boolean isStableGuardian = YES.equals(model.getStable_guardian());
+        boolean hasChildrenInSchool = YES.equals(model.getChildren_in_school());
+        boolean isInSchool = YES.equals(model.getIn_school());
+        boolean hasYearInSchool = YES.equals(model.getYear_school());
+        boolean hasRepeatedSchool = YES.equals(model.getRepeat_school());
+
+        if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
+                && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
+                && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
+                && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            showDialogBox();
+
+        } else {
+            animateFAB();
+        }
+    }
+    public void showDialogBox(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+
+        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
 
