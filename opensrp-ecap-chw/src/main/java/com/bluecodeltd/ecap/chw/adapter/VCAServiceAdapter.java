@@ -7,11 +7,13 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,26 +105,41 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 //            }
 
 
+        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
+
         holder.linearLayout.setOnClickListener(v -> {
+            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_layout);
+                dialog.show();
 
-            if (v.getId() == R.id.itemm) {
+                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                dialogButton.setOnClickListener(va -> dialog.dismiss());
+
+            } else {
+                if (v.getId() == R.id.itemm) {
+
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(context);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+                        openFormUsingFormUtils(context, "service_report_vca", service);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-
-
-                try {
-                    openFormUsingFormUtils(context, "service_report_vca", service);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
             }
+
         });
 
         holder.delete.setOnClickListener(v -> {

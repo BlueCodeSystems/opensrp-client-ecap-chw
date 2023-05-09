@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.dao;
 
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
@@ -306,7 +307,46 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
 
     }
+    public static CaseStatusModel getCaseStatus(String childID) {
+//        String sql = "SELECT ec_client_index.unique_id, ec_client_index.case_status " +
+//                "FROM ec_client_index " +
+//                "JOIN ec_vca_case_plan_domain ON ec_vca_case_plan_domain.unique_id = ec_client_index.unique_id " +
+//                "WHERE ec_client_index.unique_id ='" + childID + "' " +
+//                "GROUP BY ec_client_index.unique_id, ec_client_index.case_status";
+        String sql = "SELECT first_name,last_name,unique_id, case_status FROM ec_client_index  WHERE unique_id = '" + childID + "'";
 
+        DataMap<CaseStatusModel> dataMap = c -> {
+            CaseStatusModel model = new CaseStatusModel();
+            model.setFirst_name(getCursorValue(c, "first_name"));
+            model.setLast_name(getCursorValue(c, "last_name"));
+            model.setUnique_id(getCursorValue(c, "unique_id"));
+            model.setCase_status(getCursorValue(c, "case_status"));
+            return model;
+        };
+
+        List<CaseStatusModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
+
+    public static List<Child> getDomainActiveStatus(String childID) {
+
+        String sql = "SELECT ec_client_index.unique_id, ec_client_index.case_status \n" +
+                "FROM ec_client_index \n" +
+                "JOIN ec_vca_case_plan_domain ON ec_vca_case_plan_domain.unique_id = ec_client_index.unique_id WHERE ec_client_index.unique_id ='" + childID + "'\n" +
+                "GROUP BY ec_client_index.unique_id, ec_client_index.case_status";
+
+        List<Child> values = AbstractDao.readData(sql, getChildDataMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static List<CasePlanModel> getCasePlansById(String childID) {
 
