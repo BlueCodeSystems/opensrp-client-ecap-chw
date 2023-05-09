@@ -7,11 +7,13 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,19 +100,33 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
             }
         });
+        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(showReferrals.getUnique_id());
+
         holder.editme.setOnClickListener(v -> {
+            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_layout);
+                dialog.show();
 
-            if (v.getId() == R.id.edit_me) {
+                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                try {
+                Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                dialogButton.setOnClickListener(va -> dialog.dismiss());
 
-                    openFormUsingFormUtils(context, "referral", showReferrals);
+            } else {
+                if (v.getId() == R.id.edit_me) {
+
+                    try {
+
+                        openFormUsingFormUtils(context, "referral", showReferrals);
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-
             }
         });
         holder.delete.setOnClickListener(v -> {
