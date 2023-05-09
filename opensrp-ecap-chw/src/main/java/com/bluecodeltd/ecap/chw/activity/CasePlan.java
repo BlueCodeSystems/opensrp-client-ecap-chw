@@ -6,9 +6,11 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -103,30 +106,43 @@ public class CasePlan extends AppCompatActivity {
         switch (id) {
             case R.id.domainBtn:
             case R.id.domainBtn2:
+                CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(childId);
+                if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                    Dialog dialog = new Dialog(this);
+                    dialog.setContentView(R.layout.dialog_layout);
+                    dialog.show();
 
-                try {
-                    FormUtils formUtils = new FormUtils(CasePlan.this);
-                    JSONObject indexRegisterForm;
+                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                    dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                    indexRegisterForm = formUtils.getFormJson("domain");
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
+                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                    dialogButton.setOnClickListener(va -> dialog.dismiss());
 
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",childId);
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(CasePlan.this);
+                        JSONObject indexRegisterForm;
 
-                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                    cDate.put("value", caseDate);
+                        indexRegisterForm = formUtils.getFormJson("domain");
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
 
-                    if(hivStatus == null || !hivStatus.equals("yes")){
-                        JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
-                        domainType.remove(0);
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                        cId.put("value",childId);
+
+                        JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                        cDate.put("value", caseDate);
+
+                        if(hivStatus == null || !hivStatus.equals("yes")){
+                            JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
+                            domainType.remove(0);
+                        }
+
+                        startFormActivity(indexRegisterForm);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
                 break;

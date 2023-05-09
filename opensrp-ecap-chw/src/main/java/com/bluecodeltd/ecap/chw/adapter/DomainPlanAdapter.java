@@ -7,11 +7,13 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -131,26 +133,84 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         });
 
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(casePlan.getUnique_id());
-        caseStatusModel.getCase_status();
+
+    holder.editme.setOnClickListener(v -> {
+                if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                    Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.dialog_layout);
+                    dialog.show();
+
+                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                    dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+
+                    Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                    dialogButton.setOnClickListener(va -> dialog.dismiss());
+
+                } else {
+                    if (v.getId() == R.id.edit_me) {
+
+                        try {
+                            if (context instanceof CasePlan) {
+                                openFormUsingFormUtils(context, "domain", casePlan);
+                            } else {
+                                openFormUsingFormUtils(context, "caregiver_domain", casePlan);
+                            }
 
 
-        holder.editme.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.edit_me) {
-
-                try {
-                    if(context instanceof CasePlan){
-                        openFormUsingFormUtils(context, "domain", casePlan);
-                    } else {
-                        openFormUsingFormUtils(context, "caregiver_domain", casePlan);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+
+    });
+    holder.delete.setOnClickListener(v -> {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("You are about to delete this vulnerability");
+        builder.setNegativeButton("NO", (dialog, id) -> {
+            //  Action for 'NO' Button
+            dialog.cancel();
+
+        }).setPositiveButton("YES",((dialogInterface, i) -> {
+            FormUtils formUtils = null;
+            try {
+                formUtils = new FormUtils(context);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+            casePlan.setDelete_status("1");
+            JSONObject vcaScreeningForm = formUtils.getFormJson(deleteFormName);
+            try {
+                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( casePlan, Map.class));
+                vcaScreeningForm.put("entity_id", casePlan.getBase_entity_id());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+
+                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                if (childIndexEventClient == null) {
+                    return;
+                }
+                saveRegistration(childIndexEventClient,true);
+
+
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            if (context instanceof Activity) {
+                ((Activity) context).finish();
+            }
+
+        }));
+
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("Alert");
+        alert.show();
+    });
 
         holder.expLess.setOnClickListener(v -> {
 
@@ -161,56 +221,9 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                 holder.expLess.setVisibility(View.GONE);
             }
         });
-        holder.delete.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete this vulnerability");
-            builder.setNegativeButton("NO", (dialog, id) -> {
-                //  Action for 'NO' Button
-                dialog.cancel();
 
-            }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                casePlan.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson(deleteFormName);
-                try {
-                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( casePlan, Map.class));
-                    vcaScreeningForm.put("entity_id", casePlan.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-
-                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
-                    }
-                    saveRegistration(childIndexEventClient,true);
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
-
-            }));
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Alert");
-            alert.show();
-        });
 
     }
-
     public void openFormUsingFormUtils(Context context, String formName, CasePlanModel caseplan) throws JSONException {
 
         oMapper = new ObjectMapper();
