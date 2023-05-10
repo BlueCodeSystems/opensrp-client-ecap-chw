@@ -64,7 +64,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         //String is_closed = HouseholdDao.getHouseholdByBaseId(baseId).getStatus();
 
 
-        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", baseId, householdId, genderList, is_screened, ageList, context);
+        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.findViewById(R.id.register_columns).setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);

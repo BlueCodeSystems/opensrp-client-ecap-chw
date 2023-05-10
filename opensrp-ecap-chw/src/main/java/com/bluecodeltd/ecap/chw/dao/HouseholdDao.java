@@ -383,6 +383,45 @@ public class HouseholdDao extends AbstractDao {
 
         return models.get(0);
     }
+    public static GraduationBenchmarkModel getAllHouseholdsGraduationStatus() {
+
+        String sql = "SELECT *  FROM ec_graduation";
+
+        DataMap<GraduationBenchmarkModel> dataMap = c -> {
+            GraduationBenchmarkModel model = new GraduationBenchmarkModel();
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+            model.setDate_assessment(getCursorValue(c, "date_assessment"));
+            model.setHiv_status_enrolled(getCursorValue(c, "hiv_status_enrolled"));
+            model.setCaregiver_hiv_status_enrolled(getCursorValue(c, "caregiver_hiv_status_enrolled"));
+            model.setPrevious_asmt_date(getCursorValue(c, "previous_asmt_date"));
+            model.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
+            model.setPrevention(getCursorValue(c, "prevention"));
+            model.setUndernourished(getCursorValue(c, "undernourished"));
+            model.setSchool_fees(getCursorValue(c, "school_fees"));
+            model.setMedical_costs(getCursorValue(c, "medical_costs"));
+            model.setRecord_abuse(getCursorValue(c, "record_abuse"));
+            model.setCaregiver_beaten(getCursorValue(c, "caregiver_beaten"));
+            model.setChild_beaten(getCursorValue(c, "child_beaten"));
+            model.setAware_sexual(getCursorValue(c, "aware_sexual"));
+            model.setAgainst_will(getCursorValue(c, "against_will"));
+            model.setStable_guardian(getCursorValue(c, "stable_guardian"));
+            model.setChildren_in_school(getCursorValue(c, "children_in_school"));
+            model.setIn_school(getCursorValue(c, "in_school"));
+            model.setYear_school(getCursorValue(c, "year_school"));
+            model.setRepeat_school(getCursorValue(c, "repeat_school"));
+            model.setAdditional_information(getCursorValue(c, "additional_information"));
+
+            return model;
+        };
+
+        List<GraduationBenchmarkModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
 
     public static String getCurrentDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
