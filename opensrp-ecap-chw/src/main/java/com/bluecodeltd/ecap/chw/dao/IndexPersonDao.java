@@ -313,7 +313,7 @@ public class IndexPersonDao  extends AbstractDao {
 //                "JOIN ec_vca_case_plan_domain ON ec_vca_case_plan_domain.unique_id = ec_client_index.unique_id " +
 //                "WHERE ec_client_index.unique_id ='" + childID + "' " +
 //                "GROUP BY ec_client_index.unique_id, ec_client_index.case_status";
-        String sql = "SELECT first_name,last_name,unique_id, case_status FROM ec_client_index  WHERE unique_id = '" + childID + "'";
+        String sql = "SELECT household_id,first_name,last_name,unique_id, case_status FROM ec_client_index  WHERE unique_id = '" + childID + "'";
 
         DataMap<CaseStatusModel> dataMap = c -> {
             CaseStatusModel model = new CaseStatusModel();
@@ -321,6 +321,8 @@ public class IndexPersonDao  extends AbstractDao {
             model.setLast_name(getCursorValue(c, "last_name"));
             model.setUnique_id(getCursorValue(c, "unique_id"));
             model.setCase_status(getCursorValue(c, "case_status"));
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+
             return model;
         };
 
