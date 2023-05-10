@@ -7,6 +7,7 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,8 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
+import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -96,19 +100,53 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
             }
         });
+
+
         holder.editme.setOnClickListener(v -> {
+            GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(visit.getHousehold_id());
 
-            if (v.getId() == R.id.edit_me) {
+            if (model != null) {
+                final String YES = "yes";
+                final String NO = "no";
 
-                try {
+                boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
+                boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
+                boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
+                boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
+                boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
+                boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
+                boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
+                boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
+                boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
+                boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
+                boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
+                boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
+                boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
+                boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
+                boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
+                boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
 
-                    openFormUsingFormUtils(context, "household_visitation_for_caregiver", visit);
+                if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
+                        && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
+                        && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
+                        && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    showDialogBox(visit.getHousehold_id());
                 }
+            } else{
+                if (v.getId() == R.id.edit_me) {
 
+                    try {
+
+                        openFormUsingFormUtils(context, "household_visitation_for_caregiver", visit);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
+
         });
         holder.delete.setOnClickListener(v -> {
             try {
@@ -162,6 +200,19 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                 Timber.e(e);
             }
         });
+
+    }
+    public void showDialogBox(String householdId){
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        Household house = HouseholdDao.getHousehold(householdId);
+        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+
+        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
 

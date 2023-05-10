@@ -7,8 +7,11 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +61,7 @@ import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
@@ -179,6 +184,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         fab = findViewById(R.id.fabx);
+        changeFabIconColor(house.getHousehold_id());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -457,9 +463,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.fabx:
-
-                animateFAB();
-
+                getGraduationBenchmarkStatus(house.getHousehold_id());
                 break;
 
             case R.id.screenBtn:
@@ -1573,6 +1577,87 @@ public class HouseholdDetails extends AppCompatActivity {
             }
         }
 
+
+    }
+    public void getGraduationBenchmarkStatus(String householdId){
+        GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
+        if (model != null) {
+            final String YES = "yes";
+            final String NO = "no";
+
+            boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
+            boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
+            boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
+            boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
+            boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
+            boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
+            boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
+            boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
+            boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
+            boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
+            boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
+            boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
+            boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
+            boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
+            boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
+            boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
+
+            if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
+                    && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
+                    && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
+                    && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
+                HouseholdDao.updateGraduatedVCAs(house.getHousehold_id());
+                fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                showDialogBox();
+            }
+        } else {
+            animateFAB();
+        }
+    }
+    public void changeFabIconColor(String householdId){
+        GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
+        if (model != null) {
+            final String YES = "yes";
+            final String NO = "no";
+
+            boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
+            boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
+            boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
+            boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
+            boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
+            boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
+            boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
+            boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
+            boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
+            boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
+            boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
+            boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
+            boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
+            boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
+            boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
+            boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
+
+            if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
+                    && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
+                    && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
+                    && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
+                HouseholdDao.updateGraduatedVCAs(house.getHousehold_id());
+                fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                showDialogBox();
+            }
+        }
+
+    }
+    public void showDialogBox(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+
+        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
 

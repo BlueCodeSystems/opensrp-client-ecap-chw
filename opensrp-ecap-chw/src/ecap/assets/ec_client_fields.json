@@ -2870,6 +2870,20 @@
           }
         },
         {
+          "column_name": "hiv_status_enrolled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status_enrolled"
+          }
+        },
+        {
+          "column_name": "caregiver_hiv_status_enrolled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_hiv_status_enrolled"
+          }
+        },
+        {
           "column_name": "virally_suppressed",
           "type": "Client",
           "json_mapping": {

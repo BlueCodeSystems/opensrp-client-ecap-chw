@@ -3,11 +3,14 @@ package com.bluecodeltd.ecap.chw.dao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
+import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
@@ -340,5 +343,108 @@ public class HouseholdDao extends AbstractDao {
         return values;
 
     }
+
+    public static GraduationBenchmarkModel getGraduationStatus(String householdID) {
+
+        String sql = "SELECT *  FROM ec_graduation WHERE household_id = '" + householdID + "'";
+
+        DataMap<GraduationBenchmarkModel> dataMap = c -> {
+            GraduationBenchmarkModel model = new GraduationBenchmarkModel();
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+            model.setDate_assessment(getCursorValue(c, "date_assessment"));
+            model.setHiv_status_enrolled(getCursorValue(c, "hiv_status_enrolled"));
+            model.setCaregiver_hiv_status_enrolled(getCursorValue(c, "caregiver_hiv_status_enrolled"));
+            model.setPrevious_asmt_date(getCursorValue(c, "previous_asmt_date"));
+            model.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
+            model.setPrevention(getCursorValue(c, "prevention"));
+            model.setUndernourished(getCursorValue(c, "undernourished"));
+            model.setSchool_fees(getCursorValue(c, "school_fees"));
+            model.setMedical_costs(getCursorValue(c, "medical_costs"));
+            model.setRecord_abuse(getCursorValue(c, "record_abuse"));
+            model.setCaregiver_beaten(getCursorValue(c, "caregiver_beaten"));
+            model.setChild_beaten(getCursorValue(c, "child_beaten"));
+            model.setAware_sexual(getCursorValue(c, "aware_sexual"));
+            model.setAgainst_will(getCursorValue(c, "against_will"));
+            model.setStable_guardian(getCursorValue(c, "stable_guardian"));
+            model.setChildren_in_school(getCursorValue(c, "children_in_school"));
+            model.setIn_school(getCursorValue(c, "in_school"));
+            model.setYear_school(getCursorValue(c, "year_school"));
+            model.setRepeat_school(getCursorValue(c, "repeat_school"));
+            model.setAdditional_information(getCursorValue(c, "additional_information"));
+
+            return model;
+        };
+
+        List<GraduationBenchmarkModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
+    public static GraduationBenchmarkModel getAllHouseholdsGraduationStatus() {
+
+        String sql = "SELECT *  FROM ec_graduation";
+
+        DataMap<GraduationBenchmarkModel> dataMap = c -> {
+            GraduationBenchmarkModel model = new GraduationBenchmarkModel();
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+            model.setDate_assessment(getCursorValue(c, "date_assessment"));
+            model.setHiv_status_enrolled(getCursorValue(c, "hiv_status_enrolled"));
+            model.setCaregiver_hiv_status_enrolled(getCursorValue(c, "caregiver_hiv_status_enrolled"));
+            model.setPrevious_asmt_date(getCursorValue(c, "previous_asmt_date"));
+            model.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
+            model.setPrevention(getCursorValue(c, "prevention"));
+            model.setUndernourished(getCursorValue(c, "undernourished"));
+            model.setSchool_fees(getCursorValue(c, "school_fees"));
+            model.setMedical_costs(getCursorValue(c, "medical_costs"));
+            model.setRecord_abuse(getCursorValue(c, "record_abuse"));
+            model.setCaregiver_beaten(getCursorValue(c, "caregiver_beaten"));
+            model.setChild_beaten(getCursorValue(c, "child_beaten"));
+            model.setAware_sexual(getCursorValue(c, "aware_sexual"));
+            model.setAgainst_will(getCursorValue(c, "against_will"));
+            model.setStable_guardian(getCursorValue(c, "stable_guardian"));
+            model.setChildren_in_school(getCursorValue(c, "children_in_school"));
+            model.setIn_school(getCursorValue(c, "in_school"));
+            model.setYear_school(getCursorValue(c, "year_school"));
+            model.setRepeat_school(getCursorValue(c, "repeat_school"));
+            model.setAdditional_information(getCursorValue(c, "additional_information"));
+
+            return model;
+        };
+
+        List<GraduationBenchmarkModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
+
+    public static String getCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date currentDate = new Date();
+        String formattedDate = dateFormat.format(currentDate);
+        return formattedDate;
+    }
+
+    public static void updateGraduatedVCAs(String hhId) {
+        String currentDate = getCurrentDate();
+        String sql = "UPDATE ec_client_index SET case_status = '0',de_registration_date =  '" +currentDate+"',  reason = 'Graduated (Household has met the graduation benchmarks in ALL domains)'\n" +
+                " WHERE household_id = '" +hhId+"'";
+        updateDB(sql);
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
