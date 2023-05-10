@@ -5,13 +5,8 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,16 +14,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
 import com.bluecodeltd.ecap.chw.adapter.HouseholdServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
+import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -65,6 +65,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     private TextView cname, hh_id;
 
     private Toolbar toolbar;
+    String intent_householdId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         cname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
 
-        String intent_householdId = getIntent().getExtras().getString("householdId");
+        intent_householdId = getIntent().getExtras().getString("householdId");
         String intent_cname = getIntent().getExtras().getString("cname");
 
 
@@ -118,27 +119,71 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.services1:
+                GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(intent_householdId);
 
-                try {
-                    FormUtils formUtils = new FormUtils(this);
-                    JSONObject indexRegisterForm;
+                if (model != null) {
+                    final String YES = "yes";
+                    final String NO = "no";
 
-                    indexRegisterForm = formUtils.getFormJson("service_report_household");
+                    boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
+                    boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
+                    boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
+                    boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
+                    boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
+                    boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
+                    boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
+                    boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
+                    boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
+                    boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
+                    boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
+                    boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
+                    boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
+                    boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
+                    boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
+                    boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
 
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
-                    cId.put("value",hh_id.getText().toString());
+                    if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
+                            && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
+                            && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
+                            && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
+
+                        showDialogBox(intent_householdId);
+                    }
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(this);
+                        JSONObject indexRegisterForm;
+
+                        indexRegisterForm = formUtils.getFormJson("service_report_household");
+
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                        cId.put("value",hh_id.getText().toString());
 
 
-                    startFormActivity(indexRegisterForm);
+                        startFormActivity(indexRegisterForm);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+
 
                 break;
         }
     }
+    public void showDialogBox(String householdId){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
 
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        Household house = HouseholdDao.getHousehold(householdId);
+        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+
+        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+
+    }
     public void startFormActivity(JSONObject jsonObject) {
 
         Form form = new Form();

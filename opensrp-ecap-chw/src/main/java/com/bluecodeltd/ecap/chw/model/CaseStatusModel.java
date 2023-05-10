@@ -1,7 +1,15 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class CaseStatusModel {
-    String first_name,last_name,unique_id,case_status;
+    String household_id,first_name,last_name,unique_id,case_status;
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
 
     public String getFirst_name() {
         return first_name;

@@ -8,7 +8,9 @@ import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
@@ -381,6 +383,29 @@ public class HouseholdDao extends AbstractDao {
 
         return models.get(0);
     }
+
+    public static String getCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date currentDate = new Date();
+        String formattedDate = dateFormat.format(currentDate);
+        return formattedDate;
+    }
+
+    public static void updateGraduatedVCAs(String hhId) {
+        String currentDate = getCurrentDate();
+        String sql = "UPDATE ec_client_index SET case_status = '0',de_registration_date =  '" +currentDate+"',  reason = 'Graduated (Household has met the graduation benchmarks in ALL domains)'\n" +
+                " WHERE household_id = '" +hhId+"'";
+        updateDB(sql);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
