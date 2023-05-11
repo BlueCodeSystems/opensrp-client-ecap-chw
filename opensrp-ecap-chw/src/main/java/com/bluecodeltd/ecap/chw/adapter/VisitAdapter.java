@@ -25,6 +25,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,7 +71,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     public VisitAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_visit, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
 
         VisitAdapter.ViewHolder viewHolder = new VisitAdapter.ViewHolder(v);
 
@@ -178,6 +179,66 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.show();
         });
 
+        Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
+
+        if (childModel.getIs_hiv_positive().equals("yes")){
+            holder.exPandableView.setVisibility(View.GONE);
+            holder.expMore.setVisibility(View.GONE);
+            holder.expLess.setVisibility(View.GONE);
+        }
+        holder.linearLayout.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.itemm) {
+
+                holder.exPandableView.setVisibility(View.VISIBLE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.expMore.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_more) {
+
+                holder.exPandableView.setVisibility(View.VISIBLE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.VISIBLE);
+                holder.editme.setVisibility(View.GONE);
+                holder.delete.setVisibility(View.GONE);
+            }
+        });
+
+        holder.expLess.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_less) {
+
+                holder.exPandableView.setVisibility(View.GONE);
+                holder.expMore.setVisibility(View.VISIBLE);
+                holder.expLess.setVisibility(View.GONE);
+                holder.editme.setVisibility(View.VISIBLE);
+                holder.delete.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        if(childModel.getIs_hiv_positive() != null && childModel.getIs_hiv_positive().equals("yes")){
+            holder.intialHivStatus.setText("Positive");
+        } else if(childModel.getIs_hiv_positive().equals("unknown")) {
+            holder.intialHivStatus.setText("Unknown");
+        } else {
+            holder.intialHivStatus.setText("Negative");
+        }
+        holder.initialHivStatusDate.setText(childModel.getDate_screened());
+
+        if(visit.getIs_hiv_positive() != null && visit.getIs_hiv_positive().equals("yes")){
+            holder.updateHivStatus.setText("Positive");
+        } else if (visit.getIs_hiv_positive().equals("unknown")) {
+            holder.updateHivStatus.setText("Unknown");
+
+        } else {
+            holder.updateHivStatus.setText("Negative");
+        }
+        holder.updatedHivStatusDate.setText(visit.getVisit_date());
     }
 
     public void openFormUsingFormUtils(Context context, String formName, VcaVisitationModel visit) throws JSONException {
@@ -320,10 +381,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtDate;
+        TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate;
 
-        LinearLayout linearLayout;
-        ImageView editme, delete;
+        LinearLayout linearLayout, exPandableView;
+        ImageView expMore, expLess,editme, delete;
 
         public ViewHolder(View itemView) {
 
@@ -333,6 +394,13 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             txtDate  = itemView.findViewById(R.id.date);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            exPandableView = itemView.findViewById(R.id.expandable);
+            expLess = itemView.findViewById(R.id.expand_less);
+            expMore = itemView.findViewById(R.id.expand_more);
+            intialHivStatus =  itemView.findViewById(R.id.initial_hiv_status);
+            initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
+            updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
+            updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
 
         }
 
