@@ -139,6 +139,14 @@ public class ProfileOverviewFragment extends Fragment {
             txtFacility.setText("N/A");
         }
 
+        if (childIndex.getCaregiver_sex() != null){
+            txtGender.setText(childIndex.getGender());
+            String myString = childIndex.getCaregiver_sex();
+            txtGender.setText(myString.substring(0, 1).toUpperCase() + myString.substring(1).toLowerCase());
+        } else {
+            txtGender.setText("N/A");
+        }
+
         if (childIndex.getDate_referred() != null){
             txtReferred.setText(childIndex.getDate_referred());
         } else {
@@ -184,15 +192,16 @@ public class ProfileOverviewFragment extends Fragment {
         }
 
         if(childIndex.getVl_last_result() != null){
-        int i = Integer.parseInt(childIndex.getVl_last_result());
+        /*int i = Integer.parseInt(childIndex.getVl_last_result());
         if (i < 1000){
         txtIsSuppressed.setText("yes");
         } else {
         txtIsSuppressed.setText("no");
-         }
+         }*/
+            txtIsSuppressed.setText(childIndex.getVl_last_result());
         }
         else {
-          txtIsSuppressed.setText("not set");
+          txtIsSuppressed.setText("NOt Set");
         }
 
 
@@ -223,8 +232,7 @@ public class ProfileOverviewFragment extends Fragment {
         });
 
         txtCaregiverName.setText(childIndex.getCaregiver_name());
-        String myString = childIndex.getCaregiver_sex();
-        txtGender.setText(myString.substring(0, 1).toUpperCase() + myString.substring(1).toLowerCase());
+
         txtDob.setText(childIndex.getCaregiver_birth_date());
         txtHiv.setText(childIndex.getCaregiver_hiv_status());
         txtRelation.setText(childIndex.getRelation());
