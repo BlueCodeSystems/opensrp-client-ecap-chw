@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.ChildSafetyPlanActions;
+import com.bluecodeltd.ecap.chw.dao.ChildSafetyActionDao;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyPlanModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -60,8 +61,15 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
         final ChildSafetyPlanModel plan = plans.get(position);
 
         holder.setIsRecyclable(false);
+        if (plan.getInitial_date() != null){
+            holder.txtDate.setText(plan.getInitial_date());
+        }
 
-        holder.txtDate.setText(plan.getInitial_date());
+        if (plan.getInitial_date() != null){
+            holder.numberOfAction.setText(ChildSafetyActionDao.countChildSafetyPlan(plan.getUnique_id(),plan.getInitial_date())+" Actions");
+        }
+
+
 
         holder.linearLayout.setOnClickListener(v -> {
             Intent i = new Intent(context, ChildSafetyPlanActions.class);
@@ -123,7 +131,8 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtDate;
+        TextView txtDate,numberOfAction;
+
 
         LinearLayout linearLayout;
 
@@ -134,6 +143,7 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
 
             linearLayout = itemView.findViewById(R.id.itemm);
             txtDate  = itemView.findViewById(R.id.date);
+            numberOfAction = itemView.findViewById(R.id.number_of_actions);
 
 
         }
