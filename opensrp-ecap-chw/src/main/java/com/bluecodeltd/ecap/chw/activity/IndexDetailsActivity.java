@@ -566,6 +566,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 i.putExtra("vca_id", indexVCA.getUnique_id());
                 i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
                 startActivity(i);
+                finish();
                 break;
 
         }
