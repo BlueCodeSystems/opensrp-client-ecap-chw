@@ -13,6 +13,22 @@ public class ChildSafetyPlanModel {
     private String safety_plans;
     private String household_id;
 
+    public ChildSafetyPlanModel() {
+        this.base_entity_id = base_entity_id;
+        this.unique_id = unique_id;
+        this.caseworker_name = caseworker_name;
+        this.phone = phone;
+        this.initial_date = initial_date;
+        this.completion_date = completion_date;
+        this.safety_threats = safety_threats;
+        this.safety_action = safety_action;
+        this.safety_protection = safety_protection;
+        this.safety_plans = safety_plans;
+        this.household_id = household_id;
+    }
+
+
+
     public String getHousehold_id() {
         return household_id;
     }

@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.ChildSafetyPlanActions;
 import com.bluecodeltd.ecap.chw.dao.ChildSafetyActionDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyPlanModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -72,12 +73,16 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
 
 
         holder.linearLayout.setOnClickListener(v -> {
+            Child child = IndexPersonDao.getChildByBaseId(plan.getUnique_id());
             Intent i = new Intent(context, ChildSafetyPlanActions.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("child_ID",plan.getUnique_id());
-            bundle.putString("action_date",plan.getInitial_date());
-            i.putExtras(bundle);
+            i.putExtra("vca_id",plan.getUnique_id());
+            i.putExtra("vca_name",child.getFirst_name()+" "+child.getLast_name());
+            i.putExtra("action_date",plan.getInitial_date());
             context.startActivity(i);
+            if (context instanceof Activity) {
+                ((Activity) context).finish();
+            }
+
         });
     }
 

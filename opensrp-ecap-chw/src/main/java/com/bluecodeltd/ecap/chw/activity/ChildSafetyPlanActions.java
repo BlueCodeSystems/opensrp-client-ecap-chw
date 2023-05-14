@@ -57,7 +57,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<ChildSafetyActionModel> actionList = new ArrayList<>();
     private Button actionBtn, actionBtn2;
-    String childId, actionDate;
+    String vcaName, childId, actionDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +67,10 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         recyclerView = findViewById(R.id.actionrecyclerView);
         actionBtn = findViewById(R.id.actionBtn);
         actionBtn2 = findViewById(R.id.actionBtn2);
-        Bundle bundle = getIntent().getExtras();
-        childId = bundle.getString("child_ID");
-        actionDate = bundle.getString("action_date");
+
+        childId = getIntent().getExtras().getString("vca_id");
+        vcaName = getIntent().getExtras().getString("vca_name");
+        actionDate = getIntent().getExtras().getString("action_date");
 
         fetchData();
 
@@ -190,8 +191,10 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
     }
 
     private void goBackToSafetyPlan() {
-        Intent i = new Intent(ChildSafetyPlanActions.this,ChildSafetyPlanActivity.class);
+        Intent i = new Intent(getApplicationContext(),ChildSafetyPlanActions.class);
         i.putExtra("vca_id",childId);
+        i.putExtra("vca_name",vcaName);
+        i.putExtra("action_date",actionDate);
         startActivity(i);
 
     }
@@ -310,4 +313,14 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent directToSafetyPlans = new Intent(getApplicationContext(), ChildSafetyPlanActivity.class);
+        directToSafetyPlans.putExtra("vca_id",childId);
+        directToSafetyPlans.putExtra("vca_name",vcaName);
+        directToSafetyPlans.putExtra("action_date",actionDate);
+        startActivity(directToSafetyPlans);
+        finish();
+    }
 }
