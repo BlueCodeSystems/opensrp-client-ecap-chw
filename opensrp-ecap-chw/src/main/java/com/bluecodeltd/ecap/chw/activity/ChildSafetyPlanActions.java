@@ -196,6 +196,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         i.putExtra("vca_name",vcaName);
         i.putExtra("action_date",actionDate);
         startActivity(i);
+        finish();
 
     }
 
