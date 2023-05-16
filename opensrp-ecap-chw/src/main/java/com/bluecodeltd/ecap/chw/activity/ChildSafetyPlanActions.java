@@ -180,13 +180,8 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
                 Timber.e(e);
             }
         }
-        Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
         goBackToSafetyPlan();
-
-
-
-
-
+        Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
 
     }
 
@@ -197,6 +192,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         i.putExtra("action_date",actionDate);
         startActivity(i);
         finish();
+        recreate();
 
     }
 
