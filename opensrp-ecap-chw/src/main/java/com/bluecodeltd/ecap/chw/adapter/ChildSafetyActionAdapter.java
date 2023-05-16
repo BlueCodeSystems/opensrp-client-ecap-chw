@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.ChildSafetyPlanActions;
-import com.bluecodeltd.ecap.chw.activity.ChildSafetyPlanActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -190,7 +189,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
         });
     }
     public void callChildActionActivity(ChildSafetyActionModel plan, Child child) {
-        Intent openChildSafetyPlanActionActivity = new Intent(context, ChildSafetyPlanActivity.class);
+        Intent openChildSafetyPlanActionActivity = new Intent(context, ChildSafetyPlanActions.class);
         openChildSafetyPlanActionActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         openChildSafetyPlanActionActivity.putExtra("vca_id", plan.getUnique_id());
         openChildSafetyPlanActionActivity.putExtra("vca_name", child.getFirst_name() + " " + child.getLast_name());
@@ -200,9 +199,11 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
             Activity activity = (ChildSafetyPlanActions) context;
             activity.finish();
             activity.startActivity(openChildSafetyPlanActionActivity);
+            activity.recreate();
         } else {
             context.startActivity(openChildSafetyPlanActionActivity);
         }
+
     }
 
 
