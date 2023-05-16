@@ -8,10 +8,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/collapsing_toolbar_appbarlayout"
@@ -108,7 +109,8 @@
         <RelativeLayout
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hhrecyclerView"
@@ -138,32 +140,38 @@
 
             </LinearLayout>
 
-
-
         </RelativeLayout>
 
-        <com.rey.material.widget.Button
-            android:id="@+id/child_plan"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="#218CC5"
-            android:onClick="onClick"
-            android:padding="8dp"
-            android:text="Add Child Safe Plan"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:visibility="visible"
-            app:rd_enable="true"
-            app:rd_rippleType="wave" />
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginBottom="10dp">
 
+            <com.rey.material.widget.Button
+                android:id="@+id/child_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#218CC5"
+                android:onClick="onClick"
+                android:padding="8dp"
+                android:text="Add Child Safe Plan"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:visibility="visible"
+                app:rd_enable="true"
+                app:rd_rippleType="wave" />
 
-    </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

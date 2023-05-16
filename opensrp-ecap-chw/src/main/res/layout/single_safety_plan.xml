@@ -105,6 +105,15 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/delete_record"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:tint="#696969"
+            android:layout_centerInParent="true"
+            android:src="@drawable/delete_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 

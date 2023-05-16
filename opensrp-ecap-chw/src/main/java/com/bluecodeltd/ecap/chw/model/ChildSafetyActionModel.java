@@ -11,6 +11,7 @@ public class ChildSafetyActionModel {
     private String stateWhen;
     private String frequency;
     private String unique_id;
+    private String delete_status;
 
     public String getSafety_threats() {
         return safety_threats;
@@ -90,5 +91,13 @@ public class ChildSafetyActionModel {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 }

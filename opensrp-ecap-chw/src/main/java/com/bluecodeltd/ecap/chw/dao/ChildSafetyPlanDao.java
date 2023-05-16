@@ -10,7 +10,7 @@ import java.util.List;
 public class ChildSafetyPlanDao extends AbstractDao {
     public static List<ChildSafetyPlanModel> getChildSafetyPlanModel (String vcaID) {
 
-        String sql = "SELECT * FROM ec_child_safety_plan WHERE unique_id = '" + vcaID + "' ";
+        String sql = "SELECT * FROM ec_child_safety_plan WHERE unique_id = '" + vcaID + "' AND (delete_status IS NULL OR delete_status <> '1') GROUP BY initial_date";
 
         List<ChildSafetyPlanModel> values = AbstractDao.readData(sql, getChildSafetyPlanModelMap());
         if (values == null || values.size() == 0)

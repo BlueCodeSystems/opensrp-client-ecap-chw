@@ -6987,6 +6987,13 @@
           "json_mapping": {
             "field": "attributes.safety_plans"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -7063,6 +7070,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.who"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
