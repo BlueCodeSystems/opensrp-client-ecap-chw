@@ -210,7 +210,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
                 finish();
                 startActivity(getIntent());
                 Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
-
+                recreate();
                 //openChildSafetyPlanAction(dateId);
 //                if(encounterType.equals("Child Safety Plan"))
 //                {
