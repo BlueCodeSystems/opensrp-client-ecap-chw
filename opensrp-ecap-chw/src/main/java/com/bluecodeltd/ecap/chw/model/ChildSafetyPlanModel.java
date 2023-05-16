@@ -12,13 +12,15 @@ public class ChildSafetyPlanModel {
     private String safety_protection;
     private String safety_plans;
     private String household_id;
+    private String delete_status;
 
-    public String getHousehold_id() {
-        return household_id;
+
+    public String getBase_entity_id() {
+        return base_entity_id;
     }
 
-    public void setHousehold_id(String household_id) {
-        this.household_id = household_id;
+    public void setBase_entity_id(String base_entity_id) {
+        this.base_entity_id = base_entity_id;
     }
 
     public String getUnique_id() {
@@ -89,15 +91,23 @@ public class ChildSafetyPlanModel {
         return safety_plans;
     }
 
-    public String getBase_entity_id() {
-        return base_entity_id;
-    }
-
-    public void setBase_entity_id(String base_entity_id) {
-        this.base_entity_id = base_entity_id;
-    }
-
     public void setSafety_plans(String safety_plans) {
         this.safety_plans = safety_plans;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 }
