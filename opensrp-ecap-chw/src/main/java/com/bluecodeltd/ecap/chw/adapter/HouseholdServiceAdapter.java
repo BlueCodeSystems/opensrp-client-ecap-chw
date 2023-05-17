@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -57,6 +59,8 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     Context context;
     List<FamilyServiceModel> services;
     ObjectMapper oMapper;
+    private static final long REFRESH_DELAY = 100;
+    private Handler handler = new Handler();
 
 
     public HouseholdServiceAdapter(List<FamilyServiceModel> services, Context context){
@@ -217,9 +221,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                     } catch (Exception e) {
                         Timber.e(e);
                     }
-                    if (context instanceof Activity) {
-                        ((Activity) context).finish();
-                    }
+                   refreshActivity();
 
                 }));
 
@@ -236,6 +238,17 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
 
     }
+    public void refreshActivity() {
+        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
+    }
+
+    private Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Activity activity = (HouseholdServiceActivity) context;
+            activity.recreate();
+        }
+    };
     public void showDialogBox(String householdId){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);

@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.CaregiverVisitAdapter;
-import com.bluecodeltd.ecap.chw.adapter.VisitAdapter;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +32,7 @@ public class HouseholdVisitsFragment extends Fragment {
     View vieww;
 
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
