@@ -24,6 +24,7 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
@@ -128,37 +129,53 @@ public class VcaServiceActivity extends AppCompatActivity {
         switch (id) {
             case R.id.services1:
                 CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid);
-                if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                if(CasePlanDao.checkCasePlan(intent_vcaid) == 0){
                     Dialog dialog = new Dialog(this);
                     dialog.setContentView(R.layout.dialog_layout);
                     dialog.show();
 
                     TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                    dialogMessage.setText("Unable to add service(s) for "+caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " because no Case Plan(s) have been added");
 
                     android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
                     dialogButton.setOnClickListener(view -> dialog.dismiss());
 
-                } else {
-                    try {
-                        FormUtils formUtils = new FormUtils(this);
-                        JSONObject indexRegisterForm;
+                } else{
+                    if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                        Dialog dialog = new Dialog(this);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                        indexRegisterForm = formUtils.getFormJson("service_report_vca");
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                        cId.put("value",hh_id.getText().toString());
+                        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(view -> dialog.dismiss());
 
-                        JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                        hiv.put("value",hivstatus);
+                    } else {
+                        try {
+                            FormUtils formUtils = new FormUtils(this);
+                            JSONObject indexRegisterForm;
+
+                            indexRegisterForm = formUtils.getFormJson("service_report_vca");
+
+                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                            cId.put("value",hh_id.getText().toString());
+
+                            JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                            hiv.put("value",hivstatus);
 
 
-                        startFormActivity(indexRegisterForm);
+                            startFormActivity(indexRegisterForm);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+
                 }
+
+
 
 
                 break;
