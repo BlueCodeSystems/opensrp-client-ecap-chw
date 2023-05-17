@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -62,6 +64,8 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     List<CasePlanModel> caseplans;
 
     ObjectMapper oMapper;
+    private static final long REFRESH_DELAY = 100;
+    private Handler handler = new Handler();
 
     public DomainPlanAdapter(ArrayList<CasePlanModel> caseplans, Context context, String formName){
 
@@ -199,9 +203,8 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             } catch (Exception e) {
                 Timber.e(e);
             }
-            if (context instanceof Activity) {
-                ((Activity) context).finish();
-            }
+//            callActivity(casePlan);
+            refreshActivity();
 
         }));
 
@@ -222,6 +225,32 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             }
         });
 
+
+    }
+
+    public void refreshActivity() {
+        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
+    }
+
+    private Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Activity activity = (CasePlan) context;
+            activity.recreate();
+        }
+    };
+    public void callActivity(CasePlanModel casePlan) {
+        Intent openActivity = new Intent(context, CasePlan.class);
+        openActivity.putExtra("childId",  casePlan.getUnique_id());
+        openActivity.putExtra("dateId",  casePlan.getCase_plan_date());
+        if (context instanceof IndexDetailsActivity) {
+            Activity activity = (IndexDetailsActivity) context;
+            activity.finish();
+            activity.startActivity(openActivity);
+//            activity.recreate();
+        } else {
+            context.startActivity(openActivity);
+        }
 
     }
     public void openFormUsingFormUtils(Context context, String formName, CasePlanModel caseplan) throws JSONException {
