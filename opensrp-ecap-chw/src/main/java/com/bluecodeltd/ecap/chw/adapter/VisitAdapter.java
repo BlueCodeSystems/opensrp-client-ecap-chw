@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -166,9 +167,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
+                Intent returnToProfile = new Intent(context, IndexDetailsActivity.class);
+                returnToProfile.putExtra("Child",  visit.getUnique_id());
+                context.startActivity(returnToProfile);
+                ((Activity) context).finish();
 
             }));
 
