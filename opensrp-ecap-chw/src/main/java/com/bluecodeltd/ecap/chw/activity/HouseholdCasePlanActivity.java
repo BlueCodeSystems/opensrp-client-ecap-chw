@@ -366,4 +366,11 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent householdProfile = new Intent(getBaseContext(),HouseholdDetails.class);
+        householdProfile.putExtra("householdId",householdId);
+        startActivity(householdProfile);
+    }
 }
