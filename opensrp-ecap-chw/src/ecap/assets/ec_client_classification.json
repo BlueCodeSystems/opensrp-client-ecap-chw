@@ -29,6 +29,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Household Case Status",
+            "creates_case": [
+              "ec_household"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Member Sub Population",
             "creates_case": [
               "ec_client_index"

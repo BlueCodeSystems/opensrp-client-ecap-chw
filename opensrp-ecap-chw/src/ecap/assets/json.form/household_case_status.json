@@ -1,6 +1,6 @@
 {
     "count": "1",
-    "encounter_type": "Sub Population",
+    "encounter_type": "Household Case Status",
     "entity_id": "",
     "relational_id": "",
     "metadata": {
@@ -73,7 +73,7 @@
           "openmrs_entity": "person_attribute",
           "openmrs_entity_id": "case_status",
           "type": "native_radio",
-          "label": "VCA Case record status",
+          "label": "Household Case record status",
           "options": [
             {
               "key": "1",
@@ -112,20 +112,16 @@
           }
         },
         {
-          "key": "reason",
+          "key": "de_registration_reason",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "reason",
+          "openmrs_entity_id": "de_registration_reason",
           "type": "native_radio",
           "label": "Reason for Closing Case",
           "options": [
             {
               "key": "Wrong Entry",
               "text": "Wrong Entry"
-            },
-            {
-              "key": "Transferred to other OVC program",
-              "text": "Transferred to other OVC program"
             },
             {
               "key": "Exited without graduation",
@@ -137,12 +133,8 @@
               "text": "Lost to follow-up"
             },
             {
-              "key": "Aging without transition plan",
-              "text": "Aging without transition plan"
-            },
-            {
-              "key": "VCA died",
-              "text": "VCA died"
+              "key": "Caregiver died",
+              "text": "Caregiver died"
             },
             {
               "key": "Moved (Relocated)",
@@ -177,17 +169,17 @@
           "hint": "Specify organization, program, and name of receiving officer",
           "edit_type": "",
           "relevance": {
-            "step1:reason": {
+            "step1:de_registration_reason": {
               "type": "string",
               "ex": "equalTo(., \"Transferred to other OVC program\")"
             }
           }
         },
         {
-          "key": "other_reason",
+          "key": "other_de_registration_reason",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "other_reason",
+          "openmrs_entity_id": "other_de_registration_reason",
           "type": "edit_text",
           "hint": "Other Reason",
           "edit_type": "name",
@@ -195,6 +187,24 @@
             "step1:reason": {
               "type": "string",
               "ex": "equalTo(., \"other\")"
+            }
+          }
+        },
+        {
+          "key": "death_toast",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "concept",
+          "openmrs_entity_id": "instructions",
+          "type": "toaster_notes",
+          "text": "Re-register the VCA/HH with a new caregiver",
+          "text_color": "#000000",
+          "label_text_style": "bold",
+          "toaster_info_title": "Instructions",
+          "toaster_type": "warning",
+          "relevance": {
+            "step1:de_registration_reason": {
+              "type": "string",
+              "ex": "equalTo(., \"Caregiver died\")"
             }
           }
         }
