@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -184,9 +185,10 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                     } catch (Exception e) {
                         Timber.e(e);
                     }
-                    if (context instanceof Activity) {
-                        ((Activity) context).finish();
-                    }
+                    Intent householdProfile = new Intent(context, HouseholdDetails.class);
+                    householdProfile.putExtra("householdId",visit.getHousehold_id());
+                    context.startActivity(householdProfile);
+                    ((Activity) context).finish();
 
                 }));
 
