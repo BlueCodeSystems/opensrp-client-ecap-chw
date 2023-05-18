@@ -83,6 +83,51 @@ public class Household {
     private String province;
     private String facility;
     private String status;
+    private String case_status;
+    private String de_registration_date;
+    private String de_registration_reason;
+    private String transfer_reason;
+    private String other_de_registration_reason;
+
+    public String getCase_status() {
+        return case_status;
+    }
+
+    public void setCase_status(String case_status) {
+        this.case_status = case_status;
+    }
+
+    public String getDe_registration_date() {
+        return de_registration_date;
+    }
+
+    public void setDe_registration_date(String de_registration_date) {
+        this.de_registration_date = de_registration_date;
+    }
+
+    public String getDe_registration_reason() {
+        return de_registration_reason;
+    }
+
+    public void setDe_registration_reason(String de_registration_reason) {
+        this.de_registration_reason = de_registration_reason;
+    }
+
+    public String getTransfer_reason() {
+        return transfer_reason;
+    }
+
+    public void setTransfer_reason(String transfer_reason) {
+        this.transfer_reason = transfer_reason;
+    }
+
+    public String getOther_de_registration_reason() {
+        return other_de_registration_reason;
+    }
+
+    public void setOther_de_registration_reason(String other_de_registration_reason) {
+        this.other_de_registration_reason = other_de_registration_reason;
+    }
 
     public String getMarital_status() {
         return marital_status;
