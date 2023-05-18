@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdCasePlanActivity;
+import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -176,9 +177,10 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
                     } catch (Exception e) {
                         Timber.e(e);
                     }
-                    if (context instanceof Activity) {
-                        ((Activity) context).finish();
-                    }
+                    Intent householdProfile = new Intent(context, HouseholdDetails.class);
+                    householdProfile.putExtra("householdId",house.getHousehold_id());
+                    context.startActivity(householdProfile);
+                    ((Activity) context).finish();
 
                 }));
 

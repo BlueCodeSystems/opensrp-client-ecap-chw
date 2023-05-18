@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
+import com.bluecodeltd.ecap.chw.activity.HouseholdCasePlanActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
@@ -64,6 +66,8 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
     List<CasePlanModel> caseplans;
 
     ObjectMapper oMapper;
+    private static final long REFRESH_DELAY = 100;
+    private Handler handler = new Handler();
 
     public HouseholdDomainPlanAdapter(ArrayList<CasePlanModel> caseplans, Context context, String formName) {
         this.context = context;
@@ -217,9 +221,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
+               refreshActivity();
 
             }));
 
@@ -241,7 +243,17 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         });
     }
 
+    public void refreshActivity() {
+        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
+    }
 
+    private Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Activity activity = (HouseholdCasePlanActivity) context;
+            activity.recreate();
+        }
+    };
     public void showDialogBox(String householdId){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
