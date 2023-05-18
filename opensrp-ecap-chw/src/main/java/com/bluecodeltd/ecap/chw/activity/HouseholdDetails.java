@@ -8,6 +8,7 @@ import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -833,6 +834,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "Graduation":
                     case "Household Visitation For Caregiver":
                     case "Hiv Assessment For Caregiver":
+                    case "Household Case Status":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
@@ -1081,6 +1083,17 @@ public class HouseholdDetails extends AppCompatActivity {
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
+                case "Household Case Status":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
 
                     break;
 
@@ -1478,6 +1491,15 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                 break;
+            case R.id.case_status:
+                try {
+                    openFormUsingFormUtils(getBaseContext(),"household_case_status");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                break;
+
 
         }
         return super.onOptionsItemSelected(item);
@@ -1660,6 +1682,32 @@ public class HouseholdDetails extends AppCompatActivity {
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
+    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+
+
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject formToBeOpened;
+
+        formToBeOpened = formUtils.getFormJson(formName);
+
+        switch (formName) {
+
+            case "household_case_status":
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                break;
+
+        }
+
+        startFormActivity(formToBeOpened);
+    }
+
 
     public void buildDialog(){
         //Creating dialog box
