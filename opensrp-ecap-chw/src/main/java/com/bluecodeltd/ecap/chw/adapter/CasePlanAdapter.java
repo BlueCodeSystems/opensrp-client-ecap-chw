@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
+import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -56,6 +58,8 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     List<CasePlanModel> caseplans;
     String hivStatus;
     AlertDialog.Builder builder;
+    private static final long REFRESH_DELAY = 100;
+    private Handler handler = new Handler();
 
 
     public CasePlanAdapter(List<CasePlanModel> caseplans, Context context, String hivStatus){
@@ -172,9 +176,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
+              callActivity(casePlan);
 
             }));
 
@@ -185,6 +187,33 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             alert.show();
         });
 
+
+    }
+    public void refreshActivity() {
+        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
+    }
+
+    private Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Activity activity = (CasePlan) context;
+            activity.recreate();
+        }
+    };
+
+    public void callActivity(CasePlanModel casePlan) {
+        Intent openActivity = new Intent(context, IndexDetailsActivity.class);
+        openActivity.putExtra("Child",  casePlan.getUnique_id());
+        openActivity.putExtra("dateId",  casePlan.getCase_plan_date());
+        openActivity.putExtra("hivStatus",  hivStatus);
+        if (context instanceof IndexDetailsActivity) {
+            Activity activity = (IndexDetailsActivity) context;
+            activity.finish();
+            activity.startActivity(openActivity);
+//            activity.recreate();
+        } else {
+            context.startActivity(openActivity);
+        }
 
     }
     public ChildIndexEventClient processRegistration(String jsonString){
