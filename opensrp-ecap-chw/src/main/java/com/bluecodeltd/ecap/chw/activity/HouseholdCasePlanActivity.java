@@ -302,7 +302,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             if(hivStatus.trim().equals("negative")){
                 indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).getJSONArray("options").remove(0);
             }
-            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", uniqueId);
+            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", householdId);
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", householdId);
            // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
             JSONObject statusObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");

@@ -85,7 +85,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
         final CasePlanModel casePlan = caseplans.get(position);
 
         holder.setIsRecyclable(false);
-        String vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(house.getUnique_id(),casePlan.getCase_plan_date());
+        String vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(house.getHousehold_id(),casePlan.getCase_plan_date());
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
 
