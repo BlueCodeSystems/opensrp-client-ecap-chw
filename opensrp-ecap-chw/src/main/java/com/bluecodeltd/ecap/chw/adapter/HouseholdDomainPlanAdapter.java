@@ -26,10 +26,8 @@ import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.HouseholdCasePlanActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -135,10 +133,10 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(casePlan.getUnique_id());
+//        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(casePlan.getUnique_id());
 
         holder.editme.setOnClickListener(v -> {
-            GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(caseStatusModel.getHousehold_id());
+            GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(casePlan.getHousehold_id());
 
             if (model != null) {
                 final String YES = "yes";
@@ -166,7 +164,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                         && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
                         && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
 
-                    showDialogBox(caseStatusModel.getHousehold_id());
+                    showDialogBox(casePlan.getHousehold_id());
                 }
             } else {
                 if (v.getId() == R.id.edit_me) {
