@@ -52,9 +52,9 @@ public class CasePlanDao extends AbstractDao {
 
     }
 
-    public static String countCaregiverVulnerabilities (String uniqueId, String cpDate){
+    public static String countCaregiverVulnerabilities (String householdID, String cpDate){
 
-        String sql = "SELECT COUNT(*) v FROM ec_caregiver_case_plan_domain WHERE unique_id = '" + uniqueId + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT COUNT(*) v FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 

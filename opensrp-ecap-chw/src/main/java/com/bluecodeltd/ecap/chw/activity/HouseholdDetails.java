@@ -1716,4 +1716,12 @@ public class HouseholdDetails extends AppCompatActivity {
         alert.setTitle("VCA Screening");
         alert.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
+        startActivity(returnToHouseholdIndexActivity);
+        finish();
+    }
 }

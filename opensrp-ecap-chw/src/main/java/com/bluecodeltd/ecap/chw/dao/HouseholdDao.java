@@ -236,6 +236,7 @@ public class HouseholdDao extends AbstractDao {
             record.setQuarter(getCursorValue(c, "quarter"));
             record.setStatus(getCursorValue(c, "status"));
             record.setComment(getCursorValue(c, "comment"));
+            record.setHousehold_id(getCursorValue(c,"household_id"));
 
             return record;
         };
