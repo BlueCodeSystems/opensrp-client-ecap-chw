@@ -164,9 +164,8 @@ public class VcaVisitationDao extends AbstractDao {
             record.setSchool_administration_date_signed(getCursorValue(c, "school_administration_date_signed"));
             record.setSchool_administration_signature(getCursorValue(c, "school_administration_signature"));
             record.setPhone(getCursorValue(c, "phone"));
-
-
-
+            record.setLength_on_art(getCursorValue(c,"length_on_art"));
+            record.setIndicate_vl_result(getCursorValue(c,"indicate_vl_result"));
 
             return record;
         };

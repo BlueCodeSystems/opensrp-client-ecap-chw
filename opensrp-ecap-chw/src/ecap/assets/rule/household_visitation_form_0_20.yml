@@ -335,3 +335,10 @@ priority: 1
 condition: "(step1_level_mmd >  0 && step1_level_mmd <= 12) && (step1_drug_regimen >  0 && step1_drug_regimen <= 12)"
 actions:
   - "isRelevant = true"
+---
+name: step1_art_medication
+description: art_medication
+priority: 1
+condition: "step1_art_appointment.contains('yes') || step1_counselling.contains('no') || step1_counselling.contains('yes')"
+actions:
+  - "isRelevant = true"
