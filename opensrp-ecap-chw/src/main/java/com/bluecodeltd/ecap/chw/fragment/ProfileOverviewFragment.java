@@ -191,18 +191,23 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText("N/A");
         }
 
-        if(childIndex.getVl_last_result() != null){
-        /*int i = Integer.parseInt(childIndex.getVl_last_result());
-        if (i < 1000){
-        txtIsSuppressed.setText("yes");
+        if (childIndex.getVl_last_result() != null) {
+            try {
+                int checkIfSuppressed = Integer.parseInt(childIndex.getVl_last_result());
+                if (checkIfSuppressed < 1000) {
+                    txtIsSuppressed.setText("yes");
+                } else {
+                    txtIsSuppressed.setText("no");
+                }
+            } catch (NumberFormatException e) {
+                txtIsSuppressed.setText(childIndex.getVl_last_result());
+            }
         } else {
-        txtIsSuppressed.setText("no");
-         }*/
-            txtIsSuppressed.setText(childIndex.getVl_last_result());
+            txtIsSuppressed.setText("Not Set");
         }
-        else {
-          txtIsSuppressed.setText("NOt Set");
-        }
+
+
+
 
 
         if (childIndex.getDate_next_vl() != null){
