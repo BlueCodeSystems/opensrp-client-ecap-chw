@@ -5461,6 +5461,20 @@
           }
         },
         {
+          "column_name": "length_on_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.length_on_art"
+          }
+        },
+        {
+          "column_name": "indicate_vl_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.indicate_vl_result"
+          }
+        },
+        {
           "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
