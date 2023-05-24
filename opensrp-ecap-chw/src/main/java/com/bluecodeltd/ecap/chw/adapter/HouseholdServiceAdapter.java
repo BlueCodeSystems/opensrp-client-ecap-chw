@@ -132,7 +132,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 //        }
 
         holder.linearLayout.setOnClickListener(v -> {
-
+            Household household = HouseholdDao.getHousehold(service.getHousehold_id());
             GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(service.getHousehold_id());
 
             if (model != null) {
@@ -161,8 +161,10 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                         && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
                         && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
 
-                    showDialogBox(service.getHousehold_id());
+                    showDialogBox(service.getHousehold_id(), "`s household graduated");
                 }
+            } else if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
+                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
                 if (v.getId() == R.id.itemm) {
 
@@ -249,14 +251,14 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             activity.recreate();
         }
     };
-    public void showDialogBox(String householdId){
+    public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
         Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+        dialogMessage.setText(house.getCaregiver_name() + message);
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());

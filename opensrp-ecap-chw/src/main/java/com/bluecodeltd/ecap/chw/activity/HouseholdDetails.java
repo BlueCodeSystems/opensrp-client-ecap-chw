@@ -1630,10 +1630,18 @@ public class HouseholdDetails extends AppCompatActivity {
                     && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
                 HouseholdDao.updateGraduatedVCAs(house.getHousehold_id());
                 fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                showDialogBox();
+                showDialogBox(house.getCaregiver_name() + "`s household graduated");
             }
-        } else {
-            animateFAB();
+        }
+
+        else  {
+            if (house.getCase_status().equals("0") || house.getCase_status().equals("2")){
+                fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+            } else {
+                animateFAB();
+            }
+
         }
     }
     public void changeFabIconColor(String householdId){
@@ -1665,18 +1673,22 @@ public class HouseholdDetails extends AppCompatActivity {
                     && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
                 HouseholdDao.updateGraduatedVCAs(house.getHousehold_id());
                 fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                showDialogBox();
+                showDialogBox(house.getCaregiver_name() + "`s household graduated");
             }
+        }
+        else if (house.getCase_status().equals("0") || house.getCase_status().equals("2")){
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+            showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
         }
 
     }
-    public void showDialogBox(){
+    public void showDialogBox(String message){
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+        dialogMessage.setText(message);
 
         Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
