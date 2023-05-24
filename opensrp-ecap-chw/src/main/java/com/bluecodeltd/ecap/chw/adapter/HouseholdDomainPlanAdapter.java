@@ -137,6 +137,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
 
         holder.editme.setOnClickListener(v -> {
             GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(casePlan.getHousehold_id());
+            Household household = HouseholdDao.getHousehold(casePlan.getHousehold_id());
 
             if (model != null) {
                 final String YES = "yes";
@@ -164,8 +165,10 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                         && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
                         && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
 
-                    showDialogBox(casePlan.getHousehold_id());
+                    showDialogBox(casePlan.getHousehold_id(), "`s household graduated");
                 }
+            } else if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
+                showDialogBox(casePlan.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
                 if (v.getId() == R.id.edit_me) {
 
@@ -252,14 +255,14 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
             activity.recreate();
         }
     };
-    public void showDialogBox(String householdId){
+    public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
         Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+        dialogMessage.setText(house.getCaregiver_name() + message);
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
