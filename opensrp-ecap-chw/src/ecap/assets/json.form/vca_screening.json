@@ -1391,10 +1391,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:agyw_sexually_active": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },

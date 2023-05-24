@@ -121,17 +121,13 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         switch (id) {
             case R.id.services1:
                 GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(intent_householdId);
+                Household house = HouseholdDao.getHousehold(intent_householdId);
 if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
-    Dialog dialog = new Dialog(this);
-    dialog.setContentView(R.layout.dialog_layout);
-    dialog.show();
+    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
 
-    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-    Household house = HouseholdDao.getHousehold(intent_householdId);
-    dialogMessage.setText("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
+} else if (house.getCase_status().equals("0") || house.getCase_status().equals("2")) {
+        showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
 
-    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-    dialogButton.setOnClickListener(view -> dialog.dismiss());
 } else {
     if (model != null) {
         final String YES = "yes";
@@ -159,7 +155,7 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                 && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
                 && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
 
-            showDialogBox(intent_householdId);
+            showDialogBox(house.getCaregiver_name() + "`s household graduated");
         }
     } else {
         try {
@@ -185,14 +181,13 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                 break;
         }
     }
-    public void showDialogBox(String householdId){
+    public void showDialogBox(String message){
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + "`s household graduated");
+        dialogMessage.setText(message);
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
