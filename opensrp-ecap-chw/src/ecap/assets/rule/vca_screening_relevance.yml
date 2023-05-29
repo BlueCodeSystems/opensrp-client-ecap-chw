@@ -657,3 +657,10 @@ priority: 1
 condition: "step1_school.contains('pre_school') || step1_school.contains('primary_school') || step1_school.contains('secondary_school') "
 actions:
   - "isRelevant = true"
+---
+name: step1_agyw_food_or_economically_insecure
+description: agyw_food_or_economically_insecure
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 20) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
+actions:
+  - "isRelevant = true"
