@@ -342,3 +342,10 @@ priority: 1
 condition: "step1_art_appointment.contains('yes') || step1_counselling.contains('no') || step1_counselling.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step1_six_months
+description: six_months
+priority: 1
+condition: "step1_length_on_art > 6"
+actions:
+  - "isRelevant = true"
