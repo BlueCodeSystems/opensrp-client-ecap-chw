@@ -24,7 +24,6 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.rey.material.widget.Button;
@@ -317,38 +316,8 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         }
     }
     public void getGraduationBenchmarkStatus(String householdId){
-        GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
         Household household = HouseholdDao.getHousehold(householdId);
-
-        if (model != null) {
-            final String YES = "yes";
-            final String NO = "no";
-
-            boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
-            boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
-            boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
-            boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
-            boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
-            boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
-            boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
-            boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
-            boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
-            boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
-            boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
-            boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
-            boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
-            boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
-            boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
-            boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
-
-            if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
-                    && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
-                    && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
-                    && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
-
-                showDialogBox(householdId,household.getCaregiver_name() + "`s household graduated");
-            }
-        } else if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
+        if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
             showDialogBox(household.getHousehold_id(), "`s has been inactive or de-registered");
         } else {
             addVulnarability();
