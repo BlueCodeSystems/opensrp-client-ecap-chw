@@ -5,6 +5,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -149,6 +150,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,6 +237,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
+            fab.setVisibility(View.INVISIBLE);
         }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
@@ -284,7 +288,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtAge.setText(getAge(birthdate));
             vcaAge = getAgeWithoutText(birthdate);
 
-
         } else {
             txtAge.setText("Not Set");
         }
@@ -302,6 +305,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
 
+    public int calculateAge(String dateOfBirth) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate currentDate = LocalDate.now();
+        LocalDate birthDate = LocalDate.parse(dateOfBirth, formatter);
+        Period period = Period.between(birthDate, currentDate);
+        int age = period.getYears();
+        return age;
+    }
 
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
@@ -403,6 +414,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
 
+    @SuppressLint("RestrictedApi")
     public void onClick(View v) throws JSONException {
         int id = v.getId();
 
@@ -410,7 +422,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.fab:
                 if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
                     showDialogBoxForAlreadyConductedVisits();
-                } else {
+                } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
+               fab.setVisibility(View.INVISIBLE);
+            } else {
                     animateFAB();
                 }
                 break;
