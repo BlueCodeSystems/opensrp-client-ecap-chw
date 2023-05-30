@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,6 +142,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
+        }
+        if(Integer.parseInt(memberAge) > 18 ){
+            holder.gradBtn.setVisibility(View.INVISIBLE);
         }
 
         holder.gradBtn.setOnClickListener(v->{
