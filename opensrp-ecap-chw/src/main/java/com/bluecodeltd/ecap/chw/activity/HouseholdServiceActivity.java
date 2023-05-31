@@ -129,35 +129,6 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
         showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
 
 } else {
-    if (model != null) {
-        final String YES = "yes";
-        final String NO = "no";
-
-        boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
-        boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
-        boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
-        boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
-        boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
-        boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
-        boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
-        boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
-        boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
-        boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
-        boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
-        boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
-        boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
-        boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
-        boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
-        boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
-
-        if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
-                && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
-                && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
-                && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
-
-            showDialogBox(house.getCaregiver_name() + "`s household graduated");
-        }
-    } else {
         try {
             FormUtils formUtils = new FormUtils(this);
             JSONObject indexRegisterForm;
@@ -173,7 +144,7 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+
 
 }
 
