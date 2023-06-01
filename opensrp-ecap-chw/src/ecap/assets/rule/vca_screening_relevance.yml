@@ -261,7 +261,7 @@ actions:
 name: step3_subpop4_information_toast
 description: subpop4_information_toast calculation
 priority: 1
-condition: "step1_agyw_sexually_active.contains('yes') && step1_agyw_food_or_economically_insecure.contains('yes')"
+condition: "step1_agyw_sexually_active.contains('yes') || step1_agyw_food_or_economically_insecure.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
