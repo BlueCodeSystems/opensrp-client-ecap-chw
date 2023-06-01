@@ -26,6 +26,7 @@ public class WeServiceCaregiverModel {
     private String we_loan2_use;
     private String sold_items;
     private String other_sold_item;
+    private  String we_loans_taken_in_period;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -217,5 +218,13 @@ public class WeServiceCaregiverModel {
 
     public void setOther_sold_item(String other_sold_item) {
         this.other_sold_item = other_sold_item;
+    }
+
+    public String getWe_loans_taken_in_period() {
+        return we_loans_taken_in_period;
+    }
+
+    public void setWe_loans_taken_in_period(String we_loans_taken_in_period) {
+        this.we_loans_taken_in_period = we_loans_taken_in_period;
     }
 }
