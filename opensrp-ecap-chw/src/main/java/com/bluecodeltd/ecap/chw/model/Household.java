@@ -5,6 +5,8 @@ public class Household {
 
     private String unique_id;
     private String caseworker_name;
+    //household_case_status
+    private String household_case_status;
     private String screening_location_home;
     private String biological_children;
     private String first_name;
@@ -770,5 +772,13 @@ public class Household {
 
     public void setMother_screening_date(String mother_screening_date) {
         this.mother_screening_date = mother_screening_date;
+    }
+
+    public String getHousehold_case_status() {
+        return household_case_status;
+    }
+
+    public void setHousehold_case_status(String household_case_status) {
+        this.household_case_status = household_case_status;
     }
 }

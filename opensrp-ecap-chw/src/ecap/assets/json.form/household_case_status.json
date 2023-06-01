@@ -68,10 +68,10 @@
           "toaster_type": "info"
         },
         {
-          "key": "case_status",
+          "key": "household_case_status",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "case_status",
+          "openmrs_entity_id": "household_case_status",
           "type": "native_radio",
           "label": "Household Case record status",
           "options": [

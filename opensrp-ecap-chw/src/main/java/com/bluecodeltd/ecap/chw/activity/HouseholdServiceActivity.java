@@ -125,7 +125,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
     showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
 
-} else if (house.getCase_status().equals("0") || house.getCase_status().equals("2")) {
+} else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
         showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
 
 } else {
