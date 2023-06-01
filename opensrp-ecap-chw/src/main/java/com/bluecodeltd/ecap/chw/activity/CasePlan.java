@@ -196,7 +196,8 @@ public class CasePlan extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, false);
 
                 Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-
+                finish();
+                startActivity(getIntent());
 
             } catch (Exception e) {
                 Timber.e(e);
