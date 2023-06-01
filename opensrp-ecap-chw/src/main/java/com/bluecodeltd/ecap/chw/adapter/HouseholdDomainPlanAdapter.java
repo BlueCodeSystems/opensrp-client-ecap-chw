@@ -137,7 +137,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         holder.editme.setOnClickListener(v -> {
             Household household = HouseholdDao.getHousehold(casePlan.getHousehold_id());
 
-          if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
+          if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
                 showDialogBox(casePlan.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
                 if (v.getId() == R.id.edit_me) {

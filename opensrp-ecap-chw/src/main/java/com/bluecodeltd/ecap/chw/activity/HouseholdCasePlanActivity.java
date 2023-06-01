@@ -318,7 +318,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     }
     public void getGraduationBenchmarkStatus(String householdId){
         Household household = HouseholdDao.getHousehold(householdId);
-        if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
+        if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
             showDialogBox(household.getHousehold_id(), "`s has been inactive or de-registered");
         } else {
             addVulnarability();
