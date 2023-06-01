@@ -165,7 +165,8 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
                 Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-
+                finish();
+                startActivity(getIntent());
 
             } catch (Exception e) {
                 Timber.e(e);

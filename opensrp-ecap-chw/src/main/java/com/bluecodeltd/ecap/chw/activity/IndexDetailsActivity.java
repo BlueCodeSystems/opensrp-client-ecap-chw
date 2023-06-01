@@ -420,8 +420,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         switch (id){
             case R.id.fab:
-                if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
-                    showDialogBoxForAlreadyConductedVisits();
+                if(child.getCase_status() != null && (child.getCase_status().equals("0") || child.getCase_status().equals("2"))){
+                    showDeregisteredStatus();
                 } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
                fab.setVisibility(View.INVISIBLE);
             } else {
@@ -1393,7 +1393,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
      }
 
  }
-    public void showDialogBoxForAlreadyConductedVisits(){
+    public void showDeregisteredStatus(){
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
