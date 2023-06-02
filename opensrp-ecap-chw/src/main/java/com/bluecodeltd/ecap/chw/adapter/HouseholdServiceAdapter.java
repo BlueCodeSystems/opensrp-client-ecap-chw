@@ -132,7 +132,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         holder.linearLayout.setOnClickListener(v -> {
             Household household = HouseholdDao.getHousehold(service.getHousehold_id());
-           if (household.getCase_status().equals("0") || household.getCase_status().equals("2")) {
+           if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
                 showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
                 if (v.getId() == R.id.itemm) {

@@ -247,6 +247,8 @@ public class HouseholdDao extends AbstractDao {
 
             Household record = new Household();
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            //household_case_status
+            record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setGender(getCursorValue(c, "gender"));
