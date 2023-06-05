@@ -384,8 +384,8 @@
         "hint": "How long has a child been on ART?",
         "edit_type": "number",
         "v_regex": {
-          "value": "^(0?[1-9]|1[0-2])$",
-          "err": "The number of months must be between 1 and 12 (inclusive)"
+          "value": "^\\d+$",
+          "err": "The months value must be a valid number"
         },
         "relevance": {
           "step1:child_art": {

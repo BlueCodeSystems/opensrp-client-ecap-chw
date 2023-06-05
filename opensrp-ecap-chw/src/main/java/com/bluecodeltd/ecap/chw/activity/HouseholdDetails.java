@@ -1601,7 +1601,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
     }
     public void getDeregistrationStatus(){
-            if (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2")){
+            if (house.getHousehold_case_status() != null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))){
                 fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                 showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
             } else {
