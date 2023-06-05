@@ -134,13 +134,10 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-
             boolean is_edit_mode = false;
-
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
             JSONObject jsonFormObject = null;
@@ -150,12 +147,11 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
 
             try {
-
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
                 if (childIndexEventClient == null) {
@@ -165,14 +161,11 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
                 Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                finish();
-                startActivity(getIntent());
-
             } catch (Exception e) {
                 Timber.e(e);
             }
-
         }
+
         finish();
         startActivity(getIntent());
     }
