@@ -6,7 +6,7 @@ public class GraduationBenchmarkModel {
             school_fees,medical_costs,record_abuse,caregiver_beaten,
             child_beaten,aware_sexual,against_will,stable_guardian,
             children_in_school,in_school,year_school,repeat_school,
-            additional_information;
+            additional_information,graduation_status;
 
     public String getHousehold_id() {
         return household_id;
@@ -174,5 +174,13 @@ public class GraduationBenchmarkModel {
 
     public void setAdditional_information(String additional_information) {
         this.additional_information = additional_information;
+    }
+
+    public String getGraduation_status() {
+        return graduation_status;
+    }
+
+    public void setGraduation_status(String graduation_status) {
+        this.graduation_status = graduation_status;
     }
 }

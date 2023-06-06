@@ -872,6 +872,8 @@
           }
         }
       }
+
+
     ]
   },
   "step10": {
@@ -897,6 +899,20 @@
           "rules-engine": {
             "ex-rules": {
               "rules-file": "graduation_assessment.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "graduation_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "graduation_status",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "grad_calculation.yml"
             }
           }
         }

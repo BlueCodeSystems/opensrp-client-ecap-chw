@@ -3036,6 +3036,13 @@
           "json_mapping": {
             "field": "attributes.additional_information"
           }
+        },
+        {
+          "column_name": "graduation_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.graduation_status"
+          }
         }
       ]
     },

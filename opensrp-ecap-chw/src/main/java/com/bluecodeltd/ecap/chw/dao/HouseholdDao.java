@@ -379,6 +379,7 @@ public class HouseholdDao extends AbstractDao {
             model.setYear_school(getCursorValue(c, "year_school"));
             model.setRepeat_school(getCursorValue(c, "repeat_school"));
             model.setAdditional_information(getCursorValue(c, "additional_information"));
+            model.setGraduation_status(getCursorValue(c, "graduation_status"));
 
             return model;
         };
