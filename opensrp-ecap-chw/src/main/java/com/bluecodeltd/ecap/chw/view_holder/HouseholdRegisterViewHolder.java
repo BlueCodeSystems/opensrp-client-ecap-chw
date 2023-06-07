@@ -43,7 +43,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
-        isGraduated = checkIfGraduated(householdId);
+        isGraduated = checkGraduationStatus(householdId);
 
         if(isGraduated){
             homeIcon.setImageResource(R.mipmap.graduation);
@@ -104,47 +104,58 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
 
     }
+public boolean checkGraduationStatus(String householdId){
+    GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
 
-    public  boolean checkIfGraduated (String householdId){
-
-        boolean check = false;
-
-       // check = GraduationDao.checkHouseholdGratuated(householdId);
-        GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
-
-        if (model != null) {
-            final String YES = "yes";
-            final String NO = "no";
-
-            boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
-            boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
-            boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
-            boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
-            boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
-            boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
-            boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
-            boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
-            boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
-            boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
-            boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
-            boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
-            boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
-            boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
-            boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
-            boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
-
-            if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
-                    && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
-                    && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
-                    && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
-
-                homeIcon.setImageResource(R.mipmap.graduation);
-                check = true;
-            }
+    boolean check = false;
+    if (model != null) {
+        if (model.getGraduation_status() != null && model.getGraduation_status().equals("1")) {
+            homeIcon.setImageResource(R.mipmap.graduation);
+            check = true;
         }
-
-        return check;
     }
+    return check;
+}
+//    public  boolean checkIfGraduated (String householdId){
+//
+//        boolean check = false;
+//
+//       // check = GraduationDao.checkHouseholdGratuated(householdId);
+//        GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
+//
+//        if (model != null) {
+//            final String YES = "yes";
+//            final String NO = "no";
+//
+//            boolean isEnrolledInHivProgram = model.getHiv_status_enrolled() != null && YES.equals(model.getHiv_status_enrolled());
+//            boolean isCaregiverEnrolledInHivProgram = model.getCaregiver_hiv_status_enrolled() != null && YES.equals(model.getCaregiver_hiv_status_enrolled());
+//            boolean isVirallySuppressed = model.getVirally_suppressed() != null && YES.equals(model.getVirally_suppressed());
+//            boolean isPreventionApplied = model.getPrevention() != null && YES.equals(model.getPrevention());
+//            boolean isUndernourished = model.getUndernourished() != null && YES.equals(model.getUndernourished());
+//            boolean hasSchoolFees = model.getSchool_fees() != null && YES.equals(model.getSchool_fees());
+//            boolean hasMedicalCosts = model.getMedical_costs() != null && YES.equals(model.getMedical_costs());
+//            boolean isRecordAbuseAbsent = model.getRecord_abuse() != null && NO.equals(model.getRecord_abuse());
+//            boolean isCaregiverBeatenAbsent = model.getCaregiver_beaten() != null && NO.equals(model.getCaregiver_beaten());
+//            boolean isChildBeatenAbsent = model.getChild_beaten() != null && NO.equals(model.getChild_beaten());
+//            boolean isAgainstWillAbsent = model.getAgainst_will() != null && NO.equals(model.getAgainst_will());
+//            boolean isStableGuardian = model.getStable_guardian() != null && YES.equals(model.getStable_guardian());
+//            boolean hasChildrenInSchool = model.getChildren_in_school() != null && YES.equals(model.getChildren_in_school());
+//            boolean isInSchool = model.getIn_school() != null && YES.equals(model.getIn_school());
+//            boolean hasYearInSchool = model.getYear_school() != null && YES.equals(model.getYear_school());
+//            boolean hasRepeatedSchool = model.getRepeat_school() != null && YES.equals(model.getRepeat_school());
+//
+//            if (isEnrolledInHivProgram && isCaregiverEnrolledInHivProgram && isVirallySuppressed && isPreventionApplied
+//                    && isUndernourished && hasSchoolFees && hasMedicalCosts && isRecordAbuseAbsent
+//                    && isCaregiverBeatenAbsent && isChildBeatenAbsent && isAgainstWillAbsent && isStableGuardian
+//                    && hasChildrenInSchool && isInSchool && hasYearInSchool && hasRepeatedSchool) {
+//
+//                homeIcon.setImageResource(R.mipmap.graduation);
+//                check = true;
+//            }
+//        }
+//
+//        return check;
+//    }
 
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");

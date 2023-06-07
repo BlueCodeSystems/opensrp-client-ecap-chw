@@ -173,12 +173,31 @@
         }
       },
       {
+        "key": "date_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_art",
+        "type": "edit_text",
+        "hint": "Indicate the number of months the Primary Caregiver has been on ART ",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Indicate the number of months the Primary Caregiver has been on ART "
+        },
+        "relevance": {
+          "step1:caregiver_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_appointment",
         "type": "native_radio",
-        "label": "Did Caregiver meet the last clinical/pharmacy appointment? ",
+        "label": "Check the ART appointment card.  Did Caregiver meet the last clinical/pharmacy appointment?",
         "options": [
           {
             "key": "yes",
@@ -225,7 +244,6 @@
           }
         }
       },
-
       {
         "key": "art_medication",
         "openmrs_entity_parent": "",
@@ -252,7 +270,6 @@
           }
         }
       },
-
       {
         "key": "mmd",
         "openmrs_entity_parent": "",
@@ -279,13 +296,14 @@
           }
         }
       },
+
       {
         "key": "mmd_months",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mmd_months",
         "type": "edit_text",
-        "hint": "Indicate the number of MMD months of drugs ",
+        "hint": "Indicate the number of months of drugs they collected during their last visit",
         "edit_type": "number",
         "v_required": {
           "value": false,
@@ -298,25 +316,7 @@
           }
         }
       },
-      {
-        "key": "date_art",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_art",
-        "type": "edit_text",
-        "hint": "Indicate the number of months the Primary Caregiver has been on ART ",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Indicate the number of months the Primary Caregiver has been on ART "
-        },
-        "relevance": {
-          "step1:caregiver_art": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
+
       {
         "key": "six_months",
         "openmrs_entity_parent": "",
@@ -363,27 +363,12 @@
       },
 
       {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Health Facility",
-        "relevance": {
-          "step1:six_months": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
         "key": "vl_last_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
-        "hint": "VL Result",
+        "hint": "Verify with health facility and indicate the VL result",
         "edit_type": "number",
         "read_only": false,
         "relevance": {
@@ -393,23 +378,10 @@
           }
         }
       },
-      {
-        "key": "other_hiv_positive",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "other_hiv_positive",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "name",
-        "read_only": false,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_for_caregiver.yml"
-            }
-          }
-        }
-      },
+
+
+
+
 
       {
         "key": "date_hiv",
