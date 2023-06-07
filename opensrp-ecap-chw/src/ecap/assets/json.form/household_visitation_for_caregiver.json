@@ -178,7 +178,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_art",
         "type": "edit_text",
-        "hint": "Indicate the number of months the Primary Caregiver has been on ART ",
+        "hint": "How long has Primary Caregiver been on ART ",
         "edit_type": "number",
         "v_required": {
           "value": false,
@@ -264,7 +264,7 @@
           }
         ],
         "relevance": {
-          "step1:caregiver_art": {
+          "step1:art_appointment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -290,9 +290,10 @@
           }
         ],
         "relevance": {
-          "step1:caregiver_hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"positive\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_caregiver.yml"
+            }
           }
         }
       },
