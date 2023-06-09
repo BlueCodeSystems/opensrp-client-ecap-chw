@@ -96,9 +96,8 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     }
 
     public void fetchData(){
-
+        domainList.clear();
         domainList.addAll(HouseholdDao.getDomainsById(householdId, caseDate));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
@@ -113,7 +112,6 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             domainBtn2.setVisibility(View.VISIBLE);
         }
     }
-
 
     public void startFormActivity(JSONObject jsonObject) {
 
