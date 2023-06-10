@@ -79,20 +79,22 @@ public class CasePlan extends AppCompatActivity {
 
     }
 
-    public void fetchData(){
-
+    public void fetchData() {
+        domainList.clear();
         domainList.addAll(IndexPersonDao.getDomainsById(childId, caseDate));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(CasePlan.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
+            recyclerView.setAdapter(recyclerViewadapter);
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
-        if (recyclerViewadapter.getItemCount() > 0 && domainList.size() > 0){
-
+        if (recyclerViewadapter.getItemCount() > 0) {
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
         }
@@ -204,7 +206,7 @@ public class CasePlan extends AppCompatActivity {
                     case "Domain":
                         Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
                         recreate();
-
+                        refresh();
                         break;
 
                 }
@@ -328,6 +330,11 @@ public class CasePlan extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+    public void refresh(){
+        finish();
+        startActivity(getIntent());
+    }
+
 
 
 }
