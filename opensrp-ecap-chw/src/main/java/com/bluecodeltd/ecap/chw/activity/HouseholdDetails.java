@@ -171,6 +171,7 @@ public class HouseholdDetails extends AppCompatActivity {
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
         weServiceMapper = new ObjectMapper();
+        assessmentMapper = new ObjectMapper();
 
         callFab = findViewById(R.id.callFab);
 
@@ -583,7 +584,7 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.cassessment:
                 try {
 
-                    assessmentMapper = new ObjectMapper();
+
 
                     indexRegisterForm = formUtils.getFormJson("hh_caregiver_assessment");
 
