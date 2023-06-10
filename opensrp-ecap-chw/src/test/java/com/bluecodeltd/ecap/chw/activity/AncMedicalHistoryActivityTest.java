@@ -6,13 +6,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.anc.domain.MemberObject;
 import org.smartregister.chw.anc.domain.Visit;
 import org.smartregister.chw.core.activity.CoreAncMedicalHistoryActivity;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author rkodev
  */
-public class AncMedicalHistoryActivityTest extends BaseUnitTest {
+public class AncMedicalHistoryActivityTest extends AutoCloseKoinTest {
 
     protected AncMedicalHistoryActivity activity;
     protected ActivityController<AncMedicalHistoryActivity> controller;

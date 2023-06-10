@@ -5,9 +5,10 @@ import android.content.Context;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.R;
 import org.smartregister.chw.anc.model.BaseAncHomeVisitAction;
 import org.smartregister.chw.core.utils.NativeFormProcessor;
@@ -15,7 +16,7 @@ import org.smartregister.chw.core.utils.NativeFormProcessor;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ANCCardActionTest extends BaseUnitTest {
+public class ANCCardActionTest extends AutoCloseKoinTest {
 
     @Test
     public void testOnPayloadReceive() throws Exception {

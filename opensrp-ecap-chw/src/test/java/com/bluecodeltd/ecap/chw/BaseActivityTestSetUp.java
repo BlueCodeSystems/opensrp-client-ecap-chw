@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import org.junit.Before;
 import org.junit.Rule;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -15,7 +16,7 @@ import org.robolectric.android.controller.ActivityController;
  * @param <T>
  * @author rkodev
  */
-public abstract class BaseActivityTestSetUp<T extends Activity> extends BaseUnitTest {
+public abstract class BaseActivityTestSetUp<T extends Activity> extends AutoCloseKoinTest {
 
     protected T activity;
     protected ActivityController<T> controller;

@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -17,7 +18,7 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.util.ReflectionHelpers;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.activity.AncHomeVisitActivity;
 import com.bluecodeltd.ecap.chw.activity.AncMemberProfileActivity;
 import org.smartregister.chw.core.presenter.AncRegisterFragmentPresenter;
@@ -27,7 +28,7 @@ import org.smartregister.commonregistry.CommonRepository;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-public class AncRegisterFragmentTest extends BaseUnitTest {
+public class AncRegisterFragmentTest extends AutoCloseKoinTest {
     @Mock
     private Context context;
 

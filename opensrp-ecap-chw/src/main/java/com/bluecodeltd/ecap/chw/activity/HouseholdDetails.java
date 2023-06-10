@@ -475,6 +475,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworkerphone = prefs.getString("phone", "Anonymous");
                     String caseworkername = prefs.getString("caseworker_name", "Anonymous");
+                    String caseworkerProvince= prefs.getString("province", "Anonymous");
 
                     householdMapper = new ObjectMapper();
 
@@ -498,6 +499,15 @@ public class HouseholdDetails extends AppCompatActivity {
                         caseworker_name_object.remove(JsonFormUtils.VALUE);
                         try {
                             caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    JSONObject caseworker_province = getFieldJSONObject(fields(indexRegisterForm, "step2"), "province");
+                    if (caseworker_province != null) {
+                        caseworker_province.remove(JsonFormUtils.VALUE);
+                        try {
+                            caseworker_province.put(JsonFormUtils.VALUE, caseworkerProvince);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

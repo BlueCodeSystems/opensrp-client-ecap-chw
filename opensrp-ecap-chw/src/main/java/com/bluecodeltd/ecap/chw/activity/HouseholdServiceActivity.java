@@ -199,10 +199,11 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                 e.printStackTrace();
             }
 
-
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
 
             try {
 
@@ -212,11 +213,20 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
-
-                Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
 
+                switch (EncounterType) {
+
+                    case "Household Service Report":
+
+                        Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        getIntent();
+
+                        break;
+
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -258,7 +268,7 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 

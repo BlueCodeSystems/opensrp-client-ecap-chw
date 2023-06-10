@@ -6,9 +6,10 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.R;
 import org.smartregister.chw.anc.model.BaseAncHomeVisitAction;
 import org.smartregister.chw.core.utils.NativeFormProcessor;
@@ -16,7 +17,7 @@ import org.smartregister.chw.core.utils.NativeFormProcessor;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SleepingUnderLLITNActionTest extends BaseUnitTest {
+public class SleepingUnderLLITNActionTest extends AutoCloseKoinTest {
 
     private SleepingUnderLLITNAction action;
     private final Context context = RuntimeEnvironment.application;

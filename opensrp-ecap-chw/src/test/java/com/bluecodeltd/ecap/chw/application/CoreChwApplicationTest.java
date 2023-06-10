@@ -2,13 +2,13 @@ package com.bluecodeltd.ecap.chw.application;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mockito;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.immunization.ImmunizationLibrary;
 import org.smartregister.reporting.ReportingLibrary;
 
-public class CoreChwApplicationTest extends BaseUnitTest {
+public class CoreChwApplicationTest extends AutoCloseKoinTest {
 
     @Test
     public void immunizationLibraryIsInitialisedOnStart() {

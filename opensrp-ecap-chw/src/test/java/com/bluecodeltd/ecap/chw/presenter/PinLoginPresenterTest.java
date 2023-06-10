@@ -2,15 +2,16 @@ package com.bluecodeltd.ecap.chw.presenter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.contract.PinLoginContract;
 import com.bluecodeltd.ecap.chw.pinlogin.PinLogger;
 
-public class PinLoginPresenterTest extends BaseUnitTest {
+public class PinLoginPresenterTest extends AutoCloseKoinTest {
 
     @Mock
     private PinLoginContract.View view;
