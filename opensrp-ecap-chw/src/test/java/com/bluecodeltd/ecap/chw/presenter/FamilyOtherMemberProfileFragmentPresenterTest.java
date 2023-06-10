@@ -3,15 +3,15 @@ package com.bluecodeltd.ecap.chw.presenter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.family.contract.FamilyOtherMemberProfileFragmentContract;
 
 /**
  * Created by keyman on 11/03/2019.
  */
-public class FamilyOtherMemberProfileFragmentPresenterTest extends BaseUnitTest {
+public class FamilyOtherMemberProfileFragmentPresenterTest extends AutoCloseKoinTest {
 
     @Mock
     private FamilyOtherMemberProfileFragmentContract.View view;

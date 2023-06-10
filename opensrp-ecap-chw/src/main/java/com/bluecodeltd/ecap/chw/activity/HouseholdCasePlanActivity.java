@@ -95,19 +95,22 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
     }
 
-    public void fetchData(){
+    public void fetchData() {
         domainList.clear();
         domainList.addAll(HouseholdDao.getDomainsById(householdId, caseDate));
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new HouseholdDomainPlanAdapter(domainList, HouseholdCasePlanActivity.this,"caregiver_domain" );
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new HouseholdDomainPlanAdapter(domainList, HouseholdCasePlanActivity.this, "caregiver_domain");
+            recyclerView.setAdapter(recyclerViewadapter);
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
+        if (recyclerViewadapter.getItemCount() > 0) {
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
         }
@@ -148,6 +151,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
@@ -156,14 +160,21 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                switch (EncounterType) {
+
+                    case "Caregiver Domain":
+                        Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                        recreate();
+                        refresh();
+                        break;
+
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-
         finish();
         startActivity(getIntent());
     }
@@ -208,7 +219,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 
@@ -315,6 +326,10 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             addVulnarability();
         }
 
+    }
+    public void refresh(){
+        finish();
+        startActivity(getIntent());
     }
 
     public void showDialogBox(String householdId,String message){

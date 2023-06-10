@@ -49,7 +49,7 @@
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.province"
+            "field": "attributes.stateProvince"
           }
         },
         {
