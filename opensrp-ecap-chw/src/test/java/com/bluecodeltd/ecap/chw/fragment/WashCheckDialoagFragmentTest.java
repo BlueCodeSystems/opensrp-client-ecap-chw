@@ -7,12 +7,12 @@ import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
-public class WashCheckDialoagFragmentTest extends BaseUnitTest {
+public class WashCheckDialoagFragmentTest extends AutoCloseKoinTest {
 
     private WashCheckDialogFragment fragment;
 

@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.GuideBooksFragmentContract;
 
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 
-public class GuideBooksAdapterTest extends BaseUnitTest {
+public class GuideBooksAdapterTest extends AutoCloseKoinTest {
 
     private GuideBooksAdapter guideBooksAdapter;
 

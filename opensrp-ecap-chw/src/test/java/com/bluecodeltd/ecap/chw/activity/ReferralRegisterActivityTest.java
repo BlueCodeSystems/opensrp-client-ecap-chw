@@ -4,12 +4,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
-public class ReferralRegisterActivityTest extends BaseUnitTest {
+public class ReferralRegisterActivityTest extends AutoCloseKoinTest {
 
     private ReferralRegisterActivity referralRegisterActivity;
     private ActivityController<ReferralRegisterActivity> controller;

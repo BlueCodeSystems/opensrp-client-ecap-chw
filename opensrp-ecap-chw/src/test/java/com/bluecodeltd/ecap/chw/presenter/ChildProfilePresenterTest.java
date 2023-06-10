@@ -6,10 +6,10 @@ import android.content.res.Resources;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.core.contract.CoreChildProfileContract;
 import com.bluecodeltd.ecap.chw.interactor.ChildProfileInteractor;
 import org.smartregister.commonregistry.CommonPersonObject;
@@ -17,7 +17,7 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 
 import java.util.UUID;
 
-public class ChildProfilePresenterTest extends BaseUnitTest {
+public class ChildProfilePresenterTest extends AutoCloseKoinTest {
 
     private static final String testBaseEntityId = UUID.randomUUID().toString();
     @Mock

@@ -5,14 +5,14 @@ import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
 /**
  * Created by Qazi Abubakar
  */
-public class FamilyKitDialogFragmentTest extends BaseUnitTest {
+public class FamilyKitDialogFragmentTest extends AutoCloseKoinTest {
     private FamilyKitDialogFragment familyKitDialogFragment;
 
     @Before
