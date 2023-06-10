@@ -6,12 +6,12 @@ import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
-public class PncRegisterFragmentTest extends BaseUnitTest {
+public class PncRegisterFragmentTest extends AutoCloseKoinTest {
 
     @Mock
     private FragmentActivity activity;

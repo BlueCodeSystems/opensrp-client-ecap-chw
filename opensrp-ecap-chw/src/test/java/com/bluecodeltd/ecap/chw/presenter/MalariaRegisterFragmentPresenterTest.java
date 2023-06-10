@@ -3,12 +3,12 @@ package com.bluecodeltd.ecap.chw.presenter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.malaria.contract.MalariaRegisterFragmentContract;
 
-public class MalariaRegisterFragmentPresenterTest extends BaseUnitTest {
+public class MalariaRegisterFragmentPresenterTest extends AutoCloseKoinTest {
 
     private MalariaRegisterFragmentPresenter presenter;
 

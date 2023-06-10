@@ -3,10 +3,10 @@ package com.bluecodeltd.ecap.chw.util;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.DBConstants;
 
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChildUtilsTest extends BaseUnitTest {
+public class ChildUtilsTest extends AutoCloseKoinTest {
 
 
     @Mock

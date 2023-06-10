@@ -184,6 +184,10 @@ public class CasePlan extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
+                is_edit_mode = true;
+            }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
 
@@ -193,18 +197,22 @@ public class CasePlan extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
-                Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                finish();
-                startActivity(getIntent());
+                switch (EncounterType) {
+
+                    case "Domain":
+                        Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                        recreate();
+
+                        break;
+
+                }
 
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -247,7 +255,7 @@ public class CasePlan extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 

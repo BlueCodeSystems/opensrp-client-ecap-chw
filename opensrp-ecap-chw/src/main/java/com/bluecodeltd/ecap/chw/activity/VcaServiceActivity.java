@@ -216,10 +216,11 @@ public class VcaServiceActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
 
             try {
 
@@ -229,10 +230,19 @@ public class VcaServiceActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
 
+                switch (EncounterType) {
+
+                    case "VCA Service Report":
+                        Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        getIntent();
+
+                        break;
+
+                }
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -272,7 +282,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 

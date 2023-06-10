@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,14 +20,13 @@ import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.anc.contract.BaseAncMemberProfileContract;
 import org.smartregister.chw.anc.util.Constants;
 
 /**
  * @author rkodev
  */
-public class AncMemberProfileActivityTest extends BaseUnitTest {
+public class AncMemberProfileActivityTest extends AutoCloseKoinTest {
 
     private AncMemberProfileActivity activity;
 
