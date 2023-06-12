@@ -404,7 +404,9 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     //Count everyone who has been tested
-                    if(sumtested < Integer.parseInt(totalChildren)){
+
+                    Boolean allChildrenHIVStatus = IndexPersonDao.allChildrenHIVStatus(householdId);
+                    if((sumtested < Integer.parseInt(totalChildren)) || allChildrenHIVStatus.equals(false)){
                         allTested = "no";
                     } else {
                         allTested = "yes";
