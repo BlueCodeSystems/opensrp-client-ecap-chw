@@ -130,6 +130,13 @@
         "text": "Index VCA Sub Population Screening"
       },
       {
+        "key": "status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "status",
+        "type": "hidden"
+      },
+      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

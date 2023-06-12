@@ -13,6 +13,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexFragmentContract;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.HouseholdRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -92,7 +93,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     protected String getMainCondition() {
-        return "is_closed <> '1'";
+        return " status IS NULL";
     }
 
     @Override
@@ -110,9 +111,10 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
 
-        String isClosed = client.getColumnmaps().get("is_closed");
+        //String isClosed = client.getColumnmaps().get("is_closed");
+        String isClosed = HouseholdDao.getHouseholdByBaseId(client.getColumnmaps().get("base_entity_id")).getStatus();
 
-         if(isClosed.equals("1")){
+         if(isClosed != null && isClosed.equals("1")){
              Toasty.warning(getActivity(), "This household has been deleted", Toast.LENGTH_LONG, true).show();
          } else {
              goToIndexDetailActivity(client);

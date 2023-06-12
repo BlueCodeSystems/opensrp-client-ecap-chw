@@ -18,6 +18,26 @@ public class CasePlanModel implements Serializable {
     private String quarter;
     private String status;
     private String comment;
+    private String delete_status;
+
+    private String household_id;
+
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
 
     public String getUnique_id() {
         return unique_id;

@@ -5,10 +5,13 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -23,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,11 +48,11 @@ import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
-import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -146,6 +150,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -230,6 +235,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
         fab = findViewById(R.id.fab);
+        if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
+            fab.setVisibility(View.INVISIBLE);
+        }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -278,7 +288,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtAge.setText(getAge(birthdate));
             vcaAge = getAgeWithoutText(birthdate);
 
-
         } else {
             txtAge.setText("Not Set");
         }
@@ -296,6 +305,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
 
+    public int calculateAge(String dateOfBirth) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate currentDate = LocalDate.now();
+        LocalDate birthDate = LocalDate.parse(dateOfBirth, formatter);
+        Period period = Period.between(birthDate, currentDate);
+        int age = period.getYears();
+        return age;
+    }
 
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
@@ -397,13 +414,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
 
+    @SuppressLint("RestrictedApi")
     public void onClick(View v) throws JSONException {
         int id = v.getId();
 
         switch (id){
             case R.id.fab:
-
-                animateFAB();
+                if(child.getCase_status() != null && (child.getCase_status().equals("0") || child.getCase_status().equals("2"))){
+                    showDeregisteredStatus();
+                } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
+               fab.setVisibility(View.INVISIBLE);
+            } else {
+                    animateFAB();
+                }
                 break;
 
                 case R.id.vca_screening:
@@ -504,6 +527,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             Intent intent = new Intent(this, HouseholdDetails.class);
             intent.putExtra("childId",  child.getUnique_id());
             intent.putExtra("householdId",  child.getHousehold_id());
+            intent.putExtra("householdId",  child.getHousehold_id());
            // intent.putExtra("household",  child.getHousehold_id());
 
             startActivity(intent);
@@ -557,6 +581,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 i.putExtra("vca_id", indexVCA.getUnique_id());
                 i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
                 startActivity(i);
+                finish();
                 break;
 
         }
@@ -818,6 +843,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     }
                     break;
 
+
+                case "Sub Population Edit":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
 
                 case "Case Record Status":
 
@@ -1198,6 +1235,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
             switch (item.getItemId()) {
+                case R.id.refresh:
+                    finish();
+                    startActivity(getIntent());
+
+                    break;
+
                 case R.id.call:
                     String caregiverPhoneNumber = child.getCaregiver_phone();
                     if (!caregiverPhoneNumber.equals("")) {
@@ -1236,8 +1279,36 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         dialog.cancel();
 
                     }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        IndexPersonDao.deleteRecord(child.getBase_entity_id());
-                        IndexPersonDao.deleteRecordfromSearch(child.getBase_entity_id());
+                        FormUtils formUtils = null;
+                        try {
+                            formUtils = new FormUtils(this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        child.setDeleted("1");
+                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+                            try {
+                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+
+                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                                if (childIndexEventClient == null) {
+                                    return;
+                                }
+                                saveRegistration(childIndexEventClient,true);
+
+
+                            } catch (Exception e) {
+                                Timber.e(e);
+                            }
+
+
 
                         Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
                         super.onBackPressed();
@@ -1323,6 +1394,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
      }
 
  }
+    public void showDeregisteredStatus(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        dialogMessage.setText(indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " was either de-registered or inactive in the program");
+
+        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+
+    }
 
     public void buildDialog(){
         //Creating dialog box

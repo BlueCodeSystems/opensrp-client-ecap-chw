@@ -1,10 +1,15 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.DomainPlanAdapter;
+import com.bluecodeltd.ecap.chw.adapter.HouseholdDomainPlanAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -74,7 +80,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         domainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            addVulnarability();
+            getGraduationBenchmarkStatus(householdId);
 
             }
         });
@@ -82,32 +88,33 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         domainBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addVulnarability();
+                getGraduationBenchmarkStatus(householdId);
             }
         });
 
 
     }
 
-    public void fetchData(){
-
+    public void fetchData() {
+        domainList.clear();
         domainList.addAll(HouseholdDao.getDomainsById(householdId, caseDate));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new DomainPlanAdapter(domainList, HouseholdCasePlanActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new HouseholdDomainPlanAdapter(domainList, HouseholdCasePlanActivity.this, "caregiver_domain");
+            recyclerView.setAdapter(recyclerViewadapter);
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
+        if (recyclerViewadapter.getItemCount() > 0) {
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
         }
     }
-
 
     public void startFormActivity(JSONObject jsonObject) {
 
@@ -128,13 +135,10 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-
             boolean is_edit_mode = false;
-
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
             JSONObject jsonFormObject = null;
@@ -144,27 +148,32 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
-
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
                 if (childIndexEventClient == null) {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                switch (EncounterType) {
 
+                    case "Caregiver Domain":
+                        Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                        recreate();
+                        refresh();
+                        break;
 
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
-
         }
         finish();
         startActivity(getIntent());
@@ -210,7 +219,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 
@@ -295,9 +304,11 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             if(hivStatus.trim().equals("negative")){
                 indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).getJSONArray("options").remove(0);
             }
-            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", uniqueId);
+            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", householdId);
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", householdId);
-            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", caseDate);
+           // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
+            JSONObject statusObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+            statusObject.put(JsonFormUtils.VALUE, caseDate);
 
 
 
@@ -307,5 +318,39 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void getGraduationBenchmarkStatus(String householdId){
+        Household household = HouseholdDao.getHousehold(householdId);
+        if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
+            showDialogBox(household.getHousehold_id(), "`s has been inactive or de-registered");
+        } else {
+            addVulnarability();
+        }
 
+    }
+    public void refresh(){
+        finish();
+        startActivity(getIntent());
+    }
+
+    public void showDialogBox(String householdId,String message){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        Household house = HouseholdDao.getHousehold(householdId);
+        dialogMessage.setText(house.getCaregiver_name() + message);
+
+        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent householdProfile = new Intent(getBaseContext(),HouseholdDetails.class);
+        householdProfile.putExtra("householdId",householdId);
+        startActivity(householdProfile);
+    }
 }

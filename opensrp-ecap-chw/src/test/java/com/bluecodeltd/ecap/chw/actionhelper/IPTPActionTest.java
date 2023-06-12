@@ -9,11 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.robolectric.RuntimeEnvironment;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.util.JsonFormUtils;
 
-public class IPTPActionTest extends BaseUnitTest {
+public class IPTPActionTest extends AutoCloseKoinTest {
 
     @Test
     public void testEvaluatePreProcess() {

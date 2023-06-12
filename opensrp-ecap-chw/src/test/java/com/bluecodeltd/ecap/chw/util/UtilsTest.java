@@ -5,9 +5,10 @@ import android.os.Environment;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.utils.Utils;
@@ -18,7 +19,7 @@ import static com.bluecodeltd.ecap.chw.util.Utils.formatDateForVisual;
 import static com.bluecodeltd.ecap.chw.util.Utils.getClientName;
 import static com.bluecodeltd.ecap.chw.util.Utils.getFormattedDateFromTimeStamp;
 
-public class UtilsTest extends BaseUnitTest {
+public class UtilsTest extends AutoCloseKoinTest {
 
     @Before
     public void setUp() {

@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import android.util.Log;
-
 import org.smartregister.dao.AbstractDao;
 
 import java.util.List;
@@ -10,7 +8,7 @@ public class CasePlanDao extends AbstractDao {
 
     public static int checkCasePlan (String childID) {
 
-        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC";
+        String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
@@ -23,7 +21,7 @@ public class CasePlanDao extends AbstractDao {
 
     public static String countVulnerabilities (String uniqueId, String cpDate){
 
-        String sql = "SELECT COUNT(*) v FROM ec_vca_case_plan_domain WHERE unique_id = '" + uniqueId + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL";
+        String sql = "SELECT COUNT(*) v FROM ec_vca_case_plan_domain WHERE unique_id = '" + uniqueId + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
@@ -38,7 +36,7 @@ public class CasePlanDao extends AbstractDao {
 
     public static int getByIDNumberOfCaregiverCasepalns (String Id) {
 
-        String sql = "SELECT COUNT(*) plans FROM ec_caregiver_case_plan WHERE household_id = '" + Id + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC";
+        String sql = "SELECT COUNT(*) plans FROM ec_caregiver_case_plan WHERE household_id = '" + Id + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
@@ -54,9 +52,9 @@ public class CasePlanDao extends AbstractDao {
 
     }
 
-    public static String countCaregiverVulnerabilities (String uniqueId, String cpDate){
+    public static String countCaregiverVulnerabilities (String householdID, String cpDate){
 
-        String sql = "SELECT COUNT(*) v FROM ec_caregiver_case_plan_domain WHERE unique_id = '" + uniqueId + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL";
+        String sql = "SELECT COUNT(*) v FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 

@@ -7,10 +7,15 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +48,10 @@ import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
@@ -111,7 +119,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
-
+    public ArrayList houseHoldsContainingSameId;
 
     Caregiver caregiver;
     AlertDialog.Builder builder, screeningBuilder;
@@ -163,6 +171,7 @@ public class HouseholdDetails extends AppCompatActivity {
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
         weServiceMapper = new ObjectMapper();
+        assessmentMapper = new ObjectMapper();
 
         callFab = findViewById(R.id.callFab);
 
@@ -176,6 +185,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         fab = findViewById(R.id.fabx);
+        changeFabIconColor();
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -394,7 +404,9 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     //Count everyone who has been tested
-                    if(sumtested < Integer.parseInt(totalChildren)){
+
+                    Boolean allChildrenHIVStatus = IndexPersonDao.allChildrenHIVStatus(householdId);
+                    if((sumtested < Integer.parseInt(totalChildren)) || allChildrenHIVStatus.equals(false)){
                         allTested = "no";
                     } else {
                         allTested = "yes";
@@ -454,9 +466,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.fabx:
-
-                animateFAB();
-
+                getDeregistrationStatus();
                 break;
 
             case R.id.screenBtn:
@@ -468,6 +478,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String caseworkerphone = prefs.getString("phone", "Anonymous");
                     String caseworkername = prefs.getString("caseworker_name", "Anonymous");
+                    String caseworkerProvince= prefs.getString("province", "Anonymous");
 
                     householdMapper = new ObjectMapper();
 
@@ -491,6 +502,15 @@ public class HouseholdDetails extends AppCompatActivity {
                         caseworker_name_object.remove(JsonFormUtils.VALUE);
                         try {
                             caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    JSONObject caseworker_province = getFieldJSONObject(fields(indexRegisterForm, "step2"), "province");
+                    if (caseworker_province != null) {
+                        caseworker_province.remove(JsonFormUtils.VALUE);
+                        try {
+                            caseworker_province.put(JsonFormUtils.VALUE, caseworkerProvince);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -541,9 +561,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
 
-
-                    //TODO
-                    // CoreJsonFormUtils.populateJsonForm(indexRegisterForm, client.getColumnmaps());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
 
@@ -569,7 +586,7 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.cassessment:
                 try {
 
-                    assessmentMapper = new ObjectMapper();
+
 
                     indexRegisterForm = formUtils.getFormJson("hh_caregiver_assessment");
 
@@ -829,6 +846,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "Graduation":
                     case "Household Visitation For Caregiver":
                     case "Hiv Assessment For Caregiver":
+                    case "Household Case Status":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
@@ -837,13 +855,11 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Caregiver Case Plan":
-                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).optString("value");
+                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).optString("value");
                         AddVulnarabilitiesToCasePlan(dateId);
                         break;
 
                 }
-
-
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -891,6 +907,19 @@ public class HouseholdDetails extends AppCompatActivity {
 
             switch (encounterType) {
 
+                case "Mother Edit":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_index");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
                 case "MUAC Score":
 
                     if (fields != null) {
@@ -917,7 +946,47 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     break;
 
+                case "Sub Population":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+
+                case "Sub Population Edit":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+
                 case "Household Screening":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+
+                case "Household Screening Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -1026,6 +1095,17 @@ public class HouseholdDetails extends AppCompatActivity {
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
+                case "Household Case Status":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
 
                     break;
 
@@ -1073,7 +1153,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    Timber.e(e);
+                    Timber.e(e.getMessage());
                 }
             }
 
@@ -1095,6 +1175,63 @@ public class HouseholdDetails extends AppCompatActivity {
     private ECSyncHelper getECSyncHelper() {
         return ChwApplication.getInstance().getEcSyncHelper();
     }
+    public boolean saveRegistrationForHouseholdEditing(ChildIndexEventClient newHouseholdIndexEventClient, boolean isEditMode, String encounterType,ChildIndexEventClient oldIndex) {
+
+        Runnable runnable = () -> {
+
+            Event event = newHouseholdIndexEventClient.getEvent();
+            Client client = newHouseholdIndexEventClient.getClient();
+
+            Client olDclient = oldIndex.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                    JSONObject existingClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(olDclient));
+
+                    if (isEditMode) {
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                } catch (Exception e) {
+                    Timber.e(e.getMessage());
+                }
+            }
+
+        };
+
+
+        try {
+            AppExecutors appExecutors = new AppExecutors();
+            appExecutors.diskIO().execute(runnable);
+            return true;
+        } catch (Exception exception) {
+            Timber.e(exception);
+            return false;
+        }
+
+
+    }
+
 
     public FormTag getFormTag() {
         FormTag formTag = new FormTag();
@@ -1306,6 +1443,13 @@ public class HouseholdDetails extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+
+                break;
+
             case R.id.call:
                 String caregiverPhoneNumber = house.getCaregiver_phone();
                 if (!caregiverPhoneNumber.equals("")) {
@@ -1328,9 +1472,25 @@ public class HouseholdDetails extends AppCompatActivity {
                     dialog.cancel();
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
-                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
 
+//                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
+//                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
+
+                    try {
+                       houseHoldsContainingSameId = (ArrayList) HouseholdDao.getDuplicatedHousehold(householdId);
+                       if(houseHoldsContainingSameId != null || houseHoldsContainingSameId.size() > 0 )
+                       {
+                           for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
+                           {
+                               Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+                               changeHouseholdStatus(householdToDelete);
+                           }
+                       }
+                     deleteFamilyChildren(householdId);
+                       deleteMothers(householdId);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
                     super.onBackPressed();
                 }));
@@ -1343,10 +1503,171 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                 break;
+            case R.id.case_status:
+                try {
+                    openFormUsingFormUtils(getBaseContext(),"household_case_status");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                break;
+
 
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void changeHouseholdStatus(Household house) throws Exception {
+
+        //open household screening form
+        FormUtils formUtils = null;
+        formUtils = new FormUtils(this);
+        JSONObject hhScreeningForm = formUtils.getFormJson("hh_edit");
+        house.setStatus("1");
+        CoreJsonFormUtils.populateJsonForm(hhScreeningForm, new ObjectMapper().convertValue(house, Map.class));
+        hhScreeningForm.put("entity_id", house.getBase_entity_id());
+        Log.d("Household JSON RESULTS", hhScreeningForm.toString());
+
+        try {
+
+            ChildIndexEventClient childIndexEventClient = processRegistration(hhScreeningForm.toString());
+            if (childIndexEventClient == null) {
+                return;
+            }
+            saveRegistration(childIndexEventClient,true,"Household Screening Edit");
+           // saveRegistrationForHouseholdEditing(childIndexEventClient, true, "Household Screening",oldIndexEventClient);
+
+
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+    }
+
+
+    public void deleteMothers(String HouseholdID) throws Exception {
+        //get all Mothers
+        List<Mother> allMothers = MotherDao.getMothers(householdId);
+        FormUtils formUtils = null;
+        formUtils = new FormUtils(this);
+        if(allMothers != null && allMothers.size() > 0)
+        {
+            for( int i = 0; i < allMothers.size(); i++)
+            {
+                Mother mother = allMothers.get(i);
+                mother.setDeleted("1");
+                JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
+                CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(mother, Map.class));
+                motherForm.put("entity_id", mother.getBaseEntityID());
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(motherForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true,"Mother Edit");
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+            }
+        }
+
+
+    }
+
+
+    public void deleteFamilyChildren(String HouseholdID) throws Exception {
+        //get all family children
+        List<Child> allChildren = IndexPersonDao.getFamilyChildren(householdId);
+        FormUtils formUtils = null;
+        formUtils = new FormUtils(this);
+        if(allChildren != null && allChildren.size() > 0)
+        {
+            for( int i = 0; i < allChildren.size(); i++)
+            {
+                Child child = allChildren.get(i);
+                child.setDeleted("1");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true,"Family Member");
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+            }
+        }
+
+
+    }
+    public void getDeregistrationStatus(){
+            if (house.getHousehold_case_status() != null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))){
+                fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+            } else {
+                animateFAB();
+            }
+
+
+    }
+    public void changeFabIconColor(){
+        if (house.getHousehold_case_status() != null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))){
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+            showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+        }
+
+    }
+    public void showDialogBox(String message){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        dialogMessage.setText(message);
+
+        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+
+    }
+    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+
+
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject formToBeOpened;
+
+        formToBeOpened = formUtils.getFormJson(formName);
+
+        switch (formName) {
+
+            case "household_case_status":
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                break;
+
+        }
+
+        startFormActivity(formToBeOpened);
+    }
+
 
     public void buildDialog(){
         //Creating dialog box
@@ -1354,5 +1675,13 @@ public class HouseholdDetails extends AppCompatActivity {
         //Setting the title manually
         alert.setTitle("VCA Screening");
         alert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
+        startActivity(returnToHouseholdIndexActivity);
+        finish();
     }
 }

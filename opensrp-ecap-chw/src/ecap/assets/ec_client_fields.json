@@ -4,6 +4,13 @@
       "name": "ec_mother_index",
       "columns": [
         {
+          "column_name": "deleted",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.deleted"
+          }
+        },
+        {
           "column_name": "last_interacted_with",
           "type": "Event",
           "json_mapping": {
@@ -42,7 +49,7 @@
           "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.province"
+            "field": "attributes.stateProvince"
           }
         },
         {
@@ -812,6 +819,13 @@
           }
         },
         {
+          "column_name": "status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.status"
+          }
+        },
+        {
           "column_name": "date_edited",
           "type": "Client",
           "json_mapping": {
@@ -1300,6 +1314,48 @@
           "json_mapping": {
             "field": "attributes.contact_number"
           }
+        },
+        {
+          "column_name": "case_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_status"
+          }
+        },
+        {
+          "column_name": "household_case_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_case_status"
+          }
+        },
+        {
+          "column_name": "de_registration_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.de_registration_date"
+          }
+        },
+        {
+          "column_name": "de_registration_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.de_registration_reason"
+          }
+        },
+        {
+          "column_name": "transfer_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.transfer_reason"
+          }
+        },
+        {
+          "column_name": "other_de_registration_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_de_registration_reason"
+          }
         }
       ]
     },
@@ -1393,6 +1449,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "deleted",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.deleted"
           }
         },
         {
@@ -2781,6 +2844,13 @@
           "json_mapping": {
             "field": "attributes.comment"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -2839,6 +2909,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.previous_asmt_date"
+          }
+        },
+        {
+          "column_name": "hiv_status_enrolled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status_enrolled"
+          }
+        },
+        {
+          "column_name": "caregiver_hiv_status_enrolled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_hiv_status_enrolled"
           }
         },
         {
@@ -2951,6 +3035,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.additional_information"
+          }
+        },
+        {
+          "column_name": "graduation_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.graduation_status"
           }
         }
       ]
@@ -3137,6 +3228,13 @@
           "json_mapping": {
             "field": "attributes.comment"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -3169,6 +3267,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.case_plan_status"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
@@ -3209,6 +3314,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.case_plan_status"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
@@ -3333,6 +3445,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.other_stable_services"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
@@ -4343,6 +4462,13 @@
           "json_mapping": {
             "field": "attributes.specify_stability"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -4669,6 +4795,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_date_signed"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
@@ -5339,6 +5472,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.school_administration_signature"
+          }
+        },
+        {
+          "column_name": "length_on_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.length_on_art"
+          }
+        },
+        {
+          "column_name": "indicate_vl_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.indicate_vl_result"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
@@ -6798,6 +6952,13 @@
           "json_mapping": {
             "field": "attributes.other_services_household"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -6889,6 +7050,13 @@
           "json_mapping": {
             "field": "attributes.safety_plans"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -6965,6 +7133,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.who"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]

@@ -227,32 +227,9 @@
           }
         }
       },
-      {
-        "key": "clinical_care",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "clinical_care",
-        "type": "native_radio",
-        "label": "If child is HIV+ but not on ART, has s/he been referred to Health facility for enrollment into clinical care",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "value": false
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "value": false
-          }
-        ],
-        "relevance": {
-          "step1:child_art": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
+
+
+
       {
         "key": "art_appointment",
         "openmrs_entity_parent": "",
@@ -325,9 +302,10 @@
           }
         ],
         "relevance": {
-          "step1:art_appointment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -359,6 +337,25 @@
         }
       },
       {
+        "key": "drug_regimen",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "drug_regimen",
+        "type": "edit_text",
+        "hint": "Indicate drug regimen",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Indicate drug regimen"
+        },
+        "relevance": {
+          "step1:child_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "level_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -379,41 +376,21 @@
         }
       },
       {
-        "key": "drug_regimen",
+        "key": "length_on_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "drug_regimen",
+        "openmrs_entity_id": "length_on_art",
         "type": "edit_text",
-        "hint": "Indicate drug regimen",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "Indicate drug regimen"
+        "hint": "How long has a child been on ART?",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "^\\d+$",
+          "err": "The months value must be a valid number"
         },
         "relevance": {
-          "step1:child_mmd": {
+          "step1:child_art": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "date_art",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_art",
-        "type": "edit_text",
-        "hint": "Number of months the child has been on ART ",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Number of months the child has been on ART "
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
           }
         }
       },
@@ -437,9 +414,10 @@
           }
         ],
         "relevance": {
-          "step1:date_art": {
-            "type": "string",
-            "ex": "greaterThan(., \"6\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -450,9 +428,9 @@
         "openmrs_entity_id": "",
         "type": "toaster_notes",
         "text": "If child has not had a VL done, refer to facility for VL testing",
-        "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
-        "toaster_info_title": "Information Toaster Info Title",
+        "toaster_type": "warning",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
         "relevance": {
           "step1:six_months": {
             "type": "string",
@@ -461,13 +439,13 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "indicate_vl_result",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "indicate_vl_result",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "Health Facility",
+        "hint": "Indicate the VL result",
         "relevance": {
           "step1:six_months": {
             "type": "string",
@@ -475,6 +453,69 @@
           }
         }
       },
+
+
+
+
+
+
+
+
+
+
+      {
+        "key": "date_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_art",
+        "type": "edit_text",
+        "hint": "Number of months the child has been on ART ",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Number of months the child has been on ART "
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "clinical_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "clinical_care",
+        "type": "native_radio",
+        "label": "If child is HIV+ but not on ART, has s/he been referred to Health facility for enrollment into clinical care",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:child_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+
+
+
+
+
+
       {
         "key": "vl_last_result",
         "openmrs_entity_parent": "",
@@ -2371,6 +2412,29 @@
             "type": "string",
             "ex": "greaterThan(., \"5\")"
           }
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "label": "Delete",
+        "options": [
+          {
+            "key": "0",
+            "text": "0",
+            "value": true
+          },
+          {
+            "key": "1",
+            "text": "1"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
         }
       }
     ]

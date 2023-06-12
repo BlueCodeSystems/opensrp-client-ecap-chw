@@ -96,10 +96,9 @@ actions:
 name: step4_date_next_vl
 description: date_next_vl
 priority: 2
-condition: "( step4_date_last_vl != null ) && (step4_vl_last_result > 0 && step4_vl_last_result < 1000 )"
+condition: "( step4_date_last_vl != null ) && (step4_vl_last_result > -1 && step4_vl_last_result < 1000 )"
 actions:
   - "calculation = helper.addDuration(step4_date_last_vl,'365d')"
-
 ---
 name: step1_fsw_child_tested
 description: fsw_child_tested
@@ -135,7 +134,7 @@ actions:
 name: step3_subpop4_toast
 description: subpop4_toast relevance
 priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
+condition: "step1_agyw_sexually_active.contains('yes') || step1_agyw_food_or_economically_insecure.contains('yes')"
 actions:
   - "calculation = true"
 
@@ -158,7 +157,7 @@ actions:
 name: step3_subpop2_toast
 description: subpop2_toast relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 6 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
 actions:
   - "calculation = true"
 ---

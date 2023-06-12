@@ -100,6 +100,34 @@ public class VcaVisitationModel {
     private String school_administration_date_signed;
     private String school_administration_signature;
     private String phone;
+    private String indicate_vl_result;
+    private String length_on_art;
+
+    private String delete_status;
+
+    public String getIndicate_vl_result() {
+        return indicate_vl_result;
+    }
+
+    public void setIndicate_vl_result(String indicate_vl_result) {
+        this.indicate_vl_result = indicate_vl_result;
+    }
+
+    public String getLength_on_art() {
+        return length_on_art;
+    }
+
+    public void setLength_on_art(String length_on_art) {
+        this.length_on_art = length_on_art;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
 
     public String getPhone() {
         return phone;

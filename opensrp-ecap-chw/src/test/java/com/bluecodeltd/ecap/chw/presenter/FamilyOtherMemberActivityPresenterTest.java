@@ -5,12 +5,12 @@ import android.content.Context;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.core.contract.FamilyOtherMemberProfileExtendedContract;
 import org.smartregister.cloudant.models.Client;
 import org.smartregister.cloudant.models.Event;
@@ -22,7 +22,7 @@ import org.smartregister.family.interactor.FamilyOtherMemberProfileInteractor;
 /**
  * Created by keyman on 11/03/2019.
  */
-public class FamilyOtherMemberActivityPresenterTest extends BaseUnitTest {
+public class FamilyOtherMemberActivityPresenterTest extends AutoCloseKoinTest {
 
     @Mock
     private FamilyOtherMemberProfileExtendedContract.View view;

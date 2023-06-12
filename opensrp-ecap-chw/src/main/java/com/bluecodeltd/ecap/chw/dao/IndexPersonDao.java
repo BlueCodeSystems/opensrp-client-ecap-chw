@@ -2,11 +2,16 @@ package com.bluecodeltd.ecap.chw.dao;
 
 
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.AllChildrenHIVStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE is_closed != 1 AND household_id = '" + householdID + "'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE  household_id = '" + householdID + "' AND deleted IS NULL OR deleted != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -56,7 +61,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countAllChildren(){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE is_closed = 0";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -73,7 +78,7 @@ public class IndexPersonDao  extends AbstractDao {
     }
     public static String countAllChildrenByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
 
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
+        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND adolescent_birthdate IS NOT NULL AND deleted IS NULL OR deleted != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -106,7 +111,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<VCAServiceModel> getServicesByVCAID(String vcaid) {
 
-        String sql = "SELECT * FROM ec_vca_service_report WHERE unique_id = '" + vcaid + "'";
+        String sql = "SELECT * FROM ec_vca_service_report WHERE unique_id = '" + vcaid + "'  AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)
@@ -170,6 +175,45 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+    public static boolean allChildrenHIVStatus(String householdID) {
+        String sql = "SELECT is_hiv_positive, adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
+
+        AbstractDao.DataMap<AllChildrenHIVStatusModel> dataMap = c -> {
+            String isHivPositive = getCursorValue(c, "is_hiv_positive");
+            String birthdateString = getCursorValue(c, "adolescent_birthdate");
+            String birthdate = String.valueOf(LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            return new AllChildrenHIVStatusModel(isHivPositive, birthdate);
+        };
+
+        List<AllChildrenHIVStatusModel> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        LocalDate today = LocalDate.now();
+
+        for (AllChildrenHIVStatusModel value : values) {
+            String isHivPositive = value.getIsHivPositive();
+            LocalDate birthdate = LocalDate.parse(value.getBirthdate());
+
+            if (!isHivPositive.equalsIgnoreCase("yes") && !isHivPositive.equalsIgnoreCase("no")) {
+                return false;
+            }
+
+            Period age = Period.between(birthdate, today);
+            int years = age.getYears();
+
+            if (years < 0 || years > 18) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
 
 
     public static String countTestedAbove15Children(String householdID){
@@ -285,7 +329,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' AND is_closed = '0'";
+        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' AND (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)
@@ -297,7 +341,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<CasePlanModel> getDomainsById(String childID, String caseDate) {
 
-        String sql = "SELECT * FROM ec_vca_case_plan_domain WHERE unique_id = '" + childID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC";
+        String sql = "SELECT * FROM ec_vca_case_plan_domain WHERE unique_id = '" + childID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
@@ -306,11 +350,52 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
 
     }
+    public static CaseStatusModel getCaseStatus(String childID) {
+//        String sql = "SELECT ec_client_index.unique_id, ec_client_index.case_status " +
+//                "FROM ec_client_index " +
+//                "JOIN ec_vca_case_plan_domain ON ec_vca_case_plan_domain.unique_id = ec_client_index.unique_id " +
+//                "WHERE ec_client_index.unique_id ='" + childID + "' " +
+//                "GROUP BY ec_client_index.unique_id, ec_client_index.case_status";
+        String sql = "SELECT household_id,first_name,last_name,unique_id, case_status FROM ec_client_index  WHERE unique_id = '" + childID + "'";
 
+        DataMap<CaseStatusModel> dataMap = c -> {
+            CaseStatusModel model = new CaseStatusModel();
+            model.setFirst_name(getCursorValue(c, "first_name"));
+            model.setLast_name(getCursorValue(c, "last_name"));
+            model.setUnique_id(getCursorValue(c, "unique_id"));
+            model.setCase_status(getCursorValue(c, "case_status"));
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+
+            return model;
+        };
+
+        List<CaseStatusModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
+
+    public static List<Child> getDomainActiveStatus(String childID) {
+
+        String sql = "SELECT ec_client_index.unique_id, ec_client_index.case_status \n" +
+                "FROM ec_client_index \n" +
+                "JOIN ec_vca_case_plan_domain ON ec_vca_case_plan_domain.unique_id = ec_client_index.unique_id WHERE ec_client_index.unique_id ='" + childID + "'\n" +
+                "GROUP BY ec_client_index.unique_id, ec_client_index.case_status";
+
+        List<Child> values = AbstractDao.readData(sql, getChildDataMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static List<CasePlanModel> getCasePlansById(String childID) {
 
-        String sql = "SELECT * FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC ";
+        String sql = "SELECT * FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
@@ -362,6 +447,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
             record.setSubpop1(getCursorValue(c, "subpop1"));
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
+            record.setDeleted(getCursorValue(c, "deleted"));
             return record;
         };
     }
@@ -470,7 +556,7 @@ public class IndexPersonDao  extends AbstractDao {
         return children.get(0);
     }
     public static List<Child> getAllChildrenSubpops(){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE is_closed = 0";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE is_closed = 0 AND (deleted IS NULL OR deleted != '1')";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
@@ -569,7 +655,7 @@ public class IndexPersonDao  extends AbstractDao {
         return children;
     }
     public static List<Child> getAllChildrenSubpopsByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = 0 ";
+        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = 0 AND (deleted IS NULL OR deleted != '1')";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
@@ -685,7 +771,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<String> getAllChildrenBirthdate(String householdID) {
 
-        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND case_status = '1'";
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND case_status = '1' AND deleted IS NULL AND adolescent_birthdate IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
 

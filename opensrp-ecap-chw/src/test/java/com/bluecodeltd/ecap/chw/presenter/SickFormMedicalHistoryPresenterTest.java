@@ -2,10 +2,10 @@ package com.bluecodeltd.ecap.chw.presenter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.anc.domain.MemberObject;
 import org.smartregister.chw.anc.domain.Visit;
 import com.bluecodeltd.ecap.chw.contract.SickFormMedicalHistoryContract;
@@ -13,7 +13,7 @@ import com.bluecodeltd.ecap.chw.contract.SickFormMedicalHistoryContract;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SickFormMedicalHistoryPresenterTest extends BaseUnitTest {
+public class SickFormMedicalHistoryPresenterTest extends AutoCloseKoinTest {
 
     private SickFormMedicalHistoryPresenter presenter;
 

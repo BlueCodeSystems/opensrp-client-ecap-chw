@@ -2,18 +2,18 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.core.adapter.MemberAdapter;
 import org.smartregister.chw.core.domain.FamilyMember;
 import org.smartregister.chw.core.listener.MemberAdapterListener;
 
 import java.util.ArrayList;
 
-public class MemberAdapterTest extends BaseUnitTest {
+public class MemberAdapterTest extends AutoCloseKoinTest {
 
     @Mock
     private MemberAdapter.MyViewHolder myViewHolder;

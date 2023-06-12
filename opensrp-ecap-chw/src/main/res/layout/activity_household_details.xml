@@ -30,10 +30,10 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarx"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="#696969"
-                    app:theme="@style/ThemeOverlay.AppCompat.Light"
-                    app:layout_collapseMode="pin" />
+                    android:layout_height="?attr/actionBarSize"
+                    android:elevation="4dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
                 <LinearLayout
                     android:layout_marginTop="56dp"

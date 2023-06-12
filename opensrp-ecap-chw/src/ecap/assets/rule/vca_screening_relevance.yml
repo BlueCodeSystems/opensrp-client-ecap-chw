@@ -247,7 +247,7 @@ actions:
 name: step3_subpop2_information_toast
 description: subpop2_information_toast relevance
 priority: 1
-condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
+condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 5 && step1_positive_mother.contains('yes')) && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -261,7 +261,7 @@ actions:
 name: step3_subpop4_information_toast
 description: subpop4_information_toast calculation
 priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
+condition: "step1_agyw_sexually_active.contains('yes') || step1_agyw_food_or_economically_insecure.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -359,14 +359,14 @@ actions:
 name: step1_less_3
 description: less 3
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 5"
 actions:
   - "isRelevant = true"
 ---
 name: step1_positive_mother
 description: positive_mother
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 5 && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -387,70 +387,70 @@ actions:
 name: step1_is_mother_virally_suppressed
 description: is_mother_virally_suppressed
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3 && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6 && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_receiving_breastfeeding
 description: child_receiving_breastfeeding
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_tested_for_hiv_inline_with_guidelines
 description: child_tested_for_hiv_inline_with_guidelines
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses_hei
 description: receives_drugs_to_prevent_hiv_and_other_illnesses_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_been_screened_for_malnutrition_hei
 description: child_been_screened_for_malnutrition_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_gets_drugs_to_prevent_tb_hei
 description: child_gets_drugs_to_prevent_tb_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses
 description: receives_drugs_to_prevent_hiv_and_other_illnesses
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_been_screened_for_malnutrition
 description: child_been_screened_for_malnutrition
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_gets_drugs_to_prevent_tb
 description: child_gets_drugs_to_prevent_tb
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_enrolled_in_early_childhood_development_program
 description: child_enrolled_in_early_childhood_development_program
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 3  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -499,7 +499,7 @@ actions:
 name: step1_agyw_sexually_active
 description: agyw_sexually_active
 priority: 1
-condition: "( helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 18) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 20) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
@@ -540,13 +540,6 @@ actions:
 ---
 name: step1_agwy_engaged_in_sex_work
 description: agwy_engaged_in_sex_work
-priority: 1
-condition: "step1_agyw_sexually_active.contains('yes')"
-actions:
-  - "isRelevant = true"
----
-name: step1_agyw_food_or_economically_insecure
-description: agyw_food_or_economically_insecure
 priority: 1
 condition: "step1_agyw_sexually_active.contains('yes')"
 actions:
@@ -662,5 +655,12 @@ name: step1_schoolName
 description: schoolName
 priority: 1
 condition: "step1_school.contains('pre_school') || step1_school.contains('primary_school') || step1_school.contains('secondary_school') "
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_food_or_economically_insecure
+description: agyw_food_or_economically_insecure
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 20) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"

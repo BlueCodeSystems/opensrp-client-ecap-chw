@@ -34,8 +34,8 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
 
         String children = Constants.EcapClientTable.EC_CLIENT_INDEX;
 
-        String countSelect = "SELECT COUNT(*) FROM " + children + "WHERE case_status IS NOT NULL AND case_status != 3";
-        String mainSelect = "SELECT *, ec_client_index.id as _id, ec_client_index.relationalid AS relational_id, ec_client_index.facility AS residence, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index";
+        String countSelect = "SELECT COUNT(*) FROM " + children + "WHERE case_status IS NOT NULL AND case_status != 3 AND deleted != '1'";
+        String mainSelect = "SELECT *, ec_client_index.id as _id, ec_client_index.relationalid AS relational_id, ec_client_index.facility AS residence, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index ";
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_CLIENT_INDEX, countSelect, mainSelect);
         getView().initializeAdapter();

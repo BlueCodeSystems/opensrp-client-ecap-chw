@@ -6,16 +6,16 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.anc.model.BaseAncHomeVisitAction;
 import org.smartregister.chw.core.utils.NativeFormProcessor;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ECDActionTest extends BaseUnitTest {
+public class ECDActionTest extends AutoCloseKoinTest {
 
     private ECDAction action;
     private final Context context = RuntimeEnvironment.application;
