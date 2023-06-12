@@ -4,7 +4,15 @@ public class FamilyServiceModel {
 
     private String  services, services_household, services_caregiver,  date,
             household_id, base_entity_id, other_services_caregiver,
-            other_services_household,health_services,other_health_services,schooled_services,other_schooled_services,safe_services,other_safe_services,stable_services,other_stable_services,hh_level_services,other_hh_level_services;
+            other_services_household,health_services,other_health_services,schooled_services,other_schooled_services,safe_services,other_safe_services,stable_services,other_stable_services,hh_level_services,other_hh_level_services,delete_status;
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;

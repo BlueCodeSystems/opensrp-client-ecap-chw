@@ -129,6 +129,10 @@
             "text": "Age-appropriate HIV prevention support "
           },
           {
+            "key": "Adherence support",
+            "text": "Adherence support"
+          },
+          {
             "key": "Provided condoms",
             "text": "Provided condoms"
           },
@@ -427,12 +431,16 @@
         "type": "check_box",
         "options": [
           {
+            "key": "Family or psychosocial support for family conflict mitigation",
+            "text": "Family/psychosocial support for family conflict mitigation"
+          },
+          {
             "key": "Household hygiene counselling and WASH",
             "text": "Household hygiene counselling and WASH"
           },
           {
-            "key": "Family or psychosocial support for family conflict mitigation",
-            "text": "Family/psychosocial support for family conflict mitigation"
+            "key": "Family case conferencing to prevent occurrence",
+            "text": "Family case conferencing to prevent occurrence"
           },
           {
             "key": "Family received cash support",
@@ -443,8 +451,32 @@
             "text": "Family received material support"
           },
           {
-            "key": "Linked to evidence-based parenting intervention to prevent HIV and sexual violence to their children (e.g. Chimwemwe program)",
-            "text": "Linked to evidence-based parenting intervention to prevent HIV and sexual violence to their children (e.g. Chimwemwe program)"
+            "key": "Linked to evidence-based parenting interventions to prevent HIV and sexual violence to children (e.g. Chimwemwe program)",
+            "text": "Linked to evidence-based parenting interventions to prevent HIV and sexual violence to children (e.g. Chimwemwe program)"
+          },
+          {
+            "key": "Household Post violence trauma counselling",
+            "text": "Household Post violence trauma counselling"
+          },
+          {
+            "key": "Linked to WE program",
+            "text": "Linked to WE program"
+          },
+          {
+            "key": "Linked to other savings groups",
+            "text": "Linked to other savings groups"
+          },
+          {
+            "key": "Linked to social cash transfer (SCT)",
+            "text": "Linked to social cash transfer (SCT)"
+          },
+          {
+            "key": "Linkages to formal financial institutions (banks, credit union etc)",
+            "text": "Linkages to formal financial institutions (banks, credit union etc)"
+          },
+          {
+            "key": "Linked to other livelihood support",
+            "text": "Linked to other livelihood support"
           },
           {
             "key": "other",
@@ -477,6 +509,29 @@
               "rules-file": "services.yml"
             }
           }
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "label": "Delete",
+        "options": [
+          {
+            "key": "0",
+            "text": "0",
+            "value": true
+          },
+          {
+            "key": "1",
+            "text": "1"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
         }
       }
     ]

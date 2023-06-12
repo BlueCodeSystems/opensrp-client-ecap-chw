@@ -4,11 +4,11 @@ import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 import org.smartregister.chw.anc.domain.VaccineDisplay;
 import com.bluecodeltd.ecap.chw.fragment.BaseHomeVisitImmunizationFragmentFlv;
 import org.smartregister.immunization.domain.jsonmapping.VaccineGroup;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ImmunizationValidatorTest extends BaseUnitTest {
+public class ImmunizationValidatorTest extends AutoCloseKoinTest {
 
     @Mock
     private BaseHomeVisitImmunizationFragmentFlv fragmentFlv;

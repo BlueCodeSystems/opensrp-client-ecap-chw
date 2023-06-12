@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,6 +143,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
         }
+        if(Integer.parseInt(memberAge) > 18 ){
+            holder.gradBtn.setVisibility(View.INVISIBLE);
+        }
 
         holder.gradBtn.setOnClickListener(v->{
 
@@ -269,17 +271,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     String subpop3 = child.getSubpop3();
                     assert subpop3 != null;
 
-                    if((Integer.parseInt(memberAge) < 18) || isEligibleForEnrollment(child)){
+                    if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
                         intent.putExtra("Child",  child.getUnique_id());
                         context.startActivity(intent);
 
-                    } else if (!isEligibleForEnrollment(child)){
+                    } /*else if (!isEligibleForEnrollment(child)){
                         Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
 
-                    }else {
+                    }*/else {
                         Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
                     }
 
@@ -443,7 +445,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     public Boolean isEligibleForEnrollment(Child child ) {
 
-        try{
+        return true;
+
+  /*      try{
 
             if ((child.getIs_hiv_positive().equals("yes")) || (child.getSubpop1() != null && child.getSubpop1().equals("true")) || (child.getSubpop2() != null && child.getSubpop2().equals("true")) ||
                     (child.getSubpop3() != null && child.getSubpop3().equals("true")) || (child.getSubpop4() != null && child.getSubpop4().equals("true")) ||
@@ -460,7 +464,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             return false;
 
         }
-
+*/
 
         }
 

@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
@@ -18,7 +19,7 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.FragmentBaseActivity;
 import com.bluecodeltd.ecap.chw.adapter.ListableAdapter;
@@ -29,7 +30,7 @@ import com.bluecodeltd.ecap.chw.viewholder.ListableViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportsFragmentTest extends BaseUnitTest {
+public class ReportsFragmentTest extends AutoCloseKoinTest {
 
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();

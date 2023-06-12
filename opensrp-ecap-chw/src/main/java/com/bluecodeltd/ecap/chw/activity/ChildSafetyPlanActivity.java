@@ -65,7 +65,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
     private TextView vcaname,hh_id;
 
     private Toolbar toolbar;
-    public String hivstatus, household_id, intent_vcaid;
+    public String hivstatus, household_id, intent_vcaid,  intent_cname;
     private Button child_plan;
 
     @Override
@@ -85,7 +85,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         child_plan = findViewById(R.id.child_plan);
 
         intent_vcaid = getIntent().getExtras().getString("vca_id");
-        String intent_cname = getIntent().getExtras().getString("vca_name");
+        intent_cname = getIntent().getExtras().getString("vca_name");
 
 
         hh_id.setText("VCA ID : " + intent_vcaid);
@@ -210,7 +210,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
                 finish();
                 startActivity(getIntent());
                 Toasty.success(ChildSafetyPlanActivity.this, "Child Safety Plan Saved", Toast.LENGTH_LONG, true).show();
-
+                recreate();
                 //openChildSafetyPlanAction(dateId);
 //                if(encounterType.equals("Child Safety Plan"))
 //                {
@@ -377,4 +377,13 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent directToIndexActivity = new Intent(getApplicationContext(), IndexDetailsActivity.class);
+        directToIndexActivity.putExtra("Child",intent_vcaid);
+        directToIndexActivity.putExtra("vca_name",intent_cname);
+        startActivity(directToIndexActivity);
+        finish();
+    }
 }

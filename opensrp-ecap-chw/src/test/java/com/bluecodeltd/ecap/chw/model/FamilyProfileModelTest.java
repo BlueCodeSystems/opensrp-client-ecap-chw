@@ -2,12 +2,12 @@ package com.bluecodeltd.ecap.chw.model;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
-public class FamilyProfileModelTest extends BaseUnitTest {
+public class FamilyProfileModelTest extends AutoCloseKoinTest {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();

@@ -1,14 +1,16 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
+import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HouseholdDao extends AbstractDao {
@@ -75,7 +77,7 @@ public class HouseholdDao extends AbstractDao {
     }
     public static String countNumberoFHouseholds () {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND is_closed = '0'";
+        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND status IS NULL OR status != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
 
@@ -92,7 +94,7 @@ public class HouseholdDao extends AbstractDao {
     public static String countNumberOfHouseholdsByCaseworkerPhone ( String caseworkerPhoneNumber)
     {
 
-        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "' AND is_closed = '0'";
+        String sql = "SELECT count(DISTINCT household_id ) AS phone FROM ec_household WHERE screened = 'true' AND phone = '" + caseworkerPhoneNumber + "' AND status IS NULL OR status != '1'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "phone");
 
@@ -107,20 +109,55 @@ public class HouseholdDao extends AbstractDao {
     }
 
 
+    public static List<Household> getDuplicatedHousehold (String householdID) {
 
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE  ec_household.household_id  = '" + householdID + "'";
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+
+        if (values == null || values.size() == 0) {
+            return new ArrayList<>();
+        } else {
+            return values;
+        }
+
+
+
+    }
     public static Household getHousehold (String householdID) {
 
-        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE ec_household.household_id = '" + householdID + "' LIMIT 1";
+       // String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household  WHERE ec_household.household_id = '" + householdID + "' ";
+        String sql = "SELECT *,A.* FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B ON A.household_id = B.household_id";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+        if (values == null || values.size() == 0)
+        {
+            return new Household();
+        }
+
+        return values.get(0);
+
+    }
+    public static Household getHouseholdByBaseId (String baseID) {
+
+        String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE ec_household.base_entity_id = '" + baseID + "'" ;
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+
+
+        if (values == null || values.size() == 0)
+        {
+            return new Household();
+        }
 
         return values.get(0);
 
     }
 
+
     public static List<FamilyServiceModel> getServicesByHousehold(String householdId) {
 
-        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "'";
+        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<FamilyServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)
@@ -172,7 +209,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static List<CasePlanModel> getCasePlansById(String householdId) {
 
-        String sql = "SELECT * FROM ec_caregiver_case_plan WHERE household_id = '" + householdId + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC ";
+        String sql = "SELECT * FROM ec_caregiver_case_plan WHERE household_id = '" + householdId + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
@@ -199,6 +236,7 @@ public class HouseholdDao extends AbstractDao {
             record.setQuarter(getCursorValue(c, "quarter"));
             record.setStatus(getCursorValue(c, "status"));
             record.setComment(getCursorValue(c, "comment"));
+            record.setHousehold_id(getCursorValue(c,"household_id"));
 
             return record;
         };
@@ -209,6 +247,8 @@ public class HouseholdDao extends AbstractDao {
 
             Household record = new Household();
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            //household_case_status
+            record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setGender(getCursorValue(c, "gender"));
@@ -289,6 +329,12 @@ public class HouseholdDao extends AbstractDao {
             record.setFacility(getCursorValue(c, "facility"));
             record.setPhone(getCursorValue(c, "phone"));
             record.setDate_edited(getCursorValue(c, "date_edited"));
+            record.setStatus(getCursorValue(c, "status"));
+            record.setCase_status(getCursorValue(c,"case_status"));
+            record.setDe_registration_date(getCursorValue(c,"de_registration_date"));
+            record.setTransfer_reason(getCursorValue(c,"transfer_reason"));
+            record.setOther_de_registration_reason(getCursorValue(c,"other_de_registration_reason"));
+            record.setDe_registration_reason(getCursorValue(c,"de_registration_reason"));
 
             return record;
         };
@@ -296,7 +342,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static List<CasePlanModel> getDomainsById(String householdID, String caseDate) {
 
-        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL ORDER BY case_plan_date DESC ";
+        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
@@ -305,5 +351,109 @@ public class HouseholdDao extends AbstractDao {
         return values;
 
     }
+
+    public static GraduationBenchmarkModel getGraduationStatus(String householdID) {
+
+        String sql = "SELECT *  FROM ec_graduation WHERE household_id = '" + householdID + "'";
+
+        DataMap<GraduationBenchmarkModel> dataMap = c -> {
+            GraduationBenchmarkModel model = new GraduationBenchmarkModel();
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+            model.setDate_assessment(getCursorValue(c, "date_assessment"));
+            model.setHiv_status_enrolled(getCursorValue(c, "hiv_status_enrolled"));
+            model.setCaregiver_hiv_status_enrolled(getCursorValue(c, "caregiver_hiv_status_enrolled"));
+            model.setPrevious_asmt_date(getCursorValue(c, "previous_asmt_date"));
+            model.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
+            model.setPrevention(getCursorValue(c, "prevention"));
+            model.setUndernourished(getCursorValue(c, "undernourished"));
+            model.setSchool_fees(getCursorValue(c, "school_fees"));
+            model.setMedical_costs(getCursorValue(c, "medical_costs"));
+            model.setRecord_abuse(getCursorValue(c, "record_abuse"));
+            model.setCaregiver_beaten(getCursorValue(c, "caregiver_beaten"));
+            model.setChild_beaten(getCursorValue(c, "child_beaten"));
+            model.setAware_sexual(getCursorValue(c, "aware_sexual"));
+            model.setAgainst_will(getCursorValue(c, "against_will"));
+            model.setStable_guardian(getCursorValue(c, "stable_guardian"));
+            model.setChildren_in_school(getCursorValue(c, "children_in_school"));
+            model.setIn_school(getCursorValue(c, "in_school"));
+            model.setYear_school(getCursorValue(c, "year_school"));
+            model.setRepeat_school(getCursorValue(c, "repeat_school"));
+            model.setAdditional_information(getCursorValue(c, "additional_information"));
+            model.setGraduation_status(getCursorValue(c, "graduation_status"));
+
+            return model;
+        };
+
+        List<GraduationBenchmarkModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
+    public static GraduationBenchmarkModel getAllHouseholdsGraduationStatus() {
+
+        String sql = "SELECT *  FROM ec_graduation";
+
+        DataMap<GraduationBenchmarkModel> dataMap = c -> {
+            GraduationBenchmarkModel model = new GraduationBenchmarkModel();
+            model.setHousehold_id(getCursorValue(c, "household_id"));
+            model.setDate_assessment(getCursorValue(c, "date_assessment"));
+            model.setHiv_status_enrolled(getCursorValue(c, "hiv_status_enrolled"));
+            model.setCaregiver_hiv_status_enrolled(getCursorValue(c, "caregiver_hiv_status_enrolled"));
+            model.setPrevious_asmt_date(getCursorValue(c, "previous_asmt_date"));
+            model.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
+            model.setPrevention(getCursorValue(c, "prevention"));
+            model.setUndernourished(getCursorValue(c, "undernourished"));
+            model.setSchool_fees(getCursorValue(c, "school_fees"));
+            model.setMedical_costs(getCursorValue(c, "medical_costs"));
+            model.setRecord_abuse(getCursorValue(c, "record_abuse"));
+            model.setCaregiver_beaten(getCursorValue(c, "caregiver_beaten"));
+            model.setChild_beaten(getCursorValue(c, "child_beaten"));
+            model.setAware_sexual(getCursorValue(c, "aware_sexual"));
+            model.setAgainst_will(getCursorValue(c, "against_will"));
+            model.setStable_guardian(getCursorValue(c, "stable_guardian"));
+            model.setChildren_in_school(getCursorValue(c, "children_in_school"));
+            model.setIn_school(getCursorValue(c, "in_school"));
+            model.setYear_school(getCursorValue(c, "year_school"));
+            model.setRepeat_school(getCursorValue(c, "repeat_school"));
+            model.setAdditional_information(getCursorValue(c, "additional_information"));
+
+            return model;
+        };
+
+        List<GraduationBenchmarkModel> models = AbstractDao.readData(sql, dataMap);
+
+        if (models == null || models.isEmpty()) {
+            return null;
+        }
+
+        return models.get(0);
+    }
+
+    public static String getCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date currentDate = new Date();
+        String formattedDate = dateFormat.format(currentDate);
+        return formattedDate;
+    }
+
+    public static void updateGraduatedVCAs(String hhId) {
+        String currentDate = getCurrentDate();
+        String sql = "UPDATE ec_client_index SET case_status = '0',de_registration_date =  '" +currentDate+"',  reason = 'Graduated (Household has met the graduation benchmarks in ALL domains)'\n" +
+                " WHERE household_id = '" +hhId+"'";
+        updateDB(sql);
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

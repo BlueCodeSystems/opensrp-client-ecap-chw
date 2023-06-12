@@ -72,7 +72,13 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-
+      {
+        "key": "is_closed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_closed",
+        "type": "hidden"
+      },
       {
         "key": "province",
         "openmrs_entity_parent": "",

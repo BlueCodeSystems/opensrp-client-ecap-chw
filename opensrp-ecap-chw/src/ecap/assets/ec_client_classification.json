@@ -22,6 +22,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "Sub Population Edit",
+            "creates_case": [
+              "ec_client_index"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Case Status",
+            "creates_case": [
+              "ec_household"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Member Sub Population",
             "creates_case": [
               "ec_client_index"
@@ -351,6 +365,20 @@
               "ec_household",
               "ec_client_index",
               "ec_caregiver_household_assessment"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Screening Edit",
+            "creates_case": [
+              "ec_household"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Edit",
+            "creates_case": [
+              "ec_mother_index"
             ]
           },
           {

@@ -23,7 +23,7 @@ public class ReferralDao extends AbstractDao {
     }
     public static List<ReferralModel> getReferralsByID(String childID) {
 
-        String sql = "SELECT * FROM ec_referral WHERE unique_id = '" + childID + "' ORDER BY date_referred DESC ";
+        String sql = "SELECT * FROM ec_referral WHERE unique_id = '" + childID + "'  AND (delete_status IS NULL OR delete_status <> '1') ORDER BY date_referred DESC ";
 
         List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
         if (values == null || values.size() == 0)
@@ -35,7 +35,7 @@ public class ReferralDao extends AbstractDao {
 
     public static List<ReferralModel> getReferralsByHouseholdID(String hh_ID) {
 
-        String sql = "SELECT * FROM ec_referral WHERE household_id = '" + hh_ID + "' ORDER BY date_referred DESC ";
+        String sql = "SELECT * FROM ec_referral WHERE household_id = '" + hh_ID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY date_referred DESC ";
 
         List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
         if (values == null || values.size() == 0)

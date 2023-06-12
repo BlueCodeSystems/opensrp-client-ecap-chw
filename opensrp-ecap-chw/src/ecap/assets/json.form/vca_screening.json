@@ -95,6 +95,13 @@
         "edit_type": "name"
       },
       {
+        "key": "deleted",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "deleted",
+        "type": "hidden"
+      },
+      {
         "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1384,35 +1391,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "agyw_engaged_in_sex_work",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "agyw_engaged_in_sex_work",
-        "type": "native_radio",
-        "label": "Is the AGYW engaged in sex work?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:agyw_sexually_active": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2448,7 +2429,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
-        "edit_type": "number",
         "hint": "Last VL results",
         "relevance": {
           "step4:vl_check_box": {

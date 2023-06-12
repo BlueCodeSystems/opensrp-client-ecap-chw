@@ -3,13 +3,14 @@ package com.bluecodeltd.ecap.chw.presenter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
+
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.contract.CoreChildRegisterFragmentContract;
 
-public class ChildRegisterFragmentPresenterTest extends BaseUnitTest {
+public class ChildRegisterFragmentPresenterTest extends AutoCloseKoinTest {
 
     private ChildRegisterFragmentPresenter presenter;
 

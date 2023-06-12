@@ -5,42 +5,37 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
 import com.bluecodeltd.ecap.chw.adapter.DomainPlanAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -54,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -85,20 +79,22 @@ public class CasePlan extends AppCompatActivity {
 
     }
 
-    public void fetchData(){
-
+    public void fetchData() {
+        domainList.clear();
         domainList.addAll(IndexPersonDao.getDomainsById(childId, caseDate));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(CasePlan.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
+            recyclerView.setAdapter(recyclerViewadapter);
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
-        if (recyclerViewadapter.getItemCount() > 0 && domainList.size() > 0){
-
+        if (recyclerViewadapter.getItemCount() > 0) {
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
         }
@@ -112,30 +108,43 @@ public class CasePlan extends AppCompatActivity {
         switch (id) {
             case R.id.domainBtn:
             case R.id.domainBtn2:
+                CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(childId);
+                if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+                    Dialog dialog = new Dialog(this);
+                    dialog.setContentView(R.layout.dialog_layout);
+                    dialog.show();
 
-                try {
-                    FormUtils formUtils = new FormUtils(CasePlan.this);
-                    JSONObject indexRegisterForm;
+                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                    dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                    indexRegisterForm = formUtils.getFormJson("domain");
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
+                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                    dialogButton.setOnClickListener(va -> dialog.dismiss());
 
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",childId);
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(CasePlan.this);
+                        JSONObject indexRegisterForm;
 
-                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                    cDate.put("value", caseDate);
+                        indexRegisterForm = formUtils.getFormJson("domain");
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
+                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
 
-                    if(hivStatus == null || !hivStatus.equals("yes")){
-                        JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
-                        domainType.remove(0);
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                        cId.put("value",childId);
+
+                        JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                        cDate.put("value", caseDate);
+
+                        if(hivStatus == null || !hivStatus.equals("yes")){
+                            JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
+                            domainType.remove(0);
+                        }
+
+                        startFormActivity(indexRegisterForm);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
                 break;
@@ -177,6 +186,10 @@ public class CasePlan extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
+                is_edit_mode = true;
+            }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
 
@@ -186,17 +199,22 @@ public class CasePlan extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
-                Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                switch (EncounterType) {
 
+                    case "Domain":
+                        Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                        recreate();
+                        refresh();
+                        break;
+
+                }
 
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -239,7 +257,7 @@ public class CasePlan extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 
@@ -312,6 +330,11 @@ public class CasePlan extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+    public void refresh(){
+        finish();
+        startActivity(getIntent());
+    }
+
 
 
 }

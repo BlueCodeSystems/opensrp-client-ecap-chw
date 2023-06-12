@@ -253,6 +253,10 @@
             "text": "COVID Messaging"
           },
           {
+            "key": "Adherence Support",
+            "text": "Adherence Support"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
@@ -466,6 +470,29 @@
                 "or": ["other"]
               }]
           }
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "label": "Delete",
+        "options": [
+          {
+            "key": "0",
+            "text": "0",
+            "value": true
+          },
+          {
+            "key": "1",
+            "text": "1"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
         }
       }
     ]

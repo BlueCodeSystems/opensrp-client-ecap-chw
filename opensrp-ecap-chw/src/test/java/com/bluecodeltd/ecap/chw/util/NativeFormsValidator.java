@@ -11,8 +11,8 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.robolectric.RuntimeEnvironment;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import timber.log.Timber;
  * Validates that all the files in the json.forms folder is a valid forms files
  * Prevents creating files that are not
  */
-public class NativeFormsValidator extends BaseUnitTest {
+public class NativeFormsValidator extends AutoCloseKoinTest {
 
     private List<String> forms = new ArrayList<>();
     private Context context = RuntimeEnvironment.application;

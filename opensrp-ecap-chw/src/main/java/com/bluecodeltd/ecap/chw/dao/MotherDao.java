@@ -3,9 +3,9 @@ package com.bluecodeltd.ecap.chw.dao;
 import com.bluecodeltd.ecap.chw.domain.PncBaby;
 
 import com.bluecodeltd.ecap.chw.domain.Mother;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.smartregister.chw.core.domain.Child;
 import org.smartregister.dao.AbstractDao;
 
 import java.text.ParseException;
@@ -24,10 +24,8 @@ public class MotherDao  extends AbstractDao {
         DataMap<Mother> dataMap = c -> {
             return new Mother(
                     getCursorValue(c, "base_entity_id"),
-                    getCursorValue(c, "first_name"),
-                    getCursorValue(c, "last_name"),
-                    null,
-                    null
+                    getCursorValue(c, "deleted"),
+                    getCursorValue(c, "caregiver_name")
             );
         };
 
@@ -38,10 +36,24 @@ public class MotherDao  extends AbstractDao {
         return mother.get(0);
     }
 
-    public  List<Child> getMotherChildren(String baseId)
-    {
+    public static List<Mother> getMothers(String householdID) {
 
-        return null;
+        String sql = "SELECT * FROM ec_mother_index WHERE household_id = '"+ householdID +"' ";
+
+        DataMap<Mother> dataMap = c -> {
+            return new Mother(
+                    getCursorValue(c, "base_entity_id"),
+                    getCursorValue(c, "deleted"),
+                    getCursorValue(c, "caregiver_name")
+            );
+        };
+
+        List<Mother> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
     }
 
 }

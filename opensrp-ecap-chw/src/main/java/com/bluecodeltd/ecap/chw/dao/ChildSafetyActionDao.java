@@ -21,10 +21,23 @@ public class ChildSafetyActionDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static String countChildSafetyPlan (String uniqueId, String cpDate){
 
+        String sql = "SELECT COUNT(*) v FROM ec_child_safety_actions WHERE unique_id = '" + uniqueId + "' AND initial_date = '" + cpDate + "' AND (delete_status IS NULL OR delete_status <> '1')";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
     public static List<ChildSafetyActionModel> getActionsById(String childID, String actionDate) {
 
-        String sql = "SELECT * FROM ec_child_safety_actions WHERE unique_id = '" + childID + "' AND initial_date = '" + actionDate + "' AND initial_date IS NOT NULL ORDER BY initial_date DESC";
+        String sql = "SELECT * FROM ec_child_safety_actions WHERE unique_id = '" + childID + "' AND initial_date = '" + actionDate + "' AND initial_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY initial_date DESC";
         //String sql = "SELECT * FROM ec_child_safely_action WHERE unique_id = '" + childID + "' ";
         List<ChildSafetyActionModel> values = AbstractDao.readData(sql, getChildSafetyActionModelMap());
         if (values == null || values.size() == 0)

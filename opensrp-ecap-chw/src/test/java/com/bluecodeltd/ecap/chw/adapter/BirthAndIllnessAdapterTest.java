@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.koin.test.AutoCloseKoinTest;
 import org.mockito.Mockito;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.util.ReflectionHelpers;
-import com.bluecodeltd.ecap.chw.BaseUnitTest;
 
 import java.util.ArrayList;
 
-public class BirthAndIllnessAdapterTest extends BaseUnitTest {
+public class BirthAndIllnessAdapterTest extends AutoCloseKoinTest {
 
     private Context context = RuntimeEnvironment.application;
 

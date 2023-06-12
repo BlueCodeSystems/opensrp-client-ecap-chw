@@ -364,10 +364,10 @@
         }
       },
       {
-        "key": "we_loan1_on_medical",
+        "key": "we_loans1_on_medical",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "we_loan1_on_medical",
+        "openmrs_entity_id": "we_loans1_on_medical",
         "type": "native_radio",
         "label": "Did you use any of the first loan funds to pay for medical expenses?",
         "label_text_style": "italic",
@@ -444,7 +444,7 @@
           },
           {
             "key": "no",
-            "text": "Yes"
+            "text": "No"
           },
           {
             "key": "unknown",
