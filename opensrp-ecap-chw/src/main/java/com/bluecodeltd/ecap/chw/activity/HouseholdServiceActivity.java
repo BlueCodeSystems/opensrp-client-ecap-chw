@@ -221,8 +221,8 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                     case "Household Service Report":
 
                         Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        getIntent();
+                        recreate();
+                        refresh();
 
                         break;
 
@@ -231,8 +231,6 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -340,6 +338,10 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+    public void refresh(){
+        finish();
+        startActivity(getIntent());
     }
 
 }
