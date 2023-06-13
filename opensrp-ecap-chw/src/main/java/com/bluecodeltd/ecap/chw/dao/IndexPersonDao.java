@@ -4,10 +4,14 @@ package com.bluecodeltd.ecap.chw.dao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.AllChildrenHIVStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,6 +175,45 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+    public static boolean allChildrenHIVStatus(String householdID) {
+        String sql = "SELECT is_hiv_positive, adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
+
+        AbstractDao.DataMap<AllChildrenHIVStatusModel> dataMap = c -> {
+            String isHivPositive = getCursorValue(c, "is_hiv_positive");
+            String birthdateString = getCursorValue(c, "adolescent_birthdate");
+            String birthdate = String.valueOf(LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            return new AllChildrenHIVStatusModel(isHivPositive, birthdate);
+        };
+
+        List<AllChildrenHIVStatusModel> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        LocalDate today = LocalDate.now();
+
+        for (AllChildrenHIVStatusModel value : values) {
+            String isHivPositive = value.getIsHivPositive();
+            LocalDate birthdate = LocalDate.parse(value.getBirthdate());
+
+            if (!isHivPositive.equalsIgnoreCase("yes") && !isHivPositive.equalsIgnoreCase("no")) {
+                return false;
+            }
+
+            Period age = Period.between(birthdate, today);
+            int years = age.getYears();
+
+            if (years < 0 || years > 18) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
 
 
     public static String countTestedAbove15Children(String householdID){
