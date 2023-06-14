@@ -385,6 +385,9 @@ public class HouseholdDetails extends AppCompatActivity {
                     Integer childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
                     indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value","1");
 
+                    JSONObject toast_reminder_benchmark_3 = getFieldJSONObject(fields(indexRegisterForm, "step4"), "toast_reminder_benchmark_3");
+
+
                     if(childrenabove10to17 > 0){
                         if(answered == 0){
 
@@ -399,6 +402,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     } else  {
                         indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value", "1");
                             indexRegisterForm.getJSONObject("step4").getJSONArray("fields").remove(0);
+                            toast_reminder_benchmark_3.put("type", "toaster_notes");
                             //Because Index 0 has been removed, index 3 becomes index 2
 
                     }
@@ -406,7 +410,8 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Count everyone who has been tested
 
                     Boolean allChildrenHIVStatus = IndexPersonDao.allChildrenHIVStatus(householdId);
-                    if((sumtested < Integer.parseInt(totalChildren)) || allChildrenHIVStatus.equals(false)){
+//                    (sumtested < Integer.parseInt(totalChildren))
+                    if( allChildrenHIVStatus.equals(false)){
                         allTested = "no";
                     } else {
                         allTested = "yes";
@@ -435,6 +440,15 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
                     suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
+
+                    JSONObject toast_applicable = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_applicable");
+
+                    if (virally_suppressed.equals("no")){
+                        suppressed.put("hidden", true);
+                        toast_applicable.put("type", "toaster_notes");
+                    } else{
+                        toast_applicable.put("type", "hidden");
+                    }
 
 
                     startFormActivity(indexRegisterForm);
