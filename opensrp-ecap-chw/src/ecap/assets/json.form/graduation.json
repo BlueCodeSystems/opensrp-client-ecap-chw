@@ -326,6 +326,17 @@
             }
           }
         }
+      },
+      {
+        "key": "toast_applicable",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "hidden",
+        "text": "Benchmark 2 is not applicable because no beneficiary has been documented as virally suppressed (with a viral load below 1,000 in the last 12 months)",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "warning"
       }
     ]
   },
@@ -342,7 +353,7 @@
         "label_info_title":"Benchmark 3: Knowledgeable about HIV prevention",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Is Benchmark 3 met?",
+        "label": "Do all adolescents 12 to 17 have good HIV prevention knowledge?",
         "options": [
           {
             "key": "yes",
@@ -391,6 +402,17 @@
         }
       },
       {
+        "key": "toast_reminder_benchmark_3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "hidden",
+        "text": "For this benchmark, all adolescents aged 12 to 17 need to have a good understanding of HIV prevention",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info"
+      },
+      {
         "key": "instructions_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -424,7 +446,7 @@
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
         "type": "native_radio",
-        "label": "Is Benchmark 4 met?",
+        "label": "Are there no children below the age of 5 who are undernourished?",
         "options": [
           {
             "key": "yes",
