@@ -217,8 +217,16 @@
             "text": "HIV disclosure support"
           },
           {
-            "key": "Tracked developmental milestones",
-            "text": "Tracked developmental milestones"
+            "key": "HIV treatment and care",
+            "text": "HIV treatment and care"
+          },
+          {
+            "key": "Tracked developmental milestones in HIV infected/exposed infants",
+            "text": "Tracked developmental milestones in HIV infected/exposed infants"
+          },
+          {
+            "key": "HIV adherence support second and third EAC",
+            "text": "HIV adherence support second and third EAC"
           },
           {
             "key": "Age-appropriate HIV prevention support ",
@@ -241,12 +249,80 @@
             "text": "Lost to follow up tracing"
           },
           {
-            "key": "Appointment reminders",
-            "text": "Appointment reminders"
+            "key": "Appointment reminders, ART and other drugs collection /delivery",
+            "text": "Appointment reminders, ART and other drugs collection /delivery"
           },
           {
-            "key": "ART and other drugs collection or delivery",
-            "text": "ART and other drugs collection /delivery  "
+            "key": "Immunization",
+            "text": "Immunization"
+          },
+          {
+            "key": "Viral Load (PCR)",
+            "text": "Viral Load (PCR)"
+          },
+          {
+            "key": "Routine health care",
+            "text": "Routine health care"
+          },
+          {
+            "key": "VMMC",
+            "text": "VMMC"
+          },
+          {
+            "key": "CD4",
+            "text": "CD4"
+          },
+          {
+            "key": "Emergency Health Care",
+            "text": "Emergency Health Care"
+          },
+          {
+            "key": "Followed up for EAC  followed up for eac lessons",
+            "text": "Followed up for EAC  followed up for eac lessons"
+          },
+          {
+            "key": "Viral load sample collection",
+            "text": "Viral load sample collection"
+          },
+          {
+            "key": "TB Screening",
+            "text": "TB Screening"
+          },
+          {
+            "key": "Health education on Cholera prevention",
+            "text": "Health education on Cholera prevention"
+          },
+          {
+            "key": "Rapid test was done",
+            "text": "Rapid test was done"
+          },
+          {
+            "key": "Sexually transmitted infections (STIs) treatment",
+            "text": "Sexually transmitted infections (STIs) treatment"
+          },
+          {
+            "key": "Malnutrition screening",
+            "text": "Malnutrition screening"
+          },
+          {
+            "key": "Supplementary or Therapeutic feeding",
+            "text": "Supplementary or Therapeutic feeding"
+          },
+          {
+            "key": "Nutrition screening",
+            "text": "Nutrition screening"
+          },
+          {
+            "key": "MUAC screening",
+            "text": "MUAC screening"
+          },
+          {
+            "key": "Conducted COVID testing/accompanied to health facility for testing",
+            "text": "Conducted COVID testing/accompanied to health facility for testing"
+          },
+          {
+            "key": "COVID-19 Vaccine",
+            "text": "COVID-19 Vaccine"
           },
           {
             "key": "COVID Messaging",
