@@ -21,6 +21,23 @@ public class GradDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static boolean returnTrueForBenchmark4(String householdID) {
+        String sql = "SELECT infection_correct, protect_correct, prevention_correct FROM ec_grad WHERE household_id = '" + householdID + "'";
+        List<GradModel> values = AbstractDao.readData(sql, getGradModelMap());
+
+        if (values.size() == 0) {
+            return false;
+        }
+
+        for (GradModel model : values) {
+            if (Integer.parseInt(model.getInfection_correct()) >= 2 && Integer.parseInt(model.getProtect_correct()) >= 1 && Integer.parseInt(model.getPrevention_correct()) >= 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public static String bench3Answers(String householdID){
 
