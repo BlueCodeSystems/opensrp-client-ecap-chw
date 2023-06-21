@@ -175,7 +175,7 @@
           },
           {
             "key": "unknown",
-            "text": "I don't know/No answer"
+            "text": "No answer"
           }
         ],
         "v_required": {
@@ -477,7 +477,7 @@
           },
           {
             "key": "no",
-            "text": "Yes"
+            "text": "No"
           },
           {
             "key": "unknown",
@@ -623,6 +623,10 @@
           {
             "key": "poultry",
             "text": "Poultry"
+          },
+          {
+            "key": "none",
+            "text": "None"
           },
           {
             "key": "other",
