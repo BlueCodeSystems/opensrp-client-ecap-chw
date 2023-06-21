@@ -443,11 +443,14 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     JSONObject toast_applicable = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_applicable");
 
-                    if (virally_suppressed.equals("no")){
-                        suppressed.put("hidden", true);
-                        toast_applicable.put("type", "toaster_notes");
-                    } else{
+                    Boolean checkPositiveChildren = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
+
+                    if(HouseholdDao.checkIfCaregiverIsPositive(householdId).equals("positive") || checkPositiveChildren.equals(true)){
+                        suppressed.put("hidden", false);
                         toast_applicable.put("type", "hidden");
+                    } else {
+                        toast_applicable.put("type", "toaster_notes");
+                        suppressed.put("hidden", true);
                     }
 
 
