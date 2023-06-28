@@ -34,6 +34,33 @@ public class VcaVisitationDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static String getRecentVcaVlResult(String vcaID) {
+        String sql = "SELECT indicate_vl_result FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + vcaID + "' GROUP BY indicate_vl_result LIMIT 1";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "indicate_vl_result");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+        return values.get(0);
+    }
+    public static String getRecentVisitDate(String vcaID) {
+        String sql = "SELECT MAX(visit_date) AS visit_date FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + vcaID + "' GROUP BY indicate_vl_result LIMIT 1";
+
+        AbstractDao.DataMap<String> dataMap = c -> AbstractDao.getCursorValue(c, "visit_date");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+        return values.get(0);
+    }
+
 
     public static List<VcaVisitationModel> getVisitsByCaseWorkerPhone(String casePhone) {
 
