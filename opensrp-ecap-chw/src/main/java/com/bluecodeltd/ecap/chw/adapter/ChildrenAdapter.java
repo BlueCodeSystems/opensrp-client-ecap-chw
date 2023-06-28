@@ -20,6 +20,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
@@ -158,6 +159,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             JSONObject formToBeOpened;
 
             formToBeOpened = formUtils.getFormJson("grad");
+
             try {
                 formToBeOpened.getJSONObject("step1").put("title", child.getFirst_name() + " " + child.getLast_name() + " : " + holder.age.getText().toString() + " - " + child.getGender());
             } catch (JSONException e) {
@@ -367,18 +369,14 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             case "grad":
                 //Initialize Graduation Button
-                gradModel = GradDao.getGrad(child.getUnique_id());
+                GradModel graduationModel = populateGraduationModel(child.getUnique_id());
 
-                if(gradModel == null){
-
+                if (graduationModel == null) {
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(child, Map.class));
-
                 } else {
-
-                    formToBeOpened.put("entity_id", this.gradModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(gradModel, Map.class));
+                    formToBeOpened.put("entity_id", graduationModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationModel, Map.class));
                 }
-
 
                 break;
         }
@@ -486,4 +484,32 @@ public Boolean checkAgeEligibility(String age)
 
     return true;
 }
+    public GradModel populateGraduationModel(String uniqueId) {
+        GradModel gradModel = GradDao.getGrad(uniqueId);
+
+        if (gradModel == null) {
+            return null;
+        }
+
+        GradModel graduationModel = new GradModel();
+        graduationModel.setUnique_id(gradModel.getUnique_id());
+        graduationModel.setBase_entity_id(gradModel.getBase_entity_id());
+        graduationModel.setHousehold_id(gradModel.getHousehold_id());
+        graduationModel.setAdolescent_birthdate(gradModel.getAdolescent_birthdate());
+        graduationModel.setIs_hiv_positive(gradModel.getIs_hiv_positive());
+        graduationModel.setArt_number(gradModel.getArt_number());
+        graduationModel.setFacility(gradModel.getFacility());
+        graduationModel.setDate_last_vl(VcaVisitationDao.getRecentVisitDate(gradModel.getUnique_id()));
+        graduationModel.setVl_last_result(VcaVisitationDao.getRecentVcaVlResult(gradModel.getUnique_id()));
+        graduationModel.setInfected_community(gradModel.getInfected_community());
+        graduationModel.setInfection_correct(gradModel.getInfection_correct());
+        graduationModel.setProtect_infection(gradModel.getProtect_infection());
+        graduationModel.setPrevention_support(gradModel.getPrevention_support());
+        graduationModel.setPrevention_correct(gradModel.getPrevention_correct());
+        graduationModel.setProtect_correct(gradModel.getProtect_correct());
+        graduationModel.setSign_malnutrition(gradModel.getSign_malnutrition());
+
+        return graduationModel;
+    }
+
 }
