@@ -85,6 +85,67 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getVisit_date());
+        Household householdModel = HouseholdDao.getHousehold(visit.getHousehold_id());
+
+        if (householdModel.getCaregiver_hiv_status().equals("positive")){
+            holder.exPandableView.setVisibility(View.GONE);
+            holder.expMore.setVisibility(View.GONE);
+            holder.expLess.setVisibility(View.GONE);
+        }
+        holder.linearLayout.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.itemm) {
+
+                holder.exPandableView.setVisibility(View.VISIBLE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.expMore.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_more) {
+
+                holder.exPandableView.setVisibility(View.VISIBLE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.VISIBLE);
+                holder.editme.setVisibility(View.GONE);
+                holder.delete.setVisibility(View.GONE);
+            }
+        });
+
+        holder.expLess.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_less) {
+
+                holder.exPandableView.setVisibility(View.GONE);
+                holder.expMore.setVisibility(View.VISIBLE);
+                holder.expLess.setVisibility(View.GONE);
+                holder.editme.setVisibility(View.VISIBLE);
+                holder.delete.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        if(householdModel.getCaregiver_hiv_status() != null && householdModel.getCaregiver_hiv_status().equals("positive")){
+            holder.intialHivStatus.setText("Positive");
+        } else if(householdModel.getCaregiver_hiv_status().equals("unknown")) {
+            holder.intialHivStatus.setText("Unknown");
+        } else {
+            holder.intialHivStatus.setText("Negative");
+        }
+        holder.initialHivStatusDate.setText(householdModel.getScreening_date());
+
+        if(visit.getCaregiver_hiv_status() != null && visit.getCaregiver_hiv_status().equals("positive")){
+            holder.updateHivStatus.setText("Positive");
+        } else if (visit.getCaregiver_hiv_status().equals("unknown")) {
+            holder.updateHivStatus.setText("Unknown");
+
+        } else {
+            holder.updateHivStatus.setText("Negative");
+        }
+        holder.updatedHivStatusDate.setText(visit.getVisit_date());
+
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -330,10 +391,10 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtDate;
+        TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate;
 
-        LinearLayout linearLayout;
-        ImageView editme,delete;
+        LinearLayout linearLayout, exPandableView;
+        ImageView expMore, expLess,editme,delete;
 
         public ViewHolder(View itemView) {
 
@@ -343,6 +404,14 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
             txtDate  = itemView.findViewById(R.id.date);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            exPandableView = itemView.findViewById(R.id.expandable);
+            expLess = itemView.findViewById(R.id.expand_less);
+            expMore = itemView.findViewById(R.id.expand_more);
+            intialHivStatus =  itemView.findViewById(R.id.initial_hiv_status);
+            initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
+            updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
+            updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
+
 
         }
 
