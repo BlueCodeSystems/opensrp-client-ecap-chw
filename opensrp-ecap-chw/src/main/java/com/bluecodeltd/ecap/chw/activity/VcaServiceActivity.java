@@ -270,7 +270,7 @@ public class VcaServiceActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
+            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_vca_service_report");
             tagSyncMetadata(event);
             Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
             return new ChildIndexEventClient(event, client);

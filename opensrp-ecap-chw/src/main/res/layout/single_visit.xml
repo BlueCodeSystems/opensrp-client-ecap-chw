@@ -8,6 +8,25 @@
     android:layout_marginTop="5dp"
     android:elevation="20dp"
     >
+    <ImageView
+        android:id="@+id/expand_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="110dp"
+        android:src="@drawable/baseline_expand_more_24"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/expand_less"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="110dp"
+        android:src="@drawable/baseline_expand_less_24" />
 
     <ImageView
         android:layout_alignParentEnd="true"
