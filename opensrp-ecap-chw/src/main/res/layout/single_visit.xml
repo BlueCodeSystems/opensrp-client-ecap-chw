@@ -27,7 +27,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="110dp"
         android:src="@drawable/baseline_expand_less_24" />
-
     <ImageView
         android:layout_alignParentEnd="true"
         android:id="@+id/edit_me"
@@ -110,6 +109,154 @@
         android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
+    <LinearLayout
+        android:id="@+id/expandable"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_below="@+id/itemm"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Initial HIV status"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/initial_hiv_status"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Date of initial Hiv status"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/initial_hiv_status_date"
+                android:layout_weight="1"
+                android:text="yhs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Updated HIV status"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/updated_hiv_status"
+                android:layout_weight="1"
+                android:text="DGHHDSGBVU JHB jyhgshgfuis fsjhisujhf sfiuhsiouho0sigK"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Date of updated HIV status"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/updated_hiv_status_date"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:weightSum="2"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:textStyle="bold"-->
+        <!--                android:text="Institution of Service referral"-->
+        <!--                android:layout_width="0dip"-->
+        <!--                android:layout_height="wrap_content"/>-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/institution"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="yhs"-->
+        <!--                android:layout_width="0dip"-->
+        <!--                android:layout_height="wrap_content"/>-->
+
+        <!--        </LinearLayout>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:weightSum="2"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:textStyle="bold"-->
+        <!--                android:text="Comments"-->
+        <!--                android:layout_width="0dip"-->
+        <!--                android:layout_height="wrap_content"/>-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/comment"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="yhsjhsiujhg ujhiujhoip mb"-->
+        <!--                android:layout_width="0dip"-->
+        <!--                android:layout_height="wrap_content"/>-->
+
+        <!--        </LinearLayout>-->
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
