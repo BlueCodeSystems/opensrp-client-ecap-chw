@@ -47,6 +47,7 @@ public class VcaVisitationDao extends AbstractDao {
 
         return values.get(0);
     }
+
     public static String getRecentVisitDate(String vcaID) {
         String sql = "SELECT MAX(visit_date) AS visit_date FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + vcaID + "' GROUP BY indicate_vl_result LIMIT 1";
 

@@ -144,7 +144,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
         }
-        if(Integer.parseInt(memberAge) > 18 ){
+        int age = Integer.parseInt(memberAge);
+        if (age > 18 || age < 10) {
             holder.gradBtn.setVisibility(View.INVISIBLE);
         }
 
@@ -370,9 +371,29 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             case "grad":
                 //Initialize Graduation Button
                 GradModel graduationModel = populateGraduationModel(child.getUnique_id());
+                Child childModel = new Child();
+
+                if (VcaVisitationDao.getRecentVisitDate(child.getUnique_id()) != null){
+                    childModel.setDate_last_vl(VcaVisitationDao.getRecentVisitDate(child.getUnique_id()));
+                } else {
+                    childModel.setDate_last_vl(child.getDate_last_vl());
+                }
+
+                if (VcaVisitationDao.getRecentVcaVlResult(child.getUnique_id()) != null){
+                    childModel.setVl_last_result(VcaVisitationDao.getRecentVcaVlResult(child.getUnique_id()));
+                } else {
+                    childModel.setVl_last_result(child.getVl_last_result());
+                }
+
+                childModel.setHousehold_id(child.getHousehold_id());
+                childModel.setUnique_id(child.getUnique_id());
+                childModel.setIs_hiv_positive(child.getIs_hiv_positive());
+                childModel.setFacility(child.getFacility());
+                childModel.setArt_number(child.getArt_number());
+
 
                 if (graduationModel == null) {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(child, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(childModel, Map.class));
                 } else {
                     formToBeOpened.put("entity_id", graduationModel.getBase_entity_id());
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(graduationModel, Map.class));
