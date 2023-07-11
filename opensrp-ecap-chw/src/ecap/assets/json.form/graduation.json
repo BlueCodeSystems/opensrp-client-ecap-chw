@@ -277,8 +277,8 @@
         "openmrs_entity_id": "virally_suppressed",
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. Answer the questions for each child, adolescent,  youth and primary guardian in the household enrolled in the Project and living with HIV",
         "label_info_title":"Benchmark 2: Virally suppressed ",
-        "type": "native_radio",
-        "read_only" : true,
+        "type": "hidden",
+        "read_only" : false,
         "label": "Has each beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
         "options": [
           {
@@ -930,7 +930,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "graduation_status",
-        "type": "hidden",
+        "type": "edit_text",
         "calculation": {
           "rules-engine": {
             "ex-rules": {

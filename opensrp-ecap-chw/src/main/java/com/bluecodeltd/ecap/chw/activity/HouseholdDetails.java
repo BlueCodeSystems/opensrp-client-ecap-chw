@@ -407,7 +407,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     }
 
-                    //Count everyone who has been tested
+                    //Benchmark **** 1 **** logic
 
                     Boolean allChildrenHIVStatus = IndexPersonDao.allChildrenHIVStatus(householdId);
 //                    (sumtested < Integer.parseInt(totalChildren))
@@ -419,24 +419,30 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
                     hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-
-                    //Check if Caregiver Has been Tested using HIV Assessment
                     if(caregiverHivAssessmentModel == null || caregiverHivAssessmentModel.getHiv_status() == null || caregiverHivAssessmentModel.getHiv_status().equals("never_tested")){
                         caregiverTested = "no";
                     } else {
                         caregiverTested = "yes";
                     }
-
-
-                    if(Integer.parseInt(virally_suppressed) < Integer.parseInt(positiveChildren)){
-
-                        virally_suppressed = "no";
-                    } else {
-                        virally_suppressed = "yes";
-                    }
-
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);
+
+                    // Benchmark **** 2 ****logic
+
+            Boolean areAllPositiveSuppressedChildren = GradDao.areAllPositiveSuppressedChildren(householdId);
+               if(areAllPositiveSuppressedChildren.equals(false)){
+                   virally_suppressed = "no";
+               }  else {
+                   virally_suppressed = "yes";
+               }
+//                    if(Integer.parseInt(virally_suppressed) < Integer.parseInt(positiveChildren)){
+//
+//                        virally_suppressed = "no";
+//                    } else {
+//                        virally_suppressed = "yes";
+//                    }
+
+
 
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
                     suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
@@ -451,6 +457,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     } else {
                         toast_applicable.put("type", "toaster_notes");
                         suppressed.put("hidden", true);
+                        suppressed.put(JsonFormUtils.VALUE, "N/A");
                     }
 
 
