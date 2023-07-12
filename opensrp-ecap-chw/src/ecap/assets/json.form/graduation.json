@@ -288,6 +288,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -362,6 +366,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -407,7 +415,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "hidden",
-        "text": "For this benchmark, all adolescents aged 12 to 17 need to have a good understanding of HIV prevention",
+        "text": "The test household doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info"
