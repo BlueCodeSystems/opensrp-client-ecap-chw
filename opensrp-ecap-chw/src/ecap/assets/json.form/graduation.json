@@ -277,8 +277,8 @@
         "openmrs_entity_id": "virally_suppressed",
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. Answer the questions for each child, adolescent,  youth and primary guardian in the household enrolled in the Project and living with HIV",
         "label_info_title":"Benchmark 2: Virally suppressed ",
-        "type": "hidden",
-        "read_only" : false,
+        "type": "native_radio",
+        "read_only" : true,
         "label": "Has each beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
         "options": [
           {
@@ -288,6 +288,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -362,6 +366,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -407,7 +415,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "hidden",
-        "text": "For this benchmark, all adolescents aged 12 to 17 need to have a good understanding of HIV prevention",
+        "text": "The test household doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info"
@@ -930,7 +938,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "graduation_status",
-        "type": "edit_text",
+        "type": "hidden",
         "calculation": {
           "rules-engine": {
             "ex-rules": {

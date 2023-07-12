@@ -1,26 +1,16 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class VcaGradCorrectAnswers {
-    private String isHivPositive;
     private String birthdate;
     private String infection_correct;
     private String protect_correct;
     private String prevention_correct;
 
-    public VcaGradCorrectAnswers(String isHivPositive, String birthdate, String infection_correct, String protect_correct, String prevention_correct) {
-        this.isHivPositive = isHivPositive;
+    public VcaGradCorrectAnswers(String birthdate, String infection_correct, String protect_correct, String prevention_correct) {
         this.birthdate = birthdate;
         this.infection_correct = infection_correct;
         this.protect_correct = protect_correct;
         this.prevention_correct = prevention_correct;
-    }
-
-    public String getIsHivPositive() {
-        return isHivPositive;
-    }
-
-    public void setIsHivPositive(String isHivPositive) {
-        this.isHivPositive = isHivPositive;
     }
 
     public String getBirthdate() {
