@@ -43,15 +43,15 @@ public class GradDao extends AbstractDao {
     public static boolean areAllPositiveSuppressedChildren(String householdID) {
         String sql = "SELECT DISTINCT ec_visit.unique_id, ec_visit.indicate_vl_result, ec_visit.is_hiv_positive, ec_visit.visit_date, ec_client_index.household_id\n" +
                 "FROM ec_household_visitation_for_vca_0_20_years ec_visit\n" +
-                "JOIN (SELECT unique_id, household_id FROM ec_client_index) ec_client_index ON ec_visit.unique_id = ec_client_index.unique_id\n" +
-                "WHERE ec_client_index.household_id = '" + householdID + "' AND ec_visit.is_hiv_positive = 'yes' \n" +
+                "JOIN (SELECT unique_id, household_id,deleted FROM ec_client_index) ec_client_index ON ec_visit.unique_id = ec_client_index.unique_id\n" +
+                "WHERE ec_client_index.household_id = '" + householdID + "' AND ec_visit.is_hiv_positive = 'yes' AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> 1) \n" +
                 "GROUP BY ec_visit.unique_id\n" +
                 "ORDER BY ec_visit.visit_date DESC";
         AbstractDao.DataMap<Boolean> dataMap = c -> {
             String indicateVlResult = getCursorValue(c, "indicate_vl_result");
             String isHivPositive = getCursorValue(c, "is_hiv_positive");
             if (indicateVlResult != null && isHivPositive != null &&
-                    Integer.parseInt(indicateVlResult) < 1000 && "yes".equalsIgnoreCase(isHivPositive)) {
+                    Integer.parseInt(indicateVlResult) <= 1000 && "yes".equalsIgnoreCase(isHivPositive)) {
                 return true;
             } else {
                 return false;
@@ -75,8 +75,8 @@ public class GradDao extends AbstractDao {
     public static boolean isEveryVCAKnowledgeableAboutHIVPrevention(String householdID) {
         String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
                 " FROM ec_grad grad\n" +
-                " JOIN (SELECT unique_id, adolescent_birthdate FROM ec_client_index) ec_client_index\n" +
-                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "'";
+                " JOIN (SELECT unique_id, adolescent_birthdate,deleted FROM ec_client_index WHERE (deleted IS NULL OR deleted <> 1)) ec_client_index\n" +
+                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "' AND  strftime('%Y', 'now') - strftime('%Y', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) BETWEEN 12 AND 17";
 
         AbstractDao.DataMap<VcaGradCorrectAnswers> dataMap = c -> {
             String birthdateString = getCursorValue(c, "adolescent_birthdate");
@@ -122,7 +122,7 @@ public class GradDao extends AbstractDao {
         String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
                 " FROM ec_grad grad\n" +
                 " JOIN (SELECT unique_id, adolescent_birthdate FROM ec_client_index) ec_client_index\n" +
-                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "'";
+                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "' AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> 1)";
 
         AbstractDao.DataMap<VcaGradCorrectAnswers> dataMap = c -> {
             String birthdateString = getCursorValue(c, "adolescent_birthdate");
