@@ -231,11 +231,6 @@ public class IndexPersonDao  extends AbstractDao {
 
         return true;
     }
-
-
-
-
-
     public static String countTestedAbove15Children(String householdID){
 
         String sql = "SELECT COUNT(*) AS childrenCount FROM ec_hiv_assessment_above_15 WHERE household_id = '" + householdID + "' AND hiv_test IS NOT NULL AND hiv_test != 'never_tested'";
