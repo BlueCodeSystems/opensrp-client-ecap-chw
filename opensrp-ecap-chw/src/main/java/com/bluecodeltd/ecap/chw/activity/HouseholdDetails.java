@@ -410,8 +410,9 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //Benchmark **** 1 **** logic
+
                     Boolean allChildrenHIVStatus = IndexPersonDao.allChildrenHIVStatus(householdId);
-//                    (sumtested < Integer.parseInt(totalChildren))
+
                     if( allChildrenHIVStatus.equals(false)){
                         allTested = "no";
                     } else {
