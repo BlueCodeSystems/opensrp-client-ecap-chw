@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "HIV Testing Register",
+  "encounter_type": "HIV Testing Service",
   "entity_id": "",
   "show_errors_on_submit": true,
   "metadata": {
