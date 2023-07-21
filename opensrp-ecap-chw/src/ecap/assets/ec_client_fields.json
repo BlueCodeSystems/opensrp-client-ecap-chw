@@ -3332,7 +3332,7 @@
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "baseEntityId"
+            "field": "attributes.base_entity_id"
           }
         },
         {
@@ -3340,6 +3340,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
           }
         },
         {
@@ -6825,7 +6832,6 @@
     {
       "name": "ec_household_service_report",
       "columns": [
-
         {
           "column_name": "services",
           "type": "Client",
@@ -6903,7 +6909,6 @@
             "field": "attributes.other_stable_services"
           }
         },
-
         {
           "column_name": "hh_level_services",
           "type": "Client",
@@ -6923,6 +6928,55 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
+          }
+        },
+        {
+          "column_name": "art_clinic",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_clinic"
+          }
+        },
+        {
+          "column_name": "date_last_vl",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_last_vl"
+          }
+        },
+        {
+          "column_name": "vl_last_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_last_result"
+          }
+        },
+        {
+          "column_name": "date_next_vl",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_next_vl"
+          }
+        },
+        {
+          "column_name": "caregiver_mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_mmd"
+          }
+        },
+        {
+          "column_name": "level_mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.level_mmd"
           }
         },
         {
