@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -17,10 +18,13 @@ import androidx.transition.TransitionManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -31,8 +35,9 @@ public class ProfileOverviewFragment extends Fragment {
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
-            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool;
+            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level;
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,6 +77,8 @@ public class ProfileOverviewFragment extends Fragment {
         txtHiv = view.findViewById(R.id.hiv_status);
         txtRelation = view.findViewById(R.id.child_relation);
         txtPhone = view.findViewById(R.id.caregiver_phone);
+        recent_vl_result = view.findViewById(R.id.recent_vl_result);
+        recent_mmd_level = view.findViewById(R.id.recent_mmd_level);
 
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
@@ -226,6 +233,44 @@ public class ProfileOverviewFragment extends Fragment {
             txtMMDResult.setText(childIndex.getLevel_mmd());
         } else {
             txtMMDResult.setText("N/A");
+        }
+
+        List<VCAServiceModel> serviceModels = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
+
+        if (!serviceModels.isEmpty()) {
+            VCAServiceModel serviceModel = serviceModels.get(0);
+            if(serviceModel.getVl_last_result() != null){
+                recent_vl_result.setText(serviceModel.getVl_last_result());
+            } else {
+                if (childIndex.getVl_last_result() != null){
+                    recent_vl_result.setText(childIndex.getVl_last_result());
+                } else {
+                    recent_vl_result.setText("N/A");
+                }
+            }
+
+            if(serviceModel.getLevel_mmd() != null){
+                recent_mmd_level.setText(serviceModel.getLevel_mmd());
+            } else {
+                if (childIndex.getLevel_mmd() != null){
+                    recent_mmd_level.setText(childIndex.getLevel_mmd());
+                } else {
+                    recent_mmd_level.setText("N/A");
+                }
+            }
+
+        } else {
+            if (childIndex.getVl_last_result() != null){
+                recent_vl_result.setText(childIndex.getVl_last_result());
+            } else {
+                recent_vl_result.setText("N/A");
+            }
+
+            if (childIndex.getLevel_mmd() != null){
+                recent_mmd_level.setText(childIndex.getLevel_mmd());
+            } else {
+                recent_mmd_level.setText("N/A");
+            }
         }
 
         imgBtn.setOnClickListener(v -> {
