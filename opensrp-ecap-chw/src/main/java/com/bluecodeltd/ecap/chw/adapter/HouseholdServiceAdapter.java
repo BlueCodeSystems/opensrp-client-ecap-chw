@@ -25,8 +25,8 @@ import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -56,13 +56,13 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
 
     Context context;
-    List<FamilyServiceModel> services;
+    List<HouseholdServiceReportModel> services;
     ObjectMapper oMapper;
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
 
 
-    public HouseholdServiceAdapter(List<FamilyServiceModel> services, Context context){
+    public HouseholdServiceAdapter(List<HouseholdServiceReportModel> services, Context context){
 
         super();
 
@@ -84,7 +84,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     @Override
     public void onBindViewHolder(HouseholdServiceAdapter.ViewHolder holder, final int position) {
 
-        final FamilyServiceModel service = services.get(position);
+        final HouseholdServiceReportModel service = services.get(position);
 
         holder.setIsRecyclable(false);
 
@@ -234,7 +234,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, FamilyServiceModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
 
         oMapper = new ObjectMapper();
 
