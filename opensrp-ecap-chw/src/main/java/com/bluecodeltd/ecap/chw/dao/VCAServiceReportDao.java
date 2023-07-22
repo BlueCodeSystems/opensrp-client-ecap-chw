@@ -8,6 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VCAServiceReportDao extends AbstractDao {
+
+    public static List<VCAServiceModel> getRecentServicesByVCAID(String vcaID) {
+
+        String sql = "SELECT service.is_hiv_positive, service.date, service.vl_last_result, service.child_mmd, service.unique_id\n" +
+                "FROM (\n" +
+                "    SELECT is_hiv_positive, vl_last_result, child_mmd, date, unique_id,delete_status,\n" +
+                "           ROW_NUMBER() OVER (PARTITION BY unique_id ORDER BY date DESC) as rn\n" +
+                "    FROM ec_vca_service_report\n" +
+                ") service\n" +
+                "WHERE service.rn = 1 AND service.unique_id = '" + vcaID + "' AND (service.delete_status IS NULL OR service.delete_status <> '1')";
+
+        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static List<VCAServiceModel> getServicesByVCAID(String vcaid) {
 
         String sql = "SELECT * FROM ec_vca_service_report WHERE unique_id = '" + vcaid + "'  AND (delete_status IS NULL OR delete_status <> '1')";
@@ -19,6 +37,7 @@ public class VCAServiceReportDao extends AbstractDao {
         return values;
 
     }
+
 
     public static DataMap<VCAServiceModel> getServiceModelMap() {
         return c -> {
