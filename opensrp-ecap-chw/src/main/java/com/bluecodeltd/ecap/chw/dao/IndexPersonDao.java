@@ -175,6 +175,26 @@ public class IndexPersonDao  extends AbstractDao {
         return values.get(0);
 
     }
+    public static boolean checkForAtLeastOnePositiveVca(String householdID) {
+        String sql = "SELECT is_hiv_positive FROM ec_client_index WHERE household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "is_hiv_positive");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        for (String value : values) {
+            if (value.equals("yes")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static boolean allChildrenHIVStatus(String householdID) {
         String sql = "SELECT is_hiv_positive, adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
 
@@ -211,11 +231,6 @@ public class IndexPersonDao  extends AbstractDao {
 
         return true;
     }
-
-
-
-
-
     public static String countTestedAbove15Children(String householdID){
 
         String sql = "SELECT COUNT(*) AS childrenCount FROM ec_hiv_assessment_above_15 WHERE household_id = '" + householdID + "' AND hiv_test IS NOT NULL AND hiv_test != 'never_tested'";

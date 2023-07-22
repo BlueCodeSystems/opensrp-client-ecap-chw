@@ -16,7 +16,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/case_status"
-        android:title="De-Registration"
+        android:title="Case Closure"
         app:showAsAction="never"/>
     <item
         android:id="@+id/delete_record"
