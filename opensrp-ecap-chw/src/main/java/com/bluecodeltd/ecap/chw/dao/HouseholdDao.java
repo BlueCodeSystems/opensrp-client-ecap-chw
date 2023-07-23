@@ -75,6 +75,25 @@ public class HouseholdDao extends AbstractDao {
         }
 
     }
+    public static boolean checkPositiveCaregiver(String householdID) {
+        String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "caregiver_hiv_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        for (String value : values) {
+            if (value.equals("positive")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public static String checkIfCaregiverIsPositive (String household_id) {
 
         String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + household_id + "'";
@@ -89,6 +108,42 @@ public class HouseholdDao extends AbstractDao {
             return "0";
         }
 
+    }
+    public static boolean isViralLoadForAllPositiveCaregivers(String householdID) {
+        // First, get the list of household_ids where caregiver_hiv_status is 'positive' and viral_load_results is less than or equal to 1000
+        String sql1 = "SELECT caregiver_hiv_status, viral_load_results, household_id " +
+                "FROM ec_household " +
+                "WHERE caregiver_hiv_status = 'positive' "  +
+                "AND household_id = '" + householdID + "'";
+
+        List<String> householdIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "household_id"));
+
+        if (householdIds == null || householdIds.isEmpty()) {
+            return false;
+        }
+
+        for (String id : householdIds) {
+            // Then, check if the vl_last_result conducted for a period of one year from today is less than 1000 for each household
+            String sql2 = "SELECT household_id, vl_last_result, date as date " +
+                    "FROM ec_household_service_report " +
+                    "WHERE vl_last_result IS NOT NULL " +
+                    "AND date >= DATE('now','-1 year') " +
+                    "AND household_id = '" + id + "'";
+
+            List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "vl_last_result"));
+
+            if (values == null || values.isEmpty()) {
+                return false;
+            }
+
+            for (String value : values) {
+                if (Integer.parseInt(value) > 1000) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
     public static String countNumberoFHouseholds () {
 

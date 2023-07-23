@@ -195,6 +195,76 @@ public class IndexPersonDao  extends AbstractDao {
         return false;
     }
 
+    public static boolean allVcasWhoseVLLessThan1000MeetRequirement(String householdID) {
+
+        String sql1 = "SELECT is_hiv_positive, vl_last_result, household_id, unique_id " +
+                "FROM ec_client_index " +
+                "WHERE is_hiv_positive = 'yes' "  +
+                "AND household_id = '" + householdID + "'";
+
+        List<String> vcaIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "unique_id"));
+
+        if (vcaIds == null || vcaIds.isEmpty()) {
+            return false;
+        }
+
+        for (String vcaId : vcaIds) {
+            // Then, check if the vl_last_result conducted for a period of one year from today is less than 1000 for each VCA in the household
+            String sql2 = "SELECT unique_id, vl_last_result, date as date " +
+                    "FROM ec_vca_service_report " +
+                    "WHERE vl_last_result IS NOT NULL " + // Check that vl_last_result is not null
+                    "AND date >= DATE('now','-1 year') " + // This gets the date one year in the past from the current date in SQLite
+                    "AND unique_id = '" + vcaId + "'";
+
+            List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "vl_last_result"));
+
+            if (values == null || values.isEmpty()) {
+                return false;
+            }
+
+            for (String value : values) {
+                if (Integer.parseInt(value) > 1000) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean allVcasWhoseVLIsAbove100MeetRequirement(String householdID) {
+        // First, get the list of VCAs in the household who are HIV positive and whose vl_last_result is above 1000
+        String sql1 = "SELECT is_hiv_positive, vl_last_result, household_id, unique_id " +
+                "FROM ec_client_index " +
+                "WHERE is_hiv_positive = 'yes' " +
+                "AND CAST(vl_last_result AS INTEGER) > 1000 " +
+                "AND household_id = '" + householdID + "'";
+
+        // Then, check if the vl_last_result in the first 4 records from ec_vca_service_report is less than 1000 for each VCA in the household
+        String sql2 = "SELECT unique_id, vl_last_result, date as date " +
+                "FROM (SELECT * FROM ec_vca_service_report " +
+                "WHERE unique_id IN (" + sql1 + ") " +
+                "ORDER BY date ASC " +
+                "LIMIT 4) " +
+                "WHERE CAST(vl_last_result AS INTEGER) <= 1000";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "vl_last_result");
+
+        List<String> values = AbstractDao.readData(sql2, dataMap);
+
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        for (String value : values) {
+            if (Integer.parseInt(value) > 1000) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static boolean allChildrenHIVStatus(String householdID) {
         String sql = "SELECT is_hiv_positive, adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
 
