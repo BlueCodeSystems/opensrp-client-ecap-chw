@@ -203,7 +203,7 @@
         "relevance": {
           "step1:caregiver_mmd": {
             "type": "string",
-            "ex": "equalTo(., \"positive\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -384,6 +384,10 @@
             "text": "Other Specify"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -478,6 +482,10 @@
             "text": "Other Specify"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -540,6 +548,10 @@
             "text": "Other Specify"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -611,6 +623,10 @@
             "text": "Other Specify"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -702,6 +718,10 @@
             "text": "Other Specify"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
