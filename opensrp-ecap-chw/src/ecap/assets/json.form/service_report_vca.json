@@ -355,7 +355,11 @@
             "key": "other",
             "text": "Other Specify"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        }
       },
       {
         "key": "other_service",
@@ -423,7 +427,11 @@
             "key": "other",
             "text": "Other Specify"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        }
       },
       {
         "key": "other_schooled_services",
@@ -479,7 +487,11 @@
             "key": "other",
             "text": "Other Specify"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        }
       },
       {
         "key": "other_safe_services",
@@ -544,7 +556,11 @@
             "key": "other",
             "text": "Other Specify"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service"
+        }
       },
       {
         "key": "other_stable_services",

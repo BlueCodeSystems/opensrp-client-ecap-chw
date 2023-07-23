@@ -994,6 +994,13 @@
           }
         },
         {
+          "column_name": "date_started_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_started_art"
+          }
+        },
+        {
           "column_name": "caregiver_art_number",
           "type": "Client",
           "json_mapping": {
@@ -1008,6 +1015,13 @@
           }
         },
         {
+          "column_name": "date_next_vl",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_next_vl"
+          }
+        },
+        {
           "column_name": "viral_load_results",
           "type": "Client",
           "json_mapping": {
@@ -1019,6 +1033,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.vl_suppressed"
+          }
+        },
+        {
+          "column_name": "date_of_last_viral_load",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_last_viral_load"
+          }
+        },
+        {
+          "column_name": "caregiver_mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_mmd"
+          }
+        },
+        {
+          "column_name": "level_mmd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.level_mmd"
           }
         },
         {
@@ -3332,7 +3367,7 @@
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.base_entity_id"
+            "field": "baseEntityId"
           }
         },
         {
@@ -3343,17 +3378,17 @@
           }
         },
         {
-          "column_name": "is_hiv_positive",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.is_hiv_positive"
-          }
-        },
-        {
           "column_name": "date",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "is_hiv_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_hiv_positive"
           }
         },
         {
@@ -6832,6 +6867,7 @@
     {
       "name": "ec_household_service_report",
       "columns": [
+
         {
           "column_name": "services",
           "type": "Client",
@@ -6909,6 +6945,7 @@
             "field": "attributes.other_stable_services"
           }
         },
+
         {
           "column_name": "hh_level_services",
           "type": "Client",
