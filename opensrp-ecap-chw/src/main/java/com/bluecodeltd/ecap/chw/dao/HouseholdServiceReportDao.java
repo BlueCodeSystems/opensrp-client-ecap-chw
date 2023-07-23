@@ -10,7 +10,7 @@ import java.util.List;
 public class HouseholdServiceReportDao extends AbstractDao {
     public static List<HouseholdServiceReportModel> getServicesByHousehold(String householdId) {
 
-        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT * FROM ec_household_service_report WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY date DESC";
 
         List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)
