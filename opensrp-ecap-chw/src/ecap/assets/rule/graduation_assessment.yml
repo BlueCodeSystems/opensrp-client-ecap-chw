@@ -9,7 +9,9 @@ actions:
 name: step3_toaster_bench_2
 description: step3_toaster_bench_2
 priority: 1
-condition: "step3_virally_suppressed.contains('yes')"
+condition: "(step3_virally_suppressed.contains('yes') && step3_suppressed_caregiver.contains('yes')) 
+|| (step3_virally_suppressed.contains('yes') && step3_suppressed_caregiver.contains('N/A'))
+|| (step3_virally_suppressed.contains('N/A') && step3_suppressed_caregiver.contains('yes'))"
 actions:
   - "isRelevant = true"
 ---
@@ -23,7 +25,7 @@ actions:
 name: step6_toaster_bench_5
 description: step6_toaster_bench_5
 priority: 1
-condition: "step6_school_fees.contains('yes') && step6_medical_costs.contains('yes')"
+condition: "(step6_school_fees.contains('yes') && step6_medical_costs.contains('yes')) || (step6_school_fees.contains('N/A') && step6_medical_costs.contains('yes'))"
 actions:
   - "isRelevant = true"
 ---

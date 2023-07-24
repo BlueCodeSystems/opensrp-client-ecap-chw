@@ -279,7 +279,31 @@
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Has each beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
+        "label": "Has each VCA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
+          }
+        ]
+      },
+      {
+        "key": "suppressed_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "suppressed_caregiver",
+        "label_info_title":"Benchmark 2: Virally suppressed ",
+        "type": "native_radio",
+        "read_only" : true,
+        "label": "Has the caregiver as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
         "options": [
           {
             "key": "yes",
@@ -463,6 +487,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -533,7 +561,12 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
+
         ]
       },
       {
@@ -789,7 +822,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_in_school",
-        "type": "native_radio",
+        "type": "hidden",
         "label": "Are there any children or adolescents of school age (Grade 1 to grade 7) in the household?",
         "options": [
           {
@@ -827,6 +860,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -845,6 +882,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -863,6 +904,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },

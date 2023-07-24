@@ -2430,6 +2430,7 @@
         "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
         "hint": "Last VL results",
+        "edit_type": "number",
         "relevance": {
           "step4:vl_check_box": {
             "type": "string",

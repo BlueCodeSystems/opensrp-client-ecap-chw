@@ -118,7 +118,9 @@ public class HouseholdDao extends AbstractDao {
 
         List<String> householdIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "household_id"));
 
-        if (householdIds == null || householdIds.isEmpty()) {
+        List<String> viralLoads = AbstractDao.readData(sql1, c -> getCursorValue(c, "viral_load_results"));
+
+        if (householdIds == null || householdIds.isEmpty() || viralLoads.contains(null)) {
             return false;
         }
 
@@ -126,8 +128,7 @@ public class HouseholdDao extends AbstractDao {
             // Then, check if the vl_last_result conducted for a period of one year from today is less than 1000 for each household
             String sql2 = "SELECT household_id, vl_last_result, date as date " +
                     "FROM ec_household_service_report " +
-                    "WHERE vl_last_result IS NOT NULL " +
-                    "AND date >= DATE('now','-1 year') " +
+                    "WHERE DATE(SUBSTR(date, 7, 4) || '-' || SUBSTR(date, 4, 2) || '-' || SUBSTR(date, 1, 2)) >= DATE('now','-1 year') " +
                     "AND household_id = '" + id + "'";
 
             List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "vl_last_result"));
@@ -137,7 +138,7 @@ public class HouseholdDao extends AbstractDao {
             }
 
             for (String value : values) {
-                if (Integer.parseInt(value) > 1000) {
+                if (value == null || Integer.parseInt(value) >= 1001) {
                     return false;
                 }
             }
