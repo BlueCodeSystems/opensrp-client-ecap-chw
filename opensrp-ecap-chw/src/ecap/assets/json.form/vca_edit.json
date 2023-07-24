@@ -2491,7 +2491,7 @@
         "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "vca_screening_calculation.yml"
+              "rules-file": "viral_load_calculation.yml"
             }
           }
         }
