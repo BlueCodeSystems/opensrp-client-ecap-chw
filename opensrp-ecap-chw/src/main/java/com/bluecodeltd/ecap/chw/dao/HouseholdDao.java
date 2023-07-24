@@ -146,6 +146,20 @@ public class HouseholdDao extends AbstractDao {
 
         return true;
     }
+    public static boolean checkForCaregiverHivStatus(String householdID) {
+        String sql = "SELECT hiv_status FROM ec_caregiver_hiv_assessment WHERE household_id  = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "hiv_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values != null && !values.isEmpty()) {
+            String status = values.get(0);
+            return status.equals("positive") || status.equals("negative") || status.equals("status_not_required");
+        } else {
+            return false;
+        }
+    }
     public static String countNumberoFHouseholds () {
 
         String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND status IS NULL OR status != '1'";

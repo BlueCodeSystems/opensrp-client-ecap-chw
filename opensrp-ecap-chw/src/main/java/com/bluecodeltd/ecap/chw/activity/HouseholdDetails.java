@@ -421,10 +421,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
                     hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-                    if(caregiverHivAssessmentModel == null || caregiverHivAssessmentModel.getHiv_status() == null || caregiverHivAssessmentModel.getHiv_status().equals("never_tested")){
-                        caregiverTested = "no";
-                    } else {
+                    Boolean checkForHivStatus = HouseholdDao.checkForCaregiverHivStatus(householdId);
+                    if(checkForHivStatus.equals(true)){
                         caregiverTested = "yes";
+                    } else {
+                        caregiverTested = "no";
                     }
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);

@@ -352,13 +352,17 @@
             "text": "Adherence Support"
           },
           {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "You are required to select at least one service"
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
         }
       },
       {
@@ -424,13 +428,17 @@
             "text": "Received regular assistance/ support with homework (e.g., homework club participation)"
           },
           {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "You are required to select at least one service"
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
         }
       },
       {
@@ -484,13 +492,17 @@
             "text": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)"
           },
           {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "You are required to select at least one service"
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
         }
       },
       {
@@ -553,13 +565,17 @@
             "text": "Numeracy training"
           },
           {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
             "key": "other",
             "text": "Other Specify"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "You are required to select at least one service"
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
         }
       },
       {
