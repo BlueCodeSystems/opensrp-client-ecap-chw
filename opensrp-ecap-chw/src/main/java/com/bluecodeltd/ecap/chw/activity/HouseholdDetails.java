@@ -460,6 +460,9 @@ public class HouseholdDetails extends AppCompatActivity {
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
                     suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
+                    JSONObject suppressed_caregiver = getFieldJSONObject(fields(indexRegisterForm, "step3"), "suppressed_caregiver");
+
+
                     JSONObject toast_applicable = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_applicable");
 
                     Boolean checkPositiveChildren = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
@@ -467,31 +470,29 @@ public class HouseholdDetails extends AppCompatActivity {
                     Boolean allVcasWhoseVLLessThan1000MeetRequirement = IndexPersonDao.allVcasWhoseVLLessThan1000MeetRequirement(householdId);
                     Boolean isViralLoadForAllPositiveCaregivers = HouseholdDao.isViralLoadForAllPositiveCaregivers(householdId);
 
-                    if(returnTrueForPositiveCaregiver.equals(true) || checkPositiveChildren.equals(true)){
+                    if(checkPositiveChildren.equals(true)){
                         suppressed.put("hidden", false);
                         toast_applicable.put("type", "hidden");
-                        if(checkPositiveChildren.equals(true)){
+
                             if (allVcasWhoseVLLessThan1000MeetRequirement.equals(true)){
                                 suppressed.put(JsonFormUtils.VALUE, "yes");
                             } else {
                                 suppressed.put(JsonFormUtils.VALUE, "no");
                             }
-                        }
-
-                        if(returnTrueForPositiveCaregiver.equals(true)){
-                            if (isViralLoadForAllPositiveCaregivers.equals(true)) {
-                                suppressed.put(JsonFormUtils.VALUE, "yes");
-                            } else {
-                                suppressed.put(JsonFormUtils.VALUE, "no");
-                            }
-                        }
 
                     } else {
-                        toast_applicable.put("type", "toaster_notes");
-                        toast_applicable.put("text", cname.getText().toString()+" doesn’t have any beneficiary been documented as virally suppressed (with a viral load below 1,000 in the last 12 months)");
                         suppressed.put(JsonFormUtils.VALUE, "N/A");
                     }
 
+                    if(returnTrueForPositiveCaregiver.equals(true)){
+                        if (isViralLoadForAllPositiveCaregivers.equals(true)) {
+                            suppressed_caregiver.put(JsonFormUtils.VALUE, "yes");
+                        } else {
+                            suppressed_caregiver.put(JsonFormUtils.VALUE, "no");
+                        }
+                    } else {
+                        suppressed_caregiver.put(JsonFormUtils.VALUE, "N/A");
+                    }
 
 
 

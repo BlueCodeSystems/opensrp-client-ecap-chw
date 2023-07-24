@@ -746,6 +746,7 @@
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
         "hint": "Result of most recent viral load test.",
+        "edit_type": "number",
         "v_numeric": {
           "value": "true",
           "err": "Viral load can only contain numbers"
