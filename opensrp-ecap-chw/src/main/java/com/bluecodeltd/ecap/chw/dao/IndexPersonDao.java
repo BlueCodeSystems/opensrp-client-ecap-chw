@@ -4,14 +4,10 @@ package com.bluecodeltd.ecap.chw.dao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.AllChildrenHIVStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,7 +172,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
     public static boolean checkForAtLeastOnePositiveVca(String householdID) {
-        String sql = "SELECT is_hiv_positive FROM ec_client_index WHERE household_id = '" + householdID + "'";
+        String sql = "SELECT is_hiv_positive FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "is_hiv_positive");
 
@@ -195,12 +191,12 @@ public class IndexPersonDao  extends AbstractDao {
         return false;
     }
 
-    public static boolean allVcasWhoseVLLessThan1000MeetRequirement(String householdID) {
+    public static boolean doTheVCAsMeetBenchmarkTwo(String householdID) {
 
         String sql1 = "SELECT is_hiv_positive, vl_last_result, household_id, unique_id " +
                 "FROM ec_client_index " +
                 "WHERE is_hiv_positive = 'yes' "  +
-                "AND household_id = '" + householdID + "'";
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
 
         List<String> vcaIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "unique_id"));
         List<String> viralResult = AbstractDao.readData(sql1, c -> getCursorValue(c, "vl_last_result"));
@@ -214,7 +210,7 @@ public class IndexPersonDao  extends AbstractDao {
             String sql2 = "SELECT unique_id, vl_last_result, date as date " +
                     "FROM ec_vca_service_report " +
                     "WHERE DATE(SUBSTR(date, 7, 4) || '-' || SUBSTR(date, 4, 2) || '-' || SUBSTR(date, 1, 2)) >= DATE('now','-1 year')" + // This gets the date one year in the past from the current date in SQLite
-                    "AND unique_id = '" + vcaId + "'";
+                    "AND unique_id = '" + vcaId + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
             List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "vl_last_result"));
 
@@ -232,41 +228,56 @@ public class IndexPersonDao  extends AbstractDao {
         return true;
     }
 
-    public static boolean allChildrenHIVStatus(String householdID) {
-        String sql = "SELECT is_hiv_positive, adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
+    public static boolean doTheVCAsMeetBenchmarkOne(String householdID) {
+        String sql1 = "SELECT unique_id, adolescent_birthdate, household_id " +
+                "FROM ec_client_index " +
+                "WHERE (is_hiv_positive = 'no' OR is_hiv_positive = 'unknown' OR is_hiv_positive = 'not_required')  " +
+                "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 1 " +
+                "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 18 " +
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
 
-        AbstractDao.DataMap<AllChildrenHIVStatusModel> dataMap = c -> {
-            String isHivPositive = getCursorValue(c, "is_hiv_positive");
-            String birthdateString = getCursorValue(c, "adolescent_birthdate");
-            String birthdate = String.valueOf(LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            return new AllChildrenHIVStatusModel(isHivPositive, birthdate);
-        };
+        List<String> vcaIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "unique_id"));
 
-        List<AllChildrenHIVStatusModel> values = AbstractDao.readData(sql, dataMap);
-
-        if (values == null || values.isEmpty()) {
+        if (vcaIds == null || vcaIds.isEmpty()) {
             return false;
         }
 
-        LocalDate today = LocalDate.now();
+        for (String vcaId : vcaIds) {
+            String sql2 = "SELECT unique_id, is_hiv_positive, household_id " +
+                    "FROM ( " +
+                    "SELECT hiv_test AS is_hiv_positive, unique_id, household_id FROM ec_hiv_assessment_below_15 " +
+                    "UNION ALL " +
+                    "SELECT hiv_test AS is_hiv_positive, unique_id, household_id FROM ec_hiv_assessment_above_15 " +
+                    ") AS combined " +
+                    "WHERE unique_id = '" + vcaId + "'";
 
-        for (AllChildrenHIVStatusModel value : values) {
-            String isHivPositive = value.getIsHivPositive();
-            LocalDate birthdate = LocalDate.parse(value.getBirthdate());
+            List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "unique_id"));
+            List<String> hivPositives = AbstractDao.readData(sql2, c -> getCursorValue(c, "is_hiv_positive"));
 
-            if (!isHivPositive.equalsIgnoreCase("yes") && !isHivPositive.equalsIgnoreCase("no")) {
+            if (values == null || values.isEmpty()) {
                 return false;
             }
 
-            Period age = Period.between(birthdate, today);
-            int years = age.getYears();
-
-            if (years < 0 || years > 18) {
-                return false;
+            for (String hivPositive : hivPositives) {
+                if (!hivPositive.equalsIgnoreCase("yes") && !hivPositive.equalsIgnoreCase("no")  && !hivPositive.equalsIgnoreCase("positive") && !hivPositive.equalsIgnoreCase("negative")) {
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+    public static boolean returnTrueForAtLeastOneVCAISHivNegativeInHousehold(String householdID) {
+
+        String sql = "SELECT first_name, last_name, is_hiv_positive " +
+                "FROM ec_client_index " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND is_hiv_positive IN ('unknown', 'no')";
+
+        List<String> vcaIds = AbstractDao.readData(sql, c -> getCursorValue(c, "first_name"));
+
+        return vcaIds != null && !vcaIds.isEmpty();
     }
     public static String countTestedAbove15Children(String householdID){
 

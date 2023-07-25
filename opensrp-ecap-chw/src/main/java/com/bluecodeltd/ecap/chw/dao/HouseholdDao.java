@@ -76,7 +76,7 @@ public class HouseholdDao extends AbstractDao {
 
     }
     public static boolean checkPositiveCaregiver(String householdID) {
-        String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "'";
+        String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "caregiver_hiv_status");
 
@@ -114,7 +114,7 @@ public class HouseholdDao extends AbstractDao {
         String sql1 = "SELECT caregiver_hiv_status, viral_load_results, household_id " +
                 "FROM ec_household " +
                 "WHERE caregiver_hiv_status = 'positive' "  +
-                "AND household_id = '" + householdID + "'";
+                "AND household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";
 
         List<String> householdIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "household_id"));
 
@@ -129,7 +129,7 @@ public class HouseholdDao extends AbstractDao {
             String sql2 = "SELECT household_id, vl_last_result, date as date " +
                     "FROM ec_household_service_report " +
                     "WHERE DATE(SUBSTR(date, 7, 4) || '-' || SUBSTR(date, 4, 2) || '-' || SUBSTR(date, 1, 2)) >= DATE('now','-1 year') " +
-                    "AND household_id = '" + id + "'";
+                    "AND household_id = '" + id + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
             List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "vl_last_result"));
 
@@ -145,6 +145,18 @@ public class HouseholdDao extends AbstractDao {
         }
 
         return true;
+    }
+    public static boolean isCaregiverHIVStatusEligibleInHousehold(String householdID) {
+
+        String sql = "SELECT caregiver_name, caregiver_hiv_status, status " +
+                "FROM ec_household " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (status IS NULL OR status <> '1') " +
+                "AND caregiver_hiv_status IN ('unknown', 'negative')";
+
+        List<String> householdIds = AbstractDao.readData(sql, c -> getCursorValue(c, "caregiver_name"));
+
+        return householdIds != null && !householdIds.isEmpty();
     }
     public static boolean checkForCaregiverHivStatus(String householdID) {
         String sql = "SELECT hiv_status FROM ec_caregiver_hiv_assessment WHERE household_id  = '" + householdID + "'";

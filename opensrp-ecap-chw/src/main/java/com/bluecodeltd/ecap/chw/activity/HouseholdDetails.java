@@ -410,23 +410,34 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //Benchmark **** 1 **** logic
+                    Boolean checkForVCAHivStatus = IndexPersonDao.returnTrueForAtLeastOneVCAISHivNegativeInHousehold(householdId);
 
-                    Boolean allChildrenHIVStatus = IndexPersonDao.allChildrenHIVStatus(householdId);
+                    Boolean allChildrenHIVStatus = IndexPersonDao.doTheVCAsMeetBenchmarkOne(householdId);
 
-                    if( allChildrenHIVStatus.equals(false)){
-                        allTested = "no";
+                    if(checkForVCAHivStatus.equals(true)){
+                        if( allChildrenHIVStatus.equals(false)){
+                            allTested = "no";
+                        } else {
+                            allTested = "yes";
+                        }
                     } else {
-                        allTested = "yes";
+                        allTested = "N/A";
                     }
 
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
                     hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
                     Boolean checkForHivStatus = HouseholdDao.checkForCaregiverHivStatus(householdId);
-                    if(checkForHivStatus.equals(true)){
-                        caregiverTested = "yes";
-                    } else {
-                        caregiverTested = "no";
-                    }
+                    Boolean isCaregiverHIVStatusEligibleInHousehold = HouseholdDao.isCaregiverHIVStatusEligibleInHousehold(householdId);
+                   if(isCaregiverHIVStatusEligibleInHousehold.equals(true)){
+                       if(checkForHivStatus.equals(true)){
+                           caregiverTested = "yes";
+                       } else {
+                           caregiverTested = "no";
+                       }
+                   } else {
+                       caregiverTested = "N/A";
+                   }
+
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);
 
@@ -468,7 +479,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     Boolean checkPositiveChildren = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
                     Boolean returnTrueForPositiveCaregiver = HouseholdDao.checkPositiveCaregiver(householdId);
-                    Boolean allVcasWhoseVLLessThan1000MeetRequirement = IndexPersonDao.allVcasWhoseVLLessThan1000MeetRequirement(householdId);
+                    Boolean allVcasWhoseVLLessThan1000MeetRequirement = IndexPersonDao.doTheVCAsMeetBenchmarkTwo(householdId);
                     Boolean isViralLoadForAllPositiveCaregivers = HouseholdDao.isViralLoadForAllPositiveCaregivers(householdId);
 
                     if(checkPositiveChildren.equals(true)){
@@ -500,7 +511,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     //Benchmark **** 3 **** logic
 
-                    Boolean isEveryVCAKnowledgeableAboutHIVPrevention = GradDao.isEveryVCAKnowledgeableAboutHIVPrevention(householdId);
+                    Boolean isEveryVCAKnowledgeableAboutHIVPrevention = GradDao.doTheVCAsMeetBenchMarkThree(householdId);
                     Boolean hasVCAInAgeRange = GradDao.hasVCAInAgeRange(householdId);
                     JSONObject prevention = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
 
