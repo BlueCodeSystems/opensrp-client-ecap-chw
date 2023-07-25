@@ -454,10 +454,10 @@ public class HouseholdDetails extends AppCompatActivity {
 //
 //                    JSONObject toast_applicable = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_applicable");
 //
-//                    Boolean checkPositiveChildren = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
-//                    Boolean returnTrueForPositiveCaregiver = HouseholdDao.checkPositiveCaregiver(householdId);
+//                    Boolean hasPositiveVCA = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
+//                    Boolean  isCaregiverPositive = HouseholdDao.checkPositiveCaregiver(householdId);
 //
-//                    if(HouseholdDao.checkIfCaregiverIsPositive(householdId).equals("positive") || checkPositiveChildren.equals(true)){
+//                    if(HouseholdDao.checkIfCaregiverIsPositive(householdId).equals("positive") || hasPositiveVCA.equals(true)){
 //                        suppressed.put("hidden", false);
 //                        toast_applicable.put("type", "hidden");
 //                    } else {
@@ -468,7 +468,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
 
-                    //updated logic
+                    //Benchmark **** 2 **** logic updated
+
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
                     suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
@@ -477,16 +478,16 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     JSONObject toast_applicable = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_applicable");
 
-                    Boolean checkPositiveChildren = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
-                    Boolean returnTrueForPositiveCaregiver = HouseholdDao.checkPositiveCaregiver(householdId);
-                    Boolean allVcasWhoseVLLessThan1000MeetRequirement = IndexPersonDao.doTheVCAsMeetBenchmarkTwo(householdId);
+                    Boolean hasPositiveVCA = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
+                    Boolean  isCaregiverPositive = HouseholdDao.isCaregiverPositive(householdId);
+                    Boolean checkIfVcasWithVLBelow1000MeetingRequirement = IndexPersonDao.doTheVCAsMeetBenchmarkTwo(householdId);
                     Boolean isViralLoadForAllPositiveCaregivers = HouseholdDao.isViralLoadForAllPositiveCaregivers(householdId);
 
-                    if(checkPositiveChildren.equals(true)){
+                    if(hasPositiveVCA.equals(true)){
                         suppressed.put("hidden", false);
                         toast_applicable.put("type", "hidden");
 
-                            if (allVcasWhoseVLLessThan1000MeetRequirement.equals(true)){
+                            if (checkIfVcasWithVLBelow1000MeetingRequirement.equals(true)){
                                 suppressed.put(JsonFormUtils.VALUE, "yes");
                             } else {
                                 suppressed.put(JsonFormUtils.VALUE, "no");
@@ -496,7 +497,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         suppressed.put(JsonFormUtils.VALUE, "N/A");
                     }
 
-                    if(returnTrueForPositiveCaregiver.equals(true)){
+                    if( isCaregiverPositive.equals(true)){
                         if (isViralLoadForAllPositiveCaregivers.equals(true)) {
                             suppressed_caregiver.put(JsonFormUtils.VALUE, "yes");
                         } else {
@@ -529,6 +530,21 @@ public class HouseholdDetails extends AppCompatActivity {
                         prevention.put(JsonFormUtils.VALUE, "N/A");
 
                     }
+
+                    //Benchmark **** 4 **** logic
+
+                    Boolean hasAtLeastOneVCAUnderFiveYearsOld = IndexPersonDao.hasAtLeastOneVCAUnderFiveYearsOld(householdId);
+                    JSONObject malnutrition = getFieldJSONObject(fields(indexRegisterForm, "step5"), "undernourished");
+                    JSONObject underFiveToast = getFieldJSONObject(fields(indexRegisterForm, "step5"), "toaster_underFive");
+                   if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)){
+                       malnutrition.put(JsonFormUtils.READ_ONLY, false);
+                   } else {
+                       malnutrition.put(JsonFormUtils.READ_ONLY, true);
+                       malnutrition.put(JsonFormUtils.VALUE,"N/A");
+                       underFiveToast.put("type", "toaster_notes");
+                       underFiveToast.put("text", cname.getText().toString()+" have any adolescents aged 5 and below who need to be assessed for undernourishment");
+                   }
+
 
                     startFormActivity(indexRegisterForm);
 

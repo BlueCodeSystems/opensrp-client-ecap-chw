@@ -65,6 +65,41 @@
         "edit_type": "name"
       },
       {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date",
+        "type": "date_picker",
+        "hint": "Date when Service/s Provided",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "services",
+        "type": "native_radio",
+        "label": "Please select who you are providing service for",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "caregiver",
+            "text": "Caregiver"
+          },
+          {
+            "key": "household",
+            "text": "Household"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -88,6 +123,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:services": {
+            "type": "string",
+            "ex": "equalTo(., \"caregiver\")"
+          }
         }
       },
       {
@@ -205,41 +246,6 @@
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
-        }
-      },
-      {
-        "key": "date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date",
-        "type": "date_picker",
-        "hint": "Date when Service/s Provided",
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "services",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "services",
-        "type": "native_radio",
-        "label": "Please select who you are providing service for",
-        "label_text_style": "italic",
-        "options": [
-          {
-            "key": "caregiver",
-            "text": "Caregiver"
-          },
-          {
-            "key": "household",
-            "text": "Household"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This is a Required field."
         }
       },
       {

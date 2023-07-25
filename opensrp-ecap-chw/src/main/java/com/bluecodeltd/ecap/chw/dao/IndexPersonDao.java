@@ -232,7 +232,7 @@ public class IndexPersonDao  extends AbstractDao {
         String sql1 = "SELECT unique_id, adolescent_birthdate, household_id " +
                 "FROM ec_client_index " +
                 "WHERE (is_hiv_positive = 'no' OR is_hiv_positive = 'unknown' OR is_hiv_positive = 'not_required')  " +
-                "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 1 " +
+                "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 2 " +
                 "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 18 " +
                 "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
 
@@ -278,6 +278,17 @@ public class IndexPersonDao  extends AbstractDao {
         List<String> vcaIds = AbstractDao.readData(sql, c -> getCursorValue(c, "first_name"));
 
         return vcaIds != null && !vcaIds.isEmpty();
+    }
+    public static boolean hasAtLeastOneVCAUnderFiveYearsOld(String householdID) {
+
+        String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
+                "FROM ec_client_index " +
+                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 5 " +
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+
+        List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
+
+        return ids != null && !ids.isEmpty();
     }
     public static String countTestedAbove15Children(String householdID){
 

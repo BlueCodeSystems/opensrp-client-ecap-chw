@@ -503,6 +503,17 @@
         ]
       },
       {
+        "key": "toaster_underFive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "text": "",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": ""
+      },
+      {
         "key": "toaster_bench_4",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
