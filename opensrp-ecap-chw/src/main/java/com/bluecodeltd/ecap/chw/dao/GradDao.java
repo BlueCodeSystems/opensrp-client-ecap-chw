@@ -72,7 +72,7 @@ public class GradDao extends AbstractDao {
 
         return true;
     }
-    public static boolean isEveryVCAKnowledgeableAboutHIVPrevention(String householdID) {
+    public static boolean doTheVCAsMeetBenchMarkThree(String householdID) {
         String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
                 " FROM ec_grad grad\n" +
                 " JOIN (SELECT unique_id, adolescent_birthdate,deleted FROM ec_client_index WHERE (deleted IS NULL OR deleted <> 1)) ec_client_index\n" +
