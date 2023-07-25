@@ -75,7 +75,7 @@ public class HouseholdDao extends AbstractDao {
         }
 
     }
-    public static boolean checkPositiveCaregiver(String householdID) {
+    public static boolean isCaregiverPositive(String householdID) {
         String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "caregiver_hiv_status");
