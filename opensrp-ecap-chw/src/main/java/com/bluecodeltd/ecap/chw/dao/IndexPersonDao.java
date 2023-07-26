@@ -492,7 +492,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<CasePlanModel> getCasePlansById(String childID) {
 
-        String sql = "SELECT * FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(case_plan_date,7,4) || '-' || substr(case_plan_date,4,2) || '-' || substr(case_plan_date,1,2)) as sortable_date FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)

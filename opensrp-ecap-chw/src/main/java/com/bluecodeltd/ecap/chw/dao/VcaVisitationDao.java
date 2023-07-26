@@ -83,7 +83,8 @@ public class VcaVisitationDao extends AbstractDao {
 
     public static List<VcaVisitationModel> getVisitsByID(String childID) {
 
-        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + childID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY visit_date DESC ";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + childID + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
         if (values == null || values.size() == 0)
