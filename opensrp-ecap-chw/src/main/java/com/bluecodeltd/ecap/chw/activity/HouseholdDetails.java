@@ -410,33 +410,30 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //Benchmark **** 1 **** logic
-                    Boolean checkForVCAHivStatus = IndexPersonDao.returnTrueForAtLeastOneVCAISHivNegativeInHousehold(householdId);
+                    Boolean checkForVCAHivStatus = IndexPersonDao.checkHivStatusInHousehold(householdId);
 
                     Boolean allChildrenHIVStatus = IndexPersonDao.doTheVCAsMeetBenchmarkOne(householdId);
 
                     if(checkForVCAHivStatus.equals(true)){
-                        if( allChildrenHIVStatus.equals(false)){
-                            allTested = "no";
-                        } else {
+
                             allTested = "yes";
+                        } else {
+                            allTested = "no";
                         }
-                    } else {
-                        allTested = "N/A";
-                    }
 
                     JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
                     hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-                    Boolean checkForHivStatus = HouseholdDao.checkForCaregiverHivStatus(householdId);
+
+                    Boolean checkForHivStatus = HouseholdDao.checkCaregiverHivStatusInHousehold(householdId);
+
                     Boolean isCaregiverHIVStatusEligibleInHousehold = HouseholdDao.isCaregiverHIVStatusEligibleInHousehold(householdId);
-                   if(isCaregiverHIVStatusEligibleInHousehold.equals(true)){
-                       if(checkForHivStatus.equals(true)){
+
+                   if(checkForHivStatus.equals(true)){
                            caregiverTested = "yes";
                        } else {
                            caregiverTested = "no";
                        }
-                   } else {
-                       caregiverTested = "N/A";
-                   }
+
 
                     JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
                     tested.put(JsonFormUtils.VALUE, caregiverTested);
@@ -1372,7 +1369,14 @@ public class HouseholdDetails extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             rscreen.setVisibility(View.VISIBLE);
             grad_form.setVisibility(View.VISIBLE);
-            chivAssessment.setVisibility(View.VISIBLE);
+            if(house.getCaregiver_hiv_status().equals("positive") ||
+                    house.getCaregiver_hiv_status().equals("HIV+")
+                    ) {
+                chivAssessment.setVisibility(View.GONE);
+            } else {
+                chivAssessment.setVisibility(View.VISIBLE);
+            }
+
             rassessment.setVisibility(View.VISIBLE);
             rcase_plan.setVisibility(View.VISIBLE);
             refferal.setVisibility(View.VISIBLE);
