@@ -386,6 +386,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 }
 
                 childModel.setHousehold_id(child.getHousehold_id());
+                childModel.setAdolescent_birthdate(child.getAdolescent_birthdate());
                 childModel.setUnique_id(child.getUnique_id());
                 childModel.setIs_hiv_positive(child.getIs_hiv_positive());
                 childModel.setFacility(child.getFacility());

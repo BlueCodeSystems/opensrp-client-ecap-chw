@@ -267,13 +267,36 @@ public class IndexPersonDao  extends AbstractDao {
 
         return true;
     }
+    public static boolean checkHivStatusInHousehold(String householdID) {
+
+        String sql = "SELECT first_name, last_name, is_hiv_positive " +
+                "FROM ec_client_index " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1')";
+
+        List<String> hivStatuses = AbstractDao.readData(sql, c -> getCursorValue(c, "is_hiv_positive"));
+
+        if (hivStatuses == null || hivStatuses.isEmpty()) {
+            return false;
+        }
+
+        for (String status : hivStatuses) {
+            if (status.equalsIgnoreCase("no") ||
+                    status.equalsIgnoreCase("yes") ||
+                    status.equalsIgnoreCase("not_required")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public static boolean returnTrueForAtLeastOneVCAISHivNegativeInHousehold(String householdID) {
 
         String sql = "SELECT first_name, last_name, is_hiv_positive " +
                 "FROM ec_client_index " +
                 "WHERE household_id = '" + householdID + "' " +
                 "AND (deleted IS NULL OR deleted <> '1') " +
-                "AND is_hiv_positive IN ('unknown', 'no')";
+                "AND is_hiv_positive IN ('unknown', 'no','yes','not_required')";
 
         List<String> vcaIds = AbstractDao.readData(sql, c -> getCursorValue(c, "first_name"));
 
