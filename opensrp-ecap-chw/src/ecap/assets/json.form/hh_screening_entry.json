@@ -813,11 +813,11 @@
         "label": "Are you virally suppressed as of your most recent viral load test?",
         "options": [
           {
-            "key": "Less than 1000 copies/ml",
+            "key": "yes",
             "text": "Yes"
           },
           {
-            "key": "Above 1000 copies/ml",
+            "key": "no",
             "text": "No"
           }
         ],
@@ -829,10 +829,9 @@
           }
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step2:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },

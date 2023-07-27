@@ -1374,31 +1374,6 @@
         }
       },
       {
-        "key": "agyw_engaged_in_transactional_sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
-        "type": "native_radio",
-        "label": "Is the AGYW engaged in transactional sex?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "agyw_engaged_in_sex_work",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

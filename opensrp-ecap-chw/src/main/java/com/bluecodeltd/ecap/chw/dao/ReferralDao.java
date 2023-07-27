@@ -37,7 +37,7 @@ public class ReferralDao extends AbstractDao {
 
     public static List<ReferralModel> getReferralsByHouseholdID(String hh_ID) {
 
-        String sql = "SELECT *, strftime('%Y-%m-%d', substr(date_referred,7,4) || '-' || substr(date_referred,4,2) || '-' || substr(date_referred,1,2)) as sortable_date FROM ec_referral WHERE household_id = '" + hh_ID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(referred_date,7,4) || '-' || substr(referred_date,4,2) || '-' || substr(referred_date,1,2)) as sortable_date FROM ec_referral WHERE household_id = '" + hh_ID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
         if (values == null || values.size() == 0)
