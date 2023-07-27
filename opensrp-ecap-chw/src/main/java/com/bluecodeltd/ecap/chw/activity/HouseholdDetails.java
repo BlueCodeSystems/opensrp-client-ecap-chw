@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.constants.JsonFormConstants.OPTIONS_FIELD_NAME;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
@@ -533,13 +534,21 @@ public class HouseholdDetails extends AppCompatActivity {
                     Boolean hasAtLeastOneVCAUnderFiveYearsOld = IndexPersonDao.hasAtLeastOneVCAUnderFiveYearsOld(householdId);
                     JSONObject malnutrition = getFieldJSONObject(fields(indexRegisterForm, "step5"), "undernourished");
                     JSONObject underFiveToast = getFieldJSONObject(fields(indexRegisterForm, "step5"), "toaster_underFive");
-                   if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)){
-                       malnutrition.put(JsonFormUtils.READ_ONLY, false);
-                   } else {
+                    if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)){
+                        malnutrition.put(JsonFormUtils.READ_ONLY, false);
+                        JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
+                        for(int i = 0; i < options.length(); i++){
+                            JSONObject option = options.getJSONObject(i);
+                            if(option.getString("key").equals("N/A")){
+                                options.remove(i);
+                                break;
+                            }
+                        }
+                    }else {
                        malnutrition.put(JsonFormUtils.READ_ONLY, true);
                        malnutrition.put(JsonFormUtils.VALUE,"N/A");
                        underFiveToast.put("type", "toaster_notes");
-                       underFiveToast.put("text", cname.getText().toString()+" have any adolescents aged 5 and below who need to be assessed for undernourishment");
+                       underFiveToast.put("text", cname.getText().toString()+" doesnt any adolescents aged 5 and below who need to be assessed for undernourishment");
                    }
 
 
