@@ -1374,30 +1374,6 @@
         }
       },
       {
-        "key": "agyw_engaged_in_transactional_sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
-        "type": "native_radio",
-        "label": "Is the AGYW engaged in transactional sex?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "step1:agyw_sexually_active": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
         "key": "agyw_food_or_economically_insecure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

@@ -467,7 +467,7 @@
     ]
   },
   "step5": {
-    "title": "Benchmark 4: Not undernourished",
+    "title": "Benchmark 4: Not malnourished ",
     "next": "step6",
     "fields": [
       {
@@ -478,7 +478,7 @@
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
         "type": "native_radio",
-        "label": "Are there no children below the age of 5 who are undernourished?",
+        "label": "Are there no children below the age of 5 who are malnourished?",
         "options": [
           {
             "key": "yes",
