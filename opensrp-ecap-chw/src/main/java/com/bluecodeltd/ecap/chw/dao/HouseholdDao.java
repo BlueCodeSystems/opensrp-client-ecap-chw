@@ -472,7 +472,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static List<CasePlanModel> getDomainsById(String householdID, String caseDate) {
 
-        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
+        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "'  AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
