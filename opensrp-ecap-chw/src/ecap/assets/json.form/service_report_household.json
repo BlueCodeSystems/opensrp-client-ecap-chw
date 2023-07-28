@@ -394,16 +394,15 @@
             "text": "Other Specify"
           }
         ],
+        "relevance": {
+          "step1:services": {
+            "type": "string",
+            "ex": "equalTo(., \"caregiver\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "services.yml"
-            }
-          }
         }
       },
       {
