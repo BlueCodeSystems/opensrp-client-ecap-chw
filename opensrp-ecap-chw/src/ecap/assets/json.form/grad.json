@@ -115,7 +115,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_hiv_positive",
         "read_only": "true",
-        "type": "native_radio",
+        "type": "hidden",
         "label": "Is the Child/Adolescent HIV Positive",
         "options": [
           {

@@ -104,8 +104,15 @@ public class ProfileOverviewFragment extends Fragment {
         cal.setTimeInMillis(timestamp);
         String date_time = DateFormat.format("dd-MM-yyyy HH:mm:ss", cal).toString();
 
-        if(childIndex.getDate_started_art() != null){
+        if(childIndex.getIs_hiv_positive().equals("yes")){
             myview.setVisibility(View.VISIBLE);
+            imgBtn.setOnClickListener(v -> {
+
+                TransitionManager.beginDelayedTransition(myview2, new AutoTransition());
+                myview2.setVisibility(View.VISIBLE);
+                // imgBtn.setImageResource(R.drawable.goto_arrow);
+
+            });
         } else {
             myview.setVisibility(View.GONE);
         }
@@ -273,13 +280,7 @@ public class ProfileOverviewFragment extends Fragment {
             }
         }
 
-        imgBtn.setOnClickListener(v -> {
 
-            TransitionManager.beginDelayedTransition(myview2, new AutoTransition());
-            myview2.setVisibility(View.VISIBLE);
-            // imgBtn.setImageResource(R.drawable.goto_arrow);
-
-        });
 
         txtCaregiverName.setText(childIndex.getCaregiver_name());
 
