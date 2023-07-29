@@ -1049,7 +1049,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(indexVCA.getIs_hiv_positive() != null){
                     rassessment.setVisibility(View.VISIBLE);
                 }
-                if(indexVCA.getIs_hiv_positive().equals("yes")){
+                if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
                     hiv_assessment.setVisibility(View.GONE);
                 } else {
                     if(Integer.parseInt(vcaAge) > 1){
