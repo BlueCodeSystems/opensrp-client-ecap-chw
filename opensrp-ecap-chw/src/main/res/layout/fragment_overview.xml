@@ -304,7 +304,6 @@
             android:layout_marginRight="10dp"
             android:background="@color/overview_header_bg"
             android:gravity="center_vertical"
-            android:onClick="mClick"
             android:src="@drawable/ic_down" />
 
     </RelativeLayout>

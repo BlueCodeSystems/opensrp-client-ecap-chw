@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -104,15 +102,9 @@ public class ProfileOverviewFragment extends Fragment {
         cal.setTimeInMillis(timestamp);
         String date_time = DateFormat.format("dd-MM-yyyy HH:mm:ss", cal).toString();
 
-        if(childIndex.getIs_hiv_positive().equals("yes")){
+        if (childIndex.getDate_started_art() != null && childIndex.getIs_hiv_positive() != null &&
+                childIndex.getIs_hiv_positive().equals("yes")){
             myview.setVisibility(View.VISIBLE);
-            imgBtn.setOnClickListener(v -> {
-
-                TransitionManager.beginDelayedTransition(myview2, new AutoTransition());
-                myview2.setVisibility(View.VISIBLE);
-                // imgBtn.setImageResource(R.drawable.goto_arrow);
-
-            });
         } else {
             myview.setVisibility(View.GONE);
         }
@@ -279,18 +271,22 @@ public class ProfileOverviewFragment extends Fragment {
                 recent_mmd_level.setText("N/A");
             }
         }
+imgBtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        myview2.setVisibility(View.VISIBLE);
+    }
+});
 
 
-
-        txtCaregiverName.setText(childIndex.getCaregiver_name());
-
-        txtDob.setText(childIndex.getCaregiver_birth_date());
-        txtHiv.setText(childIndex.getCaregiver_hiv_status());
-        txtRelation.setText(childIndex.getRelation());
-        txtPhone.setText(childIndex.getCaregiver_phone());
-        txtEditedBy.setText(childIndex.getCaseworker_name());
-        txtDateEdited.setText(date_time);
-        txtcPhone.setText(childIndex.getPhone());
+        txtCaregiverName.setText(childIndex.getCaregiver_name() != null ? childIndex.getCaregiver_name() : "Not Set");
+        txtDob.setText(childIndex.getCaregiver_birth_date() != null ? childIndex.getCaregiver_birth_date() : "Not Set");
+        txtHiv.setText(childIndex.getCaregiver_hiv_status() != null ? childIndex.getCaregiver_hiv_status() : "Not Set");
+        txtRelation.setText(childIndex.getRelation() != null ? childIndex.getRelation() : "Not Set");
+        txtPhone.setText(childIndex.getCaregiver_phone() != null ? childIndex.getCaregiver_phone() : "Not Set");
+        txtEditedBy.setText(childIndex.getCaseworker_name() != null ? childIndex.getCaseworker_name() : "Not Set");
+        txtDateEdited.setText(date_time != null ? date_time : "Not Set");
+        txtcPhone.setText(childIndex.getPhone() != null ? childIndex.getPhone() : "Not Set");
 
         return view;
 
