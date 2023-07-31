@@ -778,7 +778,7 @@
         "openmrs_entity_id": "viral_load_results",
         "type": "edit_text",
         "hint": "Last VL results",
-        "input": "number",
+        "edit_type": "number",
         "v_required": {
           "value": false,
           "err": "Enter VL results"
