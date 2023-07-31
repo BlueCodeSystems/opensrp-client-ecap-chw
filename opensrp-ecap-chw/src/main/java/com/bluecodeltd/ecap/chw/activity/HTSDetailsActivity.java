@@ -33,12 +33,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
+import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HIVTestingServiceDao;
@@ -46,6 +48,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
+import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
@@ -92,6 +95,7 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -142,6 +146,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
+
+    private ViewPager viewPager;
+    TabLayout tabLayout;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -304,6 +311,16 @@ public class HTSDetailsActivity extends AppCompatActivity {
 //createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
 //
 
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tabs);
+        returnViewPager();
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new HTSlinksFragment());
+
+        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("HTS Links");
     }
 
 
@@ -331,7 +348,15 @@ public class HTSDetailsActivity extends AppCompatActivity {
         return map;
 
     }
+    public HashMap<String, HIVTestingServiceModel> getLinkID() {
 
+        HashMap<String, HIVTestingServiceModel> map = new HashMap<>();
+
+        map.put("client",hivTestingServiceModel);
+
+        return map;
+
+    }
 
     public int calculateAge(String dateOfBirth) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -1127,6 +1152,15 @@ public class HTSDetailsActivity extends AppCompatActivity {
         Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
+    }
+    public  void returnViewPager(){
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new HTSlinksFragment());
+
+        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("HTS Links");
     }
 
     public void buildDialog(){
