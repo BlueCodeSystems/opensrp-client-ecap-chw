@@ -56,6 +56,8 @@ public class IndexClientsUtils {
                 table = CoreConstants.TABLE_NAME.EC_HOUSEHOLD;
             } else if(encounterType.equals("Mother Register")) {
                 table = CoreConstants.TABLE_NAME.EC_MOTHER_INDEX;
+            }else if(encounterType.equals("HIV Testing Service")) {
+                table = CoreConstants.TABLE_NAME.EC_HIV_TESTING_SERVICE;
             }
 
             Event childEvent = JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
