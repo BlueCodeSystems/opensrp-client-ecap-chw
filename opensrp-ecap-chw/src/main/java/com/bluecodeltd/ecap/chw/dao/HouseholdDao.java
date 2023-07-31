@@ -350,6 +350,11 @@ public class HouseholdDao extends AbstractDao {
             record.setTransfer_reason(getCursorValue(c,"transfer_reason"));
             record.setOther_de_registration_reason(getCursorValue(c,"other_de_registration_reason"));
             record.setDe_registration_reason(getCursorValue(c,"de_registration_reason"));
+            record.setDate_started_art(getCursorValue(c,"date_started_art"));
+            record.setDate_next_vl(getCursorValue(c,"date_next_vl"));
+            record.setCaregiver_mmd(getCursorValue(c,"caregiver_mmd"));
+            record.setLevel_mmd(getCursorValue(c,"level_mmd"));
+
 
             return record;
         };

@@ -692,6 +692,54 @@
         }
       },
       {
+        "key": "date_started_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_started_art",
+        "type": "date_picker",
+        "hint": "Date started ART",
+        "label_info_text": "Give an estimate if the exact date is not known",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
+        "relevance": {
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+
+        "key": "date_of_last_viral_load",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_last_viral_load",
+        "type": "date_picker",
+        "hint": "Date of last viral load test",
+        "label_info_title": "Date of last viral load test",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "relevance": {
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "This is a Required field."
+        }
+      },
+      {
         "key": "viral_load_results",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -710,6 +758,28 @@
           "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_next_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_next_vl",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date of next VL test",
+        "relevance": {
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "service_report_household_calculation.yml"
+            }
           }
         }
       },
@@ -746,27 +816,54 @@
           }
         }
       },
-      {
 
-        "key": "date_of_last_viral_load",
+      {
+        "key": "caregiver_mmd",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_last_viral_load",
-        "type": "date_picker",
-        "hint": "Date of last viral load test",
-        "label_info_title": "Date of last viral load test",
-        "expanded": false,
-        "min_date": "today-100y",
-        "max_date": "today",
+        "openmrs_entity_id": "caregiver_mmd",
+        "type": "native_radio",
+        "label": "Is the caregiver on MMD?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
         "relevance": {
-          "step2:active_on_treatment": {
+          "step2:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        },
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "level_mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "level_mmd",
+        "type": "spinner",
+        "hint": "Level of MMD for caregiver ",
+        "values": [
+          "Less than 3 months",
+          "Between 3-5 months",
+          "6 months or more"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Select level of MMD for caregiver"
+        },
+        "relevance": {
+          "step2:caregiver_mmd": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
-        },
-        "v_required": {
-          "value": false,
-          "err": "This is a Required field."
         }
       },
       {
