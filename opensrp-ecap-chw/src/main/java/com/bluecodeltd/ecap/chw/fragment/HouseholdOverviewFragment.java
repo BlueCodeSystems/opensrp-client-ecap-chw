@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,29 +15,34 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
+import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Household;
-import com.rey.material.widget.Button;
+import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rey.material.widget.Button;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
     LinearLayout linearLayout, muacView;
     Button screenBtn;
+    ImageButton arrowButton;
     FloatingActionButton fab;
     Household house;
     CaregiverAssessmentModel caregiverAssessmentModel;
     String nutritionWarning;
     private TextView txtFemalesBetweenTenAndSeventeen;
     private TextView txtFemalesLessThanFive;
+    RelativeLayout relativeLayout;
+    LinearLayout layout;
 
-
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +66,24 @@ public class HouseholdOverviewFragment extends Fragment {
         linearLayout = view.findViewById(R.id.llayout);
         muacView = view.findViewById(R.id.muac_warning);
         screenBtn = view.findViewById(R.id.screenBtn);
+
+        txtOnART = view.findViewById(R.id.is_art);
+        txtArtNumber = view.findViewById(R.id.art_number);
+        txtDateStartedArt = view.findViewById(R.id.art_date);
+        txtVlLastDate = view.findViewById(R.id.date_last_vl);
+        txtVlResult = view.findViewById(R.id.last_vl_result);
+        txtRecentVLResult = view.findViewById(R.id.recent_vl_result);
+        txtIsSuppressed = view.findViewById(R.id.vl_suppressed);
+        txtNextVl = view.findViewById(R.id.next_vl_test);
+        txtIsMMD = view.findViewById(R.id.on_mmd);
+        txtLevelMMD = view.findViewById(R.id.mmd_level);
+        txtRecentMMD = view.findViewById(R.id.recent_mmd_level);
+
+        relativeLayout = view.findViewById(R.id.myview);
+        layout = view.findViewById(R.id.mylayout);
+        arrowButton = view.findViewById(R.id.arrow_button);
+
+
 
         fab = getActivity().findViewById(R.id.fabx);
 
@@ -164,8 +189,67 @@ public class HouseholdOverviewFragment extends Fragment {
         {
             txtEdited_by.setText(edited_by);
         }
+        if(house.getCaregiver_hiv_status().equals("negative")){
+         relativeLayout.setVisibility(View.GONE);
+         layout.setVisibility(View.GONE);
+        }
+        arrowButton.setOnClickListener(view -> {
+            layout.setVisibility(View.VISIBLE);
+        });
+
+            txtOnART.setText(house.getActive_on_treatment());
+            txtArtNumber.setText(house.getCaregiver_art_number());
+            txtDateStartedArt.setText(house.getDate_started_art());
+            txtVlLastDate.setText(house.getDate_of_last_viral_load());
+            txtNextVl.setText(house.getDate_next_vl());
+            txtVlResult.setText(house.getViral_load_results());
+            txtIsSuppressed.setText(house.getVl_suppressed());
+            txtIsMMD.setText(house.getCaregiver_mmd());
+            txtLevelMMD.setText(house.getLevel_mmd());
 
 
+
+
+        List<HouseholdServiceReportModel> serviceModels = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());
+        if (!serviceModels.isEmpty()) {
+            HouseholdServiceReportModel serviceModel = serviceModels.get(0);
+            if (serviceModel.getLevel_mmd() != null) {
+                txtRecentMMD.setText(serviceModel.getLevel_mmd());
+            } else {
+                if (house.getLevel_mmd() != null) {
+                    txtRecentMMD.setText(house.getLevel_mmd());
+                } else {
+                    txtRecentMMD.setText("N/A");
+                }
+            }
+
+            if (serviceModel.getVl_last_result() != null) {
+                txtRecentVLResult.setText(serviceModel.getVl_last_result());
+            } else {
+                if (house.getViral_load_results() != null) {
+                    txtRecentVLResult.setText(house.getViral_load_results());
+                } else {
+                    txtRecentVLResult.setText("N/A");
+                }
+            }
+
+        }
+        else {
+            if (house.getLevel_mmd() != null) {
+                txtRecentMMD.setText(house.getLevel_mmd());
+            } else {
+                txtRecentMMD.setText("N/A");
+            }
+
+
+            if (house.getViral_load_results() != null) {
+                txtRecentVLResult.setText(house.getViral_load_results());
+            } else {
+                txtRecentVLResult.setText("N/A");
+            }
+
+
+        }
         if(is_screened != null && is_screened.equals("true")){
 
             screenBtn.setVisibility(View.GONE);

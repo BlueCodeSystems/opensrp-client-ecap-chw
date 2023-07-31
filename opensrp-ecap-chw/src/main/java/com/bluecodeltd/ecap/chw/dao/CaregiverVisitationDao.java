@@ -12,7 +12,9 @@ public class CaregiverVisitationDao extends AbstractDao {
 
     public static List<CaregiverVisitationModel> getVisitsByID(String householdID) {
 
-        String sql = "SELECT * FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'  AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date" +
+                " FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'  " +
+                "AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
         if (values == null || values.size() == 0)

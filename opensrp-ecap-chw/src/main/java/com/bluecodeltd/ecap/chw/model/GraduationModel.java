@@ -7,6 +7,7 @@ public class GraduationModel {
     private String date_assessment;
     private String previous_asmt_date;
     private String virally_suppressed;
+    private String suppressed_caregiver;
     private String prevention;
     private String undernourished;
     private String school_fees;
@@ -181,5 +182,13 @@ public class GraduationModel {
 
     public void setAdditional_information(String additional_information) {
         this.additional_information = additional_information;
+    }
+
+    public String getSuppressed_caregiver() {
+        return suppressed_caregiver;
+    }
+
+    public void setSuppressed_caregiver(String suppressed_caregiver) {
+        this.suppressed_caregiver = suppressed_caregiver;
     }
 }

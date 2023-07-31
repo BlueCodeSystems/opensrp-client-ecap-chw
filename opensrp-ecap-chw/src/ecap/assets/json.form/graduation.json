@@ -279,7 +279,7 @@
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Has each beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
+        "label": "Has each VCA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
         "options": [
           {
             "key": "yes",
@@ -288,6 +288,34 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
+          }
+        ]
+      },
+      {
+        "key": "suppressed_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "suppressed_caregiver",
+        "label_info_title":"Benchmark 2: Virally suppressed ",
+        "type": "native_radio",
+        "read_only" : true,
+        "label": "Has the caregiver as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -362,6 +390,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -407,7 +439,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "hidden",
-        "text": "For this benchmark, all adolescents aged 12 to 17 need to have a good understanding of HIV prevention",
+        "text": "The test household doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info"
@@ -435,7 +467,7 @@
     ]
   },
   "step5": {
-    "title": "Benchmark 4: Not undernourished",
+    "title": "Benchmark 4: Not malnourished ",
     "next": "step6",
     "fields": [
       {
@@ -446,7 +478,7 @@
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
         "type": "native_radio",
-        "label": "Are there no children below the age of 5 who are undernourished?",
+        "label": "Are there no children below the age of 5 who are malnourished?",
         "options": [
           {
             "key": "yes",
@@ -455,8 +487,23 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
+      },
+      {
+        "key": "toaster_underFive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "text": "",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": ""
       },
       {
         "key": "toaster_bench_4",
@@ -525,7 +572,12 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
+
         ]
       },
       {
@@ -781,7 +833,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_in_school",
-        "type": "native_radio",
+        "type": "hidden",
         "label": "Are there any children or adolescents of school age (Grade 1 to grade 7) in the household?",
         "options": [
           {
@@ -819,6 +871,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -837,6 +893,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },
@@ -855,6 +915,10 @@
           {
             "key": "no",
             "text": "No"
+          },
+          {
+            "key": "N/A",
+            "text": "N/A"
           }
         ]
       },

@@ -26,6 +26,7 @@ import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
@@ -99,7 +100,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         vcaname.setText(intent_cname);
 
 
-        familyServiceList.addAll(IndexPersonDao.getServicesByVCAID(intent_vcaid));
+        familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
         recyclerView.setHasFixedSize(true);
@@ -236,9 +237,9 @@ public class VcaServiceActivity extends AppCompatActivity {
                 switch (EncounterType) {
 
                     case "VCA Service Report":
-                        Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        getIntent();
+                      Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                      familyServiceList.clear();
+                      familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
 
                         break;
 
@@ -315,6 +316,7 @@ public class VcaServiceActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    runOnUiThread(this::refreshData);
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -351,6 +353,12 @@ public class VcaServiceActivity extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+    private void refreshData() {
+        familyServiceList.clear();
+        List<VCAServiceModel> updatedList = VCAServiceReportDao.getServicesByVCAID(intent_vcaid);
+        familyServiceList.addAll(updatedList);
+        recyclerViewadapter.notifyDataSetChanged();
     }
 
     public void HouseholdLinkFromVca(){

@@ -1,0 +1,15 @@
+---
+name: step2_date_next_vl
+description: date_next_vl
+priority: 1
+condition: "(step2_date_of_last_viral_load != null ) && (step2_viral_load_results > 1000)"
+actions:
+  - "calculation = helper.addDuration(step2_date_of_last_viral_load,'90d')"
+
+---
+name: step2_date_next_vl
+description: date_next_vl
+priority: 2
+condition: "(step2_date_of_last_viral_load != null ) && (step2_viral_load_results > 0 && step2_viral_load_results < 1000 )"
+actions:
+  - "calculation = helper.addDuration(step2_date_of_last_viral_load,'365d')"

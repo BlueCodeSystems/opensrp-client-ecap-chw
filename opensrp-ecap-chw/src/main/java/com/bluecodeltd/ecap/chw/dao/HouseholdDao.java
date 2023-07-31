@@ -75,6 +75,25 @@ public class HouseholdDao extends AbstractDao {
         }
 
     }
+    public static boolean isCaregiverPositive(String householdID) {
+        String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "caregiver_hiv_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        for (String value : values) {
+            if (value.equals("positive")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     public static String checkIfCaregiverIsPositive (String household_id) {
 
         String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + household_id + "'";
@@ -89,6 +108,69 @@ public class HouseholdDao extends AbstractDao {
             return "0";
         }
 
+    }
+    public static boolean isViralLoadForAllPositiveCaregivers(String householdID) {
+        // First, get the list of household_ids where caregiver_hiv_status is 'positive' and viral_load_results is less than or equal to 1000
+        String sql1 = "SELECT caregiver_hiv_status, viral_load_results, household_id " +
+                "FROM ec_household " +
+                "WHERE caregiver_hiv_status = 'positive' "  +
+                "AND household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";
+
+        List<String> householdIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "household_id"));
+
+        List<String> viralLoads = AbstractDao.readData(sql1, c -> getCursorValue(c, "viral_load_results"));
+
+        if (householdIds == null || householdIds.isEmpty() || viralLoads.contains(null)) {
+            return false;
+        }
+
+        for (String id : householdIds) {
+            // Then, check if the vl_last_result conducted for a period of one year from today is less than 1000 for each household
+            String sql2 = "SELECT household_id, vl_last_result, date as date " +
+                    "FROM ec_household_service_report " +
+                    "WHERE DATE(SUBSTR(date, 7, 4) || '-' || SUBSTR(date, 4, 2) || '-' || SUBSTR(date, 1, 2)) >= DATE('now','-1 year') " +
+                    "AND household_id = '" + id + "' AND (delete_status IS NULL OR delete_status <> '1')";
+
+            List<String> values = AbstractDao.readData(sql2, c -> getCursorValue(c, "vl_last_result"));
+
+            if (values == null || values.isEmpty()) {
+                return false;
+            }
+
+            for (String value : values) {
+                if (value == null || Integer.parseInt(value) >= 1001) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    public static boolean isCaregiverHIVStatusEligibleInHousehold(String householdID) {
+
+        String sql = "SELECT caregiver_name, caregiver_hiv_status, status " +
+                "FROM ec_household " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (status IS NULL OR status <> '1') " +
+                "AND caregiver_hiv_status IN ('unknown', 'negative')";
+
+        List<String> householdIds = AbstractDao.readData(sql, c -> getCursorValue(c, "caregiver_name"));
+
+        return householdIds != null && !householdIds.isEmpty();
+    }
+    public static boolean checkForCaregiverHivStatus(String householdID) {
+        String sql = "SELECT hiv_status FROM ec_caregiver_hiv_assessment WHERE household_id  = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "hiv_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values != null && !values.isEmpty()) {
+            String status = values.get(0);
+            return status.equals("positive") || status.equals("negative") || status.equals("status_not_required");
+        } else {
+            return false;
+        }
     }
     public static String countNumberoFHouseholds () {
 
@@ -168,6 +250,34 @@ public class HouseholdDao extends AbstractDao {
         return values.get(0);
 
     }
+    public static boolean checkCaregiverHivStatusInHousehold(String householdID) {
+
+        String sql = "SELECT caregiver_hiv_status " +
+                "FROM ec_household " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (status IS NULL OR status <> '1')";
+
+        List<String> hivStatuses = AbstractDao.readData(sql, c -> getCursorValue(c, "caregiver_hiv_status"));
+
+        if (hivStatuses == null || hivStatuses.isEmpty()) {
+            return false;
+        }
+
+        for (String status : hivStatuses) {
+            if (status.equalsIgnoreCase("positive") ||
+                    status.equalsIgnoreCase("negative") ||
+                    status.equalsIgnoreCase("status_not_required") ||
+                    status.equalsIgnoreCase("HIV+") ||
+                    status.equalsIgnoreCase("HIV-") ||
+                    status.equalsIgnoreCase("not_required")
+
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
     public static List<FamilyServiceModel> getServicesByHousehold(String householdId) {
@@ -224,7 +334,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static List<CasePlanModel> getCasePlansById(String householdId) {
 
-        String sql = "SELECT * FROM ec_caregiver_case_plan WHERE household_id = '" + householdId + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(case_plan_date,7,4) || '-' || substr(case_plan_date,4,2) || '-' || substr(case_plan_date,1,2)) as sortable_date  FROM ec_caregiver_case_plan WHERE household_id = '" + householdId + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)
@@ -350,6 +460,11 @@ public class HouseholdDao extends AbstractDao {
             record.setTransfer_reason(getCursorValue(c,"transfer_reason"));
             record.setOther_de_registration_reason(getCursorValue(c,"other_de_registration_reason"));
             record.setDe_registration_reason(getCursorValue(c,"de_registration_reason"));
+            record.setDate_started_art(getCursorValue(c,"date_started_art"));
+            record.setDate_next_vl(getCursorValue(c,"date_next_vl"));
+            record.setCaregiver_mmd(getCursorValue(c,"caregiver_mmd"));
+            record.setLevel_mmd(getCursorValue(c,"level_mmd"));
+
 
             return record;
         };
@@ -357,7 +472,7 @@ public class HouseholdDao extends AbstractDao {
 
     public static List<CasePlanModel> getDomainsById(String householdID, String caseDate) {
 
-        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
+        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + caseDate + "'  AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
 
         List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
         if (values == null || values.size() == 0)

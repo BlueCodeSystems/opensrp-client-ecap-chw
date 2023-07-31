@@ -445,6 +445,7 @@
         "openmrs_entity_id": "indicate_vl_result",
         "type": "edit_text",
         "read_only": "false",
+        "edit_type": "number",
         "hint": "Indicate the VL result",
         "relevance": {
           "step1:six_months": {
