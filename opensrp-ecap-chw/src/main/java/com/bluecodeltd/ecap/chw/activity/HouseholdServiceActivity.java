@@ -26,10 +26,11 @@ import com.bluecodeltd.ecap.chw.adapter.HouseholdServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -61,7 +62,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<FamilyServiceModel> familyServiceList = new ArrayList<>();
+    private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView cname, hh_id;
 
@@ -90,7 +91,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         hh_id.setText(intent_householdId);
         cname.setText(intent_cname);
 
-        familyServiceList.addAll(HouseholdDao.getServicesByHousehold(intent_householdId));
+        familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
         recyclerView.setHasFixedSize(true);
@@ -137,6 +138,9 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
 
             JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
             cId.put("value",hh_id.getText().toString());
+
+            JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+            hivStatus.put("value",house.getCaregiver_hiv_status());
 
 
             startFormActivity(indexRegisterForm);
@@ -221,8 +225,8 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                     case "Household Service Report":
 
                         Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        recreate();
-                        refresh();
+                        refreshData();
+
 
                         break;
 
@@ -232,7 +236,12 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
             }
         }
     }
-
+    private void refreshData() {
+        familyServiceList.clear();
+        List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
+        familyServiceList.addAll(updatedList);
+        recyclerViewadapter.notifyDataSetChanged();
+    }
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
@@ -299,6 +308,9 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                     List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+                    // Refresh the data on the main thread
+                    runOnUiThread(this::refreshData);
 
 
                 } catch (Exception e) {
