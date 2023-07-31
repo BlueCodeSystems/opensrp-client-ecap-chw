@@ -114,6 +114,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     private RelativeLayout txtScreening, addIndexClients, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
+
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -464,146 +465,12 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
 
             case R.id.assessment:
-
-                if(indexVCA.getDate_screened() != null){
                     try {
-                        openFormUsingFormUtils(HTSDetailsActivity.this,"vca_assessment");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-
-                break;
-            case R.id.case_plan:
-
-                if(indexVCA.getDate_screened() != null){
-                    try {
-                        openFormUsingFormUtils(HTSDetailsActivity.this,"case_plan");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-                break;
-            case R.id.referral:
-
-                if(indexVCA.getDate_screened() != null){
-
-                    try {
-
-                        openFormUsingFormUtils(HTSDetailsActivity.this,"referral");
-
+                        openFormUsingFormUtils(HTSDetailsActivity.this,"hiv_testing_links");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                } else {
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-
-                break;
-
-            case R.id.myservice:
-
-                if(indexVCA.getDate_screened() != null) {
-
-                    Intent intent2 = new Intent(this, VcaServiceActivity.class);
-                    intent2.putExtra("hh_id", indexVCA.getHousehold_id());
-                    intent2.putExtra("vcaid", indexVCA.getUnique_id());
-                    intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
-                    intent2.putExtra("vcaname", txtName.getText().toString());
-                    startActivity(intent2);
-                }
-                else{
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-            case R.id.show_referrals:
-
-
-                Intent showReferrals = new Intent(HTSDetailsActivity.this, ShowReferralsActivity.class);
-                    Bundle referral = new Bundle();
-                    referral.putString("childId",child.getUnique_id());
-                    referral.putString("name",child.getAdolescent_first_name()+ "  " +child.getAdolescent_last_name());
-                    showReferrals.putExtras(referral);
-//                    referral.putString("date",child.getDate_referred());
-//                showReferrals.putExtra("childId",  child.getUnique_id());
-//                showReferrals.putExtra("householdId",  child.getHousehold_id());
-                // intent.putExtra("household",  child.getHousehold_id());
-
-                startActivity(showReferrals);
-
-
-                break;
-
-            case R.id.household_profile:
-
-
-            Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getUnique_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
-           // intent.putExtra("household",  child.getHousehold_id());
-
-            startActivity(intent);
-
-
-                break;
-
-            case R.id.household_visitation_for_vca:
-
-                if(indexVCA.getDate_screened() != null) {
-                    try {
-
-                        openFormUsingFormUtils(HTSDetailsActivity.this,"household_visitation_for_vca_0_20_years");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else{
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-
-                break;
-
-            case R.id.hiv_assessment:
-
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(HTSDetailsActivity.this, "hiv_risk_assessment_under_15_years");
-                } else {
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-
-            case R.id.hiv_assessment2:
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(HTSDetailsActivity.this, "hiv_risk_assessment_above_15_years");
-                }else{
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-
-            case R.id.we_services_vca:
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(HTSDetailsActivity.this, "we_services_vca");
-                }else{
-                    Toasty.warning(HTSDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-            case R.id.childPlan:
-                Intent i = new Intent(HTSDetailsActivity.this, ChildSafetyPlanActivity.class);
-                i.putExtra("vca_id", indexVCA.getUnique_id());
-                i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
-                startActivity(i);
-                finish();
                 break;
 
         }
@@ -746,156 +613,13 @@ public class HTSDetailsActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Member Sub Population":
-                case "Sub Population":
+
+                case "HIV Testing Links":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "VCA Case Plan":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "Case Worker Service Report":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_SERVICE_REPORT);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-
-                    break;
-
-                case "Referral":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "WE Services VCA":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_WE_SERVICES_VCA);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "VCA Assessment":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_ASSESSMENT);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "Household Visitation For Caregiver":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_CAREGIVER);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "Household Visitation Form 0-20 years":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_VCA);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "HIV Risk Assessment Above 15":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_ABOVE_15);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "HIV Risk Assessment Below 15":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_BELOW_15);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-
-                case "Sub Population Edit":
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-
-                    break;
-
-                case "Case Record Status":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "Child Safety Plan":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
+                                encounterType, Constants.EcapClientTable.EC_HIV_TESTING_LINKS);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -1153,8 +877,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
             case "case_plan":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+//                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
              /*   if(vcaCasePlanModel == null){
 
@@ -1201,6 +925,21 @@ public class HTSDetailsActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
+            case "hiv_testing_links":
+//                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+//                populateCaseworkerPhoneAndName(formToBeOpened);
+                JSONObject clientNumber = getFieldJSONObject(fields(formToBeOpened, "step1"), "client_number");
+
+                if (clientNumber  != null) {
+                    clientNumber .remove(JsonFormUtils.VALUE);
+                    try {
+                        clientNumber.put(JsonFormUtils.VALUE, hivTestingServiceModel.getClient_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+
 
     }
 

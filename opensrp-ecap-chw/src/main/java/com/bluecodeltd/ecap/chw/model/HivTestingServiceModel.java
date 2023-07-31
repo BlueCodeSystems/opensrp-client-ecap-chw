@@ -1,6 +1,6 @@
 package com.bluecodeltd.ecap.chw.model;
 
-public class HivTestingServiceModel {
+public class HIVTestingServiceModel {
     private String base_entity_id;
     private String relational_id;
     private String implementing_partner;
@@ -9,11 +9,13 @@ public class HivTestingServiceModel {
     private String district;
     private String client_number;
     private String testing_modality;
-    private String case_name;
-    private String caseName_on_art;
-    private String artNumber_for_caseName;
-    private String case_snn_gender;
-    private String case_snn_birthdate;
+    private String first_name;
+    private String middle_name;
+    private String last_name;
+    private String on_art;
+    private String art_number;
+    private String gender;
+    private String birthdate;
     private String case_snn_entry_point;
     private String case_snn_house_number;
     private String individual_tested;
@@ -97,44 +99,60 @@ public class HivTestingServiceModel {
         this.testing_modality = testing_modality;
     }
 
-    public String getCase_name() {
-        return case_name;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setCase_name(String case_name) {
-        this.case_name = case_name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getCaseName_on_art() {
-        return caseName_on_art;
+    public String getMiddle_name() {
+        return middle_name;
     }
 
-    public void setCaseName_on_art(String caseName_on_art) {
-        this.caseName_on_art = caseName_on_art;
+    public void setMiddle_name(String middle_name) {
+        this.middle_name = middle_name;
     }
 
-    public String getArtNumber_for_caseName() {
-        return artNumber_for_caseName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setArtNumber_for_caseName(String artNumber_for_caseName) {
-        this.artNumber_for_caseName = artNumber_for_caseName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public String getCase_snn_gender() {
-        return case_snn_gender;
+    public String getOn_art() {
+        return on_art;
     }
 
-    public void setCase_snn_gender(String case_snn_gender) {
-        this.case_snn_gender = case_snn_gender;
+    public void setOn_art(String on_art) {
+        this.on_art = on_art;
     }
 
-    public String getCase_snn_birthdate() {
-        return case_snn_birthdate;
+    public String getArt_number() {
+        return art_number;
     }
 
-    public void setCase_snn_birthdate(String case_snn_birthdate) {
-        this.case_snn_birthdate = case_snn_birthdate;
+    public void setArt_number(String art_number) {
+        this.art_number = art_number;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getCase_snn_entry_point() {
