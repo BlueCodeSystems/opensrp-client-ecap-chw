@@ -26,8 +26,10 @@ public class Household {
     private String caregiver_phone;
     private String caregiver_hiv_status;
     private String active_on_treatment;
+    private String date_started_art;
     private String caregiver_art_number;
     private String relation;
+    private String date_next_vl;
     private String viral_load_results;
     private String date_of_last_viral_load;
     private String base_entity_id;
@@ -90,6 +92,9 @@ public class Household {
     private String de_registration_reason;
     private String transfer_reason;
     private String other_de_registration_reason;
+    private String level_mmd;
+    private String caregiver_mmd;
+
 
     public String getCase_status() {
         return case_status;
@@ -780,5 +785,37 @@ public class Household {
 
     public void setHousehold_case_status(String household_case_status) {
         this.household_case_status = household_case_status;
+    }
+
+    public String getDate_started_art() {
+        return date_started_art;
+    }
+
+    public void setDate_started_art(String date_started_art) {
+        this.date_started_art = date_started_art;
+    }
+
+    public String getDate_next_vl() {
+        return date_next_vl;
+    }
+
+    public void setDate_next_vl(String date_next_vl) {
+        this.date_next_vl = date_next_vl;
+    }
+
+    public String getLevel_mmd() {
+        return level_mmd;
+    }
+
+    public void setLevel_mmd(String level_mmd) {
+        this.level_mmd = level_mmd;
+    }
+
+    public String getCaregiver_mmd() {
+        return caregiver_mmd;
+    }
+
+    public void setCaregiver_mmd(String caregiver_mmd) {
+        this.caregiver_mmd = caregiver_mmd;
     }
 }
