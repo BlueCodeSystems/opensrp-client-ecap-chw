@@ -535,6 +535,13 @@
             "creates_case": [
               "ec_child_safety_actions"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "HIV Testing Service",
+            "creates_case": [
+              "ec_hiv_testing_service"
+            ]
           }
         ]
       }
