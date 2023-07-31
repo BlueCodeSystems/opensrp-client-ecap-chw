@@ -1,18 +1,18 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-
-import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.HIVTestingServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
 import java.util.List;
 
-public class HivTestingServiceDao extends AbstractDao{
-    public static HivTestingServiceModel getHivTestingServiceModel (String vcaID) {
+public class HIVTestingServiceDao extends AbstractDao {
 
-        String sql = "SELECT * FROM ec_hiv_testing_service WHERE unique_id = '" + vcaID + "' ";
+    public static HIVTestingServiceModel getHivServiceClient (String clientID) {
 
-        List<HivTestingServiceModel> values = AbstractDao.readData(sql, getHivTestingServiceModelMap());
+        String sql = "SELECT * FROM ec_hiv_testing_service WHERE client_number = '" + clientID + "' ";
+
+        List<HIVTestingServiceModel> values = AbstractDao.readData(sql, getHIVTestingServiceModelMap());
 
         if (values.size() == 0) {
             return null;
@@ -22,10 +22,10 @@ public class HivTestingServiceDao extends AbstractDao{
         return values.get(0);
     }
 
-    public static AbstractDao.DataMap<HivTestingServiceModel> getHivTestingServiceModelMap() {
+    public static DataMap<HIVTestingServiceModel> getHIVTestingServiceModelMap() {
         return c -> {
 
-            HivTestingServiceModel record = new HivTestingServiceModel();
+            HIVTestingServiceModel record = new HIVTestingServiceModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setImplementing_partner(getCursorValue(c, "implementing_partner"));
@@ -34,11 +34,13 @@ public class HivTestingServiceDao extends AbstractDao{
             record.setDistrict(getCursorValue(c, "district"));
             record.setClient_number(getCursorValue(c, "client_number"));
             record.setTesting_modality(getCursorValue(c, "testing_modality"));
-            record.setCase_name(getCursorValue(c, "case_name"));
-            record.setCaseName_on_art(getCursorValue(c, "caseName_on_art"));
-            record.setArtNumber_for_caseName(getCursorValue(c, "artNumber_for_caseName"));
-            record.setCase_snn_gender(getCursorValue(c, "case_snn_gender"));
-            record.setCase_snn_birthdate(getCursorValue(c, "case_snn_birthdate"));
+            record.setFirst_name(getCursorValue(c, "first_name"));
+            record.setMiddle_name(getCursorValue(c, "middle_name"));
+            record.setLast_name(getCursorValue(c, "last_name"));
+            record.setOn_art(getCursorValue(c, "on_art"));
+            record.setArt_date(getCursorValue(c, "art_number"));
+            record.setGender(getCursorValue(c, "gender"));
+            record.setBirthdate(getCursorValue(c, "birthdate"));
             record.setCase_snn_entry_point(getCursorValue(c, "case_snn_entry_point"));
             record.setCase_snn_house_number(getCursorValue(c, "case_snn_house_number"));
             record.setIndividual_tested(getCursorValue(c, "individual_tested"));
@@ -59,8 +61,8 @@ public class HivTestingServiceDao extends AbstractDao{
             record.setChecked_by(getCursorValue(c, "checked_by"));
 
 
-
             return record;
         };
     }
+
 }

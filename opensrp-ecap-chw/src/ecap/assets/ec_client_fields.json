@@ -7487,6 +7487,187 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_hiv_testing_links",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "client_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_number"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "middle_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.middle_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.birthdate"
+          }
+        },
+        {
+          "column_name": "entry_point",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.entry_point"
+          }
+        },
+        {
+          "column_name": "house_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.house_number"
+          }
+        },
+        {
+          "column_name": "individual_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.individual_tested"
+          }
+        },
+        {
+          "column_name": "ecap_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecap_id"
+          }
+        },
+        {
+          "column_name": "sub_population",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sub_population"
+          }
+        },
+        {
+
+          "column_name": "relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relationship"
+          }
+        },
+        {
+          "column_name": "address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.address"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "date_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_tested"
+          }
+        },
+        {
+          "column_name": "hiv_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result"
+          }
+        },
+        {
+          "column_name": "test_done_hf",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.test_done_hf"
+          }
+        },
+        {
+          "column_name": "hiv_recent_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_recent_test"
+          }
+        },
+        {
+          "column_name": "art_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_date"
+          }
+        },
+        {
+          "column_name": "art_date_initiated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_date_initiated"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "checked_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.checked_by"
+          }
+        }
+      ]
     }
   ]
 }
