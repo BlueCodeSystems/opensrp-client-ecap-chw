@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -29,6 +28,7 @@ public class GraduationDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setDate_assessment(getCursorValue(c, "date_assessment"));
             record.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
+            record.setSuppressed_caregiver(getCursorValue(c,"suppressed_caregiver"));
             record.setPrevention(getCursorValue(c, "prevention"));
             record.setUndernourished(getCursorValue(c,"undernourished"));
             record.setSchool_fees(getCursorValue(c, "school_fees"));

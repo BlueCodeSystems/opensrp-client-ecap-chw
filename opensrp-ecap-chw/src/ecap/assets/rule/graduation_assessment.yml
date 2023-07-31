@@ -2,28 +2,34 @@
 name: step2_toaster_bench_1
 description: step2_toaster_bench_1
 priority: 1
-condition: "step2_hiv_status_enrolled.contains('yes') && step2_caregiver_hiv_status_enrolled.contains('yes')"
+condition: "(step2_hiv_status_enrolled.contains('yes') && step2_caregiver_hiv_status_enrolled.contains('yes'))
+  || (step2_hiv_status_enrolled.contains('N/A') && step2_caregiver_hiv_status_enrolled.contains('yes'))
+  || (step2_hiv_status_enrolled.contains('yes') && step2_caregiver_hiv_status_enrolled.contains('N/A'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_toaster_bench_2
 description: step3_toaster_bench_2
 priority: 1
-condition: "step3_virally_suppressed.contains('yes')"
+condition: "(step3_virally_suppressed.contains('yes') && step3_suppressed_caregiver.contains('yes')) 
+|| (step3_virally_suppressed.contains('yes') && step3_suppressed_caregiver.contains('N/A'))
+|| (step3_virally_suppressed.contains('N/A') && step3_suppressed_caregiver.contains('yes'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_toaster_bench_2_no
 description: step3_toaster_bench_2_no
 priority: 1
-condition: "step3_virally_suppressed.contains('no')"
+condition: "step3_virally_suppressed.contains('no') 
+|| (step3_virally_suppressed.contains('no') && step3_suppressed_caregiver.contains('N/A')) 
+|| (step3_virally_suppressed.contains('N/A') && step3_suppressed_caregiver.contains('no'))"
 actions:
   - "isRelevant = true"
 ---
 name: step6_toaster_bench_5
 description: step6_toaster_bench_5
 priority: 1
-condition: "step6_school_fees.contains('yes') && step6_medical_costs.contains('yes')"
+condition: "(step6_school_fees.contains('yes') && step6_medical_costs.contains('yes')) || (step6_school_fees.contains('N/A') && step6_medical_costs.contains('yes'))"
 actions:
   - "isRelevant = true"
 ---
@@ -107,7 +113,7 @@ actions:
 name: step2_toaster_bench_1_no
 description: step2_toaster_bench_1_no
 priority: 1
-condition: "!step2_hiv_status_enrolled.contains('yes') || !step2_caregiver_hiv_status_enrolled.contains('yes')"
+condition: "step2_hiv_status_enrolled.contains('no') || step2_caregiver_hiv_status_enrolled.contains('no')"
 actions:
   - "isRelevant = true"
 ---
