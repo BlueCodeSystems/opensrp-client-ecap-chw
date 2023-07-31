@@ -7303,35 +7303,50 @@
           }
         },
         {
-          "column_name": "case_name",
+          "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_name"
+            "field": "attributes.first_name"
           }
         },
         {
-          "column_name": "caseName_on_art",
+          "column_name": "middle_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caseName_on_art"
+            "field": "attributes.middle_name"
           }
         },
         {
-          "column_name": "artNumber_for_caseName",
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "on_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.on_art"
+          }
+        },
+        {
+          "column_name": "art_number",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.art_number"
           }
         },
         {
-          "column_name": "case_snn_gender",
+
+          "column_name": "gender",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_snn_gender"
+            "field": "attributes.gender"
           }
         },
         {
-          "column_name": "case_snn_birthdate",
+          "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.birthdate"
