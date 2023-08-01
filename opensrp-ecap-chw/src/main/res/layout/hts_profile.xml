@@ -138,7 +138,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            >
 
                             <Button
                                 android:onClick="onClick"
@@ -326,7 +328,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
+                    app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
 
