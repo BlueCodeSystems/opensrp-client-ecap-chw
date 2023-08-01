@@ -139,8 +139,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:visibility="gone"
-                            >
+                            android:visibility="gone">
 
                             <Button
                                 android:onClick="onClick"
@@ -613,7 +612,6 @@
             app:backgroundTint="@color/text_black"
             app:fabSize="normal"
             app:srcCompat="@drawable/baseline_mode_edit_24" />
-
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
