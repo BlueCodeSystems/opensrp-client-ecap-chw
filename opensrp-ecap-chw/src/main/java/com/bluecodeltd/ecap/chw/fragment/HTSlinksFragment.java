@@ -66,7 +66,6 @@ public class HTSlinksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_h_t_slinks, container, false);
 
         recyclerView = view.findViewById(R.id.hts_links);
-        linkText = view.findViewById(R.id.hts_text);
 
         htsLinksModel.clear();
         HashMap<String, HIVTestingServiceModel> mymap = ((HTSDetailsActivity) requireActivity()).getLinkID();
@@ -83,10 +82,6 @@ public class HTSlinksFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
 
-        if (recyclerViewAdapter.getItemCount() > 0){
-
-            linkText.setVisibility(View.VISIBLE);
-        }
 
         return view;
     }

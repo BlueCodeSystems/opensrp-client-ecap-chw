@@ -80,6 +80,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "First name can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter name"
         }
       },
       {
@@ -94,6 +98,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Middle name can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter name"
         }
       },
       {
@@ -108,6 +116,10 @@
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
           "err": "Last name can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter name"
         }
       },
       {
@@ -115,15 +127,22 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
-        "type": "spinner",
-        "hint": "Sex",
-        "values": [
-          "Male",
-          "Female"
+        "type": "native_radio",
+        "label": "Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+
         ],
         "v_required": {
-          "value": "true",
-          "err": "Please enter the sex"
+          "value": true,
+          "err": "This field is Required"
         }
       },
       {
@@ -132,7 +151,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Age",
+        "hint": "Birthdate",
         "expanded": false,
         "duration": {
           "label": "Age"

@@ -14,13 +14,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -481,7 +477,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
                     try {
 
-                        openFormUsingFormUtils(HTSDetailsActivity.this,"hiv_testing_links");
+                        openFormUsingFormUtils(HTSDetailsActivity.this,"hiv_testing_service");
                     } catch (JSONException e) {
                         e.printStackTrace();
                    }
@@ -553,6 +549,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
                     case "VCA Assessment":
                     case "HIV Risk Assessment Above 15":
                     case "HIV Risk Assessment Below 15":
+                    case "HIV Testing Links":
+                    case "HIV Testing Service":
 
                         finish();
                         startActivity(getIntent());
@@ -650,6 +648,17 @@ public class HTSDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+                case "HIV Testing Service":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HIV_TESTING_SERVICE);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -733,7 +742,6 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         updateRegistration(pair, jsonString, true);
     }
-
     public void updateRegistration(final Pair<Client, Event> pair, final String jsonString, final boolean isEditMode) {
         Runnable runnable = () -> {
             finishUpdate(pair, jsonString, isEditMode);
@@ -950,6 +958,12 @@ public class HTSDetailsActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
+            case "hiv_testing_service":
+
+                formToBeOpened.put("entity_id", this.hivTestingServiceModel.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+                populateCaseworkerPhoneAndName(formToBeOpened);
+                break;
             case "hiv_testing_links":
 //                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
 //                populateCaseworkerPhoneAndName(formToBeOpened);
@@ -971,107 +985,107 @@ public class HTSDetailsActivity extends AppCompatActivity {
         startFormActivity(formToBeOpened);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-            switch (item.getItemId()) {
-                case R.id.refresh:
-                    finish();
-                    startActivity(getIntent());
-
-                    break;
-
-                case R.id.call:
-                    String caregiverPhoneNumber = child.getCaregiver_phone();
-                    if (!caregiverPhoneNumber.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-
-                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                        startActivity(callIntent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
-                    }
-
-                return true;
-            case R.id.case_status:
-
-                try {
-                    openFormUsingFormUtils(HTSDetailsActivity.this, "case_status");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case R.id.delete_record:
-
-                    if(txtGender.getText().toString().equals("MALE")){
-                        gender = "his";
-                    } else {
-                        gender = "her";
-                    }
-
-                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-                    builder.setNegativeButton("NO", (dialog, id) -> {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
-
-                    }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        FormUtils formUtils = null;
-                        try {
-                            formUtils = new FormUtils(this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        child.setDeleted("1");
-                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
-                            try {
-                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
-                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            try {
-
-                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                                if (childIndexEventClient == null) {
-                                    return;
-                                }
-                                saveRegistration(childIndexEventClient,true);
-
-
-                            } catch (Exception e) {
-                                Timber.e(e);
-                            }
-
-
-
-                        Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                        super.onBackPressed();
-                    }));
-
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Alert");
-                    alert.show();
-
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//            switch (item.getItemId()) {
+//                case R.id.refresh:
+//                    finish();
+//                    startActivity(getIntent());
+//
+//                    break;
+//
+//                case R.id.call:
+//                    String caregiverPhoneNumber = child.getCaregiver_phone();
+//                    if (!caregiverPhoneNumber.equals("")) {
+//                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
+//
+//                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+//                        startActivity(callIntent);
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                return true;
+//            case R.id.case_status:
+//
+//                try {
+//                    openFormUsingFormUtils(HTSDetailsActivity.this, "case_status");
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//
+//            case R.id.delete_record:
+//
+//                    if(txtGender.getText().toString().equals("MALE")){
+//                        gender = "his";
+//                    } else {
+//                        gender = "her";
+//                    }
+//
+//                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
+//                    builder.setNegativeButton("NO", (dialog, id) -> {
+//                        //  Action for 'NO' Button
+//                        dialog.cancel();
+//
+//                    }).setPositiveButton("YES",((dialogInterface, i) -> {
+//                        FormUtils formUtils = null;
+//                        try {
+//                            formUtils = new FormUtils(this);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        child.setDeleted("1");
+//                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+//                            try {
+//                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+//                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//
+//                            try {
+//
+//                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+//                                if (childIndexEventClient == null) {
+//                                    return;
+//                                }
+//                                saveRegistration(childIndexEventClient,true);
+//
+//
+//                            } catch (Exception e) {
+//                                Timber.e(e);
+//                            }
+//
+//
+//
+//                        Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+//                        super.onBackPressed();
+//                    }));
+//
+//                    //Creating dialog box
+//                    AlertDialog alert = builder.create();
+//                    //Setting the title manually
+//                    alert.setTitle("Alert");
+//                    alert.show();
+//
+//                break;
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @Override
