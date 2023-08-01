@@ -8,7 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HTSLinksDao extends AbstractDao {
+    public static int htsCount(String clientID){
+
+        String sql = "SELECT COUNT(*) AS htsCount FROM FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' ";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "htsCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
     public static List<HTSlinksModel> getHTSLinks (String clientID) {
+
 
         String sql = "SELECT * FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' ";
 
