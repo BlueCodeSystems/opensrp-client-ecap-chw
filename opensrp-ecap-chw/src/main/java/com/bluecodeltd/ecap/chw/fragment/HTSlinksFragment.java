@@ -20,22 +20,19 @@ import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 public class HTSlinksFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    RecyclerView recyclerView;
+    RecyclerView.Adapter recyclerViewAdapter;
+    TextView linkText;
+    private ArrayList<HTSlinksModel> htsLinksModel = new ArrayList<>();
+    View rootView; // Add this line
     public HTSlinksFragment() {
         // Required empty public constructor
     }
-
     public static HTSlinksFragment newInstance(String param1, String param2) {
         HTSlinksFragment fragment = new HTSlinksFragment();
         Bundle args = new Bundle();
@@ -44,7 +41,6 @@ public class HTSlinksFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,27 +49,16 @@ public class HTSlinksFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-    RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewAdapter;
-    TextView linkText;
-    private ArrayList<HTSlinksModel> htsLinksModel = new ArrayList<>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_h_t_slinks, container, false);
-
-        recyclerView = view.findViewById(R.id.hts_links);
-
+        rootView = inflater.inflate(R.layout.fragment_h_t_slinks, container, false);
+        recyclerView = rootView.findViewById(R.id.hts_links);
         htsLinksModel.clear();
         HashMap<String, HIVTestingServiceModel> mymap = ((HTSDetailsActivity) requireActivity()).getLinkID();
         HIVTestingServiceModel htsModel = mymap.get("client");
         String id = htsModel.getClient_number();
-
         htsLinksModel.addAll(HTSLinksDao.getHTSLinks(id));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
@@ -82,7 +67,7 @@ public class HTSlinksFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
 
-
-        return view;
+        return rootView;
     }
+
 }
