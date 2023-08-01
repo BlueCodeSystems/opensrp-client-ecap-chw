@@ -40,6 +40,7 @@ import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HIVTestingServiceDao;
+import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -120,7 +121,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
-    private TextView visitTabCount, plansTabCount;
+    private TextView htsCount,visitTabCount, plansTabCount;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     private UniqueIdRepository uniqueIdRepository;
@@ -309,6 +310,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
+//        updateTasksTabTitle();
         returnViewPager();
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HTSlinksFragment());
@@ -1175,6 +1177,18 @@ public class HTSDetailsActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("HTS Links");
+    }
+    private void updateTasksTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.hts_title);
+        visitTabTitle.setText("HTS Links");
+        htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
+
+        int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());
+
+        htsCount.setText(String.valueOf(htsLinks));
+
+        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
 
     public void buildDialog(){
