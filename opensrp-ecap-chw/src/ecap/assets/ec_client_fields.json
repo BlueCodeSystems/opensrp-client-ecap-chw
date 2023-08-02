@@ -7513,6 +7513,13 @@
           }
         },
         {
+          "column_name": "date_linked",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_linked"
+          }
+        },
+        {
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
@@ -7665,6 +7672,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.checked_by"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
