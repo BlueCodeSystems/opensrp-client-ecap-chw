@@ -46,6 +46,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
+import com.bluecodeltd.ecap.chw.fragment.HTSFragmentOverview;
 import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
@@ -219,13 +220,6 @@ public class HTSDetailsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 //        updateTasksTabTitle();
         returnViewPager();
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new HTSlinksFragment());
-
-        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("HTS Links");
     }
     public void animateFAB(){
 
@@ -1123,12 +1117,14 @@ public class HTSDetailsActivity extends AppCompatActivity {
     }
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new HTSFragmentOverview());
         fragments.add(new HTSlinksFragment());
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("HTS Links");
+        tabLayout.getTabAt(0).setText("Overview");
+        tabLayout.getTabAt(1).setText("HTS Links");
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);

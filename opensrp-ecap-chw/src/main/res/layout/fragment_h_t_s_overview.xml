@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/overview_summary_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/overview_section_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/overview_header_bg"
+            android:gravity="left"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_drawable_padding"
+            android:paddingBottom="@dimen/contact_drawable_padding"
+            android:singleLine="true"
+            android:text="DETAILS"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Partner"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/partner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/overview_section_details_left1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Facility"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/facility"
+                    android:inputType="textCapWords"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Province"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/province"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:text="District" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/district"
+                    android:inputType="textCapWords"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/overview_header_bg"
+            android:gravity="left"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_drawable_padding"
+            android:paddingBottom="@dimen/contact_drawable_padding"
+            android:singleLine="true"
+            android:text="ART STATUS DETAILS"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Are you on ART"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/art_treatment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/artLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:text="ART Number" />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/art_number"
+                    android:textAllCaps="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/overview_section_header3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/overview_header_bg"
+            android:gravity="left"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_drawable_padding"
+            android:paddingBottom="@dimen/contact_drawable_padding"
+            android:singleLine="true"
+            android:text="History"
+            android:textAllCaps="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="Last Edited By"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/edited_by"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:text="Not set"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="Caseworker Phone"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:text="Not set"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="Date Last Edited"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/date_edited"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:text="Not set"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/muac_warning"
+            android:orientation="horizontal"
+            android:gravity="left"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_drawable_padding"
+            android:paddingBottom="@dimen/contact_drawable_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_icon_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp"
+                android:textStyle="italic"
+                android:text="Please Complete Nutrition Screening Using MUAC Scores for each child in the Members Tab"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

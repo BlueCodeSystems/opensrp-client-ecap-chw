@@ -38,7 +38,7 @@ public class HIVTestingServiceDao extends AbstractDao {
             record.setMiddle_name(getCursorValue(c, "middle_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setOn_art(getCursorValue(c, "on_art"));
-            record.setArt_date(getCursorValue(c, "art_number"));
+            record.setArt_number(getCursorValue(c, "art_number"));
             record.setGender(getCursorValue(c, "gender"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
             record.setCase_snn_entry_point(getCursorValue(c, "case_snn_entry_point"));
