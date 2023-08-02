@@ -138,6 +138,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
+        "read_only": true,
         "label": "Gender",
         "options": [
           {
@@ -224,13 +225,43 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
-        "type": "edit_text",
-        "hint": "Sub-population",
+        "type": "check_box",
         "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Sub-population can  only contain letters"
+        "label": "Sub-population",
+        "options": [
+          {
+            "key": "subpop1",
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
+
+          },
+          {
+            "key": "subpop2",
+            "text": "HIV Exposed Infants (HEIs)"
+
+          },
+          {
+            "key": "subpop3",
+            "text": "Children of Women Living with HIV"
+
+          },
+          {
+            "key": "subpop4",
+            "text": "Adolescent Girls and Young Women (AGYW)"
+          },
+          {
+            "key": "subpop5",
+            "text": "Survivors of Sexual Violence"
+
+          },
+          {
+            "key": "subpop",
+            "text": "Children of Female Sex Workers (FSWs)"
+
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Select sub population"
         }
       },
       {
@@ -310,15 +341,22 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_result",
-        "type": "spinner",
-        "hint": "HIV Result (HIV+/HIV-)",
-        "values": [
-          "Newly Tested HIV+",
-          "Newly Tested HIV-"
+        "type": "native_radio",
+        "label": "HIV Result (HIV+/HIV-)",
+        "options": [
+          {
+            "key": "Newly Tested HIV-",
+            "text": "Newly Tested HIV-"
+          },
+          {
+            "key": "Newly Tested HIV+",
+            "text": "Newly Tested HIV+"
+          }
+
         ],
         "v_required": {
-          "value": "true",
-          "err": "Please enter the sex"
+          "value": true,
+          "err": "This field is Required"
         }
       },
       {
@@ -349,15 +387,22 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_recent_test",
-        "type": "spinner",
-        "hint": "HIV Recent Testing Result",
-        "values": [
-          "Recent",
-          "LT"
+        "type": "native_radio",
+        "label": "HIV Recent Testing Result",
+        "options": [
+          {
+            "key": "Recent",
+            "text": "Recent"
+          },
+          {
+            "key": "LT",
+            "text": "LT"
+          }
+
         ],
         "v_required": {
-          "value": "true",
-          "err": "Please enter the sex"
+          "value": true,
+          "err": "This field is Required"
         }
       },
       {

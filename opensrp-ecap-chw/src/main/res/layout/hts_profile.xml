@@ -238,7 +238,7 @@
             <RelativeLayout
                 android:id="@+id/vca_screening"
                 android:onClick="onClick"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:gravity="center_vertical"
@@ -247,7 +247,7 @@
 
                 <RelativeLayout
                     android:background="#666666"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
@@ -261,10 +261,11 @@
                     <TextView
                         android:background="#666666"
                         android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="Edit details"
+                        android:gravity="center"
                         android:textStyle="italic"
                         android:visibility="visible" />
 
@@ -294,7 +295,7 @@
 
                 <RelativeLayout
                     android:background="#666666"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
