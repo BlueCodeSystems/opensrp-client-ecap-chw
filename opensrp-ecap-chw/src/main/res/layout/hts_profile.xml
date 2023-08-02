@@ -259,12 +259,12 @@
 
 
                     <TextView
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="Edit details"
-                        android:background="#666666"
-                        android:textColor="@android:color/white"
                         android:textStyle="italic"
                         android:visibility="visible" />
 

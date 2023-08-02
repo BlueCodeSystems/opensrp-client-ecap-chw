@@ -970,11 +970,20 @@ public class HTSDetailsActivity extends AppCompatActivity {
 //                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
 //                populateCaseworkerPhoneAndName(formToBeOpened);
                 JSONObject clientNumber = getFieldJSONObject(fields(formToBeOpened, "step1"), "client_number");
+                JSONObject dateLinked = getFieldJSONObject(fields(formToBeOpened, "step1"), "date_linked");
 
                 if (clientNumber  != null) {
                     clientNumber .remove(JsonFormUtils.VALUE);
                     try {
                         clientNumber.put(JsonFormUtils.VALUE, hivTestingServiceModel.getClient_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (dateLinked  != null) {
+                    dateLinked.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateLinked.put(JsonFormUtils.VALUE, getFormattedDate());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -985,6 +994,11 @@ public class HTSDetailsActivity extends AppCompatActivity {
     }
 
         startFormActivity(formToBeOpened);
+    }
+    private String getFormattedDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return today.format(formatter);
     }
 
 //    @Override

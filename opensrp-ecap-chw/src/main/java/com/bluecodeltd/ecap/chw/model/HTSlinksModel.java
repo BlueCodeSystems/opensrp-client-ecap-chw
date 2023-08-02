@@ -4,6 +4,7 @@ public class HTSlinksModel {
     private String base_entity_id;
     private String relational_id;
     private String client_number;
+    private String date_linked;
     private String first_name;
     private String middle_name;
     private String last_name;
@@ -49,6 +50,14 @@ public class HTSlinksModel {
 
     public void setClient_number(String client_number) {
         this.client_number = client_number;
+    }
+
+    public String getDate_linked() {
+        return date_linked;
+    }
+
+    public void setDate_linked(String date_linked) {
+        this.date_linked = date_linked;
     }
 
     public String getFirst_name() {

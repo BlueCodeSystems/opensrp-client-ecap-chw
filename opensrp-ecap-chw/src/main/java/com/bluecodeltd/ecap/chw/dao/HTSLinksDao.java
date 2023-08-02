@@ -10,7 +10,7 @@ import java.util.List;
 public class HTSLinksDao extends AbstractDao {
     public static int htsCount(String clientID){
 
-        String sql = "SELECT COUNT(*) AS htsCount FROM FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' ";
+        String sql = "SELECT COUNT(*) AS htsCount FROM FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' AND (delete_status IS NULL OR delete_status <> '1') ";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "htsCount");
 
@@ -22,7 +22,8 @@ public class HTSLinksDao extends AbstractDao {
     public static List<HTSlinksModel> getHTSLinks (String clientID) {
 
 
-        String sql = "SELECT * FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' ";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_linked,7,4) || '-' || substr(date_linked,4,2) || '-' || substr(date_linked,1,2)) as sortable_date FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "'" +
+                " AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC ";
 
         List<HTSlinksModel> values = AbstractDao.readData(sql, getHTSlinksModelMap());
         if (values == null || values.size() == 0)
@@ -38,6 +39,7 @@ public class HTSLinksDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setClient_number(getCursorValue(c, "client_number"));
+            record.setDate_linked(getCursorValue(c, "date_linked"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setMiddle_name(getCursorValue(c, "middle_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
