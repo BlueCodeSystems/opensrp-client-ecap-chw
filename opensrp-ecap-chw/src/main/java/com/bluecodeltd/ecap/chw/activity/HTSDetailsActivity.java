@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.constants.JsonFormConstants.OPTIONS_FIELD_NAME;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
@@ -146,6 +147,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     TabLayout tabLayout;
+    private Dialog dimDialog;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -185,6 +187,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         txtAge = findViewById(R.id.vca_age);
         txtChildid = findViewById(R.id.childid);
 
+
         if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
             txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
         }
@@ -208,105 +211,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
             txtChildid.setText("ID : " + clientId);
         }
 
-
-//        String hhIntent = getIntent().getExtras().getString("fromHousehold");
-//        if(hhIntent == null){
-//            hhIntent = getIntent().getExtras().getString("fromIndex");
-//        }
-//
-//        indexVCA = VCAScreeningDao.getVcaScreening(childId);
-//        child = IndexPersonDao.getChildByBaseId(childId);
-//        gender = indexVCA.getGender();
-//        uniqueId = indexVCA.getUnique_id();
-//
-//        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
-//        is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
-//
-
-//
-//        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
-//        referralModel = ReferralDao.getReferral(childId);
-//        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
-//        hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
-//        vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
-//        vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
-//        weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
-//
-//
-//
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
-//
-//        if(vcaAssessmentModel == null){
-//            fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//
-//        if(referralModel == null){
-//            fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//        if(hivRiskAssessmentUnder15Model == null){
-//            fabHiv.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//        if(hivRiskAssessmentAbove15Model == null){
-//            fabHiv2.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//        if(vcaVisitationModel == null){
-//            fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//        if(vcaCasePlanModel == null){
-//            fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//
-//        if( gender != null && gender.equals("male")){
-//
-//            toolbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
-//            myAppbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
-//
-//        } else {
-//
-//            toolbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
-//            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
-//
-//        }
-//
-//
-//
-//        if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
-//            fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-//        } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-//            fab.setVisibility(View.INVISIBLE);
-//        }
 
-/*//        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-//        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);*/
-//
-
-//        rassessment = findViewById(R.id.assessment);
-//        rcase_plan = findViewById(R.id.case_plan);
-//        referral = findViewById(R.id.referral);
-//        household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
-//
-//
-//
-//        hiv_assessment = findViewById(R.id.hiv_assessment);
-//        hiv_assessment2 = findViewById(R.id.hiv_assessment2);
-//        childPlan = findViewById(R.id.childPlan);
-//        weServicesVca = findViewById(R.id.we_services_vca);
-//
-
-//
-//        mTabLayout =  findViewById(R.id.tabs);
-//        mViewPager  = findViewById(R.id.viewpager);
-//
-//        setupViewPager();
-//        updateVisitsTabTitle();
-//        updatePlanTabTitle();
-//
-//        int page = getIntent().getIntExtra("tab",0);
-//        mViewPager.setCurrentItem(page);
-//
-//createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
-//
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
@@ -320,7 +227,37 @@ public class HTSDetailsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("HTS Links");
     }
+    public void animateFAB(){
 
+
+        if (isFabOpen){
+
+            closeFab();
+        } else {
+
+            isFabOpen = true;
+            fab.startAnimation(rotate_forward);
+            txtScreening.setVisibility(View.VISIBLE);
+            addIndexClients.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public void closeFab(){
+        fab.startAnimation(rotate_backward);
+        isFabOpen = false;
+        txtScreening.setVisibility(View.GONE);
+        addIndexClients.setVisibility(View.GONE);
+//        rcase_plan.setVisibility(View.GONE);
+//        referral.setVisibility(View.GONE);
+//        household_visitation_for_vca.setVisibility(View.GONE);
+//        hiv_assessment.setVisibility(View.GONE);
+//        hiv_assessment2.setVisibility(View.GONE);
+//        childPlan.setVisibility(View.GONE);
+//        weServicesVca.setVisibility(View.GONE);
+
+
+    }
 
     public HashMap<String, Child> getData() {
         String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
@@ -805,37 +742,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
-    public void animateFAB(){
 
-
-        if (isFabOpen){
-
-            closeFab();
-        } else {
-
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            txtScreening.setVisibility(View.VISIBLE);
-            addIndexClients.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        txtScreening.setVisibility(View.GONE);
-        addIndexClients.setVisibility(View.GONE);
-//        rcase_plan.setVisibility(View.GONE);
-//        referral.setVisibility(View.GONE);
-//        household_visitation_for_vca.setVisibility(View.GONE);
-//        hiv_assessment.setVisibility(View.GONE);
-//        hiv_assessment2.setVisibility(View.GONE);
-//        childPlan.setVisibility(View.GONE);
-//        weServicesVca.setVisibility(View.GONE);
-
-
-    }
 
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
@@ -971,6 +878,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 //                populateCaseworkerPhoneAndName(formToBeOpened);
                 JSONObject clientNumber = getFieldJSONObject(fields(formToBeOpened, "step1"), "client_number");
                 JSONObject dateLinked = getFieldJSONObject(fields(formToBeOpened, "step1"), "date_linked");
+                JSONObject gender = getFieldJSONObject(fields(formToBeOpened, "step1"), "gender");
 
                 if (clientNumber  != null) {
                     clientNumber .remove(JsonFormUtils.VALUE);
@@ -984,6 +892,36 @@ public class HTSDetailsActivity extends AppCompatActivity {
                     dateLinked.remove(JsonFormUtils.VALUE);
                     try {
                         dateLinked.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(hivTestingServiceModel.getGender().equals("Male")) {
+                    JSONArray options = gender.getJSONArray(OPTIONS_FIELD_NAME);
+                    for (int i = 0; i < options.length(); i++) {
+                        JSONObject option = options.getJSONObject(i);
+                        if (option.getString("key").equals("male")) {
+                            options.remove(i);
+                            break;
+                        }
+                    }
+                    try {
+                        gender.put(JsonFormUtils.VALUE, "female");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(hivTestingServiceModel.getGender().equals("Female")) {
+                    JSONArray options = gender.getJSONArray(OPTIONS_FIELD_NAME);
+                    for (int i = 0; i < options.length(); i++) {
+                        JSONObject option = options.getJSONObject(i);
+                        if (option.getString("key").equals("female")) {
+                            options.remove(i);
+                            break;
+                        }
+                    }
+                    try {
+                        gender.put(JsonFormUtils.VALUE, "male");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
