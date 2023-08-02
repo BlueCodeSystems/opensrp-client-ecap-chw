@@ -29,7 +29,7 @@ public class HTSlinksFragment extends Fragment {
     RecyclerView.Adapter recyclerViewAdapter;
     TextView linkText;
     private ArrayList<HTSlinksModel> htsLinksModel = new ArrayList<>();
-    View rootView; // Add this line
+    View rootView;
     public HTSlinksFragment() {
         // Required empty public constructor
     }
