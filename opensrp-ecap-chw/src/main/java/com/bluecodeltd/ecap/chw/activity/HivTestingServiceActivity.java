@@ -3,15 +3,11 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
-import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +19,9 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.fragment.HivTestingServiceRegisterFragment;
-import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.presenter.HivTestingRegisterPresenter;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -130,6 +124,8 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HivTestingServiceActivity.this);
         String code = sp.getString("code", "00000");
+        String facility = sp.getString("facility","anonymous");
+        String partner = sp.getString("partner","anonymous");
         Object obj = sp.getAll();
 
         //******** HOUSEHOLD ID ******//
@@ -144,7 +140,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
         String newEntityId =  Integer.toString(Rnumber);
 
         //******** POPULATE AS INDEX VCA ******//
-        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP3), "index_check_box");
+        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP1), "index_check_box");
 
         if (indexCheckObject != null) {
             indexCheckObject.remove(JsonFormUtils.VALUE);
@@ -154,11 +150,34 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                 e.printStackTrace();
             }
         }
+        //******** POPULATE FACILITY ******//
+        JSONObject facilityObject = getFieldJSONObject(fields(jsonObject, STEP1), "health_facility");
+
+        if (facilityObject != null) {
+            facilityObject.remove(JsonFormUtils.VALUE);
+            try {
+                facilityObject.put(JsonFormUtils.VALUE, facility);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        //******** POPULATE PARTNER ******//
+        JSONObject partnerObject = getFieldJSONObject(fields(jsonObject, STEP1), "implementing_partner");
+
+        if (partnerObject != null) {
+            partnerObject.remove(JsonFormUtils.VALUE);
+            try {
+                partnerObject.put(JsonFormUtils.VALUE, partner);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
 
 
 
         //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "client_number");
 
         if (stepOneUniqueId != null) {
             stepOneUniqueId.remove(JsonFormUtils.VALUE);
@@ -386,6 +405,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
+            bottomNavigationView.getMenu().removeItem(R.id.action_identifcation);
          //   bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
 
         }
@@ -400,45 +420,45 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.profilemenu, menu);
-
-        final MenuItem menuItem = menu.findItem(R.id.action_notifications);
-
-        View actionView = menuItem.getActionView();
-        textCartItemCount =  actionView.findViewById(R.id.notification_badge);
-
-        setupBadge();
-
-        actionView.setOnClickListener(v -> onOptionsItemSelected(menuItem));
-
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        item.setVisible(true);
-        item.setEnabled(false);
-        // Handle item selection
-        switch (item.getItemId()) {
-
-            case R.id.user:
-
-                Intent i = new Intent(this, Profile.class);
-                startActivity(i);
-
-                break;
-
-            case R.id.action_notifications:
-
-                Intent i2 = new Intent(this, NotificationActivity.class);
-                startActivity(i2);
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.profilemenu, menu);
+//
+//        final MenuItem menuItem = menu.findItem(R.id.action_notifications);
+//
+//        View actionView = menuItem.getActionView();
+//        textCartItemCount =  actionView.findViewById(R.id.notification_badge);
+//
+//        setupBadge();
+//
+//        actionView.setOnClickListener(v -> onOptionsItemSelected(menuItem));
+//
+//        return true;
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        item.setVisible(true);
+//        item.setEnabled(false);
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//
+//            case R.id.user:
+//
+//                Intent i = new Intent(this, Profile.class);
+//                startActivity(i);
+//
+//                break;
+//
+//            case R.id.action_notifications:
+//
+//                Intent i2 = new Intent(this, NotificationActivity.class);
+//                startActivity(i2);
+//
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
     public UniqueIdRepository getUniqueIdRepository() {
         if (uniqueIdRepository == null) {
             uniqueIdRepository = new UniqueIdRepository();

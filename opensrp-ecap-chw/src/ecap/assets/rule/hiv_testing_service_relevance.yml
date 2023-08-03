@@ -1,0 +1,21 @@
+---
+name: step1_gender
+description: gender
+priority: 1
+condition: "step1_testing_modality.contains('index') || step1_testing_modality.contains('snt')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_birthdate
+description: birthdate
+priority: 1
+condition: "step1_testing_modality.contains('index') || step1_testing_modality.contains('snt')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_number
+description: art_number
+priority: 1
+condition: "step1_testing_modality.contains('index') || step1_testing_modality.contains('snt')"
+actions:
+  - "isRelevant = true"
