@@ -2,7 +2,6 @@
   "count": 1,
   "encounter_type": "HIV Testing Links",
   "entity_id": "",
-  "show_errors_on_submit": true,
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -133,90 +132,12 @@
         }
       },
       {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "read_only": true,
-        "label": "Gender",
-        "options": [
-          {
-            "key": "male",
-            "text": "male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "birthdate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "birthdate",
-        "type": "date_picker",
-        "hint": "Birthdate",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the date of birth"
-        }
-      },
-      {
-        "key": "entry_point",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "entry_point",
-        "type": "edit_text",
-        "hint": "Entry Point",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Entry can  only contain letters"
-        }
-      },
-      {
-        "key": "house_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "house_number",
-        "type": "edit_text",
-        "hint": "House number"
-      },
-      {
-        "key": "individual_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "individual_tested",
-        "type": "edit_text",
-        "hint": "ECAPII OVC Comprehensive Program ID",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
-        }
-      },
-      {
         "key": "ecap_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAPII VCA ID (If Applicable)",
+        "hint": " ECAPII ID (If Applicable)",
         "read_only": "false",
         "edit_type": "name"
       },
@@ -230,38 +151,61 @@
         "label": "Sub-population",
         "options": [
           {
-            "key": "subpop1",
+            "key": "Children/Adolescents Living with HIV (C/ALHIV)",
             "text": "Children/Adolescents Living with HIV (C/ALHIV)"
 
           },
           {
-            "key": "subpop2",
+            "key": "HIV Exposed Infants (HEIs)",
             "text": "HIV Exposed Infants (HEIs)"
 
           },
           {
-            "key": "subpop3",
+            "key": "Children of Women Living with HIV",
             "text": "Children of Women Living with HIV"
 
           },
           {
-            "key": "subpop4",
+            "key": "Adolescent Girls and Young Women (AGYW)",
             "text": "Adolescent Girls and Young Women (AGYW)"
           },
           {
-            "key": "subpop5",
+            "key": "Survivors of Sexual Violence",
             "text": "Survivors of Sexual Violence"
 
           },
           {
-            "key": "subpop",
+            "key": "Children of Female Sex Workers (FSWs)",
             "text": "Children of Female Sex Workers (FSWs)"
+
+          },
+          {
+            "key": "Siblings of the Index/Other family members",
+            "text": "Siblings of the Index/Other family members"
 
           }
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Select sub population"
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "Age",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the date of birth"
         }
       },
       {
@@ -302,22 +246,17 @@
         "label": "Current HIV Status",
         "options": [
           {
-            "key": "Unknown",
-            "text": "Unknown"
+            "key": "negative",
+            "text": "Negative"
+          },
+          {
+            "key": "positive",
+            "text": "Positive"
           },
           {
             "key": "Test Not Required (evidenced by an HIV risk assessment)",
             "text": "Test Not Required (evidenced by an HIV risk assessment)"
-          },
-          {
-            "key": "Known Negative (Evidenced Tested negative in the past 3 months)",
-            "text": "Known Negative (Evidenced Tested negative in the past 3 months)"
-          },
-          {
-            "key": "Known positive",
-            "text": "Known positive"
           }
-
         ],
         "v_required": {
           "value": true,
@@ -330,7 +269,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_tested",
         "type": "date_picker",
-        "hint": "Date tested",
+         "hint": "Date tested",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
@@ -345,12 +284,12 @@
         "label": "HIV Result (HIV+/HIV-)",
         "options": [
           {
-            "key": "Newly Tested HIV-",
-            "text": "Newly Tested HIV-"
+            "key": "negative",
+            "text": "Negative"
           },
           {
-            "key": "Newly Tested HIV+",
-            "text": "Newly Tested HIV+"
+            "key": "positive",
+            "text": "Positive"
           }
 
         ],
@@ -380,6 +319,12 @@
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
         }
       },
       {

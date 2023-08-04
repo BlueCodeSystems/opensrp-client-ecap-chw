@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.vijay.jsonwizard.constants.JsonFormConstants.OPTIONS_FIELD_NAME;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
@@ -866,6 +865,15 @@ public class HTSDetailsActivity extends AppCompatActivity {
                 formToBeOpened.put("entity_id", this.hivTestingServiceModel.getBase_entity_id());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
+                JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
+                if (dateEdited  != null) {
+                    dateEdited.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateEdited.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case "hiv_testing_links":
 //                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
@@ -890,36 +898,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                if(hivTestingServiceModel.getGender().equals("Male")) {
-                    JSONArray options = gender.getJSONArray(OPTIONS_FIELD_NAME);
-                    for (int i = 0; i < options.length(); i++) {
-                        JSONObject option = options.getJSONObject(i);
-                        if (option.getString("key").equals("male")) {
-                            options.remove(i);
-                            break;
-                        }
-                    }
-                    try {
-                        gender.put(JsonFormUtils.VALUE, "female");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(hivTestingServiceModel.getGender().equals("Female")) {
-                    JSONArray options = gender.getJSONArray(OPTIONS_FIELD_NAME);
-                    for (int i = 0; i < options.length(); i++) {
-                        JSONObject option = options.getJSONObject(i);
-                        if (option.getString("key").equals("female")) {
-                            options.remove(i);
-                            break;
-                        }
-                    }
-                    try {
-                        gender.put(JsonFormUtils.VALUE, "male");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+
                 break;
 
 
@@ -1123,8 +1102,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("Overview");
-        tabLayout.getTabAt(1).setText("HTS Links");
+        tabLayout.getTabAt(0).setText("OVERVIEW");
+        tabLayout.getTabAt(1).setText("HTS LINKS");
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);

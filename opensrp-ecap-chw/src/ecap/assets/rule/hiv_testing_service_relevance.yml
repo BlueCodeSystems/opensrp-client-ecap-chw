@@ -19,3 +19,17 @@ priority: 1
 condition: "step1_testing_modality.contains('index') || step1_testing_modality.contains('snt')"
 actions:
   - "isRelevant = true"
+---
+name: step1_art_date
+description: art_date
+priority: 1
+condition: "step1_hiv_status.contains('positive') || step1_hiv_result.contains('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_date_initiated
+description: art_date_initiated
+priority: 1
+condition: "step1_hiv_status.contains('positive') || step1_hiv_result.contains('positive')"
+actions:
+  - "isRelevant = true"

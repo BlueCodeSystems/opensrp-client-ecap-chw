@@ -2,7 +2,6 @@
   "count": 1,
   "encounter_type": "HIV Testing Service",
   "entity_id": "",
-  "show_errors_on_submit": true,
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -55,6 +54,16 @@
     "title": "",
     "fields": [
       {
+        "key": "date_client_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date Case Record Created",
+        "edit_type": "number"
+      },
+      {
         "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -97,7 +106,7 @@
         "edit_type": "name",
         "look_up": "false",
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Partners is Required"
         }
       },
@@ -112,7 +121,7 @@
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Health facility Required"
         }
       },
@@ -127,7 +136,7 @@
         "edit_type": "name",
         "look_up": "false",
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "District is Required"
         }
       },
@@ -142,7 +151,7 @@
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Province is Required"
         }
       },
@@ -156,7 +165,7 @@
         "hint": "Client Number",
         "edit_type": "number",
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Client number is Required"
         }
       },
@@ -182,7 +191,7 @@
           }
         ],
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Testing modality is Required"
         }
       },
@@ -200,7 +209,7 @@
           "err": "First name can only contain letters"
         },
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Enter first name"
         }
       },
@@ -232,7 +241,7 @@
           "err": "Last name can only contain letters"
         },
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Enter last name"
         }
       },
@@ -251,7 +260,7 @@
           }
         },
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "ART number is Required"
         }
       },
@@ -273,7 +282,7 @@
           }
         ],
         "v_required": {
-          "value": true,
+          "value": "true",
           "err": "Gender is Required"
         },
         "relevance": {
@@ -326,6 +335,16 @@
           "value": "true",
           "err": "Please enter the entry point"
         }
+      },
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date edited",
+        "edit_type": "number"
       },
       {
         "key": "delete_status",
