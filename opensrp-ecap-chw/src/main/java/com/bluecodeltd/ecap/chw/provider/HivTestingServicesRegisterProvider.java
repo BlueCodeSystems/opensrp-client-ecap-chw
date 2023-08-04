@@ -9,12 +9,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.view_holder.HivTestingServicesRegisterViewHolder;
-import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -91,13 +86,15 @@ public class HivTestingServicesRegisterProvider implements RecyclerViewProvider<
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
         String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "birthdate", true);
+        String client_type = Utils.getValue(personObjectClient.getColumnmaps(), "testing_modality", true);
+
 
         if(birthdate != null && !birthdate.isEmpty())
         {
             age = getAge(birthdate);
         }
 
-        hivTestingServicesRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + clientId, gender, age);
+        hivTestingServicesRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + clientId, gender, age,client_type);
         hivTestingServicesRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         hivTestingServicesRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         hivTestingServicesRegisterViewHolder.itemView.setTag(smartRegisterClient);

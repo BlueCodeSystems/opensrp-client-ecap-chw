@@ -178,15 +178,15 @@
         "label": "Testing Modality (SNS/Index/Other Community)",
         "options": [
           {
-            "key": "snt",
+            "key": "SNT",
             "text": "SNT"
           },
           {
-            "key": "index",
+            "key": "Index",
             "text": "Index"
           },
           {
-            "key": "other community",
+            "key": "Other Community",
             "text": "Other Community"
           }
         ],

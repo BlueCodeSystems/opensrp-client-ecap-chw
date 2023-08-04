@@ -13,7 +13,7 @@ public class HivTestingServicesRegisterViewHolder extends RecyclerView.ViewHolde
 
     private TextView familyNameTextView;
 
-    private TextView villageTextView, gender_age;
+    private TextView villageTextView, gender_age,client_type;
 
     //public Button caseplan_layout;
 
@@ -32,11 +32,12 @@ public class HivTestingServicesRegisterViewHolder extends RecyclerView.ViewHolde
         visitLayout = itemView.findViewById(R.id.index_visit);
         gender_age = itemView.findViewById(R.id.gender_age);
         warningIcon = itemView.findViewById(R.id.index_warning);
+        client_type = itemView.findViewById(R.id.client_type);
 
     }
 
 
-    public void setupViews(String family, String village,String gender,String age){
+    public void setupViews(String family, String village,String gender,String age,String client){
 
         //check if gender is null
         if(gender == null)
@@ -56,6 +57,10 @@ public class HivTestingServicesRegisterViewHolder extends RecyclerView.ViewHolde
         familyNameTextView.setText(family);
         villageTextView.setText(village);
         gender_age.setText(gender + " : " + age);
+        if(client.equals("Other Community")){
+            gender_age.setVisibility(View.GONE);
+        }
+        client_type.setText("Testing Modality: "+client);
 
 //        if(status != null && status.equals("1")){
 //            myStatus.setBackgroundColor(0xff05b714);
