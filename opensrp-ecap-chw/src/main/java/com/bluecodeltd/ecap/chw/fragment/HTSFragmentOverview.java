@@ -90,13 +90,11 @@ public class HTSFragmentOverview extends Fragment {
         facility.setText(caseWorkDetails.getString("facility", "Anonymous"));
         province.setText(htsModel.getProvince());
         district.setText(htsModel.getDistrict());
-        art_treatment.setText(htsModel.getOn_art());
         artNumber.setText(htsModel.getArt_number());
         phone.setText(caseWorkDetails.getString("phone", "Anonymous"));
 
-        if(htsModel.getOn_art().equals("no")){
-            artLayout.setVisibility(View.GONE);
-        }
+        artLayout.setVisibility(View.GONE);
+
 
         return rootView;
     }

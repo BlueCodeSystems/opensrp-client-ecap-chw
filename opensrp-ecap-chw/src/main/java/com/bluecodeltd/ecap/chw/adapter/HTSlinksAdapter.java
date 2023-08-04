@@ -135,10 +135,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
                 initial_artLayout.setVisibility(android.view.View.VISIBLE);
                 enrolled_on_ARTLayout.setVisibility(android.view.View.VISIBLE);
             }
-            if (entry_point != null) {
-                String entryPointValue = client.getEntry_point();
-                entry_point.setText(entryPointValue != null ? entryPointValue : "");
-            }
+
 
             if (hiv_status != null) {
                 String hivStatusValue = client.getHiv_status();

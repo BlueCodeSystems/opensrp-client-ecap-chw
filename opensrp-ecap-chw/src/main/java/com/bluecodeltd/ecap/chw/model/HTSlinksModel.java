@@ -8,13 +8,9 @@ public class HTSlinksModel {
     private String first_name;
     private String middle_name;
     private String last_name;
-    private String gender;
-    private String birthdate;
-    private String entry_point;
-    private String house_number;
-    private String individual_tested;
     private String ecap_id;
     private String sub_population;
+    private String birthdate;
     private String relationship;
     private String address;
     private String hiv_status;
@@ -27,6 +23,7 @@ public class HTSlinksModel {
     private String comment;
     private String caseworker_name;
     private String checked_by;
+    private String delete_status;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -84,46 +81,6 @@ public class HTSlinksModel {
         this.last_name = last_name;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public String getEntry_point() {
-        return entry_point;
-    }
-
-    public void setEntry_point(String entry_point) {
-        this.entry_point = entry_point;
-    }
-
-    public String getHouse_number() {
-        return house_number;
-    }
-
-    public void setHouse_number(String house_number) {
-        this.house_number = house_number;
-    }
-
-    public String getIndividual_tested() {
-        return individual_tested;
-    }
-
-    public void setIndividual_tested(String individual_tested) {
-        this.individual_tested = individual_tested;
-    }
-
     public String getEcap_id() {
         return ecap_id;
     }
@@ -138,6 +95,14 @@ public class HTSlinksModel {
 
     public void setSub_population(String sub_population) {
         this.sub_population = sub_population;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getRelationship() {
@@ -234,5 +199,13 @@ public class HTSlinksModel {
 
     public void setChecked_by(String checked_by) {
         this.checked_by = checked_by;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 }

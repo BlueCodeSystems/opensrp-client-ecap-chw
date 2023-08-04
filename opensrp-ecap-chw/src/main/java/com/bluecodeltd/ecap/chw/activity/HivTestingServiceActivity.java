@@ -45,6 +45,8 @@ import org.smartregister.util.FormUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -206,6 +208,24 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        JSONObject dateClientCreated = getFieldJSONObject(fields(jsonObject, STEP1), "date_client_created");
+        if (dateClientCreated  != null) {
+            dateClientCreated.remove(JsonFormUtils.VALUE);
+            try {
+                dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject dateEdited = getFieldJSONObject(fields(jsonObject, STEP1), "date_edited");
+        if (dateEdited  != null) {
+            dateEdited.remove(JsonFormUtils.VALUE);
+            try {
+                dateEdited.put(JsonFormUtils.VALUE, getFormattedDate());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -213,7 +233,11 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
-
+    private String getFormattedDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return today.format(formatter);
+    }
     @Override
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){

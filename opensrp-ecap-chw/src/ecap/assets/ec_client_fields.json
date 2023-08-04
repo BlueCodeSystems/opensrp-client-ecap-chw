@@ -7371,6 +7371,20 @@
           "json_mapping": {
             "field": "attributes.delete_status"
           }
+        },
+        {
+          "column_name": "date_client_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
         }
       ]
     },
@@ -7427,41 +7441,6 @@
           }
         },
         {
-          "column_name": "gender",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.gender"
-          }
-        },
-        {
-          "column_name": "birthdate",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.birthdate"
-          }
-        },
-        {
-          "column_name": "entry_point",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.entry_point"
-          }
-        },
-        {
-          "column_name": "house_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.house_number"
-          }
-        },
-        {
-          "column_name": "individual_tested",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.individual_tested"
-          }
-        },
-        {
           "column_name": "ecap_id",
           "type": "Client",
           "json_mapping": {
@@ -7473,6 +7452,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.sub_population"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.birthdate"
           }
         },
         {
