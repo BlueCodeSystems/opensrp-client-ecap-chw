@@ -22,7 +22,7 @@
             android:paddingTop="@dimen/contact_drawable_padding"
             android:paddingBottom="@dimen/contact_drawable_padding"
             android:singleLine="true"
-            android:text="DETAILS"
+            android:text="CLIENT DETAILS"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,42 +34,6 @@
             android:paddingTop="@dimen/contact_small_padding"
             android:paddingBottom="@dimen/contact_small_padding"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Partner"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/partner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +45,7 @@
                     android:id="@+id/overview_section_details_left1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Facility"
+                    android:text="Health Facility"
                     android:paddingLeft="@dimen/contact_drawable_padding"
                     android:paddingTop="@dimen/contact_small_padding"
                     android:paddingBottom="@dimen/contact_small_padding"
@@ -105,7 +69,6 @@
                     />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,7 +79,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Province"
+                    android:text="Testing Modality"
                     android:paddingLeft="@dimen/contact_drawable_padding"
                     android:paddingTop="@dimen/contact_small_padding"
                     android:paddingBottom="@dimen/contact_small_padding"
@@ -124,9 +87,10 @@
                     android:textColor="@color/black_text_color"
                     />
 
+
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/province"
+                    android:id="@+id/testing_modality"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -138,106 +102,6 @@
                     />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    android:layout_weight="1"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:text="District" />
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/district"
-                    android:inputType="textCapWords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/overview_header_bg"
-            android:gravity="left"
-            android:paddingLeft="@dimen/contact_drawable_padding"
-            android:paddingTop="@dimen/contact_drawable_padding"
-            android:paddingBottom="@dimen/contact_drawable_padding"
-            android:singleLine="true"
-            android:text="ART STATUS DETAILS"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
-        <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/contact_small_padding"
-            android:paddingBottom="@dimen/contact_small_padding"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Are you on ART"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/art_treatment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-
-
-
-
-
-
-
             <LinearLayout
                 android:id="@+id/artLayout"
                 android:layout_width="match_parent"
@@ -270,7 +134,49 @@
 
             </LinearLayout>
 
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Entry Point"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/entry_point"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
         </LinearLayout>
+
+
         <TextView
             android:id="@+id/overview_section_header3"
             android:layout_width="match_parent"
@@ -281,12 +187,119 @@
             android:paddingTop="@dimen/contact_drawable_padding"
             android:paddingBottom="@dimen/contact_drawable_padding"
             android:singleLine="true"
-            android:text="History"
+            android:text="CASE WORKER DETAILS AND HISTORY"
             android:textAllCaps="true"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Case Worker Name"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/caseworker_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    android:text="Not set"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:text="Caseworker Phone"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    android:text="Not set"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="Implementing Partner"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/implementing_partner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:text="Not set"
+                />
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -306,73 +319,42 @@
 
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/edited_by"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:text="Not set"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:text="Caseworker Phone"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color" />
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/phone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:text="Not set"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:text="Date Last Edited"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color" />
-
-            <TextView
-                android:layout_weight="1"
                 android:id="@+id/date_edited"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                android:text="Not set"
+                />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="Date Case Created"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/date_case_created"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"

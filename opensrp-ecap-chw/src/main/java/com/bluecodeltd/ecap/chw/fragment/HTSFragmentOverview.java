@@ -33,7 +33,7 @@ public class HTSFragmentOverview extends Fragment {
     private String mParam1;
     private String mParam2;
     View rootView;
-    TextView partner,facility,province, district,art_treatment,artNumber, edited_by,phone,date_edited;
+    TextView facility,partner,testing_modality,artNumber,caseworkerName, entry_point,district,art_treatment, date_edited,phone, date_case_created;
     LinearLayout artLayout;
     public HTSFragmentOverview() {
         // Required empty public constructor
@@ -70,30 +70,38 @@ public class HTSFragmentOverview extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_h_t_s_overview, container, false);
-        partner = rootView.findViewById(R.id.partner);
+
         facility = rootView.findViewById(R.id.facility);
-        province = rootView.findViewById(R.id.province);
-        district = rootView.findViewById(R.id.district);
-        art_treatment = rootView.findViewById(R.id.art_treatment);
+        testing_modality = rootView.findViewById(R.id.testing_modality);
         artNumber = rootView.findViewById(R.id.art_number);
-        edited_by = rootView.findViewById(R.id.edited_by);
+        entry_point = rootView.findViewById(R.id.entry_point);
+        caseworkerName = rootView.findViewById(R.id.caseworker_name);
         phone = rootView.findViewById(R.id.phone);
+        partner = rootView.findViewById(R.id.implementing_partner);
         date_edited = rootView.findViewById(R.id.date_edited);
+        date_case_created = rootView.findViewById(R.id.date_case_created);
         artLayout = rootView.findViewById(R.id.artLayout);
+
+
 
         SharedPreferences caseWorkDetails = PreferenceManager.getDefaultSharedPreferences(getContext());
         // Inflate the layout for this fragment
         HashMap<String, HIVTestingServiceModel> mymap = ((HTSDetailsActivity) requireActivity()).getLinkID();
         HIVTestingServiceModel htsModel = mymap.get("client");
 
-        partner.setText(htsModel.getImplementing_partner());
-        facility.setText(caseWorkDetails.getString("facility", "Anonymous"));
-        province.setText(htsModel.getProvince());
-        district.setText(htsModel.getDistrict());
-        artNumber.setText(htsModel.getArt_number());
-        phone.setText(caseWorkDetails.getString("phone", "Anonymous"));
+if(htsModel.getTesting_modality() != null && htsModel.getTesting_modality().equals("Other Community")){
+    artLayout.setVisibility(View.GONE);
+}
+        facility.setText(caseWorkDetails.getString("facility", "Anonymous") != null ? caseWorkDetails.getString("facility", "Anonymous") : "Not Set");
+        testing_modality.setText(htsModel.getTesting_modality() != null ? htsModel.getTesting_modality() : "Not Set");
+        artNumber.setText(htsModel.getArt_number() != null ? htsModel.getArt_number() : "Not Set");
+        entry_point.setText(htsModel.getEntry_point() != null ? htsModel.getEntry_point() : "Not Set");
+        caseworkerName.setText(htsModel.getCaseworker_name() != null ? htsModel.getCaseworker_name() : "Not Set");
+        phone.setText(caseWorkDetails.getString("phone", "Anonymous") != null ? caseWorkDetails.getString("phone", "Anonymous") : "Not Set");
+        partner.setText(htsModel.getImplementing_partner() != null ? htsModel.getImplementing_partner() : "Not Set");
+        date_edited.setText(htsModel.getDate_edited() != null ? htsModel.getDate_edited() : "Not Set");
+        date_case_created.setText(htsModel.getDate_client_created() != null ? htsModel.getDate_client_created() : "Not Set");
 
-        artLayout.setVisibility(View.GONE);
 
 
         return rootView;
