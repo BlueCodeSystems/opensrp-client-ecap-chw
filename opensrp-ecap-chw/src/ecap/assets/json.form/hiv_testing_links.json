@@ -360,7 +360,14 @@
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "art_date_initiated",
@@ -372,7 +379,14 @@
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "comment",

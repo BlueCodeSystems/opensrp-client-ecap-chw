@@ -19,12 +19,96 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Entry Point"
+                android:text="Date Linked"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/entry_point"
+                android:id="@+id/date_linked"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Sub Population"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/sub_population"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="age"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/age"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Relationship"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/relationship"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Current Address"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/current_address"
                 android:layout_weight="1"
                 android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
                 android:layout_width="0dip"
@@ -144,6 +228,78 @@
 
             <TextView
                 android:id="@+id/initial_art_date"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Comment"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/comment"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Case Worker Name"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/caseworker_name"
+                android:layout_weight="1"
+                android:text="yhs dgbdfbhdh"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Checked By"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/checked_by"
                 android:layout_weight="1"
                 android:text="yhs dgbdfbhdh"
                 android:layout_width="0dip"

@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -119,54 +118,81 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
     private void showCustomDialog(HTSlinksModel client) {
 
         android.view.View dialogView = LayoutInflater.from(context).inflate(R.layout.hts_links_details, null);
-        final TextView entry_point,hiv_status,date_tested,test_results,date_enrolled_on_ART,initial_art_date;
+//        final TextView expandable, date_linked, sub_population, age, relationship, current_address, hiv_status, date_tested, test_results, enrolled_on_ARTLayout, date_enrolled_on_ART, initial_artLayout, initial_art_date, comment, caseworker_name, checked_by;
+
+
         LinearLayout  initial_artLayout,enrolled_on_ARTLayout;
-        entry_point = dialogView.findViewById(R.id.entry_point);
-        hiv_status = dialogView.findViewById(R.id.hiv_status);
-        date_tested = dialogView.findViewById(R.id.date_tested);
-        test_results = dialogView.findViewById(R.id.test_results);
-        date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
-        initial_art_date = dialogView.findViewById(R.id.initial_art_date);
-        initial_artLayout = dialogView.findViewById(R.id.initial_artLayout);
+
+        TextView date_linked = dialogView.findViewById(R.id.date_linked);
+        TextView sub_population = dialogView.findViewById(R.id.sub_population);
+        TextView age = dialogView.findViewById(R.id.age);
+        TextView relationship = dialogView.findViewById(R.id.relationship);
+        TextView current_address = dialogView.findViewById(R.id.current_address);
+        TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
+        TextView date_tested = dialogView.findViewById(R.id.date_tested);
+        TextView test_results = dialogView.findViewById(R.id.test_results);
+        TextView date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
+        TextView initial_art_date = dialogView.findViewById(R.id.initial_art_date);
+        TextView comment = dialogView.findViewById(R.id.comment);
+        TextView caseworker_name = dialogView.findViewById(R.id.caseworker_name);
+        TextView checked_by = dialogView.findViewById(R.id.checked_by);
+
         enrolled_on_ARTLayout = dialogView.findViewById(R.id.enrolled_on_ARTLayout);
+        initial_artLayout = dialogView.findViewById(R.id.initial_artLayout);
 
         if (client != null) {
-            if(client.getHiv_status().equals("known positive") || client.getHiv_result().equals("Newly Tested HIV+")){
+            if (client.getHiv_status() != null && client.getHiv_status().equals("positive") ||
+                    client.getHiv_result() != null && client.getHiv_result().equals("positive")) {
                 initial_artLayout.setVisibility(android.view.View.VISIBLE);
                 enrolled_on_ARTLayout.setVisibility(android.view.View.VISIBLE);
             }
 
+            String datLinked = client.getDate_linked();
+            date_linked.setText(datLinked != null ? datLinked : "Not Set");
 
-            if (hiv_status != null) {
-                String hivStatusValue = client.getHiv_status();
-                hiv_status.setText(hivStatusValue != null ? hivStatusValue : "");
-            }
+            String subPopulation = client.getSub_population();
+           String  str = subPopulation.replace("\"", "").replace("[", "").replace("]", "").replace(",", ", ");
+            sub_population.setText(str  != null ? str  : "Not Set");
 
-            if (date_tested != null) {
-                String dateTestedValue = client.getDate_tested();
-                date_tested.setText(dateTestedValue != null ? dateTestedValue : "");
-            }
+            String linkAge = getAgeWithoutText(client.getBirthdate());
+            age.setText(linkAge != null ? linkAge : "Not Set");
 
-            if (test_results != null) {
-                String testResultsValue = client.getHiv_result();
-                test_results.setText(testResultsValue != null ? testResultsValue : "");
-            }
+            String relation = client.getRelationship();
+            relationship.setText(relation != null ? relation : "Not Set");
 
-            if (date_enrolled_on_ART != null) {
-                String dateEnrolledOnARTValue = client.getArt_date();
-                date_enrolled_on_ART.setText(dateEnrolledOnARTValue != null ? dateEnrolledOnARTValue : "");
-            }
+            String address = client.getAddress();
+            current_address.setText(address != null ? address : "Not Set");
 
-            if (initial_art_date != null) {
-                String initialArtDateValue = client.getArt_date_initiated();
-                initial_art_date.setText(initialArtDateValue != null ? initialArtDateValue : "");
-            }
+            String comments = client.getComment();
+            comment.setText(comments != null ? comments : "Not Set");
+
+            String caseWorker = client.getCaseworker_name();
+            caseworker_name.setText(caseWorker != null ? caseWorker : "Not Set");
+
+            String checkedBy = client.getChecked_by();
+            checked_by.setText(checkedBy != null ? checkedBy : "Not Set");
+
+            String hivStatusValue = client.getHiv_status();
+            hiv_status.setText(hivStatusValue != null ? hivStatusValue : "Not Set");
+
+            String dateTestedValue = client.getDate_tested();
+            date_tested.setText(dateTestedValue != null ? dateTestedValue : "Not Set");
+
+            String testResultsValue = client.getHiv_result();
+            test_results.setText(testResultsValue != null ? testResultsValue : "Not Set");
+
+            String dateEnrolledOnARTValue = client.getArt_date();
+            date_enrolled_on_ART.setText(dateEnrolledOnARTValue != null ? dateEnrolledOnARTValue : "Not Set");
+
+            String initialArtDateValue = client.getArt_date_initiated();
+            initial_art_date.setText(initialArtDateValue != null ? initialArtDateValue : "Not Set");
+
+
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(dialogView);
 
-        // Custom title
         TextView title = new TextView(context);
         title.setText(client.getFirst_name()+" "+client.getLast_name()+" details");
         title.setBackgroundColor(Color.DKGRAY);
@@ -176,12 +202,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         title.setTextSize(20);
         builder.setCustomTitle(title);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
