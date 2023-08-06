@@ -19,6 +19,7 @@ public class HIVTestingServiceModel {
     private String birthdate;
     private String entry_point;
     private String delete_status;
+    private String date_edited;
     private String date_client_created;
 
 
@@ -164,6 +165,14 @@ public class HIVTestingServiceModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
     }
 
     public String getDate_client_created() {

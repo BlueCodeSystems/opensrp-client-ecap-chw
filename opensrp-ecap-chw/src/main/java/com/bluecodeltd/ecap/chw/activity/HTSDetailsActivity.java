@@ -187,6 +187,11 @@ public class HTSDetailsActivity extends AppCompatActivity {
         txtAge = findViewById(R.id.vca_age);
         txtChildid = findViewById(R.id.childid);
 
+        if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
+            txtAge.setVisibility(View.GONE);
+            txtGender.setVisibility(View.GONE);
+        }
+
 
         if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
             txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
@@ -200,7 +205,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
             }
 
         if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
-            txtAge.setText(getAge(hivTestingServiceModel.getBirthdate()));
+            txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
             //vcaAge = getAgeWithoutText(birthdate);
 
         } else {
