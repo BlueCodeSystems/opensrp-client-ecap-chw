@@ -7477,6 +7477,14 @@
           }
         },
         {
+
+          "column_name": "other_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_relationship"
+          }
+        },
+        {
           "column_name": "address",
           "type": "Client",
           "json_mapping": {

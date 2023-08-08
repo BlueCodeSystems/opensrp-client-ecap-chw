@@ -10,7 +10,7 @@ import java.util.List;
 public class HTSLinksDao extends AbstractDao {
     public static int htsCount(String clientID){
 
-        String sql = "SELECT COUNT(*) AS htsCount FROM FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' AND (delete_status IS NULL OR delete_status <> '1') ";
+        String sql = "SELECT COUNT(*) AS htsCount FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' AND (delete_status IS NULL OR delete_status <> '1') ";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "htsCount");
 
@@ -47,6 +47,7 @@ public class HTSLinksDao extends AbstractDao {
             record.setSub_population(getCursorValue(c, "sub_population"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
             record.setRelationship(getCursorValue(c, "relationship"));
+            record.setOther_relationship(getCursorValue(c, "other_relationship"));
             record.setAddress(getCursorValue(c, "address"));
             record.setHiv_status(getCursorValue(c, "hiv_status"));
             record.setDate_tested(getCursorValue(c, "date_tested"));

@@ -12,6 +12,7 @@ public class HTSlinksModel {
     private String sub_population;
     private String birthdate;
     private String relationship;
+    private String other_relationship;
     private String address;
     private String hiv_status;
     private String date_tested;
@@ -111,6 +112,14 @@ public class HTSlinksModel {
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
+    }
+
+    public String getOther_relationship() {
+        return other_relationship;
+    }
+
+    public void setOther_relationship(String other_relationship) {
+        this.other_relationship = other_relationship;
     }
 
     public String getAddress() {
