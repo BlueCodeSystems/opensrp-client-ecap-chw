@@ -7261,6 +7261,13 @@
           }
         },
         {
+          "column_name": "last_interacted_with",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.last_interacted_with"
+          }
+        },
+        {
           "column_name": "caseworker_name",
           "type": "Client",
           "json_mapping": {
