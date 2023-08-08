@@ -122,7 +122,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
-    private TextView htsCount,visitTabCount, plansTabCount;
+    private TextView htsCount,visitTabCount, plansTabCount, genderSpacer,ageSpacer;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     private UniqueIdRepository uniqueIdRepository;
@@ -149,7 +149,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     TabLayout tabLayout;
     private Dialog dimDialog;
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,10 +186,13 @@ public class HTSDetailsActivity extends AppCompatActivity {
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
         txtChildid = findViewById(R.id.childid);
-
+        genderSpacer = findViewById(R.id.gender_spacer);
+        ageSpacer = findViewById(R.id.age_spacer);
         if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
             txtAge.setVisibility(View.GONE);
             txtGender.setVisibility(View.GONE);
+            genderSpacer.setVisibility(View.GONE);
+            ageSpacer.setVisibility(View.GONE);
         }
 
 
