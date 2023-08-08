@@ -3,7 +3,6 @@ package com.bluecodeltd.ecap.chw.application;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.application.CoreChwApplication;
-import org.smartregister.chw.core.utils.ChildDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
 
@@ -257,7 +256,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.EC_CLIENT_INDEX, Constants.EcapClientTable.EC_MOTHER_INDEX, CoreConstants.TABLE_NAME.EC_HOUSEHOLD};
+        return new String[]{CoreConstants.TABLE_NAME.EC_CLIENT_INDEX, Constants.EcapClientTable.EC_MOTHER_INDEX, CoreConstants.TABLE_NAME.EC_HOUSEHOLD, Constants.EcapClientTable.EC_HIV_TESTING_SERVICE};
     }
 
     @Override
@@ -286,6 +285,14 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "index_check_box",
                 "caregiver_name",
                 "hid"
+        });
+
+        map.put(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                "first_name",
+                "middle_name",
+                "last_name",
+                "client_number"
         });
         return map;
     }
@@ -316,6 +323,15 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "caregiver_name",
                 "hid"
         });
+
+        map.put(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                "first_name",
+                "middle_name",
+                "last_name",
+                "client_number"
+        });
+
         return map;
     }
 
