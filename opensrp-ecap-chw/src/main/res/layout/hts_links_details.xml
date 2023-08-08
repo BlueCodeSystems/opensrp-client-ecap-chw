@@ -19,7 +19,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Date Linked"
+                android:text="Date Linked:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -40,7 +40,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Sub Population"
+                android:text="Sub Population:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -61,7 +61,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="age"
+                android:text="Age:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Relationship"
+                android:text="Relationship:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -103,7 +103,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Current Address"
+                android:text="Current Address:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -126,7 +126,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Current HIV Status"
+                android:text="Current HIV Status:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -149,7 +149,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Date Tested"
+                android:text="Date Tested:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -174,7 +174,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="HIV Testing Resuits"
+                android:text="HIV Testing Resuits:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -198,7 +198,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Date Enrolled on ART"
+                android:text="Date Enrolled on ART:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -222,7 +222,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Date Initiated on ART"
+                android:text="Date Initiated on ART:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -246,7 +246,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Comment"
+                android:text="Comment:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -270,7 +270,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Case Worker Name"
+                android:text="Case Worker Name:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 
@@ -294,7 +294,7 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Checked By"
+                android:text="Checked By:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 

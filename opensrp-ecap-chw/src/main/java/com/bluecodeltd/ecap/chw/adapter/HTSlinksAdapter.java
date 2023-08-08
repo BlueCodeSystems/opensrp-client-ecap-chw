@@ -151,7 +151,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             date_linked.setText(datLinked != null ? datLinked : "Not Set");
 
             String subPopulation = client.getSub_population();
-           String  str = subPopulation.replace("\"", "").replace("[", "").replace("]", "").replace(",", ", ");
+            String str = subPopulation.replace("\"", "").replace("[", "").replace("]", "").replace(",", ",\n");
             sub_population.setText(str  != null ? str  : "Not Set");
 
             String linkAge = getAgeWithoutText(client.getBirthdate());
@@ -302,7 +302,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType) {
 
         Runnable runnable = () -> {
 
@@ -357,4 +357,6 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
     private ECSyncHelper getECSyncHelper() {
         return ChwApplication.getInstance().getEcSyncHelper();
     }
+
+
 }
