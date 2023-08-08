@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -227,6 +228,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 //        updateTasksTabTitle();
         returnViewPager();
+        updateTasksTabTitle();
+
     }
     public void animateFAB(){
 
@@ -888,7 +891,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 //                populateCaseworkerPhoneAndName(formToBeOpened);
                 JSONObject clientNumber = getFieldJSONObject(fields(formToBeOpened, "step1"), "client_number");
                 JSONObject dateLinked = getFieldJSONObject(fields(formToBeOpened, "step1"), "date_linked");
-                JSONObject gender = getFieldJSONObject(fields(formToBeOpened, "step1"), "gender");
+                JSONObject caseWorkerName = getFieldJSONObject(fields(formToBeOpened, "step1"), "caseworker_name");
 
                 if (clientNumber  != null) {
                     clientNumber .remove(JsonFormUtils.VALUE);
@@ -902,6 +905,14 @@ public class HTSDetailsActivity extends AppCompatActivity {
                     dateLinked.remove(JsonFormUtils.VALUE);
                     try {
                         dateLinked.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (caseWorkerName  != null) {
+                    caseWorkerName.remove(JsonFormUtils.VALUE);
+                    try {
+                        caseWorkerName.put(JsonFormUtils.VALUE,hivTestingServiceModel.getCaseworker_name());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1115,15 +1126,24 @@ public class HTSDetailsActivity extends AppCompatActivity {
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
-        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.hts_title);
-        visitTabTitle.setText("HTS Links");
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
+        visitTabTitle.setText("HTS LINKS");
         htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
 
         int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());
 
         htsCount.setText(String.valueOf(htsLinks));
 
-        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
+        if ( tabLayout != null) {
+            TabLayout.Tab tab =  tabLayout.getTabAt(1);
+            if (tab != null) {
+                tab.setCustomView(taskTabTitleLayout);
+            } else {
+                Log.e("HTSDetailsActivity", "Error");
+            }
+        } else {
+            Log.e("HTSDetailsActivity", "mTabLayout is null");
+        }
     }
 
     public void buildDialog(){

@@ -215,17 +215,46 @@
         "openmrs_entity_id": "relationship",
         "type": "spinner",
         "hint": "Relationship to Index/SNS index",
+        "keys": [
+          "Mother",
+          "Father",
+          "Husband",
+          "Wife",
+          "Sister",
+          "Cousin",
+          "Other"
+        ],
         "values": [
           "Mother",
           "Father",
           "Husband",
           "Wife",
           "Sister",
-          "Cousin"
+          "Cousin",
+          "Other"
         ],
         "v_required": {
           "value": "true",
           "err": "Select relationship"
+        }
+      },
+      {
+        "key": "other_relationship",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_relationship",
+        "type": "edit_text",
+        "hint": "Other Relationship",
+        "read_only": "false",
+        "v_required": {
+          "value": "true",
+          "err": "Enter Other Relationship"
+        },
+        "relevance": {
+          "step1:relationship": {
+            "type": "string",
+            "ex": "equalTo(., \"Other\")"
+          }
         }
       },
       {
@@ -402,6 +431,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
+        "read_only": "true",
         "hint": "Case Worker Name"
       },
       {
