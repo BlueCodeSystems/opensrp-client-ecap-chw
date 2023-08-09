@@ -30,6 +30,7 @@
                         android:id="@+id/toolbarx"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
+                        android:background="#003060"
                         app:theme="@style/ThemeOverlay.AppCompat.Light"
                         app:layout_collapseMode="pin" />
 
@@ -41,7 +42,8 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         app:layout_collapseMode="parallax"
-                        app:layout_collapseParallaxMultiplier="1.5">
+                        app:layout_collapseParallaxMultiplier="1.5"
+                        android:background="#003060">
 
 
 
@@ -212,6 +214,7 @@
                     app:tabMaxWidth="0dp"
                     app:tabMode="fixed"
                     app:tabSelectedTextColor="@color/white"
+                    android:background="#003060"
                     app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
 
             </com.google.android.material.appbar.AppBarLayout>
