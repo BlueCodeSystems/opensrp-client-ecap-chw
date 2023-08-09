@@ -7261,6 +7261,27 @@
           }
         },
         {
+          "column_name": "last_interacted_with",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.last_interacted_with"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
           "column_name": "implementing_partner",
           "type": "Client",
           "json_mapping": {
@@ -7275,17 +7296,17 @@
           }
         },
         {
-          "column_name": "province",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.stateProvince"
-          }
-        },
-        {
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.countyDistrict"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stateProvince"
           }
         },
         {
@@ -7303,59 +7324,127 @@
           }
         },
         {
-          "column_name": "case_name",
+          "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_name"
+            "field": "attributes.first_name"
           }
         },
         {
-          "column_name": "caseName_on_art",
+          "column_name": "middle_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caseName_on_art"
+            "field": "attributes.middle_name"
           }
         },
         {
-          "column_name": "artNumber_for_caseName",
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "art_number",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.art_number"
           }
         },
         {
-          "column_name": "case_snn_gender",
+          "column_name": "gender",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_snn_gender"
+            "field": "attributes.gender"
           }
         },
         {
-          "column_name": "case_snn_birthdate",
+          "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.birthdate"
           }
         },
         {
-          "column_name": "case_snn_entry_point",
+          "column_name": "entry_point",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.entry_point"
           }
         },
         {
-          "column_name": "case_snn_house_number",
+          "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.house_number"
+            "field": "attributes.delete_status"
           }
         },
         {
-          "column_name": "individual_tested",
+          "column_name": "date_client_created",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.individual_tested"
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_hiv_testing_links",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "client_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_number"
+          }
+        },
+        {
+          "column_name": "date_linked",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_linked"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "middle_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.middle_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
           }
         },
         {
@@ -7373,21 +7462,30 @@
           }
         },
         {
-          "column_name": "individual_index_SNS_birthdate",
+          "column_name": "birthdate",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.birthdate"
           }
         },
         {
-          "column_name": "index_sns_relationship",
+
+          "column_name": "relationship",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.relationship"
           }
         },
         {
-          "column_name": "current_address_landmarks",
+
+          "column_name": "other_relationship",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_relationship"
+          }
+        },
+        {
+          "column_name": "address",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.address"
@@ -7398,14 +7496,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.hiv_status"
-          }
-        },
-
-        {
-          "column_name": "client_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.client_number"
           }
         },
         {
@@ -7433,7 +7523,7 @@
           "column_name": "hiv_recent_test",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.result"
+            "field": "attributes.hiv_recent_test"
           }
         },
         {
@@ -7469,6 +7559,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.checked_by"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
