@@ -189,7 +189,7 @@ public class HouseholdOverviewFragment extends Fragment {
         {
             txtEdited_by.setText(edited_by);
         }
-        if(house.getCaregiver_hiv_status().equals("negative")){
+        if(house.getCaregiver_hiv_status() != null && house.getCaregiver_hiv_status().equals("negative")){
          relativeLayout.setVisibility(View.GONE);
          layout.setVisibility(View.GONE);
         }
@@ -197,17 +197,15 @@ public class HouseholdOverviewFragment extends Fragment {
             layout.setVisibility(View.VISIBLE);
         });
 
-            txtOnART.setText(house.getActive_on_treatment());
-            txtArtNumber.setText(house.getCaregiver_art_number());
-            txtDateStartedArt.setText(house.getDate_started_art());
-            txtVlLastDate.setText(house.getDate_of_last_viral_load());
-            txtNextVl.setText(house.getDate_next_vl());
-            txtVlResult.setText(house.getViral_load_results());
-            txtIsSuppressed.setText(house.getVl_suppressed());
-            txtIsMMD.setText(house.getCaregiver_mmd());
-            txtLevelMMD.setText(house.getLevel_mmd());
-
-
+        txtOnART.setText(house.getActive_on_treatment() != null ? house.getActive_on_treatment() : "Not Set");
+        txtArtNumber.setText(house.getCaregiver_art_number() != null ? house.getCaregiver_art_number() : "Not Set");
+        txtDateStartedArt.setText(house.getDate_started_art() != null ? house.getDate_started_art() : "Not Set");
+        txtVlLastDate.setText(house.getDate_of_last_viral_load() != null ? house.getDate_of_last_viral_load() : "Not Set");
+        txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
+        txtVlResult.setText(house.getViral_load_results() != null ? house.getViral_load_results() : "Not Set");
+        txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
+        txtIsMMD.setText(house.getCaregiver_mmd() != null ? house.getCaregiver_mmd() : "Not Set");
+        txtLevelMMD.setText(house.getLevel_mmd() != null ? house.getLevel_mmd() : "Not Set");
 
 
         List<HouseholdServiceReportModel> serviceModels = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());

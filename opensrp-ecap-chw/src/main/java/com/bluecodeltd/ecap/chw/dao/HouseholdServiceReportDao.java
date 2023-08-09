@@ -24,13 +24,8 @@ public class HouseholdServiceReportDao extends AbstractDao {
     }
     public static List<HouseholdServiceReportModel> getRecentVLServicesByHousehold(String householdId) {
 
-        String sql = "SELECT service.is_hiv_positive, service.date, service.vl_last_result, service.level_mmd, service.caregiver_mmd, service.household_id\n" +
-                "FROM (\n" +
-                "    SELECT is_hiv_positive, level_mmd, vl_last_result, caregiver_mmd, date, household_id,delete_status,\n" +
-                "           ROW_NUMBER() OVER (PARTITION BY household_id ORDER BY date DESC) as rn\n" +
-                "    FROM ec_household_service_report\n" +
-                ") service\n" +
-                "WHERE service.rn = 1  AND household_id = '" + householdId + "' AND  (service.delete_status IS NULL OR service.delete_status <> '1')";
+        String sql = "SELECT is_hiv_positive, date, vl_last_result, level_mmd, caregiver_mmd,household_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+                "\t\t\t\tFROM ec_household_service_report WHERE  household_id = '" + householdId + "' AND  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC LIMIT 1";
 
         List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)

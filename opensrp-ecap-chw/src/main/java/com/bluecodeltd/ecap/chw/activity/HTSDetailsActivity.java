@@ -11,18 +11,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,30 +30,28 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
+import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
-import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.ReferralDao;
-import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
-import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
-import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.HIVTestingServiceDao;
+import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
-import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
+import com.bluecodeltd.ecap.chw.fragment.HTSFragmentOverview;
+import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.HIVTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
@@ -101,6 +94,7 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -110,7 +104,7 @@ import java.util.Map;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class IndexDetailsActivity extends AppCompatActivity {
+public class HTSDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
@@ -119,17 +113,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
-
+    public String clientId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
+    private RelativeLayout txtScreening, addIndexClients, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
+
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
-    private TextView visitTabCount, plansTabCount;
+    private TextView htsCount,visitTabCount, plansTabCount, genderSpacer,ageSpacer;
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     private UniqueIdRepository uniqueIdRepository;
@@ -145,139 +139,129 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
-
+    HIVTestingServiceModel hivTestingServiceModel;
+    String full_name = "";
+    String birthdate = "";
 
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
 
-    @SuppressLint("RestrictedApi")
+    private ViewPager viewPager;
+    TabLayout tabLayout;
+    private Dialog dimDialog;
+
+    @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vca_content);
+        setContentView(R.layout.hts_profile);
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
+        toolbar.getOverflowIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
 
-        builder = new AlertDialog.Builder(IndexDetailsActivity.this);
-        screeningBuilder = new AlertDialog.Builder(IndexDetailsActivity.this);
-
-        childId = getIntent().getExtras().getString("Child");
-        String hhIntent = getIntent().getExtras().getString("fromHousehold");
-        if(hhIntent == null){
-            hhIntent = getIntent().getExtras().getString("fromIndex");
-        }
-
-        indexVCA = VCAScreeningDao.getVcaScreening(childId);
-        child = IndexPersonDao.getChildByBaseId(childId);
-        gender = indexVCA.getGender();
-        uniqueId = indexVCA.getUnique_id();
-
-        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
-        is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
-
+        fab = findViewById(R.id.fab);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
         fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
         fabReferal = findViewById(R.id.refer_to_facility_fab);
         fabCasePlan =  findViewById(R.id.case_plan_fab);
         fabAssessment = findViewById(R.id.fabAssessment);
-
-        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
-        referralModel = ReferralDao.getReferral(childId);
-        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
-        hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
-        vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
-        vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
-        weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
-
-
-
-        oMapper = new ObjectMapper();
-        clientMapper = new ObjectMapper();
-
-        if(vcaAssessmentModel == null){
-            fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-
-        if(referralModel == null){
-            fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-        if(hivRiskAssessmentUnder15Model == null){
-            fabHiv.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-        if(hivRiskAssessmentAbove15Model == null){
-            fabHiv2.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-        if(vcaVisitationModel == null){
-            fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-        if(vcaCasePlanModel == null){
-            fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-
-        if( gender != null && gender.equals("male")){
-
-            toolbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
-            myAppbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
-
-        } else {
-
-            toolbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
-            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
-
-        }
-
-
-        fab = findViewById(R.id.fab);
-        if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
-            fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-        } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-            fab.setVisibility(View.INVISIBLE);
-        }
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-
         txtScreening = findViewById(R.id.vca_screening);
-        rassessment = findViewById(R.id.assessment);
-        rcase_plan = findViewById(R.id.case_plan);
-        referral = findViewById(R.id.referral);
-        household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
-
-
-
-        hiv_assessment = findViewById(R.id.hiv_assessment);
-        hiv_assessment2 = findViewById(R.id.hiv_assessment2);
-        childPlan = findViewById(R.id.childPlan);
-        weServicesVca = findViewById(R.id.we_services_vca);
+        addIndexClients = findViewById(R.id.assessment);
+//        builder = new AlertDialog.Builder(HTSDetailsActivity.this);
+//        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
+//
+        clientId = getIntent().getExtras().getString("client_id");
+        hivTestingServiceModel = HIVTestingServiceDao.getHivServiceClient(clientId);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
         txtAge = findViewById(R.id.vca_age);
         txtChildid = findViewById(R.id.childid);
+        genderSpacer = findViewById(R.id.gender_spacer);
+        ageSpacer = findViewById(R.id.age_spacer);
+        if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
+            txtAge.setVisibility(View.GONE);
+            txtGender.setVisibility(View.GONE);
+            genderSpacer.setVisibility(View.GONE);
+            ageSpacer.setVisibility(View.GONE);
+        }
 
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
 
-        setupViewPager();
-        updateVisitsTabTitle();
-        updatePlanTabTitle();
+        if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
+            txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
+        }
 
-        int page = getIntent().getIntExtra("tab",0);
-        mViewPager.setCurrentItem(page);
 
-createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
+        if (hivTestingServiceModel != null && hivTestingServiceModel.getFirst_name() != null && hivTestingServiceModel.getLast_name() != null)
+        {
+            full_name = hivTestingServiceModel.getFirst_name() + " " + hivTestingServiceModel.getLast_name();
+        txtName.setText(full_name);
+            }
 
+        if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
+            txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
+            //vcaAge = getAgeWithoutText(birthdate);
+
+        } else {
+            txtAge.setText("Not Set");
+        }
+
+        if (clientId != null && !clientId.isEmpty()){
+            txtChildid.setText("ID : " + clientId);
+        }
+
+        oMapper = new ObjectMapper();
+        clientMapper = new ObjectMapper();
+
+
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tabs);
+//        updateTasksTabTitle();
+        returnViewPager();
+        updateTasksTabTitle();
+
+    }
+    public void animateFAB(){
+
+
+        if (isFabOpen){
+
+            closeFab();
+        } else {
+
+            isFabOpen = true;
+            fab.startAnimation(rotate_forward);
+            txtScreening.setVisibility(View.VISIBLE);
+            addIndexClients.setVisibility(View.VISIBLE);
+        }
 
     }
 
+    public void closeFab(){
+        fab.startAnimation(rotate_backward);
+        isFabOpen = false;
+        txtScreening.setVisibility(View.GONE);
+        addIndexClients.setVisibility(View.GONE);
+//        rcase_plan.setVisibility(View.GONE);
+//        referral.setVisibility(View.GONE);
+//        household_visitation_for_vca.setVisibility(View.GONE);
+//        hiv_assessment.setVisibility(View.GONE);
+//        hiv_assessment2.setVisibility(View.GONE);
+//        childPlan.setVisibility(View.GONE);
+//        weServicesVca.setVisibility(View.GONE);
+
+
+    }
 
     public HashMap<String, Child> getData() {
         String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
@@ -292,7 +276,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtAge.setText("Not Set");
         }
 
-        txtName.setText(full_name);
+
         txtGender.setText(gender.toUpperCase());
         txtChildid.setText("ID : " + indexVCA.getUnique_id());
 
@@ -303,7 +287,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return map;
 
     }
+    public HashMap<String, HIVTestingServiceModel> getLinkID() {
 
+        HashMap<String, HIVTestingServiceModel> map = new HashMap<>();
+
+        map.put("client",hivTestingServiceModel);
+
+        return map;
+
+    }
 
     public int calculateAge(String dateOfBirth) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -420,20 +412,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         switch (id){
             case R.id.fab:
-                if(child.getCase_status() != null && (child.getCase_status().equals("0") || child.getCase_status().equals("2"))){
-                    showDeregisteredStatus();
-                } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-               fab.setVisibility(View.INVISIBLE);
-            } else {
+
                     animateFAB();
-                }
                 break;
 
                 case R.id.vca_screening:
 
                     try {
 
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
+                        openFormUsingFormUtils(HTSDetailsActivity.this,"hiv_testing_service");
                     } catch (JSONException e) {
                         e.printStackTrace();
                    }
@@ -442,146 +429,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
             case R.id.assessment:
-
-                if(indexVCA.getDate_screened() != null){
                     try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-
-                break;
-            case R.id.case_plan:
-
-                if(indexVCA.getDate_screened() != null){
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-                break;
-            case R.id.referral:
-
-                if(indexVCA.getDate_screened() != null){
-
-                    try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
-
+                        openFormUsingFormUtils(HTSDetailsActivity.this,"hiv_testing_links");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-
-                break;
-
-            case R.id.myservice:
-
-                if(indexVCA.getDate_screened() != null) {
-
-                    Intent intent2 = new Intent(this, VcaServiceActivity.class);
-                    intent2.putExtra("hh_id", indexVCA.getHousehold_id());
-                    intent2.putExtra("vcaid", indexVCA.getUnique_id());
-                    intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
-                    intent2.putExtra("vcaname", txtName.getText().toString());
-                    startActivity(intent2);
-                }
-                else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-            case R.id.show_referrals:
-
-
-                Intent showReferrals = new Intent(IndexDetailsActivity.this, ShowReferralsActivity.class);
-                    Bundle referral = new Bundle();
-                    referral.putString("childId",child.getUnique_id());
-                    referral.putString("name",child.getAdolescent_first_name()+ "  " +child.getAdolescent_last_name());
-                    showReferrals.putExtras(referral);
-//                    referral.putString("date",child.getDate_referred());
-//                showReferrals.putExtra("childId",  child.getUnique_id());
-//                showReferrals.putExtra("householdId",  child.getHousehold_id());
-                // intent.putExtra("household",  child.getHousehold_id());
-
-                startActivity(showReferrals);
-
-
-                break;
-
-            case R.id.household_profile:
-
-
-            Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getUnique_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
-           // intent.putExtra("household",  child.getHousehold_id());
-
-            startActivity(intent);
-
-
-                break;
-
-            case R.id.household_visitation_for_vca:
-
-                if(indexVCA.getDate_screened() != null) {
-                    try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-
-
-                break;
-
-            case R.id.hiv_assessment:
-
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
-                } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-
-            case R.id.hiv_assessment2:
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
-                }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-
-            case R.id.we_services_vca:
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
-                }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
-                break;
-            case R.id.childPlan:
-                Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
-                i.putExtra("vca_id", indexVCA.getUnique_id());
-                i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
-                startActivity(i);
-                finish();
                 break;
 
         }
@@ -639,6 +492,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     case "VCA Assessment":
                     case "HIV Risk Assessment Above 15":
                     case "HIV Risk Assessment Below 15":
+                    case "HIV Testing Links":
+                    case "HIV Testing Service":
 
                         finish();
                         startActivity(getIntent());
@@ -655,7 +510,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 }
 
-                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                Toasty.success(HTSDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -666,7 +521,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     private void openVcaCasplanToAddVulnarabilities(String dateId) {
-        Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
+        Intent i = new Intent(HTSDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
         i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
@@ -724,156 +579,24 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Member Sub Population":
-                case "Sub Population":
+
+                case "HIV Testing Links":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                                encounterType, Constants.EcapClientTable.EC_HIV_TESTING_LINKS);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
-                case "VCA Case Plan":
+                case "HIV Testing Service":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_VCA_CASE_PLAN);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "Case Worker Service Report":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_SERVICE_REPORT);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-
-                    break;
-
-                case "Referral":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "WE Services VCA":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_WE_SERVICES_VCA);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "VCA Assessment":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_ASSESSMENT);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "Household Visitation For Caregiver":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_CAREGIVER);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "Household Visitation Form 0-20 years":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_VCA);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "HIV Risk Assessment Above 15":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_ABOVE_15);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-                case "HIV Risk Assessment Below 15":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_BELOW_15);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-
-                case "Sub Population Edit":
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
-                    }
-
-                    break;
-
-                case "Case Record Status":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
-                        tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-                        return new ChildIndexEventClient(event, client);
-                    }
-                    break;
-
-                case "Child Safety Plan":
-
-                    if (fields != null) {
-                        FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
+                                encounterType, Constants.EcapClientTable.EC_HIV_TESTING_SERVICE);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -962,12 +685,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         updateRegistration(pair, jsonString, true);
     }
-
     public void updateRegistration(final Pair<Client, Event> pair, final String jsonString, final boolean isEditMode) {
         Runnable runnable = () -> {
             finishUpdate(pair, jsonString, isEditMode);
             appExecutors.mainThread().execute(() -> {
-               Intent i = new Intent(IndexDetailsActivity.this, IndexRegisterActivity.class);
+               Intent i = new Intent(HTSDetailsActivity.this, IndexRegisterActivity.class);
                startActivity(i);
             });
         };
@@ -1024,76 +746,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
-    public void animateFAB(){
 
-
-        if (isFabOpen){
-
-            closeFab();
-        } else {
-
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            txtScreening.setVisibility(View.VISIBLE);
-
-
-            if (is_screened != null && is_screened.equals("true")){
-
-                rcase_plan.setVisibility(View.VISIBLE);
-                referral.setVisibility(View.VISIBLE);
-                household_visitation_for_vca.setVisibility(View.VISIBLE);
-                childPlan.setVisibility(View.VISIBLE);
-
-
-
-                if(indexVCA.getIs_hiv_positive() != null){
-                    rassessment.setVisibility(View.VISIBLE);
-                }
-                if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
-                    hiv_assessment.setVisibility(View.GONE);
-                } else {
-                    if(Integer.parseInt(vcaAge) > 1){
-                        if(Integer.parseInt(vcaAge) < 15){
-                            hiv_assessment.setVisibility(View.VISIBLE);
-                        }
-
-                        if(Integer.parseInt(vcaAge) >= 15){
-                            hiv_assessment2.setVisibility(View.VISIBLE);
-                        }
-
-
-                    }
-                }
-
-
-                if(Integer.parseInt(vcaAge) > 18){
-                    weServicesVca.setVisibility(View.VISIBLE);
-                }
-            }
-            else{
-
-                Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
-
-            }
-        }
-
-    }
-
-    public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        txtScreening.setVisibility(View.GONE);
-        rassessment.setVisibility(View.GONE);
-        rcase_plan.setVisibility(View.GONE);
-        referral.setVisibility(View.GONE);
-        household_visitation_for_vca.setVisibility(View.GONE);
-        hiv_assessment.setVisibility(View.GONE);
-        hiv_assessment2.setVisibility(View.GONE);
-        childPlan.setVisibility(View.GONE);
-        weServicesVca.setVisibility(View.GONE);
-
-
-    }
 
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
@@ -1108,25 +761,21 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
-        formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
+        formToBeOpened.getJSONObject("step1").put("title", hivTestingServiceModel.getFirst_name() != null ? hivTestingServiceModel.getFirst_name() : "" + " " + hivTestingServiceModel.getLast_name() != null ? hivTestingServiceModel.getLast_name() : "" + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
+       // formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", .getUnique_id());
 
         switch (formName) {
 
-            case "case_status":
+            //case "case_status":
             case "vca_screening":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+               // CoreJsonFormUtils.populateJsonForm(formToBeOpened));
                 //Populate Caseworker Name
-                populateCaseworkerPhoneAndName(formToBeOpened);
-
-                if(indexVCA.getIndex_check_box() != null && !indexVCA.getIndex_check_box().equals("1")){
-                    formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
-                    formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
-                }
+                //populateCaseworkerPhoneAndName(formToBeOpened);
 
 
-                formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+//                formToBeOpened.put("entity_id", this.hivTestingServiceModel.getBase_entity_id());
+//                startFormActivity(formToBeOpened);
 
                 break;
 
@@ -1174,8 +823,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case "case_plan":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+//                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
              /*   if(vcaCasePlanModel == null){
 
@@ -1222,113 +871,167 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
+            case "hiv_testing_service":
+
+                formToBeOpened.put("entity_id", this.hivTestingServiceModel.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+                populateCaseworkerPhoneAndName(formToBeOpened);
+                JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
+                if (dateEdited  != null) {
+                    dateEdited.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateEdited.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case "hiv_testing_links":
+//                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+//                populateCaseworkerPhoneAndName(formToBeOpened);
+                JSONObject clientNumber = getFieldJSONObject(fields(formToBeOpened, "step1"), "client_number");
+                JSONObject dateLinked = getFieldJSONObject(fields(formToBeOpened, "step1"), "date_linked");
+                JSONObject caseWorkerName = getFieldJSONObject(fields(formToBeOpened, "step1"), "caseworker_name");
+
+                if (clientNumber  != null) {
+                    clientNumber .remove(JsonFormUtils.VALUE);
+                    try {
+                        clientNumber.put(JsonFormUtils.VALUE, hivTestingServiceModel.getClient_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (dateLinked  != null) {
+                    dateLinked.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateLinked.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (caseWorkerName  != null) {
+                    caseWorkerName.remove(JsonFormUtils.VALUE);
+                    try {
+                        caseWorkerName.put(JsonFormUtils.VALUE,hivTestingServiceModel.getCaseworker_name());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+
 
     }
 
         startFormActivity(formToBeOpened);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
+    private String getFormattedDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return today.format(formatter);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-            switch (item.getItemId()) {
-                case R.id.refresh:
-                    finish();
-                    startActivity(getIntent());
-
-                    break;
-
-                case R.id.call:
-                    String caregiverPhoneNumber = child.getCaregiver_phone();
-                    if (!caregiverPhoneNumber.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-
-                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                        startActivity(callIntent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
-                    }
-
-                return true;
-            case R.id.case_status:
-
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case R.id.delete_record:
-
-                    if(txtGender.getText().toString().equals("MALE")){
-                        gender = "his";
-                    } else {
-                        gender = "her";
-                    }
-
-                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-                    builder.setNegativeButton("NO", (dialog, id) -> {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
-
-                    }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        FormUtils formUtils = null;
-                        try {
-                            formUtils = new FormUtils(this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        child.setDeleted("1");
-                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
-                            try {
-                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
-                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            try {
-
-                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                                if (childIndexEventClient == null) {
-                                    return;
-                                }
-                                saveRegistration(childIndexEventClient,true);
-
-
-                            } catch (Exception e) {
-                                Timber.e(e);
-                            }
-
-
-
-                        Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                        super.onBackPressed();
-                    }));
-
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Alert");
-                    alert.show();
-
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//            switch (item.getItemId()) {
+//                case R.id.refresh:
+//                    finish();
+//                    startActivity(getIntent());
+//
+//                    break;
+//
+//                case R.id.call:
+//                    String caregiverPhoneNumber = child.getCaregiver_phone();
+//                    if (!caregiverPhoneNumber.equals("")) {
+//                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
+//
+//                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+//                        startActivity(callIntent);
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                return true;
+//            case R.id.case_status:
+//
+//                try {
+//                    openFormUsingFormUtils(HTSDetailsActivity.this, "case_status");
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//
+//            case R.id.delete_record:
+//
+//                    if(txtGender.getText().toString().equals("MALE")){
+//                        gender = "his";
+//                    } else {
+//                        gender = "her";
+//                    }
+//
+//                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
+//                    builder.setNegativeButton("NO", (dialog, id) -> {
+//                        //  Action for 'NO' Button
+//                        dialog.cancel();
+//
+//                    }).setPositiveButton("YES",((dialogInterface, i) -> {
+//                        FormUtils formUtils = null;
+//                        try {
+//                            formUtils = new FormUtils(this);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        child.setDeleted("1");
+//                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+//                            try {
+//                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+//                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//
+//                            try {
+//
+//                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+//                                if (childIndexEventClient == null) {
+//                                    return;
+//                                }
+//                                saveRegistration(childIndexEventClient,true);
+//
+//
+//                            } catch (Exception e) {
+//                                Timber.e(e);
+//                            }
+//
+//
+//
+//                        Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+//                        super.onBackPressed();
+//                    }));
+//
+//                    //Creating dialog box
+//                    AlertDialog alert = builder.create();
+//                    //Setting the title manually
+//                    alert.setTitle("Alert");
+//                    alert.show();
+//
+//                break;
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @Override
@@ -1350,7 +1053,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
                     getIntent().removeExtra("fromHousehold");
                     try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this, "vca_screening");
+                        openFormUsingFormUtils(HTSDetailsActivity.this, "vca_screening");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1383,7 +1086,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
  }
  public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
-     SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+     SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(HTSDetailsActivity.this);
      caseworkerphone = cp.getString("phone", "Anonymous");
 
      JSONObject cphone = getFieldJSONObject(fields(formToBeOpened, "step1"), "phone");
@@ -1409,6 +1112,38 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
+    }
+    public  void returnViewPager(){
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new HTSFragmentOverview());
+        fragments.add(new HTSlinksFragment());
+
+        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("OVERVIEW");
+        tabLayout.getTabAt(1).setText("HTS LINKS");
+    }
+    private void updateTasksTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
+        visitTabTitle.setText("HTS LINKS");
+        htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
+
+        int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());
+
+        htsCount.setText(String.valueOf(htsLinks));
+
+        if ( tabLayout != null) {
+            TabLayout.Tab tab =  tabLayout.getTabAt(1);
+            if (tab != null) {
+                tab.setCustomView(taskTabTitleLayout);
+            } else {
+                Log.e("HTSDetailsActivity", "Error");
+            }
+        } else {
+            Log.e("HTSDetailsActivity", "mTabLayout is null");
+        }
     }
 
     public void buildDialog(){

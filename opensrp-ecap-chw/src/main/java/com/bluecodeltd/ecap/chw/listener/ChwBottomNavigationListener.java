@@ -10,6 +10,7 @@ import timber.log.Timber;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.HivTestingServiceActivity;
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
@@ -113,6 +114,21 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 try {
 
                     idRegisterActivity.startFormActivity("female_sex_worker",null,"");
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+        }
+        else if (item.getItemId() == R.id.action_hts) {
+
+            if ( context instanceof HivTestingServiceActivity) {
+
+                HivTestingServiceActivity hivTestingServiceActivity = (HivTestingServiceActivity) context;
+
+                try {
+
+                    hivTestingServiceActivity.startFormActivity("hiv_testing_service",null,"");
 
                 } catch (Exception e) {
                     Timber.e(e);

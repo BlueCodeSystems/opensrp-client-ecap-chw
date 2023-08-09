@@ -1,0 +1,359 @@
+{
+  "count": 1,
+  "encounter_type": "HIV Testing Service",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "",
+    "fields": [
+      {
+        "key": "date_client_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date Case Record Created",
+        "edit_type": "number"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Edited By",
+        "read_only": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Caseworker Phone",
+        "edit_type": "number",
+        "read_only": true,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "implementing_partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "implementing_partner",
+        "type": "edit_text",
+        "hint": "Implementing Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "false",
+        "v_required": {
+          "value": "true",
+          "err": "Partners is Required"
+        }
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": "true",
+          "err": "Health facility Required"
+        }
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "countyDistrict",
+        "type": "edit_text",
+        "hint": "District",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "false",
+        "v_required": {
+          "value": "true",
+          "err": "District is Required"
+        }
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stateProvince",
+        "type": "edit_text",
+        "hint": "Province",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": "true",
+          "err": "Province is Required"
+        }
+      },
+      {
+        "key": "client_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "client_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Client Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Client number is Required"
+        }
+      },
+      {
+        "key": "testing_modality",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "testing_modality",
+        "type": "native_radio",
+        "label": "Testing Modality (SNS/Index/Other Community)",
+        "options": [
+          {
+            "key": "SNT",
+            "text": "SNT"
+          },
+          {
+            "key": "Index",
+            "text": "Index"
+          },
+          {
+            "key": "Other Community",
+            "text": "Other Community"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Testing modality is Required"
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "First Name",
+        "read_only": "false",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "First name can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Enter first name"
+        }
+      },
+      {
+        "key": "middle_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "middle_name",
+        "type": "edit_text",
+        "hint": "Middle Name",
+        "read_only": "false",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Middle name can only contain letters"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Last Name",
+        "read_only": "false",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Last name can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Enter last name"
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": "true",
+          "err": "ART number is Required"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Index/SNS Case Sex",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Gender is Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "Age",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the date of birth"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "entry_point",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "entry_point",
+        "type": "edit_text",
+        "hint": "Entry Point",
+        "read_only": "false",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Entry point can  only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the entry point"
+        }
+      },
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date edited",
+        "edit_type": "number"
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "hint": ""
+      }
+    ]
+  }
+}
