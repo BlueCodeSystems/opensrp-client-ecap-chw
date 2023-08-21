@@ -216,11 +216,7 @@ public class ProfileOverviewFragment extends Fragment {
 
 
 
-        if (childIndex.getDate_next_vl() != null){
-            txtNextVl.setText(childIndex.getDate_next_vl());
-        } else {
-            txtNextVl.setText("N/A");
-        }
+
 
         if (childIndex.getChild_mmd() != null){
             txtIsMMD.setText(childIndex.getChild_mmd());
@@ -258,6 +254,17 @@ public class ProfileOverviewFragment extends Fragment {
                 }
             }
 
+            if (serviceModel.getDate_next_vl() != null){
+                txtNextVl.setText(serviceModel.getDate_next_vl());
+            } else {
+                if (childIndex.getDate_next_vl() != null){
+                    txtNextVl.setText(childIndex.getDate_next_vl());
+                } else {
+                    txtNextVl.setText("N/A");
+                }
+            }
+
+
         } else {
             if (childIndex.getVl_last_result() != null){
                 recent_vl_result.setText(childIndex.getVl_last_result());
@@ -269,6 +276,12 @@ public class ProfileOverviewFragment extends Fragment {
                 recent_mmd_level.setText(childIndex.getLevel_mmd());
             } else {
                 recent_mmd_level.setText("N/A");
+            }
+
+            if (childIndex.getDate_next_vl() != null){
+                txtNextVl.setText(childIndex.getDate_next_vl());
+            } else {
+                txtNextVl.setText("N/A");
             }
         }
 imgBtn.setOnClickListener(new View.OnClickListener() {
