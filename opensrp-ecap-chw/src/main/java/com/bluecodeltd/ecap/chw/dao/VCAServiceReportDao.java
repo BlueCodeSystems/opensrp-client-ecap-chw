@@ -11,7 +11,7 @@ public class VCAServiceReportDao extends AbstractDao {
 
     public static List<VCAServiceModel> getRecentServicesByVCAID(String vcaID) {
 
-        String sql = "SELECT is_hiv_positive, vl_last_result, child_mmd, date, unique_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+        String sql = "SELECT *,is_hiv_positive, vl_last_result, child_mmd, level_mmd,date, unique_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
                 "FROM ec_vca_service_report WHERE  unique_id = '" + vcaID + "' AND  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC LIMIT 1";
 
         List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
