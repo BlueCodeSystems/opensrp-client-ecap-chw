@@ -124,10 +124,13 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         LinearLayout  initial_artLayout,enrolled_on_ARTLayout;
 
         TextView date_linked = dialogView.findViewById(R.id.date_linked);
+        TextView ecap_id = dialogView.findViewById(R.id.ecap_id);
         TextView sub_population = dialogView.findViewById(R.id.sub_population);
         TextView age = dialogView.findViewById(R.id.age);
         TextView relationship = dialogView.findViewById(R.id.relationship);
         TextView current_address = dialogView.findViewById(R.id.current_address);
+        TextView landmark = dialogView.findViewById(R.id.landmark);
+        TextView phone = dialogView.findViewById(R.id.phone);
         TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
         TextView date_tested = dialogView.findViewById(R.id.date_tested);
         TextView test_results = dialogView.findViewById(R.id.test_results);
@@ -150,6 +153,9 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             String datLinked = client.getDate_linked();
             date_linked.setText(datLinked != null ? datLinked : "Not Set");
 
+            String ecapId = client.getEcap_id();
+            ecap_id.setText(ecapId != null ? ecapId : "Not Set");
+
             String subPopulation = client.getSub_population();
             String str = subPopulation.replace("\"", "").replace("[", "").replace("]", "").replace(",", ",\n");
             sub_population.setText(str  != null ? str  : "Not Set");
@@ -162,6 +168,12 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
             String address = client.getAddress();
             current_address.setText(address != null ? address : "Not Set");
+
+            String landmarkAddress = client.getLandmark();
+            landmark.setText(landmarkAddress != null ? landmarkAddress : "Not Set");
+
+            String linkPhone = client.getPhone();
+            phone.setText(linkPhone != null ? linkPhone : "Not Set");
 
             String comments = client.getComment();
             comment.setText(comments != null ? comments : "Not Set");
