@@ -14,6 +14,8 @@ public class HTSlinksModel {
     private String relationship;
     private String other_relationship;
     private String address;
+    private String landmark;
+    private String phone;
     private String hiv_status;
     private String date_tested;
     private String hiv_result;
@@ -128,6 +130,22 @@ public class HTSlinksModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getHiv_status() {
