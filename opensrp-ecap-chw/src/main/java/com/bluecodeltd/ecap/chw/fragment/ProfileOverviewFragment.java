@@ -19,6 +19,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -33,7 +34,8 @@ public class ProfileOverviewFragment extends Fragment {
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
-            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level;
+            txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
+            new_caregiver_name, overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -78,9 +80,25 @@ public class ProfileOverviewFragment extends Fragment {
         recent_vl_result = view.findViewById(R.id.recent_vl_result);
         recent_mmd_level = view.findViewById(R.id.recent_mmd_level);
 
+        new_caregiver_name = view.findViewById(R.id.new_caregiver_name);
+        new_caregiver_gender = view.findViewById(R.id.new_caregiver_gender);
+        new_caregiver_dob = view.findViewById(R.id.new_caregiver_dob);
+        new_hiv_status = view.findViewById(R.id.new_hiv_status);
+        new_child_relation = view.findViewById(R.id.new_child_relation);
+        new_caregiver_phone = view.findViewById(R.id.new_caregiver_phone);
+
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
 
+        HashMap<String, newCaregiverModel> caregiverDetails = ((IndexDetailsActivity) requireActivity()).getUpdatedCaregiverData();
+        newCaregiverModel updateCaregiver = caregiverDetails.get("UpdatedCaregiver");
+
+        new_caregiver_name.setText(updateCaregiver.getNew_caregiver_name());
+        new_caregiver_gender.setText(updateCaregiver.getNew_caregiver_gender());
+        new_caregiver_dob.setText(updateCaregiver.getNew_caregiver_dob());
+        new_hiv_status.setText(updateCaregiver.getNew_hiv_status());
+        new_child_relation.setText(updateCaregiver.getNew_child_relation());
+        new_caregiver_phone.setText(updateCaregiver.getNew_caregiver_phone());
 
         String subpop1 = childIndex.getSubpop1();
         String subpop2 = childIndex.getSubpop2();

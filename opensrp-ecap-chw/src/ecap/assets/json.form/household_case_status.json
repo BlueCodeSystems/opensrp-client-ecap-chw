@@ -207,6 +207,198 @@
               "ex": "equalTo(., \"Caregiver died\")"
             }
           }
+        },
+
+
+        {
+          "key": "new_caregiver_name",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_caregiver_name",
+          "type": "edit_text",
+          "hint": "Caregiver's Full Name",
+          "v_required": {
+            "value": true,
+            "err": "Name of caregiver is required"
+          },
+          "v_regex": {
+            "value": "[A-Za-z \\s\\.\\-]* [A-Za-z \\s\\.\\-]*",
+            "err": "Please enter a valid name"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          }
+        },
+        {
+          "key": "new_caregiver_nrc",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_caregiver_nrc",
+          "type": "edit_text",
+          "hint": "Caregiver's NRC#",
+          "v_regex": {
+            "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
+            "err": "Number must take the format of ######/##/#"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          }
+        },
+        {
+          "key": "new_caregiver_birth_date",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_caregiver_birth_date",
+          "type": "date_picker",
+          "hint": "Caregiver's Date of Birth",
+          "look_up": "true",
+          "expanded": false,
+          "duration": {
+            "label": "Age"
+          },
+          "min_date": "today-100y",
+          "max_date": "today-19y",
+          "v_required": {
+            "value": true,
+            "err": "Please enter Birth Date"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          }
+        },
+        {
+          "key": "new_caregiver_sex",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_caregiver_sex",
+          "type": "native_radio",
+          "label": "Caregiver's Gender",
+          "options": [
+            {
+              "key": "male",
+              "text": "Male"
+            },
+            {
+              "key": "female",
+              "text": "Female"
+            }
+          ],
+          "v_required": {
+            "value": true,
+            "err": "Required"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          }
+        },
+        {
+          "key": "new_relation",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_relation",
+          "type": "native_radio",
+          "label": "Relationship to Child",
+          "options": [
+            {
+              "key": "parent",
+              "text": "Parent"
+            },
+            {
+              "key": "guardian",
+              "text": "Guardian"
+            }
+          ],
+          "v_required": {
+            "value": true,
+            "err": "This field is required"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          }
+        },
+        {
+          "key": "new_caregiver_hiv_status",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_caregiver_hiv_status",
+          "type": "native_radio",
+          "label": "Caregiver's HIV Status",
+          "options": [
+            {
+              "key": "positive",
+              "text": "Positive"
+            },
+            {
+              "key": "negative",
+              "text": "Negative"
+            },
+            {
+              "key": "unknown",
+              "text": "Unknown"
+            },
+            {
+              "key": "status_not_required",
+              "text": "Status not required based on risk assessment"
+            }
+          ],
+          "v_required": {
+            "value": true,
+            "err": "Select HIV status"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          },
+          "calculation": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "vca_screening_calculation.yml"
+              }
+            }
+          }
+        },
+        {
+          "key": "new_caregiver_phone",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "new_caregiver_phone",
+          "type": "edit_text",
+          "hint": "Caregiver's Phone Number",
+          "edit_type": "number",
+          "v_regex": {
+            "value": "((07||09)[5-7][0-9]{7})|s*",
+            "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          },
+          "relevance": {
+            "rules-engine": {
+              "ex-rules": {
+                "rules-file": "household_case_status.yml"
+              }
+            }
+          }
         }
       ]
     }
