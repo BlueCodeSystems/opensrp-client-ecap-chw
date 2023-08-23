@@ -704,7 +704,7 @@
             android:paddingTop="@dimen/contact_drawable_padding"
             android:paddingBottom="@dimen/contact_drawable_padding"
             android:singleLine="true"
-            android:text="Caregiver Details"
+            android:text="Current Caregiver Details"
             android:textAllCaps="true"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/white"
@@ -761,7 +761,6 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/overview_section_details_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Gender"
@@ -909,6 +908,223 @@
                 <TextView
                     android:layout_weight="1"
                     android:id="@+id/caregiver_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/overview_section_header5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/overview_header_bg"
+                android:gravity="left"
+                android:layout_marginTop="3dp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_drawable_padding"
+                android:paddingBottom="@dimen/contact_drawable_padding"
+                android:singleLine="true"
+                android:text="Updated caregiver details"
+                android:textAllCaps="true"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/new_caregiver_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/new_caregiver_gender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:capitalize="words"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Birth"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/new_caregiver_dob"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="HIV Status"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/new_hiv_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Relationship to Child"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/new_child_relation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_small_padding"
+                    android:paddingBottom="@dimen/contact_small_padding"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/black_text_color"
+                    />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/new_caregiver_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="start"
