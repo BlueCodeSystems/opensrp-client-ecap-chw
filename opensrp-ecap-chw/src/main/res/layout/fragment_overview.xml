@@ -919,23 +919,46 @@
                     />
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/overview_section_header5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/caregiverDetails"
                 android:background="@color/overview_header_bg"
-                android:gravity="left"
-                android:layout_marginTop="3dp"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_drawable_padding"
-                android:paddingBottom="@dimen/contact_drawable_padding"
-                android:singleLine="true"
-                android:text="Updated caregiver details"
-                android:textAllCaps="true"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/white"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/overview_section_header5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/overview_header_bg"
+                    android:gravity="left"
+                    android:layout_marginTop="3dp"
+                    android:paddingLeft="@dimen/contact_drawable_padding"
+                    android:paddingTop="@dimen/contact_drawable_padding"
+                    android:paddingBottom="@dimen/contact_drawable_padding"
+                    android:singleLine="true"
+                    android:text="Current caregiver details"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/arrow_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/overview_header_bg"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/ic_down"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
             <LinearLayout
+                android:id="@+id/linearlayout_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
@@ -971,6 +994,7 @@
 
 
             <LinearLayout
+                android:id="@+id/linearlayout_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
@@ -1004,8 +1028,8 @@
                     />
 
             </LinearLayout>
-
             <LinearLayout
+                android:id="@+id/linearlayout_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
@@ -1037,8 +1061,8 @@
                     />
 
             </LinearLayout>
-
             <LinearLayout
+                android:id="@+id/linearlayout_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
@@ -1070,9 +1094,8 @@
                     />
 
             </LinearLayout>
-
-
             <LinearLayout
+                android:id="@+id/linearlayout_relation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
@@ -1105,6 +1128,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/linearlayout_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"

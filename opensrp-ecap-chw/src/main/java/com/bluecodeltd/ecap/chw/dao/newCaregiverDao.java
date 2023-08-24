@@ -30,11 +30,14 @@ public class newCaregiverDao extends AbstractDao {
             newCaregiverModel record = new newCaregiverModel();
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setNew_caregiver_name(getCursorValue(c, "new_caregiver_name"));
-            record.setNew_caregiver_gender(getCursorValue(c, "new_caregiver_gender"));
-            record.setNew_caregiver_dob(getCursorValue(c, "new_caregiver_dob"));
-            record.setNew_hiv_status(getCursorValue(c, "new_hiv_status"));
-            record.setNew_child_relation(getCursorValue(c, "new_child_relation"));
+            record.setNew_caregiver_nrc(getCursorValue(c, "new_caregiver_nrc"));
+            record.setNew_caregiver_birth_date(getCursorValue(c, "new_caregiver_birth_date"));
+            record.setNew_caregiver_sex(getCursorValue(c, "new_caregiver_sex"));
+            record.setNew_relation(getCursorValue(c, "new_relation"));
+            record.setNew_caregiver_hiv_status(getCursorValue(c, "new_caregiver_hiv_status"));
             record.setNew_caregiver_phone(getCursorValue(c, "new_caregiver_phone"));
+            record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
+
 
             return record;
         };

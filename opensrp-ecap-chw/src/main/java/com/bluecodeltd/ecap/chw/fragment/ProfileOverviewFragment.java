@@ -30,12 +30,12 @@ import java.util.Objects;
 public class ProfileOverviewFragment extends Fragment {
 
     RelativeLayout myview;
-    LinearLayout myview2;
+    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone;
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
-            new_caregiver_name, overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
+            new_caregiver_name, overview_section_header3,overview_section_header5,overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -86,6 +86,17 @@ public class ProfileOverviewFragment extends Fragment {
         new_hiv_status = view.findViewById(R.id.new_hiv_status);
         new_child_relation = view.findViewById(R.id.new_child_relation);
         new_caregiver_phone = view.findViewById(R.id.new_caregiver_phone);
+        overview_section_header3 = view.findViewById(R.id.overview_section_header3);
+        overview_section_header5 = view.findViewById(R.id.overview_section_header5);
+
+
+        linearlayout_name =  view.findViewById(R.id. linearlayout_name);
+        linearlayout_gender = view.findViewById(R.id.linearlayout_gender);
+        linearlayout_dob = view.findViewById(R.id.linearlayout_dob);
+        linearlayout_status = view.findViewById(R.id.linearlayout_status);
+        linearlayout_relation = view.findViewById(R.id.linearlayout_relation);
+        linearlayout_phone = view.findViewById(R.id.linearlayout_phone);
+
 
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
@@ -93,12 +104,28 @@ public class ProfileOverviewFragment extends Fragment {
         HashMap<String, newCaregiverModel> caregiverDetails = ((IndexDetailsActivity) requireActivity()).getUpdatedCaregiverData();
         newCaregiverModel updateCaregiver = caregiverDetails.get("UpdatedCaregiver");
 
-        new_caregiver_name.setText(updateCaregiver.getNew_caregiver_name());
-        new_caregiver_gender.setText(updateCaregiver.getNew_caregiver_gender());
-        new_caregiver_dob.setText(updateCaregiver.getNew_caregiver_dob());
-        new_hiv_status.setText(updateCaregiver.getNew_hiv_status());
-        new_child_relation.setText(updateCaregiver.getNew_child_relation());
-        new_caregiver_phone.setText(updateCaregiver.getNew_caregiver_phone());
+        new_caregiver_name.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_name() != null ? updateCaregiver.getNew_caregiver_name() : "");
+        new_caregiver_gender.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_sex() != null ? updateCaregiver.getNew_caregiver_sex() : "");
+        new_caregiver_dob.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_birth_date() != null ? updateCaregiver.getNew_caregiver_birth_date() : "");
+        new_hiv_status.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_hiv_status() != null ? updateCaregiver.getNew_caregiver_hiv_status() : "");
+        new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "");
+        new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "");
+
+        if(updateCaregiver.getHousehold_case_status() != null && updateCaregiver.getHousehold_case_status().equals("0")){
+            overview_section_header3.setText("Previous Caregiver Details");
+        }
+        if(updateCaregiver.getHousehold_case_status() == null || updateCaregiver.getHousehold_case_status().equals("1") || updateCaregiver.getHousehold_case_status().equals("2")){
+            overview_section_header5.setVisibility(View.GONE);
+
+            linearlayout_gender.setVisibility(View.GONE);
+            linearlayout_dob.setVisibility(View.GONE);
+            linearlayout_status.setVisibility(View.GONE);
+            linearlayout_relation.setVisibility(View.GONE);
+            linearlayout_phone.setVisibility(View.GONE);
+            linearlayout_name.setVisibility(View.GONE);
+        }
+
+
 
         String subpop1 = childIndex.getSubpop1();
         String subpop2 = childIndex.getSubpop2();
