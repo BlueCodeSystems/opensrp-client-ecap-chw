@@ -60,7 +60,7 @@ public class CasePlan extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
-    String childId, caseDate, hivStatus;
+    String childId, caseDate, hivStatus,case_plan_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,7 @@ public class CasePlan extends AppCompatActivity {
         childId = getIntent().getExtras().getString("childId");
         caseDate = getIntent().getExtras().getString("dateId");
         hivStatus = getIntent().getExtras().getString("hivStatus");
+        case_plan_id = getIntent().getExtras().getString("case_plan_id");
 
         fetchData();
 
@@ -126,14 +127,18 @@ public class CasePlan extends AppCompatActivity {
                         JSONObject indexRegisterForm;
 
                         indexRegisterForm = formUtils.getFormJson("domain");
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", caseDate);
+//                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
+//                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", caseDate);
 
                         JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
                         cId.put("value",childId);
 
                         JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
                         cDate.put("value", caseDate);
+
+
+                        JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
+                        casePlanId.put("value", case_plan_id);
 
                         if(hivStatus == null || !hivStatus.equals("yes")){
                             JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");

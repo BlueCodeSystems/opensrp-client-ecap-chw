@@ -59,7 +59,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
-    String householdId, caseDate,uniqueId, hivStatus;
+    String householdId, caseDate,uniqueId, hivStatus,case_plan_id;
 
 
     @Override
@@ -75,6 +75,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         caseDate = getIntent().getExtras().getString("dateId");
         uniqueId = getIntent().getExtras().getString("unique_id");
         hivStatus = getIntent().getStringExtra("status");
+        case_plan_id = getIntent().getExtras().getString("case_plan_id");
 
         fetchData();
         domainBtn.setOnClickListener(new View.OnClickListener() {
@@ -309,6 +310,10 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
            // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
             JSONObject statusObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
             statusObject.put(JsonFormUtils.VALUE, caseDate);
+
+
+            JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
+            casePlanId.put("value", case_plan_id);
 
 
 
