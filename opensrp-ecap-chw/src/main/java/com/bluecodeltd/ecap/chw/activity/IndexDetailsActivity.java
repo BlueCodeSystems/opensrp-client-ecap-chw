@@ -108,6 +108,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -152,6 +153,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
+
+    Random number;
+    int rNumber;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -642,9 +646,13 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                         JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
                         String dateId = cpdate.optString("value");
+
+                        JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                        String cp_Id = cpId.optString("value");
+
                         finish();
                         startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId);
+                        openVcaCasplanToAddVulnarabilities(dateId,cp_Id);
 
                         break;
 
@@ -680,10 +688,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     }
 
-    private void openVcaCasplanToAddVulnarabilities(String dateId) {
+    private void openVcaCasplanToAddVulnarabilities(String dateId,String cpId) {
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
+        i.putExtra("case_plan_id",cpId);
         i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
         startActivity(i);
     }
@@ -1188,6 +1197,20 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case "case_plan":
+                number = new Random();
+                rNumber = number.nextInt(900000000);
+                String assignCasePlanId =  Integer.toString(rNumber);
+                JSONObject case_plan_id = getFieldJSONObject(fields(formToBeOpened, "step1"), "case_plan_id");
+
+
+                if (case_plan_id != null) {
+                    case_plan_id.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                    try {
+                        case_plan_id.put(JsonFormUtils.VALUE, "CP"+assignCasePlanId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);

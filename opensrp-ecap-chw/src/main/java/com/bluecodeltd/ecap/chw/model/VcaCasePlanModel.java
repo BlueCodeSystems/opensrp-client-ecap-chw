@@ -4,7 +4,16 @@ public class VcaCasePlanModel {
     private String base_entity_id;
     private String unique_id;
     private String case_plan_date;
+    private String case_plan_id;
     private String case_plan_status;
+
+    public String getCase_plan_id() {
+        return case_plan_id;
+    }
+
+    public void setCase_plan_id(String case_plan_id) {
+        this.case_plan_id = case_plan_id;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;
