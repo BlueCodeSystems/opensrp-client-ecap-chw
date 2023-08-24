@@ -127,8 +127,8 @@ public class HouseholdDetails extends AppCompatActivity {
 
     ObjectMapper oMapper, householdMapper, caregiverMapper,weServiceMapper, assessmentMapper, graduationMapper;
     CommonPersonObjectClient household;
-    Random Number;
-    int Rnumber;
+    Random number;
+    int rNumber;
     List<String> allMalesBirthDates;
     List<String> allFemalesBirthDates;
     List<String> allChildrenBirthDates;
@@ -673,8 +673,23 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.hcase_plan:
                 try {
-
                     indexRegisterForm = formUtils.getFormJson("care_case_plan");
+
+                    number = new Random();
+                    rNumber = number.nextInt(900000000);
+                    String assignCasePlanId =  Integer.toString(rNumber);
+                    JSONObject case_plan_id = getFieldJSONObject(fields(indexRegisterForm, "step1"), "case_plan_id");
+
+
+                    if (case_plan_id != null) {
+                        case_plan_id.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                        try {
+                            case_plan_id.put(JsonFormUtils.VALUE, "CP"+assignCasePlanId);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
 
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
                     startFormActivity(indexRegisterForm);
@@ -813,9 +828,9 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
 
-                    Number = new Random();
-                    Rnumber = Number.nextInt(900000000);
-                    String newEntityId =  Integer.toString(Rnumber);
+                    number = new Random();
+                    rNumber = number.nextInt(900000000);
+                    String newEntityId =  Integer.toString(rNumber);
 
 
                     //******** POPULATE JSON FORM WITH VCA UNIQUE ID ******//
@@ -971,7 +986,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     case "Caregiver Case Plan":
                         String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).optString("value");
-                        AddVulnarabilitiesToCasePlan(dateId);
+
+                        JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                        String cp_Id = cpId.optString("value");
+
+                        AddVulnarabilitiesToCasePlan(dateId,cp_Id);
                         break;
 
                 }
@@ -983,12 +1002,13 @@ public class HouseholdDetails extends AppCompatActivity {
 
     }
 
-    private void AddVulnarabilitiesToCasePlan(String dateId) {
+    private void AddVulnarabilitiesToCasePlan(String dateId,String cpId) {
         Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
         i.putExtra("unique_id",  house.getUnique_id());
         i.putExtra("householdId",  house.getHousehold_id());
         i.putExtra("status",house.getCaregiver_hiv_status());
         i.putExtra("dateId",  dateId);
+        i.putExtra("case_plan_id",cpId);
         startActivity(i);
     }
 

@@ -520,6 +520,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setQuarter(getCursorValue(c, "quarter"));
             record.setStatus(getCursorValue(c, "status"));
             record.setComment(getCursorValue(c, "comment"));
+            record.setCase_plan_id(getCursorValue(c, "case_plan_id"));
 
             return record;
           };
@@ -544,6 +545,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
             record.setSubpop1(getCursorValue(c, "subpop1"));
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
+            record.setCase_plan_id(getCursorValue(c, "case_plan_id"));
             record.setDeleted(getCursorValue(c, "deleted"));
             return record;
         };

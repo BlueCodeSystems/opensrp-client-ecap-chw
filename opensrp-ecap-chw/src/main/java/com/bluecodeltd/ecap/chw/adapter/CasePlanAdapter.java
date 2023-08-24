@@ -131,6 +131,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                 Intent i = new Intent(context, CasePlan.class);
                 i.putExtra("childId",  casePlan.getUnique_id());
                 i.putExtra("dateId",  casePlan.getCase_plan_date());
+                i.putExtra("case_plan_id",casePlan.getCase_plan_id());
                 i.putExtra("hivStatus",  hivStatus);
                 context.startActivity(i);
 
