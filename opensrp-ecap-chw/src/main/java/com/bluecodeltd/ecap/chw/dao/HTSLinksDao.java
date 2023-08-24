@@ -49,6 +49,8 @@ public class HTSLinksDao extends AbstractDao {
             record.setRelationship(getCursorValue(c, "relationship"));
             record.setOther_relationship(getCursorValue(c, "other_relationship"));
             record.setAddress(getCursorValue(c, "address"));
+            record.setLandmark(getCursorValue(c, "landmark"));
+            record.setPhone(getCursorValue(c, "phone"));
             record.setHiv_status(getCursorValue(c, "hiv_status"));
             record.setDate_tested(getCursorValue(c, "date_tested"));
             record.setHiv_result(getCursorValue(c, "hiv_result"));

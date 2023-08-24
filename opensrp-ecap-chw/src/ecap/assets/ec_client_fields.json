@@ -1391,7 +1391,64 @@
           "json_mapping": {
             "field": "attributes.other_de_registration_reason"
           }
+        },
+        {
+          "column_name": "new_caregiver_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_name"
+          }
+        },
+        {
+          "column_name": "new_caregiver_nrc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_nrc"
+          }
+        },
+        {
+          "column_name": "new_caregiver_birth_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_birth_date"
+          }
+        },
+        {
+          "column_name": "new_caregiver_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_sex"
+          }
+        },
+        {
+          "column_name": "new_relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_relation"
+          }
+        },
+        {
+          "column_name": "new_caregiver_hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_hiv_status"
+          }
+        },
+        {
+          "column_name": "new_caregiver_phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_phone"
+          }
         }
+
+
+
+
+
+
+
+
       ]
     },
     {
@@ -7489,6 +7546,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.address"
+          }
+        },
+        {
+          "column_name": "landmark",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.landmark"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
           }
         },
         {

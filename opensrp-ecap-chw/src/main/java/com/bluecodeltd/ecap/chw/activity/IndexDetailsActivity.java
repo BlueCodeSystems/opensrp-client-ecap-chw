@@ -53,6 +53,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -68,6 +69,7 @@ import com.bluecodeltd.ecap.chw.model.VcaCasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -145,6 +147,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
+    newCaregiverModel updatedCaregiver;
 
 
     public VCAModel client;
@@ -195,6 +198,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
         weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
+        updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
 
 
 
@@ -303,6 +307,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return map;
 
     }
+
+    public HashMap<String, newCaregiverModel> getUpdatedCaregiverData() {
+
+        HashMap<String, newCaregiverModel> map = new HashMap<>();
+
+        map.put("UpdatedCaregiver",updatedCaregiver);
+
+        return map;
+
+    }
+
 
 
     public int calculateAge(String dateOfBirth) {

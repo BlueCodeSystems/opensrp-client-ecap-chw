@@ -21,6 +21,7 @@
         <View
             android:id="@+id/mycolor"
             android:layout_width="5dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:background="#58CD12"
             />

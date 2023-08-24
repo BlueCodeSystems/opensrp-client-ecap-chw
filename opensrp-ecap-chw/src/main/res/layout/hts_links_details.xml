@@ -40,6 +40,27 @@
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
+                android:text="ECAPII ID:"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/ecap_id"
+                android:layout_weight="1"
+                android:text=""
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="Sub Population:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
@@ -109,6 +130,48 @@
 
             <TextView
                 android:id="@+id/current_address"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Landmark:"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/landmark"
+                android:layout_weight="1"
+                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Phone:"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/phone"
                 android:layout_weight="1"
                 android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
                 android:layout_width="0dip"

@@ -138,8 +138,7 @@
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
         "hint": " ECAPII ID (If Applicable)",
-        "read_only": "false",
-        "edit_type": "name"
+        "read_only": "false"
       },
       {
         "key": "sub_population",
@@ -263,9 +262,33 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "address",
         "type": "edit_text",
-        "hint": "Current address,including landmarks of the index contact and phone number",
+        "hint": "Address",
         "read_only": "false"
       },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Landmark of the index contact",
+        "read_only": "false"
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Phone Number",
+        "read_only": "false",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+
       {
         "key": "hiv_status",
         "openmrs_entity_parent": "",
