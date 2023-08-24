@@ -201,7 +201,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtArtNumber.setText(house.getCaregiver_art_number() != null ? house.getCaregiver_art_number() : "Not Set");
         txtDateStartedArt.setText(house.getDate_started_art() != null ? house.getDate_started_art() : "Not Set");
         txtVlLastDate.setText(house.getDate_of_last_viral_load() != null ? house.getDate_of_last_viral_load() : "Not Set");
-        txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
+
         txtVlResult.setText(house.getViral_load_results() != null ? house.getViral_load_results() : "Not Set");
         txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
         txtIsMMD.setText(house.getCaregiver_mmd() != null ? house.getCaregiver_mmd() : "Not Set");
@@ -230,6 +230,11 @@ public class HouseholdOverviewFragment extends Fragment {
                     txtRecentVLResult.setText("N/A");
                 }
             }
+            if (serviceModel.getDate_next_vl() != null) {
+                txtNextVl.setText(serviceModel.getDate_next_vl());
+            } else {
+                txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
+            }
 
         }
         else {
@@ -245,6 +250,7 @@ public class HouseholdOverviewFragment extends Fragment {
             } else {
                 txtRecentVLResult.setText("N/A");
             }
+            txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
 
 
         }
