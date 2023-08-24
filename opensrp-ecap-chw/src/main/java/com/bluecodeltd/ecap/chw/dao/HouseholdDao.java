@@ -464,6 +464,13 @@ public class HouseholdDao extends AbstractDao {
             record.setDate_next_vl(getCursorValue(c,"date_next_vl"));
             record.setCaregiver_mmd(getCursorValue(c,"caregiver_mmd"));
             record.setLevel_mmd(getCursorValue(c,"level_mmd"));
+            record.setNew_caregiver_name(getCursorValue(c, "new_caregiver_name"));
+            record.setNew_caregiver_nrc(getCursorValue(c, "new_caregiver_nrc"));
+            record.setNew_caregiver_birth_date(getCursorValue(c, "new_caregiver_birth_date"));
+            record.setNew_caregiver_sex(getCursorValue(c, "new_caregiver_sex"));
+            record.setNew_relation(getCursorValue(c, "new_relation"));
+            record.setNew_caregiver_hiv_status(getCursorValue(c, "new_caregiver_hiv_status"));
+            record.setNew_caregiver_phone(getCursorValue(c, "new_caregiver_phone"));
 
 
             return record;

@@ -2,13 +2,15 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class newCaregiverModel {
     private String new_caregiver_name;
-    private String overview_section_details_left;
-    private String new_caregiver_gender;
-    private String new_caregiver_dob;
-    private String new_hiv_status;
-    private String new_child_relation;
+    private String new_caregiver_nrc;
+    private String new_caregiver_birth_date;
+    private String new_caregiver_sex;
+    private String new_relation;
+    private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
     private String household_id;
+    private String household_case_status;
+
 
     public String getNew_caregiver_name() {
         return new_caregiver_name;
@@ -18,44 +20,44 @@ public class newCaregiverModel {
         this.new_caregiver_name = new_caregiver_name;
     }
 
-    public String getOverview_section_details_left() {
-        return overview_section_details_left;
+    public String getNew_caregiver_nrc() {
+        return new_caregiver_nrc;
     }
 
-    public void setOverview_section_details_left(String overview_section_details_left) {
-        this.overview_section_details_left = overview_section_details_left;
+    public void setNew_caregiver_nrc(String new_caregiver_nrc) {
+        this.new_caregiver_nrc = new_caregiver_nrc;
     }
 
-    public String getNew_caregiver_gender() {
-        return new_caregiver_gender;
+    public String getNew_caregiver_birth_date() {
+        return new_caregiver_birth_date;
     }
 
-    public void setNew_caregiver_gender(String new_caregiver_gender) {
-        this.new_caregiver_gender = new_caregiver_gender;
+    public void setNew_caregiver_birth_date(String new_caregiver_birth_date) {
+        this.new_caregiver_birth_date = new_caregiver_birth_date;
     }
 
-    public String getNew_caregiver_dob() {
-        return new_caregiver_dob;
+    public String getNew_caregiver_sex() {
+        return new_caregiver_sex;
     }
 
-    public void setNew_caregiver_dob(String new_caregiver_dob) {
-        this.new_caregiver_dob = new_caregiver_dob;
+    public void setNew_caregiver_sex(String new_caregiver_sex) {
+        this.new_caregiver_sex = new_caregiver_sex;
     }
 
-    public String getNew_hiv_status() {
-        return new_hiv_status;
+    public String getNew_relation() {
+        return new_relation;
     }
 
-    public void setNew_hiv_status(String new_hiv_status) {
-        this.new_hiv_status = new_hiv_status;
+    public void setNew_relation(String new_relation) {
+        this.new_relation = new_relation;
     }
 
-    public String getNew_child_relation() {
-        return new_child_relation;
+    public String getNew_caregiver_hiv_status() {
+        return new_caregiver_hiv_status;
     }
 
-    public void setNew_child_relation(String new_child_relation) {
-        this.new_child_relation = new_child_relation;
+    public void setNew_caregiver_hiv_status(String new_caregiver_hiv_status) {
+        this.new_caregiver_hiv_status = new_caregiver_hiv_status;
     }
 
     public String getNew_caregiver_phone() {
@@ -72,5 +74,13 @@ public class newCaregiverModel {
 
     public void setHousehold_id(String household_id) {
         this.household_id = household_id;
+    }
+
+    public String getHousehold_case_status() {
+        return household_case_status;
+    }
+
+    public void setHousehold_case_status(String household_case_status) {
+        this.household_case_status = household_case_status;
     }
 }
