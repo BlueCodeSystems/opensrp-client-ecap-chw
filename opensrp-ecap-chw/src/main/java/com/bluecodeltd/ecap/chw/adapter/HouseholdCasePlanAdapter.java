@@ -132,6 +132,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
                 i.putExtra("householdId",  house.getHousehold_id());
                 i.putExtra("status", house.getCaregiver_hiv_status());
                 i.putExtra("dateId",  casePlan.getCase_plan_date());
+                i.putExtra("case_plan_id",casePlan.getCase_plan_id());
                 context.startActivity(i);
 
             }

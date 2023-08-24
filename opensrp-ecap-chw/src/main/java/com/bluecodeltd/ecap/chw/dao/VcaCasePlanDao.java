@@ -10,7 +10,7 @@ public class VcaCasePlanDao extends AbstractDao {
 
     public static VcaCasePlanModel getVcaCasePlan (String vcaID) {
 
-        String sql = "SELECT * FROM ec_vca_case_plan WHERE unique_id = '" + vcaID + "' ";
+        String sql = "SELECT * FROM ec_vca_case_plan WHERE unique_id = '" + vcaID + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<VcaCasePlanModel> values = AbstractDao.readData(sql, getVcaCasePlanModelMap());
 
@@ -30,6 +30,8 @@ public class VcaCasePlanDao extends AbstractDao {
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setCase_plan_date(getCursorValue(c, "case_plan_date"));
             record.setCase_plan_status(getCursorValue(c, "case_plan_status"));
+            record.setCase_plan_id(getCursorValue(c, "case_plan_id"));
+
 
             return record;
         };

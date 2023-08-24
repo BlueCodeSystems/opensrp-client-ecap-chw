@@ -2861,6 +2861,13 @@
           }
         },
         {
+          "column_name": "case_plan_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_id"
+          }
+        },
+        {
           "column_name": "case_plan_date",
           "type": "Client",
           "json_mapping": {
@@ -3253,6 +3260,13 @@
           }
         },
         {
+          "column_name": "case_plan_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_id"
+          }
+        },
+        {
           "column_name": "case_plan_date",
           "type": "Client",
           "json_mapping": {
@@ -3356,6 +3370,13 @@
           }
         },
         {
+          "column_name": "case_plan_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_id"
+          }
+        },
+        {
           "column_name": "case_plan_date",
           "type": "Client",
           "json_mapping": {
@@ -3400,6 +3421,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "case_plan_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_plan_id"
           }
         },
         {
