@@ -13,7 +13,7 @@ import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
-import com.bluecodeltd.ecap.chw.model.HIVTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 
 import java.util.HashMap;
 
@@ -86,8 +86,8 @@ public class HTSFragmentOverview extends Fragment {
 
         SharedPreferences caseWorkDetails = PreferenceManager.getDefaultSharedPreferences(getContext());
         // Inflate the layout for this fragment
-        HashMap<String, HIVTestingServiceModel> mymap = ((HTSDetailsActivity) requireActivity()).getLinkID();
-        HIVTestingServiceModel htsModel = mymap.get("client");
+        HashMap<String, HivTestingServiceModel> mymap = ((HTSDetailsActivity) requireActivity()).getLinkID();
+        HivTestingServiceModel htsModel = mymap.get("client");
 
 if(htsModel.getTesting_modality() != null && htsModel.getTesting_modality().equals("Other Community")){
     artLayout.setVisibility(View.GONE);
