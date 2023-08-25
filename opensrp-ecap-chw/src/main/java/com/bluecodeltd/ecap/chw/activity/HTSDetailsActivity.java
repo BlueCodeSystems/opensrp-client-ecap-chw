@@ -40,7 +40,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HIVTestingServiceDao;
+import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao;
 import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -51,7 +51,7 @@ import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.HIVTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
@@ -139,7 +139,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
-    HIVTestingServiceModel hivTestingServiceModel;
+    HivTestingServiceModel hivTestingServiceModel;
     String full_name = "";
     String birthdate = "";
 
@@ -181,7 +181,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //
         clientId = getIntent().getExtras().getString("client_id");
-        hivTestingServiceModel = HIVTestingServiceDao.getHivServiceClient(clientId);
+        hivTestingServiceModel = HivTestingServiceDao.getHivServiceClient(clientId);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -287,9 +287,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
         return map;
 
     }
-    public HashMap<String, HIVTestingServiceModel> getLinkID() {
+    public HashMap<String, HivTestingServiceModel> getLinkID() {
 
-        HashMap<String, HIVTestingServiceModel> map = new HashMap<>();
+        HashMap<String, HivTestingServiceModel> map = new HashMap<>();
 
         map.put("client",hivTestingServiceModel);
 
