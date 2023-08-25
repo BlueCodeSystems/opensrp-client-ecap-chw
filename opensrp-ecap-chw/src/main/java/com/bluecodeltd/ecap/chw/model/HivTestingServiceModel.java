@@ -1,6 +1,6 @@
 package com.bluecodeltd.ecap.chw.model;
 
-public class HIVTestingServiceModel {
+public class HivTestingServiceModel {
     private String base_entity_id;
     private String relational_id;
     private String caseworker_name;
