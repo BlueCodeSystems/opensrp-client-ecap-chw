@@ -23,7 +23,7 @@ import com.bluecodeltd.ecap.chw.adapter.HTSlinksAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.HIVTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -80,8 +80,8 @@ public class HTSlinksFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    HashMap<String, HIVTestingServiceModel> mymap;
-    HIVTestingServiceModel htsModel;
+    HashMap<String, HivTestingServiceModel> mymap;
+    HivTestingServiceModel htsModel;
     String id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

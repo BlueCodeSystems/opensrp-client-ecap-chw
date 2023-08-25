@@ -104,12 +104,12 @@ public class ProfileOverviewFragment extends Fragment {
         HashMap<String, newCaregiverModel> caregiverDetails = ((IndexDetailsActivity) requireActivity()).getUpdatedCaregiverData();
         newCaregiverModel updateCaregiver = caregiverDetails.get("UpdatedCaregiver");
 
-        new_caregiver_name.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_name() != null ? updateCaregiver.getNew_caregiver_name() : "");
-        new_caregiver_gender.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_sex() != null ? updateCaregiver.getNew_caregiver_sex() : "");
-        new_caregiver_dob.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_birth_date() != null ? updateCaregiver.getNew_caregiver_birth_date() : "");
-        new_hiv_status.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_hiv_status() != null ? updateCaregiver.getNew_caregiver_hiv_status() : "");
-        new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "");
-        new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "");
+        new_caregiver_name.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_name() != null ? updateCaregiver.getNew_caregiver_name() : "Not Set");
+        new_caregiver_gender.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_sex() != null ? updateCaregiver.getNew_caregiver_sex() : "Not Set");
+        new_caregiver_dob.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_birth_date() != null ? updateCaregiver.getNew_caregiver_birth_date() : "Not Set");
+        new_hiv_status.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_hiv_status() != null ? updateCaregiver.getNew_caregiver_hiv_status() : "Not Set");
+        new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "Not Set");
+        new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "Not Set");
 
         if(updateCaregiver.getHousehold_case_status() != null && updateCaregiver.getHousehold_case_status().equals("0")){
             overview_section_header3.setText("Previous Caregiver Details");

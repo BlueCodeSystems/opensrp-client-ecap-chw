@@ -1,18 +1,18 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import com.bluecodeltd.ecap.chw.model.HIVTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
 import java.util.List;
 
-public class HIVTestingServiceDao extends AbstractDao {
+public class HivTestingServiceDao extends AbstractDao {
 
-    public static HIVTestingServiceModel getHivServiceClient (String clientID) {
+    public static HivTestingServiceModel getHivServiceClient (String clientID) {
 
         String sql = "SELECT * FROM ec_hiv_testing_service WHERE client_number = '" + clientID + "' ";
 
-        List<HIVTestingServiceModel> values = AbstractDao.readData(sql, getHIVTestingServiceModelMap());
+        List<HivTestingServiceModel> values = AbstractDao.readData(sql, getHIVTestingServiceModelMap());
 
         if (values.size() == 0) {
             return null;
@@ -22,10 +22,10 @@ public class HIVTestingServiceDao extends AbstractDao {
         return values.get(0);
     }
 
-    public static DataMap<HIVTestingServiceModel> getHIVTestingServiceModelMap() {
+    public static DataMap<HivTestingServiceModel> getHIVTestingServiceModelMap() {
         return c -> {
 
-            HIVTestingServiceModel record = new HIVTestingServiceModel();
+            HivTestingServiceModel record = new HivTestingServiceModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
