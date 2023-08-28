@@ -86,6 +86,10 @@
             {
               "key": "0",
               "text": "Closed"
+            },
+            {
+              "key": "Update Caregiver Details",
+              "text": "Update Caregiver Details"
             }
           ]
         },
@@ -120,17 +124,8 @@
           "label": "Reason for Closing Case",
           "options": [
             {
-              "key": "Wrong Entry",
-              "text": "Wrong Entry"
-            },
-            {
               "key": "Exited without graduation",
               "text": "Exited without graduation"
-            },
-
-            {
-              "key": "Lost to follow up",
-              "text": "Lost to follow-up"
             },
             {
               "key": "Caregiver died",
