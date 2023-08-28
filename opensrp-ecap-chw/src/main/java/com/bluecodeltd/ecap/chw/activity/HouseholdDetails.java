@@ -7,6 +7,7 @@ import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -51,6 +52,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
@@ -66,6 +68,7 @@ import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -111,7 +114,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
     private Toolbar toolbar;
-    private TextView visitTabCount, cname, txtDistrict, txtVillage,casePlanTabCount;
+    private TextView visitTabCount, cname,updatedCaregiverName, txtDistrict, txtVillage,casePlanTabCount;
     public TextView childTabCount;
     private FloatingActionButton fab,callFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -141,8 +144,10 @@ public class HouseholdDetails extends AppCompatActivity {
     CaregiverHivAssessmentModel caregiverHivAssessmentModel;
     GraduationModel graduationModel;
     WeServiceCaregiverModel weServiceCaregiverModel;
+    newCaregiverModel updatedCaregiver;
     private ArrayList<Child> childList = new ArrayList<>();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +167,7 @@ public class HouseholdDetails extends AppCompatActivity {
         caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
         caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
         graduationModel = GraduationDao.getGraduation(householdId);
+        updatedCaregiver = newCaregiverDao.getNewCaregiverById(householdId);
 
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
@@ -200,6 +206,7 @@ public class HouseholdDetails extends AppCompatActivity {
         chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
         //caregiver_name
         cname = findViewById(R.id.caregiver_name);
+        updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
         txtVillage = findViewById(R.id.address1);
         rassessment = findViewById(R.id.cassessment);
@@ -222,6 +229,13 @@ public class HouseholdDetails extends AppCompatActivity {
 
         } else {
             cname.setText(house.getCaregiver_name() + " Household");
+        }
+
+        if((updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("Update Caregiver Details")) || (updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("0") && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty())){
+
+            updatedCaregiverName.setVisibility(View.VISIBLE);
+            updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+
         }
 
         countFemales = IndexPersonDao.countFemales(householdId);

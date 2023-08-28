@@ -1,11 +1,10 @@
 package com.bluecodeltd.ecap.chw.model;
 
-import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.util.Constants;
+
 import org.smartregister.chw.core.model.NavigationModel;
 import org.smartregister.chw.core.model.NavigationOption;
-import org.smartregister.chw.core.utils.CoreConstants;
-import com.bluecodeltd.ecap.chw.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
