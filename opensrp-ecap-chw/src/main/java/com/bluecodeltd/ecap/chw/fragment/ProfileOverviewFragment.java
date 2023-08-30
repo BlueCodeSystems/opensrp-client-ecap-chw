@@ -111,7 +111,8 @@ public class ProfileOverviewFragment extends Fragment {
         new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "Not Set");
         new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "Not Set");
 
-        if((updateCaregiver.getHousehold_case_status() != null && updateCaregiver.getHousehold_case_status().equals("Update Caregiver Details")) || (updateCaregiver.getHousehold_case_status() != null && updateCaregiver.getHousehold_case_status().equals("0") && updateCaregiver.getNew_caregiver_name() != null && !updateCaregiver.getNew_caregiver_name().isEmpty())){
+        if(updateCaregiver.getNew_caregiver_name()!=null && !updateCaregiver.getNew_caregiver_name().isEmpty()){
+
             overview_section_header3.setText("Previous Caregiver Details");
 
             linearlayout_gender.setVisibility(View.VISIBLE);

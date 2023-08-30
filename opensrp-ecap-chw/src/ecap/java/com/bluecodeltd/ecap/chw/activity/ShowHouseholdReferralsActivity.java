@@ -88,7 +88,7 @@ public class ShowHouseholdReferralsActivity extends AppCompatActivity {
 
         updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
 
-        if((updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("Update Caregiver Details")) || (updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("0") && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty())){
+        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
 
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");

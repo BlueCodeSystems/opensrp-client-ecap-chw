@@ -231,7 +231,7 @@ public class HouseholdDetails extends AppCompatActivity {
             cname.setText(house.getCaregiver_name() + " Household");
         }
 
-        if((updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("Update Caregiver Details")) || (updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("0") && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty())){
+        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
 
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
@@ -1667,6 +1667,15 @@ public class HouseholdDetails extends AppCompatActivity {
                 }
 
                 break;
+            case R.id.update_caregiver_details:
+                try {
+                    openFormUsingFormUtils(getBaseContext(),"update_caregiver_details");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                break;
+
 
 
         }
@@ -1816,6 +1825,10 @@ public class HouseholdDetails extends AppCompatActivity {
             case "household_case_status":
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                break;
+            case "update_caregiver_details":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
                 formToBeOpened.put("entity_id", this.house.getBase_entity_id());
                 break;
 
