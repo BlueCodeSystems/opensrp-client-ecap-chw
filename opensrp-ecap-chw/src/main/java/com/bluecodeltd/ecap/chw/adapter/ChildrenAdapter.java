@@ -21,9 +21,11 @@ import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -176,6 +178,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         });
 
+        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
         if(caseStatus != null && caseStatus.equals("1")){
 
@@ -188,10 +191,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         } else if(caseStatus != null && caseStatus.equals("2")){
 
             holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
-        } else{
+        }
+        else{
             holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
         }
 
+//        if(caregiverModel.getHousehold_case_status() != null && caregiverModel.getHousehold_case_status().equals("0")){
+//
+//            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+//        }
 
         if(dob != null){
 
