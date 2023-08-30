@@ -37,6 +37,7 @@ public class newCaregiverDao extends AbstractDao {
             record.setNew_caregiver_hiv_status(getCursorValue(c, "new_caregiver_hiv_status"));
             record.setNew_caregiver_phone(getCursorValue(c, "new_caregiver_phone"));
             record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
+            record.setReason_for_updating_caregiver(getCursorValue(c,"reason_for_updating_caregiver"));
 
 
             return record;

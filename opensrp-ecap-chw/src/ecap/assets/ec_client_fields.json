@@ -1393,6 +1393,13 @@
           }
         },
         {
+          "column_name": "reason_for_updating_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reason_for_updating_caregiver"
+          }
+        },
+        {
           "column_name": "new_caregiver_name",
           "type": "Client",
           "json_mapping": {
