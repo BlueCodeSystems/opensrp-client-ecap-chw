@@ -49,6 +49,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
@@ -493,7 +494,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     Boolean hasPositiveVCA = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
                     Boolean  isCaregiverPositive = HouseholdDao.isCaregiverPositive(householdId);
                     Boolean checkIfVcasWithVLBelow1000MeetingRequirement = IndexPersonDao.doTheVCAsMeetBenchmarkTwo(householdId);
-                    Boolean isViralLoadForAllPositiveCaregivers = HouseholdDao.isViralLoadForAllPositiveCaregivers(householdId);
+                    Boolean checkForCaregiverVL = HouseholdServiceReportDao.checkForHouseholdViralLoad(householdId);
 
                     if(hasPositiveVCA.equals(true)){
                         suppressed.put("hidden", false);
@@ -510,7 +511,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
                     if( isCaregiverPositive.equals(true)){
-                        if (isViralLoadForAllPositiveCaregivers.equals(true)) {
+                        if (checkForCaregiverVL.equals(true)) {
                             suppressed_caregiver.put(JsonFormUtils.VALUE, "yes");
                         } else {
                             suppressed_caregiver.put(JsonFormUtils.VALUE, "no");

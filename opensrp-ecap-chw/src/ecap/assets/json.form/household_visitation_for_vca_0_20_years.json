@@ -1312,23 +1312,6 @@
         }
       },
       {
-        "key": "muac_measurement_b",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_measurement_b",
-        "type": "edit_text",
-        "hint": "What is the child’s MUAC measurement?",
-        "edit_type": "number",
-        "read_only": false,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "toaster",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
