@@ -16,7 +16,7 @@ actions:
 name: step1_virally_suppressed
 description: virally_suppressed
 priority: 2
-condition: "(step1_vl_last_result > 1000) && (step1_date_calculated > 12)"
+condition: "step1_vl_last_result > 1000"
 actions:
   - "calculation = 'no'"
 ---
