@@ -104,6 +104,7 @@ public class VcaVisitationModel {
     private String length_on_art;
 
     private String delete_status;
+    private String status_color;
 
     public String getIndicate_vl_result() {
         return indicate_vl_result;
@@ -911,5 +912,13 @@ public class VcaVisitationModel {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getStatus_color() {
+        return status_color;
+    }
+
+    public void setStatus_color(String status_color) {
+        this.status_color = status_color;
     }
 }

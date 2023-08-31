@@ -1,20 +1,17 @@
 package com.bluecodeltd.ecap.chw.view_holder;
 
-import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-
-import org.json.JSONException;
-import org.smartregister.view.contract.Village;
+import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,6 +25,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private final ImageView  visitLayout, caseplan_layout, warningIcon;
     private final TextView index_icon_layout;
+    private final Button dueButton;
 
     public IndexRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -39,6 +37,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         visitLayout = itemView.findViewById(R.id.index_visit);
         gender_age = itemView.findViewById(R.id.gender_age);
         warningIcon = itemView.findViewById(R.id.index_warning);
+        dueButton = itemView.findViewById(R.id.due_button);
 
     }
 
@@ -46,7 +45,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     public void setupViews(String family, String village, int plans, int visits, String is_index, String status, String gender, String age, String is_screened){
 
         familyNameTextView.setText(family);
-        villageTextView.setText(village);
+        villageTextView.setText("ID : "+village);
         gender_age.setText(gender + " : " + age);
 
         if(status != null && status.equals("1")){
@@ -83,6 +82,38 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             warningIcon.setVisibility(View.GONE);
         } else {
             warningIcon.setVisibility(View.VISIBLE);
+        }
+        VcaVisitationModel visitStatus = VcaVisitationDao.getVcaVisitationNotification(village);
+
+        if (visitStatus == null) {
+            dueButton.setBackgroundResource(R.drawable.due_contact);
+            dueButton.setText("Conduct Visit");
+            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+            return;
+        }
+
+        String statusColor = visitStatus.getStatus_color();
+
+        if (statusColor != null) {
+            statusColor = statusColor.trim();
+        }
+
+        if (statusColor != null && statusColor.equalsIgnoreCase("green")) {
+            dueButton.setBackgroundResource(R.drawable.home_visit_due);
+            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.colorGreen));
+            dueButton.setText("Visit Due: "+visitStatus.getVisit_date());
+        } else if (statusColor != null && statusColor.equalsIgnoreCase("yellow")) {
+            dueButton.setBackgroundResource(R.drawable.home_visit_10days_less);
+            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.pie_chart_yellow));
+            dueButton.setText("Visit Due: "+visitStatus.getVisit_date());
+        } else if (statusColor != null && statusColor.equalsIgnoreCase("red")) {
+            dueButton.setBackgroundResource(R.drawable.home_visit_overdue);
+            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.red_overlay));
+            dueButton.setText("Visit Overdue: "+visitStatus.getVisit_date());
+        } else  {
+            dueButton.setBackgroundResource(R.drawable.due_contact);
+            dueButton.setText("Conduct Visit");
+            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
         }
 
     }
