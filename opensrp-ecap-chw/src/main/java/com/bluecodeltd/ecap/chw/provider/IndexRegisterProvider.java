@@ -1,9 +1,6 @@
 package com.bluecodeltd.ecap.chw.provider;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +9,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.FamilyDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
@@ -22,7 +17,6 @@ import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.cursoradapter.RecyclerViewFragment;
 import org.smartregister.cursoradapter.RecyclerViewProvider;
 import org.smartregister.util.Utils;
 import org.smartregister.view.contract.SmartRegisterClient;
@@ -75,7 +69,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String is_screened = HouseholdDao.checkIfScreened(household_id);
 
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + childId, plans, visits, is_index, status, gender, age, is_screened);
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, plans, visits, is_index, status, gender, age, is_screened);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
