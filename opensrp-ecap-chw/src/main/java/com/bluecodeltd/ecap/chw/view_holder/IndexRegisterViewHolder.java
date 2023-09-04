@@ -62,6 +62,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     private final ImageView  visitLayout, caseplan_layout, warningIcon;
     private final TextView index_icon_layout;
     private final Button dueButton;
+    JSONObject indexRegisterForm;
 
     public IndexRegisterViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -154,9 +155,10 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         }
 
             dueButton.setOnClickListener(view -> {
+
+
                 try {
                     FormUtils formUtils = new FormUtils(context);
-                    JSONObject indexRegisterForm;
 
                     indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
 
@@ -196,6 +198,17 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                     e.printStackTrace();
                 }
             });
+        try {
+
+            ChildIndexEventClient childIndexEventClient = processRegistration(indexRegisterForm.toString());
+            if (childIndexEventClient == null) {
+                return;
+            }
+            saveRegistration(childIndexEventClient,true);
+
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
     public void startFormActivity(JSONObject jsonObject) {
         Form form = new Form();
@@ -251,7 +264,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
 
         Runnable runnable = () -> {
 
