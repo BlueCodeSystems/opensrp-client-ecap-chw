@@ -385,25 +385,25 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 Child childModel = new Child();
                 List<VCAServiceModel> serviceModels = VCAServiceReportDao.getRecentServicesByVCAID(child.getUnique_id());
 
-                if (!serviceModels.isEmpty()) {
-                    VCAServiceModel serviceModel = serviceModels.get(0);
-                    if (serviceModel.getDate_last_vl() != null){
-                        childModel.setDate_last_vl(serviceModel.getDate_last_vl());
-                   //     graduationModel.setDate_last_vl(serviceModel.getDate_last_vl());
-                    } else {
-                        childModel.setDate_last_vl(child.getDate_last_vl());
-                 //       graduationModel.setDate_last_vl(child.getDate_last_vl());
-                    }
-
-                    if (serviceModel.getVl_last_result() != null){
-                        childModel.setVl_last_result(serviceModel.getVl_last_result());
-                        graduationModel.setVl_last_result(serviceModel.getVl_last_result());
-                    } else {
-                        childModel.setVl_last_result(child.getVl_last_result());
-                        graduationModel.setVl_last_result(child.getVl_last_result());
-                    }
-
-                }
+//                if (!serviceModels.isEmpty()) {
+//                    VCAServiceModel serviceModel = serviceModels.get(0);
+//                    if (serviceModel.getDate_last_vl() != null){
+//                        childModel.setDate_last_vl(serviceModel.getDate_last_vl());
+//                   //     graduationModel.setDate_last_vl(serviceModel.getDate_last_vl());
+//                    } else {
+//                        childModel.setDate_last_vl(child.getDate_last_vl());
+//                 //       graduationModel.setDate_last_vl(child.getDate_last_vl());
+//                    }
+//
+//                    if (serviceModel.getVl_last_result() != null){
+//                        childModel.setVl_last_result(serviceModel.getVl_last_result());
+//                        graduationModel.setVl_last_result(serviceModel.getVl_last_result());
+//                    } else {
+//                        childModel.setVl_last_result(child.getVl_last_result());
+//                        graduationModel.setVl_last_result(child.getVl_last_result());
+//                    }
+//
+//                }
                 childModel.setHousehold_id(child.getHousehold_id());
                 childModel.setAdolescent_birthdate(child.getAdolescent_birthdate());
                 childModel.setUnique_id(child.getUnique_id());
