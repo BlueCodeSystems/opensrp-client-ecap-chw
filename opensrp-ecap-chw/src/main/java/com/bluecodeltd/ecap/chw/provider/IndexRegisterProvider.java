@@ -55,8 +55,8 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
         String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true);
-
         String age = getAge(birthdate);
+        String vcaAge = String.valueOf(getVcaAge(birthdate));
 
         int plans = CasePlanDao.checkCasePlan(childId);
 
@@ -69,7 +69,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String is_screened = HouseholdDao.checkIfScreened(household_id);
 
 
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, plans, visits, is_index, status, gender, age, is_screened);
+        indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, plans, visits, is_index, status, gender, age, is_screened,vcaAge);
         indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
@@ -108,6 +108,39 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             return periodBetweenDateOfBirthAndNow.getDays() +" Days Old";
         }
         else return "Age Not Set";
+    }
+
+    private int getVcaAge(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            if(periodBetweenDateOfBirthAndNow.getYears() == 1){
+
+                return periodBetweenDateOfBirthAndNow.getYears();
+
+            } else {
+                return periodBetweenDateOfBirthAndNow.getYears();
+            }
+
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+
+            if (periodBetweenDateOfBirthAndNow.getMonths() == 1){
+
+                return periodBetweenDateOfBirthAndNow.getMonths();
+
+            } else {
+                return periodBetweenDateOfBirthAndNow.getMonths();
+            }
+
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return periodBetweenDateOfBirthAndNow.getDays() ;
+        }
+        else return 0;
     }
 
 
@@ -149,8 +182,9 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     @Override
     public IndexRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
         View viewHolder = inflater().inflate(R.layout.index_register_item_layout, null);
-        return new IndexRegisterViewHolder(viewHolder);
+        return new IndexRegisterViewHolder(viewHolder, context);
     }
+
 
     @Override
     public RecyclerView.ViewHolder createFooterHolder(ViewGroup parent) {

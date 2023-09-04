@@ -389,10 +389,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     VCAServiceModel serviceModel = serviceModels.get(0);
                     if (serviceModel.getDate_last_vl() != null){
                         childModel.setDate_last_vl(serviceModel.getDate_last_vl());
-                        graduationModel.setDate_last_vl(serviceModel.getDate_last_vl());
+                   //     graduationModel.setDate_last_vl(serviceModel.getDate_last_vl());
                     } else {
                         childModel.setDate_last_vl(child.getDate_last_vl());
-                        graduationModel.setDate_last_vl(child.getDate_last_vl());
+                 //       graduationModel.setDate_last_vl(child.getDate_last_vl());
                     }
 
                     if (serviceModel.getVl_last_result() != null){
