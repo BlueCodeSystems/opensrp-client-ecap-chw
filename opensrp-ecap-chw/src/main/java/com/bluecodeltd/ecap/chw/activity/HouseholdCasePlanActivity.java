@@ -307,7 +307,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             }
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", householdId);
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", householdId);
-           // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
+            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
             JSONObject statusObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
             statusObject.put(JsonFormUtils.VALUE, caseDate);
 
