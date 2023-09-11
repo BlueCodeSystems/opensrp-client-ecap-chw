@@ -71,6 +71,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         warningIcon = itemView.findViewById(R.id.index_warning);
         dueButton = itemView.findViewById(R.id.due_button);
 
+
     }
 
 
@@ -78,7 +79,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         familyNameTextView.setText(family);
         villageTextView.setText("ID : "+village);
-        gender_age.setText(gender + " : " + age+" Years Old");
+        gender_age.setText(gender + " : " + age+" ");
 
         FormUtils formUtils = null;
         try {
@@ -193,14 +194,16 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 //                            e.printStackTrace();
 //                        }
 //                    }
+//                    IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
+//                    idRegisterActivity.startFormActivity(indexRegisterForm);
 //
 //                    startFormActivity(indexRegisterForm);
 //
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-//
 //                try {
+//
 //
 //                    ChildIndexEventClient childIndexEventClient = processRegistration(indexRegisterForm.toString());
 //                    if (childIndexEventClient == null) {
@@ -208,10 +211,13 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 //                    }
 //                    saveRegistration(childIndexEventClient,true);
 //
+//
 //                } catch (Exception e) {
 //                    Timber.e(e);
 //                }
+//
 //            });
+
 
 
     }
