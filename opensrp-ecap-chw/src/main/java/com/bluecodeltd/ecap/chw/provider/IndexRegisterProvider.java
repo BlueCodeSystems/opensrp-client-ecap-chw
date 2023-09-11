@@ -56,7 +56,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
         String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true);
         String age = getAge(birthdate);
-        String vcaAge = String.valueOf(getVcaAge(birthdate));
+        String vcaAge = getVcaAge(birthdate);
 
         int plans = CasePlanDao.checkCasePlan(childId);
 
@@ -77,7 +77,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     }
 
 
-    private String getAge(String birthdate){
+    private String getVcaAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
         LocalDate today =LocalDate.now();
@@ -110,37 +110,16 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         else return "Age Not Set";
     }
 
-    private int getVcaAge(String birthdate){
+    private String getAge(String birthdate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
-        LocalDate today =LocalDate.now();
+        LocalDate today = LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
-        if(periodBetweenDateOfBirthAndNow.getYears() >0)
-        {
-            if(periodBetweenDateOfBirthAndNow.getYears() == 1){
 
-                return periodBetweenDateOfBirthAndNow.getYears();
+        int years = periodBetweenDateOfBirthAndNow.getYears();
+        int months = periodBetweenDateOfBirthAndNow.getMonths();
 
-            } else {
-                return periodBetweenDateOfBirthAndNow.getYears();
-            }
-
-        }
-        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
-
-            if (periodBetweenDateOfBirthAndNow.getMonths() == 1){
-
-                return periodBetweenDateOfBirthAndNow.getMonths();
-
-            } else {
-                return periodBetweenDateOfBirthAndNow.getMonths();
-            }
-
-        }
-        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
-            return periodBetweenDateOfBirthAndNow.getDays() ;
-        }
-        else return 0;
+        return years + "y " + months + "m";
     }
 
 
