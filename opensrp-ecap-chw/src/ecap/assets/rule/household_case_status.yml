@@ -2,27 +2,14 @@
 name: step1_new_caregiver_name
 description: new_caregiver_name
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
-
-
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_new_caregiver_nrc
 description: new_caregiver_nrc
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
-
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 
 actions:
   - "isRelevant = true"
@@ -30,12 +17,7 @@ actions:
 name: step1_new_caregiver_birth_date
 description: new_caregiver_birth_date
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 
 
 actions:
@@ -44,12 +26,7 @@ actions:
 name: step1_new_caregiver_sex
 description: new_caregiver_sex
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 
 
 actions:
@@ -58,12 +35,7 @@ actions:
 name: step1_new_relation
 description: new_relation
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 
 
 actions:
@@ -72,12 +44,7 @@ actions:
 name: step1_new_caregiver_hiv_status
 description: new_caregiver_hiv_status
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 
 
 actions:
@@ -86,12 +53,7 @@ actions:
 name: step1_new_caregiver_phone
 description: new_caregiver_phone
 priority: 1
-condition: "step1_de_registration_reason.contains('Wrong Entry') 
-|| step1_de_registration_reason.contains('Exited without graduation') 
-|| step1_de_registration_reason.contains('Lost to follow up') 
-|| step1_de_registration_reason.contains('Caregiver died')
-|| step1_de_registration_reason.contains('Moved (Relocated)')
-|| step1_de_registration_reason.contains('other')"
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
 
 
 actions:

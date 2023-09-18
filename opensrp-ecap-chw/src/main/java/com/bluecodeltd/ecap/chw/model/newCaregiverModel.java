@@ -10,6 +10,7 @@ public class newCaregiverModel {
     private String new_caregiver_phone;
     private String household_id;
     private String household_case_status;
+    private  String reason_for_updating_caregiver;
 
 
     public String getNew_caregiver_name() {
@@ -82,5 +83,13 @@ public class newCaregiverModel {
 
     public void setHousehold_case_status(String household_case_status) {
         this.household_case_status = household_case_status;
+    }
+
+    public String getReason_for_updating_caregiver() {
+        return reason_for_updating_caregiver;
+    }
+
+    public void setReason_for_updating_caregiver(String reason_for_updating_caregiver) {
+        this.reason_for_updating_caregiver = reason_for_updating_caregiver;
     }
 }
