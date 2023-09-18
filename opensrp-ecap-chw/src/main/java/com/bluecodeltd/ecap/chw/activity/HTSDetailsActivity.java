@@ -1122,12 +1122,12 @@ public class HTSDetailsActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("OVERVIEW");
-        tabLayout.getTabAt(1).setText("HTS LINKS");
+        tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
-        visitTabTitle.setText("HTS LINKS");
+        visitTabTitle.setText("INDEX/SNT CONTACT");
         htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
 
         int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());
