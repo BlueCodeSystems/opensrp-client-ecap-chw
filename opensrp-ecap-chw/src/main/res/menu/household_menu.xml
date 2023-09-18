@@ -26,5 +26,9 @@
         android:id="@+id/case_status"
         android:title="Case Closure"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/update_caregiver_details"
+        android:title="Update Caregiver Details"
+        app:showAsAction="never" />
 
 </menu>

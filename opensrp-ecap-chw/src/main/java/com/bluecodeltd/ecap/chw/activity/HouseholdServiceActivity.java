@@ -27,10 +27,12 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -64,11 +66,13 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView cname, hh_id;
+    private TextView cname, hh_id,updatedCaregiverName;
 
     private Toolbar toolbar;
     String intent_householdId;
+    newCaregiverModel updatedCaregiver;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +87,25 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.service_container);
         cname = findViewById(R.id.caregiver_name);
         hh_id = findViewById(R.id.hhid);
+        updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
 
         intent_householdId = getIntent().getExtras().getString("householdId");
         String intent_cname = getIntent().getExtras().getString("cname");
 
+        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
+
 
         hh_id.setText(intent_householdId);
         cname.setText(intent_cname);
+
+        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
+
+            updatedCaregiverName.setVisibility(View.VISIBLE);
+            updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+
+        }
+
+
 
         familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
 

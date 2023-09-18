@@ -132,6 +132,39 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
                 />
+            <LinearLayout
+                android:id="@+id/due_button_wrapper"
+                android:background="@drawable/grey_left_border"
+                android:paddingLeft="@dimen/register_list_item_padding"
+                android:paddingTop="@dimen/register_list_top_bottom_padding"
+                android:paddingRight="@dimen/register_list_item_padding"
+                android:paddingBottom="@dimen/register_list_top_bottom_padding"
+                android:layout_width="@dimen/register_list_item_width"
+                android:layout_height="@dimen/register_list_item_height"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/register_list_item_padding"
+                android:paddingEnd="@dimen/register_list_item_padding"
+                android:layout_alignParentEnd="true">
+                <Button
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="@dimen/register_list_due_size"
+                    android:typeface="normal"
+                    android:textColor="@color/grey"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/due_button"
+                    android:background="@drawable/due_contact"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:text="Home Visit"
+                    android:hapticFeedbackEnabled="true"
+                    android:textAllCaps="false"
+                    />
+            </LinearLayout>
 
 
         </LinearLayout>

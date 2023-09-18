@@ -4,7 +4,6 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.EventClient;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,10 +15,7 @@ import org.smartregister.client.utils.constants.JsonFormConstants;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.tag.FormTag;
-import org.smartregister.family.domain.FamilyEventClient;
 import org.smartregister.family.util.JsonFormUtils;
-import org.smartregister.family.util.Utils;
-import org.smartregister.opd.pojo.OpdEventClient;
 import org.smartregister.repository.AllSharedPreferences;
 
 import java.util.ArrayList;
@@ -58,6 +54,9 @@ public class IndexClientsUtils {
                 table = CoreConstants.TABLE_NAME.EC_MOTHER_INDEX;
             }else if(encounterType.equals("HIV Testing Service")) {
                 table = CoreConstants.TABLE_NAME.EC_HIV_TESTING_SERVICE;
+            }
+            else if(encounterType.equals("Household Visitation Form 0-20 years")) {
+                table = Constants.EcapClientTable.EC_HOUSEHOLD_VCA;
             }
 
             Event childEvent = JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
