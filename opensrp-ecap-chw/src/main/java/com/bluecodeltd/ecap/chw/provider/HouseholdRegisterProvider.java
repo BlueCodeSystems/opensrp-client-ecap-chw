@@ -2,12 +2,9 @@ package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +12,6 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.view_holder.HouseholdRegisterViewHolder;
-import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -29,10 +25,6 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdRegisterProvider implements RecyclerViewProvider<HouseholdRegisterViewHolder>, View.OnClickListener{
@@ -55,7 +47,9 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String householdId = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", false);
-        String caregiver_Name = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+        String updated_caregiver_name = Utils.getValue(personObjectClient.getColumnmaps(), "new_caregiver_name", true);
+//        String caregiver_Name = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+
         String is_closed = Utils.getValue(personObjectClient.getColumnmaps(), "is_closed", true);
         String baseId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", true);
         List<String> genderList = IndexPersonDao.getGenders(householdId);
@@ -63,8 +57,14 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         String is_screened = HouseholdDao.checkIfScreened(householdId);
         //String is_closed = HouseholdDao.getHouseholdByBaseId(baseId).getStatus();
 
+        String caregiverName;
+        if(updated_caregiver_name.isEmpty()){
+            caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+        } else {
+            caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "new_caregiver_name", true);
+        }
 
-        householdRegisterViewHolder.setupViews(caregiver_Name + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
+        householdRegisterViewHolder.setupViews(caregiverName + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
         householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.findViewById(R.id.register_columns).setOnClickListener(onClickListener);
         householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
