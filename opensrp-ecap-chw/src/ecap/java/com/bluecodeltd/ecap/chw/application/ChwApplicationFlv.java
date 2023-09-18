@@ -143,7 +143,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "index_check_box",
                 "caregiver_name",
                 "household_id",
-                "status"
+                "status",
+                "new_caregiver_name"
         });
         map.put(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,

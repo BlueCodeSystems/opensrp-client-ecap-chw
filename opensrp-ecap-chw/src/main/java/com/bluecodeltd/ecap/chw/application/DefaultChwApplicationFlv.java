@@ -284,7 +284,8 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 DBConstants.KEY.LAST_INTERACTED_WITH,
                 "index_check_box",
                 "caregiver_name",
-                "hid"
+                "hid",
+                "new_caregiver_name"
         });
 
         map.put(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, new String[]{
