@@ -220,6 +220,8 @@
         "type": "spinner",
         "hint": "Relationship to Index/SNS index",
         "keys": [
+          "Son",
+          "Daughter",
           "Mother",
           "Father",
           "Husband",
@@ -229,6 +231,8 @@
           "Other"
         ],
         "values": [
+          "Son",
+          "Daughter",
           "Mother",
           "Father",
           "Husband",
@@ -304,11 +308,11 @@
         "options": [
           {
             "key": "negative",
-            "text": "Negative"
+            "text": "Known Negative"
           },
           {
             "key": "positive",
-            "text": "Positive"
+            "text": "Known Positive"
           },
           {
             "key": "Test Not Required (evidenced by an HIV risk assessment)",
@@ -342,11 +346,11 @@
         "options": [
           {
             "key": "negative",
-            "text": "Negative"
+            "text": "Known Negative "
           },
           {
             "key": "positive",
-            "text": "Positive"
+            "text": "Known Positive"
           }
 
         ],
