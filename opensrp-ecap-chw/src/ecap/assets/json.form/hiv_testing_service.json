@@ -270,7 +270,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
-        "label": "Index/SNS Case Sex",
+        "label": "Index/SNS/Other Community Case Sex",
         "options": [
           {
             "key": "male",
