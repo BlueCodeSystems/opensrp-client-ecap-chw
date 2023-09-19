@@ -867,7 +867,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "spinner",
-        "hint": "Level of MMD for child ",
+        "hint": "Level of MMD for caregiver ",
         "values": [
           "Less than 3 months",
           "Between 3-5 months",
@@ -875,7 +875,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Select level of MMD for child"
+          "err": "Select level of MMD for caregiver"
         },
         "relevance": {
           "step2:caregiver_mmd": {
