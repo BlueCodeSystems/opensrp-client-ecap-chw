@@ -787,7 +787,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Date of next VL test",
         "relevance": {
           "step2:active_on_treatment": {
