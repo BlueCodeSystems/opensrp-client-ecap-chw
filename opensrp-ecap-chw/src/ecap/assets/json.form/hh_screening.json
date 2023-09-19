@@ -278,6 +278,16 @@
             "key": "subpop",
             "text": "Children of Female Sex Workers (FSWs)",
             "value": "false"
+          },
+          {
+            "key": "Siblings of the Index/Other family members",
+            "text": "Siblings of the Index/Other family members"
+
+          },
+          {
+            "key": "PBFW",
+            "text": "PBFW"
+
           }
         ],
         "v_required": {
