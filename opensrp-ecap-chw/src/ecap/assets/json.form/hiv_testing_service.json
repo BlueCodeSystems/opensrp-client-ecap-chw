@@ -260,7 +260,7 @@
           }
         },
         "v_required": {
-          "value": "true",
+          "value": "false",
           "err": "ART number is Required"
         }
       },
