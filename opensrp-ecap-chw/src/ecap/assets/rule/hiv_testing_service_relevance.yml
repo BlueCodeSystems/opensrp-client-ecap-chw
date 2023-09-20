@@ -2,7 +2,7 @@
 name: step1_gender
 description: gender
 priority: 1
-condition: "step1_testing_modality.contains('Index') || step1_testing_modality.contains('SNT') || step1_testing_modality.contains('Other Community') "
+condition: "step1_testing_modality.contains('Index') || step1_testing_modality.contains('SNT')"
 actions:
   - "isRelevant = true"
 ---
