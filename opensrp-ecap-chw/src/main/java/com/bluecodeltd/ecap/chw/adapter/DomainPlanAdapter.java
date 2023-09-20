@@ -67,6 +67,17 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
 
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+
+    private OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
+
+
     public DomainPlanAdapter(ArrayList<CasePlanModel> caseplans, Context context, String formName){
 
         super();
@@ -199,12 +210,16 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                 }
                 saveRegistration(childIndexEventClient,true);
 
+                if (onDataUpdateListener != null) {
+                    onDataUpdateListener.onDataUpdate();
+                }
+
 
             } catch (Exception e) {
                 Timber.e(e);
             }
 //            callActivity(casePlan);
-            refreshActivity();
+//            refreshActivity();
 
         }));
 
@@ -228,17 +243,17 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 
     }
 
-    public void refreshActivity() {
-        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
-    }
-
-    private Runnable refreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Activity activity = (CasePlan) context;
-            activity.recreate();
-        }
-    };
+//    public void refreshActivity() {
+//        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
+//    }
+//
+//    private Runnable refreshRunnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            Activity activity = (CasePlan) context;
+//            activity.recreate();
+//        }
+//    };
     public void callActivity(CasePlanModel casePlan) {
         Intent openActivity = new Intent(context, CasePlan.class);
         openActivity.putExtra("childId",  casePlan.getUnique_id());
@@ -379,6 +394,9 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onDataUpdateListener != null) {
+                        onDataUpdateListener.onDataUpdate();
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);
