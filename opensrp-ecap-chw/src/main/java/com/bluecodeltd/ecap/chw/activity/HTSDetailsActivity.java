@@ -242,8 +242,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
-            if(hivTestingServiceModel.getTesting_modality() != null && hivTestingServiceModel.getTesting_modality().equals("Other Community") ){
-                addIndexClients.setVisibility(View.GONE);
+            if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
+                addIndexClients.setVisibility(View.VISIBLE);
             }
 
         }
