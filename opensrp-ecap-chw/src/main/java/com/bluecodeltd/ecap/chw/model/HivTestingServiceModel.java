@@ -18,6 +18,20 @@ public class HivTestingServiceModel {
     private String gender;
     private String birthdate;
     private String entry_point;
+    private String ecap_id;
+    private String sub_population;
+    private String address;
+    private String landmark;
+    private String contact_phone;
+    private String hiv_status;
+    private String date_tested;
+    private String hiv_result;
+    private String test_done_hf;
+    private String hiv_recent_test;
+    private String art_date;
+    private String art_date_initiated;
+    private String comment;
+    private String checked_by;
     private String delete_status;
     private String date_edited;
     private String date_client_created;
@@ -157,6 +171,119 @@ public class HivTestingServiceModel {
 
     public void setEntry_point(String entry_point) {
         this.entry_point = entry_point;
+    }
+
+
+    public String getEcap_id() {
+        return ecap_id;
+    }
+
+    public void setEcap_id(String ecap_id) {
+        this.ecap_id = ecap_id;
+    }
+
+    public String getSub_population() {
+        return sub_population;
+    }
+
+    public void setSub_population(String sub_population) {
+        this.sub_population = sub_population;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public String getContact_phone() {
+        return contact_phone;
+    }
+
+    public void setContact_phone(String contact_phone) {
+        this.contact_phone = contact_phone;
+    }
+
+    public String getHiv_status() {
+        return hiv_status;
+    }
+
+    public void setHiv_status(String hiv_status) {
+        this.hiv_status = hiv_status;
+    }
+
+    public String getDate_tested() {
+        return date_tested;
+    }
+
+    public void setDate_tested(String date_tested) {
+        this.date_tested = date_tested;
+    }
+
+    public String getHiv_result() {
+        return hiv_result;
+    }
+
+    public void setHiv_result(String hiv_result) {
+        this.hiv_result = hiv_result;
+    }
+
+    public String getTest_done_hf() {
+        return test_done_hf;
+    }
+
+    public void setTest_done_hf(String test_done_hf) {
+        this.test_done_hf = test_done_hf;
+    }
+
+    public String getHiv_recent_test() {
+        return hiv_recent_test;
+    }
+
+    public void setHiv_recent_test(String hiv_recent_test) {
+        this.hiv_recent_test = hiv_recent_test;
+    }
+
+    public String getArt_date() {
+        return art_date;
+    }
+
+    public void setArt_date(String art_date) {
+        this.art_date = art_date;
+    }
+
+    public String getArt_date_initiated() {
+        return art_date_initiated;
+    }
+
+    public void setArt_date_initiated(String art_date_initiated) {
+        this.art_date_initiated = art_date_initiated;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getChecked_by() {
+        return checked_by;
+    }
+
+    public void setChecked_by(String checked_by) {
+        this.checked_by = checked_by;
     }
 
     public String getDelete_status() {

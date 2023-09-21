@@ -353,10 +353,10 @@
         }
       },
       {
-        "key": "phone",
+        "key": "contact_phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone",
+        "openmrs_entity_id": "contact_phone",
         "type": "edit_text",
         "hint": "Phone Number",
         "read_only": "false",
@@ -627,21 +627,6 @@
         "openmrs_entity_id": "comment",
         "type": "edit_text",
         "hint": "Comments",
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
-          }
-        }
-      },
-      {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Case Worker Name",
         "relevance": {
           "step1:testing_modality": {
             "type": "string",

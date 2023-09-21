@@ -330,7 +330,8 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "first_name",
                 "middle_name",
                 "last_name",
-                "client_number"
+                "client_number",
+                "testing_modality"
         });
 
         return map;

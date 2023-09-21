@@ -57,9 +57,9 @@ public class HivTestingServicesRegisterViewHolder extends RecyclerView.ViewHolde
         familyNameTextView.setText(family);
         villageTextView.setText(village);
         gender_age.setText(gender + " : " + age);
-        if(client.equals("Other Community")){
-            gender_age.setVisibility(View.GONE);
-        }
+//        if(client.equals("Other Community")){
+//            gender_age.setVisibility(View.GONE);
+//        }
         client_type.setText("Testing Modality: "+client);
 
 //        if(status != null && status.equals("1")){
