@@ -173,6 +173,7 @@ public class HouseholdDetails extends AppCompatActivity {
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
         house = getHousehold(householdId);
+        refreshActivity(house);
 
         caregiver = CaregiverDao.getCaregiver(householdId);
 
@@ -1853,5 +1854,12 @@ public class HouseholdDetails extends AppCompatActivity {
         Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
         startActivity(returnToHouseholdIndexActivity);
         finish();
+    }
+    public void refreshActivity(Household house){
+        if(house == null){
+            finish();
+            startActivity(getIntent());
+        }
+
     }
 }

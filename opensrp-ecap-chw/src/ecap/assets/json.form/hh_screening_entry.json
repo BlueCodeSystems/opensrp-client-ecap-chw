@@ -796,23 +796,26 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
-        "type": "edit_text",
-        "read_only": "false",
+        "type": "date_picker",
         "hint": "Date of next VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
         "relevance": {
           "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "service_report_household_calculation.yml"
-            }
-          }
         }
       },
+
       {
 
         "key": "vl_suppressed",

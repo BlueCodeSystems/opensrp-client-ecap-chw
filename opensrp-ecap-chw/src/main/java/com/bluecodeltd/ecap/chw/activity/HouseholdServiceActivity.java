@@ -371,5 +371,12 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
         finish();
         startActivity(getIntent());
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HouseholdDetails.class);
+        intent.putExtra("householdId", intent_householdId);
+        startActivity(intent);
+        finish();
+    }
 
 }
