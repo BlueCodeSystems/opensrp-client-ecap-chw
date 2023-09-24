@@ -77,6 +77,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1139,8 +1140,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case "case_status":
             case "vca_screening":
+                if(indexVCA.getIs_on_hiv_treatment() == null){
+                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
+                    indexVCAMap.remove("date_started_art");
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                }
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
 
