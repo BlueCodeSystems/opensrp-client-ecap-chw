@@ -174,6 +174,8 @@ public class Child implements Serializable {
         this.phone = phone;
         this.schoolName = schoolName;
     }
+
+    private String case_plan_id;
     @SerializedName("phone")
     @Expose
     private String phone;
@@ -1165,5 +1167,13 @@ public class Child implements Serializable {
 
     public void setDated_edited(String dated_edited) {
         this.dated_edited = dated_edited;
+    }
+
+    public String getCase_plan_id() {
+        return case_plan_id;
+    }
+
+    public void setCase_plan_id(String case_plan_id) {
+        this.case_plan_id = case_plan_id;
     }
 }

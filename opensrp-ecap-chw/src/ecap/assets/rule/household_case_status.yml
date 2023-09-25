@@ -1,0 +1,60 @@
+---
+name: step1_new_caregiver_name
+description: new_caregiver_name
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_new_caregiver_nrc
+description: new_caregiver_nrc
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+
+actions:
+  - "isRelevant = true"
+---
+name: step1_new_caregiver_birth_date
+description: new_caregiver_birth_date
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+
+
+actions:
+  - "isRelevant = true"
+---
+name: step1_new_caregiver_sex
+description: new_caregiver_sex
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+
+
+actions:
+  - "isRelevant = true"
+---
+name: step1_new_relation
+description: new_relation
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+
+
+actions:
+  - "isRelevant = true"
+---
+name: step1_new_caregiver_hiv_status
+description: new_caregiver_hiv_status
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+
+
+actions:
+  - "isRelevant = true"
+---
+name: step1_new_caregiver_phone
+description: new_caregiver_phone
+priority: 1
+condition: "step1_household_case_status.contains('Update Caregiver Details')"
+
+
+actions:
+  - "isRelevant = true"

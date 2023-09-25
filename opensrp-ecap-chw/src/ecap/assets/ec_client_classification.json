@@ -542,6 +542,13 @@
             "creates_case": [
               "ec_hiv_testing_service"
             ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "HIV Testing Links",
+            "creates_case": [
+              "ec_hiv_testing_links"
+            ]
           }
         ]
       }

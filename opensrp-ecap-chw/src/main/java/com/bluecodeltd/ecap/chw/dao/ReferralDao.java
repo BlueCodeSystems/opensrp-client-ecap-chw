@@ -23,7 +23,9 @@ public class ReferralDao extends AbstractDao {
     }
     public static List<ReferralModel> getReferralsByID(String childID) {
 
-        String sql = "SELECT * FROM ec_referral WHERE unique_id = '" + childID + "'  AND (delete_status IS NULL OR delete_status <> '1') ORDER BY date_referred DESC ";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_referred,7,4) || '-' || substr(date_referred,4,2) || '-' || substr(date_referred,1,2)) as sortable_date" +
+                " FROM ec_referral WHERE unique_id = '" + childID + "'" +
+                "  AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
         if (values == null || values.size() == 0)
@@ -35,7 +37,7 @@ public class ReferralDao extends AbstractDao {
 
     public static List<ReferralModel> getReferralsByHouseholdID(String hh_ID) {
 
-        String sql = "SELECT * FROM ec_referral WHERE household_id = '" + hh_ID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY date_referred DESC ";
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(referred_date,7,4) || '-' || substr(referred_date,4,2) || '-' || substr(referred_date,1,2)) as sortable_date FROM ec_referral WHERE household_id = '" + hh_ID + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
         if (values == null || values.size() == 0)
@@ -50,15 +52,22 @@ public class ReferralDao extends AbstractDao {
         return c -> {
 
             ReferralModel record = new ReferralModel();
+            record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
-            record.setUnique_id(getCursorValue(c,"unique_id"));
+            record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setReferred_date(getCursorValue(c, "referred_date"));
+            record.setDate_edited(getCursorValue(c, "date_edited"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
+            record.setPhone(getCursorValue(c, "phone"));
             record.setReceiving_organization(getCursorValue(c, "receiving_organization"));
+            record.setDate_referred(getCursorValue(c, "date_referred"));
+            record.setCovid_19(getCursorValue(c, "covid_19"));
             record.setCd4(getCursorValue(c, "cd4"));
             record.setHiv_adherence(getCursorValue(c, "hiv_adherence"));
             record.setHiv_counseling_testing(getCursorValue(c, "hiv_counseling_testing"));
             record.setPost_gbv(getCursorValue(c, "post_gbv"));
-            record.setViral_load(getCursorValue(c, "substance_abuse"));
+            record.setSubstance_abuse(getCursorValue(c, "substance_abuse"));
             record.setTb_screening(getCursorValue(c, "tb_screening"));
             record.setSupplementary(getCursorValue(c, "supplementary"));
             record.setPrep(getCursorValue(c, "prep"));
@@ -91,18 +100,6 @@ public class ReferralDao extends AbstractDao {
             record.setCash_support(getCursorValue(c, "cash_support"));
             record.setFood_security(getCursorValue(c, "food_security"));
             record.setOther_stability_services(getCursorValue(c, "other_stability_services"));
-            record.setFollow_up(getCursorValue(c, "follow_up"));
-            record.setFirst_name(getCursorValue(c, "first_name"));
-            record.setLast_name(getCursorValue(c, "last_name"));
-            record.setJob_title(getCursorValue(c, "job_title"));
-            record.setDate_of_service1(getCursorValue(c, "date_of_service1"));
-            record.setDate_of_service2(getCursorValue(c, "date_of_service2"));
-            record.setDate_of_service3(getCursorValue(c, "date_of_service3"));
-            record.setDate_of_service4(getCursorValue(c, "date_of_service4"));
-            record.setSignature(getCursorValue(c, "signature"));
-            record.setCovid_19(getCursorValue(c, "covid_19"));
-            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
-            record.setPhone(getCursorValue(c, "phone"));
             record.setDateCovidProvided(getCursorValue(c, "dateCovidProvided"));
             record.setDateCD4Provided(getCursorValue(c, "dateCD4Provided"));
             record.setDateHivAdherenceProvided(getCursorValue(c, "dateHivAdherenceProvided"));
@@ -114,6 +111,7 @@ public class ReferralDao extends AbstractDao {
             record.setDatePlanningProvided(getCursorValue(c, "datePlanningProvided"));
             record.setDateInsecticideProvided(getCursorValue(c, "dateInsecticideProvided"));
             record.setDateTreatmentProvided(getCursorValue(c, "dateTreatmentProvided"));
+            record.setDateHealthProvided(getCursorValue(c, "dateHealthProvided"));
             record.setDateVmmcProvided(getCursorValue(c, "dateVmmcProvided"));
             record.setDateImmunizationProvided(getCursorValue(c, "dateImmunizationProvided"));
             record.setDateCondomProvided(getCursorValue(c, "dateCondomProvided"));
@@ -123,11 +121,12 @@ public class ReferralDao extends AbstractDao {
             record.setDateTreatmentCareProvided(getCursorValue(c, "dateTreatmentCareProvided"));
             record.setDatePmtctProvided(getCursorValue(c, "datePmtctProvided"));
             record.setDateHygienceProvided(getCursorValue(c, "dateHygienceProvided"));
+            record.setDatePlhaProvided(getCursorValue(c, "datePlhaProvided"));
             record.setDateViralLoadProvided(getCursorValue(c, "dateViralLoadProvided"));
             record.setOtherHealth(getCursorValue(c, "otherHealth"));
             record.setDateInfectionProvided(getCursorValue(c, "dateInfectionProvided"));
             record.setDatePrepProvided(getCursorValue(c, "datePrepProvided"));
-            record.setTransmitted_infections(getCursorValue(c, "dateFacilityProvided"));
+            record.setDateFacilityProvided(getCursorValue(c, "dateFacilityProvided"));
             record.setDateTraumaProvided(getCursorValue(c, "dateTraumaProvided"));
             record.setDateAssistanceProvided(getCursorValue(c, "dateAssistanceProvided"));
             record.setDateOtherSafetyProvided(getCursorValue(c, "dateOtherSafetyProvided"));
@@ -136,13 +135,14 @@ public class ReferralDao extends AbstractDao {
             record.setDateBursariesProvided(getCursorValue(c, "dateBursariesProvided"));
             record.setDateSchooledProvided(getCursorValue(c, "dateSchooledProvided"));
             record.setDateCashProvided(getCursorValue(c, "dateCashProvided"));
+            record.setDateSupportProvided(getCursorValue(c, "dateSupportProvided"));
             record.setDateSecurityProvided(getCursorValue(c, "dateSecurityProvided"));
             record.setDateStabilityProvided(getCursorValue(c, "dateStabilityProvided"));
             record.setSpecify_education(getCursorValue(c, "specify_education"));
             record.setSpecify_safety(getCursorValue(c, "specify_safety"));
             record.setSpecify_school(getCursorValue(c, "specify_school"));
             record.setSpecify_stability(getCursorValue(c, "specify_stability"));
-            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setDelete_status(getCursorValue(c, "delete_status"));
 
 
 

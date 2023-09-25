@@ -11,13 +11,8 @@ public class VCAServiceReportDao extends AbstractDao {
 
     public static List<VCAServiceModel> getRecentServicesByVCAID(String vcaID) {
 
-        String sql = "SELECT service.is_hiv_positive, service.date, service.vl_last_result, service.child_mmd, service.unique_id\n" +
-                "FROM (\n" +
-                "    SELECT is_hiv_positive, vl_last_result, child_mmd, date, unique_id,delete_status,\n" +
-                "           ROW_NUMBER() OVER (PARTITION BY unique_id ORDER BY date DESC) as rn\n" +
-                "    FROM ec_vca_service_report\n" +
-                ") service\n" +
-                "WHERE service.rn = 1 AND service.unique_id = '" + vcaID + "' AND (service.delete_status IS NULL OR service.delete_status <> '1')";
+        String sql = "SELECT *,is_hiv_positive, vl_last_result, child_mmd, level_mmd,date, unique_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+                "FROM ec_vca_service_report WHERE  unique_id = '" + vcaID + "' AND  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC LIMIT 1";
 
         List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)
@@ -27,8 +22,10 @@ public class VCAServiceReportDao extends AbstractDao {
 
     }
     public static List<VCAServiceModel> getServicesByVCAID(String vcaid) {
-
-        String sql = "SELECT * FROM ec_vca_service_report WHERE unique_id = '" + vcaid + "'  AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+                "FROM ec_vca_service_report\n" +
+                "WHERE unique_id = '" + vcaid + "' AND (delete_status IS NULL OR delete_status <> '1')\n" +
+                "ORDER BY sortable_date DESC";
 
         List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
         if (values == null || values.size() == 0)

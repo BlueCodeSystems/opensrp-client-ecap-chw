@@ -59,7 +59,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
-    String householdId, caseDate,uniqueId, hivStatus;
+    String householdId, caseDate,uniqueId, hivStatus,case_plan_id;
 
 
     @Override
@@ -75,6 +75,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         caseDate = getIntent().getExtras().getString("dateId");
         uniqueId = getIntent().getExtras().getString("unique_id");
         hivStatus = getIntent().getStringExtra("status");
+        case_plan_id = getIntent().getExtras().getString("case_plan_id");
 
         fetchData();
         domainBtn.setOnClickListener(new View.OnClickListener() {
@@ -302,19 +303,46 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             indexRegisterForm = formUtils.getFormJson("caregiver_domain");
 
             if(hivStatus.trim().equals("negative")){
-                indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).getJSONArray("options").remove(0);
+//                indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(4).getJSONArray("options").remove(0);
+                removeOption(indexRegisterForm, "step1", "type", "hiv");
             }
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", householdId);
             indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", householdId);
-           // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
+            indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", "2020-01-01");
             JSONObject statusObject = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
             statusObject.put(JsonFormUtils.VALUE, caseDate);
+
+
+            JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
+            casePlanId.put("value", case_plan_id);
 
 
 
             startFormActivity(indexRegisterForm);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeOption(JSONObject indexRegisterForm, String stepName, String fieldName, String optionToRemove) {
+        try {
+            JSONArray fields = indexRegisterForm.getJSONObject(stepName).getJSONArray("fields");
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject field = fields.getJSONObject(i);
+                if (field.getString("key").equals(fieldName)) {
+                    JSONArray options = field.getJSONArray("options");
+                    for (int j = 0; j < options.length(); j++) {
+                        JSONObject option = options.getJSONObject(j);
+                        if (option.getString("key").equals(optionToRemove)) {
+                            options.remove(j);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

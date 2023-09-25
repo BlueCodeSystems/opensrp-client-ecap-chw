@@ -6,6 +6,7 @@ public class CasePlanModel implements Serializable {
 
     private String base_entity_id;
     private String unique_id;
+    private String case_plan_id;
     private String case_plan_date;
     private String case_plan_status;
     private String type;
@@ -149,5 +150,13 @@ public class CasePlanModel implements Serializable {
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getCase_plan_id() {
+        return case_plan_id;
+    }
+
+    public void setCase_plan_id(String case_plan_id) {
+        this.case_plan_id = case_plan_id;
     }
 }

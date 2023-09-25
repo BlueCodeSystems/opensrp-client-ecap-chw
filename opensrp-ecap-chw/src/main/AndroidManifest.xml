@@ -67,6 +67,10 @@
             android:name=".activity.CasePlan"
             android:exported="true"
             android:label="VCA Case Plan" />
+
+        <activity
+            android:name=".activity.HivTestingServiceActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
@@ -163,6 +167,11 @@
         <activity
             android:name=".activity.IndexDetailsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HTSDetailsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+
+
         <activity
             android:name=".activity.HouseholdDetails"
             android:theme="@style/ChwTheme.NoActionBar" />

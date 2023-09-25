@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,8 +21,10 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ShowHouseholdReferralsAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -50,14 +53,17 @@ import timber.log.Timber;
 
 public class ShowHouseholdReferralActivity extends AppCompatActivity {
 
-    public String household_id, intent_vcaid;
+    public String household_id, intent_household_id;
     RecyclerView.Adapter recyclerViewadapter;
     private RecyclerView recyclerView;
     private final ArrayList<ReferralModel> referralList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView vcaname, hh_id, txtReferral,txtBold;
+    private TextView vcaname, hh_id, txtReferral,txtBold,updatedCaregiverName;
     private Toolbar toolbar;
 
+    newCaregiverModel updatedCaregiver;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +80,27 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         hh_id = findViewById(R.id.hhid);
         txtReferral = findViewById(R.id.txtNoReferral);
 
+        updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
+
         Bundle bundle = getIntent().getExtras();
-        intent_vcaid = bundle.getString("householdId");
+        intent_household_id = bundle.getString("householdId");
         String intent_cname = bundle.getString("householdName");
 
-        hh_id.setText("Household ID : " + intent_vcaid);
+        hh_id.setText("Household ID : " + intent_household_id);
         vcaname.setText(intent_cname+ " " +"Household");
         txtReferral.setText("No referrals have been added for " +intent_cname+ " " +"household");
 
+        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_household_id);
 
-        referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_vcaid));
+        if((updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("Update Caregiver Details")) || (updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("0") && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty())){
+
+            updatedCaregiverName.setVisibility(View.VISIBLE);
+            updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+
+        }
+
+
+        referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_household_id));
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowHouseholdReferralActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);

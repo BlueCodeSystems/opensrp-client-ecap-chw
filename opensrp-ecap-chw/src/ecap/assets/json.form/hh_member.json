@@ -2525,6 +2525,7 @@
         "openmrs_entity_id": "vl_last_result",
         "type": "edit_text",
         "hint": "Last VL results",
+        "edit_type": "number",
         "v_required": {
           "value": false,
           "err": "Enter last VL results"
@@ -2609,6 +2610,7 @@
         "openmrs_entity_id": "vl_next_result",
         "type": "edit_text",
         "hint": "VL next results",
+        "edit_type": "number",
         "v_required": {
           "value": false,
           "err": "Enter next VL results"

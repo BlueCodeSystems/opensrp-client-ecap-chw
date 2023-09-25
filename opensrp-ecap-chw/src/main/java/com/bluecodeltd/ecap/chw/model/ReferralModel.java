@@ -2,9 +2,17 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class ReferralModel {
 
+    private String unique_id;
+    private String household_id;
     private String base_entity_id;
+    private String relational_id;
     private String referred_date;
+    private String date_edited;
+    private String caseworker_name;
+    private String phone;
     private String receiving_organization;
+    private String date_referred;
+    private String covid_19;
     private String cd4;
     private String hiv_adherence;
     private String hiv_counseling_testing;
@@ -42,19 +50,6 @@ public class ReferralModel {
     private String cash_support;
     private String food_security;
     private String other_stability_services;
-    private String follow_up;
-    private String first_name;
-    private String last_name;
-    private String job_title;
-    private String date_of_service1;
-    private String date_of_service2;
-    private String date_of_service3;
-    private String date_of_service4;
-    private String signature;
-    private String covid_19;
-    private String caseworker_name;
-    private String phone;
-
     private String dateCovidProvided;
     private String dateCD4Provided;
     private String dateHivAdherenceProvided;
@@ -66,6 +61,7 @@ public class ReferralModel {
     private String datePlanningProvided;
     private String dateInsecticideProvided;
     private String dateTreatmentProvided;
+    private String dateHealthProvided;
     private String dateVmmcProvided;
     private String dateImmunizationProvided;
     private String dateCondomProvided;
@@ -89,22 +85,29 @@ public class ReferralModel {
     private String dateBursariesProvided;
     private String dateSchooledProvided;
     private String dateCashProvided;
+    private String dateSupportProvided;
     private String dateSecurityProvided;
     private String dateStabilityProvided;
     private String specify_education;
     private String specify_safety;
     private String specify_school;
     private String specify_stability;
-    private String unique_id;
-    private String household_id;
-    private  String delete_status;
+    private String delete_status;
 
-    public String getDelete_status() {
-        return delete_status;
+    public String getUnique_id() {
+        return unique_id;
     }
 
-    public void setDelete_status(String delete_status) {
-        this.delete_status = delete_status;
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 
     public String getBase_entity_id() {
@@ -115,6 +118,14 @@ public class ReferralModel {
         this.base_entity_id = base_entity_id;
     }
 
+    public String getRelational_id() {
+        return relational_id;
+    }
+
+    public void setRelational_id(String relational_id) {
+        this.relational_id = relational_id;
+    }
+
     public String getReferred_date() {
         return referred_date;
     }
@@ -123,12 +134,52 @@ public class ReferralModel {
         this.referred_date = referred_date;
     }
 
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
+    }
+
+    public String getCaseworker_name() {
+        return caseworker_name;
+    }
+
+    public void setCaseworker_name(String caseworker_name) {
+        this.caseworker_name = caseworker_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getReceiving_organization() {
         return receiving_organization;
     }
 
     public void setReceiving_organization(String receiving_organization) {
         this.receiving_organization = receiving_organization;
+    }
+
+    public String getDate_referred() {
+        return date_referred;
+    }
+
+    public void setDate_referred(String date_referred) {
+        this.date_referred = date_referred;
+    }
+
+    public String getCovid_19() {
+        return covid_19;
+    }
+
+    public void setCovid_19(String covid_19) {
+        this.covid_19 = covid_19;
     }
 
     public String getCd4() {
@@ -427,102 +478,6 @@ public class ReferralModel {
         this.other_stability_services = other_stability_services;
     }
 
-    public String getFollow_up() {
-        return follow_up;
-    }
-
-    public void setFollow_up(String follow_up) {
-        this.follow_up = follow_up;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getJob_title() {
-        return job_title;
-    }
-
-    public void setJob_title(String job_title) {
-        this.job_title = job_title;
-    }
-
-    public String getDate_of_service1() {
-        return date_of_service1;
-    }
-
-    public void setDate_of_service1(String date_of_service1) {
-        this.date_of_service1 = date_of_service1;
-    }
-
-    public String getDate_of_service2() {
-        return date_of_service2;
-    }
-
-    public void setDate_of_service2(String date_of_service2) {
-        this.date_of_service2 = date_of_service2;
-    }
-
-    public String getDate_of_service3() {
-        return date_of_service3;
-    }
-
-    public void setDate_of_service3(String date_of_service3) {
-        this.date_of_service3 = date_of_service3;
-    }
-
-    public String getDate_of_service4() {
-        return date_of_service4;
-    }
-
-    public void setDate_of_service4(String date_of_service4) {
-        this.date_of_service4 = date_of_service4;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
-    public String getCovid_19() {
-        return covid_19;
-    }
-
-    public void setCovid_19(String covid_19) {
-        this.covid_19 = covid_19;
-    }
-
-    public String getCaseworker_name() {
-        return caseworker_name;
-    }
-
-    public void setCaseworker_name(String caseworker_name) {
-        this.caseworker_name = caseworker_name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getDateCovidProvided() {
         return dateCovidProvided;
     }
@@ -609,6 +564,14 @@ public class ReferralModel {
 
     public void setDateTreatmentProvided(String dateTreatmentProvided) {
         this.dateTreatmentProvided = dateTreatmentProvided;
+    }
+
+    public String getDateHealthProvided() {
+        return dateHealthProvided;
+    }
+
+    public void setDateHealthProvided(String dateHealthProvided) {
+        this.dateHealthProvided = dateHealthProvided;
     }
 
     public String getDateVmmcProvided() {
@@ -795,6 +758,14 @@ public class ReferralModel {
         this.dateCashProvided = dateCashProvided;
     }
 
+    public String getDateSupportProvided() {
+        return dateSupportProvided;
+    }
+
+    public void setDateSupportProvided(String dateSupportProvided) {
+        this.dateSupportProvided = dateSupportProvided;
+    }
+
     public String getDateSecurityProvided() {
         return dateSecurityProvided;
     }
@@ -843,19 +814,11 @@ public class ReferralModel {
         this.specify_stability = specify_stability;
     }
 
-    public String getUnique_id() {
-        return unique_id;
+    public String getDelete_status() {
+        return delete_status;
     }
 
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
-    }
-
-    public String getHousehold_id() {
-        return household_id;
-    }
-
-    public void setHousehold_id(String household_id) {
-        this.household_id = household_id;
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 }

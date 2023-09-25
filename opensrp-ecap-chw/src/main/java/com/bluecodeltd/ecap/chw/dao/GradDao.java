@@ -72,7 +72,7 @@ public class GradDao extends AbstractDao {
 
         return true;
     }
-    public static boolean isEveryVCAKnowledgeableAboutHIVPrevention(String householdID) {
+    public static boolean doTheVCAsMeetBenchMarkThree(String householdID) {
         String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
                 " FROM ec_grad grad\n" +
                 " JOIN (SELECT unique_id, adolescent_birthdate,deleted FROM ec_client_index WHERE (deleted IS NULL OR deleted <> 1)) ec_client_index\n" +
@@ -119,41 +119,16 @@ public class GradDao extends AbstractDao {
 
 
     public static boolean hasVCAInAgeRange(String householdID) {
-        String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
-                " FROM ec_grad grad\n" +
-                " JOIN (SELECT unique_id, adolescent_birthdate FROM ec_client_index) ec_client_index\n" +
-                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "' AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> 1)";
 
-        AbstractDao.DataMap<VcaGradCorrectAnswers> dataMap = c -> {
-            String birthdateString = getCursorValue(c, "adolescent_birthdate");
-            String infection_correct = getCursorValue(c, "infection_correct");
-            String protect_correct = getCursorValue(c, "protect_correct");
-            String prevention_correct = getCursorValue(c, "prevention_correct");
-            String birthdate = String.valueOf(LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            return new VcaGradCorrectAnswers(birthdate, infection_correct, protect_correct, prevention_correct);
-        };
+        String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
+                "FROM ec_client_index " +
+                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 12 " +
+                "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 17 " +
+                "AND household_id = '" + householdID + "'";
 
-        List<VcaGradCorrectAnswers> values = AbstractDao.readData(sql, dataMap);
+        List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
 
-        if (values == null || values.isEmpty()) {
-            return false;
-        }
-
-        LocalDate today = LocalDate.now();
-        boolean hasChildInRange = false;
-
-        for (VcaGradCorrectAnswers value : values) {
-            LocalDate birthdate = LocalDate.parse(value.getBirthdate());
-            Period age = Period.between(birthdate, today);
-            int years = age.getYears();
-
-            if (years >= 12 && years <= 17) {
-                hasChildInRange = true;
-                break;
-            }
-        }
-
-        return hasChildInRange;
+        return ids != null && !ids.isEmpty();
     }
 
 

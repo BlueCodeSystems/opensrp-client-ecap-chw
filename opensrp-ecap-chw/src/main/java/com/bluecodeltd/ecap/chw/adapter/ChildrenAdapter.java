@@ -20,10 +20,14 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
+import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
+import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -176,6 +180,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         });
 
+        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
         if(caseStatus != null && caseStatus.equals("1")){
 
@@ -188,10 +193,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         } else if(caseStatus != null && caseStatus.equals("2")){
 
             holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
-        } else{
+        }
+        else{
             holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
         }
 
+//        if(caregiverModel.getHousehold_case_status() != null && caregiverModel.getHousehold_case_status().equals("0")){
+//
+//            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+//        }
 
         if(dob != null){
 
@@ -371,26 +381,35 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             case "grad":
                 //Initialize Graduation Button
                 GradModel graduationModel = populateGraduationModel(child.getUnique_id());
+//                VCAServiceModel serviceModel = (VCAServiceModel) VCAServiceReportDao.getRecentServicesByVCAID(child.getUnique_id());
                 Child childModel = new Child();
+                List<VCAServiceModel> serviceModels = VCAServiceReportDao.getRecentServicesByVCAID(child.getUnique_id());
 
-                if (VcaVisitationDao.getRecentVisitDate(child.getUnique_id()) != null){
-                    childModel.setDate_last_vl(VcaVisitationDao.getRecentVisitDate(child.getUnique_id()));
-                } else {
-                    childModel.setDate_last_vl(child.getDate_last_vl());
-                }
-
-                if (VcaVisitationDao.getRecentVcaVlResult(child.getUnique_id()) != null){
-                    childModel.setVl_last_result(VcaVisitationDao.getRecentVcaVlResult(child.getUnique_id()));
-                } else {
-                    childModel.setVl_last_result(child.getVl_last_result());
-                }
-
+//                if (!serviceModels.isEmpty()) {
+//                    VCAServiceModel serviceModel = serviceModels.get(0);
+//                    if (serviceModel.getDate_last_vl() != null){
+//                        childModel.setDate_last_vl(serviceModel.getDate_last_vl());
+//                   //     graduationModel.setDate_last_vl(serviceModel.getDate_last_vl());
+//                    } else {
+//                        childModel.setDate_last_vl(child.getDate_last_vl());
+//                 //       graduationModel.setDate_last_vl(child.getDate_last_vl());
+//                    }
+//
+//                    if (serviceModel.getVl_last_result() != null){
+//                        childModel.setVl_last_result(serviceModel.getVl_last_result());
+//                        graduationModel.setVl_last_result(serviceModel.getVl_last_result());
+//                    } else {
+//                        childModel.setVl_last_result(child.getVl_last_result());
+//                        graduationModel.setVl_last_result(child.getVl_last_result());
+//                    }
+//
+//                }
                 childModel.setHousehold_id(child.getHousehold_id());
+                childModel.setAdolescent_birthdate(child.getAdolescent_birthdate());
                 childModel.setUnique_id(child.getUnique_id());
                 childModel.setIs_hiv_positive(child.getIs_hiv_positive());
                 childModel.setFacility(child.getFacility());
                 childModel.setArt_number(child.getArt_number());
-
 
                 if (graduationModel == null) {
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(childModel, Map.class));

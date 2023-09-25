@@ -79,6 +79,20 @@
         }
       },
       {
+        "key": "case_plan_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_plan_id",
+        "type": "edit_text",
+        "hint": "Case plan ID",
+        "read_only": true,
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This Field is Required"
+        }
+      },
+      {
         "key": "case_plan_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

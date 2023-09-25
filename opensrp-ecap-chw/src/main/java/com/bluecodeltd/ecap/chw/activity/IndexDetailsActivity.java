@@ -53,6 +53,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
+import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -68,6 +69,7 @@ import com.bluecodeltd.ecap.chw.model.VcaCasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
+import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -106,6 +108,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -145,10 +148,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
+    newCaregiverModel updatedCaregiver;
 
 
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
+
+    Random number;
+    int rNumber;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -195,6 +202,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
         weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
+        updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
 
 
 
@@ -303,6 +311,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return map;
 
     }
+
+    public HashMap<String, newCaregiverModel> getUpdatedCaregiverData() {
+
+        HashMap<String, newCaregiverModel> map = new HashMap<>();
+
+        map.put("UpdatedCaregiver",updatedCaregiver);
+
+        return map;
+
+    }
+
 
 
     public int calculateAge(String dateOfBirth) {
@@ -627,9 +646,13 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                         JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
                         String dateId = cpdate.optString("value");
+
+                        JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                        String cp_Id = cpId.optString("value");
+
                         finish();
                         startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId);
+                        openVcaCasplanToAddVulnarabilities(dateId,cp_Id);
 
                         break;
 
@@ -665,10 +688,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     }
 
-    private void openVcaCasplanToAddVulnarabilities(String dateId) {
+    private void openVcaCasplanToAddVulnarabilities(String dateId,String cpId) {
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
+        i.putExtra("case_plan_id",cpId);
         i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
         startActivity(i);
     }
@@ -1049,18 +1073,22 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(indexVCA.getIs_hiv_positive() != null){
                     rassessment.setVisibility(View.VISIBLE);
                 }
+                if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
+                    hiv_assessment.setVisibility(View.GONE);
+                } else {
+                    if(Integer.parseInt(vcaAge) > 1){
+                        if(Integer.parseInt(vcaAge) < 15){
+                            hiv_assessment.setVisibility(View.VISIBLE);
+                        }
 
-                if(Integer.parseInt(vcaAge) > 1){
-                    if(Integer.parseInt(vcaAge) < 15){
-                        hiv_assessment.setVisibility(View.VISIBLE);
+                        if(Integer.parseInt(vcaAge) >= 15){
+                            hiv_assessment2.setVisibility(View.VISIBLE);
+                        }
+
+
                     }
-
-                    if(Integer.parseInt(vcaAge) >= 15){
-                        hiv_assessment2.setVisibility(View.VISIBLE);
-                    }
-
-
                 }
+
 
                 if(Integer.parseInt(vcaAge) > 18){
                     weServicesVca.setVisibility(View.VISIBLE);
@@ -1169,6 +1197,20 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case "case_plan":
+                number = new Random();
+                rNumber = number.nextInt(900000000);
+                String assignCasePlanId =  Integer.toString(rNumber);
+                JSONObject case_plan_id = getFieldJSONObject(fields(formToBeOpened, "step1"), "case_plan_id");
+
+
+                if (case_plan_id != null) {
+                    case_plan_id.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                    try {
+                        case_plan_id.put(JsonFormUtils.VALUE, "CP"+assignCasePlanId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
