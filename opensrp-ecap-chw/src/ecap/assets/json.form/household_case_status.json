@@ -120,21 +120,8 @@
           "label": "Reason for Closing Case",
           "options": [
             {
-              "key": "Wrong Entry",
-              "text": "Wrong Entry"
-            },
-            {
               "key": "Exited without graduation",
               "text": "Exited without graduation"
-            },
-
-            {
-              "key": "Lost to follow up",
-              "text": "Lost to follow-up"
-            },
-            {
-              "key": "Caregiver died",
-              "text": "Caregiver died"
             },
             {
               "key": "Moved (Relocated)",

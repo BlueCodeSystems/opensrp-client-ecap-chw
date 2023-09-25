@@ -86,6 +86,7 @@ public class Constants extends CoreConstants {
         String HOUSEHOLD_INDEX = "Household Screening";
         String IDENTIFICATION = "identification";
         String GRADUATION_ASSESSMENT = "OVC Graduation Assessment";
+        String HIV_TESTING_SERVICE = "HIV Testing Service";
     }
 
     public interface EcapClientTable {
@@ -117,6 +118,8 @@ public class Constants extends CoreConstants {
         String EC_WE_SERVICES_CAREGIVER = "ec_we_services_caregiver";
         String EC_CHILD_SAFETY_ACTION = "ec_child_safety_actions";
         String EC_WE_SERVICES_VCA = "ec_we_services_vca";
+        String EC_HIV_TESTING_SERVICE="ec_hiv_testing_service";
+        String EC_HIV_TESTING_LINKS="ec_hiv_testing_links";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";

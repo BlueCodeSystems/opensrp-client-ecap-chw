@@ -37,5 +37,12 @@
         app:showAsAction="ifRoom"
         android:title="FSW Screening" />
 
+  <item
+      android:id="@+id/action_hts"
+      android:enabled="true"
+      android:icon="@mipmap/ic_add_family"
+      android:title="@string/add_hts"
+      app:showAsAction="ifRoom" />
+
 
 </menu>

@@ -251,8 +251,39 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
+        HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
+        householdReport.setServices(service.getServices());
+        householdReport.setServices_household(service.getServices_household());
 
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
+        if (service.getHealth_services() == null && service.getServices_caregiver() != null){
+            householdReport.setHealth_services(service.getServices_caregiver());
+        } else {
+            householdReport.setHealth_services(service.getHealth_services());
+        }
+
+        householdReport.setOther_health_services(service.getOther_health_services());
+        householdReport.setSchooled_services(service.getSchooled_services());
+        householdReport.setOther_schooled_services(service.getOther_schooled_services());
+        householdReport.setSafe_services(service.getSafe_services());
+        householdReport.setOther_safe_services(service.getOther_safe_services());
+        householdReport.setStable_services(service.getStable_services());
+        householdReport.setOther_stable_services(service.getOther_stable_services());
+        householdReport.setHh_level_services(service.getHh_level_services());
+        householdReport.setOther_hh_level_services(service.getOther_hh_level_services());
+        householdReport.setDate(service.getDate());
+        householdReport.setIs_hiv_positive(service.getIs_hiv_positive());
+        householdReport.setArt_clinic(service.getArt_clinic());
+        householdReport.setDate_last_vl(service.getDate_last_vl());
+        householdReport.setVl_last_result(service.getVl_last_result());
+        householdReport.setDate_next_vl(service.getDate_next_vl());
+        householdReport.setCaregiver_mmd(service.getCaregiver_mmd());
+        householdReport.setLevel_mmd(service.getLevel_mmd());
+        householdReport.setHousehold_id(service.getHousehold_id());
+        householdReport.setBase_entity_id(service.getBase_entity_id());
+        householdReport.setOther_services_caregiver(service.getOther_services_caregiver());
+        householdReport.setOther_services_household(service.getOther_services_household());
+        householdReport.setDelete_status(service.getDelete_status());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
 
         startFormActivity(formToBeOpened);
 

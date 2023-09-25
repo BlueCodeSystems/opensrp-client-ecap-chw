@@ -26,8 +26,10 @@ public class Household {
     private String caregiver_phone;
     private String caregiver_hiv_status;
     private String active_on_treatment;
+    private String date_started_art;
     private String caregiver_art_number;
     private String relation;
+    private String date_next_vl;
     private String viral_load_results;
     private String date_of_last_viral_load;
     private String base_entity_id;
@@ -90,6 +92,16 @@ public class Household {
     private String de_registration_reason;
     private String transfer_reason;
     private String other_de_registration_reason;
+    private String level_mmd;
+    private String caregiver_mmd;
+    private String new_caregiver_name;
+    private String new_caregiver_nrc;
+    private String new_caregiver_birth_date;
+    private String new_caregiver_sex;
+    private String new_relation;
+    private String new_caregiver_hiv_status;
+    private String new_caregiver_phone;
+
 
     public String getCase_status() {
         return case_status;
@@ -780,5 +792,93 @@ public class Household {
 
     public void setHousehold_case_status(String household_case_status) {
         this.household_case_status = household_case_status;
+    }
+
+    public String getDate_started_art() {
+        return date_started_art;
+    }
+
+    public void setDate_started_art(String date_started_art) {
+        this.date_started_art = date_started_art;
+    }
+
+    public String getDate_next_vl() {
+        return date_next_vl;
+    }
+
+    public void setDate_next_vl(String date_next_vl) {
+        this.date_next_vl = date_next_vl;
+    }
+
+    public String getLevel_mmd() {
+        return level_mmd;
+    }
+
+    public void setLevel_mmd(String level_mmd) {
+        this.level_mmd = level_mmd;
+    }
+
+    public String getCaregiver_mmd() {
+        return caregiver_mmd;
+    }
+
+    public void setCaregiver_mmd(String caregiver_mmd) {
+        this.caregiver_mmd = caregiver_mmd;
+    }
+
+    public String getNew_caregiver_name() {
+        return new_caregiver_name;
+    }
+
+    public void setNew_caregiver_name(String new_caregiver_name) {
+        this.new_caregiver_name = new_caregiver_name;
+    }
+
+    public String getNew_caregiver_nrc() {
+        return new_caregiver_nrc;
+    }
+
+    public void setNew_caregiver_nrc(String new_caregiver_nrc) {
+        this.new_caregiver_nrc = new_caregiver_nrc;
+    }
+
+    public String getNew_caregiver_birth_date() {
+        return new_caregiver_birth_date;
+    }
+
+    public void setNew_caregiver_birth_date(String new_caregiver_birth_date) {
+        this.new_caregiver_birth_date = new_caregiver_birth_date;
+    }
+
+    public String getNew_caregiver_sex() {
+        return new_caregiver_sex;
+    }
+
+    public void setNew_caregiver_sex(String new_caregiver_sex) {
+        this.new_caregiver_sex = new_caregiver_sex;
+    }
+
+    public String getNew_relation() {
+        return new_relation;
+    }
+
+    public void setNew_relation(String new_relation) {
+        this.new_relation = new_relation;
+    }
+
+    public String getNew_caregiver_hiv_status() {
+        return new_caregiver_hiv_status;
+    }
+
+    public void setNew_caregiver_hiv_status(String new_caregiver_hiv_status) {
+        this.new_caregiver_hiv_status = new_caregiver_hiv_status;
+    }
+
+    public String getNew_caregiver_phone() {
+        return new_caregiver_phone;
+    }
+
+    public void setNew_caregiver_phone(String new_caregiver_phone) {
+        this.new_caregiver_phone = new_caregiver_phone;
     }
 }

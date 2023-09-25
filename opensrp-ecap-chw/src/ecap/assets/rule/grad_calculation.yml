@@ -16,7 +16,7 @@ actions:
 name: step1_virally_suppressed
 description: virally_suppressed
 priority: 2
-condition: "(step1_vl_last_result > 1000) && (step1_date_calculated > 12)"
+condition: "step1_vl_last_result > 1000"
 actions:
   - "calculation = 'no'"
 ---
@@ -51,16 +51,17 @@ actions:
 name: step10_graduation_status
 description: step10_graduation_status
 priority: 1
-condition: "step2_hiv_status_enrolled.contains('yes') 
-            && step2_caregiver_hiv_status_enrolled.contains('yes') 
+condition: "(step2_hiv_status_enrolled.contains('yes') || step2_hiv_status_enrolled.contains('N/A'))  
+            && (step2_caregiver_hiv_status_enrolled.contains('yes') || step2_caregiver_hiv_status_enrolled.contains('N/A'))
             
             && (step3_virally_suppressed.contains('yes') || step3_virally_suppressed.contains('N/A'))
+            && (step3_suppressed_caregiver.contains('yes') || step3_suppressed_caregiver.contains('N/A'))
             
             && (step4_prevention.contains('yes') || step4_prevention.contains('N/A'))
             
-            && step5_undernourished.contains('yes') 
+            && (step5_undernourished.contains('yes') || step5_undernourished.contains('N/A'))
             
-            && step6_school_fees.contains('yes') 
+            && (step6_school_fees.contains('yes') || step6_school_fees.contains('N/A') )
             && step6_medical_costs.contains('yes') 
             
             && step7_record_abuse.contains('no') 
@@ -70,25 +71,26 @@ condition: "step2_hiv_status_enrolled.contains('yes')
             
             && step8_stable_guardian.contains('yes')
             
-            && step9_in_school.contains('yes') 
-            && step9_year_school.contains('yes') 
-            && step9_repeat_school.contains('yes')"
+            && (step9_in_school.contains('yes') || step9_in_school.contains('N/A')) 
+            && (step9_year_school.contains('yes') || step9_year_school.contains('N/A'))
+            && (step9_repeat_school.contains('yes') || step9_repeat_school.contains('N/A'))"
 actions:
   - "calculation = 1"
 ---
 name: step10_graduation_status
 description: step10_graduation_status
 priority: 2
-condition: "!(step2_hiv_status_enrolled.contains('yes') 
-            && step2_caregiver_hiv_status_enrolled.contains('yes') 
+condition: "!((step2_hiv_status_enrolled.contains('yes') || step2_hiv_status_enrolled.contains('N/A'))  
+            && (step2_caregiver_hiv_status_enrolled.contains('yes') || step2_caregiver_hiv_status_enrolled.contains('N/A'))
             
             && (step3_virally_suppressed.contains('yes') || step3_virally_suppressed.contains('N/A'))
+            && (step3_suppressed_caregiver.contains('yes') || step3_suppressed_caregiver.contains('N/A'))
             
             && (step4_prevention.contains('yes') || step4_prevention.contains('N/A'))
             
-            && step5_undernourished.contains('yes') 
+            && (step5_undernourished.contains('yes') || step5_undernourished.contains('N/A'))
             
-            && step6_school_fees.contains('yes') 
+            && (step6_school_fees.contains('yes') || step6_school_fees.contains('N/A') )
             && step6_medical_costs.contains('yes') 
             
             && step7_record_abuse.contains('no') 
@@ -98,8 +100,8 @@ condition: "!(step2_hiv_status_enrolled.contains('yes')
             
             && step8_stable_guardian.contains('yes')
             
-            && step9_in_school.contains('yes') 
-            && step9_year_school.contains('yes') 
-            && step9_repeat_school.contains('yes'))"
+            && (step9_in_school.contains('yes') || step9_in_school.contains('N/A')) 
+            && (step9_year_school.contains('yes') || step9_year_school.contains('N/A'))
+            && (step9_repeat_school.contains('yes') || step9_repeat_school.contains('N/A')))"
 actions:
   - "calculation = 0"
