@@ -86,21 +86,21 @@ actions:
 name: step1_hiv_infection
 description: hiv_infection
 priority: 1
-condition: "step1_age > 9 && step1_age <= 17"
+condition: "step1_age >= 10 && step1_age <= 17"
 actions:
   - "isRelevant = true"
 ---
 name: step1_against_hiv_risk
 description: against_hiv_risk
 priority: 1
-condition: "step1_age > 9 && step1_age <= 17"
+condition: "step1_age >= 10 && step1_age <= 17"
 actions:
   - "isRelevant = true"
 ---
 name: step1_prevention_support
 description: prevention_support
 priority: 1
-condition: "step1_age > 9 && step1_age <= 17"
+condition: "step1_age >= 10 && step1_age <= 17"
 actions:
   - "isRelevant = true"
 ---

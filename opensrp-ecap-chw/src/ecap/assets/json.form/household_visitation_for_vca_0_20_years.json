@@ -522,18 +522,9 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_last_result",
-        "type": "spinner",
+        "type": "edit_text",
         "hint": "Last VL results",
-        "values": [
-          "Less than 1000 copies/ml",
-          "Above 1000 copies/ml",
-          "Other"
-        ],
-        "keys": [
-          "Less than 1000 copies/ml",
-          "Above 1000 copies/ml",
-          "Other"
-        ],
+        "edit_type": "number",
         "relevance": {
           "step1:six_months": {
             "type": "string",

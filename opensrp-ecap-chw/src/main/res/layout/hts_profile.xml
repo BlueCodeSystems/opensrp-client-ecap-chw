@@ -318,7 +318,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="Add reference"
+                        android:text="Add Contact"
                         android:textStyle="italic"
                         android:visibility="visible" />
 
