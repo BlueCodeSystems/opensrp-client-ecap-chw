@@ -57,7 +57,7 @@ public class CasePlan extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    DomainPlanAdapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
     String childId, caseDate, hivStatus,case_plan_id;
@@ -91,6 +91,10 @@ public class CasePlan extends AppCompatActivity {
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
             recyclerView.setAdapter(recyclerViewadapter);
+
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                recreate();
+            }));
         } else {
             recyclerViewadapter.notifyDataSetChanged();
         }

@@ -3,26 +3,19 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
-import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP4;
-import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
-import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdIndexFragment;
-import com.bluecodeltd.ecap.chw.fragment.MotherIndexFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexPresenter;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
-import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +27,6 @@ import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
-import org.smartregister.domain.UniqueId;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
@@ -48,7 +40,6 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -213,6 +204,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
+            bottomNavigationView.getMenu().removeItem(R.id.action_hts);
             bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Household");
 
         }

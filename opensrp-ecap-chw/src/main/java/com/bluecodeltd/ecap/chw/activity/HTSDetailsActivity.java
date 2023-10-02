@@ -40,8 +40,8 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao;
 import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
+import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -51,9 +51,9 @@ import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -242,7 +242,10 @@ public class HTSDetailsActivity extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
-            addIndexClients.setVisibility(View.VISIBLE);
+            if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
+                addIndexClients.setVisibility(View.VISIBLE);
+            }
+
         }
 
     }
@@ -1116,18 +1119,23 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HTSFragmentOverview());
-        fragments.add(new HTSlinksFragment());
+        if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
+            fragments.add(new HTSlinksFragment());
+        }
+
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("OVERVIEW");
-        tabLayout.getTabAt(1).setText("HTS LINKS");
+        if (tabLayout.getTabAt(1) != null) {
+            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
+        }
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
-        visitTabTitle.setText("HTS LINKS");
+        visitTabTitle.setText("INDEX/SNT CONTACT");
         htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
 
         int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());

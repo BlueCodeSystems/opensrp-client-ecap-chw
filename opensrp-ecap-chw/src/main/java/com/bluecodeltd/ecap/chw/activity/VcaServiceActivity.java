@@ -376,4 +376,11 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         });
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, IndexDetailsActivity.class);
+        intent.putExtra("Child", intent_vcaid);
+        startActivity(intent);
+        finish();
+    }
 }

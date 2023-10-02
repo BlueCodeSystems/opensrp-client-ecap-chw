@@ -251,19 +251,28 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText("N/A");
         }
 
-        if (childIndex.getVl_last_result() != null) {
+        List<VCAServiceModel> sModel = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
+
+        String viralLoadResult = null;
+
+        if (!sModel.isEmpty()) {
+            VCAServiceModel serviceM = sModel.get(0);
+            viralLoadResult = serviceM.getVl_last_result();
+        }
+
+        if (viralLoadResult == null) {
+            viralLoadResult = childIndex.getVl_last_result();
+        }
+
+        if (viralLoadResult != null) {
             try {
-                int checkIfSuppressed = Integer.parseInt(childIndex.getVl_last_result());
-                if (checkIfSuppressed < 1000) {
-                    txtIsSuppressed.setText("yes");
-                } else {
-                    txtIsSuppressed.setText("no");
-                }
+                int intValue = Integer.parseInt(viralLoadResult);
+                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
             } catch (NumberFormatException e) {
-                txtIsSuppressed.setText(childIndex.getVl_last_result());
+                txtIsSuppressed.setText("Update VL Results");
             }
         } else {
-            txtIsSuppressed.setText("Not Set");
+            txtIsSuppressed.setText("Not set");
         }
 
 
