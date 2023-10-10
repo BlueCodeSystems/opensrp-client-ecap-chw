@@ -1662,11 +1662,28 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
             case R.id.case_status:
-                try {
-                    openFormUsingFormUtils(getBaseContext(),"household_case_status");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+//                Boolean status = IndexPersonDao.checkGraduationStatus(householdId);
+//                if(status.equals(false)){
+//                    showDialogBox("You need to deregister all the vcas in the household");
+//                } else {
+                    try {
+                        openFormUsingFormUtils(getBaseContext(),"household_case_status");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+//                }
+//                FormUtils formUtils = null;
+//                try {
+//                    formUtils = new FormUtils(HouseholdDetails.this);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                JSONObject indexRegisterForm = formUtils.getFormJson("household_case_status");
+//
+//                startFormActivity(indexRegisterForm);
+
+
+
 
                 break;
             case R.id.update_caregiver_details:
@@ -1828,6 +1845,27 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
                 formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
+                if(vcaGradStatus.equals(false)){
+                    JSONObject status = getFieldJSONObject(fields(formToBeOpened, "step1"), "household_case_status");
+                    JSONArray options = status.getJSONArray("options");
+
+                    for (int i = 0; i < options.length(); i++) {
+                        JSONObject option = options.getJSONObject(i);
+                        if ("0".equals(option.getString("key"))) {
+                            options.remove(i);
+                            break;
+                        }
+                    }
+                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                    info.put("type", "toaster_notes");
+                    info.put("text","If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
+
+                } else {
+                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                    info.put("type", "hidden");
+                }
+
                 break;
             case "update_caregiver_details":
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
