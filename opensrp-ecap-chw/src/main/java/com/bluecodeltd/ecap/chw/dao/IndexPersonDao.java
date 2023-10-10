@@ -10,6 +10,7 @@ import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class IndexPersonDao  extends AbstractDao {
 
@@ -752,6 +753,37 @@ public class IndexPersonDao  extends AbstractDao {
             return null;
         }
         return children;
+    }
+    public static boolean checkGraduationStatus(String householdID) {
+        String sql = "SELECT case_status, last_name, is_hiv_positive " +
+                "FROM ec_client_index " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1')";
+
+        List<String> status = AbstractDao.readData(sql, c -> getCursorValue(c, "case_status"));
+
+        for (String caseStatus : status) {
+            if (caseStatus == null || "1".equals(caseStatus) || "2".equals(caseStatus) || "3".equals(caseStatus)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public static String returnVcaNames(String householdID) {
+        String sql = "SELECT case_status, first_name, last_name, is_hiv_positive " +
+                "FROM ec_client_index " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND case_status != '0'";
+
+        final AtomicInteger counter = new AtomicInteger(1);
+        List<String> names = AbstractDao.readData(sql, c -> {
+            String firstName = getCursorValue(c, "first_name");
+            String lastName = getCursorValue(c, "last_name");
+            return counter.getAndIncrement() + ". " + firstName + " " + lastName;
+        });
+
+        return String.join("\n", names) + "\n";
     }
     public static List<Child> getAllChildrenSubpopsByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
         String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = 0 AND (deleted IS NULL OR deleted != '1')";
