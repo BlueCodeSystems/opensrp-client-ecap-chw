@@ -29,15 +29,23 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:usesCleartextTraffic="true"
-        android:exported="true"
         android:name=".application.ChwApplication"
         android:allowBackup="true"
+        android:exported="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/ChwTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <activity
+            android:name=".HouseholdServicesOnlyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShowOnlyHouseholdServicesActivity"
+            android:exported="false"
+            android:label="@string/title_activity_show_only_household_services"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.FlagActivity"
             android:exported="false" />
@@ -67,7 +75,6 @@
             android:name=".activity.CasePlan"
             android:exported="true"
             android:label="VCA Case Plan" />
-
         <activity
             android:name=".activity.HivTestingServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -170,8 +177,6 @@
         <activity
             android:name=".activity.HTSDetailsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
-
         <activity
             android:name=".activity.HouseholdDetails"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -210,10 +215,10 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ChildProfileActivity"
+            android:exported="true"
             android:label="@string/child_details"
             android:launchMode="singleTop"
-            android:theme="@style/ChwTheme.NoActionBar"
-            android:exported="true">
+            android:theme="@style/ChwTheme.NoActionBar">
             <intent-filter>
                 <action android:name="org.smartregister.action.THINKMD_ASSESSMENT" />
 
@@ -237,8 +242,8 @@
             android:name=".activity.ClientReferralActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
-            android:exported="true"
             android:name=".activity.LoginActivity"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -314,6 +319,9 @@
             android:name=".activity.AncMemberMapActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.HouseholdServicesOnlyActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.GuideBooksTutorialsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
@@ -337,20 +345,27 @@
                 android:resource="@xml/captured_images_path" />
         </provider>
 
-        <service android:name="org.smartregister.sync.intent.PullUniqueIdsIntentService"
-            android:exported="false"/>
-        <service android:name="org.smartregister.sync.intent.ExtendedSyncIntentService"
-            android:exported="false"/>
-        <service android:name="org.smartregister.sync.intent.SyncLocationsByLevelAndTagsIntentService"
-            android:exported="false"/>
-        <service android:name="org.smartregister.sync.intent.DocumentConfigurationIntentService"
-            android:exported="false"/>
-        <service android:name="org.smartregister.sync.intent.ValidateIntentService"
-            android:exported="false"/>
-        <service android:name="org.smartregister.service.ImageUploadSyncService"
-            android:exported="false"/>
-        <service android:name=".sync.ChwSyncIntentService"
-            android:exported="false"/>
+        <service
+            android:name="org.smartregister.sync.intent.PullUniqueIdsIntentService"
+            android:exported="false" />
+        <service
+            android:name="org.smartregister.sync.intent.ExtendedSyncIntentService"
+            android:exported="false" />
+        <service
+            android:name="org.smartregister.sync.intent.SyncLocationsByLevelAndTagsIntentService"
+            android:exported="false" />
+        <service
+            android:name="org.smartregister.sync.intent.DocumentConfigurationIntentService"
+            android:exported="false" />
+        <service
+            android:name="org.smartregister.sync.intent.ValidateIntentService"
+            android:exported="false" />
+        <service
+            android:name="org.smartregister.service.ImageUploadSyncService"
+            android:exported="false" />
+        <service
+            android:name=".sync.ChwSyncIntentService"
+            android:exported="false" />
 
         <uses-library
             android:name="org.apache.http.legacy"
