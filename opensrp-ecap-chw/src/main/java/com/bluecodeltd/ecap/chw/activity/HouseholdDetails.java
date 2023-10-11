@@ -646,16 +646,32 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    JSONObject subPop = getFieldJSONObject(fields(indexRegisterForm, "step2"), "sub_population");
+                    if (house.getSub_population() != null) {
+                        String subPopulationString = house.getSub_population();
+                        JSONArray subPopulations = new JSONArray(subPopulationString);
+                        JSONArray options = subPop.getJSONArray("options");
 
-                    JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
+                        for (int i = 0; i < options.length(); i++) {
+                            JSONObject option = options.getJSONObject(i);
+                            String key = option.getString("key");
+                            if (subPopulations.toString().contains("\"" + key + "\"")) {
+                                option.put("value", "true");
+                            } else {
+                                option.put("value", "false");
+                            }
+                        }
+                    }
+                    else {
+                        JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
 
-                    subPopulation.getJSONObject(0).put("value", house.getSubpop1());
-                    subPopulation.getJSONObject(1).put("value", house.getSubpop2());
-                    subPopulation.getJSONObject(2).put("value", house.getSubpop3());
-                    subPopulation.getJSONObject(3).put("value", house.getSubpop4());
-                    subPopulation.getJSONObject(5).put("value", house.getSubpop());
-                    subPopulation.getJSONObject(4).put("value", house.getSubpop5());
-
+                        subPopulation.getJSONObject(0).put("value", house.getSubpop1());
+                        subPopulation.getJSONObject(1).put("value", house.getSubpop2());
+                        subPopulation.getJSONObject(2).put("value", house.getSubpop3());
+                        subPopulation.getJSONObject(3).put("value", house.getSubpop4());
+                        subPopulation.getJSONObject(5).put("value", house.getSubpop());
+                        subPopulation.getJSONObject(4).put("value", house.getSubpop5());
+                    }
                     indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
@@ -1001,7 +1017,9 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Caregiver Case Plan":
-                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).optString("value");
+
+                        JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                        String dateId = date.optString("value");
 
                         JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
                         String cp_Id = cpId.optString("value");
