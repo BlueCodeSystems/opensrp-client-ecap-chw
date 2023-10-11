@@ -101,6 +101,7 @@ public class Household {
     private String new_relation;
     private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
+    private String sub_population;
 
 
     public String getCase_status() {
@@ -881,4 +882,13 @@ public class Household {
     public void setNew_caregiver_phone(String new_caregiver_phone) {
         this.new_caregiver_phone = new_caregiver_phone;
     }
+
+    public String getSub_population() {
+        return sub_population;
+    }
+
+    public void setSub_population(String sub_population) {
+        this.sub_population = sub_population;
+    }
+
 }

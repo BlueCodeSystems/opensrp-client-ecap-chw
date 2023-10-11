@@ -366,7 +366,7 @@ actions:
 name: step1_positive_mother
 description: positive_mother
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') < 5 && step1_is_hiv_positive.contains('no')"
+condition: "step1_is_hiv_positive.contains('no')"
 actions:
   - "isRelevant = true"
 ---
@@ -380,77 +380,77 @@ actions:
 name: step1_adhering_to_treatment
 description: adhering_to_treatment
 priority: 1
-condition: "step1_positive_mother.contains('yes') && step1_active_on_treatment.contains('yes')"
+condition: "step1_active_on_treatment.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_is_mother_virally_suppressed
 description: is_mother_virally_suppressed
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6 && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_receiving_breastfeeding
 description: child_receiving_breastfeeding
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_tested_for_hiv_inline_with_guidelines
 description: child_tested_for_hiv_inline_with_guidelines
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses_hei
 description: receives_drugs_to_prevent_hiv_and_other_illnesses_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_been_screened_for_malnutrition_hei
 description: child_been_screened_for_malnutrition_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_gets_drugs_to_prevent_tb_hei
 description: child_gets_drugs_to_prevent_tb_hei
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_receives_drugs_to_prevent_hiv_and_other_illnesses
 description: receives_drugs_to_prevent_hiv_and_other_illnesses
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_been_screened_for_malnutrition
 description: child_been_screened_for_malnutrition
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_gets_drugs_to_prevent_tb
 description: child_gets_drugs_to_prevent_tb
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step1_child_enrolled_in_early_childhood_development_program
 description: child_enrolled_in_early_childhood_development_program
 priority: 1
-condition: "step1_positive_mother.contains('yes') && helper.formatDate(step1_adolescent_birthdate,'y') < 6  && step1_is_hiv_positive.contains('no')"
+condition: "step1_positive_mother.contains('yes')"
 actions:
   - "isRelevant = true"
 ---

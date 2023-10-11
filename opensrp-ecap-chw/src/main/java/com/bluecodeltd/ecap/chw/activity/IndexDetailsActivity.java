@@ -246,9 +246,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-        } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-            fab.setVisibility(View.INVISIBLE);
         }
+
+//        String subpop1 = child.getSubpop1();
+//        String subpop2 = child.getSubpop2();
+//        String subpop3 = child.getSubpop3();
+//        String subpop4 = child.getSubpop4();
+//        String subpop5 = child.getSubpop5();
+//        String subpop6 = child.getSubpop6();
+//
+//        if (subpop1 != null || subpop2 != null || subpop3 != null ||
+//                subpop4 != null || subpop5 != null || subpop6 != null) {
+//            fab.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            fab.setVisibility(View.INVISIBLE);
+//        }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -442,9 +455,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.fab:
                 if(child.getCase_status() != null && (child.getCase_status().equals("0") || child.getCase_status().equals("2"))){
                     showDeregisteredStatus();
-                } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-               fab.setVisibility(View.INVISIBLE);
-            } else {
+                }
+//                else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
+//               fab.setVisibility(View.INVISIBLE);
+//            }
+                else {
                     animateFAB();
                 }
                 break;

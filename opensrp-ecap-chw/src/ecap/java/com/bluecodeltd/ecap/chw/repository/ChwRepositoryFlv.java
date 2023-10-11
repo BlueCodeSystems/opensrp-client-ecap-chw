@@ -2,27 +2,25 @@ package com.bluecodeltd.ecap.chw.repository;
 
 import android.content.Context;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
-import org.smartregister.chw.anc.repository.VisitDetailsRepository;
-import org.smartregister.chw.anc.repository.VisitRepository;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import org.smartregister.chw.core.BuildConfig;
-import org.smartregister.chw.core.application.CoreChwApplication;
-import org.smartregister.chw.core.repository.StockUsageReportRepository;
-import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.util.ChildDBConstants;
 import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtils;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtilsFlv;
-import org.smartregister.domain.db.Column;
+
+import net.sqlcipher.database.SQLiteDatabase;
+
+import org.smartregister.chw.anc.repository.VisitDetailsRepository;
+import org.smartregister.chw.anc.repository.VisitRepository;
+import org.smartregister.chw.core.BuildConfig;
+import org.smartregister.chw.core.repository.StockUsageReportRepository;
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.immunization.repository.RecurringServiceRecordRepository;
 import org.smartregister.immunization.repository.VaccineRepository;
 import org.smartregister.immunization.util.IMDatabaseUtils;
 import org.smartregister.reporting.ReportingLibrary;
 import org.smartregister.repository.AlertRepository;
-import org.smartregister.repository.EventClientRepository;
 import org.smartregister.util.DatabaseMigrationUtils;
 
 import java.util.ArrayList;
@@ -131,24 +129,9 @@ public class ChwRepositoryFlv {
 
     private static void upgradeToVersion3(SQLiteDatabase db) {
         try {
-            Column[] columns = {EventClientRepository.event_column.formSubmissionId};
-            EventClientRepository.createIndex(db, EventClientRepository.Table.event, columns);
-
-            db.execSQL(VaccineRepository.ALTER_ADD_CREATED_AT_COLUMN);
-            VaccineRepository.migrateCreatedAt(db);
-
-            db.execSQL(RecurringServiceRecordRepository.ALTER_ADD_CREATED_AT_COLUMN);
-            RecurringServiceRecordRepository.migrateCreatedAt(db);
+            db.execSQL("ALTER TABLE ec_household ADD sub_population VARCHAR");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion3 ");
-        }
-        try {
-            Column[] columns = {EventClientRepository.event_column.formSubmissionId};
-            EventClientRepository.createIndex(db, EventClientRepository.Table.event, columns);
-
-
-        } catch (Exception e) {
-            Timber.e(e, "upgradeToVersion3 " + e.getMessage());
         }
     }
 

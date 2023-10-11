@@ -28,6 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/subPopLayout1"
             android:paddingTop="@dimen/contact_small_padding"
             android:paddingBottom="@dimen/contact_small_padding"
             android:gravity="start"
@@ -109,6 +110,31 @@
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
                 android:text="C/FSWs."
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/subPopLayout2"
+            android:visibility="gone"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/sub_population"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text=""
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/black_text_color"
                 />

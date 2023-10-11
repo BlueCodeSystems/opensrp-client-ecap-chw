@@ -1447,6 +1447,13 @@
           "json_mapping": {
             "field": "attributes.new_caregiver_phone"
           }
+        },
+        {
+          "column_name": "sub_population",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sub_population"
+          }
         }
 
 
@@ -1690,6 +1697,7 @@
             "field": "attributes.other_school"
           }
         },
+
         {
           "column_name": "is_hiv_positive",
           "type": "Client",
