@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,9 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
@@ -99,7 +102,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         try{
 
-            dob = child.getAdolescent_birthdate();
+            dob = checkAndConvertDateFormat(child.getAdolescent_birthdate());
 
         } catch (NullPointerException e) {
 
@@ -148,9 +151,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
 
         }
-        int age = Integer.parseInt(memberAge);
-        if (age > 18 || age < 10) {
-            holder.gradBtn.setVisibility(View.INVISIBLE);
+        if (!memberAge.equals("Invalid birthdate format")) {
+            int age = Integer.parseInt(memberAge);
+            if (age >= 18 || age <= 10) {
+                holder.gradBtn.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            Log.e("TAG", "Invalid birthdate format");
         }
 
         holder.gradBtn.setOnClickListener(v->{
@@ -307,39 +314,41 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
     private String getAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
-        LocalDate today =LocalDate.now();
-        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
-        if(periodBetweenDateOfBirthAndNow.getYears() >0)
-        {
-            return periodBetweenDateOfBirthAndNow.getYears() +" Years";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+            LocalDate today = LocalDate.now();
+            Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+            if(periodBetweenDateOfBirthAndNow.getYears() > 0) {
+                return periodBetweenDateOfBirthAndNow.getYears() +" Years";
+            } else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0) {
+                return periodBetweenDateOfBirthAndNow.getMonths() +" Months ";
+            } else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() == 0) {
+                return periodBetweenDateOfBirthAndNow.getDays() +" Days ";
+            } else return "Not Set";
+        } catch (DateTimeParseException e) {
+            Log.e("TAG", "Invalid birthdate format: " + e.getMessage());
+            return "Invalid birthdate format";
         }
-        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
-            return periodBetweenDateOfBirthAndNow.getMonths() +" Months ";
-        }
-        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
-            return periodBetweenDateOfBirthAndNow.getDays() +" Days ";
-        }
-        else return "Not Set";
     }
 
     private String getAgeWithoutText(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
-        LocalDate today =LocalDate.now();
-        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
-        if(periodBetweenDateOfBirthAndNow.getYears() >0)
-        {
-            return String.valueOf(periodBetweenDateOfBirthAndNow.getYears());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+            LocalDate today = LocalDate.now();
+            Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+            if(periodBetweenDateOfBirthAndNow.getYears() > 0) {
+                return String.valueOf(periodBetweenDateOfBirthAndNow.getYears());
+            } else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0) {
+                return String.valueOf(periodBetweenDateOfBirthAndNow.getMonths());
+            } else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() == 0) {
+                return String.valueOf(periodBetweenDateOfBirthAndNow.getDays());
+            } else return "Not Set";
+        } catch (DateTimeParseException e) {
+            Log.e("TAG", "Invalid birthdate format: " + e.getMessage());
+            return "Invalid birthdate format";
         }
-        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
-            return String.valueOf(periodBetweenDateOfBirthAndNow.getMonths());
-        }
-        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
-            return String.valueOf(periodBetweenDateOfBirthAndNow.getDays());
-        }
-        else return "Not Set";
     }
 
     public void openFormUsingFormUtils(Context context, String formName, Child child, String myage) throws JSONException {
@@ -524,6 +533,21 @@ public Boolean checkAgeEligibility(String age)
 
     return true;
 }
+    private String checkAndConvertDateFormat(String date){
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return date;
+        } else {
+            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            try {
+                LocalDate localDate = LocalDate.parse(date, oldFormatter);
+                return localDate.format(newFormatter);
+            } catch (DateTimeParseException e) {
+                Log.e("TAG", "Invalid date format: " + e.getMessage());
+                return "Invalid date format";
+            }
+        }
+    }
     public GradModel populateGraduationModel(String uniqueId) {
         GradModel gradModel = GradDao.getGrad(uniqueId);
 

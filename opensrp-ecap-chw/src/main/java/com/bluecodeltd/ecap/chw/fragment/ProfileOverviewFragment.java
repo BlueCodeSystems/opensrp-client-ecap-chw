@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,17 +119,22 @@ public class ProfileOverviewFragment extends Fragment {
         new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "Not Set");
         new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "Not Set");
 
-        if(updateCaregiver.getNew_caregiver_name()!=null && !updateCaregiver.getNew_caregiver_name().isEmpty()){
+        try {
+            if(updateCaregiver.getNew_caregiver_name() != null && !updateCaregiver.getNew_caregiver_name().isEmpty()){
+                overview_section_header3.setText("Previous Caregiver Details");
+                linearlayout_gender.setVisibility(View.VISIBLE);
+                linearlayout_dob.setVisibility(View.VISIBLE);
+                linearlayout_status.setVisibility(View.VISIBLE);
+                linearlayout_relation.setVisibility(View.VISIBLE);
+                linearlayout_phone.setVisibility(View.VISIBLE);
+                linearlayout_name.setVisibility(View.VISIBLE);
+                overview_section_header5.setVisibility(View.VISIBLE);
+            }
 
-            overview_section_header3.setText("Previous Caregiver Details");
 
-            linearlayout_gender.setVisibility(View.VISIBLE);
-            linearlayout_dob.setVisibility(View.VISIBLE);
-            linearlayout_status.setVisibility(View.VISIBLE);
-            linearlayout_relation.setVisibility(View.VISIBLE);
-            linearlayout_phone.setVisibility(View.VISIBLE);
-            linearlayout_name.setVisibility(View.VISIBLE);
-            overview_section_header5.setVisibility(View.VISIBLE);
+        } catch (NullPointerException e) {
+            Log.e("TAG", "Error: " + e.getMessage());
+
         }
 //        if(updateCaregiver.getHousehold_case_status() == null && updateCaregiver.getHousehold_case_status().equals("1") || updateCaregiver.getHousehold_case_status().equals("2")){
 //            overview_section_header5.setVisibility(View.GONE);
