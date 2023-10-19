@@ -98,11 +98,13 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -233,11 +235,13 @@ public class HouseholdDetails extends AppCompatActivity {
             cname.setText(house.getCaregiver_name() + " Household");
         }
 
-        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
-
-            updatedCaregiverName.setVisibility(View.VISIBLE);
-            updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
-
+        try {
+            if(updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
+                updatedCaregiverName.setVisibility(View.VISIBLE);
+                updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
+            }
+        } catch (NullPointerException e) {
+            Log.e("TAG", "Error: " + e.getMessage());
         }
 
         countFemales = IndexPersonDao.countFemales(householdId);
@@ -265,7 +269,21 @@ public class HouseholdDetails extends AppCompatActivity {
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
-
+    private String checkAndConvertDateFormat(String date){
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return date;
+        } else {
+            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            try {
+                LocalDate localDate = LocalDate.parse(date, oldFormatter);
+                return localDate.format(newFormatter);
+            } catch (DateTimeParseException e) {
+                Log.e("TAG", "Invalid date format: " + e.getMessage());
+                return "Invalid date format";
+            }
+        }
+    }
 
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {
@@ -1465,26 +1483,29 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
     public void countNumberOfMales(List<String> allBirthDates){
-            int totalNumberOfMalesBelowFive = 0;
-            int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
-            DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
-            if( allBirthDates != null)
-            {
+        int totalNumberOfMalesBelowFive = 0;
+        int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if( allBirthDates != null)
+        {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                {
-                    totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                    {
+                        totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                    }
+                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
+                    {
+                        totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
+                    }
                 }
-                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
-                {
-                    totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
-                 }
             }
-            }
+        }
 
         lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
         malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
@@ -1493,28 +1514,30 @@ public class HouseholdDetails extends AppCompatActivity {
     public void countNumberOfFemales(List<String> allBirthDates){
         int totalNumberOfFemalesBelowFive = 0;
         int totalNumberOfFemalesBetweenTenAndSeventeen =0 ;
-        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if( allBirthDates != null)
         {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                {
-                    totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
-                }
-                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
-                {
-                    totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                    {
+                        totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
+                    }
+                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
+                    {
+                        totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                    }
                 }
             }
         }
 
         lessThanFiveFemales = String.valueOf(totalNumberOfFemalesBelowFive);
         FemalesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfFemalesBetweenTenAndSeventeen);
-
     }
 
     public void countChildren10to17(List<String> allBirthDates){
@@ -1547,25 +1570,26 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public void countNumberofChildren(List<String> allBirthDates){
         int totalNumberOfChildren = 0;
-        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if( allBirthDates != null)
         {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
 
-                if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
-                {
-                    totalNumberOfChildren = totalNumberOfChildren + 1;
+                    if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+                    {
+                        totalNumberOfChildren = totalNumberOfChildren + 1;
+                    }
                 }
-
             }
         }
 
         totalChildren = String.valueOf(totalNumberOfChildren);
-
     }
 
     public int countNumberofChildren10to17(List<String> allBirthDates){
@@ -1886,8 +1910,15 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
             case "update_caregiver_details":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
-                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                if (updatedCaregiver != null){
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
+                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                }
+
+
                 break;
 
         }
