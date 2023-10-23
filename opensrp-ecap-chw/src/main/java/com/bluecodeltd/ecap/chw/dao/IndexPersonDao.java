@@ -363,7 +363,7 @@ public class IndexPersonDao  extends AbstractDao {
     public static List<String> getMalesBirthdates (String householdID){
 
 
-        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'male' AND household_id = '" + householdID + "'";
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'male' AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
 
@@ -886,7 +886,7 @@ public class IndexPersonDao  extends AbstractDao {
     }
     public static List<String> getAllFemalesBirthdate(String householdID) {
 
-        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'female' AND household_id = '" + householdID + "'";
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE gender = 'female' AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
 
@@ -902,7 +902,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<String> getAllChildrenBirthdate(String householdID) {
 
-        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND case_status = '1' AND deleted IS NULL AND adolescent_birthdate IS NOT NULL";
+        String sql = "SELECT adolescent_birthdate FROM ec_client_index WHERE household_id = '" + householdID + "' AND case_status = '1' AND (deleted IS NULL OR deleted <> '1') AND adolescent_birthdate IS NOT NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "adolescent_birthdate");
 

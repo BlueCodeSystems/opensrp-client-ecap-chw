@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder> {
 
@@ -54,7 +57,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
-        String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true);
+        String birthdate = checkAndConvertDateFormat(Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true));
         String age = getAge(birthdate);
         String vcaAge = getVcaAge(birthdate);
 
@@ -122,7 +125,21 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         return years + "y " + months + "m";
     }
 
-
+    private String checkAndConvertDateFormat(String date){
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return date;
+        } else {
+            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            try {
+                LocalDate localDate = LocalDate.parse(date, oldFormatter);
+                return localDate.format(newFormatter);
+            } catch (DateTimeParseException e) {
+                Log.e("TAG", "Invalid date format: " + e.getMessage());
+                return "Invalid date format";
+            }
+        }
+    }
 
     @Override
     public void getFooterView(RecyclerView.ViewHolder viewHolder,int currentPageCount, int totalPageCount, boolean hasNextPage, boolean hasPreviousPage) {
