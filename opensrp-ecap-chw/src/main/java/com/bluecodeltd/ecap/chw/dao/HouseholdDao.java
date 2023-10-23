@@ -180,12 +180,12 @@ public class HouseholdDao extends AbstractDao {
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        if(values != null && values.size() > 0 ){
-            return values.get(0);
+        if(values != null && !values.isEmpty()){
+            String result = values.get(0);
+            return result != null ? result : "0";
         } else {
             return "0";
         }
-
     }
 
     public static String countNumberOfHouseholdsByCaseworkerPhone ( String caseworkerPhoneNumber)
