@@ -1,17 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -25,7 +13,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.preference.PreferenceManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -58,6 +50,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,14 +144,14 @@ public class DashboardActivity extends AppCompatActivity {
 
         loadingDataProgressBar.setVisibility(View.VISIBLE);
         allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
-       // loadData();
+        // loadData();
         refreshData();
         facilityName.setText(facility);
         facilityInformationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (facilityInformationSwitch.isChecked()){
-                   loadingDataProgressBar.setVisibility(View.VISIBLE);
+                    loadingDataProgressBar.setVisibility(View.VISIBLE);
                     loadCaseworkerData();
                     handler.removeCallbacks(runnable);
                     loadingDataProgressBar.setVisibility(View.INVISIBLE);
@@ -204,7 +200,7 @@ public class DashboardActivity extends AppCompatActivity {
         for (int i = 0; i < MAX_X_VALUE; i++) {
             float x = i;
             float y = new Random().nextFloat() * (MAX_Y_VALUE - MIN_Y_VALUE) + MIN_Y_VALUE;
-                    //new Util .randomFloatBetween(MIN_Y_VALUE, MAX_Y_VALUE);
+            //new Util .randomFloatBetween(MIN_Y_VALUE, MAX_Y_VALUE);
             values.add(new BarEntry(x, y));
         }
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
@@ -241,7 +237,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         l.getEntries();
 
-       // l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        // l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
 
         l.setYEntrySpace(10f);
         LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#9B51E0"));
@@ -251,12 +247,12 @@ public class DashboardActivity extends AppCompatActivity {
         LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
         LegendEntry l6=new LegendEntry("FSW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#FBA1B7"));
         l.setCustom(new LegendEntry[]{l1,l2,l3,l4,l5,l6});
-       // l.setWordWrapEnabled(true);
+        // l.setWordWrapEnabled(true);
 
-       // LegendEntry l1=new LegendEntry("Male",Legend.LegendForm.CIRCLE,10f,2f,null,Color.YELLOW);
-       // LegendEntry l2=new LegendEntry("Female", Legend.LegendForm.CIRCLE,10f,2f,null,Color.RED);
+        // LegendEntry l1=new LegendEntry("Male",Legend.LegendForm.CIRCLE,10f,2f,null,Color.YELLOW);
+        // LegendEntry l2=new LegendEntry("Female", Legend.LegendForm.CIRCLE,10f,2f,null,Color.RED);
 
-      //  l.setCustom(new LegendEntry[]{l1,l2});
+        //  l.setCustom(new LegendEntry[]{l1,l2});
 
         l.setEnabled(true);
 
@@ -371,10 +367,10 @@ public class DashboardActivity extends AppCompatActivity {
     public void loadData()
     {
         localTime = LocalTime.now();
-       // allChildren = IndexPersonDao.getAllChildrenSubpops();
+        // allChildren = IndexPersonDao.getAllChildrenSubpops();
         int visitsDue = getDueVisits(CaregiverVisitationDao.countAllVisits());
 
-       // int subPop = Collections.max(countSubpop(IndexPersonDao.getAllChildrenSubpops()));
+        // int subPop = Collections.max(countSubpop(IndexPersonDao.getAllChildrenSubpops()));
         allDueVisits.setText(String.valueOf(visitsDue));
 
 
@@ -569,7 +565,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.refresh:
-               loadData();
+                loadData();
                 break;
 
         }
