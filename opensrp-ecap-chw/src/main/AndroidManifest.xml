@@ -39,13 +39,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
-            android:name=".HouseholdServicesOnlyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ShowOnlyHouseholdServicesActivity"
-            android:exported="false"
-            android:label="@string/title_activity_show_only_household_services"
-            android:theme="@style/ChwTheme.NoActionBar" />
+            android:name=".activity.WeGroupDashBoardActivity"
+            android:exported="true"
+            android:theme="@style/ChwTheme.NoActionBar"  />
+
         <activity
             android:name=".activity.FlagActivity"
             android:exported="false" />
