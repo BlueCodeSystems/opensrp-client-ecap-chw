@@ -317,9 +317,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtAge.setText("Not Set");
         }
 
-        txtName.setText(full_name);
-        txtGender.setText(gender.toUpperCase());
-        txtChildid.setText("ID : " + indexVCA.getUnique_id());
+        try {
+            txtName.setText(full_name);
+            txtGender.setText(gender.toUpperCase());
+            txtChildid.setText("ID : " + indexVCA.getUnique_id());
+        } catch (NullPointerException e) {
+            txtGender.setText("");
+            e.printStackTrace();
+        }
+
 
         HashMap<String, Child> map = new HashMap<>();
 
