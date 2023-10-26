@@ -29,6 +29,7 @@ import androidx.work.WorkManager;
 //import com.bluecode.weledger.interfaces.UserApi;
 //import com.bluecode.weledger.models.MembersModel;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.CreateMemberClass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -61,6 +62,7 @@ public class MembersFragment extends Fragment {
 
     RecyclerView members_recyclerview;
     Toolbar toolbar;
+    String username, password;
 //    MembersListAdapter memberListAdapter;
 //    ArrayList<MembersModel> listMembers;
 
@@ -98,6 +100,7 @@ public class MembersFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
         // Fetch member users data
 //        fetchMembersUsers();
     }
@@ -111,6 +114,9 @@ public class MembersFragment extends Fragment {
 
         addMember = rootView.findViewById(R.id.fab);
 
+        username = getArguments().getString("username");
+        password = getArguments().getString("password");
+
 //        listMembers = new ArrayList<>();
 //        members_recyclerview = rootView.findViewById(R.id.viewGroups);
 //
@@ -120,13 +126,15 @@ public class MembersFragment extends Fragment {
 //        members_recyclerview.setLayoutManager(layoutManager);
 //        members_recyclerview.setAdapter(memberListAdapter);
 //
-//        addMember.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), FacilitatorNewMemberActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        addMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateMemberClass.class);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }

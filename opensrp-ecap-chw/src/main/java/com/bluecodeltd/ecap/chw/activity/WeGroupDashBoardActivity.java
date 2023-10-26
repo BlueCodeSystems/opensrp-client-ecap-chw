@@ -42,12 +42,15 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
     TextView groupTabCount;
     private Toolbar toolbar;
     private AppBarLayout myAppbar;
+    String username,password;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_we_group_dash_board);
 
+        username = getIntent().getStringExtra("username");
+        password = getIntent().getStringExtra("password");
 
         addMember = findViewById(R.id.fab);
 
@@ -68,8 +71,16 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
     }
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
+
         fragments.add(new GroupsFragment());
-        fragments.add(new MembersFragment());
+
+        MembersFragment membersFragment = new MembersFragment();
+        Bundle args = new Bundle();
+        args.putString("username", username);
+        args.putString("password", password);
+        membersFragment.setArguments(args);
+        fragments.add(membersFragment);
+
         fragments.add(new ConstituitionFragment());
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);

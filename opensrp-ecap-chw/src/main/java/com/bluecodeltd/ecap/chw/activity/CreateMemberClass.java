@@ -1,0 +1,237 @@
+package com.bluecodeltd.ecap.chw.activity;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.bluecodeltd.ecap.chw.BuildConfig;
+import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.api.MemberApi;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
+import com.bluecodeltd.ecap.chw.model.Credentials;
+import com.bluecodeltd.ecap.chw.model.MemberListModel;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+public class CreateMemberClass extends AppCompatActivity {
+    Button submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_member_class);
+
+        String username = getIntent().getStringExtra("username");
+        String password = getIntent().getStringExtra("password");
+        getToken(username,password);
+        submit = findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postMember();
+            }
+
+            public void postMember() {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(CreateMemberClass.this);
+                String token = "";
+                getToken(username,password);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(new AuthInterceptor(token));
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://keycloak.zeir.smartregister.org/")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(new OkHttpClient.Builder().addInterceptor(new AuthInterceptor(token)).build())
+                        .build();
+
+                MemberApi memberApi = retrofit.create(MemberApi.class);
+
+                Map<String, String> attributes = new HashMap<>();
+                attributes.put("gender", "Male");
+                attributes.put("dob", "1990-01-01");
+                attributes.put("height", "180");
+
+                Credentials credential = new Credentials("password","123456",false);
+
+                List<Credentials> credentialsList = new ArrayList<>();
+                credentialsList.add(credential);
+
+                MemberListModel member = new MemberListModel(
+                        "Lee",
+                        true,
+                        false,
+                        "Lee",
+                        "Lest",
+                        "lee1@wegroup.com",
+                        attributes,
+                        credentialsList
+                );
+
+                Call<MemberListModel> userCall = memberApi.createUser(member);
+
+                userCall.enqueue(new Callback<MemberListModel>() {
+                    @Override
+                    public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("API Response", "Response received successfully");
+                        } else {
+                            Log.e("API Response", "Response error: " + response.errorBody());
+                            Log.e("API Response", "Response code: " + response.code());
+                            Log.e("API Response", "Response message: " + response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MemberListModel> call, Throwable t) {
+                        Log.e("postusererror", "perror : " + t.getMessage());
+                    }
+                });
+            }
+        });
+    }
+
+    private void getToken (final String username, final String password) {
+
+        String tag_string_req = "req_login";
+
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/token";
+        StringRequest
+                stringRequest
+                = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+
+
+                        String jsonInString = new Gson().toJson(response.toString().trim());
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.toString().trim());
+
+                            String token  = jsonObject.getString("access_token");
+
+                            getCreds(token);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                error -> {
+
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("grant_type","password");
+                params.put("username",username);
+                params.put("password",password);
+                params.put("scope","openid");
+                params.put("client_id", BuildConfig.OAUTH_CLIENT_ID);
+                params.put("client_secret",BuildConfig.OAUTH_CLIENT_SECRET);
+                return params;
+            }};
+
+        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_req);
+
+    }
+    private void getCreds(String token){
+
+        Log.i("chobela_token ", "chobela_token" + token);
+
+        String tag_string_creds = "req_creds";
+
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/userinfo";
+        StringRequest
+                stringRequest
+                = new StringRequest(
+                Request.Method.GET,
+                url,
+                (Response.Listener<String>) response -> {
+
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+
+                        String sub = jObj.getString("sub");
+                        String code = jObj.getString("code");
+                        String name = jObj.getString("name");
+                        String given_name = jObj.getString("given_name");
+                        String family_name = jObj.getString("family_name");
+                        String province = jObj.getString("province");
+                        String partner = jObj.getString("partner");
+                        String phone = jObj.getString("phone");
+                        String district = jObj.getString("district");
+                        String facility = jObj.getString("facility");
+                        String email = jObj.getString("email");
+                        String nrc = jObj.getString("nrc");
+
+                        // save user data
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(CreateMemberClass.this);
+                        SharedPreferences.Editor edit = sp.edit();
+
+
+                        edit.putString("sub", sub);
+                        edit.putString("code", code);
+                        edit.putString("caseworker_name", name);
+                        edit.putString("given_name", given_name);
+                        edit.putString("family_name", family_name);
+                        edit.putString("province", province);
+                        edit.putString("partner", partner);
+                        edit.putString("phone", phone);
+                        edit.putString("district", district);
+                        edit.putString("facility", facility);
+                        edit.putString("email", email);
+                        edit.putString("nrc", nrc);
+
+                        edit.commit();
+                        finish();
+                        startActivity(getIntent());
+
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }};
+
+
+        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_creds);
+
+    }
+}
