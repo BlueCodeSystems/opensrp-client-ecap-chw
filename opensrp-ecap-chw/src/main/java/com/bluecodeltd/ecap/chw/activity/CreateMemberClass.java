@@ -12,10 +12,13 @@ import androidx.preference.PreferenceManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.api.MemberApi;
+import com.bluecodeltd.ecap.chw.api.VolleyCallback;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
 import com.bluecodeltd.ecap.chw.model.Credentials;
@@ -47,7 +50,14 @@ public class CreateMemberClass extends AppCompatActivity {
 
         String username = getIntent().getStringExtra("username");
         String password = getIntent().getStringExtra("password");
-        getToken(username,password);
+
+        getToken(username, password, BuildConfig.OAUTH_CLIENT_ID, BuildConfig.OAUTH_CLIENT_SECRET, new VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("Access Token", result);
+
+            }
+        });
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,113 +66,109 @@ public class CreateMemberClass extends AppCompatActivity {
             }
 
             public void postMember() {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(CreateMemberClass.this);
-                String token = "";
-                getToken(username,password);
-                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                httpClient.addInterceptor(new AuthInterceptor(token));
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://keycloak.zeir.smartregister.org/")
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(new OkHttpClient.Builder().addInterceptor(new AuthInterceptor(token)).build())
-                        .build();
-
-                MemberApi memberApi = retrofit.create(MemberApi.class);
-
-                Map<String, String> attributes = new HashMap<>();
-                attributes.put("gender", "Male");
-                attributes.put("dob", "1990-01-01");
-                attributes.put("height", "180");
-
-                Credentials credential = new Credentials("password","123456",false);
-
-                List<Credentials> credentialsList = new ArrayList<>();
-                credentialsList.add(credential);
-
-                MemberListModel member = new MemberListModel(
-                        "Lee",
-                        true,
-                        false,
-                        "Lee",
-                        "Lest",
-                        "lee1@wegroup.com",
-                        attributes,
-                        credentialsList
-                );
-
-                Call<MemberListModel> userCall = memberApi.createUser(member);
-
-                userCall.enqueue(new Callback<MemberListModel>() {
+                getToken(username, password, BuildConfig.OAUTH_CLIENT_ID, BuildConfig.OAUTH_CLIENT_SECRET, new VolleyCallback() {
                     @Override
-                    public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("API Response", "Response received successfully");
-                        } else {
-                            Log.e("API Response", "Response error: " + response.errorBody());
-                            Log.e("API Response", "Response code: " + response.code());
-                            Log.e("API Response", "Response message: " + response.message());
-                        }
-                    }
+                    public void onSuccess(String result) {
+                        Log.d("Access Token", result);
 
-                    @Override
-                    public void onFailure(Call<MemberListModel> call, Throwable t) {
-                        Log.e("postusererror", "perror : " + t.getMessage());
+                        String token = result;
+
+                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                        httpClient.addInterceptor(new AuthInterceptor(token));
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("https://keycloak.zeir.smartregister.org/")
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .client(new OkHttpClient.Builder().addInterceptor(new AuthInterceptor(token)).build())
+                                .build();
+
+                        MemberApi memberApi = retrofit.create(MemberApi.class);
+
+                        Map<String, String> attributes = new HashMap<>();
+                        attributes.put("gender", "Male");
+                        attributes.put("dob", "1990-01-01");
+                        attributes.put("height", "180");
+
+                        Credentials credential = new Credentials("password","123456",false);
+
+                        List<Credentials> credentialsList = new ArrayList<>();
+                        credentialsList.add(credential);
+
+                        MemberListModel member = new MemberListModel(
+                                "Lee",
+                                true,
+                                false,
+                                "Lee",
+                                "Lest",
+                                "lee1@wegroup.com",
+                                attributes,
+                                credentialsList
+                        );
+
+                        Call<MemberListModel> userCall = memberApi.createUser(member);
+
+                        userCall.enqueue(new Callback<MemberListModel>() {
+                            @Override
+                            public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("API Response", "Response received successfully");
+                                } else {
+                                    Log.e("API Response", "Response error: " + response.errorBody());
+                                    Log.e("API Response", "Response code: " + response.code());
+                                    Log.e("API Response", "Response message: " + response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<MemberListModel> call, Throwable t) {
+                                Log.e("postusererror", "perror : " + t.getMessage());
+                            }
+                        });
                     }
                 });
             }
         });
     }
 
-    private void getToken (final String username, final String password) {
-
-        String tag_string_req = "req_login";
-
+    private void getToken(String username, String password, String clientId, String clientSecret, final VolleyCallback callback) {
         String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/token";
-        StringRequest
-                stringRequest
-                = new StringRequest(
+
+        StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 url,
-                new Response.Listener() {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Object response) {
-
-
-                        String jsonInString = new Gson().toJson(response.toString().trim());
+                    public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response.toString().trim());
-
-                            String token  = jsonObject.getString("access_token");
-
-                            getCreds(token);
-
-
-
+                            JSONObject jsonObject = new JSONObject(response);
+                            String accessToken = jsonObject.getString("access_token");
+                            callback.onSuccess(accessToken);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
-                error -> {
-
-                }){
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Error", error.toString());
+                    }
+                }
+        ) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("grant_type","password");
-                params.put("username",username);
-                params.put("password",password);
-                params.put("scope","openid");
-                params.put("client_id", BuildConfig.OAUTH_CLIENT_ID);
-                params.put("client_secret",BuildConfig.OAUTH_CLIENT_SECRET);
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("grant_type", "password");
+                params.put("client_id", clientId);
+                params.put("client_secret", clientSecret);
+                params.put("username", username);
+                params.put("password", password);
                 return params;
-            }};
-
-        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_req);
-
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
     }
     private void getCreds(String token){
 

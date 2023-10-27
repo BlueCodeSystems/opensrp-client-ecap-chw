@@ -1,0 +1,340 @@
+{
+  "count": 1,
+  "encounter_type": "We Group Member",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "",
+    "fields": [
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date Case Record Created",
+        "edit_type": "number"
+      },
+      {
+        "key": "group_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Member Id",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Member id is Required"
+        }
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Member First Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Member Last Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Member Gender",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "nrc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nrc",
+        "type": "edit_text",
+        "hint": "Member's NRC#",
+        "v_regex": {
+          "value": "([0-9]{6}/[0-9]{2}/[0-9])|\\s*",
+          "err": "Number must take the format of ######/##/#"
+        }
+      },
+      {
+        "key": "email",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "email",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Email",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": " is Required"
+        }
+      },
+      {
+        "key": "username",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "username",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Username",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Password is Required"
+        }
+      },
+
+      {
+        "key": "admission_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "admission_date",
+        "type": "date_picker",
+        "hint": "Admission Date",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the admission date"
+        }
+      },
+      {
+        "key": "password",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "password",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Password",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Password is Required"
+        }
+      },
+
+      {
+        "key": "ecap_hh_ID",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecap_hh_ID",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "ECAPII HH ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "ECAPII HH ID is Required"
+        }
+      },
+      {
+        "key": "role",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "role",
+        "type": "native_radio",
+        "label": "Member Role",
+        "options": [
+          {
+            "key": "Book Writer",
+            "text": "Book Writer"
+          },
+          {
+            "key": "Ordinary Member",
+            "text": "Ordinary Member"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "phone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone_number",
+        "type": "edit_text",
+        "hint": "Phone Number",
+        "edit_type": "number",
+        "read_only": false,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "single_female_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "single_female_caregiver",
+        "type": "native_radio",
+        "label": "Single Female Caregiver",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "next_of_kin",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "next_of_kin",
+        "type": "edit_text",
+        "hint": "Next of Kin Name",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Only takes in letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This field is required.",
+          "text_size": 8
+        }
+      },
+      {
+        "key": "next_of_kin_phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "next_of_kin_phone",
+        "type": "edit_text",
+        "hint": "Next of Kin Phone Number",
+        "edit_type": "number",
+        "read_only": false,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "read_only": "true"
+      }
+    ]
+  }
+}
