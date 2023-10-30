@@ -46,13 +46,16 @@ import com.android.volley.toolbox.Volley;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CreateMemberClass;
+import com.bluecodeltd.ecap.chw.adapter.MembersListAdapter;
 import com.bluecodeltd.ecap.chw.api.MemberApi;
 import com.bluecodeltd.ecap.chw.api.VolleyCallback;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
 import com.bluecodeltd.ecap.chw.model.Credentials;
 import com.bluecodeltd.ecap.chw.model.MemberListModel;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -110,8 +113,8 @@ public class MembersFragment extends Fragment {
     RecyclerView members_recyclerview;
     Toolbar toolbar;
     String username, password;
-//    MembersListAdapter memberListAdapter;
-//    ArrayList<MembersModel> listMembers;
+    MembersListAdapter memberListAdapter;
+    ArrayList<MembersModel> listMembers;
 
     private String mParam1;
     private String mParam2;
@@ -151,19 +154,23 @@ public class MembersFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_members, container, false);
 
         addMember = rootView.findViewById(R.id.fab);
+try{
+    username = getArguments().getString("username");
+    password = getArguments().getString("password");
+} catch (Exception e){
 
-        username = getArguments().getString("username");
-        password = getArguments().getString("password");
+}
 
-//        listMembers = new ArrayList<>();
-//        members_recyclerview = rootView.findViewById(R.id.viewGroups);
-//
-//        listMembers = returnUsers();
-//        memberListAdapter = new MembersListAdapter(getContext(), listMembers);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        members_recyclerview.setLayoutManager(layoutManager);
-//        members_recyclerview.setAdapter(memberListAdapter);
-//
+
+        listMembers = new ArrayList<>();
+        members_recyclerview = rootView.findViewById(R.id.viewGroups);
+
+        listMembers.addAll(WeGroupMembersDao.getWeGroupMembers());
+        memberListAdapter = new MembersListAdapter(getContext(), listMembers);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        members_recyclerview.setLayoutManager(layoutManager);
+        members_recyclerview.setAdapter(memberListAdapter);
+
         addMember.setOnClickListener(v -> {
             FormUtils formUtils = null;
             try {
@@ -266,7 +273,13 @@ public class MembersFragment extends Fragment {
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
+                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
+                if (childIndexEventClient == null) {
+                    return;
+                }
+
+                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
                 switch (EncounterType) {
 
@@ -485,12 +498,12 @@ public class MembersFragment extends Fragment {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Group":
+                case "We Group Member":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_we_group");
+                                encounterType, "ec_we_group_member");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);

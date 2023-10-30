@@ -94,7 +94,7 @@
       {
         "key": "first_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
         "hint": "Member First Name",
@@ -107,7 +107,7 @@
       {
         "key": "last_name",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "hint": "Member Last Name",
@@ -181,12 +181,12 @@
       },
 
       {
-        "key": "admission_date",
+        "key": "contribution_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "admission_date",
+        "openmrs_entity_id": "contribution_date",
         "type": "date_picker",
-        "hint": "Admission Date",
+        "hint": "Contribution Date",
         "expanded": false,
         "duration": {
           "label": ""

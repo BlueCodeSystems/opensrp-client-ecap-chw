@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
 import com.bluecodeltd.ecap.chw.fragment.GroupsFragment;
 import com.bluecodeltd.ecap.chw.fragment.MembersFragment;
@@ -81,14 +82,14 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         membersFragment.setArguments(args);
         fragments.add(membersFragment);
 
-        fragments.add(new ConstituitionFragment());
+//        fragments.add(new ConstituitionFragment());
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("Groups");
         tabLayout.getTabAt(1).setText("Members");
-        tabLayout.getTabAt(2).setText("Constitution");
+//        tabLayout.getTabAt(2).setText("Constitution");
 
     }
     private void updateGroupTabTitle() {
@@ -108,7 +109,7 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         groupTabCount = taskTabTitleLayout.findViewById(R.id.tab_count);
         groupTabTitle.setText("Members");
 
-        int count = 0;
+        int count = WeGroupMembersDao.getMembersCount();
 
         groupTabCount.setText(String.valueOf(count));
         tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);

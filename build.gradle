@@ -59,6 +59,12 @@ allprojects {
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
         maven { url 'https://repo1.maven.org/maven2/com/ibm/fhir' }
+
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.google.android.material:material:1.4.0'
+        }
     }
 }
 

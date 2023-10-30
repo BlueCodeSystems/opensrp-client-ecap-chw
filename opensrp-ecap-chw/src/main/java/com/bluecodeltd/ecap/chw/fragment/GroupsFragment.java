@@ -275,6 +275,9 @@ public class GroupsFragment extends Fragment {
             }
         }
     }
+
+
+
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {

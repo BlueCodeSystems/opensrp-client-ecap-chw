@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_margin="1dp"
+    android:id="@+id/relativeLayout"
+    >
+
+    <LinearLayout android:id="@+id/holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="1dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="2dip">
+
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--            android:id="@+id/tvIcon"-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:src="@drawable/ic_user"-->
+<!--            app:civ_border_width="2dp"-->
+<!--            app:civ_border_color="#F1127A"-->
+<!--            android:foregroundGravity="center_horizontal"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:padding="5dp"/>-->
+        <com.bluecodeltd.ecap.chw.activity.CircularImageView
+            android:id="@+id/tvIcon"
+            android:src="@drawable/ic_user"
+            android:elevation="0dp"
+            android:padding="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="98dp"
+            android:layout_height="98dp"
+            android:background="@color/blue" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/holder"
+        android:layout_toRightOf="@+id/holder"
+        android:textColor="#040404"
+        android:layout_marginTop="15dp"
+        android:text="Weledger Member"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/member_ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="40dp"
+        android:layout_toRightOf="@+id/holder"
+        android:text="ID: 12345"
+        android:textColor="#4C4C4C"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
