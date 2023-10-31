@@ -1,15 +1,24 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -17,12 +26,16 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
 import com.bluecodeltd.ecap.chw.fragment.MembersFragment;
 import com.bluecodeltd.ecap.chw.fragment.ServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.SummaryFragment;
+import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -30,6 +43,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -42,15 +56,20 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class WeGroupMemberProfileActivity extends AppCompatActivity {
+    private Toolbar toolbar;
+    private AppBarLayout myAppbar;
     private ViewPager viewPager;
     TabLayout tabLayout;
     FloatingActionButton mAddFab, addSavings, addLoan, addFine,addSocialFund, addRepayment, addIga;
@@ -62,15 +81,24 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     TextView userName,userId;
 
     String name,id;
-
+MembersModel membersModel;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_member);
 
+        toolbar = findViewById(R.id.toolbarx);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
+        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        NavigationMenu.getInstance(this, null, toolbar);
+
         name = getIntent().getStringExtra("userName");
         id = getIntent().getStringExtra("userId");
+
+        membersModel =  WeGroupMembersDao.getWeGroupMemberById(id);
 
         userName = findViewById(R.id.user_name);
         userId = findViewById(R.id.user_id);
@@ -183,6 +211,24 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                 JSONObject indexRegisterForm;
 
                 indexRegisterForm = formUtils.getFormJson("we_group_member_savings");
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -200,6 +246,25 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                 JSONObject indexRegisterForm;
 
                 indexRegisterForm = formUtils.getFormJson("we_group_member_loan");
+
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -215,6 +280,25 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                 JSONObject indexRegisterForm;
 
                 indexRegisterForm = formUtils.getFormJson("we_group_member_fine");
+
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -230,23 +314,65 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                 JSONObject indexRegisterForm;
 
                 indexRegisterForm = formUtils.getFormJson("we_group_member_social_fund");
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
                 startFormActivity(indexRegisterForm);
             }
         });
 //        addRepayment.setOnClickListener(
 //                view -> Toast.makeText(NewMemberActivity.this, "Repayment Added", Toast.LENGTH_SHORT
 //                ).show());
-//        addIga.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//                Intent intent = new Intent(NewMemberActivity.this, BookWriterPostIGA.class);
-//                intent.putExtra("userName", name);
-//                intent.putExtra("userId", id);
-//                startActivity(intent);
-//                startActivity( intent);
-//            }
-//        });
+        addIga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(getBaseContext());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject indexRegisterForm;
+
+                indexRegisterForm = formUtils.getFormJson("we_group_member_iga");
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                startFormActivity(indexRegisterForm);
+            }
+        });
     }
 
     public  void returnViewPager(){
@@ -359,10 +485,16 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                 switch (EncounterType) {
 
                     case "Group":
-                        Toasty.success(getApplicationContext(), "Group Saved", Toast.LENGTH_LONG, true).show();
+                    case "We Group Member Saving":
+                    case "We Group Member loan":
+                    case "We Group Member Fine":
+                    case "We Group Member Social Fund":
+                    case "We Group Member IGA":
+                        Toasty.success(getApplicationContext(), "Form Saved", Toast.LENGTH_LONG, true).show();
                         finish();
                         startActivity(getIntent());
                         break;
+
 
                 }
 
@@ -415,6 +547,63 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, "ec_we_group");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "We Group Member Saving":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_member_saving");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "We Group Member loan":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_member_loan");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "We Group Member Fine":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_member_fine");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "We Group Member Social Fund":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_member_social_fund");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "We Group Member IGA":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_member_iga");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -501,6 +690,40 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+    public HashMap<String, MembersModel> getData() {
+
+
+        HashMap<String, MembersModel> map = new HashMap<>();
+
+        map.put("uniqueID",membersModel);
+
+        return map;
+
+    }
+    private String getFormattedDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return today.format(formatter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.we_group_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

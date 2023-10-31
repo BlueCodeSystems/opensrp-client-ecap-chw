@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -98,6 +100,8 @@ public class GroupsFragment extends Fragment {
     RecyclerView transactions_recylerview;
     ArrayList<WeGroupModel> listGroups;
     ViewGroupsAdapter viewGroupsAdapter;
+    private Handler handler = new Handler(Looper.getMainLooper());
+
 
     public GroupsFragment() {
         // Required empty public constructor
@@ -138,16 +142,14 @@ public class GroupsFragment extends Fragment {
         transactions_recylerview = view.findViewById(R.id.viewGroups);
         listGroups = new ArrayList<>();
         addNewGroup = view.findViewById(R.id.fab);
-//
-//        fetchGroups();
-//
+
         listGroups.addAll(WeGroupDao.getWeGroups());
         viewGroupsAdapter = new ViewGroupsAdapter(requireContext(), listGroups);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext());
         transactions_recylerview.setLayoutManager(layoutManager);
         transactions_recylerview.setAdapter(viewGroupsAdapter);
         viewGroupsAdapter.notifyDataSetChanged();
-//
+
         addNewGroup.setOnClickListener(v -> {
             FormUtils formUtils = null;
             try {
@@ -264,8 +266,16 @@ public class GroupsFragment extends Fragment {
 
                     case "Group":
                         Toasty.success(getContext(), "Group Saved", Toast.LENGTH_LONG, true).show();
-//                        recreate();
-//                        refresh();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listGroups.clear();
+                                listGroups.addAll(WeGroupDao.getWeGroups());
+                                viewGroupsAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+
                         break;
 
                 }
@@ -391,4 +401,5 @@ public class GroupsFragment extends Fragment {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+
 }

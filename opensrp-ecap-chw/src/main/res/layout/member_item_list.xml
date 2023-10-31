@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="98dp"
             android:layout_height="98dp"
-            android:background="@color/blue" />
+            android:background="@drawable/ic_info" />
 
 
     </LinearLayout>

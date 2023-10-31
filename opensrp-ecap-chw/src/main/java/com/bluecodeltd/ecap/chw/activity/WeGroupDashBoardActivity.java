@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -19,22 +21,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
+import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
 import com.bluecodeltd.ecap.chw.fragment.GroupsFragment;
 import com.bluecodeltd.ecap.chw.fragment.MembersFragment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
+import timber.log.Timber;
 
 public class WeGroupDashBoardActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -115,44 +128,22 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_toolbar,menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        String role = preferences.getString("role_id", "");
-//
-////        if (id == R.id.action_upload_constitution) {
-////            if (!role.equals(Constants.ORDINARY_MEMBER_ROLE)) {
-////                Intent intent3 = new Intent(this, PdfActivity.class);
-////                startActivity(intent3);
-////                return true;
-////            }
-////        }
-////
-////        if (id == R.id.action_view_constitution) {
-////            Intent intent = new Intent(this, PdfDownloadActivity.class);
-////            startActivity(intent);
-////            return true;
-////        }
-////
-////        // TODO Add actions for the tool bar
-////        if (id == R.id.action_logout) {
-//////            dialogLogout();
-////            return true;
-////        }
-////
-////        if(id == R.id.action_services){
-////            Intent intent = new Intent(getApplicationContext(), NewMemberActivity.class);;
-////            startActivity(intent);
-////            finish();
-////        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.we_group_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

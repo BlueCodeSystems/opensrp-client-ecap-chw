@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Ecap II</string>
+    <string name="app_name">We-eLedger</string>
     <string name="login_title">Mobile Application for Women Empowered Village Banking</string>
-    <string name="nav_logo">USAID Ecap II</string>
+    <string name="nav_logo">USAID Ecap II Women Empowerment</string>
     <string name="add_family">Add Household</string>
     <string name="menu_anc">ANC</string>
     <string name="menu_pnc">PNC</string>

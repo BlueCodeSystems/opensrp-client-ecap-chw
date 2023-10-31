@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 
@@ -21,6 +22,23 @@ public class WeGroupMembersDao extends AbstractDao {
 
         return Integer.parseInt(values.get(0));
 
+    }
+    public static MembersModel getWeGroupMemberById (String memberID) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + memberID + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MembersModel> values = AbstractDao.readData(sql, getWeGroupMembersModelMap());
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
     }
     public static List<MembersModel> getWeGroupMembers () {
 

@@ -15,6 +15,8 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +52,7 @@ import com.bluecodeltd.ecap.chw.adapter.MembersListAdapter;
 import com.bluecodeltd.ecap.chw.api.MemberApi;
 import com.bluecodeltd.ecap.chw.api.VolleyCallback;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
@@ -115,6 +118,8 @@ public class MembersFragment extends Fragment {
     String username, password;
     MembersListAdapter memberListAdapter;
     ArrayList<MembersModel> listMembers;
+
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     private String mParam1;
     private String mParam2;
@@ -344,6 +349,16 @@ try{
                         postMember(stringDateCreated, "324689599752", stringUniqueId, stringFirstName, stringLastName, stringGender,
                                 stringNrc, stringEmail, stringUsername, stringPassword, stringAdmissionDate, stringEcapHhID,
                                 stringRole, stringPhoneNumber, stringSingleFemaleCaregiver, stringNextOfKin, stringNextOfKinPhone, stringDeleteStatus);
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                listMembers.clear();
+                                listMembers.addAll(WeGroupMembersDao.getWeGroupMembers());
+                                memberListAdapter.notifyDataSetChanged();
+                            }
+                        });
+
                         break;
 
                 }
@@ -460,6 +475,7 @@ try{
                     public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
                         if (response.isSuccessful()) {
                             Log.d("API Response", "Response received successfully");
+
                         } else {
                             Log.e("API Response", "Response error: " + response.errorBody());
                             Log.e("API Response", "Response code: " + response.code());

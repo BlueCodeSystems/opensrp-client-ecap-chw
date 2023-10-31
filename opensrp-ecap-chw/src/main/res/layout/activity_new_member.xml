@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="HardcodedText">
+
     <View
         android:id="@+id/dimBackground"
         android:layout_width="match_parent"
@@ -336,15 +337,28 @@
         app:layout_constraintBottom_toBottomOf="@+id/add_iga_fab"
         app:layout_constraintEnd_toStartOf="@+id/add_iga_fab"
         app:layout_constraintTop_toTopOf="@+id/add_iga_fab" />
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarx"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:background="#FF007F"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="PROFILE"
+        app:titleTextColor="#ffff" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:id="@+id/linearLayout"
         android:background="@drawable/profile_bk"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarx">
+
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"

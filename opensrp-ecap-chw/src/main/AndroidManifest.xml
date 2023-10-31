@@ -47,7 +47,8 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.WeGroupMemberProfileActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.FlagActivity"
             android:exported="false" />

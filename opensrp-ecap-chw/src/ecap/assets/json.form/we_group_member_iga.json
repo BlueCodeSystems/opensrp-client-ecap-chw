@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "We Group Member loan",
+  "encounter_type": "We Group Member IGA",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,7 +51,7 @@
     }
   },
   "step1": {
-    "title": "Member Loans Form",
+    "title": "Member IGA Form",
     "fields": [
       {
         "key": "date_created",
@@ -105,80 +105,12 @@
         }
       },
       {
-        "key": "date_of_loan",
+        "key": "meeting_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_loan",
-        "type": "date_picker",
-        "hint": "Date of loan",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the loan date"
-        }
-      },
-      {
-        "key": "interest_rate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "interest_rate",
+        "openmrs_entity_id": "meeting_number",
         "type": "edit_text",
-        "read_only": "true",
-        "hint": "Interest Rate",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "duration",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "duration",
-        "type": "date_picker",
-        "hint": "Duration",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Duration"
-        }
-      },
-      {
-        "key": "due_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "due_date",
-        "type": "date_picker",
-        "hint": "Due Date",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Due Date"
-        }
-      },
-      {
-        "key": "loan_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "loan_number",
-        "type": "edit_text",
-        "hint": "Loan Number",
+        "hint": "Meeting Number",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -186,12 +118,12 @@
         }
       },
       {
-        "key": "started_iga",
+        "key": "date_of_meeting",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "started_iga",
+        "openmrs_entity_id": "date_of_meeting",
         "type": "date_picker",
-        "hint": "Started IGA",
+        "hint": "Meeting Date",
         "expanded": false,
         "duration": {
           "label": ""
@@ -200,9 +132,101 @@
         "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Due Date"
+          "err": "Please enter the contribution date"
         }
       },
+      {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "hint": "Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "meeting_agenda",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "meeting_agenda",
+        "type": "edit_text",
+        "hint": "Meeting Agenda",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "decisions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "decisions",
+        "type": "edit_text",
+        "hint": "Decisions",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "iga_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "iga_type",
+        "type": "edit_text",
+        "hint": "IGA Type",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "number_of_igas",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_of_igas",
+        "type": "edit_text",
+        "hint": "IGA Number",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "moderator",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "moderator",
+        "type": "edit_text",
+        "hint": "Moderator",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "type_of_group_iga",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "type_of_group_iga",
+        "type": "edit_text",
+        "hint": "Group IGA Type",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+
       {
         "key": "delete_status",
         "openmrs_entity_parent": "",

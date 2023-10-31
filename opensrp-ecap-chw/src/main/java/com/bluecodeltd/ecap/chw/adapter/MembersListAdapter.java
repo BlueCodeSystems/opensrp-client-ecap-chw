@@ -50,17 +50,16 @@ public class MembersListAdapter extends RecyclerView.Adapter<MembersListAdapter.
         holder.name.setText(model.getFirst_name()+" "+model.getLast_name());
         String gender = model.getGender();
 
-        String blueColorCode = null;
-        if(gender != null && gender.equals("male")){
-            blueColorCode = "#A3DEFF";
+        int drawableResource;
+
+        if (gender != null && gender.equals("male")) {
+            drawableResource = R.drawable.blue_background;
         } else {
-            blueColorCode = "#FDC4F1";
+            drawableResource = R.drawable.pink_background;
         }
 
-        int colorCode = Color.parseColor(blueColorCode);
+        holder.tvIcon.setBackgroundResource(drawableResource);
 
-        holder.tvIcon.setBackgroundColor(colorCode);
-//        holder.tvIcon.setText(model.getMember_name().substring(0,1));
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

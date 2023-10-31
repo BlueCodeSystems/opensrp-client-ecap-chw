@@ -4,9 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
+import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,7 @@ public class SummaryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView admission_date,user_role,user_phone,user_nrc,next_of_kin,next_of_kin_phone,group_name,group_id;
 
     public SummaryFragment() {
         // Required empty public constructor
@@ -56,9 +64,85 @@ public class SummaryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_summary, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_summary, container, false);
+
+        admission_date = view.findViewById(R.id.admission_date);
+        user_role = view.findViewById(R.id.user_role);
+        user_phone = view.findViewById(R.id.user_phone);
+        user_nrc = view.findViewById(R.id.user_nrc);
+        next_of_kin = view.findViewById(R.id.next_of_kin);
+        next_of_kin_phone = view.findViewById(R.id.next_of_kin_phone);
+        group_name = view.findViewById(R.id.group_name);
+        group_id = view.findViewById(R.id.group_id);
+
+        HashMap<String, MembersModel> mymap = ((WeGroupMemberProfileActivity) requireActivity()).getData();
+        MembersModel membersModel = mymap.get("uniqueID");
+        try {
+            String admissionDate = membersModel.getAdmission_date();
+            if (admissionDate != null) {
+                admission_date.setText(admissionDate);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String role = membersModel.getRole();
+            if (role != null) {
+                user_role.setText(role);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String phoneNumber = membersModel.getPhone_number();
+            if (phoneNumber != null) {
+                user_phone.setText(phoneNumber);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String nrc = membersModel.getNrc();
+            if (nrc != null) {
+                user_nrc.setText(nrc);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String nextOfKin = membersModel.getNext_of_kin();
+            if (nextOfKin != null) {
+                next_of_kin.setText(nextOfKin);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String nextOfKinPhone = membersModel.getNext_of_kin_phone();
+            if (nextOfKinPhone != null) {
+                next_of_kin_phone.setText(nextOfKinPhone);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String groupId = membersModel.getGroup_id();
+            if (groupId != null) {
+                group_id.setText(groupId);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
+        return view;
     }
+
 }

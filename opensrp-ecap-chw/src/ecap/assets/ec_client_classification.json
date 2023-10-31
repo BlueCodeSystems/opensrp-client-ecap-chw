@@ -21,6 +21,41 @@
           },
           {
             "field": "eventType",
+            "field_value": "We Group Member Saving",
+            "creates_case": [
+              "ec_we_group_member_saving"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "We Group Member loan",
+            "creates_case": [
+              "ec_we_group_member_loan"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "We Group Member Fine",
+            "creates_case": [
+              "ec_we_group_member_fine"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "We Group Member Social Fund",
+            "creates_case": [
+              "ec_we_group_member_social_fund"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "We Group Member IGA",
+            "creates_case": [
+              "ec_we_group_member_iga"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
               "ec_family"
