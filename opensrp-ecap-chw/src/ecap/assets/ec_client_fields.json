@@ -576,6 +576,82 @@
       ]
     },
     {
+      "name": "ec_we_group_member_repayment",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+
+        {
+          "column_name": "group_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "repayment_purpose",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repayment_purpose"
+          }
+        },
+        {
+          "column_name": "amount",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.amount"
+          }
+        },
+        {
+          "column_name": "repayment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repayment_date"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facilitator_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator_id"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_we_group_member_iga",
       "columns": [
         {

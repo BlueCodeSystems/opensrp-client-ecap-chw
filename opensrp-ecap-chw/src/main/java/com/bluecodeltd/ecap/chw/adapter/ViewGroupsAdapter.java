@@ -1,6 +1,8 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
+import com.bluecodeltd.ecap.chw.activity.WeGroupProfileActivity;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 
@@ -56,13 +60,13 @@ public class ViewGroupsAdapter extends RecyclerView.Adapter<ViewGroupsAdapter.Vi
         }
 //        String dateCreatedText = "Group Number " + model.getDate_created() ;
 //        holder.date_created.setText(dateCreatedText);
-//        holder.linear_group_layout.setOnClickListener(v -> {
-//            Intent intent = new Intent(v.getContext(), FacilitatorNewMemberActivity.class);
-//            intent.putExtra("groupName", model.getGroup_name());
-//            intent.putExtra("groupId", model.getGroup_id());
-//            v.getContext().startActivity(intent);
-//            ((Activity) v.getContext()).finish();
-//        });
+            holder.linear_group_layout.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), WeGroupProfileActivity.class);
+            intent.putExtra("groupName", model.getGroup_name());
+            intent.putExtra("groupId", model.getGroup_id());
+            v.getContext().startActivity(intent);
+            ((Activity) v.getContext()).finish();
+        });
 
     }
 

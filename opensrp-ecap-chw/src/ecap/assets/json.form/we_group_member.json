@@ -51,7 +51,7 @@
     }
   },
   "step1": {
-    "title": "",
+    "title": "Member Registration Form",
     "fields": [
       {
         "key": "date_created",
@@ -60,7 +60,7 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Case Record Created",
+        "hint": "Date Record Created",
         "edit_type": "number"
       },
       {
@@ -173,20 +173,19 @@
         "type": "edit_text",
         "read_only": "false",
         "hint": "Username",
-        "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Password is Required"
+          "err": "Username is Required"
         }
       },
 
       {
-        "key": "contribution_date",
+        "key": "admission_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "contribution_date",
+        "openmrs_entity_id": "admission_date",
         "type": "date_picker",
-        "hint": "Contribution Date",
+        "hint": "Admission Date",
         "expanded": false,
         "duration": {
           "label": ""

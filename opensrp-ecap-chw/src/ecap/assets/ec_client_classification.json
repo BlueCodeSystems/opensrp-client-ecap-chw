@@ -49,6 +49,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "We Group Member Repayment",
+            "creates_case": [
+              "ec_we_group_member_repayment"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "We Group Member IGA",
             "creates_case": [
               "ec_we_group_member_iga"

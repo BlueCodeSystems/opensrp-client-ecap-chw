@@ -39,6 +39,21 @@ public class WeGroupDao extends AbstractDao {
 
         return values;
     }
+    public static List<WeGroupModel> getWeGroupsById (String groupId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<WeGroupModel> values = AbstractDao.readData(sql, getWeGroupModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
 
     public static DataMap<WeGroupModel> getWeGroupModelMap() {
         return c -> {

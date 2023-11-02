@@ -78,6 +78,8 @@ public class SummaryFragment extends Fragment {
 
         HashMap<String, MembersModel> mymap = ((WeGroupMemberProfileActivity) requireActivity()).getData();
         MembersModel membersModel = mymap.get("uniqueID");
+
+
         try {
             String admissionDate = membersModel.getAdmission_date();
             if (admissionDate != null) {

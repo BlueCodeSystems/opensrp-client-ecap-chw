@@ -366,7 +366,7 @@
             android:layout_height="96dp"
             android:src="@drawable/ic_user"
             app:civ_border_width="2dp"
-            app:civ_border_color="#F1127A"
+            app:civ_border_color="#Fff"
             android:layout_marginLeft="5dp"
             android:padding="5dp"/>
         <TextView

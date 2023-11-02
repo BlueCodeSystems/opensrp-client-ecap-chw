@@ -23,6 +23,19 @@ public class WeGroupMembersDao extends AbstractDao {
         return Integer.parseInt(values.get(0));
 
     }
+    public static int getMembersCountById(String groupId){
+
+        String sql = "SELECT COUNT(*) as members\n" +
+                "FROM ec_we_group_member\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "members");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
     public static MembersModel getWeGroupMemberById (String memberID) {
 
 
@@ -40,6 +53,7 @@ public class WeGroupMembersDao extends AbstractDao {
 
         return values.get(0);
     }
+
     public static List<MembersModel> getWeGroupMembers () {
 
 
@@ -47,6 +61,21 @@ public class WeGroupMembersDao extends AbstractDao {
                 "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
                 "FROM ec_we_group_member\n" +
                 "WHERE (delete_status IS NULL OR delete_status <> '1')\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MembersModel> values = AbstractDao.readData(sql, getWeGroupMembersModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
+    public static List<MembersModel> getWeGroupMembersByGroupId (String groupId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "'\n" +
                 "ORDER BY sortable_date DESC";
 
         List<MembersModel> values = AbstractDao.readData(sql, getWeGroupMembersModelMap());

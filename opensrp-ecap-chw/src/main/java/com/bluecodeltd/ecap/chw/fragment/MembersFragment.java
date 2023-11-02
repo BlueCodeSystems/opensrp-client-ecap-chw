@@ -17,7 +17,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.OneTimeWorkRequest;
@@ -40,6 +40,7 @@ import androidx.work.WorkManager;
 //import com.bluecode.weledger.databases.DatabaseHelper;
 //import com.bluecode.weledger.interfaces.UserApi;
 //import com.bluecode.weledger.models.MembersModel;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -48,6 +49,7 @@ import com.android.volley.toolbox.Volley;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CreateMemberClass;
+import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.adapter.MembersListAdapter;
 import com.bluecodeltd.ecap.chw.api.MemberApi;
 import com.bluecodeltd.ecap.chw.api.VolleyCallback;
@@ -159,12 +161,21 @@ public class MembersFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_members, container, false);
 
         addMember = rootView.findViewById(R.id.fab);
-try{
-    username = getArguments().getString("username");
-    password = getArguments().getString("password");
-} catch (Exception e){
+            try{
+                username = getArguments().getString("username");
+                password = getArguments().getString("password");
+            } catch (Exception e){
 
-}
+            }
+
+        getToken(username, password, BuildConfig.OAUTH_CLIENT_ID, BuildConfig.OAUTH_CLIENT_SECRET, result -> {
+            Log.d("Access Token", result);
+
+            String token = result;
+        getCreds(token);
+    });
+
+
 
 
         listMembers = new ArrayList<>();
@@ -284,7 +295,7 @@ try{
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+                saveRegistration(childIndexEventClient, is_edit_mode);
 
                 switch (EncounterType) {
 
@@ -406,6 +417,75 @@ try{
             }
         };
         Volley.newRequestQueue(getContext()).add(stringRequest);
+    }
+    private void getCreds(String token){
+
+        Log.i("chobela_token ", "chobela_token" + token);
+
+        String tag_string_creds = "req_creds";
+
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/userinfo";
+        StringRequest
+                stringRequest
+                = new StringRequest(
+                Request.Method.GET,
+                url,
+                (Response.Listener<String>) response -> {
+
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+
+                        String sub = jObj.getString("sub");
+                        String code = jObj.getString("code");
+                        String name = jObj.getString("name");
+                        String given_name = jObj.getString("given_name");
+                        String family_name = jObj.getString("family_name");
+                        String province = jObj.getString("province");
+                        String partner = jObj.getString("partner");
+                        String phone = jObj.getString("phone");
+                        String district = jObj.getString("district");
+                        String facility = jObj.getString("facility");
+                        String email = jObj.getString("email");
+                        String nrc = jObj.getString("nrc");
+                        String first_name = jObj.getString("first_name");
+
+                        // save user data
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences.Editor edit = sp.edit();
+
+
+                        edit.putString("sub", sub);
+                        edit.putString("code", code);
+                        edit.putString("caseworker_name", name);
+                        edit.putString("given_name", given_name);
+                        edit.putString("family_name", family_name);
+                        edit.putString("province", province);
+                        edit.putString("partner", partner);
+                        edit.putString("phone", phone);
+                        edit.putString("district", district);
+                        edit.putString("facility", facility);
+                        edit.putString("email", email);
+                        edit.putString("nrc", nrc);
+
+                        edit.commit();
+
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }};
+
+
+        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_creds);
+
     }
 
     public void postMember(String stringDateCreated, String stringGroupId, String stringUniqueId,
@@ -534,7 +614,7 @@ try{
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
 
         Runnable runnable = () -> {
 

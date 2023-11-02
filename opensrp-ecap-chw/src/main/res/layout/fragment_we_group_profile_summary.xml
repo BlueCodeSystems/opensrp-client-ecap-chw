@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overview_summary_row"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/profile_name"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:background="@color/colorPrimary"-->
+    <!--        android:gravity="center"-->
+    <!--        android:paddingLeft="@dimen/contact_drawable_padding"-->
+    <!--        android:paddingTop="@dimen/contact_drawable_padding"-->
+    <!--        android:paddingBottom="@dimen/contact_drawable_padding"-->
+    <!--        android:singleLine="true"-->
+    <!--        android:text="User Bluecode"-->
+    <!--        android:textAllCaps="true"-->
+    <!--        android:textAppearance="?android:textAppearanceMedium"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="25sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:layout_editor_absoluteX="2dp" />-->
+
+    <LinearLayout
+        android:id="@+id/llayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/contact_small_padding"
+        android:paddingBottom="@dimen/contact_small_padding"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Cycle Number"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/cycle_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Not Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Annual Interest Rate"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/annual_interest_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Not Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="First Training"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/first_training_meeting_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Not Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="Date Savings Started" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/date_savings_started"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Note Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="Reinvested Savings Cycle Start" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/reinvested_savings_cycle_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Note Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="Registered Members Cycle Start" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/registered_members_cycle_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Note Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:text="group Management" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/group_mgt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Note Set"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

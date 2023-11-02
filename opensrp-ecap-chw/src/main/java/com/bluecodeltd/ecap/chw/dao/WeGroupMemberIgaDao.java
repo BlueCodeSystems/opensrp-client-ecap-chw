@@ -1,0 +1,58 @@
+package com.bluecodeltd.ecap.chw.dao;
+
+import com.bluecodeltd.ecap.chw.model.MemberIGAModel;
+
+import org.smartregister.dao.AbstractDao;
+
+import java.util.List;
+
+public class WeGroupMemberIgaDao extends AbstractDao {
+
+    public static int getTotalAmount(String memberID) {
+        String sql = "SELECT SUM(amount) as amount\n" +
+                "FROM ec_we_group_member_iga\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + memberID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "amount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values.get(0) != null) {
+            try {
+                return Integer.parseInt(values.get(0));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+
+    public static DataMap<MemberIGAModel> getMemberIGAModelMap() {
+
+        return c -> {
+
+            MemberIGAModel record = new MemberIGAModel();
+            record.setLast_interacted_with(getCursorValue(c, "last_interacted_with"));
+            record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setDate_created(getCursorValue(c, "date_created"));
+            record.setGroup_id(getCursorValue(c, "group_id"));
+            record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setAmount(getCursorValue(c, "amount"));
+            record.setMeeting_number(getCursorValue(c, "meeting_number"));
+            record.setDate_of_meeting(getCursorValue(c, "date_of_meeting"));
+            record.setCycle_number(getCursorValue(c, "cycle_number"));
+            record.setMeeting_agenda(getCursorValue(c, "meeting_agenda"));
+            record.setDecisions(getCursorValue(c, "decisions"));
+            record.setIga_type(getCursorValue(c, "iga_type"));
+            record.setNumber_of_igas(getCursorValue(c, "number_of_igas"));
+            record.setModerator(getCursorValue(c, "moderator"));
+            record.setType_of_group_iga(getCursorValue(c, "type_of_group_iga"));
+            record.setDelete_status(getCursorValue(c, "delete_status"));
+            record.setFacilitator_id(getCursorValue(c, "facilitator_id"));
+
+
+            return record;
+        };
+    }
+}

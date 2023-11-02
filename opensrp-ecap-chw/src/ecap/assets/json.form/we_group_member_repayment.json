@@ -1,0 +1,165 @@
+{
+  "count": 1,
+  "encounter_type": "We Group Member Repayment",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Member Repayment Form",
+    "fields": [
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date Record Created",
+        "edit_type": "number"
+      },
+      {
+        "key": "group_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Member Id",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Member id is Required"
+        }
+      },
+      {
+        "key": "repayment_purpose",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "repayment_purpose",
+        "type": "native_radio",
+        "label": "Purpose Of Repayment",
+        "options": [
+          {
+            "key": "loan",
+            "text": "Loan"
+          },
+          {
+            "key": "fine",
+            "text": "Fine"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "amount",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "amount",
+        "type": "edit_text",
+        "hint": "Amount",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "repayment_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "repayment_date",
+        "type": "date_picker",
+        "hint": "Repayment Date",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the repayment date"
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "read_only": "true"
+      },
+      {
+        "key": "facilitator_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facilitator_id",
+        "type": "hidden",
+        "read_only": "true"
+      }
+    ]
+  }
+}

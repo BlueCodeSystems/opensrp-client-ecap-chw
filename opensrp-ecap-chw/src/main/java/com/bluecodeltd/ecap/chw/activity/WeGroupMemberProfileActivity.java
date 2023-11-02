@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
@@ -57,6 +61,7 @@ import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,7 +86,10 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     TextView userName,userId;
 
     String name,id;
-MembersModel membersModel;
+    MembersModel membersModel;
+    Handler handler = new Handler();
+    private final int FIVE_SECONDS = 2000;
+    Runnable runnable;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -337,9 +345,40 @@ MembersModel membersModel;
                 startFormActivity(indexRegisterForm);
             }
         });
-//        addRepayment.setOnClickListener(
-//                view -> Toast.makeText(NewMemberActivity.this, "Repayment Added", Toast.LENGTH_SHORT
-//                ).show());
+        addRepayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(getBaseContext());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject indexRegisterForm;
+
+                indexRegisterForm = formUtils.getFormJson("we_group_member_repayment");
+
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                startFormActivity(indexRegisterForm);
+            }
+        });
         addIga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -598,6 +637,17 @@ MembersModel membersModel;
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+                case "Member Repayment Form":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_member_iga");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
                 case "We Group Member IGA":
 
                     if (fields != null) {
@@ -724,6 +774,15 @@ MembersModel membersModel;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void refreshActivity() {
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, FIVE_SECONDS);
+              recreate();
+            }
+        }, FIVE_SECONDS);
+        super.onResume();
     }
 
 }
