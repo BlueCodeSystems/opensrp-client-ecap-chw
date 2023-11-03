@@ -44,17 +44,17 @@
             android:layout_below="@id/tabLayout" />
 
 
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:id="@+id/fab"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignParentEnd="true"-->
-        <!--            android:layout_alignParentBottom="true"-->
-        <!--            android:layout_margin="16dp"-->
-        <!--            android:src="@drawable/ic_add_32dp"-->
-        <!--            app:fabSize="normal"-->
-        <!--            app:backgroundTint="#E11153"-->
-        <!--            android:layout_alignParentRight="true" />-->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_add_32dp"
+                    app:fabSize="normal"
+                    app:backgroundTint="#E11153"
+                    android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 

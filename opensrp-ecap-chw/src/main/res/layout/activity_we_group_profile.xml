@@ -364,7 +364,7 @@
             android:id="@+id/profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/ic_user"
+            android:src="@drawable/ic_groups"
             app:civ_border_width="2dp"
             app:civ_border_color="#Fff"
             android:layout_marginLeft="5dp"

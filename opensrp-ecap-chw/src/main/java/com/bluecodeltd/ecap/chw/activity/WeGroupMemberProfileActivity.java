@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -34,8 +36,10 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
 import com.bluecodeltd.ecap.chw.fragment.MembersFragment;
+import com.bluecodeltd.ecap.chw.fragment.MyGroupMembersFragment;
 import com.bluecodeltd.ecap.chw.fragment.ServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.SummaryFragment;
+import com.bluecodeltd.ecap.chw.fragment.WeGroupFragmentMembers;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -90,6 +94,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     Handler handler = new Handler();
     private final int FIVE_SECONDS = 2000;
     Runnable runnable;
+    TextView groupTabCount;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +148,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         mAddFab = findViewById(R.id.add_fab);
         dimBackground = findViewById(R.id.dimBackground);
         returnViewPager();
+        updateMemberTabTitle();
 
         addSavings = findViewById(R.id.add_saving_fab);
         addLoan = findViewById(R.id.add_loan_fab);
@@ -237,6 +243,17 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (genderID  != null) {
+                    genderID.remove(JsonFormUtils.VALUE);
+                    try {
+                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -269,6 +286,16 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                     memberID.remove(JsonFormUtils.VALUE);
                     try {
                         memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (genderID  != null) {
+                    genderID.remove(JsonFormUtils.VALUE);
+                    try {
+                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -307,6 +334,16 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (genderID  != null) {
+                    genderID.remove(JsonFormUtils.VALUE);
+                    try {
+                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -336,6 +373,16 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                     memberID.remove(JsonFormUtils.VALUE);
                     try {
                         memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (genderID  != null) {
+                    genderID.remove(JsonFormUtils.VALUE);
+                    try {
+                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -376,6 +423,16 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (genderID  != null) {
+                    genderID.remove(JsonFormUtils.VALUE);
+                    try {
+                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -409,6 +466,16 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (genderID  != null) {
+                    genderID.remove(JsonFormUtils.VALUE);
+                    try {
+                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });
@@ -417,9 +484,15 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new SummaryFragment());
-        fragments.add(new MembersFragment());
+
+        MyGroupMembersFragment myGroupMembersFragment = new MyGroupMembersFragment();
+        Bundle args = new Bundle();
+        args.putString("userId", id);
+        myGroupMembersFragment.setArguments(args);
+        fragments.add(myGroupMembersFragment);
+
         fragments.add(new ServicesFragment());
-//        fragments.add(new ConstituitionFragment());
+
 
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
@@ -464,6 +537,18 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void updateMemberTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.update_tab_layout, null);
+        TextView groupTabTitle = taskTabTitleLayout.findViewById(R.id.tab_title);
+        groupTabCount = taskTabTitleLayout.findViewById(R.id.tab_count);
+        groupTabTitle.setText("GROUP MEMBERS");
+        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
+
+        int count = WeGroupMembersDao.getMembersCountById(model.getGroup_id());
+
+        groupTabCount.setText(String.valueOf(count));
+        tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
     public void setUserName(TextView userName,TextView userId){
 //        DatabaseHelper dbHelper = new DatabaseHelper(this);

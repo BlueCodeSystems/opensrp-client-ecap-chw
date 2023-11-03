@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -39,7 +40,8 @@ public class WeGroupDao extends AbstractDao {
 
         return values;
     }
-    public static List<WeGroupModel> getWeGroupsById (String groupId) {
+
+    public static WeGroupModel getWeGroupsById (String groupId) {
 
 
         String sql = "SELECT *,\n" +
@@ -48,11 +50,12 @@ public class WeGroupDao extends AbstractDao {
                 "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "'\n" +
                 "ORDER BY sortable_date DESC";
 
-        List<WeGroupModel> values = AbstractDao.readData(sql, getWeGroupModelMap());
-        if (values == null || values.size() == 0)
-            return new ArrayList<>();
+        List<WeGroupModel> values = AbstractDao.readData(sql, getWeGroupModelMap() );
+        if (values.size() == 0) {
+            return null;
+        }
 
-        return values;
+        return values.get(0);
     }
 
     public static DataMap<WeGroupModel> getWeGroupModelMap() {

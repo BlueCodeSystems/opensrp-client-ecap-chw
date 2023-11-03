@@ -1,5 +1,10 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static org.smartregister.util.JsonFormUtils.STEP1;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,28 +29,48 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
 import com.bluecodeltd.ecap.chw.fragment.GroupsFragment;
 import com.bluecodeltd.ecap.chw.fragment.MembersFragment;
+import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.client.utils.domain.Form;
+import org.smartregister.clientandeventmodel.Client;
+import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.db.EventClient;
+import org.smartregister.domain.tag.FormTag;
+import org.smartregister.family.util.AppExecutors;
+import org.smartregister.family.util.JsonFormUtils;
+import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.sync.ClientProcessorForJava;
+import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -53,7 +78,7 @@ import timber.log.Timber;
 public class WeGroupDashBoardActivity extends AppCompatActivity {
     private ViewPager viewPager;
     TabLayout tabLayout;
-    FloatingActionButton addMember;
+    FloatingActionButton addNewGroup;
     TextView groupTabCount;
     private Toolbar toolbar;
     private AppBarLayout myAppbar;
@@ -73,7 +98,7 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         editor.putString("password", password);
         editor.apply();
 
-        addMember = findViewById(R.id.fab);
+        addNewGroup = findViewById(R.id.fab);
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
@@ -88,6 +113,44 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         returnViewPager();
         updateGroupTabTitle();
         updateMemberTabTitle();
+
+
+        addNewGroup.setOnClickListener(v -> {
+            FormUtils formUtils = null;
+            try {
+                formUtils = new FormUtils(getApplicationContext());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            JSONObject indexRegisterForm;
+
+            indexRegisterForm = formUtils.getFormJson("we_group_form");
+
+            JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+            if (dateClientCreated  != null) {
+                dateClientCreated.remove(JsonFormUtils.VALUE);
+                try {
+                    dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSONObject groupId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+            if (groupId  != null) {
+                groupId.remove(JsonFormUtils.VALUE);
+                try {
+                    groupId.put(JsonFormUtils.VALUE, generateGroupId(12));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            startFormActivity(indexRegisterForm);
+
+
+        });
 
     }
     public  void returnViewPager(){
@@ -152,5 +215,208 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getFormattedDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return today.format(formatter);
+    }
+
+    public static String generateGroupId(int length) {
+        String numbers = "23456789"; // Excludes easily confused characters
+        StringBuilder stringBuilder = new StringBuilder(length);
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(numbers.length());
+            char randomChar = numbers.charAt(randomIndex);
+            stringBuilder.append(randomChar);
+        }
+
+        return stringBuilder.toString();
+    }
+    public void startFormActivity(JSONObject jsonObject) {
+
+        Form form = new Form();
+        form.setWizard(false);
+        form.setName("");
+        form.setHideSaveLabel(true);
+        form.setNextLabel(getString(R.string.next));
+        form.setPreviousLabel(getString(R.string.previous));
+        form.setSaveLabel(getString(R.string.submit));
+        form.setNavigationBackground(R.color.primary);
+        Intent intent = new Intent(getApplicationContext(), org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
+
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
+
+            boolean is_edit_mode = false;
+
+            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+
+            JSONObject jsonFormObject = null;
+            try {
+                jsonFormObject = new JSONObject(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
+                is_edit_mode = true;
+            }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
+            try {
+
+                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+
+                if (childIndexEventClient == null) {
+                    return;
+                }
+
+                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+
+                switch (EncounterType) {
+
+                    case "Group":
+                        Toasty.success(getApplicationContext(), "Group Saved", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
+
+                        break;
+
+                }
+
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
+    }
+
+
+
+    public ChildIndexEventClient processRegistration(String jsonString){
+
+        try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
+
+            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+
+            String entityId = formJsonObject.optString("entity_id");
+
+            if(entityId.isEmpty()){
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
+
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+
+
+            JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+
+            switch (encounterType) {
+                case "Group":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+
+        return null;
+    }
+
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
+
+        Runnable runnable = () -> {
+
+            Event event = childIndexEventClient.getEvent();
+            Client client = childIndexEventClient.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+
+                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+
+                    if (isEditMode) {
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+
+        };
+
+
+        try {
+            AppExecutors appExecutors = new AppExecutors();
+            appExecutors.diskIO().execute(runnable);
+            return true;
+        } catch (Exception exception) {
+            Timber.e(exception);
+            return false;
+        }
+    }
+
+    private ECSyncHelper getECSyncHelper() {
+        return ChwApplication.getInstance().getEcSyncHelper();
+    }
+
+    public FormTag getFormTag() {
+        FormTag formTag = new FormTag();
+        AllSharedPreferences allSharedPreferences = getAllSharedPreferences();
+        formTag.providerId = allSharedPreferences.fetchRegisteredANM();
+        formTag.appVersion = BuildConfig.VERSION_CODE;
+        formTag.databaseVersion = BuildConfig.DATABASE_VERSION;
+        return formTag;
+    }
+
+    public AllSharedPreferences getAllSharedPreferences () {
+        return ChwApplication.getInstance().getContext().allSharedPreferences();
+    }
+
+    private ClientProcessorForJava getClientProcessorForJava() {
+        return ChwApplication.getInstance().getClientProcessorForJava();
     }
 }

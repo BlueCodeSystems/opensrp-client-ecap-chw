@@ -15,12 +15,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,7 +103,9 @@ public class GroupsFragment extends Fragment {
     RecyclerView transactions_recylerview;
     ArrayList<WeGroupModel> listGroups;
     ViewGroupsAdapter viewGroupsAdapter;
+    SearchView searchView;
     private Handler handler = new Handler(Looper.getMainLooper());
+
 
 
     public GroupsFragment() {
@@ -142,13 +147,13 @@ public class GroupsFragment extends Fragment {
         transactions_recylerview = view.findViewById(R.id.viewGroups);
         listGroups = new ArrayList<>();
         addNewGroup = view.findViewById(R.id.fab);
+        searchView = view.findViewById(R.id.searchEditText);
 
         listGroups.addAll(WeGroupDao.getWeGroups());
         viewGroupsAdapter = new ViewGroupsAdapter(requireContext(), listGroups);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext());
         transactions_recylerview.setLayoutManager(layoutManager);
         transactions_recylerview.setAdapter(viewGroupsAdapter);
-        viewGroupsAdapter.notifyDataSetChanged();
 
         addNewGroup.setOnClickListener(v -> {
             FormUtils formUtils = null;
@@ -185,6 +190,18 @@ public class GroupsFragment extends Fragment {
             startFormActivity(indexRegisterForm);
 
 
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                viewGroupsAdapter.filter(newText);
+                return true;
+            }
         });
 
 

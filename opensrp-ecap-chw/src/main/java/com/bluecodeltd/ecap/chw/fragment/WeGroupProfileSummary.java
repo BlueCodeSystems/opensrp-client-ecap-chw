@@ -84,8 +84,55 @@ public class WeGroupProfileSummary extends Fragment {
         if (getArguments() != null) {
             String groupId = getArguments().getString("groupId");
 
-//            List<WeGroupModel> model = WeGroupDao.getWeGroupsById(groupId);
-//            cycle_number.setText(model.g);
+            WeGroupModel model = WeGroupDao.getWeGroupsById(groupId);
+
+            if (model != null) {
+                if (cycle_number != null) {
+                    String cycleNumberText = model.getCycle_number();
+                    if (cycleNumberText != null) {
+                        cycle_number.setText(cycleNumberText);
+                    }
+                }
+
+                if (annual_interest_rate != null) {
+                    String annualInterestRateText = model.getAnnual_interest_rate();
+                    if (annualInterestRateText != null) {
+                        annual_interest_rate.setText(annualInterestRateText);
+                    }
+                }
+
+                if (first_training_meeting_date != null) {
+                    String firstTrainingMeetingDateText = model.getFirst_training_meeting_date();
+                    if (firstTrainingMeetingDateText != null) {
+                        first_training_meeting_date.setText(firstTrainingMeetingDateText);
+                    }
+                }
+
+                if (date_savings_started != null) {
+                    String dateSavingsStartedText = model.getDate_savings_started();
+                    if (dateSavingsStartedText != null) {
+                        date_savings_started.setText(dateSavingsStartedText);
+                    }
+                }
+
+                if (reinvested_savings_cycle_start != null) {
+                    String reinvestedSavingsCycleStartText = model.getReinvested_savings_cycle_start();
+                    if (reinvestedSavingsCycleStartText != null) {
+                        reinvested_savings_cycle_start.setText(reinvestedSavingsCycleStartText);
+                    }
+                }
+
+                if (group_mgt != null) {
+                    String groupMgtText = model.getGroup_mgt();
+                    if (groupMgtText != null) {
+                        group_mgt.setText(groupMgtText);
+                    }
+                }
+            } else {
+
+            }
+
+
         }
         return view;
     }

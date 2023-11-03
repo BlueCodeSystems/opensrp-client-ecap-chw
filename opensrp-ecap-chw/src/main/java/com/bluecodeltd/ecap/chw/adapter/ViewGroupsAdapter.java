@@ -23,12 +23,12 @@ import java.util.ArrayList;
 public class ViewGroupsAdapter extends RecyclerView.Adapter<ViewGroupsAdapter.ViewHolder> {
     Context context;
     ArrayList<WeGroupModel> groups;
-
+    ArrayList<WeGroupModel> filteredGroups; // New list for filtered data
 
     public ViewGroupsAdapter(Context context, ArrayList<WeGroupModel> facilitatorViewGroupsModels) {
         this.context = context;
         this.groups = facilitatorViewGroupsModels;
-
+        this.filteredGroups = new ArrayList<>(facilitatorViewGroupsModels); // Initialize with the original data
     }
 
     @NonNull
@@ -41,7 +41,8 @@ public class ViewGroupsAdapter extends RecyclerView.Adapter<ViewGroupsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final WeGroupModel model = groups.get(position);
+        final WeGroupModel model = filteredGroups.get(position); // Use filtered data
+
         if (model != null) {
             if (model.getGroup_name() != null) {
                 holder.group_name.setText(model.getGroup_name());
@@ -55,50 +56,42 @@ public class ViewGroupsAdapter extends RecyclerView.Adapter<ViewGroupsAdapter.Vi
             } else {
                 holder.group_id.setText("Group ID: ");
             }
-        } else {
-            // Handle the case where model is null
         }
-//        String dateCreatedText = "Group Number " + model.getDate_created() ;
-//        holder.date_created.setText(dateCreatedText);
-            holder.linear_group_layout.setOnClickListener(v -> {
+
+        holder.linear_group_layout.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), WeGroupProfileActivity.class);
             intent.putExtra("groupName", model.getGroup_name());
             intent.putExtra("groupId", model.getGroup_id());
             v.getContext().startActivity(intent);
             ((Activity) v.getContext()).finish();
         });
-
     }
-
 
     @Override
     public int getItemCount() {
-        return groups.size();
+        return filteredGroups.size(); // Return the count of filtered data
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
-        TextView group_name, group_id,date_created;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView group_name, group_id;
         LinearLayout linear_group_layout;
-        public  ViewHolder(@NonNull View itemView) {
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             group_name = itemView.findViewById(R.id.group_name);
             group_id = itemView.findViewById(R.id.group_id);
-//            date_created = itemView.findViewById(R.id.date_created);
             linear_group_layout = itemView.findViewById(R.id.linear_group_layout);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (recyclerViewInterface != null){
-//
-//                        int pos = getAdapterPosition();
-//                        if (pos != RecyclerView.NO_POSITION){
-//                            recyclerViewInterface.onItemClick(pos);
-//
-//                        }
-//                    }
-//                }
-//            });
-
         }
+    }
+
+    // Filter the data based on a search query
+    public void filter(String query) {
+        filteredGroups.clear();
+        for (WeGroupModel model : groups) {
+            if (model.getGroup_name() != null && model.getGroup_name().toLowerCase().contains(query.toLowerCase())) {
+                filteredGroups.add(model);
+            }
+        }
+        notifyDataSetChanged();
     }
 }
