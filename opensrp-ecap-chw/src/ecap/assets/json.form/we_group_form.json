@@ -60,7 +60,7 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Case Record Created",
+        "hint": "Date Record Created",
         "edit_type": "number"
       },
       {
@@ -99,26 +99,13 @@
         "type": "edit_text",
         "read_only": "false",
         "hint": "Cycle Number",
-        "edit_type": "name",
+        "edit_type": "number",
         "v_required": {
           "value": true,
           "err": "Cycle number is Required"
         }
       },
-      {
-        "key": "annual_interest_rate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "annual_interest_rate",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Annual Interest Rate",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Interest rate is Required"
-        }
-      },
+
       {
         "key": "first_training_meeting_date",
         "openmrs_entity_parent": "",
@@ -151,7 +138,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": "true",
+          "value": "false",
           "err": "Please enter the date savings started"
         }
       },
@@ -168,6 +155,12 @@
         "v_required": {
           "value": "true",
           "err": "Reinvested savings cycle start"
+        },
+        "relevance": {
+          "step1:cycle_number": {
+            "type": "string",
+            "ex": "greaterThan(., \"1\")"
+          }
         }
       },
       {
@@ -195,16 +188,34 @@
         "options": [
           {
             "key": "supervised",
-            "text": "supervised"
+            "text": "Supervised"
           },
           {
-            "key": "Unsupervised",
-            "text": "Unsupervised"
+            "key": "self managed",
+            "text": "Self Managed"
+          },
+          {
+            "key": "spontaneous",
+            "text": "Spontaneous"
           }
         ],
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        }
+      },
+      {
+        "key": "annual_interest_rate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "annual_interest_rate",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Annual Interest Rate",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Interest rate is Required"
         }
       },
       {

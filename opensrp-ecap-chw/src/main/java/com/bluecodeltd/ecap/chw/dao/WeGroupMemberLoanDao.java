@@ -27,6 +27,26 @@ public class WeGroupMemberLoanDao extends AbstractDao {
         return 0;
     }
 
+    public static int getTotalGroupAmount(String groupID) {
+        String sql = "SELECT SUM(amount) as amount\n" +
+                "FROM ec_we_group_member_loan\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "amount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values.get(0) != null) {
+            try {
+                return Integer.parseInt(values.get(0));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+
     public static DataMap<MemberLoanModel> getMemberLoanModelMap() {
         return c -> {
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
@@ -22,7 +21,6 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSocialFundDao;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.ServicesModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,12 +63,19 @@ public class ServicesFragment extends Fragment {
         MembersModel membersModel = mymap.get("uniqueID");
 
         try {
-            String totalAmount = String.valueOf(WeGroupMemberSavingDao.getTotalAmount(membersModel.getUnique_id()));
+            String totalAmount = String.valueOf(WeGroupMemberSavingDao.getTotalPersonalAmount(membersModel.getUnique_id()));
 
             if (totalAmount != null) {
                 txtPersonalSaving.setText(totalAmount);
             } else {
                 txtPersonalSaving.setText("0");
+            }
+            String totalGroupSavingAmount = String.valueOf(WeGroupMemberSavingDao.getTotalGroupAmount(membersModel.getGroup_id()));
+
+            if (totalGroupSavingAmount != null) {
+                txtGroupSaving.setText(totalGroupSavingAmount);
+            } else {
+                txtGroupSaving.setText("0");
             }
 
             String totalAmountLoan = String.valueOf(WeGroupMemberLoanDao.getTotalAmount(membersModel.getUnique_id()));
@@ -81,6 +86,14 @@ public class ServicesFragment extends Fragment {
                 txtPersonalLoan.setText("0");
             }
 
+            String totalGroupAmountLoan = String.valueOf(WeGroupMemberLoanDao.getTotalGroupAmount(membersModel.getGroup_id()));
+
+            if (totalGroupAmountLoan != null) {
+                txtGroupLoan.setText(totalGroupAmountLoan);
+            } else {
+                txtGroupLoan.setText("0");
+            }
+
             String totalAmountFine = String.valueOf(WeGroupMemberFineDao.getTotalAmount(membersModel.getUnique_id()));
 
             if (totalAmountFine != null) {
@@ -88,6 +101,15 @@ public class ServicesFragment extends Fragment {
             } else {
                 txtPersonalFine.setText("0");
             }
+
+            String totalGroupAmountFine = String.valueOf(WeGroupMemberFineDao.getTotalGroupAmount(membersModel.getGroup_id()));
+
+            if (totalGroupAmountFine != null) {
+                txtGroupFine.setText(totalGroupAmountFine);
+            } else {
+                txtGroupFine.setText("0");
+            }
+
 
             String totalAmountSocial = String.valueOf(WeGroupMemberSocialFundDao.getTotalAmount(membersModel.getUnique_id()));
 
@@ -97,6 +119,14 @@ public class ServicesFragment extends Fragment {
                 txtPersonalSocial.setText("0");
             }
 
+            String totalAmountGroupSocial = String.valueOf(WeGroupMemberSocialFundDao.getTotalGroupAmount(membersModel.getGroup_id()));
+
+            if (totalAmountGroupSocial != null) {
+                txtGroupSocial.setText(totalAmountGroupSocial);
+            } else {
+                txtGroupSocial.setText("0");
+            }
+
             String totalAmountIga = String.valueOf(WeGroupMemberIgaDao.getTotalAmount(membersModel.getUnique_id()));
 
             if (totalAmountIga != null) {
@@ -104,6 +134,14 @@ public class ServicesFragment extends Fragment {
             } else {
                 txtPersonalIga.setText("0");
             }
+            String totalGroupAmountIga = String.valueOf(WeGroupMemberIgaDao.getTotalGroupAmount(membersModel.getGroup_id()));
+
+            if (totalGroupAmountIga != null) {
+                txtGroupIga.setText(totalGroupAmountIga);
+            } else {
+                txtGroupIga.setText("0");
+            }
+
 
 
 

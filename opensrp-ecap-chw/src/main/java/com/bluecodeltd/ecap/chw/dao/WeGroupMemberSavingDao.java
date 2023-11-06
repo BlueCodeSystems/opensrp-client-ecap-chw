@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import android.annotation.SuppressLint;
-
 import com.bluecodeltd.ecap.chw.model.MemberSavingsModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -27,10 +25,29 @@ public class WeGroupMemberSavingDao extends AbstractDao {
         return values.get(0);
     }
 
-    public static int getTotalAmount(String memberID) {
+    public static int getTotalPersonalAmount(String memberID) {
         String sql = "SELECT SUM(amount) as amount\n" +
                 "FROM ec_we_group_member_saving\n" +
                 "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + memberID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "amount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values.get(0) != null) {
+            try {
+                return Integer.parseInt(values.get(0));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+    public static int getTotalGroupAmount(String groupID) {
+        String sql = "SELECT SUM(amount) as amount\n" +
+                "FROM ec_we_group_member_saving\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupID + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "amount");
 
