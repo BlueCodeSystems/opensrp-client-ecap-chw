@@ -168,11 +168,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadData();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        loadData();
+//    }
 
     private BarData dataForBarchart(ArrayList<Integer> subpops)
     {
@@ -464,6 +464,12 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
     public void refreshData() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
@@ -471,7 +477,6 @@ public class DashboardActivity extends AppCompatActivity {
                 loadData();
             }
         }, FIVE_SECONDS);
-        super.onResume();
     }
     @Override
     protected void onPause() {

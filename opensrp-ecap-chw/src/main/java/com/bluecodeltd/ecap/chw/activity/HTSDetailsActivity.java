@@ -189,31 +189,43 @@ public class HTSDetailsActivity extends AppCompatActivity {
         txtChildid = findViewById(R.id.childid);
         genderSpacer = findViewById(R.id.gender_spacer);
         ageSpacer = findViewById(R.id.age_spacer);
-        if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
-            txtAge.setVisibility(View.GONE);
-            txtGender.setVisibility(View.GONE);
-            genderSpacer.setVisibility(View.GONE);
-            ageSpacer.setVisibility(View.GONE);
-        }
-
-
-        if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
-            txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
-        }
-
-
-        if (hivTestingServiceModel != null && hivTestingServiceModel.getFirst_name() != null && hivTestingServiceModel.getLast_name() != null)
-        {
-            full_name = hivTestingServiceModel.getFirst_name() + " " + hivTestingServiceModel.getLast_name();
-        txtName.setText(full_name);
+        try {
+            if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
+                txtAge.setVisibility(View.GONE);
+                txtGender.setVisibility(View.GONE);
+                genderSpacer.setVisibility(View.GONE);
+                ageSpacer.setVisibility(View.GONE);
             }
+        } catch (NullPointerException e) {
+            Log.e("YourActivityName", "NullPointerException", e);
+        }
 
-        if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
-            txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
-            //vcaAge = getAgeWithoutText(birthdate);
+        try {
+            if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
+                txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception", e);
+        }
 
-        } else {
-            txtAge.setText("Not Set");
+
+        try {
+            if (hivTestingServiceModel != null && hivTestingServiceModel.getFirst_name() != null && hivTestingServiceModel.getLast_name() != null) {
+                String full_name = hivTestingServiceModel.getFirst_name() + " " + hivTestingServiceModel.getLast_name();
+                txtName.setText(full_name);
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception", e);
+        }
+
+        try {
+            if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
+                txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
+            } else {
+                txtAge.setText("Not Set");
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception", e);
         }
 
         if (clientId != null && !clientId.isEmpty()){

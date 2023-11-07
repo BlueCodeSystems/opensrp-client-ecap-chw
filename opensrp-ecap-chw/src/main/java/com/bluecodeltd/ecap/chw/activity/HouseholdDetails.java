@@ -1651,14 +1651,17 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.call:
-                String caregiverPhoneNumber = house.getCaregiver_phone();
-                if (!caregiverPhoneNumber.equals("")) {
-
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                    startActivity(callIntent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                try {
+                    String caregiverPhoneNumber = house.getCaregiver_phone();
+                    if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                        startActivity(callIntent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Log.e("Phone Number Error", "Exception", e);
                 }
 
                 return true;
