@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.util.Log;
+
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
@@ -173,17 +175,22 @@ public class HouseholdDao extends AbstractDao {
         }
     }
     public static String countNumberoFHouseholds () {
+        try {
+            String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND status IS NULL OR status != '1'";
 
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND status IS NULL OR status != '1'";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
+            List<String> values = AbstractDao.readData(sql, dataMap);
 
-        List<String> values = AbstractDao.readData(sql, dataMap);
+            if(values != null && !values.isEmpty()){
+                String result = values.get(0);
+                return result != null ? result : "0";
+            } else {
+                return "0";
+            }
+        } catch (NullPointerException e) {
 
-        if(values != null && !values.isEmpty()){
-            String result = values.get(0);
-            return result != null ? result : "0";
-        } else {
+            Log.e("countNumberoFHouseholds", "NullPointerException", e);
             return "0";
         }
     }

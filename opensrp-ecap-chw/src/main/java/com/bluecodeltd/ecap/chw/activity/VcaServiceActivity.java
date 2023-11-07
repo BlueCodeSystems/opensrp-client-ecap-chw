@@ -142,17 +142,20 @@ public class VcaServiceActivity extends AppCompatActivity {
                     dialogButton.setOnClickListener(view -> dialog.dismiss());
 
                 } else{
-                    if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                        Dialog dialog = new Dialog(this);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
+                    if(caseStatusModel != null && caseStatusModel.getCase_status() != null) {
+                        if(caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
+                            Dialog dialog = new Dialog(this);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                            String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(view -> dialog.dismiss());
-
+                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(view -> dialog.dismiss());
+                        }
                     } else {
                         try {
                             FormUtils formUtils = new FormUtils(this);

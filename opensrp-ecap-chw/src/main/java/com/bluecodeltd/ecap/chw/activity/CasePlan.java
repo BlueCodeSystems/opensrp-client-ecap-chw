@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -114,46 +115,44 @@ public class CasePlan extends AppCompatActivity {
             case R.id.domainBtn:
             case R.id.domainBtn2:
                 CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(childId);
-                if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                    Dialog dialog = new Dialog(this);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
+                if(caseStatusModel != null && caseStatusModel.getCase_status() != null) {
+                    if(caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
+                        Dialog dialog = new Dialog(this);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        try {
+                            FormUtils formUtils = new FormUtils(CasePlan.this);
+                            JSONObject indexRegisterForm = formUtils.getFormJson("domain");
 
-                } else {
-                    try {
-                        FormUtils formUtils = new FormUtils(CasePlan.this);
-                        JSONObject indexRegisterForm;
+                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                            cId.put("value",childId);
 
-                        indexRegisterForm = formUtils.getFormJson("domain");
-//                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-//                        indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(2).put("value", caseDate);
+                            JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                            cDate.put("value", caseDate);
 
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                        cId.put("value",childId);
+                            JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
+                            casePlanId.put("value", case_plan_id);
 
-                        JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                        cDate.put("value", caseDate);
+                            if(hivStatus == null || !hivStatus.equals("yes")){
+                                JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
+                                domainType.remove(0);
+                            }
 
+                            startFormActivity(indexRegisterForm);
 
-                        JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
-                        casePlanId.put("value", case_plan_id);
-
-                        if(hivStatus == null || !hivStatus.equals("yes")){
-                            JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
-                            domainType.remove(0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-                        startFormActivity(indexRegisterForm);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                } else {
+                    Log.e("CasePlan", "caseStatusModel or caseStatusModel.getCase_status() is null");
                 }
 
                 break;
