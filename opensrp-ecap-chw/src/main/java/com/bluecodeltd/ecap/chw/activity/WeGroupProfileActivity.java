@@ -54,6 +54,7 @@ import com.bluecodeltd.ecap.chw.model.Credentials;
 import com.bluecodeltd.ecap.chw.model.MemberListModel;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -63,6 +64,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -85,6 +87,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -115,12 +118,15 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
 
     TextView groupTabCount;
+    ObjectMapper oMapper;
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_we_group_profile);
+
+        oMapper = new ObjectMapper();
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
@@ -134,7 +140,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("Credentials", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("username", "");
-        password = sharedPreferences.getString("username", "");
+        password = sharedPreferences.getString("password", "");
 
         membersModel =  WeGroupMembersDao.getWeGroupMemberById(groupId);
 
@@ -572,13 +578,13 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
             try {
 
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
-
-                if (childIndexEventClient == null) {
-                    return;
-                }
-
-                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+//                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+//
+//                if (childIndexEventClient == null) {
+//                    return;
+//                }
+//
+//                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
                 switch (EncounterType) {
 
@@ -645,7 +651,9 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                                 stringRole, stringPhoneNumber, stringSingleFemaleCaregiver, stringNextOfKin, stringNextOfKinPhone, stringDeleteStatus);
 
 
-
+                        Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
+                        finish();
+                        startActivity(getIntent());
                         break;
 
                 }
@@ -938,87 +946,125 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                            String stringAdmissionDate, String stringEcapHhID, String stringRole,
                            String stringPhoneNumber, String stringSingleFemaleCaregiver,
                            String stringNextOfKin, String stringNextOfKinPhone, String stringDeleteStatus) {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                getToken(username, password, BuildConfig.OAUTH_CLIENT_ID, BuildConfig.OAUTH_CLIENT_SECRET, result -> {
+                    Log.d("Access Token", result);
+                    String token = result;
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(new AuthInterceptor(token));
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("https://keycloak.zeir.smartregister.org/")
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(new OkHttpClient.Builder().addInterceptor(new AuthInterceptor(token)).build())
+                            .build();
+                    MemberApi memberApi = retrofit.create(MemberApi.class);
+                    Map<String, String> attributes = new HashMap<>();
+                    attributes.put("date_created", stringDateCreated);
+                    attributes.put("group_id", stringGroupId);
+                    attributes.put("unique_id",stringUniqueId);
+                    attributes.put("gender", stringGender);
+                    attributes.put("nrc", stringNrc);
+                    attributes.put("admission_date", stringAdmissionDate);
+                    attributes.put("ecap_hh_ID", stringEcapHhID);
+                    attributes.put("role", stringRole);
+                    attributes.put("phone_number", stringPhoneNumber);
+                    attributes.put("single_female_caregiver", stringSingleFemaleCaregiver);
+                    attributes.put("next_of_kin", stringNextOfKin);
+                    attributes.put("next_of_kin_phone", stringNextOfKinPhone);
+                    attributes.put("delete_status", stringDeleteStatus);
+                    Credentials credential = new Credentials("password",stringPassword,false);
+                    List<Credentials> credentialsList = new ArrayList<>();
+                    credentialsList.add(credential);
+                    MemberListModel member = new MemberListModel(
+                            stringUsername,
+                            true,
+                            false,
+                            stringFirstName,
+                            stringLastName,
+                            stringEmail,
+                            attributes,
+                            credentialsList
+                    );
+                    Call<MemberListModel> userCall = memberApi.createUser(member);
+                    userCall.enqueue(new Callback<MemberListModel>() {
+                        @Override
+                        public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
+                            try {
+                                if (response.body() != null && !response.body().toString().isEmpty()) {
+                                    Log.d("API Response", "Response received successfully");
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-            getToken(username, password, BuildConfig.OAUTH_CLIENT_ID, BuildConfig.OAUTH_CLIENT_SECRET, result -> {
-                Log.d("Access Token", result);
-
-                String token = result;
-
-                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                httpClient.addInterceptor(new AuthInterceptor(token));
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://keycloak.zeir.smartregister.org/")
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(new OkHttpClient.Builder().addInterceptor(new AuthInterceptor(token)).build())
-                        .build();
-
-                MemberApi memberApi = retrofit.create(MemberApi.class);
-
-                Map<String, String> attributes = new HashMap<>();
-
-                attributes.put("date_created", stringDateCreated);
-                attributes.put("group_id", stringGroupId);
-                attributes.put("unique_id",stringUniqueId);
-                attributes.put("gender", stringGender);
-                attributes.put("nrc", stringNrc);
-                attributes.put("admission_date", stringAdmissionDate);
-                attributes.put("ecap_hh_ID", stringEcapHhID);
-                attributes.put("role", stringRole);
-                attributes.put("phone_number", stringPhoneNumber);
-                attributes.put("single_female_caregiver", stringSingleFemaleCaregiver);
-                attributes.put("next_of_kin", stringNextOfKin);
-                attributes.put("next_of_kin_phone", stringNextOfKinPhone);
-                attributes.put("delete_status", stringDeleteStatus);
-
-                Credentials credential = new Credentials("password",stringPassword,false);
-
-                List<Credentials> credentialsList = new ArrayList<>();
-                credentialsList.add(credential);
-
-                MemberListModel member = new MemberListModel(
-                        stringUsername,
-                        true,
-                        false,
-                        stringFirstName,
-                        stringLastName,
-                        stringEmail,
-                        attributes,
-                        credentialsList
-                );
-
-                Call<MemberListModel> userCall = memberApi.createUser(member);
-
-                userCall.enqueue(new Callback<MemberListModel>() {
-                    @Override
-                    public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("API Response", "Response received successfully");
-
-                        } else {
-                            Log.e("API Response", "Response error: " + response.errorBody());
-                            Log.e("API Response", "Response code: " + response.code());
-                            Log.e("API Response", "Response message: " + response.message());
+                                } else {
+                                    Log.e("API Response", "Empty response body");
+                                }
+                            } catch (Exception e) {
+                                Log.e("YourActivityName", "Exception in onResponse", e);
+                            }
                         }
-                    }
+                        @Override
+                        public void onFailure(Call<MemberListModel> call, Throwable t) {
+                            if (t.getMessage() != null) {
+                                Log.e("postusererror", "perror : " + t.getMessage());
 
-                    @Override
-                    public void onFailure(Call<MemberListModel> call, Throwable t) {
-                        Log.e("postusererror", "perror : " + t.getMessage());
-                    }
+                                MembersModel member = new MembersModel();
+                                member.setDate_created(stringDateCreated);
+                                member.setUnique_id(stringUniqueId);
+                                member.setGroup_id(stringGroupId);
+                                member.setUsername(stringUsername);
+                                member.setFirst_name(stringFirstName);
+                                member.setLast_name(stringLastName);
+                                member.setGender(stringGender);
+                                member.setNrc(stringNrc);
+                                member.setEmail(stringEmail);
+                                member.setAdmission_date(stringAdmissionDate);
+                                member.setPassword(stringPassword);
+                                member.setEcap_hh_ID(stringEcapHhID);
+                                member.setRole(stringRole);
+                                member.setPhone_number(stringPhoneNumber);
+                                member.setSingle_female_caregiver(stringSingleFemaleCaregiver);
+                                member.setNext_of_kin(stringNextOfKin);
+                                member.setNext_of_kin_phone(stringNextOfKinPhone);
+                                member.setDelete_status(stringDeleteStatus);
+//                                    member.setFacilitator_id(stringFacilitatorId);
+                                FormUtils formUtils = null;
+                                try {
+                                    formUtils = new FormUtils(WeGroupProfileActivity.this);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                JSONObject weGroupMemberForm = formUtils.getFormJson("we_group_member");
+                                try {
+                                    CoreJsonFormUtils.populateJsonForm(weGroupMemberForm, new ObjectMapper().convertValue(member, Map.class));
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                ChildIndexEventClient childIndexEventClient = processRegistration(weGroupMemberForm.toString());
+
+                                if (childIndexEventClient == null) {
+                                    return;
+                                }
+                                saveRegistration(childIndexEventClient,false,"We Group Member");
+
+
+
+                            } else {
+                                Log.e("postusererror", "perror : Throwable t has a null message");
+                            }
+                        }
+                    });
                 });
-            });
-        } else {
-            Toast.makeText(WeGroupProfileActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(WeGroupProfileActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception in postMember", e);
         }
 
     }
-
     public static String generateGroupId(int length) {
         String numbers = "23456789";
         StringBuilder stringBuilder = new StringBuilder(length);
