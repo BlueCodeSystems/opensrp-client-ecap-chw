@@ -8,15 +8,18 @@ import java.util.List;
 
 public class CaregiverDao extends AbstractDao {
 
-    public static Caregiver getCaregiver (String householdID) {
-
+    public static Caregiver getCaregiver(String householdID) {
         String sql = "SELECT homeaddress, landmark, caregiver_name, ward, caregiver_nrc, caregiver_sex, caregiver_birth_date, caregiver_phone, caregiver_hiv_status, caregiver_art_number, active_on_treatment, relation FROM ec_household WHERE ec_household.household_id = '" + householdID + "' ";
 
         List<Caregiver> values = AbstractDao.readData(sql, getCaregiverMap());
 
-        return values.get(0);
-
+        if (values != null && !values.isEmpty()) {
+            return values.get(0);
+        } else {
+            return null;
+        }
     }
+
 
     public static AbstractDao.DataMap<Caregiver> getCaregiverMap() {
         return c -> {

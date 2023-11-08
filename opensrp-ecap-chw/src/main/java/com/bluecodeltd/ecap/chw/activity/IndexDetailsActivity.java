@@ -186,8 +186,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
-        gender = indexVCA.getGender();
-        uniqueId = indexVCA.getUnique_id();
+        gender = null;
+
+
+        if (indexVCA != null) {
+            if (indexVCA.getGender() != null) {
+                gender = indexVCA.getGender();
+            } else {
+            }
+            uniqueId = null;
+            if (indexVCA.getUnique_id() != null) {
+                uniqueId = indexVCA.getUnique_id();
+            } else {
+            }
+        } else {
+
+        }
+
+
 
         is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
         is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
@@ -1329,15 +1345,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
 
                 case R.id.call:
-                    String caregiverPhoneNumber = child.getCaregiver_phone();
-                    if (!caregiverPhoneNumber.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-
-                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                        startActivity(callIntent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    try {
+                        String caregiverPhoneNumber = child.getCaregiver_phone();
+                        if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                            startActivity(callIntent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        Log.e("Phone Number Error", "Exception", e);
                     }
 
                 return true;
