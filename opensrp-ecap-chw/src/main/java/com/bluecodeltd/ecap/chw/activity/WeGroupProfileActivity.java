@@ -160,14 +160,14 @@ public class WeGroupProfileActivity extends AppCompatActivity {
             if (isAllFabsVisible) {
 //                mAddFab.hide();
                 addSavings.hide();
-//                addLoan.hide();
+                addLoan.hide();
 //                addFine.hide();
 //                addSocialFund.hide();
 //                addRepayment.hide();
 //                addIga.hide();
                 addSavingsActionText.setVisibility(View.GONE);
 //                addFineActionText.setVisibility(View.GONE);
-//                addLoanActionText.setVisibility(View.GONE);
+                addLoanActionText.setVisibility(View.GONE);
 //                addSocialFundActionText.setVisibility(View.GONE);
 //                addRepaymentActionText.setVisibility(View.GONE);
 //                addIgaActionText.setVisibility(View.GONE);
@@ -183,27 +183,27 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         updateMemberTabTitle();
 
         addSavings = findViewById(R.id.add_saving_fab);
-//        addLoan = findViewById(R.id.add_loan_fab);
+        addLoan = findViewById(R.id.add_loan_fab);
 //        addFine = findViewById(R.id.add_fine_fab);
 //        addSocialFund = findViewById(R.id.add_social_fund_fab);
 //        addRepayment = findViewById(R.id.add_repayment_fab);
 //        addIga = findViewById(R.id.add_iga_fab);
 
         addSavingsActionText = findViewById(R.id.add_saving_action_text);
-//        addLoanActionText = findViewById(R.id.add_loan_action_text);
+        addLoanActionText = findViewById(R.id.add_loan_action_text);
 //        addFineActionText = findViewById(R.id.add_fine_action_text);
 //        addSocialFundActionText = findViewById(R.id.add_social_fund_action_text);
 //        addRepaymentActionText = findViewById(R.id.add_repayment_action_text);
 //        addIgaActionText = findViewById(R.id.add_iga_action_text);
 
         addSavings.setVisibility(View.GONE);
-//        addLoan.setVisibility(View.GONE);
+        addLoan.setVisibility(View.GONE);
 //        addFine.setVisibility(View.GONE);
 //        addSocialFund.setVisibility(View.GONE);
 //        addRepayment.setVisibility(View.GONE);
 //        addIga.setVisibility(View.GONE);
         addSavingsActionText.setVisibility(View.GONE);
-//        addLoanActionText.setVisibility(View.GONE);
+        addLoanActionText.setVisibility(View.GONE);
 //        addFineActionText.setVisibility(View.GONE);
 //        addSocialFundActionText.setVisibility(View.GONE);
 //        addRepaymentActionText.setVisibility(View.GONE);
@@ -215,13 +215,13 @@ public class WeGroupProfileActivity extends AppCompatActivity {
             if (!isAllFabsVisible) {
                 dimBackground.setVisibility(View.VISIBLE);
                 addSavings.show();
-//                addLoan.show();
+                addLoan.show();
 //                addFine.show();
 //                addSocialFund.show();
 //                addRepayment.show();
 //                addIga.show();
                 addSavingsActionText.setVisibility(View.VISIBLE);
-//                addLoanActionText.setVisibility(View.VISIBLE);
+                addLoanActionText.setVisibility(View.VISIBLE);
 //                addFineActionText.setVisibility(View.VISIBLE);
 //                addSocialFundActionText.setVisibility(View.VISIBLE);
 //                addRepaymentActionText.setVisibility(View.VISIBLE);
@@ -289,40 +289,40 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         });
 //
 
-//        addLoan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FormUtils formUtils = null;
-//                try {
-//                    formUtils = new FormUtils(getBaseContext());
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-//                JSONObject indexRegisterForm;
-//
-//                indexRegisterForm = formUtils.getFormJson("we_group_member_loan");
-//
-//                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-//                if (dateClientCreated  != null) {
-//                    dateClientCreated.remove(JsonFormUtils.VALUE);
-//                    try {
-//                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-//                if (memberID  != null) {
-//                    memberID.remove(JsonFormUtils.VALUE);
-//                    try {
-//                        memberID.put(JsonFormUtils.VALUE, id);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                startFormActivity(indexRegisterForm);
-//            }
-//        });
+        addLoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(getBaseContext());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject indexRegisterForm;
+
+                indexRegisterForm = formUtils.getFormJson("we_group_data_collection_form");
+
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                startFormActivity(indexRegisterForm);
+            }
+        });
 //        addFine.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

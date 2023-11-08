@@ -1,0 +1,740 @@
+{
+  "count": 1,
+  "encounter_type": "WE Group Data Collection",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "WE Group Data Collection Form",
+    "fields": [
+
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Date Record Created",
+        "edit_type": "number"
+      },
+
+      {
+        "key": "we_community_facilitator",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "we_community_facilitator",
+        "type": "edit_text",
+        "hint": "WE Community Facilitator",
+        "read_only": "false",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Please enter WE Community Facilitator"
+        }
+      },
+      {
+        "key": "supervisor_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "supervisor_name",
+        "type": "edit_text",
+        "hint": "Supervisor Name",
+        "read_only": "false",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Please enter supervisor name"
+        }
+      },
+      {
+        "key": "date_data_collection",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_data_collection",
+        "type": "date_picker",
+        "hint": "Date of Visit/Data Collection",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the date of visit/data collection"
+        }
+      },
+      {
+        "key": "current_cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "current_cycle_number",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Cycle Data Section of Online MIS"
+      },
+
+      {
+        "key": "group_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+      {
+        "key": "group_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_name",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Group Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group_name is Required"
+        }
+      },
+      {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+
+      {
+        "key": "first_training_meeting_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_training_meeting_date",
+        "type": "date_picker",
+        "hint": "First Training Meeting Date",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the first training meeting date"
+        }
+      },
+      {
+        "key": "date_savings_started",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_savings_started",
+        "type": "date_picker",
+        "hint": "Date Savings Started",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "false",
+          "err": "Please enter the date savings started"
+        }
+      },
+
+      {
+        "key": "reinvested_savings_cycle_start",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reinvested_savings_cycle_start",
+        "type": "edit_text",
+        "hint": "Reinvested Savings Cycle Start",
+        "read_only": "false",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Reinvested savings cycle start"
+        },
+        "relevance": {
+          "step1:cycle_number": {
+            "type": "string",
+            "ex": "greaterThan(., \"1\")"
+          }
+        }
+      },
+      {
+        "key": "registered_members_cycle_start",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "registered_members_cycle_start",
+        "type": "edit_text",
+        "hint": "Registered Members Cycle Start",
+        "read_only": "false",
+        "edit_type": "number",
+        "v_required": {
+          "value": "false",
+          "err": "Please enter registered members cycle start"
+        }
+      },
+
+      {
+        "key": "group_mgt",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_mgt",
+        "type": "native_radio",
+        "label": "Group Management",
+        "options": [
+          {
+            "key": "supervised",
+            "text": "Supervised"
+          },
+          {
+            "key": "self managed",
+            "text": "Self Managed"
+          },
+          {
+            "key": "spontaneous",
+            "text": "Spontaneous"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "annual_interest_rate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "annual_interest_rate",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Annual Interest Rate",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Interest rate is Required"
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Group Information Section of Online MIS"
+      },
+      {
+        "key": "linkage_external_savings",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "linkage_external_savings",
+        "type": "native_radio",
+        "label": "Linkage to external savings?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "linkage_external_credit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "linkage_external_credit",
+        "type": "native_radio",
+        "label": "Linkage to external credit?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "value_property_owned_current_cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "value_property_owned_current_cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Value of property owned by group at start of current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "registered_members_current_cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "registered_members_current_cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of registered members at the start of the current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "registered_members_time_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "registered_members_time_visit",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of registered members at time of visit",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "registered_women_time_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "registered_women_time_visit",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of registered women at time of visit",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_members_meeting",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_meeting",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of members attending this meeting",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_dropouts_current_cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_dropouts_current_cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of dropouts since start of current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Group Savings and Loan Section of Online MIS"
+      },
+
+
+      {
+        "key": "cumulative_savings_current_cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cumulative_savings_current_cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Cumulative value of savings current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "cumulative_loans_current_cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cumulative_loans_current_cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Cumulative value of loans given current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_loan_outstanding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_loan_outstanding",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of loans outstanding",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "write_offs_current cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "write_offs_current cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Cumulative value of write-offs since start of current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "loan_fund_cash_box",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "loan_fund_cash_box",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Loan fund in cash box",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Other Assets Section of Online MIS"
+      },
+      {
+        "key": "bank_balance",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "bank_balance",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Bank balance",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "social_fund_balance",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "social_fund_balance",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Social Fund Balance (or other funds)",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "value_property_currently_owned_group",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "value_property_currently_owned_group",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Value of property currently owned by the group",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "value_debts",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "value_debts",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Value of Debts",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "dividends_paid_current_cycle",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dividends_paid_current_cycle",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Dividends paid current cycle",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+
+      {
+        "key": "end_cycle_share_out_meeting",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "end_cycle_share_out_meeting",
+        "type": "native_radio",
+        "label": "End of cycle share-out meeting?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "PCI WE Initiative Data Section of Online MIS"
+      },
+      {
+        "key": "members_taken_loan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "members_taken_loan",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Total number of members who have ever taken a loan ",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_member_never_taken_loan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_member_never_taken_loan",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Total number of members who have never taken a loan",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_members_enrolled_ecapii",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_enrolled_ecapii",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Total number of members who are enrolled in the ECAPII OVC Comprehensive Program",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+
+      {
+        "key": "number_members_enrolled_ecapii_without_loan",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_enrolled_ecapii_without_loan",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of members who are in enrolled in \n the ECAPII OVC comprehensive program who have ever taken a loan",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_members_single_female_caregivers",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_single_female_caregivers",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Total number of Single Female Caregivers group member",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_members_iga",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_iga",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of Individual Income Generating Activities (IIGAs",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_members_iga_individual",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_iga_individual",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of Individual Income Generating Activities (IIGAs)",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "number_members_iga_group",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_members_iga_group",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Number of Group Income Generating Activities (GIGAs)",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Value of property  is Required"
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "read_only": "true"
+      }
+    ]
+  }
+}

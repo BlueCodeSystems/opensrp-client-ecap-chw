@@ -32,8 +32,8 @@
             android:elevation="0dp"
             android:padding="5dp"
             android:layout_centerHorizontal="true"
-            android:layout_width="98dp"
-            android:layout_height="98dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/ic_info" />
 
 
@@ -45,10 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/holder"
         android:layout_toRightOf="@+id/holder"
-        android:textColor="#040404"
+        android:textColor="#323131"
         android:layout_marginTop="15dp"
         android:text="Weledger Member"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -60,7 +60,6 @@
         android:layout_toRightOf="@+id/holder"
         android:text="ID: 12345"
         android:textColor="#4C4C4C"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

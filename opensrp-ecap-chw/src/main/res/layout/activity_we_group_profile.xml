@@ -205,33 +205,33 @@
         app:layout_constraintTop_toTopOf="@+id/add_saving_fab" />
 
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/add_loan_fab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="24dp"-->
-<!--        app:fabSize="normal"-->
-<!--        app:backgroundTint="@color/blue"-->
-<!--        android:tint="@color/white"-->
-<!--        app:tint="@color/white"-->
-<!--        android:textSize="15sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/add_saving_fab"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/add_saving_fab"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/add_saving_fab"-->
-<!--        app:srcCompat="@drawable/ic_add_loan" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_loan_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_saving_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_saving_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_saving_fab"
+        app:srcCompat="@drawable/ic_add_loan" />
 
 
-<!--    <TextView-->
-<!--        android:id="@+id/add_loan_action_text"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:text="Loan"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textSize="15sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/add_loan_fab"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/add_loan_fab"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/add_loan_fab" />-->
+    <TextView
+        android:id="@+id/add_loan_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Loan"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_loan_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_loan_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_loan_fab" />
 
 
 <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
