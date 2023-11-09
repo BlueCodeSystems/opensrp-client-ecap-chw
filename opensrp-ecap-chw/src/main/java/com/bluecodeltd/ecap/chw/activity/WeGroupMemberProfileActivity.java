@@ -16,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,16 +29,11 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.ConstituitionFragment;
-import com.bluecodeltd.ecap.chw.fragment.MembersFragment;
 import com.bluecodeltd.ecap.chw.fragment.MyGroupMembersFragment;
 import com.bluecodeltd.ecap.chw.fragment.ServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.SummaryFragment;
-import com.bluecodeltd.ecap.chw.fragment.WeGroupFragmentMembers;
-import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.appbar.AppBarLayout;
@@ -65,7 +58,6 @@ import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -150,14 +142,14 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         returnViewPager();
         updateMemberTabTitle();
 
-        addSavings = findViewById(R.id.add_saving_fab);
-        addLoan = findViewById(R.id.add_loan_fab);
+        addSavings = findViewById(R.id.add_members_fab);
+        addLoan = findViewById(R.id.we_group_data_collection_fab);
         addFine = findViewById(R.id.add_fine_fab);
         addSocialFund = findViewById(R.id.add_social_fund_fab);
         addRepayment = findViewById(R.id.add_repayment_fab);
         addIga = findViewById(R.id.add_iga_fab);
 
-        addSavingsActionText = findViewById(R.id.add_saving_action_text);
+        addSavingsActionText = findViewById(R.id.add_members_action_text);
         addLoanActionText = findViewById(R.id.add_loan_action_text);
         addFineActionText = findViewById(R.id.add_fine_action_text);
         addSocialFundActionText = findViewById(R.id.add_social_fund_action_text);

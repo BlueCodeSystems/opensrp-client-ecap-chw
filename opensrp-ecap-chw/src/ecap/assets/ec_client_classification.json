@@ -63,6 +63,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "WE Group Data Collection",
+            "creates_case": [
+              "ec_we_group_data_collection"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
               "ec_family"

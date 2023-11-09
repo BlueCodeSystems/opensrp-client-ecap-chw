@@ -180,7 +180,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_saving_fab"
+        android:id="@+id/add_members_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -194,19 +194,19 @@
 
 
     <TextView
-        android:id="@+id/add_saving_action_text"
+        android:id="@+id/add_members_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textColor="#FFFFFF"
         android:text="Add Member"
-        app:layout_constraintBottom_toBottomOf="@+id/add_saving_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_saving_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_saving_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/add_members_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_members_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_members_fab" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_loan_fab"
+        android:id="@+id/we_group_data_collection_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -215,9 +215,9 @@
         android:tint="@color/white"
         app:tint="@color/white"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/add_saving_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_saving_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_saving_fab"
+        app:layout_constraintBottom_toTopOf="@+id/add_members_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_members_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_members_fab"
         app:srcCompat="@drawable/ic_add_loan" />
 
 
@@ -226,40 +226,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Loan"
+        android:text="WE Group Data Collection"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_loan_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_loan_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_loan_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintEnd_toStartOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintTop_toTopOf="@+id/we_group_data_collection_fab" />
 
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/add_fine_fab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="24dp"-->
-<!--        app:fabSize="normal"-->
-<!--        app:backgroundTint="@color/blue"-->
-<!--        android:tint="@color/white"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/add_loan_fab"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/add_loan_fab"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/add_loan_fab"-->
-<!--        app:srcCompat="@drawable/ic_fine" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fine_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintEnd_toEndOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintStart_toStartOf="@+id/we_group_data_collection_fab"
+        app:srcCompat="@drawable/edit_icon" />
 
-<!--    &lt;!&ndash; Action name text for the Fine button &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/add_fine_action_text"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:text="Fine"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textSize="15sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/add_fine_fab"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/add_fine_fab"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/add_fine_fab" />-->
+    <!-- Action name text for the Fine button -->
+    <TextView
+        android:id="@+id/add_fine_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Edit"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_fine_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_fine_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_fine_fab" />
 
 <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/add_social_fund_fab"-->

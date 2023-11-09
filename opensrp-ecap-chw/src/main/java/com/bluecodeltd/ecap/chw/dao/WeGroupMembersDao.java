@@ -23,6 +23,47 @@ public class WeGroupMembersDao extends AbstractDao {
         return Integer.parseInt(values.get(0));
 
     }
+    public static int getMembersCountByFemale(String groupId){
+
+        String sql = "SELECT COUNT(*) as members\n" +
+                "FROM ec_we_group_member\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "' AND gender = 'female'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "members");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
+    public static int getMembersCountByFemaleCaregiver(String groupId){
+
+        String sql = "SELECT COUNT(*) as members\n" +
+                "FROM ec_we_group_member\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "' AND single_female_caregiver = 'yes'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "members");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
+
+
+    public static int getMembersCountByEcapId(String groupId){
+
+        String sql = "SELECT COUNT(*) as members\n" +
+                "FROM ec_we_group_member\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "' AND ecap_hh_ID IS NOT NULL";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "members");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
     public static int getMembersCountById(String groupId){
 
         String sql = "SELECT COUNT(*) as members\n" +
@@ -36,6 +77,7 @@ public class WeGroupMembersDao extends AbstractDao {
         return Integer.parseInt(values.get(0));
 
     }
+
     public static MembersModel getWeGroupMemberById (String memberID) {
 
 

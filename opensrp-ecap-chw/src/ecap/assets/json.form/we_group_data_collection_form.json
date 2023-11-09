@@ -154,7 +154,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "group_name",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Group Name",
         "edit_type": "name",
         "v_required": {
@@ -168,15 +168,14 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cycle_number",
         "type": "edit_text",
-        "read_only": "false",
         "hint": "Cycle Number",
+        "read_only": "true",
         "edit_type": "number",
         "v_required": {
           "value": true,
           "err": "Cycle number is Required"
         }
       },
-
       {
         "key": "first_training_meeting_date",
         "openmrs_entity_parent": "",
@@ -184,6 +183,7 @@
         "openmrs_entity_id": "first_training_meeting_date",
         "type": "date_picker",
         "hint": "First Training Meeting Date",
+        "read_only": "true",
         "expanded": false,
         "duration": {
           "label": ""
@@ -202,6 +202,7 @@
         "openmrs_entity_id": "date_savings_started",
         "type": "date_picker",
         "hint": "Date Savings Started",
+        "read_only": "true",
         "expanded": false,
         "duration": {
           "label": ""
@@ -213,7 +214,6 @@
           "err": "Please enter the date savings started"
         }
       },
-
       {
         "key": "reinvested_savings_cycle_start",
         "openmrs_entity_parent": "",
@@ -221,7 +221,7 @@
         "openmrs_entity_id": "reinvested_savings_cycle_start",
         "type": "edit_text",
         "hint": "Reinvested Savings Cycle Start",
-        "read_only": "false",
+        "read_only": "true",
         "edit_type": "number",
         "v_required": {
           "value": "true",
@@ -241,14 +241,13 @@
         "openmrs_entity_id": "registered_members_cycle_start",
         "type": "edit_text",
         "hint": "Registered Members Cycle Start",
-        "read_only": "false",
         "edit_type": "number",
+        "read_only": "true",
         "v_required": {
           "value": "false",
           "err": "Please enter registered members cycle start"
         }
       },
-
       {
         "key": "group_mgt",
         "openmrs_entity_parent": "",
@@ -256,6 +255,7 @@
         "openmrs_entity_id": "group_mgt",
         "type": "native_radio",
         "label": "Group Management",
+        "read_only": "true",
         "options": [
           {
             "key": "supervised",
@@ -281,7 +281,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "annual_interest_rate",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Annual Interest Rate",
         "edit_type": "name",
         "v_required": {
@@ -361,7 +361,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "registered_members_current_cycle",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Number of registered members at the start of the current cycle",
         "edit_type": "number",
         "v_required": {
@@ -375,7 +375,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "registered_members_time_visit",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Number of registered members at time of visit",
         "edit_type": "number",
         "v_required": {
@@ -389,7 +389,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "registered_women_time_visit",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Number of registered women at time of visit",
         "edit_type": "number",
         "v_required": {
@@ -441,7 +441,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cumulative_savings_current_cycle",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Cumulative value of savings current cycle",
         "edit_type": "number",
         "v_required": {
@@ -455,7 +455,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cumulative_loans_current_cycle",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Cumulative value of loans given current cycle",
         "edit_type": "number",
         "v_required": {
@@ -533,7 +533,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "social_fund_balance",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Social Fund Balance (or other funds)",
         "edit_type": "number",
         "v_required": {
@@ -583,7 +583,6 @@
           "err": "Value of property  is Required"
         }
       },
-
       {
         "key": "end_cycle_share_out_meeting",
         "openmrs_entity_parent": "",
@@ -606,6 +605,8 @@
           "err": "This field is Required"
         }
       },
+
+
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -614,13 +615,14 @@
         "type": "label",
         "text": "PCI WE Initiative Data Section of Online MIS"
       },
+
       {
         "key": "members_taken_loan",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "members_taken_loan",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Total number of members who have ever taken a loan ",
         "edit_type": "number",
         "v_required": {
@@ -634,7 +636,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "number_member_never_taken_loan",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Total number of members who have never taken a loan",
         "edit_type": "number",
         "v_required": {
@@ -648,7 +650,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "number_members_enrolled_ecapii",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Total number of members who are enrolled in the ECAPII OVC Comprehensive Program",
         "edit_type": "number",
         "v_required": {
@@ -656,7 +658,6 @@
           "err": "Value of property  is Required"
         }
       },
-
       {
         "key": "number_members_enrolled_ecapii_without_loan",
         "openmrs_entity_parent": "",
@@ -677,22 +678,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "number_members_single_female_caregivers",
         "type": "edit_text",
-        "read_only": "false",
+        "read_only": "true",
         "hint": "Total number of Single Female Caregivers group member",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Value of property  is Required"
-        }
-      },
-      {
-        "key": "number_members_iga",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "number_members_iga",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Number of Individual Income Generating Activities (IIGAs",
         "edit_type": "number",
         "v_required": {
           "value": false,

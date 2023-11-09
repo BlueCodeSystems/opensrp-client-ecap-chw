@@ -776,7 +776,338 @@
         }
       ]
     },
+    {
+      "name": "ec_we_group_data_collection",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "we_community_facilitator",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.we_community_facilitator"
+          }
+        },
+        {
+          "column_name": "supervisor_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.supervisor_name"
+          }
+        },
 
+        {
+          "column_name": "date_data_collection",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_data_collection"
+          }
+        },
+        {
+          "column_name": "current_cycle_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.current_cycle_number"
+          }
+        },
+
+        {
+          "column_name": "group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_name"
+          }
+        },
+        {
+          "column_name": "cycle_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cycle_number"
+          }
+        },
+        {
+          "column_name": "group_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_id"
+          }
+        },
+        {
+          "column_name": "annual_interest_rate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.annual_interest_rate"
+          }
+        },
+        {
+          "column_name": "first_training_meeting_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_training_meeting_date"
+          }
+        },
+        {
+          "column_name": "date_savings_started",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_savings_started"
+          }
+        },
+        {
+          "column_name": "reinvested_savings_cycle_start",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reinvested_savings_cycle_start"
+          }
+        },
+        {
+          "column_name": "registered_members_cycle_start",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.registered_members_cycle_start"
+          }
+        },
+        {
+          "column_name": "group_mgt",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_mgt"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "linkage_external_savings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.linkage_external_savings"
+          }
+        },
+        {
+          "column_name": "linkage_external_credit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.linkage_external_credit"
+          }
+        },
+
+
+
+        {
+          "column_name": "value_property_owned_current_cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.value_property_owned_current_cycle"
+          }
+        },
+        {
+          "column_name": "registered_members_current_cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.registered_members_current_cycle"
+          }
+        },
+        {
+          "column_name": "registered_members_time_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.registered_members_time_visit"
+          }
+        },
+        {
+          "column_name": "registered_women_time_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.registered_women_time_visit"
+          }
+        },
+        {
+          "column_name": "number_members_meeting",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_meeting"
+          }
+        },
+        {
+          "column_name": "number_dropouts_current_cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_dropouts_current_cycle"
+          }
+        },
+        {
+          "column_name": "cumulative_savings_current_cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cumulative_savings_current_cycle"
+          }
+        },
+        {
+          "column_name": "cumulative_loans_current_cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cumulative_loans_current_cycle"
+          }
+        },
+        {
+          "column_name": "number_loan_outstanding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_loan_outstanding"
+          }
+        },
+        {
+          "column_name": "write_offs_current cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.write_offs_current cycle"
+          }
+        },
+        {
+          "column_name": "loan_fund_cash_box",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.loan_fund_cash_box"
+          }
+        },
+        {
+          "column_name": "bank_balance",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.bank_balance"
+          }
+        },
+        {
+          "column_name": "social_fund_balance",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.social_fund_balance"
+          }
+        },
+        {
+          "column_name": "value_property_currently_owned_group",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.value_property_currently_owned_group"
+          }
+        },
+        {
+          "column_name": "value_debts",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.value_debts"
+          }
+        },
+        {
+          "column_name": "dividends_paid_current_cycle",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dividends_paid_current_cycle"
+          }
+        },
+        {
+          "column_name": "end_cycle_share_out_meeting",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.end_cycle_share_out_meeting"
+          }
+        },
+        {
+          "column_name": "members_taken_loan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.members_taken_loan"
+          }
+        },
+        {
+          "column_name": "number_member_never_taken_loan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_member_never_taken_loan"
+          }
+        },
+        {
+          "column_name": "number_members_enrolled_ecapii",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_enrolled_ecapii"
+          }
+        },
+        {
+          "column_name": "number_members_enrolled_ecapii_without_loan",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_enrolled_ecapii_without_loan"
+          }
+        },
+        {
+          "column_name": "number_members_single_female_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_single_female_caregivers"
+          }
+        },
+        {
+          "column_name": "number_members_iga",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_iga"
+          }
+        },
+        {
+          "column_name": "number_members_iga_individual",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_iga_individual"
+          }
+        },
+        {
+          "column_name": "number_members_iga_group",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_members_iga_group"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facilitator_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator_id"
+          }
+        }
+      ]
+    },
 
 
     {
