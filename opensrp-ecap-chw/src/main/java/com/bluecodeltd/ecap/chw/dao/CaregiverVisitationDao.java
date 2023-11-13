@@ -36,15 +36,17 @@ public class CaregiverVisitationDao extends AbstractDao {
 
     }
     public static List<CaregiverVisitationModel> countAllVisits() {
+        String sql = "SELECT * FROM ec_household_visitation_for_caregiver";
+        List<CaregiverVisitationModel> values;
 
-        String sql = "SELECT *  FROM ec_household_visitation_for_caregiver ";
-
-        List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
-        if (values == null || values.isEmpty()) {
-            return  new ArrayList<>();
+        try {
+            values = AbstractDao.readData(sql, getCaregiverVisitationMap());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
 
-        return values;
+        return values != null ? values : new ArrayList<>();
     }
 
     public static CaregiverVisitationModel getCaregiverVisitation (String householdID) {
