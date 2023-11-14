@@ -362,8 +362,8 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/ic_groups"
             app:civ_border_width="2dp"
             app:civ_border_color="#Fff"
@@ -374,7 +374,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="We User"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="#FBFBFB"/>
         <TextView
@@ -382,7 +382,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Id"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textStyle="bold"
             android:textColor="#FBFBFB"/>
     </LinearLayout>

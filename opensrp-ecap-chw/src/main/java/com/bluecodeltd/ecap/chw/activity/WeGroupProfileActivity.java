@@ -127,6 +127,9 @@ public class WeGroupProfileActivity extends AppCompatActivity {
     TextView groupTabCount;
     ObjectMapper oMapper;
 
+    String memberRole;
+    SharedPreferences sp,credentials;
+
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,9 +148,12 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         groupName = getIntent().getStringExtra("groupName");
         groupId = getIntent().getStringExtra("groupId");
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Credentials", Context.MODE_PRIVATE);
-        username = sharedPreferences.getString("username", "");
-        password = sharedPreferences.getString("password", "");
+        credentials = getSharedPreferences("Credentials", Context.MODE_PRIVATE);
+        username = credentials.getString("username", "");
+        password = credentials.getString("password", "");
+
+        sp = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        memberRole = sp.getString("userRole", "").toLowerCase();
 
         membersModel =  WeGroupMembersDao.getWeGroupMemberById(groupId);
         weGroupModel = WeGroupDao.getWeGroupsById(groupId);
@@ -186,6 +192,13 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         });
 
         mAddFab = findViewById(R.id.add_fab);
+        if(memberRole != null && (memberRole.equals("bookwriter") || memberRole.equals("facilitator"))){
+            mAddFab.setVisibility(View.VISIBLE);
+        } else {
+            mAddFab.setVisibility(View.GONE);
+        }
+
+
         dimBackground = findViewById(R.id.dimBackground);
 
         returnViewPager();
@@ -611,13 +624,15 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
             try {
 
-//                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
-//
-//                if (childIndexEventClient == null) {
-//                    return;
-//                }
-//
-//                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+
+                if(EncounterType != null && (EncounterType.equals("Group")  || EncounterType.equals("WE Group Data Collection") )){
+                    ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+                }
+
 
                 switch (EncounterType) {
 
@@ -683,10 +698,12 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                                 stringNrc, stringEmail, stringUsername, stringPassword, stringAdmissionDate, stringEcapHhID,
                                 stringRole, stringPhoneNumber, stringSingleFemaleCaregiver, stringNextOfKin, stringNextOfKinPhone, stringDeleteStatus);
 
+                        if(EncounterType != null && (EncounterType.equals("Group")  || EncounterType.equals("WE Group Data Collection") )){
+                            Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
+                            finish();
+                            startActivity(getIntent());
+                        }
 
-                        Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
                         break;
 
                 }
@@ -740,6 +757,28 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, "ec_we_group_member");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Group":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "WE Group Data Collection":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_data_collection");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -1081,7 +1120,9 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                                     return;
                                 }
                                 saveRegistration(childIndexEventClient,false,"We Group Member");
-
+                                Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
+                                finish();
+                                startActivity(getIntent());
 
 
                             } else {

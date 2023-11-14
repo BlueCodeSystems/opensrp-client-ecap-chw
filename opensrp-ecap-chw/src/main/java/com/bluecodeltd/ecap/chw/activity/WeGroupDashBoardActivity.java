@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
@@ -20,7 +21,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,9 +32,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
+import com.bluecodeltd.ecap.chw.api.VolleyCallback;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
@@ -54,10 +64,12 @@ import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.FetchStatus;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
+import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
@@ -68,6 +80,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -75,7 +88,7 @@ import java.util.Random;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
-public class WeGroupDashBoardActivity extends AppCompatActivity {
+public class WeGroupDashBoardActivity extends AppCompatActivity implements SyncStatusBroadcastReceiver.SyncStatusListener {
     private ViewPager viewPager;
     TabLayout tabLayout;
     FloatingActionButton addNewGroup;
@@ -83,11 +96,15 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AppBarLayout myAppbar;
     String username,password;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_we_group_dash_board);
+
+        SyncStatusBroadcastReceiver.init(this);
+        SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(this);
 
         username = getIntent().getStringExtra("username");
         password = getIntent().getStringExtra("password");
@@ -97,6 +114,14 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
         editor.putString("username", username);
         editor.putString("password", password);
         editor.apply();
+
+        getToken(username, password, BuildConfig.OAUTH_CLIENT_ID, BuildConfig.OAUTH_CLIENT_SECRET, result -> {
+            Log.d("Access Token", result);
+            String token = result;
+//        getCreds(token);
+        getUserRole(token);
+        });
+
 
         addNewGroup = findViewById(R.id.fab);
 
@@ -419,4 +444,178 @@ public class WeGroupDashBoardActivity extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+    private void getToken(String username, String password, String clientId, String clientSecret, final VolleyCallback callback) {
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/token";
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String accessToken = jsonObject.getString("access_token");
+                            callback.onSuccess(accessToken);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("grant_type", "password");
+                params.put("client_id", clientId);
+                params.put("client_secret", clientSecret);
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(WeGroupDashBoardActivity.this).add(stringRequest);
+    }
+    private void getCreds(String token){
+
+        Log.i("chobela_token ", "chobela_token" + token);
+
+        String tag_string_creds = "req_creds";
+
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/userinfo";
+        StringRequest
+                stringRequest
+                = new StringRequest(
+                Request.Method.GET,
+                url,
+                (Response.Listener<String>) response -> {
+
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        String sub = jObj.getString("sub");
+                        String code = jObj.getString("code");
+                        String role = jObj.getString("role");
+
+
+
+                        // save user data
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(WeGroupDashBoardActivity.this);
+                        SharedPreferences.Editor edit = sp.edit();
+
+                        edit.putString("role", role);
+
+
+                        edit.commit();
+                        finish();
+
+
+                        startActivity(getIntent());
+
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }};
+
+
+        ChwApplication.getApplicationFlavor().chwAppInstance().addToRequestQueue(stringRequest, tag_string_creds);
+
+
+    }
+
+    private void getUserRole(String token) {
+        String url = "https://keycloak.zeir.smartregister.org/auth/realms/ecap-stage/protocol/openid-connect/userinfo";
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String role = jsonObject.getString("role");
+                            saveRoleInSharedPreferences(role);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }
+        };
+
+
+        Volley.newRequestQueue(WeGroupDashBoardActivity.this).add(stringRequest);
+    }
+
+    private void saveRoleInSharedPreferences(String role) {
+
+        SharedPreferences sp = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("userRole", role);
+        editor.apply();
+    }
+
+
+    @Override
+    public void onSyncStart() {
+        Toast.makeText(WeGroupDashBoardActivity.this,"Sync Started",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSyncInProgress(FetchStatus fetchStatus) {
+
+        Toast.makeText(WeGroupDashBoardActivity.this, "Sync In Progress", Toast.LENGTH_LONG).show();
+
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+
+        mainHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshActivity();
+            }
+        }, 3000);
+    }
+
+    private void refreshActivity() {
+        finish();
+        startActivity(getIntent());
+    }
+
+
+    @Override
+    public void onSyncComplete(FetchStatus fetchStatus) {
+    Toast.makeText(WeGroupDashBoardActivity.this,"Sync Complete",Toast.LENGTH_LONG).show();
+        refreshActivity();
+    }
+
+
 }

@@ -6,7 +6,9 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -87,6 +89,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     private final int FIVE_SECONDS = 2000;
     Runnable runnable;
     TextView groupTabCount;
+    String memberRole;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,10 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
+
+        SharedPreferences sp = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+
+        memberRole = sp.getString("userRole", "").toLowerCase();
 
         name = getIntent().getStringExtra("userName");
         id = getIntent().getStringExtra("userId");
@@ -138,6 +145,15 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         });
 
         mAddFab = findViewById(R.id.add_fab);
+
+        mAddFab = findViewById(R.id.add_fab);
+        if(memberRole != null && (memberRole.equals("bookwriter") || memberRole.equals("facilitator"))){
+            mAddFab.setVisibility(View.VISIBLE);
+        } else {
+            mAddFab.setVisibility(View.GONE);
+        }
+
+
         dimBackground = findViewById(R.id.dimBackground);
         returnViewPager();
         updateMemberTabTitle();
