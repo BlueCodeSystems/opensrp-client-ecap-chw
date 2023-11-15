@@ -699,7 +699,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                                 stringRole, stringPhoneNumber, stringSingleFemaleCaregiver, stringNextOfKin, stringNextOfKinPhone, stringDeleteStatus);
 
                         if(EncounterType != null && (EncounterType.equals("Group")  || EncounterType.equals("WE Group Data Collection") )){
-                            Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
+                            Toasty.success(getApplicationContext(), "Form Saved", Toast.LENGTH_LONG, true).show();
                             finish();
                             startActivity(getIntent());
                         }
@@ -1066,11 +1066,25 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
                             try {
-                                if (response.body() != null && !response.body().toString().isEmpty()) {
-                                    Log.d("API Response", "Response received successfully");
+                                if (response.isSuccessful()) {
+                                    MemberListModel memberListModel = response.body();
 
+                                    if (memberListModel != null) {
+                                        // Check if the response body is empty
+                                        if (!memberListModel.toString().isEmpty()) {
+                                            // Handle the response
+                                            Log.d("API Response", "Response received successfully");
+                                        } else {
+                                            // Handle empty response body
+                                            Log.e("API Response", "Empty response body");
+                                        }
+                                    } else {
+                                        // Handle null response body
+                                        Log.e("API Response", "Null response body");
+                                    }
                                 } else {
-                                    Log.e("API Response", "Empty response body");
+                                    // Handle unsuccessful response
+                                    Log.e("API Response", "Unsuccessful response: " + response.code());
                                 }
                             } catch (Exception e) {
                                 Log.e("YourActivityName", "Exception in onResponse", e);

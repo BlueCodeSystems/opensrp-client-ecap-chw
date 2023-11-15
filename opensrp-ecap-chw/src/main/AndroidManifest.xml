@@ -39,9 +39,12 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
+            android:name=".WegroupPieChart"
+            android:exported="false" />
+        <activity
             android:name=".activity.WeGroupProfileActivity"
             android:exported="true"
-            android:theme="@style/ChwTheme.NoActionBar"/>
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.CreateMemberClass"
             android:exported="false" />
