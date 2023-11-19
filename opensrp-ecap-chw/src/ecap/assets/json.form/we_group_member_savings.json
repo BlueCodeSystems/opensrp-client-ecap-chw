@@ -60,9 +60,28 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date We Group Member Created",
         "edit_type": "number"
       },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "GROUP INFORMATION"
+      },
+
       {
         "key": "group_id",
         "openmrs_entity_parent": "",
@@ -76,6 +95,66 @@
           "value": true,
           "err": "Group id is Required"
         }
+      },
+      {
+        "key": "group_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group_name is Required"
+        }
+      },
+      {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
+        "key": "group_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Number",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER INFORMATION"
       },
       {
         "key": "unique_id",
@@ -92,6 +171,70 @@
         }
       },
       {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "Member's First Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Member's Last Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER SAVINGS"
+      },
+      {
+        "key": "date_savings_deposited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_savings_deposited",
+        "type": "date_picker",
+        "hint": "Date Savings Deposited",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the contribution date"
+        }
+      },
+      {
         "key": "amount",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -105,21 +248,16 @@
         }
       },
       {
-        "key": "contribution_date",
+        "key": "cumulative_savings",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "contribution_date",
-        "type": "date_picker",
-        "hint": "Contribution Date",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
+        "openmrs_entity_id": "cumulative_savings",
+        "type": "edit_text",
+        "hint": "Cumulative Savings",
+        "edit_type": "name",
         "v_required": {
-          "value": "true",
-          "err": "Please enter the contribution date"
+          "value": true,
+          "err": "This field is Required"
         }
       },
       {

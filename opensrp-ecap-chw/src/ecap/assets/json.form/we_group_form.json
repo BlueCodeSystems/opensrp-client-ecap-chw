@@ -51,7 +51,7 @@
     }
   },
   "step1": {
-    "title": "",
+    "title": "WE Group Registration Form",
     "fields": [
       {
         "key": "date_created",
@@ -60,7 +60,7 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date Group Created",
         "edit_type": "number"
       },
       {
@@ -78,6 +78,20 @@
         }
       },
       {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
         "key": "group_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -92,27 +106,26 @@
         }
       },
       {
-        "key": "cycle_number",
+        "key": "group_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cycle_number",
+        "openmrs_entity_id": "group_number",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "Cycle Number",
-        "edit_type": "number",
+        "hint": "Group Number",
+        "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Cycle number is Required"
+          "err": "Group id is Required"
         }
       },
-
       {
         "key": "first_training_meeting_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_training_meeting_date",
         "type": "date_picker",
-        "hint": "First Training Meeting Date",
+        "hint": "Date of first training meeting",
         "expanded": false,
         "duration": {
           "label": ""
@@ -120,7 +133,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": "true",
+          "value": "false",
           "err": "Please enter the first training meeting date"
         }
       },
@@ -142,14 +155,13 @@
           "err": "Please enter the date savings started"
         }
       },
-
       {
         "key": "reinvested_savings_cycle_start",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "reinvested_savings_cycle_start",
         "type": "edit_text",
-        "hint": "Reinvested Savings Cycle Start",
+        "hint": "Savings re-invested at start of current cycle",
         "read_only": "false",
         "edit_type": "number",
         "v_required": {
@@ -161,23 +173,12 @@
             "type": "string",
             "ex": "greaterThan(., \"1\")"
           }
-        }
-      },
-      {
-        "key": "registered_members_cycle_start",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "registered_members_cycle_start",
-        "type": "edit_text",
-        "hint": "Registered Members Cycle Start",
-        "read_only": "false",
-        "edit_type": "number",
+        },
         "v_required": {
-          "value": "false",
-          "err": "Please enter registered members cycle start"
+          "value": true,
+          "err": "This field is Required"
         }
       },
-
       {
         "key": "group_mgt",
         "openmrs_entity_parent": "",
@@ -205,11 +206,27 @@
         }
       },
       {
+        "key": "registered_members_cycle_start",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "registered_members_cycle_start",
+        "type": "edit_text",
+        "hint": "Number of registered members at start of group",
+        "read_only": "false",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter registered members cycle start"
+        }
+      },
+
+
+      {
         "key": "annual_interest_rate",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "annual_interest_rate",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "false",
         "hint": "Annual Interest Rate",
         "edit_type": "name",

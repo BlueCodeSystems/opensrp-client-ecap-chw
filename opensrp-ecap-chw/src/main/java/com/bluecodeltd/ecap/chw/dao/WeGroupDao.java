@@ -68,6 +68,7 @@ public class WeGroupDao extends AbstractDao {
             record.setDate_client_created(getCursorValue(c, "date_client_created"));
             record.setGroup_name(getCursorValue(c, "group_name"));
             record.setCycle_number(getCursorValue(c, "cycle_number"));
+            record.setGroup_number(getCursorValue(c, "group_number"));
             record.setGroup_id(getCursorValue(c, "group_id"));
             record.setAnnual_interest_rate(getCursorValue(c, "annual_interest_rate"));
             record.setFirst_training_meeting_date(getCursorValue(c, "first_training_meeting_date"));

@@ -60,9 +60,28 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date Created",
         "edit_type": "number"
       },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "GROUP INFORMATION"
+      },
+
       {
         "key": "group_id",
         "openmrs_entity_parent": "",
@@ -76,6 +95,66 @@
           "value": true,
           "err": "Group id is Required"
         }
+      },
+      {
+        "key": "group_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group_name is Required"
+        }
+      },
+      {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
+        "key": "group_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Number",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER INFORMATION"
       },
       {
         "key": "unique_id",
@@ -92,12 +171,58 @@
         }
       },
       {
-        "key": "amount",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "amount",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Amount",
+        "hint": "Member's First Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Member's Last Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER LOAN INFORMATION"
+      },
+      {
+        "key": "loan_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "loan_number",
+        "type": "edit_text",
+        "hint": "Loan Number",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -105,12 +230,53 @@
         }
       },
       {
-        "key": "date_of_loan",
+        "key": "amount",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_loan",
+        "openmrs_entity_id": "amount",
+        "type": "edit_text",
+        "hint": "Principal Amount",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "interest_rate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "interest_rate",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Interest Amount",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "total_loan_amount",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "total_loan_amount",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Total Loan Amount (principal + interest)",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "loan_issue_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "loan_issue_date",
         "type": "date_picker",
-        "hint": "Date of loan",
+        "hint": "Loan Issue Date",
         "expanded": false,
         "duration": {
           "label": ""
@@ -123,35 +289,17 @@
         }
       },
       {
-        "key": "interest_rate",
+        "key": "duration_in_months",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "interest_rate",
+        "openmrs_entity_id": "duration_in_months",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Interest Rate",
-        "edit_type": "name",
+        "hint": "Duration in Months",
+        "edit_type": "number",
         "v_required": {
           "value": true,
           "err": "Required"
-        }
-      },
-      {
-        "key": "duration",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "duration",
-        "type": "date_picker",
-        "hint": "Duration",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Duration"
         }
       },
       {
@@ -173,34 +321,25 @@
         }
       },
       {
-        "key": "loan_number",
+        "key": "loan_used_to_start_iga",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "loan_number",
-        "type": "edit_text",
-        "hint": "Loan Number",
-        "edit_type": "name",
+        "openmrs_entity_id": "loan_used_to_start_iga",
+        "type": "native_radio",
+        "label": "Loan Used to Start IGA?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
         "v_required": {
           "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "started_iga",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "started_iga",
-        "type": "date_picker",
-        "hint": "Started IGA",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Due Date"
+          "err": "This is a Required field."
         }
       },
       {

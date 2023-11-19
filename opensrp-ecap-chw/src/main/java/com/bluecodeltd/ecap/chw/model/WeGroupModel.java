@@ -7,6 +7,7 @@ public class WeGroupModel {
     private String group_name;
     private String cycle_number;
     private String group_id;
+    private String group_number;
     private String annual_interest_rate;
     private String first_training_meeting_date;
     private String date_savings_started;
@@ -20,6 +21,7 @@ public class WeGroupModel {
         this.base_entity_id = base_entity_id;
         this.date_client_created = date_client_created;
         this.group_name = group_name;
+        this.group_number = group_number;
         this.cycle_number = cycle_number;
         this.group_id = group_id;
         this.annual_interest_rate = annual_interest_rate;
@@ -49,6 +51,14 @@ public class WeGroupModel {
 
     public String getDate_client_created() {
         return date_client_created;
+    }
+
+    public String getGroup_number() {
+        return group_number;
+    }
+
+    public void setGroup_number(String group_number) {
+        this.group_number = group_number;
     }
 
     public void setDate_client_created(String date_client_created) {

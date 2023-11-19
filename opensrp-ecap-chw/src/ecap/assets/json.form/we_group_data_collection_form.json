@@ -61,7 +61,7 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date for We Group Data Collection",
         "edit_type": "number"
       },
 
@@ -126,12 +126,22 @@
         }
       },
       {
-        "key": "hd1",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Cycle Data Section of Online MIS"
+        "openmrs_entity_id": "purpose",
+        "toaster_info_title": "Information Toaster Info Title",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "CYCLE DATA SECTION OF ONLINE MIS"
       },
 
       {
@@ -149,6 +159,20 @@
         }
       },
       {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
         "key": "group_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -163,17 +187,17 @@
         }
       },
       {
-        "key": "cycle_number",
+        "key": "group_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cycle_number",
+        "openmrs_entity_id": "group_number",
         "type": "edit_text",
-        "hint": "Cycle Number",
+        "hint": "Group Number",
         "read_only": "true",
-        "edit_type": "number",
+        "edit_type": "name",
         "v_required": {
           "value": true,
-          "err": "Cycle number is Required"
+          "err": "Group id is Required"
         }
       },
       {
@@ -181,9 +205,9 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_training_meeting_date",
-        "type": "date_picker",
-        "hint": "First Training Meeting Date",
         "read_only": "true",
+        "type": "date_picker",
+        "hint": "Date of first training meeting",
         "expanded": false,
         "duration": {
           "label": ""
@@ -191,7 +215,7 @@
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
-          "value": "true",
+          "value": "false",
           "err": "Please enter the first training meeting date"
         }
       },
@@ -200,9 +224,9 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_savings_started",
+        "read_only": "true",
         "type": "date_picker",
         "hint": "Date Savings Started",
-        "read_only": "true",
         "expanded": false,
         "duration": {
           "label": ""
@@ -220,7 +244,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "reinvested_savings_cycle_start",
         "type": "edit_text",
-        "hint": "Reinvested Savings Cycle Start",
+        "hint": "Savings re-invested at start of current cycle",
         "read_only": "true",
         "edit_type": "number",
         "v_required": {
@@ -232,20 +256,10 @@
             "type": "string",
             "ex": "greaterThan(., \"1\")"
           }
-        }
-      },
-      {
-        "key": "registered_members_cycle_start",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "registered_members_cycle_start",
-        "type": "edit_text",
-        "hint": "Registered Members Cycle Start",
-        "edit_type": "number",
-        "read_only": "true",
+        },
         "v_required": {
-          "value": "false",
-          "err": "Please enter registered members cycle start"
+          "value": true,
+          "err": "This field is Required"
         }
       },
       {
@@ -254,8 +268,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "group_mgt",
         "type": "native_radio",
-        "label": "Group Management",
         "read_only": "true",
+        "label": "Group Management",
         "options": [
           {
             "key": "supervised",
@@ -276,26 +290,36 @@
         }
       },
       {
-        "key": "annual_interest_rate",
+        "key": "registered_members_cycle_start",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "annual_interest_rate",
+        "openmrs_entity_id": "registered_members_cycle_start",
         "type": "edit_text",
+        "hint": "Number of registered members at start of group",
         "read_only": "true",
-        "hint": "Annual Interest Rate",
-        "edit_type": "name",
+        "edit_type": "number",
         "v_required": {
-          "value": true,
-          "err": "Interest rate is Required"
+          "value": "true",
+          "err": "Please enter registered members cycle start"
         }
       },
       {
-        "key": "hd1",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Group Information Section of Online MIS"
+        "openmrs_entity_id": "purpose",
+        "toaster_info_title": "Information Toaster Info Title",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "GROUP INFORMATION SECTION OF ONLINE MIS"
       },
       {
         "key": "linkage_external_savings",
@@ -426,12 +450,22 @@
         }
       },
       {
-        "key": "hd1",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Group Savings and Loan Section of Online MIS"
+        "openmrs_entity_id": "purpose",
+        "toaster_info_title": "Information Toaster Info Title",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "GROUP SAVINGS AND LOAN SECTION OF ONLINE MIS"
       },
 
 
@@ -506,12 +540,22 @@
         }
       },
       {
-        "key": "hd1",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Other Assets Section of Online MIS"
+        "openmrs_entity_id": "purpose",
+        "toaster_info_title": "Information Toaster Info Title",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "OTHER ASSETS SECTION OF ONLINE MIS"
       },
       {
         "key": "bank_balance",
@@ -608,12 +652,22 @@
 
 
       {
-        "key": "hd1",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "PCI WE Initiative Data Section of Online MIS"
+        "openmrs_entity_id": "purpose",
+        "toaster_info_title": "Information Toaster Info Title",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "PCI WE INITIATIVE DATA SECTION OF ONLINE MIS"
       },
 
       {

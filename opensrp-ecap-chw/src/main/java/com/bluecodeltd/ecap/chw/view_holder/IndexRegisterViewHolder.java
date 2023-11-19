@@ -2,11 +2,15 @@ package com.bluecodeltd.ecap.chw.view_holder;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,14 +18,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -160,63 +167,63 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
         }
 
-//            dueButton.setOnClickListener(view -> {
-//
-//
-//                try {
-//
-//                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-//                    cId.put("value",village);
-//
-//                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "age");
-//                    cDate.put("value", vcaAge);
-//
-//                    SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(context);
-//                    String  caseworkerphone = cp.getString("phone", "Anonymous");
-//                    String caseworkername = cp.getString("caseworker_name", "Anonymous");
-//
-//                    JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step1"), "phone");
-//
-//                    if (cphone  != null) {
-//                        cphone .remove(JsonFormUtils.VALUE);
-//                        try {
-//                            cphone .put(JsonFormUtils.VALUE, caseworkerphone);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    JSONObject caseworker_name_object = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
-//                    if (caseworker_name_object != null) {
-//                        caseworker_name_object.remove(JsonFormUtils.VALUE);
-//                        try {
-//                            caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
-//                    idRegisterActivity.startFormActivity(indexRegisterForm);
-//
-//                    startFormActivity(indexRegisterForm);
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//
-//
-//                    ChildIndexEventClient childIndexEventClient = processRegistration(indexRegisterForm.toString());
-//                    if (childIndexEventClient == null) {
-//                        return;
-//                    }
-//                    saveRegistration(childIndexEventClient,true);
-//
-//
-//                } catch (Exception e) {
-//                    Timber.e(e);
-//                }
-//
-//            });
+            dueButton.setOnClickListener(view -> {
+
+
+                try {
+
+                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                    cId.put("value",village);
+
+                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "age");
+                    cDate.put("value", vcaAge);
+
+                    SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(context);
+                    String  caseworkerphone = cp.getString("phone", "Anonymous");
+                    String caseworkername = cp.getString("caseworker_name", "Anonymous");
+
+                    JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step1"), "phone");
+
+                    if (cphone  != null) {
+                        cphone .remove(JsonFormUtils.VALUE);
+                        try {
+                            cphone .put(JsonFormUtils.VALUE, caseworkerphone);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    JSONObject caseworker_name_object = getFieldJSONObject(fields(indexRegisterForm, "step1"), "caseworker_name");
+                    if (caseworker_name_object != null) {
+                        caseworker_name_object.remove(JsonFormUtils.VALUE);
+                        try {
+                            caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
+                    idRegisterActivity.startFormActivity(indexRegisterForm);
+
+                    startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(indexRegisterForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true);
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+            });
 
 
 

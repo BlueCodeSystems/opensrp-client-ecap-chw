@@ -137,7 +137,7 @@ public class WeGroupDashBoardActivity extends AppCompatActivity implements SyncS
         tabLayout = findViewById(R.id.tabLayout);
         returnViewPager();
         updateGroupTabTitle();
-        updateMemberTabTitle();
+//        updateMemberTabTitle();
 
 
         addNewGroup.setOnClickListener(v -> {
@@ -188,7 +188,7 @@ public class WeGroupDashBoardActivity extends AppCompatActivity implements SyncS
         args.putString("username", username);
         args.putString("password", password);
         membersFragment.setArguments(args);
-        fragments.add(membersFragment);
+//        fragments.add(membersFragment);
 
 //        fragments.add(new ConstituitionFragment());
 
@@ -196,7 +196,7 @@ public class WeGroupDashBoardActivity extends AppCompatActivity implements SyncS
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("Groups");
-        tabLayout.getTabAt(1).setText("Members");
+//        tabLayout.getTabAt(1).setText("Members");
 //        tabLayout.getTabAt(2).setText("Constitution");
 
     }

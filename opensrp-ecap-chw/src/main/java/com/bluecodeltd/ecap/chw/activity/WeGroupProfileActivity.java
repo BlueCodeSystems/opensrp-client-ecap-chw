@@ -306,6 +306,33 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                JSONObject WeGroupName = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_name");
+                if (WeGroupName != null) {
+                    WeGroupName.remove(JsonFormUtils.VALUE);
+                    try {
+                        WeGroupName.put(JsonFormUtils.VALUE, weGroupModel.getGroup_name());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject currentCycle = getFieldJSONObject(fields(indexRegisterForm, STEP1), "cycle_number");
+                if (currentCycle!= null) {
+                    currentCycle.remove(JsonFormUtils.VALUE);
+                    try {
+                        currentCycle.put(JsonFormUtils.VALUE, weGroupModel.getCycle_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject groupNumber = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_number");
+                if (groupNumber!= null) {
+                    groupNumber.remove(JsonFormUtils.VALUE);
+                    try {
+                        groupNumber.put(JsonFormUtils.VALUE, weGroupModel.getGroup_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 startFormActivity(indexRegisterForm);
             }
         });

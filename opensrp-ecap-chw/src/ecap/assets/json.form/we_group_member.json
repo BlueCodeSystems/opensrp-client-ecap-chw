@@ -51,18 +51,37 @@
     }
   },
   "step1": {
-    "title": "Member Registration Form",
+    "title": "WE Group Member  Registration ",
     "fields": [
       {
         "key": "date_created",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_created",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date Member Created",
         "edit_type": "number"
       },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "GROUP INFORMATION"
+      },
+
       {
         "key": "group_id",
         "openmrs_entity_parent": "",
@@ -76,6 +95,67 @@
           "value": true,
           "err": "Group id is Required"
         }
+      },
+      {
+        "key": "group_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group_name is Required"
+        }
+      },
+      {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
+        "key": "group_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Number",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER INFORMATION"
       },
       {
         "key": "unique_id",
@@ -97,7 +177,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Member First Name",
+        "hint": "Member's First Name",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -110,7 +190,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Member Last Name",
+        "hint": "Member's Last Name",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -123,7 +203,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
-        "label": "Member Gender",
+        "label": "Sex",
         "options": [
           {
             "key": "male",
@@ -132,6 +212,60 @@
           {
             "key": "female",
             "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "admission_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "admission_date",
+        "type": "date_picker",
+        "hint": "Date of Admission",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the admission date"
+        }
+      },
+      {
+        "key": "ecap_hh_ID",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecap_hh_ID",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "ECAPII HH ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "ECAPII HH ID is Required"
+        }
+      },
+      {
+        "key": "single_female_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "single_female_caregiver",
+        "type": "native_radio",
+        "label": "Single Female Caregiver",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
           }
         ],
         "v_required": {
@@ -166,6 +300,46 @@
         }
       },
       {
+        "key": "phone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone_number",
+        "type": "edit_text",
+        "hint": "Phone Number",
+        "edit_type": "number",
+        "read_only": false,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_required": {
+          "value": false,
+          "err": ""
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER'S CREDENTIALS AND ROLE"
+      },
+      {
         "key": "username",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -176,25 +350,6 @@
         "v_required": {
           "value": true,
           "err": "Username is Required"
-        }
-      },
-
-      {
-        "key": "admission_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "admission_date",
-        "type": "date_picker",
-        "hint": "Admission Date",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the admission date"
         }
       },
       {
@@ -211,21 +366,6 @@
           "err": "Password is Required"
         }
       },
-
-      {
-        "key": "ecap_hh_ID",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ecap_hh_ID",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "ECAPII HH ID",
-        "edit_type": "name",
-        "v_required": {
-          "value": false,
-          "err": "ECAPII HH ID is Required"
-        }
-      },
       {
         "key": "role",
         "openmrs_entity_parent": "",
@@ -236,7 +376,7 @@
         "options": [
           {
             "key": "Book Writer",
-            "text": "Book Writer"
+            "text": "BookWriter"
           },
           {
             "key": "Ordinary Member",
@@ -249,52 +389,31 @@
         }
       },
       {
-        "key": "phone_number",
+        "key": "spacer",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone_number",
-        "type": "edit_text",
-        "hint": "Phone Number",
-        "edit_type": "number",
-        "read_only": false,
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
       },
       {
-        "key": "single_female_caregiver",
+        "key": "info",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "single_female_caregiver",
-        "type": "native_radio",
-        "label": "Single Female Caregiver",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "NEXT OF KIN INFORMATION"
       },
+
       {
         "key": "next_of_kin",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "next_of_kin",
         "type": "edit_text",
-        "hint": "Next of Kin Name",
+        "hint": "Next of Kin Full Names",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {

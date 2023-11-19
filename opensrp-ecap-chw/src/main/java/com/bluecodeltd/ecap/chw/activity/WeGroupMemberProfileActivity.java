@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.family.util.JsonFormUtils.STEP2;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
@@ -25,19 +27,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MyGroupMembersFragment;
 import com.bluecodeltd.ecap.chw.fragment.ServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.SummaryFragment;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
+import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -47,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -66,6 +73,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -90,6 +99,8 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     Runnable runnable;
     TextView groupTabCount;
     String memberRole;
+    WeGroupModel weGroupModel;
+    MembersModel model;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +122,8 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         id = getIntent().getStringExtra("userId");
 
         membersModel =  WeGroupMembersDao.getWeGroupMemberById(id);
+        model = WeGroupMembersDao.getWeGroupMemberById(id);
+        weGroupModel = WeGroupDao.getWeGroupsById(model.getGroup_id());
 
         userName = findViewById(R.id.user_name);
         userId = findViewById(R.id.user_id);
@@ -224,45 +237,8 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         addSavings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(getBaseContext());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject indexRegisterForm;
+                openForm("we_group_member_savings");
 
-                indexRegisterForm = formUtils.getFormJson("we_group_member_savings");
-                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-                if (dateClientCreated  != null) {
-                    dateClientCreated.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                if (memberID  != null) {
-                    memberID.remove(JsonFormUtils.VALUE);
-                    try {
-                        memberID.put(JsonFormUtils.VALUE, id);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
-                if (genderID  != null) {
-                    genderID.remove(JsonFormUtils.VALUE);
-                    try {
-                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
-                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                startFormActivity(indexRegisterForm);
             }
         });
 //
@@ -270,223 +246,136 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         addLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(getBaseContext());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject indexRegisterForm;
+               openForm("we_group_member_loan");
 
-                indexRegisterForm = formUtils.getFormJson("we_group_member_loan");
-
-                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-                if (dateClientCreated  != null) {
-                    dateClientCreated.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                if (memberID  != null) {
-                    memberID.remove(JsonFormUtils.VALUE);
-                    try {
-                        memberID.put(JsonFormUtils.VALUE, id);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
-                if (genderID  != null) {
-                    genderID.remove(JsonFormUtils.VALUE);
-                    try {
-                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
-                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                startFormActivity(indexRegisterForm);
             }
         });
         addFine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(getBaseContext());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject indexRegisterForm;
+                openForm("we_group_member_fine");
 
-                indexRegisterForm = formUtils.getFormJson("we_group_member_fine");
-
-                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-                if (dateClientCreated  != null) {
-                    dateClientCreated.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                if (memberID  != null) {
-                    memberID.remove(JsonFormUtils.VALUE);
-                    try {
-                        memberID.put(JsonFormUtils.VALUE, id);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
-                if (genderID  != null) {
-                    genderID.remove(JsonFormUtils.VALUE);
-                    try {
-                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
-                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                startFormActivity(indexRegisterForm);
             }
         });
         addSocialFund.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(getBaseContext());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject indexRegisterForm;
+                openForm("we_group_member_social_fund");
 
-                indexRegisterForm = formUtils.getFormJson("we_group_member_social_fund");
-                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-                if (dateClientCreated  != null) {
-                    dateClientCreated.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                if (memberID  != null) {
-                    memberID.remove(JsonFormUtils.VALUE);
-                    try {
-                        memberID.put(JsonFormUtils.VALUE, id);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
-                if (genderID  != null) {
-                    genderID.remove(JsonFormUtils.VALUE);
-                    try {
-                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
-                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-                startFormActivity(indexRegisterForm);
             }
         });
         addRepayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(getBaseContext());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject indexRegisterForm;
 
-                indexRegisterForm = formUtils.getFormJson("we_group_member_repayment");
+               openForm("we_group_member_repayment");
 
-                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-                if (dateClientCreated  != null) {
-                    dateClientCreated.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                if (memberID  != null) {
-                    memberID.remove(JsonFormUtils.VALUE);
-                    try {
-                        memberID.put(JsonFormUtils.VALUE, id);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
-                if (genderID  != null) {
-                    genderID.remove(JsonFormUtils.VALUE);
-                    try {
-                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
-                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                startFormActivity(indexRegisterForm);
             }
         });
         addIga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(getBaseContext());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject indexRegisterForm;
-
-                indexRegisterForm = formUtils.getFormJson("we_group_member_iga");
-                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
-                if (dateClientCreated  != null) {
-                    dateClientCreated.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                if (memberID  != null) {
-                    memberID.remove(JsonFormUtils.VALUE);
-                    try {
-                        memberID.put(JsonFormUtils.VALUE, id);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
-                if (genderID  != null) {
-                    genderID.remove(JsonFormUtils.VALUE);
-                    try {
-                        MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
-                        genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                startFormActivity(indexRegisterForm);
+//                FormUtils formUtils = null;
+//                try {
+//                    formUtils = new FormUtils(getBaseContext());
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//                JSONObject indexRegisterForm;
+//
+//                indexRegisterForm = formUtils.getFormJson("we_group_member_iga");
+              openForm("we_group_member_iga");
             }
         });
+    }
+    public void openForm(String formName){
+
+        org.smartregister.util.FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JSONObject indexRegisterForm = formUtils.getFormJson(formName);
+        JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+        if (dateClientCreated  != null) {
+            dateClientCreated.remove(JsonFormUtils.VALUE);
+            try {
+                dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+        if (memberID  != null) {
+            memberID.remove(JsonFormUtils.VALUE);
+            try {
+                memberID.put(JsonFormUtils.VALUE, id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject genderID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+        if (genderID  != null) {
+            genderID.remove(JsonFormUtils.VALUE);
+            try {
+
+                genderID.put(JsonFormUtils.VALUE, model.getGroup_id());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        JSONObject WeGroupName = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_name");
+        if (WeGroupName != null) {
+            WeGroupName.remove(JsonFormUtils.VALUE);
+            try {
+                WeGroupName.put(JsonFormUtils.VALUE, weGroupModel.getGroup_name());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject currentCycle = getFieldJSONObject(fields(indexRegisterForm, STEP1), "cycle_number");
+        if (currentCycle!= null) {
+            currentCycle.remove(JsonFormUtils.VALUE);
+            try {
+                currentCycle.put(JsonFormUtils.VALUE, weGroupModel.getCycle_number());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject groupNumber = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_number");
+        if (groupNumber!= null) {
+            groupNumber.remove(JsonFormUtils.VALUE);
+            try {
+                groupNumber.put(JsonFormUtils.VALUE, weGroupModel.getGroup_number());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject memberFirstName = getFieldJSONObject(fields(indexRegisterForm, STEP1), "first_name");
+        if (memberFirstName!= null) {
+            memberFirstName.remove(JsonFormUtils.VALUE);
+            try {
+                memberFirstName.put(JsonFormUtils.VALUE, membersModel.getFirst_name());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject memberLastName = getFieldJSONObject(fields(indexRegisterForm, STEP1), "last_name");
+        if (memberLastName!= null) {
+            memberLastName.remove(JsonFormUtils.VALUE);
+            try {
+                memberLastName.put(JsonFormUtils.VALUE, membersModel.getLast_name());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        startFormActivity(indexRegisterForm);
+
     }
 
     public  void returnViewPager(){

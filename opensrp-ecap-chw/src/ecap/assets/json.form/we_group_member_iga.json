@@ -60,9 +60,28 @@
         "openmrs_entity_id": "date_created",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date Created",
         "edit_type": "number"
       },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "10dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "GROUP INFORMATION"
+      },
+
       {
         "key": "group_id",
         "openmrs_entity_parent": "",
@@ -76,6 +95,66 @@
           "value": true,
           "err": "Group id is Required"
         }
+      },
+      {
+        "key": "group_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_name",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Name",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group_name is Required"
+        }
+      },
+      {
+        "key": "cycle_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cycle_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Current Cycle Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Cycle number is Required"
+        }
+      },
+      {
+        "key": "group_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "group_number",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Group Number",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Group id is Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "MEMBER INFORMATION"
       },
       {
         "key": "unique_id",
@@ -92,16 +171,67 @@
         }
       },
       {
-        "key": "amount",
+        "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "amount",
+        "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Amount",
+        "hint": "Member's First Name",
         "edit_type": "name",
+        "read_only": "true",
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Member's Last Name",
+        "edit_type": "name",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "INDIVIDUAL INCOME GENERATING ACTIVITIES (IIGA)"
+      },
+      {
+        "key": "date_of_meeting",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_meeting",
+        "type": "date_picker",
+        "hint": "Date of Meeting",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the contribution date"
         }
       },
       {
@@ -118,30 +248,12 @@
         }
       },
       {
-        "key": "date_of_meeting",
+        "key": "number_of_individual_igas",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_meeting",
-        "type": "date_picker",
-        "hint": "Meeting Date",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the contribution date"
-        }
-      },
-      {
-        "key": "cycle_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cycle_number",
+        "openmrs_entity_id": "number_of_individual_igas",
         "type": "edit_text",
-        "hint": "Cycle Number",
+        "hint": "Number of Individual Income Generating Activities (IIGAs)",
         "edit_type": "number",
         "v_required": {
           "value": true,
@@ -149,77 +261,12 @@
         }
       },
       {
-        "key": "meeting_agenda",
+        "key": "type_of_iga",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "meeting_agenda",
+        "openmrs_entity_id": "type_of_iga",
         "type": "edit_text",
-        "hint": "Meeting Agenda",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "decisions",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "decisions",
-        "type": "edit_text",
-        "hint": "Decisions",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "iga_type",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "iga_type",
-        "type": "edit_text",
-        "hint": "IGA Type",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "number_of_igas",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "number_of_igas",
-        "type": "edit_text",
-        "hint": "IGA Number",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "moderator",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "moderator",
-        "type": "edit_text",
-        "hint": "Moderator",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "type_of_group_iga",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "type_of_group_iga",
-        "type": "edit_text",
-        "hint": "Group IGA Type",
+        "hint": "Type of Income Generating Activity",
         "edit_type": "name",
         "v_required": {
           "value": true,
