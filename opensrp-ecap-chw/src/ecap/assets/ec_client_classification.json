@@ -70,6 +70,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "We Group Cashbook",
+            "creates_case": [
+              "ec_we_group_cashbook"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "We Group GIGAs",
+            "creates_case": [
+              "ec_we_group_gigas"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
               "ec_family"

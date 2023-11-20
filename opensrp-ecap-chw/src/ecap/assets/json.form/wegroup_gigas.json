@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "We Group Member Repayment",
+  "encounter_type": "We Group GIGAs",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,16 +51,16 @@
     }
   },
   "step1": {
-    "title": "Member Repayment Form",
+    "title": "WE Group Member  Registration ",
     "fields": [
       {
         "key": "date_created",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_created",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
-        "hint": "Date Record Created",
+        "hint": "Date Member Created",
         "edit_type": "number"
       },
       {
@@ -138,6 +138,7 @@
           "err": "Group id is Required"
         }
       },
+
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -154,116 +155,15 @@
         "type": "toaster_notes",
         "toaster_type": "info",
         "toaster_info_title": "Information Toaster Info Title",
-        "text": "MEMBER INFORMATION"
+        "text": "INDIVIDUAL INCOME GENERATING ACTIVITIES (IIGA)"
       },
       {
-        "key": "unique_id",
+        "key": "date_of_meeting",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Member Id",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Member id is Required"
-        }
-      },
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "Member's First Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "hint": "Member's Last Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "toaster_info_title": "Information Toaster Info Title",
-        "text": "MEMBER REPAYMENT"
-      },
-      {
-        "key": "repayment_purpose",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "repayment_purpose",
-        "type": "native_radio",
-        "label": "Purpose Of Repayment",
-        "options": [
-          {
-            "key": "loan",
-            "text": "Loan"
-          },
-          {
-            "key": "fine",
-            "text": "Fine"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "loan_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "loan_number",
-        "type": "edit_text",
-        "hint": "Loan Number",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        },
-        "relevance": {
-          "step1:repayment_purpose": {
-            "type": "string",
-            "ex": "equalTo(., \"loan\")"
-          }
-        }
-      },
-      {
-        "key": "date_of_payment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_payment",
+        "openmrs_entity_id": "date_of_meeting",
         "type": "date_picker",
-        "hint": "Date of Payment",
+        "hint": "Date of Meeting",
         "expanded": false,
         "duration": {
           "label": ""
@@ -272,105 +172,62 @@
         "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Please enter the repayment date"
+          "err": "Please enter the date"
         }
       },
-
       {
-        "key": "value_of_outstanding_loan_old_balance_due",
+        "key": "meeting_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "value_of_outstanding_loan_old_balance_due",
+        "openmrs_entity_id": "meeting_number",
         "type": "edit_text",
-        "hint": "Value of Loans Outstanding (Due  Balance)",
+        "hint": " Meeting Number",
         "edit_type": "number",
         "v_required": {
           "value": true,
           "err": "This field is Required"
-        },
-        "relevance": {
-          "step1:repayment_purpose": {
-            "type": "string",
-            "ex": "equalTo(., \"loan\")"
-          }
         }
       },
       {
-        "key": "loan_principal_repayment",
+        "key": "number_of_individual_igas",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "loan_principal_repayment",
+        "openmrs_entity_id": "number_of_individual_igas",
         "type": "edit_text",
-        "hint": "Loan Principal Repayments Received",
+        "hint": "Number of Group Income Generating Activities (GIGAs)",
         "edit_type": "number",
         "v_required": {
           "value": true,
           "err": "This field is Required"
-        },
-        "relevance": {
-          "step1:repayment_purpose": {
-            "type": "string",
-            "ex": "equalTo(., \"loan\")"
-          }
         }
       },
       {
-        "key": "loan_interest_payment_received",
+        "key": "number_of_individual_igas",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "loan_interest_payment_received",
+        "openmrs_entity_id": "number_of_individual_igas",
         "type": "edit_text",
-        "hint": "Loan Interest Payments Received",
+        "hint": "Number of Group Income Generating Activities (GIGAs)",
         "edit_type": "number",
         "v_required": {
           "value": true,
           "err": "This field is Required"
-        },
-        "relevance": {
-          "step1:repayment_purpose": {
-            "type": "string",
-            "ex": "equalTo(., \"loan\")"
-          }
         }
       },
       {
-        "key": "value_of_outstanding_loan_new_balance_due",
+        "key": "type_of_iga",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "value_of_outstanding_loan_new_balance_due",
+        "openmrs_entity_id": "type_of_iga",
         "type": "edit_text",
-        "hint": "Value of Loans Outstanding (New Balance)",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        },
-        "relevance": {
-          "step1:repayment_purpose": {
-            "type": "string",
-            "ex": "equalTo(., \"loan\")"
-          }
-        }
-      },
-      {
-        "key": "amount",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "amount",
-        "type": "edit_text",
-        "hint": "Amount",
+        "hint": "Type of Income Generating Activity",
         "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "This field is Required"
-        },
-        "relevance": {
-          "step1:repayment_purpose": {
-            "type": "string",
-            "ex": "equalTo(., \"fine\")"
-          }
         }
       },
+
 
 
       {
@@ -378,14 +235,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "delete_status",
-        "type": "hidden",
-        "read_only": "true"
-      },
-      {
-        "key": "facilitator_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "facilitator_id",
         "type": "hidden",
         "read_only": "true"
       }

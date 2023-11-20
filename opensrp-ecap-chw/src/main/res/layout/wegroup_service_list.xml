@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <!--Image view for displaying our image-->
+    <ImageView
+        android:id="@+id/serviceImg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="4dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:padding="3dp" />
+
+    <!--Text view for displaying our text -->
+    <TextView
+        android:id="@+id/serviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:padding="3dp"
+        android:text="Category Text"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
+
+</LinearLayout>

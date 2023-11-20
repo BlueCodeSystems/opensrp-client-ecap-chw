@@ -40,6 +40,13 @@
           }
         },
         {
+          "column_name": "group_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_number"
+          }
+        },
+        {
           "column_name": "group_id",
           "type": "Client",
           "json_mapping": {
@@ -1090,6 +1097,214 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.number_members_iga_group"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facilitator_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator_id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_we_group_gigas",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+
+        {
+          "column_name": "group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_name"
+          }
+        },
+        {
+          "column_name": "cycle_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cycle_number"
+          }
+        },
+        {
+          "column_name": "group_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_number"
+          }
+        },
+        {
+          "column_name": "group_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_id"
+          }
+        },
+        {
+          "column_name": "date_of_meeting",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_meeting"
+          }
+        },
+        {
+          "column_name": "meeting_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.meeting_number"
+          }
+        },
+        {
+          "column_name": "number_of_individual_igas",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_of_individual_igas"
+          }
+        },
+        {
+          "column_name": "number_of_individual_igas",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.number_of_individual_igas"
+          }
+        },
+        {
+          "column_name": "type_of_iga",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.type_of_iga"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facilitator_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator_id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_we_group_cashbook",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+
+        {
+          "column_name": "group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_name"
+          }
+        },
+        {
+          "column_name": "cycle_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cycle_number"
+          }
+        },
+        {
+          "column_name": "group_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_number"
+          }
+        },
+        {
+          "column_name": "group_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_id"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "what_happened",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.what_happened"
+          }
+        },
+        {
+          "column_name": "cash_in",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cash_in"
+          }
+        },
+        {
+          "column_name": "cash_out",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cash_out"
+          }
+        },
+        {
+          "column_name": "balance",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.balance"
           }
         },
         {

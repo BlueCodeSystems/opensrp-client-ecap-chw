@@ -24,13 +24,13 @@ import com.bluecodeltd.ecap.chw.model.ServicesModel;
 import java.util.HashMap;
 import java.util.List;
 
-public class ServicesFragment extends Fragment {
+public class WeGroupMemberServicesFragment extends Fragment {
 
     private RecyclerView servicesRecyclerView;
     private ServicesModeAdapter servicesModelAdapter;
     private List<ServicesModel> servicesList;
 
-    public ServicesFragment() {
+    public WeGroupMemberServicesFragment() {
         // Required empty public constructor
     }
     TextView txtPersonalSaving,txtGroupSaving,txtPersonalLoan,txtGroupLoan,txtPersonalFine,txtGroupFine,txtPersonalSocial,txtGroupSocial,txtPersonalIga,txtGroupIga;

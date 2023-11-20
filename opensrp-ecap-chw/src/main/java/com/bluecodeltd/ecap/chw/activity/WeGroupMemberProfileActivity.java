@@ -2,8 +2,6 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.family.util.JsonFormUtils.STEP2;
-import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
@@ -27,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -38,12 +35,11 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MyGroupMembersFragment;
-import com.bluecodeltd.ecap.chw.fragment.ServicesFragment;
+import com.bluecodeltd.ecap.chw.fragment.WeGroupMemberServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.SummaryFragment;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -53,7 +49,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
-import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -73,8 +68,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -388,7 +381,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         myGroupMembersFragment.setArguments(args);
         fragments.add(myGroupMembersFragment);
 
-        fragments.add(new ServicesFragment());
+        fragments.add(new WeGroupMemberServicesFragment());
 
 
 
