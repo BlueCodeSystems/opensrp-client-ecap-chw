@@ -1,6 +1,6 @@
 package com.bluecodeltd.ecap.chw.model;
 
-public class MemberSavingsModel {
+public class WeGroupMemberSavings {
     private String last_interacted_with;
     private String base_entity_id;
     private String date_created;
@@ -11,7 +11,7 @@ public class MemberSavingsModel {
     private String delete_status;
     private String facilitator_id;
 
-    public MemberSavingsModel() {
+    public WeGroupMemberSavings() {
         this.last_interacted_with = last_interacted_with;
         this.base_entity_id = base_entity_id;
         this.date_created = date_created;

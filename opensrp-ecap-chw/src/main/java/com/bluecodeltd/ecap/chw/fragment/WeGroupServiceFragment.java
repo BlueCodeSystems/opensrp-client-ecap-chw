@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.WeGroupProfileActivity;
+import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberFineDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberIgaDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
@@ -21,8 +23,11 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSocialFundDao;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
+import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +50,8 @@ public class WeGroupServiceFragment extends Fragment {
     }
     TextView txtGroupSaving,txtGroupLoan,txtGroupFine,txtGroupSocial,txtGroupIga;
     RecyclerView service;
+    private ViewPager viewPager;
+    TabLayout tabLayout;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -79,6 +86,10 @@ public class WeGroupServiceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_we_group_service, container, false);
         service = view.findViewById(R.id.service);
 
+        viewPager = view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabLayout);
+
+
         txtGroupSaving = view.findViewById(R.id.txtGroupSaving);
         txtGroupLoan = view.findViewById(R.id.txtGroupLoan);
         txtGroupFine = view.findViewById(R.id.txtGroupFine);
@@ -87,6 +98,7 @@ public class WeGroupServiceFragment extends Fragment {
 
         HashMap<String, WeGroupModel> mymap = ((WeGroupProfileActivity) requireActivity()).getGroupData();
         WeGroupModel groupModel = mymap.get("groupID");
+
 
         try {
 
@@ -142,8 +154,28 @@ public class WeGroupServiceFragment extends Fragment {
             e.printStackTrace();
         }
 
-
+        returnViewPager();
 
         return view;
+    }
+
+    public void returnViewPager() {
+        List<Fragment> fragments = new ArrayList<>();
+
+        fragments.add(new WeGroupSavingServiceGroupFragment());
+        fragments.add(new WeGroupDataCollectionFragment());
+        fragments.add(new WeGroupDataCollectionFragment());
+        fragments.add(new WeGroupServiceFragment());
+        fragments.add(new WeGroupDataCollectionFragment());
+
+        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getChildFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        if (tabLayout.getTabAt(0) != null) tabLayout.getTabAt(0).setText("SAVINGS");
+        if (tabLayout.getTabAt(1) != null) tabLayout.getTabAt(1).setText("LOAN");
+        if (tabLayout.getTabAt(2) != null) tabLayout.getTabAt(2).setText("FINES");
+        if (tabLayout.getTabAt(3) != null) tabLayout.getTabAt(3).setText("SOCIAL");
+        if (tabLayout.getTabAt(4) != null) tabLayout.getTabAt(4).setText("IGA");
     }
 }
