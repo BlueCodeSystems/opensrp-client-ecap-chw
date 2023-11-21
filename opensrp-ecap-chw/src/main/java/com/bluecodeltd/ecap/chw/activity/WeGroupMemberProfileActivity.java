@@ -168,8 +168,8 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         addLoan = findViewById(R.id.we_group_data_collection_fab);
         addFine = findViewById(R.id.add_fine_fab);
         addSocialFund = findViewById(R.id.add_social_fund_fab);
-        addRepayment = findViewById(R.id.add_repayment_fab);
-        addIga = findViewById(R.id.add_iga_fab);
+        addRepayment = findViewById(R.id.add_cash_book_fab);
+        addIga = findViewById(R.id.add_cash_in_box_fab);
 
         addSavingsActionText = findViewById(R.id.add_members_action_text);
         addLoanActionText = findViewById(R.id.add_loan_action_text);
@@ -391,7 +391,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(0).setText("SUMMARY");
         tabLayout.getTabAt(1).setText("MEMBERS");
-        tabLayout.getTabAt(2).setText("SERVICES");
+        tabLayout.getTabAt(2).setText("LEDGER");
 //        tabLayout.getTabAt(3).setText("CONSTITUTION");
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -432,7 +432,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.update_tab_layout, null);
         TextView groupTabTitle = taskTabTitleLayout.findViewById(R.id.tab_title);
         groupTabCount = taskTabTitleLayout.findViewById(R.id.tab_count);
-        groupTabTitle.setText("GROUP MEMBERS");
+        groupTabTitle.setText("MEMBERS");
         MembersModel model = WeGroupMembersDao.getWeGroupMemberById(id);
 
         int count = WeGroupMembersDao.getMembersCountById(model.getGroup_id());

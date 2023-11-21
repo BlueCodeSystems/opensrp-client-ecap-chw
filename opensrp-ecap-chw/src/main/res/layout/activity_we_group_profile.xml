@@ -70,18 +70,124 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/we_group_data_collection_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_fab"
+        app:srcCompat="@drawable/ic_icon_open_book" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_social_discussions_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintEnd_toEndOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintStart_toStartOf="@+id/we_group_data_collection_fab"
+        app:srcCompat="@drawable/ic_groups" />
+
+    <TextView
+        android:id="@+id/add_social_discussions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Social Discussions"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_social_discussions_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_social_discussions_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_social_discussions_fab" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_cash_in_box_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/add_social_discussions_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_social_discussions_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_social_discussions_fab"
+        app:srcCompat="@drawable/ic_money" />
+
+    <TextView
+        android:id="@+id/add_cash_in_box_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Cash in Box"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_cash_in_box_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_cash_in_box_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_cash_in_box_fab" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_cash_book_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/add_cash_in_box_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_cash_in_box_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_cash_in_box_fab"
+        app:srcCompat="@drawable/ic_info_check" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_add_gigas_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/add_cash_book_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_cash_book_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_cash_book_fab"
+        app:srcCompat="@drawable/ic_info" />
+
+    <TextView
+        android:id="@+id/add_gigas_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="GIGAs"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_add_gigas_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_add_gigas_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_add_gigas_fab" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_members_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/add_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_fab"
         app:backgroundTint="@color/blue"
         app:tint="@color/white"
-        app:srcCompat="@drawable/ic_add_users" />
+        app:srcCompat="@drawable/ic_add_users"
+        app:layout_constraintBottom_toTopOf="@+id/add_add_gigas_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_add_gigas_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_add_gigas_fab" />
 
 
     <TextView
@@ -95,48 +201,18 @@
         app:layout_constraintEnd_toStartOf="@+id/add_members_fab"
         app:layout_constraintTop_toTopOf="@+id/add_members_fab" />
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/we_group_data_collection_fab"
+        android:id="@+id/edit_group_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         app:fabSize="normal"
         app:backgroundTint="@color/blue"
         android:tint="@color/white"
         app:tint="@color/white"
-        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/add_members_fab"
         app:layout_constraintEnd_toEndOf="@+id/add_members_fab"
         app:layout_constraintStart_toStartOf="@+id/add_members_fab"
-        app:srcCompat="@drawable/ic_add_loan" />
-
-
-    <TextView
-        android:id="@+id/add_loan_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="WE Group Data Collection"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintEnd_toStartOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintTop_toTopOf="@+id/we_group_data_collection_fab" />
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fine_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/blue"
-        android:tint="@color/white"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintEnd_toEndOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintStart_toStartOf="@+id/we_group_data_collection_fab"
         app:srcCompat="@drawable/edit_icon" />
 
     <!-- Action name text for the Fine button -->
@@ -148,86 +224,50 @@
         android:text="Group Registration"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_fine_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_fine_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_fine_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/edit_group_fab"
+        app:layout_constraintEnd_toStartOf="@+id/edit_group_fab"
+        app:layout_constraintTop_toTopOf="@+id/edit_group_fab" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_social_fund_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/blue"
-        android:tint="@color/white"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/add_fine_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_fine_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_fine_fab"
-        app:srcCompat="@drawable/ic_info" />
+
+
+
+
+
+
+
+
+
+
+
 
     <TextView
-        android:id="@+id/add_social_fund_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="GIGAs"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_social_fund_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_social_fund_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_social_fund_fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_repayment_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/blue"
-        android:tint="@color/white"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/add_social_fund_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_social_fund_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_social_fund_fab"
-        app:srcCompat="@drawable/ic_info_check" />
-
-    <TextView
-        android:id="@+id/add_repayment_action_text"
+        android:id="@+id/add_cashbook_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Cash Book"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_repayment_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_repayment_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_repayment_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/add_cash_book_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_cash_book_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_cash_book_fab" />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/add_iga_fab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="24dp"-->
-<!--        app:fabSize="normal"-->
-<!--        app:backgroundTint="@color/blue"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/add_repayment_fab"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/add_repayment_fab"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/add_repayment_fab"-->
-<!--        app:srcCompat="@drawable/ic_info" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/add_iga_action_text"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:text="IGA"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textSize="15sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/add_iga_fab"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/add_iga_fab"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/add_iga_fab" />-->
+    <TextView
+        android:id="@+id/we_group_data_collection_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="WE Group Data Collection"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintEnd_toStartOf="@+id/we_group_data_collection_fab"
+        app:layout_constraintTop_toTopOf="@+id/we_group_data_collection_fab" />
+
+
+
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarx"
         android:layout_width="match_parent"

@@ -292,7 +292,7 @@
         app:layout_constraintTop_toTopOf="@+id/add_social_fund_fab" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_repayment_fab"
+        android:id="@+id/add_cash_book_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -314,21 +314,21 @@
         android:textColor="#FFFFFF"
         android:background="#99000000"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_repayment_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_repayment_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_repayment_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/add_cash_book_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_cash_book_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_cash_book_fab" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_iga_fab"
+        android:id="@+id/add_cash_in_box_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:fabSize="normal"
         app:backgroundTint="@color/blue"
         app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/add_repayment_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_repayment_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_repayment_fab"
+        app:layout_constraintBottom_toTopOf="@+id/add_cash_book_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_cash_book_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_cash_book_fab"
         app:srcCompat="@drawable/ic_info" />
 
     <TextView
@@ -340,9 +340,9 @@
         android:textColor="#FFFFFF"
         android:background="#99000000"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_iga_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_iga_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_iga_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/add_cash_in_box_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_cash_in_box_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_cash_in_box_fab" />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarx"
         android:layout_width="match_parent"

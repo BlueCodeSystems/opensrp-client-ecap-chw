@@ -44,7 +44,6 @@ import com.bluecodeltd.ecap.chw.api.MemberApi;
 import com.bluecodeltd.ecap.chw.api.VolleyCallback;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
-import com.bluecodeltd.ecap.chw.dao.WeGroupDataCollectionDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSocialFundDao;
@@ -109,9 +108,9 @@ public class WeGroupProfileActivity extends AppCompatActivity {
     private AppBarLayout myAppbar;
     private ViewPager viewPager;
     TabLayout tabLayout;
-    FloatingActionButton mAddFab, addMembers, weGroupDataCollection, editGroup,addSocialFund, addRepayment, addIga;
+    FloatingActionButton mAddFab,editGroupFab,addMembersFab, addGroupGIGASFab,addCashBookFab, addCashInBoxFab, addSocialDiscussionsFab,weGroupDataCollectionFab,socialDiscussionsFab;
 
-    TextView addSavingsActionText, addLoanActionText, editGroupActionText,addSocialFundActionText, addRepaymentActionText, addIgaActionText;
+    TextView editGroupActionText,addMembersActionText, addGroupGIGASActionText, addCashBookActionText, addCashBookInBoxActionText,socialDiscussionsActionText, weGroupDataCollectionActionText;
 
     View dimBackground;
     Boolean isAllFabsVisible;
@@ -176,18 +175,22 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
             if (isAllFabsVisible) {
 //                mAddFab.hide();
-                addMembers.hide();
-                weGroupDataCollection.hide();
-                editGroup.hide();
-                addSocialFund.hide();
-                addRepayment.hide();
-//                addIga.hide();
-                addSavingsActionText.setVisibility(View.GONE);
+                editGroupFab.setVisibility(View.GONE);
+                addMembersFab.setVisibility(View.GONE);
+                addGroupGIGASFab.setVisibility(View.GONE);
+                addCashBookFab.setVisibility(View.GONE);
+                addCashInBoxFab.setVisibility(View.GONE);
+                addSocialDiscussionsFab.setVisibility(View.GONE);
+                weGroupDataCollectionFab.setVisibility(View.GONE);
+
+
                 editGroupActionText.setVisibility(View.GONE);
-                addLoanActionText.setVisibility(View.GONE);
-                addSocialFundActionText.setVisibility(View.GONE);
-                addRepaymentActionText.setVisibility(View.GONE);
-//                addIgaActionText.setVisibility(View.GONE);
+                addMembersActionText.setVisibility(View.GONE);
+                addGroupGIGASActionText.setVisibility(View.GONE);
+                addCashBookActionText.setVisibility(View.GONE);
+                addCashBookInBoxActionText.setVisibility(View.GONE);
+                socialDiscussionsActionText.setVisibility(View.GONE);
+                weGroupDataCollectionActionText.setVisibility(View.GONE);
 //                dimBackground.setVisibility(View.GONE);
                 isAllFabsVisible = false;
             }
@@ -206,70 +209,88 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         returnViewPager();
         updateMemberTabTitle();
 
-        addMembers = findViewById(R.id.add_members_fab);
-        weGroupDataCollection = findViewById(R.id.we_group_data_collection_fab);
-        editGroup = findViewById(R.id.add_fine_fab);
-        addSocialFund = findViewById(R.id.add_social_fund_fab);
-        addRepayment = findViewById(R.id.add_repayment_fab);
-//        addIga = findViewById(R.id.add_iga_fab);
 
-        addSavingsActionText = findViewById(R.id.add_members_action_text);
-        addLoanActionText = findViewById(R.id.add_loan_action_text);
+
+        editGroupFab = findViewById(R.id.edit_group_fab);
+        addMembersFab = findViewById(R.id.add_members_fab);
+        addGroupGIGASFab = findViewById(R.id.add_add_gigas_fab);
+        addCashBookFab = findViewById(R.id.add_cash_book_fab);
+        addCashInBoxFab = findViewById(R.id.add_cash_in_box_fab);
+        addSocialDiscussionsFab = findViewById(R.id.add_social_discussions_fab);
+        weGroupDataCollectionFab = findViewById(R.id.we_group_data_collection_fab);
+
+
         editGroupActionText = findViewById(R.id.add_fine_action_text);
-        addSocialFundActionText = findViewById(R.id.add_social_fund_action_text);
-        addRepaymentActionText = findViewById(R.id.add_repayment_action_text);
-//        addIgaActionText = findViewById(R.id.add_iga_action_text);
+        addMembersActionText = findViewById(R.id.add_members_action_text);
+        addGroupGIGASActionText = findViewById(R.id.add_gigas_action_text);
+        addCashBookActionText = findViewById(R.id.add_cashbook_action_text);
+        addCashBookInBoxActionText = findViewById(R.id.add_cash_in_box_action_text);
+        socialDiscussionsActionText = findViewById(R.id.add_social_discussions_text);
+        weGroupDataCollectionActionText = findViewById(R.id.we_group_data_collection_action_text);
 
-        addMembers.setVisibility(View.GONE);
-        weGroupDataCollection.setVisibility(View.GONE);
-        editGroup.setVisibility(View.GONE);
-        addSocialFund.setVisibility(View.GONE);
-        addRepayment.setVisibility(View.GONE);
-//        addIga.setVisibility(View.GONE);
-        addSavingsActionText.setVisibility(View.GONE);
-        addLoanActionText.setVisibility(View.GONE);
+        editGroupFab.setVisibility(View.GONE);
+        addMembersFab.setVisibility(View.GONE);
+        addGroupGIGASFab.setVisibility(View.GONE);
+        addCashBookFab.setVisibility(View.GONE);
+        addCashInBoxFab.setVisibility(View.GONE);
+        addSocialDiscussionsFab.setVisibility(View.GONE);
+        weGroupDataCollectionFab.setVisibility(View.GONE);
+
+
         editGroupActionText.setVisibility(View.GONE);
-        addSocialFundActionText.setVisibility(View.GONE);
-        addRepaymentActionText.setVisibility(View.GONE);
-//        addIgaActionText.setVisibility(View.GONE);
+        addMembersActionText.setVisibility(View.GONE);
+        addGroupGIGASActionText.setVisibility(View.GONE);
+        addCashBookActionText.setVisibility(View.GONE);
+        addCashBookInBoxActionText.setVisibility(View.GONE);
+        socialDiscussionsActionText.setVisibility(View.GONE);
+        weGroupDataCollectionActionText.setVisibility(View.GONE);
 
         isAllFabsVisible = false;
 
         mAddFab.setOnClickListener(view -> {
             if (!isAllFabsVisible) {
                 dimBackground.setVisibility(View.VISIBLE);
-                addMembers.show();
-                weGroupDataCollection.show();
-                editGroup.show();
-                addSocialFund.show();
-                addRepayment.show();
-//                addIga.show();
-                addSavingsActionText.setVisibility(View.VISIBLE);
-                addLoanActionText.setVisibility(View.VISIBLE);
+                // Set visibility to View.VISIBLE for FABs
+                editGroupFab.setVisibility(View.VISIBLE);
+                addMembersFab.setVisibility(View.VISIBLE);
+                addGroupGIGASFab.setVisibility(View.VISIBLE);
+                addCashBookFab.setVisibility(View.VISIBLE);
+                addCashInBoxFab.setVisibility(View.VISIBLE);
+                addSocialDiscussionsFab.setVisibility(View.VISIBLE);
+                weGroupDataCollectionFab.setVisibility(View.VISIBLE);
+
+// Set visibility to View.VISIBLE for action text views
                 editGroupActionText.setVisibility(View.VISIBLE);
-                addSocialFundActionText.setVisibility(View.VISIBLE);
-                addRepaymentActionText.setVisibility(View.VISIBLE);
-//                addIgaActionText.setVisibility(View.VISIBLE);
+                addMembersActionText.setVisibility(View.VISIBLE);
+                addGroupGIGASActionText.setVisibility(View.VISIBLE);
+                addCashBookActionText.setVisibility(View.VISIBLE);
+                addCashBookInBoxActionText.setVisibility(View.VISIBLE);
+                socialDiscussionsActionText.setVisibility(View.VISIBLE);
+                weGroupDataCollectionActionText.setVisibility(View.VISIBLE);
                 isAllFabsVisible = true;
             } else {
-                addMembers.hide();
-                weGroupDataCollection.hide();
-                editGroup.hide();
-                addSocialFund.hide();
-                addRepayment.hide();
-//                addIga.hide();
-                addSavingsActionText.setVisibility(View.GONE);
+                editGroupFab.setVisibility(View.GONE);
+                addMembersFab.setVisibility(View.GONE);
+                addGroupGIGASFab.setVisibility(View.GONE);
+                addCashBookFab.setVisibility(View.GONE);
+                addCashInBoxFab.setVisibility(View.GONE);
+                addSocialDiscussionsFab.setVisibility(View.GONE);
+                weGroupDataCollectionFab.setVisibility(View.GONE);
+
                 editGroupActionText.setVisibility(View.GONE);
-                addLoanActionText.setVisibility(View.GONE);
-                addSocialFundActionText.setVisibility(View.GONE);
-                addRepaymentActionText.setVisibility(View.GONE);
-//                addIgaActionText.setVisibility(View.GONE);
+                addMembersActionText.setVisibility(View.GONE);
+                addGroupGIGASActionText.setVisibility(View.GONE);
+                addCashBookActionText.setVisibility(View.GONE);
+                addCashBookInBoxActionText.setVisibility(View.GONE);
+                socialDiscussionsActionText.setVisibility(View.GONE);
+                weGroupDataCollectionActionText.setVisibility(View.GONE);
+
                 dimBackground.setVisibility(View.GONE);
 
                 isAllFabsVisible = false;
             }
         });
-        addMembers.setOnClickListener(new View.OnClickListener() {
+        addMembersFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FormUtils formUtils = null;
@@ -340,7 +361,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         });
 //
 
-        weGroupDataCollection.setOnClickListener(new View.OnClickListener() {
+        weGroupDataCollectionFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FormUtils formUtils = null;
@@ -400,7 +421,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                 startFormActivity(indexRegisterForm);
             }
         });
-        editGroup.setOnClickListener(new View.OnClickListener() {
+        editGroupFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FormUtils formUtils = null;
@@ -432,7 +453,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                 startFormActivity(indexRegisterForm);
             }
         });
-        addSocialFund.setOnClickListener(new View.OnClickListener() {
+        addGroupGIGASFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FormUtils formUtils = null;
@@ -502,7 +523,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                 startFormActivity(indexRegisterForm);
             }
         });
-        addRepayment.setOnClickListener(new View.OnClickListener() {
+        addCashBookFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FormUtils formUtils = null;
@@ -602,7 +623,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(0).setText("SUMMARY");
         tabLayout.getTabAt(1).setText("MEMBERS");
-        tabLayout.getTabAt(2).setText("SERVICES");
+        tabLayout.getTabAt(2).setText("LEDGER");
         tabLayout.getTabAt(3).setText("DATA COLLECTION");
 
 //        tabLayout.getTabAt(2).setText("SERVICES");
