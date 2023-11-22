@@ -163,10 +163,10 @@ public class WeGroupServiceFragment extends Fragment {
         List<Fragment> fragments = new ArrayList<>();
 
         fragments.add(new WeGroupSavingServiceGroupFragment());
-        fragments.add(new WeGroupDataCollectionFragment());
-        fragments.add(new WeGroupDataCollectionFragment());
-        fragments.add(new WeGroupServiceFragment());
-        fragments.add(new WeGroupDataCollectionFragment());
+        fragments.add(new WeGroupLoanServiceGroupFragment());
+        fragments.add(new WeGroupFinesServiceGroupFragment());
+        fragments.add(new WeGroupSocialFundServiceGroupFragment());
+        fragments.add(new WeGroupIgaServiceGroupFragment());
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getChildFragmentManager(), fragments);
         viewPager.setAdapter(adapter);

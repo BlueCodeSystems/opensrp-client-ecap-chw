@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.WeGroupProfileActivity;
-import com.bluecodeltd.ecap.chw.adapter.MembersListAdapter;
+import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberLoansAdapter;
 import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberSavingsAdapter;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
-import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
-import com.bluecodeltd.ecap.chw.model.WeGroupMemberSavings;
+import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 
 import java.util.ArrayList;
@@ -26,10 +26,10 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WeGroupSavingServiceGroupFragment#newInstance} factory method to
+ * Use the {@link WeGroupLoanServiceGroupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WeGroupSavingServiceGroupFragment extends Fragment {
+public class WeGroupLoanServiceGroupFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,11 +40,12 @@ public class WeGroupSavingServiceGroupFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RecyclerView savings_recyclerview;
-    WeGroupMemberSavingsAdapter savingsListAdapter;
-    ArrayList<WeGroupMemberSavings> listSavings;
+    RecyclerView loans_recyclerview;
+    WeGroupMemberLoansAdapter loansListAdapter;
+    ArrayList<MemberLoanModel> listLoans;
 
-    public WeGroupSavingServiceGroupFragment() {
+
+    public WeGroupLoanServiceGroupFragment() {
         // Required empty public constructor
     }
 
@@ -54,11 +55,11 @@ public class WeGroupSavingServiceGroupFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WeGroupSavingServiceGroupFragment.
+     * @return A new instance of fragment WeGroupLoanServiceGroupFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WeGroupSavingServiceGroupFragment newInstance(String param1, String param2) {
-        WeGroupSavingServiceGroupFragment fragment = new WeGroupSavingServiceGroupFragment();
+    public static WeGroupLoanServiceGroupFragment newInstance(String param1, String param2) {
+        WeGroupLoanServiceGroupFragment fragment = new WeGroupLoanServiceGroupFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,30 +80,30 @@ public class WeGroupSavingServiceGroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_we_group_saving_service_group, container, false);
+        View view = inflater.inflate(R.layout.fragment_we_group_loan_service_group, container, false);
         HashMap<String, WeGroupModel> mymap = ((WeGroupProfileActivity) requireActivity()).getGroupData();
         WeGroupModel groupModel = mymap.get("groupID");
-
-        listSavings = new ArrayList<>();
-        savings_recyclerview = view.findViewById(R.id.viewGroupSavings);
-
+        listLoans = new ArrayList<>();
+        loans_recyclerview = view.findViewById(R.id.viewGroupLoans);
         TextView infoTxt = view.findViewById(R.id.infoTxt);
 
-        listSavings.addAll(WeGroupMemberSavingDao.getWeGroupMembersSavingsByGroupId(groupModel.getGroup_id()));
+        listLoans.addAll(WeGroupMemberLoanDao.getWeGroupMembersLoansByGroupId(groupModel.getGroup_id()));
 
-// Check if the list is null or empty
-        if (listSavings == null || listSavings.isEmpty()) {
-            savings_recyclerview.setVisibility(View.GONE);
+
+        if (listLoans == null || listLoans.isEmpty()) {
+            loans_recyclerview.setVisibility(View.GONE);
             infoTxt.setVisibility(View.VISIBLE);
-            infoTxt.setText("No savings entries have been added.");
+            infoTxt.setText("No loan entries have been added.");
         } else {
-            savings_recyclerview.setVisibility(View.VISIBLE);
+            loans_recyclerview.setVisibility(View.VISIBLE);
             infoTxt.setVisibility(View.GONE);
-            savingsListAdapter = new WeGroupMemberSavingsAdapter(getContext(), listSavings);
+            loansListAdapter = new WeGroupMemberLoansAdapter(getContext(), listLoans);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-            savings_recyclerview.setLayoutManager(layoutManager);
-            savings_recyclerview.setAdapter(savingsListAdapter);
+            loans_recyclerview.setLayoutManager(layoutManager);
+            loans_recyclerview.setAdapter(loansListAdapter);
         }
+
+
 
         return view;
     }

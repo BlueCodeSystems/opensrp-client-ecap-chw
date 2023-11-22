@@ -166,7 +166,7 @@
 android:id="@+id/tabLayout"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:background="#C30052"
+android:background="#FF007F"
 android:elevation="12dp"
 app:tabIndicatorColor="@color/white"
 app:tabTextColor="@color/white"

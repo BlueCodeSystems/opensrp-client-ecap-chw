@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewGroupSavings"
+        android:id="@+id/viewGroupIgas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none" />
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No loans have been added"
+        android:text="No IGAs have been added"
         android:textSize="20sp"
         android:textColor="#515151"
         android:visibility="invisible"/>

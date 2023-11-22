@@ -1,12 +1,30 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
 import com.bluecodeltd.ecap.chw.model.MemberSocialFundModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WeGroupMemberSocialFundDao extends AbstractDao {
+
+    public static List<MemberSocialFundModel> getWeGroupMembersSocialFundByGroupId (String groupId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_social_fund\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MemberSocialFundModel> values = AbstractDao.readData(sql, getMemberSocialFundModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
     public static int getTotalAmount(String memberID) {
         String sql = "SELECT SUM(amount) as amount\n" +
                 "FROM ec_we_group_member_social_fund\n" +

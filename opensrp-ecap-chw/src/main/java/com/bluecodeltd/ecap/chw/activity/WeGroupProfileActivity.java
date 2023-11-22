@@ -624,7 +624,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setText("SUMMARY");
         tabLayout.getTabAt(1).setText("MEMBERS");
         tabLayout.getTabAt(2).setText("LEDGER");
-        tabLayout.getTabAt(3).setText("DATA COLLECTION");
+        tabLayout.getTabAt(3).setText("REPORTS");
 
 //        tabLayout.getTabAt(2).setText("SERVICES");
 //        tabLayout.getTabAt(3).setText("CONSTITUTION");
