@@ -13,13 +13,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.WeGroupProfileActivity;
-import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberFinesAdapter;
 import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberLoansAdapter;
-import com.bluecodeltd.ecap.chw.dao.WeGroupMemberFineDao;
+import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberLoansForMemberAdapter;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
-import com.bluecodeltd.ecap.chw.model.MemberFineModel;
 import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WeGroupFinesServiceGroupFragment#newInstance} factory method to
+ * Use the {@link WeGroupLoanServiceMemberFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WeGroupFinesServiceGroupFragment extends Fragment {
+public class WeGroupLoanServiceMemberFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,25 +41,23 @@ public class WeGroupFinesServiceGroupFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RecyclerView fines_recyclerview;
-    WeGroupMemberFinesAdapter finesListAdapter;
-    ArrayList<MemberFineModel> listFines;
-
-    public WeGroupFinesServiceGroupFragment() {
+    public WeGroupLoanServiceMemberFragment() {
         // Required empty public constructor
     }
-
+    RecyclerView loans_recyclerview;
+    WeGroupMemberLoansForMemberAdapter loansListAdapter;
+    ArrayList<MemberLoanModel> listLoans;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WeGroupFinesServiceGroupFragment.
+     * @return A new instance of fragment WeGroupLoanServiceMemberFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WeGroupFinesServiceGroupFragment newInstance(String param1, String param2) {
-        WeGroupFinesServiceGroupFragment fragment = new WeGroupFinesServiceGroupFragment();
+    public static WeGroupLoanServiceMemberFragment newInstance(String param1, String param2) {
+        WeGroupLoanServiceMemberFragment fragment = new WeGroupLoanServiceMemberFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,29 +78,37 @@ public class WeGroupFinesServiceGroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_we_group_fines_service_group, container, false);
-        HashMap<String, WeGroupModel> mymap = ((WeGroupProfileActivity) requireActivity()).getGroupData();
-        WeGroupModel groupModel = mymap.get("groupID");
+        View view = inflater.inflate(R.layout.fragment_we_group_loan_service_member, container, false);
 
-        listFines = new ArrayList<>();
-        fines_recyclerview = view.findViewById(R.id.viewGroupFines);
+//        HashMap<String, WeGroupModel> mymap = ((WeGroupProfileActivity) requireActivity()).getGroupData();
+//        WeGroupModel groupModel = mymap.get("groupID");
+
+        HashMap<String, MembersModel> mymap = ((WeGroupMemberProfileActivity) requireActivity()).getData();
+        MembersModel membersModel = mymap.get("uniqueID");
 
 
+
+        listLoans = new ArrayList<>();
+        loans_recyclerview = view.findViewById(R.id.viewGroupLoans);
         TextView infoTxt = view.findViewById(R.id.infoTxt);
-        listFines.addAll(WeGroupMemberFineDao.getWeGroupMembersLoansByGroupId(groupModel.getGroup_id()));
+
+        listLoans.addAll(WeGroupMemberLoanDao.getWeGroupMembersLoansByUniqueId(membersModel.getUnique_id()));
 
 
-        if (listFines == null || listFines.isEmpty()) {
-            fines_recyclerview.setVisibility(View.GONE);
+        if (listLoans == null || listLoans.isEmpty()) {
+            loans_recyclerview.setVisibility(View.GONE);
             infoTxt.setVisibility(View.VISIBLE);
+            infoTxt.setText("No loan entries have been added.");
         } else {
-            fines_recyclerview.setVisibility(View.VISIBLE);
+            loans_recyclerview.setVisibility(View.VISIBLE);
             infoTxt.setVisibility(View.GONE);
-            finesListAdapter = new WeGroupMemberFinesAdapter(getContext(), listFines);
+            loansListAdapter = new WeGroupMemberLoansForMemberAdapter(getContext(), listLoans);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-            fines_recyclerview.setLayoutManager(layoutManager);
-            fines_recyclerview.setAdapter(finesListAdapter);
+            loans_recyclerview.setLayoutManager(layoutManager);
+            loans_recyclerview.setAdapter(loansListAdapter);
         }
+
+
 
         return view;
     }

@@ -1,11 +1,14 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberFinesAdapter;
 import com.bluecodeltd.ecap.chw.model.MemberFineModel;
 import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
+import com.bluecodeltd.ecap.chw.model.WeGroupMemberSavings;
 
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class WeGroupMemberFineDao extends AbstractDao{
@@ -64,6 +67,41 @@ public class WeGroupMemberFineDao extends AbstractDao{
 
         return 0;
     }
+
+
+    public static List<MemberFineModel> getWeGroupMembersLoansByGroupId (String groupId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_fine\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND group_id = '" + groupId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MemberFineModel> values = AbstractDao.readData(sql, getMemberFineModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
+
+    public static List<MemberFineModel> getWeGroupMembersLoansByUniqueId (String uniqueId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_fine\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + uniqueId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MemberFineModel> values = AbstractDao.readData(sql, getMemberFineModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
+
+
     public static AbstractDao.DataMap<MemberFineModel> getMemberFineModelMap() {
         return c -> {
 
@@ -83,4 +121,6 @@ public class WeGroupMemberFineDao extends AbstractDao{
             return record;
         };
     }
+
+
 }

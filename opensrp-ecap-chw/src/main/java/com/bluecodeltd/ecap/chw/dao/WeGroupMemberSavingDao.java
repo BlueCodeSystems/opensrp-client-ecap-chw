@@ -41,6 +41,21 @@ public class WeGroupMemberSavingDao extends AbstractDao {
 
         return values;
     }
+    public static List<WeGroupMemberSavings> getWeGroupMembersSavingsByUniqueId (String uniqueId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_saving\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + uniqueId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<WeGroupMemberSavings> values = AbstractDao.readData(sql, getMemberSavingsModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
 
 
 

@@ -281,41 +281,66 @@
         app:title="PROFILE"
         app:titleTextColor="#ffff" />
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:background="#DA0E6D"
+        android:background="@drawable/profile_bk"
         app:layout_constraintTop_toBottomOf="@+id/toolbarx">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_groups"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#Fff"
-            android:layout_marginLeft="5dp"
-            android:padding="5dp"/>
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="We User"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="#FBFBFB"/>
-        <TextView
-            android:id="@id/user_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Id"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="#FBFBFB"/>
+            android:padding="16dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_groups"
+                app:civ_border_color="#Fff"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="We User"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#FBFBFB"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/profile_image"/>
+
+            <TextView
+                android:id="@id/user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Id"
+                android:textSize="15dp"
+                android:textColor="#FBFBFB"
+                android:layout_below="@id/user_name"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/profile_image"/>
+
+
+            <Button
+                android:id="@+id/go_to_register"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="We-Register"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/transparent_white_button"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="40dp"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout

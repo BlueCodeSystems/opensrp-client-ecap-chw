@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.WeGroupProfileActivity;
-import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberFinesAdapter;
-import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberLoansAdapter;
-import com.bluecodeltd.ecap.chw.dao.WeGroupMemberFineDao;
-import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
-import com.bluecodeltd.ecap.chw.model.MemberFineModel;
-import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
+import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberSavingsAdapter;
+import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberSavingsForMemberAdapter;
+import com.bluecodeltd.ecap.chw.adapter.WeGroupMemberSocialForMemberAdapter;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
+import com.bluecodeltd.ecap.chw.model.WeGroupMemberSavings;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 
 import java.util.ArrayList;
@@ -27,10 +28,10 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WeGroupFinesServiceGroupFragment#newInstance} factory method to
+ * Use the {@link WeGroupSavingServiceMemberFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WeGroupFinesServiceGroupFragment extends Fragment {
+public class WeGroupSavingServiceMemberFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,13 +42,12 @@ public class WeGroupFinesServiceGroupFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RecyclerView fines_recyclerview;
-    WeGroupMemberFinesAdapter finesListAdapter;
-    ArrayList<MemberFineModel> listFines;
-
-    public WeGroupFinesServiceGroupFragment() {
+    public WeGroupSavingServiceMemberFragment() {
         // Required empty public constructor
     }
+    RecyclerView savings_recyclerview;
+    WeGroupMemberSavingsForMemberAdapter savingsListAdapter;
+    ArrayList<WeGroupMemberSavings> listSavings;
 
     /**
      * Use this factory method to create a new instance of
@@ -55,11 +55,11 @@ public class WeGroupFinesServiceGroupFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WeGroupFinesServiceGroupFragment.
+     * @return A new instance of fragment WeGroupSavingServiceMemberFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WeGroupFinesServiceGroupFragment newInstance(String param1, String param2) {
-        WeGroupFinesServiceGroupFragment fragment = new WeGroupFinesServiceGroupFragment();
+    public static WeGroupSavingServiceMemberFragment newInstance(String param1, String param2) {
+        WeGroupSavingServiceMemberFragment fragment = new WeGroupSavingServiceMemberFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -76,34 +76,39 @@ public class WeGroupFinesServiceGroupFragment extends Fragment {
         }
     }
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_we_group_fines_service_group, container, false);
-        HashMap<String, WeGroupModel> mymap = ((WeGroupProfileActivity) requireActivity()).getGroupData();
-        WeGroupModel groupModel = mymap.get("groupID");
+        View view = inflater.inflate(R.layout.fragment_we_group_saving_service_member, container, false);
+//        HashMap<String, WeGroupModel> mymap = ((WeGroupProfileActivity) requireActivity()).getGroupData();
+//        WeGroupModel groupModel = mymap.get("groupID");
+        HashMap<String, MembersModel> mymap = ((WeGroupMemberProfileActivity) requireActivity()).getData();
+        MembersModel membersModel = mymap.get("uniqueID");
 
-        listFines = new ArrayList<>();
-        fines_recyclerview = view.findViewById(R.id.viewGroupFines);
-
+        listSavings = new ArrayList<>();
+        savings_recyclerview = view.findViewById(R.id.viewGroupSavings);
 
         TextView infoTxt = view.findViewById(R.id.infoTxt);
-        listFines.addAll(WeGroupMemberFineDao.getWeGroupMembersLoansByGroupId(groupModel.getGroup_id()));
 
+        listSavings.addAll(WeGroupMemberSavingDao.getWeGroupMembersSavingsByUniqueId(membersModel.getUnique_id()));
 
-        if (listFines == null || listFines.isEmpty()) {
-            fines_recyclerview.setVisibility(View.GONE);
+// Check if the list is null or empty
+        if (listSavings == null || listSavings.isEmpty()) {
+            savings_recyclerview.setVisibility(View.GONE);
             infoTxt.setVisibility(View.VISIBLE);
+            infoTxt.setText("No savings entries have been added.");
         } else {
-            fines_recyclerview.setVisibility(View.VISIBLE);
+            savings_recyclerview.setVisibility(View.VISIBLE);
             infoTxt.setVisibility(View.GONE);
-            finesListAdapter = new WeGroupMemberFinesAdapter(getContext(), listFines);
+            savingsListAdapter = new WeGroupMemberSavingsForMemberAdapter(getContext(), listSavings);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-            fines_recyclerview.setLayoutManager(layoutManager);
-            fines_recyclerview.setAdapter(finesListAdapter);
+            savings_recyclerview.setLayoutManager(layoutManager);
+            savings_recyclerview.setAdapter(savingsListAdapter);
         }
 
         return view;
     }
+
 }

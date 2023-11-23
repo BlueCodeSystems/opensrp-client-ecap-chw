@@ -25,6 +25,21 @@ public class WeGroupMemberLoanDao extends AbstractDao {
 
         return values;
     }
+    public static List<MemberLoanModel> getWeGroupMembersLoansByUniqueId (String uniqueId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_loan\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + uniqueId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MemberLoanModel> values = AbstractDao.readData(sql, getMemberLoanModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
     public static int getTotalAmount(String memberID) {
         String sql = "SELECT SUM(amount) as amount\n" +
                 "FROM ec_we_group_member_loan\n" +

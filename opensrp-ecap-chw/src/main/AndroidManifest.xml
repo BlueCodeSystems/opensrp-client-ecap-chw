@@ -39,7 +39,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
-            android:name=".WegroupPieChart"
+            android:name=".activity.UserRegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WegroupPieChart"
             android:exported="false" />
         <activity
             android:name=".activity.WeGroupProfileActivity"

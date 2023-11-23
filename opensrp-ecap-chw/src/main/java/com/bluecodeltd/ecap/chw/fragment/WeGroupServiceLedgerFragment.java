@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.WeGroupProfileActivity;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberFineDao;
@@ -21,7 +20,6 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupMemberIgaDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSocialFundDao;
-import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 import com.google.android.material.tabs.TabLayout;
 
@@ -31,10 +29,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WeGroupServiceFragment#newInstance} factory method to
+ * Use the {@link WeGroupServiceLedgerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WeGroupServiceFragment extends Fragment {
+public class WeGroupServiceLedgerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,7 +43,7 @@ public class WeGroupServiceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public WeGroupServiceFragment() {
+    public WeGroupServiceLedgerFragment() {
         // Required empty public constructor
     }
     TextView txtGroupSaving,txtGroupLoan,txtGroupFine,txtGroupSocial,txtGroupIga;
@@ -61,8 +59,8 @@ public class WeGroupServiceFragment extends Fragment {
      * @return A new instance of fragment WeGroupServiceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WeGroupServiceFragment newInstance(String param1, String param2) {
-        WeGroupServiceFragment fragment = new WeGroupServiceFragment();
+    public static WeGroupServiceLedgerFragment newInstance(String param1, String param2) {
+        WeGroupServiceLedgerFragment fragment = new WeGroupServiceLedgerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

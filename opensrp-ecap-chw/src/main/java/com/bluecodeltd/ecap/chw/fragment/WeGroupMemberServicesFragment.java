@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.WeGroupMemberProfileActivity;
 import com.bluecodeltd.ecap.chw.adapter.ServicesModeAdapter;
+import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberFineDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberIgaDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
@@ -20,7 +22,9 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSavingDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMemberSocialFundDao;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.ServicesModel;
+import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,13 +38,16 @@ public class WeGroupMemberServicesFragment extends Fragment {
         // Required empty public constructor
     }
     TextView txtPersonalSaving,txtGroupSaving,txtPersonalLoan,txtGroupLoan,txtPersonalFine,txtGroupFine,txtPersonalSocial,txtGroupSocial,txtPersonalIga,txtGroupIga;
-
+    private ViewPager viewPager;
+    TabLayout tabLayout;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_services, container, false);
 
+        viewPager = view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabLayout);
 
         txtPersonalSaving = view.findViewById(R.id.txtPersonalSaving);
         txtGroupSaving = view.findViewById(R.id.txtGroupSaving);
@@ -150,19 +157,28 @@ public class WeGroupMemberServicesFragment extends Fragment {
             e.printStackTrace();
         }
 
-
+        returnViewPager();
 
         return view;
     }
 
-//    private List<ServicesModel> createDummyData() {
-//        List<ServicesModel> addService = new ArrayList<>();
-//        addService.add(new ServicesModel("Saving", "User Saving: K 0", "Group Saving: K 0"));
-//        addService.add(new ServicesModel("Loan", "User Loan: K 0", "Group Loan: K 0"));
-//        addService.add(new ServicesModel("Fine", "User Fine: K 0", "Group Fine: K 0"));
-//        addService.add(new ServicesModel("Social Fund", "User Social Fund: K 0", "Group Social Fund: K 0"));
-//        addService.add(new ServicesModel("Repayment", "User Repayment: K 0", "Group Repayment: K 0"));
-//        addService.add(new ServicesModel("IGA", "User IGA: K 0", "Group IGA: K 0"));
-//        return addService;
-//    }
+    public void returnViewPager() {
+        List<Fragment> fragments = new ArrayList<>();
+
+        fragments.add(new WeGroupSavingServiceMemberFragment());
+        fragments.add(new WeGroupLoanServiceMemberFragment());
+        fragments.add(new WeGroupFinesServiceMemberFragment());
+        fragments.add(new WeGroupSocialFundServiceMemberFragment());
+        fragments.add(new WeGroupSocialFundServiceMemberFragment());
+
+        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getChildFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        if (tabLayout.getTabAt(0) != null) tabLayout.getTabAt(0).setText("SAVINGS");
+        if (tabLayout.getTabAt(1) != null) tabLayout.getTabAt(1).setText("LOAN");
+        if (tabLayout.getTabAt(2) != null) tabLayout.getTabAt(2).setText("FINES");
+        if (tabLayout.getTabAt(3) != null) tabLayout.getTabAt(3).setText("SOCIAL");
+        if (tabLayout.getTabAt(4) != null) tabLayout.getTabAt(4).setText("IGA");
+    }
 }

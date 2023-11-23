@@ -26,6 +26,21 @@ public class WeGroupMemberIgaDao extends AbstractDao {
 
         return values;
     }
+    public static List<MemberIGAModel> getWeGroupMembersIgaByUniqueId (String uniqueId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_iga\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + uniqueId + "'\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<MemberIGAModel> values = AbstractDao.readData(sql, getMemberIGAModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
 
 
 

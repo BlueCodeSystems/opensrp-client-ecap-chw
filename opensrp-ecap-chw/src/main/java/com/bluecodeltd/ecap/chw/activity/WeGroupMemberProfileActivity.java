@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     String memberRole;
     WeGroupModel weGroupModel;
     MembersModel model;
+    Button goToGroupProfile;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,15 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
+
+        goToGroupProfile = findViewById(R.id.go_to_group_profile);
+        goToGroupProfile.setOnClickListener(v -> {
+            finish();
+            Intent intent = new Intent(v.getContext(), WeGroupProfileActivity.class);
+            intent.putExtra("groupName", weGroupModel.getGroup_name());
+            intent.putExtra("groupId", weGroupModel.getGroup_id());
+            startActivity(intent);
+        });
 
         SharedPreferences sp = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
 

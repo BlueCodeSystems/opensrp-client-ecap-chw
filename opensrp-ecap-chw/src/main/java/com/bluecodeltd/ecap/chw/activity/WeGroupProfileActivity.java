@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +53,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupDataCollectionFragment;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupFragmentMembers;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupProfileSummary;
-import com.bluecodeltd.ecap.chw.fragment.WeGroupServiceFragment;
+import com.bluecodeltd.ecap.chw.fragment.WeGroupServiceLedgerFragment;
 import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
 import com.bluecodeltd.ecap.chw.model.Credentials;
 import com.bluecodeltd.ecap.chw.model.MemberListModel;
@@ -130,6 +131,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
     String memberRole;
     SharedPreferences sp,credentials;
+    Button go_to_register;
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
@@ -145,6 +147,18 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
+
+        go_to_register = findViewById(R.id.go_to_register);
+        go_to_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent register = new Intent(WeGroupProfileActivity.this,UserRegisterActivity.class);
+                register.putExtra("groupName", weGroupModel.getGroup_name());
+                register.putExtra("groupId", weGroupModel.getGroup_id());
+                startActivity(register);
+            }
+        });
 
         groupName = getIntent().getStringExtra("groupName");
         groupId = getIntent().getStringExtra("groupId");
@@ -613,7 +627,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         weGroupFragmentMembers.setArguments(args);
         fragments.add(weGroupFragmentMembers);
 
-        fragments.add(new WeGroupServiceFragment());
+        fragments.add(new WeGroupServiceLedgerFragment());
         fragments.add(new WeGroupDataCollectionFragment());
 
 
