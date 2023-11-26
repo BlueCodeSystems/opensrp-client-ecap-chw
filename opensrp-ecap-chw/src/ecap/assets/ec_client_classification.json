@@ -82,6 +82,14 @@
               "ec_we_group_gigas"
             ]
           },
+
+          {
+            "field": "eventType",
+            "field_value": "We Group Member Register",
+            "creates_case": [
+              "ec_we_group_member_register"
+            ]
+          },
           {
             "field": "eventType",
             "field_value": "Family Registration",
