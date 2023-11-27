@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,6 +67,7 @@ public class UserRegisterActivity extends AppCompatActivity {
     private Button conduct_register;
     String groupName, groupId;
     WeGroupModel weGroupModel;
+    TextView txtGroupName, txtGroupId;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -79,6 +81,11 @@ public class UserRegisterActivity extends AppCompatActivity {
 
         groupName = getIntent().getStringExtra("groupName");
         groupId = getIntent().getStringExtra("groupId");
+
+        txtGroupName = findViewById(R.id.user_name);
+        txtGroupId = findViewById(R.id.user_id);
+        txtGroupName.setText(groupName);
+        txtGroupId.setText(groupId);
 
         weGroupModel = WeGroupDao.getWeGroupsById(groupId);
 

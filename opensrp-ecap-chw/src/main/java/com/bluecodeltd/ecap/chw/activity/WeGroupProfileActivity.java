@@ -52,6 +52,7 @@ import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupDataCollectionFragment;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupFragmentMembers;
+import com.bluecodeltd.ecap.chw.fragment.WeGroupMemberMeetingRegister;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupProfileSummary;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupServiceLedgerFragment;
 import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
@@ -629,6 +630,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
 
         fragments.add(new WeGroupServiceLedgerFragment());
         fragments.add(new WeGroupDataCollectionFragment());
+        fragments.add(new WeGroupMemberMeetingRegister());
 
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
@@ -639,6 +641,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("MEMBERS");
         tabLayout.getTabAt(2).setText("LEDGER");
         tabLayout.getTabAt(3).setText("REPORTS");
+        tabLayout.getTabAt(4).setText("REGISTER");
 
 //        tabLayout.getTabAt(2).setText("SERVICES");
 //        tabLayout.getTabAt(3).setText("CONSTITUTION");
