@@ -34,7 +34,6 @@ import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -80,15 +79,6 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         familyNameTextView.setText(family);
         villageTextView.setText("ID : "+village);
         gender_age.setText(gender + " : " + age+" ");
-
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
 
 
 
@@ -164,9 +154,30 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 //
 //
 //                try {
+//                    FormUtils formUtils = null;
+//                    try {
+//                        formUtils = new FormUtils(context);
+//                    } catch (Exception e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+//
+//
 //
 //                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-//                    cId.put("value",village);
+////                    cId.remove(JsonFormUtils.VALUE);
+////                    cId.put(JsonFormUtils.VALUE, village);
+//
+//
+//                    if (cId  != null) {
+//                        cId.remove(JsonFormUtils.VALUE);
+////                        try {
+////                            cId.put(JsonFormUtils.VALUE, village);
+////                        } catch (JSONException e) {
+////                            e.printStackTrace();
+////                        }
+//                    }
 //
 //                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "age");
 //                    cDate.put("value", vcaAge);
@@ -214,7 +225,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 //
 //                } catch (Exception e) {
 //                    Timber.e(e);
-//                }
+////                }
 //
 //            });
 
@@ -235,6 +246,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         context.startActivity(intent);
     }
+
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
