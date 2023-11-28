@@ -78,10 +78,15 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     private AppBarLayout myAppbar;
     private ViewPager viewPager;
     TabLayout tabLayout;
-    FloatingActionButton mAddFab, addSavings, addLoan, addFine,addSocialFund, addRepayment, addIga;
+    FloatingActionButton mAddFab,addSocialDiscussionFab,addIgaFab,addRepaymentsFab,addFinesFab,addLoanFab,addSocialFundFab,addSavingsFab;
 
-    TextView addSavingsActionText, addLoanActionText,  addFineActionText,addSocialFundActionText, addRepaymentActionText, addIgaActionText;
-
+    TextView addSocialDiscussionActionTxt,
+            addIgaActionTxt,
+            addRepaymentsActionTxt,
+            addFinesActionTxt,
+            addLoanActionTxt,
+            addSocialFundActionTxt,
+            savingActionTxt;
     View dimBackground;
     Boolean isAllFabsVisible;
     TextView userName,userId;
@@ -101,6 +106,24 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_member);
+
+        mAddFab = findViewById(R.id.add_fab);
+        addSocialDiscussionFab = findViewById(R.id.addSocialDiscussionFab);
+        addIgaFab = findViewById(R.id.addIgaFab);
+        addRepaymentsFab = findViewById(R.id.addRepaymentsFab);
+        addFinesFab = findViewById(R.id.addFinesFab);
+        addLoanFab = findViewById(R.id.addLoanFab);
+        addSocialFundFab = findViewById(R.id.addSocialFundFab);
+        addSavingsFab = findViewById(R.id.addSavingsFab);
+
+// Initialize the TextView variables
+        addSocialDiscussionActionTxt = findViewById(R.id.addSocialDiscussionActionTxt);
+        addIgaActionTxt = findViewById(R.id.addIgaActionTxt);
+        addRepaymentsActionTxt = findViewById(R.id.addRepaymentsActionTxt);
+        addFinesActionTxt = findViewById(R.id.addFinesActionTxt);
+        addLoanActionTxt = findViewById(R.id.addLoanActionTxt);
+        addSocialFundActionTxt = findViewById(R.id.addSocialFundActionTxt);
+        savingActionTxt = findViewById(R.id.savingActionTxt);
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
@@ -143,27 +166,28 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         rootView.setOnClickListener(view -> {
 
             if (isAllFabsVisible) {
-//                mAddFab.hide();
-                addSavings.hide();
-                addLoan.hide();
-                addFine.hide();
-                addSocialFund.hide();
-                addRepayment.hide();
-                addIga.hide();
-                addSavingsActionText.setVisibility(View.GONE);
-                addFineActionText.setVisibility(View.GONE);
-                addLoanActionText.setVisibility(View.GONE);
-                addSocialFundActionText.setVisibility(View.GONE);
-                addRepaymentActionText.setVisibility(View.GONE);
-                addIgaActionText.setVisibility(View.GONE);
+
+                addSocialDiscussionFab.setVisibility(View.GONE);
+                addIgaFab.setVisibility(View.GONE);
+                addRepaymentsFab.setVisibility(View.GONE);
+                addFinesFab.setVisibility(View.GONE);
+                addLoanFab.setVisibility(View.GONE);
+                addSocialFundFab.setVisibility(View.GONE);
+                addSavingsFab.setVisibility(View.GONE);
+
+// Set visibility to GONE for TextView variables
+                addSocialDiscussionActionTxt.setVisibility(View.GONE);
+                addIgaActionTxt.setVisibility(View.GONE);
+                addRepaymentsActionTxt.setVisibility(View.GONE);
+                addFinesActionTxt.setVisibility(View.GONE);
+                addLoanActionTxt.setVisibility(View.GONE);
+                addSocialFundActionTxt.setVisibility(View.GONE);
+                savingActionTxt.setVisibility(View.GONE);
                 dimBackground.setVisibility(View.GONE);
                 isAllFabsVisible = false;
             }
         });
 
-        mAddFab = findViewById(R.id.add_fab);
-
-        mAddFab = findViewById(R.id.add_fab);
         if(memberRole != null && (memberRole.equals("bookwriter") || memberRole.equals("facilitator"))){
             mAddFab.setVisibility(View.VISIBLE);
         } else {
@@ -175,100 +199,106 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
         returnViewPager();
         updateMemberTabTitle();
 
-        addSavings = findViewById(R.id.add_members_fab);
-        addLoan = findViewById(R.id.we_group_data_collection_fab);
-        addFine = findViewById(R.id.add_fine_fab);
-        addSocialFund = findViewById(R.id.add_social_fund_fab);
-        addRepayment = findViewById(R.id.add_cash_book_fab);
-        addIga = findViewById(R.id.add_cash_in_box_fab);
 
-        addSavingsActionText = findViewById(R.id.add_members_action_text);
-        addLoanActionText = findViewById(R.id.add_loan_action_text);
-        addFineActionText = findViewById(R.id.add_fine_action_text);
-        addSocialFundActionText = findViewById(R.id.add_social_fund_action_text);
-        addRepaymentActionText = findViewById(R.id.add_repayment_action_text);
-        addIgaActionText = findViewById(R.id.add_iga_action_text);
 
-        addSavings.setVisibility(View.GONE);
-        addLoan.setVisibility(View.GONE);
-        addFine.setVisibility(View.GONE);
-        addSocialFund.setVisibility(View.GONE);
-        addRepayment.setVisibility(View.GONE);
-        addIga.setVisibility(View.GONE);
-        addSavingsActionText.setVisibility(View.GONE);
-        addLoanActionText.setVisibility(View.GONE);
-        addFineActionText.setVisibility(View.GONE);
-        addSocialFundActionText.setVisibility(View.GONE);
-        addRepaymentActionText.setVisibility(View.GONE);
-        addIgaActionText.setVisibility(View.GONE);
+
+        addSocialDiscussionFab.setVisibility(View.GONE);
+        addIgaFab.setVisibility(View.GONE);
+        addRepaymentsFab.setVisibility(View.GONE);
+        addFinesFab.setVisibility(View.GONE);
+        addLoanFab.setVisibility(View.GONE);
+        addSocialFundFab.setVisibility(View.GONE);
+        addSavingsFab.setVisibility(View.GONE);
+
+// Set visibility to GONE for TextView variables
+        addSocialDiscussionActionTxt.setVisibility(View.GONE);
+        addIgaActionTxt.setVisibility(View.GONE);
+        addRepaymentsActionTxt.setVisibility(View.GONE);
+        addFinesActionTxt.setVisibility(View.GONE);
+        addLoanActionTxt.setVisibility(View.GONE);
+        addSocialFundActionTxt.setVisibility(View.GONE);
+        savingActionTxt.setVisibility(View.GONE);
 
         isAllFabsVisible = false;
 
         mAddFab.setOnClickListener(view -> {
             if (!isAllFabsVisible) {
                 dimBackground.setVisibility(View.VISIBLE);
-                addSavings.show();
-                addLoan.show();
-                addFine.show();
-                addSocialFund.show();
-                addRepayment.show();
-                addIga.show();
-                addSavingsActionText.setVisibility(View.VISIBLE);
-                addLoanActionText.setVisibility(View.VISIBLE);
-                addFineActionText.setVisibility(View.VISIBLE);
-                addSocialFundActionText.setVisibility(View.VISIBLE);
-                addRepaymentActionText.setVisibility(View.VISIBLE);
-                addIgaActionText.setVisibility(View.VISIBLE);
+                // Set visibility to VISIBLE for FloatingActionButton variables
+                mAddFab.setVisibility(View.VISIBLE);
+                addSocialDiscussionFab.setVisibility(View.VISIBLE);
+                addIgaFab.setVisibility(View.VISIBLE);
+                addRepaymentsFab.setVisibility(View.VISIBLE);
+                addFinesFab.setVisibility(View.VISIBLE);
+                addLoanFab.setVisibility(View.VISIBLE);
+                addSocialFundFab.setVisibility(View.VISIBLE);
+                addSavingsFab.setVisibility(View.VISIBLE);
+
+                // Set visibility to VISIBLE for TextView variables
+                addSocialDiscussionActionTxt.setVisibility(View.VISIBLE);
+                addIgaActionTxt.setVisibility(View.VISIBLE);
+                addRepaymentsActionTxt.setVisibility(View.VISIBLE);
+                addFinesActionTxt.setVisibility(View.VISIBLE);
+                addLoanActionTxt.setVisibility(View.VISIBLE);
+                addSocialFundActionTxt.setVisibility(View.VISIBLE);
+                savingActionTxt.setVisibility(View.VISIBLE);
                 isAllFabsVisible = true;
             } else {
-                addSavings.hide();
-                addLoan.hide();
-                addFine.hide();
-                addSocialFund.hide();
-                addRepayment.hide();
-                addIga.hide();
-                addSavingsActionText.setVisibility(View.GONE);
-                addFineActionText.setVisibility(View.GONE);
-                addLoanActionText.setVisibility(View.GONE);
-                addSocialFundActionText.setVisibility(View.GONE);
-                addRepaymentActionText.setVisibility(View.GONE);
-                addIgaActionText.setVisibility(View.GONE);
+
+                addSocialDiscussionFab.setVisibility(View.GONE);
+                addIgaFab.setVisibility(View.GONE);
+                addRepaymentsFab.setVisibility(View.GONE);
+                addFinesFab.setVisibility(View.GONE);
+                addLoanFab.setVisibility(View.GONE);
+                addSocialFundFab.setVisibility(View.GONE);
+                addSavingsFab.setVisibility(View.GONE);
+
+// Set visibility to GONE for TextView variables
+                addSocialDiscussionActionTxt.setVisibility(View.GONE);
+                addIgaActionTxt.setVisibility(View.GONE);
+                addRepaymentsActionTxt.setVisibility(View.GONE);
+                addFinesActionTxt.setVisibility(View.GONE);
+                addLoanActionTxt.setVisibility(View.GONE);
+                addSocialFundActionTxt.setVisibility(View.GONE);
+                savingActionTxt.setVisibility(View.GONE);
                 dimBackground.setVisibility(View.GONE);
 
                 isAllFabsVisible = false;
             }
         });
-        addSavings.setOnClickListener(new View.OnClickListener() {
+        addSavingsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openForm("we_group_member_savings");
 
             }
         });
+
+        addSocialDiscussionFab.setOnClickListener(v -> openForm("we_group_social_discussions"));
 //
 
-        addLoan.setOnClickListener(new View.OnClickListener() {
+        addLoanFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                openForm("we_group_member_loan");
 
             }
         });
-        addFine.setOnClickListener(new View.OnClickListener() {
+        addFinesFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openForm("we_group_member_fine");
 
             }
         });
-        addSocialFund.setOnClickListener(new View.OnClickListener() {
+        addSocialFundFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openForm("we_group_member_social_fund");
 
             }
         });
-        addRepayment.setOnClickListener(new View.OnClickListener() {
+        addRepaymentsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -276,7 +306,7 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
 
             }
         });
-        addIga.setOnClickListener(new View.OnClickListener() {
+        addIgaFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                FormUtils formUtils = null;
@@ -410,22 +440,28 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("RestrictedApi")
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
                     mAddFab.hide();
-                    addSavings.hide();
-                    addLoan.hide();
-                    addFine.hide();
-                    addSocialFund.hide();
-                    addRepayment.hide();
-                    addIga.hide();
-                    addSavingsActionText.setVisibility(View.GONE);
-                    addFineActionText.setVisibility(View.GONE);
-                    addLoanActionText.setVisibility(View.GONE);
-                    addSocialFundActionText.setVisibility(View.GONE);
-                    addRepaymentActionText.setVisibility(View.GONE);
-                    addIgaActionText.setVisibility(View.GONE);
+
+                    addSocialDiscussionFab.setVisibility(View.GONE);
+                    addIgaFab.setVisibility(View.GONE);
+                    addRepaymentsFab.setVisibility(View.GONE);
+                    addFinesFab.setVisibility(View.GONE);
+                    addLoanFab.setVisibility(View.GONE);
+                    addSocialFundFab.setVisibility(View.GONE);
+                    addSavingsFab.setVisibility(View.GONE);
+
+// Set visibility to GONE for TextView variables
+                    addSocialDiscussionActionTxt.setVisibility(View.GONE);
+                    addIgaActionTxt.setVisibility(View.GONE);
+                    addRepaymentsActionTxt.setVisibility(View.GONE);
+                    addFinesActionTxt.setVisibility(View.GONE);
+                    addLoanActionTxt.setVisibility(View.GONE);
+                    addSocialFundActionTxt.setVisibility(View.GONE);
+                    savingActionTxt.setVisibility(View.GONE);
                     dimBackground.setVisibility(View.GONE);
                 } else {
                     mAddFab.show();

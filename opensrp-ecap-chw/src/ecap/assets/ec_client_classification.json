@@ -92,6 +92,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "We Group Cash In Box",
+            "creates_case": [
+              "ec_we_group_cash_in_box"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "We Group Social Discussions",
+            "creates_case": [
+              "ec_we_group_social_discussions"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Family Registration",
             "creates_case": [
               "ec_family"

@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "We Group Cash Book",
+  "encounter_type": "We Group Cash In Box",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,7 +51,7 @@
     }
   },
   "step1": {
-    "title": "WE Group Cash Book",
+    "title": "WE Group Cash In Box ",
     "fields": [
       {
         "key": "date_created",
@@ -155,7 +155,7 @@
         "type": "toaster_notes",
         "toaster_type": "info",
         "toaster_info_title": "Information Toaster Info Title",
-        "text": "WE CASH BOOK"
+        "text": "WE CASH IN BOX"
       },
       {
         "key": "date",
@@ -176,50 +176,12 @@
         }
       },
       {
-        "key": "what_happened",
+        "key": "loan_cash_cash_in_cashbox",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "what_happened",
+        "openmrs_entity_id": "loan_cash_cash_in_cashbox",
         "type": "edit_text",
-        "hint": "What Happened",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "cash_in",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cash_in",
-        "type": "edit_text",
-        "hint": "Cash In",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "cash_out",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cash_out",
-        "type": "edit_text",
-        "hint": "Cash Out",
-        "edit_type": "number",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "balance",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "balance",
-        "type": "edit_text",
-        "hint": "Balance",
+        "hint": "Cash in Cash Box",
         "edit_type": "number",
         "v_required": {
           "value": true,

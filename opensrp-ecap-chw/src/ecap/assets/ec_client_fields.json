@@ -1379,6 +1379,194 @@
         }
       ]
     },
+    {
+      "name": "ec_we_group_cash_in_box",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+
+        {
+          "column_name": "group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_name"
+          }
+        },
+        {
+          "column_name": "cycle_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cycle_number"
+          }
+        },
+        {
+          "column_name": "group_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_number"
+          }
+        },
+        {
+          "column_name": "group_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_id"
+          }
+        },
+        {
+          "column_name": "date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date"
+          }
+        },
+        {
+          "column_name": "loan_cash_cash_in_cashbox",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.loan_cash_cash_in_cashbox"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facilitator_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator_id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_we_group_social_discussions",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+
+        {
+          "column_name": "group_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_name"
+          }
+        },
+        {
+          "column_name": "cycle_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cycle_number"
+          }
+        },
+        {
+          "column_name": "group_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_number"
+          }
+        },
+        {
+          "column_name": "group_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.group_id"
+          }
+        },
+        {
+          "column_name": "date_of_meeting",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_meeting"
+          }
+        },
+        {
+          "column_name": "meeting_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.meeting_number"
+          }
+        },
+        {
+          "column_name": "name_of_moderator",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.name_of_moderator"
+          }
+        },
+        {
+          "column_name": "meeting_agenda",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.meeting_agenda"
+          }
+        },
+        {
+          "column_name": "meeting_decisions",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.meeting_decisions"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facilitator_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator_id"
+          }
+        }
+      ]
+    },
+
 
 
     {

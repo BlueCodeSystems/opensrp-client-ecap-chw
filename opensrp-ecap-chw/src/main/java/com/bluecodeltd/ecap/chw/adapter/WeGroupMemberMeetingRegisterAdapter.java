@@ -79,6 +79,16 @@ public class WeGroupMemberMeetingRegisterAdapter extends RecyclerView.Adapter<We
             }
         });
 
+        holder.expLess.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.expand_less) {
+
+                holder.exPandableView.setVisibility(View.GONE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     @Override

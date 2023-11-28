@@ -1,6 +1,6 @@
 {
   "count": 1,
-  "encounter_type": "We Group Cash Book",
+  "encounter_type": "We Group Social Discussions",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,7 +51,7 @@
     }
   },
   "step1": {
-    "title": "WE Group Cash Book",
+    "title": "WE Group Social Discussions",
     "fields": [
       {
         "key": "date_created",
@@ -155,15 +155,15 @@
         "type": "toaster_notes",
         "toaster_type": "info",
         "toaster_info_title": "Information Toaster Info Title",
-        "text": "WE CASH BOOK"
+        "text": "WE SOCIAL DISCUSSIONS"
       },
       {
-        "key": "date",
+        "key": "date_of_meeting",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date",
+        "openmrs_entity_id": "date_of_meeting",
         "type": "date_picker",
-        "hint": "Date",
+        "hint": "Date of Meeting",
         "expanded": false,
         "duration": {
           "label": ""
@@ -176,24 +176,12 @@
         }
       },
       {
-        "key": "what_happened",
+        "key": "meeting_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "what_happened",
+        "openmrs_entity_id": "meeting_number",
         "type": "edit_text",
-        "hint": "What Happened",
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "cash_in",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cash_in",
-        "type": "edit_text",
-        "hint": "Cash In",
+        "hint": "Meeting Number",
         "edit_type": "number",
         "v_required": {
           "value": true,
@@ -201,26 +189,39 @@
         }
       },
       {
-        "key": "cash_out",
+        "key": "name_of_moderator",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "cash_out",
+        "openmrs_entity_id": "name_of_moderator",
         "type": "edit_text",
-        "hint": "Cash Out",
-        "edit_type": "number",
+        "hint": "Name of Moderator",
+        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "This field is Required"
         }
       },
       {
-        "key": "balance",
+        "key": "meeting_agenda",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "balance",
+        "openmrs_entity_id": "meeting_agenda",
         "type": "edit_text",
-        "hint": "Balance",
-        "edit_type": "number",
+        "hint": "Meeting Agenda",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "meeting_decisions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "meeting_decisions",
+        "type": "edit_text",
+        "hint": "Meeting Decisions",
+        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "This field is Required"

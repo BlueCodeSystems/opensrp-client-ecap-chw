@@ -169,7 +169,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_add_32dp"
         app:backgroundTint="#C30052"
@@ -180,34 +180,34 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_members_fab"
+        android:id="@+id/addSocialDiscussionFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/add_fab"
         app:layout_constraintEnd_toEndOf="@+id/add_fab"
         app:layout_constraintStart_toStartOf="@+id/add_fab"
         app:backgroundTint="@color/blue"
         app:tint="@color/white"
-        app:srcCompat="@drawable/ic_saving" />
+        app:srcCompat="@drawable/ic_groups" />
 
 
     <TextView
-        android:id="@+id/add_members_action_text"
+        android:id="@+id/addSocialDiscussionActionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textColor="#FFFFFF"
-        android:text="Saving"
+        android:text="Social Discussions"
         android:background="#99000000"
-        app:layout_constraintBottom_toBottomOf="@+id/add_members_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_members_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_members_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/addSocialDiscussionFab"
+        app:layout_constraintEnd_toStartOf="@+id/addSocialDiscussionFab"
+        app:layout_constraintTop_toTopOf="@+id/addSocialDiscussionFab" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/we_group_data_collection_fab"
+        android:id="@+id/addIgaFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -216,28 +216,28 @@
         android:tint="@color/white"
         app:tint="@color/white"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/add_members_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_members_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_members_fab"
-        app:srcCompat="@drawable/ic_add_loan" />
+        app:layout_constraintBottom_toTopOf="@+id/addSocialDiscussionFab"
+        app:layout_constraintEnd_toEndOf="@+id/addSocialDiscussionFab"
+        app:layout_constraintStart_toStartOf="@+id/addSocialDiscussionFab"
+        app:srcCompat="@drawable/ic_info" />
 
 
     <TextView
-        android:id="@+id/add_loan_action_text"
+        android:id="@+id/addIgaActionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Loan"
+        android:text="IGA"
         android:background="#99000000"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintEnd_toStartOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintTop_toTopOf="@+id/we_group_data_collection_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/addIgaFab"
+        app:layout_constraintEnd_toStartOf="@+id/addIgaFab"
+        app:layout_constraintTop_toTopOf="@+id/addIgaFab" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fine_fab"
+        android:id="@+id/addRepaymentsFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -245,68 +245,14 @@
         app:backgroundTint="@color/blue"
         android:tint="@color/white"
         app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintEnd_toEndOf="@+id/we_group_data_collection_fab"
-        app:layout_constraintStart_toStartOf="@+id/we_group_data_collection_fab"
-        app:srcCompat="@drawable/ic_fine" />
+        app:layout_constraintBottom_toTopOf="@+id/addIgaFab"
+        app:layout_constraintEnd_toEndOf="@+id/addIgaFab"
+        app:layout_constraintStart_toStartOf="@+id/addIgaFab"
+        app:srcCompat="@drawable/ic_payments" />
 
     <!-- Action name text for the Fine button -->
     <TextView
-        android:id="@+id/add_fine_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Fine"
-        android:textColor="#FFFFFF"
-        android:background="#99000000"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_fine_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_fine_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_fine_fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_social_fund_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/blue"
-        android:tint="@color/white"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/add_fine_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_fine_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_fine_fab"
-        app:srcCompat="@drawable/ic_social_fund" />
-
-    <TextView
-        android:id="@+id/add_social_fund_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Social Fund"
-        android:textColor="#FFFFFF"
-        android:background="#99000000"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_social_fund_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_social_fund_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_social_fund_fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_cash_book_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/blue"
-        android:tint="@color/white"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/add_social_fund_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_social_fund_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_social_fund_fab"
-        app:srcCompat="@drawable/ic_payments" />
-
-    <TextView
-        android:id="@+id/add_repayment_action_text"
+        android:id="@+id/addRepaymentsActionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -314,35 +260,117 @@
         android:textColor="#FFFFFF"
         android:background="#99000000"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_cash_book_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_cash_book_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_cash_book_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/addRepaymentsFab"
+        app:layout_constraintEnd_toStartOf="@+id/addRepaymentsFab"
+        app:layout_constraintTop_toTopOf="@+id/addRepaymentsFab" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_cash_in_box_fab"
+        android:id="@+id/addFinesFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/addRepaymentsFab"
+        app:layout_constraintEnd_toEndOf="@+id/addRepaymentsFab"
+        app:layout_constraintStart_toStartOf="@+id/addRepaymentsFab"
+        app:srcCompat="@drawable/ic_fine" />
+
+    <TextView
+        android:id="@+id/addFinesActionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Fines"
+        android:textColor="#FFFFFF"
+        android:background="#99000000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/addFinesFab"
+        app:layout_constraintEnd_toStartOf="@+id/addFinesFab"
+        app:layout_constraintTop_toTopOf="@+id/addFinesFab" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addLoanFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/addFinesFab"
+        app:layout_constraintEnd_toEndOf="@+id/addFinesFab"
+        app:layout_constraintStart_toStartOf="@+id/addFinesFab"
+        app:srcCompat="@drawable/ic_add_loan" />
+
+    <TextView
+        android:id="@+id/addLoanActionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Loan"
+        android:textColor="#FFFFFF"
+        android:background="#99000000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/addLoanFab"
+        app:layout_constraintEnd_toStartOf="@+id/addLoanFab"
+        app:layout_constraintTop_toTopOf="@+id/addLoanFab" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addSocialFundFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:fabSize="normal"
         app:backgroundTint="@color/blue"
         app:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/add_cash_book_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_cash_book_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_cash_book_fab"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintBottom_toTopOf="@+id/addLoanFab"
+        app:layout_constraintEnd_toEndOf="@+id/addLoanFab"
+        app:layout_constraintStart_toStartOf="@+id/addLoanFab"
+        app:srcCompat="@drawable/ic_social_fund" />
 
     <TextView
-        android:id="@+id/add_iga_action_text"
+        android:id="@+id/addSocialFundActionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="IGA"
+        android:text="Social Fund"
         android:textColor="#FFFFFF"
         android:background="#99000000"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_cash_in_box_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_cash_in_box_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_cash_in_box_fab" />
+        app:layout_constraintBottom_toBottomOf="@+id/addSocialFundFab"
+        app:layout_constraintEnd_toStartOf="@+id/addSocialFundFab"
+        app:layout_constraintTop_toTopOf="@+id/addSocialFundFab" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addSavingsFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:backgroundTint="@color/blue"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/addSocialFundFab"
+        app:layout_constraintEnd_toEndOf="@+id/addSocialFundFab"
+        app:layout_constraintStart_toStartOf="@+id/addSocialFundFab"
+        app:srcCompat="@drawable/ic_saving"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/savingActionTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Savings"
+        android:textColor="#FFFFFF"
+        android:background="#99000000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/addSavingsFab"
+        app:layout_constraintEnd_toStartOf="@+id/addSavingsFab"
+        app:layout_constraintTop_toTopOf="@+id/addSavingsFab" />
+
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarx"
         android:layout_width="match_parent"

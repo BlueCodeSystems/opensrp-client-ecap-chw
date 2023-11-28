@@ -55,6 +55,7 @@ import com.bluecodeltd.ecap.chw.fragment.WeGroupFragmentMembers;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupMemberMeetingRegister;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupProfileSummary;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupServiceLedgerFragment;
+import com.bluecodeltd.ecap.chw.fragment.WeGroupSocialDiscussionsFragment;
 import com.bluecodeltd.ecap.chw.interceptor.AuthInterceptor;
 import com.bluecodeltd.ecap.chw.model.Credentials;
 import com.bluecodeltd.ecap.chw.model.MemberListModel;
@@ -608,6 +609,146 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                 startFormActivity(indexRegisterForm);
             }
         });
+        addCashInBoxFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(getBaseContext());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject indexRegisterForm;
+
+                indexRegisterForm = formUtils.getFormJson("we_group_cash_in_box");
+
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, generateGroupId(9));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject WeGroupID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (WeGroupID != null) {
+                    WeGroupID.remove(JsonFormUtils.VALUE);
+                    try {
+                        WeGroupID.put(JsonFormUtils.VALUE, groupId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject WeGroupName = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_name");
+                if (WeGroupName != null) {
+                    WeGroupName.remove(JsonFormUtils.VALUE);
+                    try {
+                        WeGroupName.put(JsonFormUtils.VALUE, weGroupModel.getGroup_name());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject currentCycle = getFieldJSONObject(fields(indexRegisterForm, STEP1), "cycle_number");
+                if (currentCycle!= null) {
+                    currentCycle.remove(JsonFormUtils.VALUE);
+                    try {
+                        currentCycle.put(JsonFormUtils.VALUE, weGroupModel.getCycle_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject groupNumber = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_number");
+                if (groupNumber!= null) {
+                    groupNumber.remove(JsonFormUtils.VALUE);
+                    try {
+                        groupNumber.put(JsonFormUtils.VALUE, weGroupModel.getGroup_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                startFormActivity(indexRegisterForm);
+            }
+        });
+        addSocialDiscussionsFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(getBaseContext());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject indexRegisterForm;
+
+                indexRegisterForm = formUtils.getFormJson("we_group_social_discussions");
+
+                JSONObject dateClientCreated = getFieldJSONObject(fields(indexRegisterForm, STEP1), "date_created");
+                if (dateClientCreated  != null) {
+                    dateClientCreated.remove(JsonFormUtils.VALUE);
+                    try {
+                        dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject memberID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                if (memberID  != null) {
+                    memberID.remove(JsonFormUtils.VALUE);
+                    try {
+                        memberID.put(JsonFormUtils.VALUE, generateGroupId(9));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject WeGroupID = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_id");
+                if (WeGroupID != null) {
+                    WeGroupID.remove(JsonFormUtils.VALUE);
+                    try {
+                        WeGroupID.put(JsonFormUtils.VALUE, groupId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject WeGroupName = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_name");
+                if (WeGroupName != null) {
+                    WeGroupName.remove(JsonFormUtils.VALUE);
+                    try {
+                        WeGroupName.put(JsonFormUtils.VALUE, weGroupModel.getGroup_name());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject currentCycle = getFieldJSONObject(fields(indexRegisterForm, STEP1), "cycle_number");
+                if (currentCycle!= null) {
+                    currentCycle.remove(JsonFormUtils.VALUE);
+                    try {
+                        currentCycle.put(JsonFormUtils.VALUE, weGroupModel.getCycle_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONObject groupNumber = getFieldJSONObject(fields(indexRegisterForm, STEP1), "group_number");
+                if (groupNumber!= null) {
+                    groupNumber.remove(JsonFormUtils.VALUE);
+                    try {
+                        groupNumber.put(JsonFormUtils.VALUE, weGroupModel.getGroup_number());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                startFormActivity(indexRegisterForm);
+            }
+        });
 
     }
 
@@ -631,6 +772,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         fragments.add(new WeGroupServiceLedgerFragment());
         fragments.add(new WeGroupDataCollectionFragment());
         fragments.add(new WeGroupMemberMeetingRegister());
+        fragments.add(new WeGroupSocialDiscussionsFragment());
 
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
@@ -642,6 +784,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setText("LEDGER");
         tabLayout.getTabAt(3).setText("REPORTS");
         tabLayout.getTabAt(4).setText("REGISTER");
+        tabLayout.getTabAt(5).setText("DISCUSSIONS");
 
 //        tabLayout.getTabAt(2).setText("SERVICES");
 //        tabLayout.getTabAt(3).setText("CONSTITUTION");
@@ -733,7 +876,7 @@ public class WeGroupProfileActivity extends AppCompatActivity {
             try {
 
 
-                if(EncounterType != null && (EncounterType.equals("Group")  || EncounterType.equals("WE Group Data Collection") )){
+                if(EncounterType != null && (EncounterType.equals("Group")  || EncounterType.equals("WE Group Data Collection") || EncounterType.equals("We Group Social Discussions") || EncounterType.equals("We Group Cash In Box") || EncounterType.equals("We Group Cashbook") || EncounterType.equals("We Group GIGAs"))){
                     ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
                     if (childIndexEventClient == null) {
                         return;
@@ -887,6 +1030,54 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, "ec_we_group_data_collection");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "We Group Cash In Box":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_cash_in_box");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "We Group Social Discussions":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_social_discussions");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "We Group Cashbook":
+
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_cashbook");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "We Group GIGAs":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_we_group_gigas");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
