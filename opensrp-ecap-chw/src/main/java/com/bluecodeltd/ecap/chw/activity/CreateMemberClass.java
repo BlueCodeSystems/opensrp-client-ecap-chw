@@ -28,12 +28,14 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -106,23 +108,33 @@ public class CreateMemberClass extends AppCompatActivity {
                                 credentialsList
                         );
 
-                        Call<MemberListModel> userCall = memberApi.createUser(member);
-
-                        userCall.enqueue(new Callback<MemberListModel>() {
+                        Call<ResponseBody> userCall = memberApi.createUser(member);
+                        userCall.enqueue(new Callback<ResponseBody>() {
                             @Override
-                            public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
+                            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                                 if (response.isSuccessful()) {
-                                    Log.d("API Response", "Response received successfully");
+                                    // Even if the response body is empty, this is a successful response.
+                                    Log.d("API Response", "User created successfully with status code: " + response.code());
+
+                                    // You can then do something with the raw response if needed, for example:
+                                    if (response.body() != null) {
+                                        try {
+                                            String responseBodyString = response.body().string(); // Beware, can only be called once!
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        // Log or handle the response
+                                    }
                                 } else {
-                                    Log.e("API Response", "Response error: " + response.errorBody());
-                                    Log.e("API Response", "Response code: " + response.code());
-                                    Log.e("API Response", "Response message: " + response.message());
+                                    // You can extract the error body if needed
+                                    Log.e("API Response", "Unsuccessful response: " + response.code());
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<MemberListModel> call, Throwable t) {
-                                Log.e("postusererror", "perror : " + t.getMessage());
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Log.e("API Response", "onFailure", t);
+                                // Handle the error, such as a network error or a parsing error
                             }
                         });
                     }

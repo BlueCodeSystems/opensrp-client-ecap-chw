@@ -22,6 +22,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -86,6 +87,7 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -98,6 +100,7 @@ import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -882,6 +885,10 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                         return;
                     }
                     saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        finish();
+                        startActivity(getIntent());
+                    });
                 }
 
 
@@ -1360,87 +1367,76 @@ public class WeGroupProfileActivity extends AppCompatActivity {
                             attributes,
                             credentialsList
                     );
-                    Call<MemberListModel> userCall = memberApi.createUser(member);
-                    userCall.enqueue(new Callback<MemberListModel>() {
+                    Call<ResponseBody> userCall = memberApi.createUser(member);
+                    userCall.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void onResponse(Call<MemberListModel> userCall, retrofit2.Response<MemberListModel> response) {
-                            try {
-                                if (response.isSuccessful()) {
-                                    MemberListModel memberListModel = response.body();
+                        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                // Even if the response body is empty, this is a successful response.
+                                Log.d("API Response", "User created successfully with status code: " + response.code());
 
-                                    if (memberListModel != null) {
-                                        // Check if the response body is empty
-                                        if (!memberListModel.toString().isEmpty()) {
-                                            // Handle the response
-                                            Log.d("API Response", "Response received successfully");
-                                        } else {
-                                            // Handle empty response body
-                                            Log.e("API Response", "Empty response body");
-                                        }
-                                    } else {
-                                        // Handle null response body
-                                        Log.e("API Response", "Null response body");
-                                    }
-                                } else {
-                                    // Handle unsuccessful response
-                                    Log.e("API Response", "Unsuccessful response: " + response.code());
-                                }
-                            } catch (Exception e) {
-                                Log.e("YourActivityName", "Exception in onResponse", e);
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<MemberListModel> call, Throwable t) {
-                            if (t.getMessage() != null) {
-                                Log.e("postusererror", "perror : " + t.getMessage());
+                                if(response.code() == 201){
 
-                                MembersModel member = new MembersModel();
-                                member.setDate_created(stringDateCreated);
-                                member.setUnique_id(stringUniqueId);
-                                member.setGroup_id(stringGroupId);
-                                member.setUsername(stringUsername);
-                                member.setFirst_name(stringFirstName);
-                                member.setLast_name(stringLastName);
-                                member.setGender(stringGender);
-                                member.setNrc(stringNrc);
-                                member.setEmail(stringEmail);
-                                member.setAdmission_date(stringAdmissionDate);
-                                member.setPassword(stringPassword);
-                                member.setEcap_hh_ID(stringEcapHhID);
-                                member.setRole(stringRole);
-                                member.setPhone_number(stringPhoneNumber);
-                                member.setSingle_female_caregiver(stringSingleFemaleCaregiver);
-                                member.setNext_of_kin(stringNextOfKin);
-                                member.setNext_of_kin_phone(stringNextOfKinPhone);
-                                member.setDelete_status(stringDeleteStatus);
+                                    MembersModel member = new MembersModel();
+                                    member.setDate_created(stringDateCreated);
+                                    member.setUnique_id(stringUniqueId);
+                                    member.setGroup_id(stringGroupId);
+                                    member.setUsername(stringUsername);
+                                    member.setFirst_name(stringFirstName);
+                                    member.setLast_name(stringLastName);
+                                    member.setGender(stringGender);
+                                    member.setNrc(stringNrc);
+                                    member.setEmail(stringEmail);
+                                    member.setAdmission_date(stringAdmissionDate);
+                                    member.setPassword(stringPassword);
+                                    member.setEcap_hh_ID(stringEcapHhID);
+                                    member.setRole(stringRole);
+                                    member.setPhone_number(stringPhoneNumber);
+                                    member.setSingle_female_caregiver(stringSingleFemaleCaregiver);
+                                    member.setNext_of_kin(stringNextOfKin);
+                                    member.setNext_of_kin_phone(stringNextOfKinPhone);
+                                    member.setDelete_status(stringDeleteStatus);
 //                                    member.setFacilitator_id(stringFacilitatorId);
-                                FormUtils formUtils = null;
-                                try {
-                                    formUtils = new FormUtils(WeGroupProfileActivity.this);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
+                                    FormUtils formUtils = null;
+                                    try {
+                                        formUtils = new FormUtils(WeGroupProfileActivity.this);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
 
-                                JSONObject weGroupMemberForm = formUtils.getFormJson("we_group_member");
-                                try {
-                                    CoreJsonFormUtils.populateJsonForm(weGroupMemberForm, new ObjectMapper().convertValue(member, Map.class));
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                ChildIndexEventClient childIndexEventClient = processRegistration(weGroupMemberForm.toString());
+                                    JSONObject weGroupMemberForm = formUtils.getFormJson("we_group_member");
+                                    try {
+                                        CoreJsonFormUtils.populateJsonForm(weGroupMemberForm, new ObjectMapper().convertValue(member, Map.class));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    ChildIndexEventClient childIndexEventClient = processRegistration(weGroupMemberForm.toString());
 
-                                if (childIndexEventClient == null) {
-                                    return;
-                                }
-                                saveRegistration(childIndexEventClient,false,"We Group Member");
-                                Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
-                                finish();
-                                startActivity(getIntent());
+                                    if (childIndexEventClient == null) {
+                                        return;
+                                    }
+                                    saveRegistration(childIndexEventClient,false,"We Group Member");
+                                    Toasty.success(getApplicationContext(), "Member Added", Toast.LENGTH_LONG, true).show();
 
+                                    new Handler().postDelayed(() -> {
+                                        finish();
+                                        startActivity(getIntent());
+                                    }, 1200);
+
+                                }
+                                else{
+                                    Toasty.success(getApplicationContext(), "Unable to Member", Toast.LENGTH_LONG, true).show();
+                                }
 
                             } else {
-                                Log.e("postusererror", "perror : Throwable t has a null message");
+                                Log.e("API Response", "Unsuccessful response: " + response.code());
                             }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.e("API Response", "onFailure", t);
+                            Toast.makeText(WeGroupProfileActivity.this, "Unable to add member check your internet connection", Toast.LENGTH_SHORT).show();
                         }
                     });
                 });

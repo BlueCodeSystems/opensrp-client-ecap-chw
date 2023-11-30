@@ -248,7 +248,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "interest_rate",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Interest Amount",
         "edit_type": "name",
         "v_required": {
@@ -262,7 +262,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "total_loan_amount",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Total Loan Amount (principal + interest)",
         "edit_type": "name",
         "v_required": {
@@ -294,7 +294,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "duration_in_months",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Duration in Months",
         "edit_type": "number",
         "v_required": {
@@ -340,6 +340,12 @@
         "v_required": {
           "value": true,
           "err": "This is a Required field."
+        },
+        "relevance": {
+          "step1:loan_number": {
+            "type": "string",
+            "ex": "greaterThan(., \"1\")"
+          }
         }
       },
       {

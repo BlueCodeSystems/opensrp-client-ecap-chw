@@ -34,10 +34,10 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="Data Collection Report"
+                android:text="Report"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -100,7 +100,6 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_edit"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"/>
 
     <ImageView

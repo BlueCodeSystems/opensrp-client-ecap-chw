@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,9 +90,17 @@ public class WeGroupDataCollectionFragment extends Fragment {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
             reports.setLayoutManager(layoutManager);
             reports.setAdapter(reportAdapter);
+            reportAdapter.setOnDataUpdateListener(() -> requireActivity().runOnUiThread(() -> {
+                refreshFragment();
+            }));
 
 
 
         return view;
+    }
+
+    public void refreshFragment() {
+        FragmentTransaction fragmentTransaction = requireFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
     }
 }

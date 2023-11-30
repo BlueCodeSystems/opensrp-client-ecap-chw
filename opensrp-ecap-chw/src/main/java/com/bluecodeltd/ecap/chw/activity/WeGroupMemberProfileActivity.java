@@ -33,11 +33,13 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.WeGroupDao;
+import com.bluecodeltd.ecap.chw.dao.WeGroupMemberLoanDao;
 import com.bluecodeltd.ecap.chw.dao.WeGroupMembersDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MyGroupMembersFragment;
 import com.bluecodeltd.ecap.chw.fragment.WeGroupMemberServicesFragment;
 import com.bluecodeltd.ecap.chw.fragment.SummaryFragment;
+import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
 import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -402,6 +404,29 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
             memberLastName.remove(JsonFormUtils.VALUE);
             try {
                 memberLastName.put(JsonFormUtils.VALUE, membersModel.getLast_name());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        JSONObject loanNumber = getFieldJSONObject(fields(indexRegisterForm, STEP1), "loan_number");
+        if (loanNumber!= null) {
+            loanNumber.remove(JsonFormUtils.VALUE);
+            try {
+                MemberLoanModel loanModel = WeGroupMemberLoanDao.getWeGroupMembersLoanNumberByUniqueId(membersModel.getUnique_id());
+
+                if (loanModel != null && loanModel.getLoan_number() != null) {
+
+                    try {
+                        int loanNumberInt = Integer.parseInt(loanModel.getLoan_number());
+                        loanNumber.put(JsonFormUtils.VALUE, calculateNextLoanNumber(loanNumberInt));
+                        loanNumber.put(JsonFormUtils.VALUE, calculateNextLoanNumber(loanNumberInt));
+                        loanNumber.put(JsonFormUtils.READ_ONLY, true);
+                    } catch (NumberFormatException e) {
+
+                    }
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -805,6 +830,10 @@ public class WeGroupMemberProfileActivity extends AppCompatActivity {
             }
         }, FIVE_SECONDS);
         super.onResume();
+    }
+
+    public static int calculateNextLoanNumber(int currentNumber) {
+        return currentNumber + 1;
     }
 
 }

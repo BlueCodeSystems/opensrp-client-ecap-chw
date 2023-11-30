@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.MemberLoanModel;
+import com.bluecodeltd.ecap.chw.model.MembersModel;
 import com.bluecodeltd.ecap.chw.model.WeGroupMemberSavings;
 
 import org.smartregister.dao.AbstractDao;
@@ -39,6 +40,25 @@ public class WeGroupMemberLoanDao extends AbstractDao {
             return new ArrayList<>();
 
         return values;
+    }
+
+
+    public static MemberLoanModel getWeGroupMembersLoanNumberByUniqueId (String uniqueId) {
+
+
+        String sql = "SELECT *,\n" +
+                "       strftime('%Y-%m-%d', substr(date_created, 7, 4) || '-' || substr(date_created, 4, 2) || '-' || substr(date_created, 1, 2)) as sortable_date\n" +
+                "FROM ec_we_group_member_loan\n" +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id = '" + uniqueId + "'\n" +
+                "ORDER BY CAST(loan_number AS SIGNED) DESC";
+
+        List<MemberLoanModel> values = AbstractDao.readData(sql, getMemberLoanModelMap());
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
     }
     public static int getTotalAmount(String memberID) {
         String sql = "SELECT SUM(amount) as amount\n" +
