@@ -203,9 +203,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         }
 
+//        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+        if (indexVCA != null) {
+            String householdId = indexVCA.getHousehold_id();
+            if (householdId != null) {
+                is_screened = HouseholdDao.checkIfScreened(householdId);
+            }
+        }
 
-
-        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
         is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
 
         fabHiv = findViewById(R.id.hiv_risk);

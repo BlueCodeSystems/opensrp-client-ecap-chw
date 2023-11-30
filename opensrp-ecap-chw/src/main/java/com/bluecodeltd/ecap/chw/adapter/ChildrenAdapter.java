@@ -286,8 +286,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                 case (R.id.register_columns):
 
-                    String subpop3 = child.getSubpop3();
-                    assert subpop3 != null;
+//                    String subpop3 = child.getSubpop3();
+//                    assert subpop3 != null;
 
                     if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 

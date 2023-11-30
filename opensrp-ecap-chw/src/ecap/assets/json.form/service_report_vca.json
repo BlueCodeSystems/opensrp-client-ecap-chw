@@ -56,6 +56,9 @@
         "openmrs_entity_id": "date",
         "type": "date_picker",
         "hint": "Date when Service/s Provided",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
           "value": true,
           "err": "This field is required"
