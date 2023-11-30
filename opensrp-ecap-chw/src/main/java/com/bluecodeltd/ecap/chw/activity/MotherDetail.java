@@ -3,26 +3,14 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
 import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-
-import es.dmoral.toasty.Toasty;
-import timber.log.Timber;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -30,6 +18,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
@@ -51,19 +46,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
-import org.smartregister.chw.core.utils.Utils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.domain.UniqueId;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
-import org.smartregister.repository.BaseRepository;
 import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
@@ -72,13 +64,16 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
+
+import es.dmoral.toasty.Toasty;
+import timber.log.Timber;
 
 public class MotherDetail extends AppCompatActivity {
 
@@ -192,22 +187,24 @@ public class MotherDetail extends AppCompatActivity {
     }
 
 
-    private String getAge(String birthdate){
+    private String getAge(String birthdate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
-        LocalDate today =LocalDate.now();
-        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
-        if(periodBetweenDateOfBirthAndNow.getYears() >0)
-        {
-            return periodBetweenDateOfBirthAndNow.getYears() +" Years";
+        LocalDate today = LocalDate.now();
+
+        try {
+            LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+            Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+            if(periodBetweenDateOfBirthAndNow.getYears() > 0) {
+                return periodBetweenDateOfBirthAndNow.getYears() + " Years";
+            } else if (periodBetweenDateOfBirthAndNow.getMonths() > 0) {
+                return periodBetweenDateOfBirthAndNow.getMonths() + " Months ";
+            } else {
+                return periodBetweenDateOfBirthAndNow.getDays() + " Days ";
+            }
+        } catch (DateTimeParseException e) {
+            return "Invalid date format";
         }
-        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
-            return periodBetweenDateOfBirthAndNow.getMonths() +" Months ";
-        }
-        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
-            return periodBetweenDateOfBirthAndNow.getDays() +" Days ";
-        }
-        else return "Not Set";
     }
 
     public void onClick(View v) {
