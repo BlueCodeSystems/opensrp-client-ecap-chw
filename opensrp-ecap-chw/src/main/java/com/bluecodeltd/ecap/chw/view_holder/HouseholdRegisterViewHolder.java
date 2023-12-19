@@ -65,10 +65,20 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             }
         }
         Household house = HouseholdDao.getHousehold(householdId);
-        if (house.getHousehold_case_status() != null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))){
-            homeIcon.setImageResource(R.drawable.inactive_house);
-        }
 
+        if (house != null) {
+            String householdCaseStatus = house.getHousehold_case_status();
+            String deRegistrationReason = house.getDe_registration_reason();
+
+            if (householdCaseStatus != null &&
+                    ("0".equals(householdCaseStatus) ||
+                            ("2".equals(householdCaseStatus) && deRegistrationReason != null &&
+                                    ("Exited without graduation".equals(deRegistrationReason) ||
+                                            "Moved (Relocated)".equals(deRegistrationReason) ||
+                                            "other".equals(deRegistrationReason))))) {
+                homeIcon.setImageResource(R.drawable.inactive_house);
+            }
+        }
 
         //This prevents Duplication of Icons
         hLayout.removeAllViews();
