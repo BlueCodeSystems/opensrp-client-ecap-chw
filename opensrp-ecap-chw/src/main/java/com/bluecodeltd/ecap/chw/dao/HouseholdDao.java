@@ -182,7 +182,7 @@ public class HouseholdDao extends AbstractDao {
             return (values != null && !values.isEmpty()) ? values.get(0) : "0";
         } catch (Exception e) {
             Log.e("countNumberoFHouseholds", "Exception", e);
-            return "0"; // Handle other database exceptions
+            return "0";
         }
     }
 
