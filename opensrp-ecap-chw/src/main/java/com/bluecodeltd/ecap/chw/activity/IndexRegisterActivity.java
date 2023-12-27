@@ -83,6 +83,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     TextView textCartItemCount;
     int mCartItemCount = 0;
     private ArrayList<VcaVisitationModel> notificationsList = new ArrayList<>();
+    String is_screened;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +206,79 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
+    }
+
+    public void startFormActivityFromTheVcaProfile(JSONObject jsonObject) {
+
+        oMapper = new ObjectMapper();
+        oMapper_hh_screen = new ObjectMapper();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+        String code = sp.getString("code", "00000");
+        Object obj = sp.getAll();
+
+        //******** HOUSEHOLD ID ******//
+        Number = new Random();
+        Rnumber = Number.nextInt(100000000);
+        String xId =  Integer.toString(Rnumber);
+        String household_id = code + "/" + xId;
+
+
+        Number = new Random();
+        Rnumber = Number.nextInt(900000000);
+        String newEntityId =  Integer.toString(Rnumber);
+
+        //******** POPULATE AS INDEX VCA ******//
+        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP3), "index_check_box");
+
+        if (indexCheckObject != null) {
+            indexCheckObject.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            try {
+                indexCheckObject.put(JsonFormUtils.VALUE, "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+//        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+//
+//        if (stepOneUniqueId != null) {
+//            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+//            try {
+//                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+
+        try {
+            //******** POPULATE JSON FORM WITH HOUSEHOLD ID ******//
+            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
+
+            JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
+
+            if (stepHouseholdId != null) {
+                stepHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                try {
+                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        Form form = new Form();
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
 
