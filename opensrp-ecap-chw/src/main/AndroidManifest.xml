@@ -71,6 +71,10 @@
         <activity
             android:name=".activity.HivTestingServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
+
+        <activity
+            android:name=".activity.PMTCTRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
@@ -89,6 +93,11 @@
         <activity
             android:name=".activity.MotherDetail"
             android:label="Mother Details"
+            android:theme="@style/ChwTheme.NoActionBar" />
+
+        <activity
+            android:name=".activity.MotherPmtctProfileActivity"
+            android:label="Mother PMTCT"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.FamilyPlanningMemberProfileActivity"
