@@ -39,7 +39,7 @@ public class MotherOverviewFragment extends Fragment {
 
         fab = getActivity().findViewById(R.id.fabx);
 
-        setViews();
+       // setViews();
 
         return view;
 
