@@ -353,6 +353,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Mother Pmtct",
+            "creates_case": [
+              "ec_pmtct_mother"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Child",
             "creates_case": [
               "ec_client_index"
