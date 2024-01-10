@@ -14,6 +14,14 @@
           },
           {
             "field": "eventType",
+            "field_value": " Mother Pmtct Monitoring",
+            "creates_case": [
+              "ec_pmtct_mother_monitoring"
+            ]
+          },
+
+          {
+            "field": "eventType",
             "field_value": "Sub Population",
             "creates_case": [
               "ec_client_index",
