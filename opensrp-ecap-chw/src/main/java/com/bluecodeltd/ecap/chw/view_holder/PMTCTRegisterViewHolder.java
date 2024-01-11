@@ -57,7 +57,7 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
 
         villageTextView.setText(village);
         familyNameTextView.setText(family);
-        gender_age.setText(gender + " : " + age);
+        gender_age.setText(gender + "  " + age);
         if(client.equals("Other Community")){
             gender_age.setVisibility(View.GONE);
         }

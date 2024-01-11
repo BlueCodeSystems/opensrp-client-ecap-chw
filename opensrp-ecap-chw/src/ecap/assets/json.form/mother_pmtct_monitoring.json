@@ -386,7 +386,7 @@
       },
 
       {
-        "key": "6_weeks_dbs_date",
+        "key": "_6_weeks_dbs_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "6_weeks_dbs_date",
