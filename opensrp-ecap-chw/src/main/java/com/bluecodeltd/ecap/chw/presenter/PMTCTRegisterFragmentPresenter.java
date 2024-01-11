@@ -33,7 +33,7 @@ public class PMTCTRegisterFragmentPresenter implements IndexRegisterFragmentCont
         String pmtct = Constants.EcapClientTable.EC_MOTHER_PMTCT;
 
         String countSelect = "SELECT COUNT(*) FROM " + pmtct + " WHERE is_closed IS NOT NULL ";
-        String mainSelect = "SELECT *, ec_pmtct_mother.id as _id,ec_pmtct_mother.facility,ec_pmtct_mother.caregiver_sex as gender FROM ec_pmtct_mother";
+        String mainSelect = "SELECT *, ec_pmtct_mother.pmtct_id as _id,ec_pmtct_mother.facility FROM ec_pmtct_mother WHERE pmtct_id IS NOT NULL";
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_MOTHER_PMTCT, countSelect, mainSelect);
         getView().initializeAdapter();

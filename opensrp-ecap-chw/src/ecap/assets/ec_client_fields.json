@@ -8401,7 +8401,7 @@
       ]
     },
     {
-      "name": "ec_pmtct_monitoring",
+      "name": "ec_pmtct_mother_monitoring",
       "columns": [
         {
           "column_name": "base_entity_id",

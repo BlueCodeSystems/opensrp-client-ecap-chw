@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.view_holder.HivTestingServicesRegisterViewHolder;
 import com.bluecodeltd.ecap.chw.view_holder.PMTCTRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -81,14 +80,15 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_full_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
-        String clientId = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_smh_no", false);
-        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_sex", true);
+        String clientId = Utils.getValue(personObjectClient.getColumnmaps(), "pmtct_id", false);
+//        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_sex", true);
+        String gender = "";
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_smh_no", true);
-        String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "birthdate", true);
-        String client_type = Utils.getValue(personObjectClient.getColumnmaps(), "testing_modality", true);
-
+        String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_age", true);
+//        String client_type = Utils.getValue(personObjectClient.getColumnmaps(), "testing_modality", true);
+        String client_type = "";
 
         if(birthdate != null && !birthdate.isEmpty())
         {
@@ -137,7 +137,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
 
     @Override
     public PMTCTRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.hts_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.ptcmt_register_item_layout, null);
         return new PMTCTRegisterViewHolder(viewHolder);
     }
 
