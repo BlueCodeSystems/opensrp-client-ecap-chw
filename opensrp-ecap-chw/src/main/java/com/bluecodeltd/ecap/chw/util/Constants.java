@@ -87,6 +87,7 @@ public class Constants extends CoreConstants {
         String IDENTIFICATION = "identification";
         String GRADUATION_ASSESSMENT = "OVC Graduation Assessment";
         String HIV_TESTING_SERVICE = "HIV Testing Service";
+        String VCA_VISIT = "Household Visitation Form 0-20 years";
     }
 
     public interface EcapClientTable {

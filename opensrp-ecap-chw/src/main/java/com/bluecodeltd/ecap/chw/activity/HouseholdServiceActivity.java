@@ -98,11 +98,9 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         hh_id.setText(intent_householdId);
         cname.setText(intent_cname);
 
-        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
-
+        if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
-
         }
 
 

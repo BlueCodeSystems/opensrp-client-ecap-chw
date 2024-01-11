@@ -157,8 +157,13 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             ecap_id.setText(ecapId != null ? ecapId : "Not Set");
 
             String subPopulation = client.getSub_population();
-            String str = subPopulation.replace("\"", "").replace("[", "").replace("]", "").replace(",", ",\n");
-            sub_population.setText(str  != null ? str  : "Not Set");
+            if (subPopulation != null) {
+                String str = subPopulation.replace("\"", "").replace("[", "").replace("]", "").replace(",", ",\n");
+                sub_population.setText(str);
+            } else {
+                sub_population.setText("Not Set");
+            }
+
 
             String linkAge = getAgeWithoutText(client.getBirthdate());
             age.setText(linkAge != null ? linkAge : "Not Set");

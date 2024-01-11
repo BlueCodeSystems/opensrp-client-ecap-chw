@@ -2,8 +2,8 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
-import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -141,18 +141,23 @@ public class VcaServiceActivity extends AppCompatActivity {
                     android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
                     dialogButton.setOnClickListener(view -> dialog.dismiss());
 
-                } else{
-                    if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                        Dialog dialog = new Dialog(this);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
+                }
+//
+//
+                    if(caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
+//                        if(caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
+                            Dialog dialog = new Dialog(this);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                            String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(view -> dialog.dismiss());
-
+                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(view -> dialog.dismiss());
+//                        }
                     } else {
                         try {
                             FormUtils formUtils = new FormUtils(this);
@@ -174,7 +179,7 @@ public class VcaServiceActivity extends AppCompatActivity {
                         }
                     }
 
-                }
+
 
 
 
