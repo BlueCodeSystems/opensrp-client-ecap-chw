@@ -23,12 +23,10 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
-import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GradModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
-import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -187,7 +185,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         });
 
-        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
+//        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
         if(caseStatus != null && caseStatus.equals("1")){
 
@@ -288,8 +286,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                 case (R.id.register_columns):
 
-                    String subpop3 = child.getSubpop3();
-                    assert subpop3 != null;
+//                    String subpop3 = child.getSubpop3();
+//                    assert subpop3 != null;
 
                     if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 

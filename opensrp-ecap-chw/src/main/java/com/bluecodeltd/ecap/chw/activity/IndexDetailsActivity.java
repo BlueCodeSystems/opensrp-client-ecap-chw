@@ -118,10 +118,10 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//    }
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -186,10 +186,31 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
-        gender = indexVCA.getGender();
-        uniqueId = indexVCA.getUnique_id();
+        gender = null;
 
-        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+
+        if (indexVCA != null) {
+            if (indexVCA.getGender() != null) {
+                gender = indexVCA.getGender();
+            } else {
+            }
+            uniqueId = null;
+            if (indexVCA.getUnique_id() != null) {
+                uniqueId = indexVCA.getUnique_id();
+            } else {
+            }
+        } else {
+
+        }
+
+//        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+        if (indexVCA != null) {
+            String householdId = indexVCA.getHousehold_id();
+            if (householdId != null) {
+                is_screened = HouseholdDao.checkIfScreened(householdId);
+            }
+        }
+
         is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
 
         fabHiv = findViewById(R.id.hiv_risk);
@@ -317,9 +338,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtAge.setText("Not Set");
         }
 
-        txtName.setText(full_name);
-        txtGender.setText(gender.toUpperCase());
-        txtChildid.setText("ID : " + indexVCA.getUnique_id());
+        try {
+            txtName.setText(full_name);
+            txtGender.setText(gender.toUpperCase());
+            txtChildid.setText("ID : " + indexVCA.getUnique_id());
+        } catch (NullPointerException e) {
+            txtGender.setText("");
+            e.printStackTrace();
+        }
+
 
         HashMap<String, Child> map = new HashMap<>();
 
@@ -1323,15 +1350,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
 
                 case R.id.call:
-                    String caregiverPhoneNumber = child.getCaregiver_phone();
-                    if (!caregiverPhoneNumber.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-
-                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                        startActivity(callIntent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    try {
+                        String caregiverPhoneNumber = child.getCaregiver_phone();
+                        if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                            startActivity(callIntent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        Log.e("Phone Number Error", "Exception", e);
                     }
 
                 return true;

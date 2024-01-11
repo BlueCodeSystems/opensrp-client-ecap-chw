@@ -1,6 +1,8 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 
+import android.util.Log;
+
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
@@ -57,21 +59,15 @@ public class IndexPersonDao  extends AbstractDao {
     }
 
     public static String countAllChildren(){
-
-        String sql = "SELECT COUNT(DISTINCT base_entity_id ) AS childrenCount FROM ec_client_index WHERE (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL";
-
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
-
-        List<String> values = AbstractDao.readData(sql, dataMap);
-
-        if (values == null || values.size() == 0) {
+        try {
+            String sql = "SELECT COUNT(DISTINCT base_entity_id) AS childrenCount FROM ec_client_index WHERE (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return (values != null && !values.isEmpty()) ? values.get(0) : "0";
+        } catch (Exception e) {
+            Log.e("countAllChildren", "Exception", e);
             return "0";
-        }else
-        {
-            return values.get(0);
         }
-
-
     }
     public static String countAllChildrenByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
 
