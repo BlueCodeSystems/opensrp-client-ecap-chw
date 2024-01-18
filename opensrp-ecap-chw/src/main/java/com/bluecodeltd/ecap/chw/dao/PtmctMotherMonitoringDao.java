@@ -9,7 +9,7 @@ import java.util.List;
 public class PtmctMotherMonitoringDao extends AbstractDao {
     public static PtmctMotherMonitoringModel getPMCTMother(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_monitoring WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_monitoring WHERE pmtct_id = '" + pmtctID + "' ";
 
         List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
 
