@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,7 +84,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
-    private RelativeLayout cLayout, mLayout;
+    private RelativeLayout cLayout, mLayout,ancLayout,labourLayout,postnatalLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
@@ -93,6 +94,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     int Rnumber;
     ObjectMapper householdMapper;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         txtAge = findViewById(R.id.mother_age);
         mLayout = findViewById(R.id.mother_form);
         cLayout = findViewById(R.id.child_form);
+        ancLayout = findViewById(R.id.anc_details);
+        labourLayout = findViewById(R.id.labour_details);
+        postnatalLayout = findViewById(R.id.postnatal_details);
         String clientId ="";
 
         //commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
@@ -284,6 +289,33 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 }
 
                 break;
+            case R.id.anc_details:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"anc_details");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.labour_details:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"labour_delivery");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.postnatal_details:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"postnatal_care");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
 
             case R.id.fabx:
 
@@ -348,8 +380,48 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 }
 
+                break;
+            case "anc_details":
+                householdMapper = new ObjectMapper();
+                if(ptmctMotherMonitoringModel == null){
+                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+
+                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
 
                 break;
+
+            case "labour_delivery":
+                householdMapper = new ObjectMapper();
+                if(ptmctMotherMonitoringModel == null){
+                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+
+                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
+
+                break;
+            case "postnatal_care":
+                householdMapper = new ObjectMapper();
+                if(ptmctMotherMonitoringModel == null){
+                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+
+                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
+
+                break;
+
 
         }
         startFormActivity(formToBeOpened);
@@ -560,6 +632,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(View.VISIBLE);
+            ancLayout.setVisibility(View.VISIBLE);
+            labourLayout.setVisibility(View.VISIBLE);
+            postnatalLayout.setVisibility(View.VISIBLE);
 
         }
     }
@@ -569,6 +644,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         isFabOpen = false;
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
+        ancLayout.setVisibility(View.GONE);
+        labourLayout.setVisibility(View.GONE);
+        postnatalLayout.setVisibility(View.GONE);
     }
     public HashMap<String, PtctMotherModel> getClientDetails() {
 

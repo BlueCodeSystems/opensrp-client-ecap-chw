@@ -1,0 +1,499 @@
+{
+  "count": "1",
+  "encounter_type": "Mother Pmtct",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "display_back_button": "true",
+    "fields": [
+
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "PMTCT Register ANC"
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "date_of_st_contact",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_st_contact",
+        "type": "date_picker",
+        "hint": "Date of 1st ANC visit",
+        "v_required": {
+          "value": true,
+          "err": "Please enter First ANC Date"
+        }
+      },
+      {
+        "key": "gestation_age_in_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gestation_age_in_weeks",
+        "type": "edit_text",
+        "hint": "Gestation age in weeks",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter last name"
+        }
+      },
+      {
+        "key": "hiv_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_tested",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "HIV Tested ?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "date_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_tested",
+        "type": "date_picker",
+        "hint": "Date tested",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter Birth Date"
+        }
+      },
+      {
+        "key": "result_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "result_of_hiv_test",
+        "type": "native_radio",
+        "label": "Result of HIV Test (R/NR)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "recency_test_result_if_applicable",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "recency_test_result_if_applicable",
+        "type": "native_radio",
+        "label": "Recency Test Result if Applicable or Done:",
+        "options": [
+          {
+            "key": "recent",
+            "text": "Recent"
+          },
+          {
+            "key": "long_term",
+            "text": "Long term"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"NR\")"
+          }
+        }
+      },
+      {
+        "key": "vl_result_at_trimester_1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_result_at_trimester_1",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "VL Result at 1st Trimester:"
+      },
+      {
+        "key": "vl_result_at_trimester_2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_result_at_trimester_2",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "VL Result at 2 nd  Trimester:"
+      },
+      {
+        "key": "vl_result_at_trimester_3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_result_at_trimester_3",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "VL Result at 3rd Trimester:"
+      },
+      {
+        "key": "male_partner_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "male_partner_tested",
+        "type": "native_radio",
+        "label": "Male partner tested?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "date_male_partner_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_male_partner_tested",
+        "type": "date_picker",
+        "hint": "Date Male Partner Tested",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      },
+      {
+        "key": "refer_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Conduct HIV testing or refer to the health facility for HIV testing",
+        "toaster_info_text": "Conduct HIV testing or refer to the health facility for HIV testing",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:male_partner_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "result_r_nr",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "result_r_nr",
+        "type": "native_radio",
+        "label": "Result (R/NR)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step2:male_partner_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "treatment_initiated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "treatment_initiated ",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Treatment Initiated (Y/N)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:result_r_nr": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
+      },
+      {
+        "key": "date_initiated_on_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_initiated_on_treatment",
+        "type": "date_picker",
+        "hint": "Date Initiated on Treatment",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      },
+      {
+        "key": "on_art_st_anc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "on_art_st_anc",
+        "type": "native_radio",
+        "label": "On ART at 1st ANC Visit (Y/N)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "tb_screening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_screening",
+        "type": "native_radio",
+        "label": "TB  Screening (Y/N)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+
+      },
+      {
+        "key": "syphilis_testing",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "syphilis_testing",
+        "type": "native_radio",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "label": "Syphylis Testing",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "syphilis_test_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "syphilis_test_type",
+        "type": "native_radio",
+        "label": "Syphilis Test Type",
+        "options": [
+          {
+            "key": "RPR",
+            "text": "RPR"
+          },
+          {
+            "key": "RST",
+            "text": "RST"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:syphilis_testing": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+
+      },
+      {
+        "key": "syphilis_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "syphilis_other",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "",
+        "read_only": false,
+        "relevance": {
+          "step1:syphilis_test_type": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
+        "key": "date_tested_for_syphilis",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_tested_for_syphilis",
+        "type": "date_picker",
+        "hint": "Date tested for Syphilis",
+        "relevance": {
+          "step1:syphilis_testing": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "syphilis_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "syphilis_result",
+        "type": "native_radio",
+        "label": "Syphilis result",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:syphilis_testing": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      }
+    ]
+  }
+}
