@@ -155,7 +155,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         indexVCA = VCAScreeningDao.getVcaScreening(village);
 
-        if (statusColor != null) {
+        if (statusColor != null && (indexVCA.getCase_status() == null || indexVCA.getCase_status().equals("1") )) {
             statusColor = statusColor.trim();
 
             // Assign resource ids based on status color
@@ -187,9 +187,15 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             dueButton.setText(buttonText);
         }
         else {
-            dueButton.setBackgroundResource(R.drawable.due_contact);
-            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
-            dueButton.setText("Conduct Visit");
+            if(indexVCA != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
+                dueButton.setBackgroundResource(R.drawable.inactive_button);
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+                dueButton.setText("Case Closed");
+            } else {
+                dueButton.setBackgroundResource(R.drawable.due_contact);
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+                dueButton.setText("Conduct Visit");
+            }
         }
 
         dueButton.setOnClickListener(new View.OnClickListener() {
@@ -209,12 +215,16 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 //                    return true;
 //                });
 //                popupMenu.show();
-                if(indexVCA.getDate_screened() != null){
-                    openVisitationForm(village,vcaAge);
+                if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
+                    Toasty.warning(context, "Unable to conduct a visitation for "+indexVCA.getFirst_name()+" "+indexVCA.getLast_name()+ " because the record is closed", Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.warning(context, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                    if (indexVCA.getDate_screened() != null) {
 
+                        openVisitationForm(village, vcaAge);
+                    } else {
+                        Toasty.warning(context, "Unable to conduct a visitation for " + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    }
+                }
             }
         });
 
