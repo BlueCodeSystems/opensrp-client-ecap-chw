@@ -36,4 +36,6 @@
     // forms colors
     <color name="family_actionbar">@color/primary</color>
     <color name="family_navigation">#61a5c9</color>
+    //Notification colors
+    <color name="inactive">#BED6E2</color>
 </resources>

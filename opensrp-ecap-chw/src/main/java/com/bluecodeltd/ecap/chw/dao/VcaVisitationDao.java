@@ -35,16 +35,20 @@ public class VcaVisitationDao extends AbstractDao {
         return values.get(0);
     }
     public static VcaVisitationModel getVcaVisitationNotification (String vcaID) {
-        String sql = "SELECT *, " +
-                "strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date, " +
-                "CASE " +
-                "    WHEN DATE(strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2))) < DATE('now','-90 day') THEN 'red' " +
-                "    WHEN DATE(strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2))) > DATE('now','-90 day') AND DATE(strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2))) <= DATE('now','-60 day') THEN 'yellow' " +
-                "    WHEN DATE(strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2))) > DATE('now','-60 day') THEN 'green' " +
-                "    ELSE 'red' " +
-                "END as status_color " +
-                "FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + vcaID + "' AND (delete_status IS NULL OR delete_status <> '1') " +
-                "ORDER BY sortable_date DESC LIMIT 1";
+        String sql = "SELECT v.*, ci.deleted, ci.case_status,\n" +
+                "       strftime('%Y-%m-%d', substr(v.visit_date,7,4) || '-' || substr(v.visit_date,4,2) || '-' || substr(v.visit_date,1,2)) as sortable_date,\n" +
+                "       CASE\n" +
+                "           WHEN DATE(strftime('%Y-%m-%d', substr(v.visit_date,7,4) || '-' || substr(v.visit_date,4,2) || '-' || substr(v.visit_date,1,2))) < DATE('now','-90 day') THEN 'red'\n" +
+                "           WHEN DATE(strftime('%Y-%m-%d', substr(v.visit_date,7,4) || '-' || substr(v.visit_date,4,2) || '-' || substr(v.visit_date,1,2))) > DATE('now','-90 day') AND DATE(strftime('%Y-%m-%d', substr(v.visit_date,7,4) || '-' || substr(v.visit_date,4,2) || '-' || substr(v.visit_date,1,2))) <= DATE('now','-60 day') THEN 'yellow'\n" +
+                "           WHEN DATE(strftime('%Y-%m-%d', substr(v.visit_date,7,4) || '-' || substr(v.visit_date,4,2) || '-' || substr(v.visit_date,1,2))) > DATE('now','-60 day') THEN 'green'\n" +
+                "           ELSE 'red'\n" +
+                "       END as status_color\n" +
+                "FROM ec_household_visitation_for_vca_0_20_years v\n" +
+                "JOIN ec_client_index ci ON v.unique_id = ci.unique_id\n" +
+                "WHERE v.unique_id = '" + vcaID + "' AND \n" +
+                "(v.delete_status IS NULL OR v.delete_status <> '1')\n" +
+                "ORDER BY sortable_date DESC\n" +
+                "LIMIT 1";
 
         List<VcaVisitationModel> values = null;
         try {
