@@ -130,59 +130,53 @@ public class VcaServiceActivity extends AppCompatActivity {
         switch (id) {
             case R.id.services1:
                 CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid);
-                if(CasePlanDao.checkCasePlan(intent_vcaid) == 0){
+
+                if (caseStatusModel == null) {
+                    break;
+                }
+
+                if (CasePlanDao.checkCasePlan(intent_vcaid) == 0) {
                     Dialog dialog = new Dialog(this);
                     dialog.setContentView(R.layout.dialog_layout);
                     dialog.show();
 
                     TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    dialogMessage.setText("Unable to add service(s) for "+caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " because no Case Plan(s) have been added");
+                    dialogMessage.setText(
+                            "Unable to add service(s) for " + caseStatusModel.getFirst_name() + " " +
+                                    caseStatusModel.getLast_name() + " because no Case Plan(s) have been added"
+                    );
 
                     android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
                     dialogButton.setOnClickListener(view -> dialog.dismiss());
+                } else if (caseStatusModel.getCase_status() != null &&
+                        ("0".equals(caseStatusModel.getCase_status()) || "2".equals(caseStatusModel.getCase_status()))) {
+                    Dialog dialog = new Dialog(this);
+                    dialog.setContentView(R.layout.dialog_layout);
+                    dialog.show();
 
-                }
-//
-//
-                    if(caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
-//                        if(caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
-                            Dialog dialog = new Dialog(this);
-                            dialog.setContentView(R.layout.dialog_layout);
-                            dialog.show();
+                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                            String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
-                            String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                    dialogButton.setOnClickListener(view -> dialog.dismiss());
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(this);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
 
-                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                            dialogButton.setOnClickListener(view -> dialog.dismiss());
-//                        }
-                    } else {
-                        try {
-                            FormUtils formUtils = new FormUtils(this);
-                            JSONObject indexRegisterForm;
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                        cId.put("value", hh_id.getText().toString());
 
-                            indexRegisterForm = formUtils.getFormJson("service_report_vca");
+                        JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                        hiv.put("value", hivstatus);
 
-                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                            cId.put("value",hh_id.getText().toString());
-
-                            JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                            hiv.put("value",hivstatus);
-
-
-                            startFormActivity(indexRegisterForm);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        startFormActivity(indexRegisterForm);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-
-
-
-
+                }
 
                 break;
         }
