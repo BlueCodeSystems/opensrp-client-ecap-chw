@@ -2397,6 +2397,13 @@
           "json_mapping": {
             "field": "attributes.other_reason"
           }
+        },
+        {
+          "column_name": "exited_graduation_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.exited_graduation_reason"
+          }
         }
       ]
     },

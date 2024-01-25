@@ -258,6 +258,12 @@
         "v_required": {
           "value": true,
           "err": "Please enter date"
+        },
+        "relevance": {
+          "step1:male_partner_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -459,6 +465,8 @@
         "openmrs_entity_id": "date_tested_for_syphilis",
         "type": "date_picker",
         "hint": "Date tested for Syphilis",
+        "min_date": "today-100y",
+        "max_date": "today",
         "relevance": {
           "step1:syphilis_testing": {
             "type": "string",

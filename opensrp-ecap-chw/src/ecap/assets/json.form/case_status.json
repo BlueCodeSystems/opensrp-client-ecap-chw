@@ -120,16 +120,40 @@
           "label": "Reason for Closing Case",
           "options": [
             {
+              "key": "Exited without graduation",
+              "text": "Exited without graduation"
+            },
+            {
+              "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
+              "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
+            }
+          ],
+          "relevance": {
+            "step1:case_status": {
+              "type": "string",
+              "ex": "equalTo(., \"0\")"
+            }
+          },
+          "v_required": {
+            "value": true,
+            "err": "Please select Reason for Closing Case"
+          }
+        },
+        {
+          "key": "exited_graduation_reason",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "person_attribute",
+          "openmrs_entity_id": "exited_graduation_reason",
+          "type": "native_radio",
+          "label": "Reason for exiting without graduation",
+          "options": [
+            {
               "key": "Wrong Entry",
               "text": "Wrong Entry"
             },
             {
               "key": "Transferred to other OVC program",
               "text": "Transferred to other OVC program"
-            },
-            {
-              "key": "Exited without graduation",
-              "text": "Exited without graduation"
             },
 
             {
@@ -149,18 +173,14 @@
               "text": "Moved (Relocated)"
             },
             {
-              "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
-              "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
-            },
-            {
               "key": "other",
               "text": "Other"
             }
           ],
           "relevance": {
-            "step1:case_status": {
+            "step1:reason": {
               "type": "string",
-              "ex": "equalTo(., \"0\")"
+              "ex": "equalTo(., \"Exited without graduation\")"
             }
           },
           "v_required": {
@@ -177,7 +197,7 @@
           "hint": "Specify organization, program, and name of receiving officer",
           "edit_type": "",
           "relevance": {
-            "step1:reason": {
+            "step1:exited_reason": {
               "type": "string",
               "ex": "equalTo(., \"Transferred to other OVC program\")"
             }
@@ -192,7 +212,7 @@
           "hint": "Other Reason",
           "edit_type": "name",
           "relevance": {
-            "step1:reason": {
+            "step1:exited_reason": {
               "type": "string",
               "ex": "equalTo(., \"other\")"
             }
