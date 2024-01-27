@@ -6219,6 +6219,13 @@
           "json_mapping": {
             "field": "attributes.date_of_hiv_test"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -6522,6 +6529,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_of_hiv_test"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
           }
         }
       ]
