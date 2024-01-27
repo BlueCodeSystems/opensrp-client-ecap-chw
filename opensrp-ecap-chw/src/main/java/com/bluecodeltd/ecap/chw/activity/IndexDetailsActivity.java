@@ -59,6 +59,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
@@ -102,10 +103,13 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -435,14 +439,21 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         mPagerAdapter.addFragment(new ChildCasePlanFragment());
         mPagerAdapter.addFragment(new ChildVisitsFragment());
 
+        String hivStatus = indexVCA.getIs_hiv_positive();
+
+        if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
+            mPagerAdapter.addFragment(new VcaHivAssesmentFragment());
+        }
+
         mViewPager.setAdapter(mPagerAdapter);
-        //mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);
+
         mTabLayout.getTabAt(0).setText("OVERVIEW");
         mTabLayout.getTabAt(1).setText("CASE PLANS");
         mTabLayout.getTabAt(2).setText("VISITS");
-
-
+        if (mPagerAdapter.getCount() > 3) {
+            mTabLayout.getTabAt(3).setText("HIV ASSESSMENT");
+        }
     }
 
     private void updateVisitsTabTitle() {
@@ -1515,6 +1526,27 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
+    }
+    private int calculateAndReturnAge(String inputDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date dateOfBirth = sdf.parse(inputDate);
+
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(dateOfBirth);
+
+            Calendar today = Calendar.getInstance();
+
+            int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+                age--;
+            }
+
+            return age;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     public void buildDialog(){
