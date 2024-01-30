@@ -29,6 +29,7 @@ import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
@@ -204,14 +205,14 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new MotherOverviewFragment());
-        //mPagerAdapter.addFragment(new MotherChildrenFragment());
+        mPagerAdapter.addFragment(new PostnatalCareFragment());
 
 
         mViewPager.setAdapter(mPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText("Overview");
-        //mTabLayout.getTabAt(1).setText("Children");
+        mTabLayout.getTabAt(1).setText("Postnatal");
 
     }
     private String getClientAge(String birthdate){
@@ -410,11 +411,13 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 break;
             case "postnatal_care":
                 householdMapper = new ObjectMapper();
-                if(ptmctMotherMonitoringModel == null){
-                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+                PtctMotherModel model = new PtctMotherModel();
+                model.setPmtct_id(ptctMotherModel.getPmtct_id());
+//                if(ptmctMotherMonitoringModel == null){
+//                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(model, Map.class));
 
-                }
+//                }
 //                else {
 //                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
 //                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));

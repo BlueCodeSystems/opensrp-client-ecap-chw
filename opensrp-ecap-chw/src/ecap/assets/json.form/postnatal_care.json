@@ -102,6 +102,40 @@
         }
       },
       {
+        "key": "postnatal_care_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "postnatal_care_visit",
+        "type": "native_radio",
+        "label": "Postnatal Care Visit",
+        "options": [
+          {
+            "key": "6 weeks",
+            "text": "6 weeks"
+          },
+          {
+            "key": "6 months",
+            "text": "6 months"
+          },
+          {
+            "key": "9 months",
+            "text": "9 months"
+          },
+          {
+            "key": "12 months",
+            "text": "12 months"
+          },
+          {
+            "key": "18 months",
+            "text": "18 months"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the postnatal care visit"
+        }
+      },
+      {
         "key": "hiv_test_result_r_nr_at_6_weeks",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -121,6 +155,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
       {
@@ -143,6 +183,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
       {
@@ -165,6 +211,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
       {
@@ -187,6 +239,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
       {
@@ -196,7 +254,13 @@
         "openmrs_entity_id": "comments_at_postnatal_care_visit_6_weeks",
         "type": "edit_text",
         "hint": "Comments (6 weeks)",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
       },
       {
         "key": "hiv_test_result_r_nr_at_6_months",
@@ -218,6 +282,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
         }
       },
       {
@@ -240,6 +310,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
         }
       },
       {
@@ -262,6 +338,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
         }
       },
       {
@@ -271,7 +353,13 @@
         "openmrs_entity_id": "number_of_condoms_distributed_at_6_months",
         "type": "edit_text",
         "edit_type": "number",
-        "hint": "Number of Condoms Distributed(6 months) "
+        "hint": "Number of Condoms Distributed(6 months) ",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
       },
       {
         "key": "comments_at_postnatal_care_visit_6",
@@ -280,7 +368,13 @@
         "openmrs_entity_id": "comments_at_postnatal_care_visit_6",
         "type": "edit_text",
         "hint": "Comments (6 months)",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
       },
 
       {
@@ -303,6 +397,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
       {
@@ -325,6 +425,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
       {
@@ -347,6 +453,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
       {
@@ -369,6 +481,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
       {
@@ -378,7 +496,13 @@
         "openmrs_entity_id": "number_of_condoms_distributed_at_9_months",
         "type": "edit_text",
         "edit_type": "number",
-        "hint": "Number of Condoms Distributed (9 months) "
+        "hint": "Number of Condoms Distributed (9 months) ",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
       },
       {
         "key": "comments_at_postnatal_care_visit_9",
@@ -387,7 +511,13 @@
         "openmrs_entity_id": "comments_at_postnatal_care_visit_9",
         "type": "edit_text",
         "hint": "Comments (9 months)",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
       },
 
       {
@@ -410,6 +540,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
       {
@@ -432,6 +568,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
       {
@@ -454,6 +596,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
       {
@@ -476,6 +624,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
       {
@@ -485,7 +639,13 @@
         "openmrs_entity_id": "number_of_condoms_distributed_at_12_months",
         "type": "edit_text",
         "edit_type": "number",
-        "hint": "Number of Condoms Distributed (12 months)"
+        "hint": "Number of Condoms Distributed (12 months)",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
       },
       {
         "key": "comments_at_postnatal_care_visit_12",
@@ -494,7 +654,13 @@
         "openmrs_entity_id": "comments_at_postnatal_care_visit_12",
         "type": "edit_text",
         "hint": "Comments (12 months)",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
       },
 
       {
@@ -517,6 +683,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
       {
@@ -539,6 +711,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
       {
@@ -561,6 +739,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
       {
@@ -583,6 +767,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
       {
@@ -592,7 +782,13 @@
         "openmrs_entity_id": "number_of_condoms_distributed_at_18_months",
         "type": "edit_text",
         "edit_type": "number",
-        "hint": "Number of Condoms Distributed (18 months)"
+        "hint": "Number of Condoms Distributed (18 months)",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
       },
       {
         "key": "comments_at_postnatal_care_visit_18",
@@ -601,7 +797,13 @@
         "openmrs_entity_id": "comments_at_postnatal_care_visit_18",
         "type": "edit_text",
         "hint": "Comments (18 months)",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
       },
       {
         "key": "spacer",
@@ -625,9 +827,22 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mothers_outcome",
-        "type": "edit_text",
-        "hint": "Mothers Outcome",
-        "edit_type": "name"
+        "type": "native_radio",
+        "label": "Mothers Outcome",
+        "options": [
+          {
+            "key": "Dead",
+            "text": "Dead"
+          },
+          {
+            "key": "Lost to follow up",
+            "text": "Lost to follow up"
+          },
+          {
+            "key": "Transited out and Exited from the program",
+            "text": "Transited out and Exited from the program"
+          }
+        ]
       }
     ]
   }
