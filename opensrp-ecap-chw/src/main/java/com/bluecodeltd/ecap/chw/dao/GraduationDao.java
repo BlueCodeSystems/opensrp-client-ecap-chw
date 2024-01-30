@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.GraduationModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GraduationDao extends AbstractDao {
@@ -19,6 +20,17 @@ public class GraduationDao extends AbstractDao {
         }
 
         return values.get(0);
+    }
+    public static List<GraduationModel> getAssessment(String householdID) {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_assessment,7,4) || '-' || substr(date_assessment,4,2) || '-' || substr(date_assessment,1,2)) as sortable_date FROM ec_graduation WHERE household_id = '" + householdID + "'  ORDER BY sortable_date DESC";
+
+        List<GraduationModel> values = AbstractDao.readData(sql, getGraduationModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
     }
 
     public static DataMap<GraduationModel> getGraduationModelMap() {

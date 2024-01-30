@@ -3172,6 +3172,13 @@
           "json_mapping": {
             "field": "attributes.graduation_status"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -6378,6 +6385,13 @@
           "json_mapping": {
             "field": "attributes.date_of_hiv_test"
           }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
         }
       ]
     },
@@ -7871,6 +7885,20 @@
           }
         },
         {
+          "column_name": "ecap_id_question",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecap_id_question"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
 
           "column_name": "date_enrolled_pmtct",
           "type": "Client",
@@ -8123,6 +8151,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.mother_tested_for_hiv"
+          }
+        },
+        {
+          "column_name": "postnatal_care_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.postnatal_care_visit"
           }
         },
         {

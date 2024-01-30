@@ -85,6 +85,9 @@ public class PtctMotherModel {
     private String comments_at_postnatal_care_visit_18;
     private String mothers_outcome;
     private String delete_status;
+    private String ecap_id_question;
+    private String Household_id;
+
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -748,5 +751,21 @@ public class PtctMotherModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getEcap_id_question() {
+        return ecap_id_question;
+    }
+
+    public void setEcap_id_question(String ecap_id_question) {
+        this.ecap_id_question = ecap_id_question;
+    }
+
+    public String getHousehold_id() {
+        return Household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        Household_id = household_id;
     }
 }

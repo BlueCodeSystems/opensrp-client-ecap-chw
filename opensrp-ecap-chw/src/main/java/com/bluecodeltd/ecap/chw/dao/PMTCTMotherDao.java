@@ -61,6 +61,17 @@ public class PMTCTMotherDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<PtctMotherModel> getPostnatalMother(String pmtctID) {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
+
+        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static DataMap<PtctMotherModel> getPtctMotherModelMap() {
         return c -> {
@@ -69,6 +80,8 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setProvince(getCursorValue(c, "province"));
             record.setDistrict(getCursorValue(c, "district"));
+            record.setEcap_id_question(getCursorValue(c, "ecap_id_question"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setWard(getCursorValue(c, "ward"));
             record.setFacility(getCursorValue(c, "facility"));
             record.setPartner(getCursorValue(c, "partner"));
