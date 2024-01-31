@@ -11,9 +11,17 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +34,11 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
+import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
@@ -48,6 +58,9 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.sync.helper.ECSyncHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -71,9 +84,12 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     private final ImageView  visitLayout, caseplan_layout, warningIcon;
     private final TextView index_icon_layout;
     private final Button dueButton;
+    private final ImageView notification;
+    private final LinearLayout notification_wrapper;
     JSONObject indexRegisterForm;
 
     VcaScreeningModel indexVCA;
+    VCAServiceModel serviceModel;
 
     public IndexRegisterViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -87,6 +103,8 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         gender_age = itemView.findViewById(R.id.gender_age);
         warningIcon = itemView.findViewById(R.id.index_warning);
         dueButton = itemView.findViewById(R.id.due_button);
+        notification = itemView.findViewById(R.id.notifications);
+        notification_wrapper = itemView.findViewById(R.id.notification_wrapper);
 
 
     }
@@ -155,7 +173,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         indexVCA = VCAScreeningDao.getVcaScreening(village);
 
-        if (statusColor != null) {
+        if (statusColor != null && (indexVCA.getCase_status() == null || indexVCA.getCase_status().equals("1") )) {
             statusColor = statusColor.trim();
 
             // Assign resource ids based on status color
@@ -187,34 +205,79 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             dueButton.setText(buttonText);
         }
         else {
-            dueButton.setBackgroundResource(R.drawable.due_contact);
-            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
-            dueButton.setText("Conduct Visit");
+            if(indexVCA != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
+                dueButton.setBackgroundResource(R.drawable.inactive_button);
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+                dueButton.setText("Case Closed");
+            } else {
+                dueButton.setBackgroundResource(R.drawable.due_contact);
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+                dueButton.setText("Conduct Visit");
+            }
         }
 
+       //Setting up the notification bell
+        serviceModel = VCAServiceReportDao.getVcaService(indexVCA.getUnique_id());
+        if (serviceModel != null && indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
+            String schooled = removeBrackets(serviceModel.getSchooled_services());
+            String stable = removeBrackets(serviceModel.getStable_services());
+
+            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
+
+            if (compareAge >= 18 && compareAge <= 20
+                    && (indexVCA.getCase_status() == null || "1".equals(indexVCA.getCase_status()))
+                    && ("not applicable".equals(schooled) || "not applicable".equals(stable))) {
+                notification_wrapper.setVisibility(View.VISIBLE);
+            } else {
+                notification_wrapper.setVisibility(View.GONE);
+            }
+        } else {
+
+        }
+
+
+        //Onclick of the notification bell
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, dueButton);
+
+                String defaultTitle = "This beneficiary has not received a service associated with:";
+                SpannableString spannableString = new SpannableString(defaultTitle);
+                spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, defaultTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+                MenuItem defaultItem = popupMenu.getMenu().add(Menu.NONE, Menu.NONE, 0, spannableString);
+
+                popupMenu.getMenuInflater().inflate(R.menu.ecap_schedules, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(menuItem -> {
+                    String title = String.valueOf(menuItem.getTitle());
+                    if (title.equals("Quarterly Re-assessment")) {
+                        openVisitationForm(village, vcaAge);
+                    }
+                    return true;
+                }
+                );
+
+// Show the popup menu
+                popupMenu.show();
+
+            }
+        });
         dueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Initializing the popup menu and giving the reference as current context
-//                PopupMenu popupMenu = new PopupMenu(context, dueButton);
-//
-//                // Inflating popup menu
-//                popupMenu.getMenuInflater().inflate(R.menu.ecap_schedules, popupMenu.getMenu());
-//                popupMenu.setOnMenuItemClickListener(menuItem -> {
-//
-//                  String title = String.valueOf(menuItem.getTitle());
-//                  if(title.equals("Quarterly Re-assessment")){
-//                      openVisitationForm(village,vcaAge);
-//                  }
-//                    return true;
-//                });
-//                popupMenu.show();
-                if(indexVCA.getDate_screened() != null){
-                    openVisitationForm(village,vcaAge);
-                } else {
-                    Toasty.warning(context, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
 
+                if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
+                    Toasty.warning(context, "Unable to conduct a visitation for "+indexVCA.getFirst_name()+" "+indexVCA.getLast_name()+ " because the record is closed", Toast.LENGTH_LONG, true).show();
+                } else {
+                    if (indexVCA.getDate_screened() != null) {
+
+                        openVisitationForm(village, vcaAge);
+                    } else {
+                        Toasty.warning(context, "Unable to conduct a visitation for " + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    }
+                }
             }
         });
 
@@ -404,15 +467,42 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static int extractAgeFromString(String ageString) {
-        // Regex pattern to match the first occurrence of one or more digits
         Pattern pattern = Pattern.compile("(\\d+)");
         Matcher matcher = pattern.matcher(ageString);
 
         if (matcher.find()) {
-            // matcher.group(0) is the entire match, matcher.group(1) is the first capturing group
             return Integer.parseInt(matcher.group(0));
         }
 
         throw new IllegalArgumentException("Invalid age string format");
+    }
+
+    private int calculateAge(String inputDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date dateOfBirth = sdf.parse(inputDate);
+
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(dateOfBirth);
+
+            Calendar today = Calendar.getInstance();
+
+            int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+                age--;
+            }
+
+            return age;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    private String removeBrackets(String input) {
+        if (input != null) {
+            return input.replaceAll("^\\[\"|\"\\]$", "");
+        }
+        return null;
     }
 }

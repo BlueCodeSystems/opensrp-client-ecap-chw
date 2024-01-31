@@ -18,11 +18,9 @@ import androidx.preference.PreferenceManager;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
-import com.bluecodeltd.ecap.chw.fragment.HivTestingServiceRegisterFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTRegisterFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
-import com.bluecodeltd.ecap.chw.presenter.HivTestingRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.PMTCTRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
@@ -198,14 +196,14 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
 
             JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "pmtct_id");
 
-            if (stepHouseholdId != null) {
-                stepHouseholdId.remove(JsonFormUtils.VALUE);
-                try {
-                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+//            if (stepHouseholdId != null) {
+//                stepHouseholdId.remove(JsonFormUtils.VALUE);
+//                try {
+//                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
         } catch (JSONException e) {
             e.printStackTrace();

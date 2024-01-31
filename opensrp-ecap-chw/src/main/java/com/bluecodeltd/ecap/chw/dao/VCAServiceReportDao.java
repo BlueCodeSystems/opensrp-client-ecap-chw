@@ -34,6 +34,23 @@ public class VCAServiceReportDao extends AbstractDao {
         return values;
 
     }
+    public static VCAServiceModel getVcaService (String vcaid) {
+
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+                "FROM ec_vca_service_report\n" +
+                "WHERE unique_id = '" + vcaid + "' AND (delete_status IS NULL OR delete_status <> '1')\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
+    }
+
 
 
     public static DataMap<VCAServiceModel> getServiceModelMap() {

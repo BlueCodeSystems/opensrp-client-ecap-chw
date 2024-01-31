@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
@@ -27,7 +28,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -53,40 +54,35 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
-
+public class VcaHiveAssessmentAbove15Adapter extends RecyclerView.Adapter<VcaHiveAssessmentAbove15Adapter.ViewHolder> {
     Context context;
-
-    List<VcaVisitationModel> visits;
+    List<HivRiskAssessmentAbove15Model> hivAssessment;
     ObjectMapper oMapper;
 
-    public VisitAdapter(List<VcaVisitationModel> visits, Context context){
 
-        super();
-
-        this.visits = visits;
+    public VcaHiveAssessmentAbove15Adapter(Context context, List<HivRiskAssessmentAbove15Model> hivAssessment) {
         this.context = context;
+        this.hivAssessment = hivAssessment;
     }
 
+    @NonNull
     @Override
-    public VisitAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
+    public VcaHiveAssessmentAbove15Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
-
-        VisitAdapter.ViewHolder viewHolder = new VisitAdapter.ViewHolder(v);
-
+        VcaHiveAssessmentAbove15Adapter.ViewHolder viewHolder = new VcaHiveAssessmentAbove15Adapter.ViewHolder(v);
         return viewHolder;
+
     }
 
     @Override
-    public void onBindViewHolder(VisitAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull VcaHiveAssessmentAbove15Adapter.ViewHolder holder, int position) {
 
-        final VcaVisitationModel visit = visits.get(position);
+
+        final HivRiskAssessmentAbove15Model assessmentUnder15Model = hivAssessment.get(position);
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getVisit_date());
+        holder.txtDate.setText(assessmentUnder15Model.getDate_edited());
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -94,7 +90,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+                    openFormUsingFormUtils(context, "hiv_risk_assessment_above_15_years", assessmentUnder15Model);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -103,7 +99,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
+        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(assessmentUnder15Model.getUnique_id());
 
         holder.editme.setOnClickListener(v -> {
             if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
@@ -122,7 +118,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
                     try {
 
-                        openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+                        openFormUsingFormUtils(context, "hiv_risk_assessment_above_15_years", assessmentUnder15Model);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -134,7 +130,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete this VCA visit");
+            builder.setMessage("You are about to delete this VCA HIV risk assessment");
             builder.setNegativeButton("NO", (dialog, id) -> {
                 //  Action for 'NO' Button
                 dialog.cancel();
@@ -146,11 +142,11 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                visit.setDelete_status("1");
+                assessmentUnder15Model.setDelete_status("1");
                 JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
                 try {
-                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( visit, Map.class));
-                    vcaScreeningForm.put("entity_id", visit.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( assessmentUnder15Model, Map.class));
+                    vcaScreeningForm.put("entity_id", assessmentUnder15Model.getBase_entity_id());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -168,7 +164,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                     Timber.e(e);
                 }
                 Intent returnToProfile = new Intent(context, IndexDetailsActivity.class);
-                returnToProfile.putExtra("Child",  visit.getUnique_id());
+                returnToProfile.putExtra("Child",  assessmentUnder15Model.getUnique_id());
                 context.startActivity(returnToProfile);
                 ((Activity) context).finish();
 
@@ -181,7 +177,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.show();
         });
 
-        Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
+        Child childModel = IndexPersonDao.getChildByBaseId(assessmentUnder15Model.getUnique_id());
 
         if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
             holder.exPandableView.setVisibility(View.GONE);
@@ -236,8 +232,8 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
         }
 
-        if (visit != null) {
-            String visitHivStatus = visit.getIs_hiv_positive();
+        if (assessmentUnder15Model != null) {
+            String visitHivStatus = assessmentUnder15Model.getHiv_test_result();
             if ("yes".equalsIgnoreCase(visitHivStatus)) {
                 holder.updateHivStatus.setText("Positive");
             } else if ("unknown".equalsIgnoreCase(visitHivStatus)) {
@@ -246,11 +242,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 holder.updateHivStatus.setText("Negative");
             }
 
-            holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
+            holder.updatedHivStatusDate.setText(assessmentUnder15Model.getDate_edited() != null ? assessmentUnder15Model.getDate_edited() : "Date not set");
         }
     }
-
-    public void openFormUsingFormUtils(Context context, String formName, VcaVisitationModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HivRiskAssessmentAbove15Model visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -309,14 +304,14 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             switch (encounterType) {
 
-                case "Household Visitation Form 0-20 years":
+                case "HIV Risk Assessment Above 15":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_VCA);
+                                encounterType, Constants.EcapClientTable.EC_HIV_ASSESSMENT_ABOVE_15);
                         tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
@@ -385,9 +380,8 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
 
-        return visits.size();
+        return hivAssessment.size();
     }
-
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate;
@@ -419,5 +413,5 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         }
     }
-
 }
+

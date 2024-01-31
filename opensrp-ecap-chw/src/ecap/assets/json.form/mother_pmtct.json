@@ -1,5 +1,5 @@
 {
-  "count": "2",
+  "count": "1",
   "encounter_type": "Mother Pmtct",
   "entity_id": "",
   "metadata": {
@@ -47,23 +47,8 @@
     "encounter_location": ""
   },
   "step1": {
-    "next": "step2",
-    "title": "Basic program information",
     "display_back_button": "true",
     "fields": [
-      {
-        "key": "instructions",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Pediatric Surge Facility Index Mother Register",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_text": "This Register serves as a detailed record for Vulnerable Children and Adolescents (VCAs) aged 0-18 years identified through index tracing of Children/Adolescents of\nHIV+ mothers, offered and/or enrolled into the VCA comprehensive program. ",
-        "toaster_info_title": "Introduction",
-        "toaster_type": "info"
-      },
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -71,6 +56,15 @@
         "openmrs_entity_id": "2",
         "type": "spacer",
         "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Basic Program Information"
       },
       {
         "key": "is_closed",
@@ -135,23 +129,43 @@
         "look_up": "true"
       },
       {
-        "key": "pmtct_id",
+        "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "pmtct_id",
+        "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
+        "hint": "Name of Community Case Worker",
         "read_only": "true",
-        "hint": "PMTCT ID",
-        "edit_type": "name"
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
       },
-
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "PMTCT Mothers Details"
+      },
       {
         "key": "date_enrolled_ecap",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_enrolled_ecap",
         "type": "date_picker",
-        "hint": "Date enrolled in community USAID Ecap II program",
+        "hint": "Date Enrolled in USAID ECAPII Program",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
@@ -159,6 +173,20 @@
         "v_required": {
           "value": true,
           "err": "Please enter the date enrolled"
+        }
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the ECAPII comprehensive program ID"
         }
       },
       {
@@ -167,7 +195,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_enrolled_pmtct",
         "type": "date_picker",
-        "hint": "Date enrolled in community PMTCT program",
+        "hint": "Date Enrolled in Community PMTCT Program",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
@@ -177,28 +205,19 @@
           "err": "Please enter the date enrolled"
         }
       },
+
       {
-        "key": "household_id",
+        "key": "mothers_full_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_id",
+        "openmrs_entity_id": "mothers_full_name",
         "type": "edit_text",
-        "read_only": "true",
-        "hint": "ECAP II comprehensive program ID",
-        "edit_type": "name"
-      },
-      {
-        "key": "caregiver_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_name",
-        "type": "edit_text",
-        "hint": "Mother's Full Name",
+        "hint": "Name (Surname&First Name)",
         "look_up": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of caregiver can only contain letters"
+          "err": "Name can only contain letters"
         },
         "v_required": {
           "value": true,
@@ -206,20 +225,49 @@
         }
       },
       {
-        "key": "caregiver_sex",
+        "key": "nick_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caregiver_sex",
-        "type": "hidden",
-        "value":"female"
+        "openmrs_entity_id": "nick_name",
+        "type": "edit_text",
+        "hint": "Client's Nick Name",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name can only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
-        "key": "date_started_art",
+        "key": "mothers_age",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_started_art",
+        "openmrs_entity_id": "mothers_age",
         "type": "date_picker",
-        "hint": "Date initiated on ART",
+        "hint": "Age",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today-10y",
+        "v_required": {
+          "value": true,
+          "err": "Please enter age"
+        }
+      },
+      {
+        "key": "date_initiated_on_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_initiated_on_art",
+        "type": "date_picker",
+        "hint": "Date Initiated on ART",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -238,7 +286,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "hint": "Mother's ART Number",
+        "hint": "ART Number",
         "edit_type": "name"
       },
       {
@@ -247,54 +295,80 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mothers_smh_no",
         "type": "edit_text",
-        "hint": "Mother's SMH Number",
-        "edit_type": "name"
+        "hint": "Mother’s SMH No."
       },
       {
-        "key": "homeaddress",
+        "key": "ecap_id_question",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "homeaddress",
+        "openmrs_entity_id": "ecap_id_question",
+        "type": "native_radio",
+        "label": "Do you have the ECAP II household ID?",
+        "read_only": false,
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Do you have the ECAP II household ID"
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
         "type": "edit_text",
-        "hint": "Home Address",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name",
+        "relevance": {
+          "step1:ecap_id_question": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "Please enter the household ID"
+        }
+      },
+      {
+        "key": "home_address",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "home_address",
+        "type": "edit_text",
+        "hint": "Address",
         "edit_type": "name",
         "v_required": {
           "value": false,
           "err": "Please enter the home address"
         }
       },
+
       {
-        "key": "landmark",
+        "key": "nearest_landmark",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "landmark",
+        "openmrs_entity_id": "nearest_landmark",
         "type": "edit_text",
         "hint": "Nearest Landmark"
       },
       {
-        "key": "phone_number",
+        "key": "mothers_phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone_number",
+        "openmrs_entity_id": "mothers_phone",
         "type": "edit_text",
-        "hint": "Mother's Phone Number",
-        "edit_type": "number",
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "mothers_landline",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mothers_landline",
-        "type": "edit_text",
-        "hint": "Mother's landline",
+        "hint": "Phone Number",
         "edit_type": "number",
         "v_numeric": {
           "value": false,
@@ -305,422 +379,7 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       }
-    ]
-  },
-  "step2": {
-    "title": "ANC",
-    "display_back_button": "true",
-    "fields": [
-      {
-        "key": "date_of_st_contact",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_st_contact",
-        "type": "date_picker",
-        "hint": "Date of 1st ANC",
-        "v_required": {
-          "value": true,
-          "err": "Please enter First ANC Date"
-        }
-      },
-      {
-        "key": "gest_age",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gest_age",
-        "type": "edit_text",
-        "hint": "Gestation Age in weeks",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": true,
-          "err": "Please enter last name"
-        }
-      },
-      {
-        "key": "done_hiv_test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "done_hiv_test",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Was mother tested for HIV?",
-        "options": [
-          {
-            "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "date_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_tested",
-        "type": "date_picker",
-        "hint": "Date of HIV test"
-      },
-      {
-        "key": "hiv_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_result",
-        "type": "native_radio",
-        "label": "HIV result",
-        "options": [
-          {
-            "key": "negative",
-            "text": "Negative"
-          },
-          {
-            "key": "positive",
-            "text": "Positive"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step2:done_hiv_test": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "recency_test_result_if_applicable",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "recency_test_result_if_applicable",
-        "type": "native_radio",
-        "label": "Recency Test Result if Applicable or Done:",
-        "options": [
-          {
-            "key": "recent",
-            "text": "Recent"
-          },
-          {
-            "key": "long_term",
-            "text": "Long term"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step2:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"negative\")"
-          }
-        }
-      },
-      {
-        "key": "vl_result_at_trimester_1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_result_at_trimester_1",
-        "type": "edit_text",
-        "edit_type": "name",
-        "hint": "VL Result at 1st Trimester:"
-      },
-      {
-        "key": "vl_result_at_trimester_2",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_result_at_trimester_2",
-        "type": "edit_text",
-        "edit_type": "name",
-        "hint": "VL Result at 2nd Trimester:"
-      },
 
-      {
-        "key": "vl_result_at_trimester_3",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_result_at_trimester_3",
-        "type": "edit_text",
-        "edit_type": "name",
-        "hint": "VL Result at 3rd Trimester:"
-      },
-
-      {
-        "key": "partner_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_tested",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Male partner tested?",
-        "options": [
-          {
-            "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "refer_toaster",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "toaster_notes",
-        "text": "Conduct HIV testing or refer to the health facility for HIV testing",
-        "toaster_info_text": "Conduct HIV testing or refer to the health facility for HIV testing",
-        "toaster_type": "warning",
-        "relevance": {
-          "step2:partner_tested": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "partner_hiv_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_hiv_result",
-        "type": "native_radio",
-        "label": "Partner's HIV result",
-        "options": [
-          {
-            "key": "negative",
-            "text": "Negative"
-          },
-          {
-            "key": "positive",
-            "text": "Positive"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step2:partner_tested": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "partner_treatment_initiated",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_treatment_initiated",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Treatment initiated?",
-        "options": [
-          {
-            "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "step2:partner_hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"positive\")"
-          }
-        }
-      },
-      {
-        "key": "partner_on_art",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner_on_art",
-        "type": "native_radio",
-        "label": "On art at 1st  ANC visit?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "relevance": {
-          "step2:partner_hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"positive\")"
-          }
-        }
-      },
-      {
-        "key": "tb_screening",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tb_screening",
-        "type": "native_radio",
-        "label": "TB screening done?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-
-      },
-      {
-        "key": "done_syphilis_test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "done_syphilis_test",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "Syphilis test done?",
-        "options": [
-          {
-            "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "No",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "syphilis_test_type",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "syphilis_test_type",
-        "type": "native_radio",
-        "label": "Syphilis Test Type",
-        "options": [
-          {
-            "key": "RPR",
-            "text": "RPR"
-          },
-          {
-            "key": "RST",
-            "text": "RST"
-          },
-          {
-            "key": "other",
-            "text": "Other"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step2:done_syphilis_test": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-
-      },
-
-      {
-        "key": "syphilis_other",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "syphilis_other",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "",
-        "read_only": false,
-        "relevance": {
-          "step2:syphilis_test_type": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
-          }
-        }
-      },
-
-
-      {
-        "key": "date_syphilis_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_syphilis_tested",
-        "type": "date_picker",
-        "hint": "Date of Syphilis test",
-        "relevance": {
-          "step2:done_syphilis_test": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "syphilis_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "syphilis_result",
-        "type": "native_radio",
-        "label": "Syphilis result",
-        "options": [
-          {
-            "key": "negative",
-            "text": "Negative"
-          },
-          {
-            "key": "positive",
-            "text": "Positive"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step2:done_syphilis_test": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      }
     ]
   }
 }
