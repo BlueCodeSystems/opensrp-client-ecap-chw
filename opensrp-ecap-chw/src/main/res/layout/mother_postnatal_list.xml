@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="Assessment Date :"
+                android:text="Postnatal Date :"
                 android:textColor="@color/text_black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
