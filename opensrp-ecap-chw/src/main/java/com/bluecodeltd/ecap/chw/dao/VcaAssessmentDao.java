@@ -7,6 +7,31 @@ import org.smartregister.dao.AbstractDao;
 import java.util.List;
 
 public class VcaAssessmentDao extends AbstractDao {
+    public static VcaAssessmentModel  getVcaVisitationNotificationFromAssessment (String vcaID) {
+        String sql = "SELECT *, " +
+                "strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2)) as sortable_date, " +
+                "CASE " +
+                "    WHEN DATE(strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2))) < DATE('now','-90 day') THEN 'red' " +
+                "    WHEN DATE(strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2))) > DATE('now','-90 day') AND DATE(strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2))) <= DATE('now','-60 day') THEN 'yellow' " +
+                "    WHEN DATE(strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2))) > DATE('now','-60 day') THEN 'green' " +
+                "    ELSE 'red' " +
+                "END as status_color " +
+                "FROM ec_vca_assessment WHERE unique_id = '" + vcaID + "' " +
+                "ORDER BY sortable_date DESC LIMIT 1";
+
+        List<VcaAssessmentModel > values = null;
+        try {
+            values =  AbstractDao.readData(sql, getVcaAssessmentModelMap());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+
+        return values.get(0);
+    }
     public static VcaAssessmentModel getVcaAssessment (String vcaID) {
 
         String sql = "SELECT * FROM ec_vca_assessment WHERE unique_id = '" + vcaID + "' ";
@@ -67,6 +92,8 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
             record.setDate_started_art(getCursorValue(c, "date_started_art"));
+            record.setStatus_color(getCursorValue(c,"status_color"));
+            record.setDate_edited(getCursorValue(c, "date_edited"));
 
             return record;
         };

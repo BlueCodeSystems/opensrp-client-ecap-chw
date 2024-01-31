@@ -10,22 +10,24 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServicesOnlyActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
-import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -51,14 +53,14 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.ViewHolder>{
-
+public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<HouseholdServicesOnlyAdapter.ViewHolder>{
     Context context;
-    List<VCAServiceModel> services;
+    List<HouseholdServiceReportModel> services;
     ObjectMapper oMapper;
+    private static final long REFRESH_DELAY = 100;
+    private Handler handler = new Handler();
 
-
-    public VCAServiceAdapter(List<VCAServiceModel> services, Context context){
+    public HouseholdServicesOnlyAdapter(List<HouseholdServiceReportModel> services, Context context){
 
         super();
 
@@ -66,37 +68,32 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         this.context = context;
 
     }
-
+    @NonNull
     @Override
-    public VCAServiceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public HouseholdServicesOnlyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_service, parent, false);
 
-        if (v == null) {
+        HouseholdServicesOnlyAdapter.ViewHolder viewHolder = new HouseholdServicesOnlyAdapter.ViewHolder(v);
 
-            throw new IllegalStateException("Unable to inflate view R.layout.single_service");
-        }
-        return new VCAServiceAdapter.ViewHolder(v);
-
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(VCAServiceAdapter.ViewHolder holder, final int position) {
-
-        final VCAServiceModel service = services.get(position);
-        if (services == null || position < 0 || position >= services.size()) {
-            return;
-        }
+    public void onBindViewHolder(@NonNull HouseholdServicesOnlyAdapter.ViewHolder holder, int position) {
+        final HouseholdServiceReportModel service = services.get(position);
 
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(service.getDate());
-        holder.txtserviceType.setText("For VCA");
+//        holder.txtServices.setText("household");
+        holder.txtserviceType.setText(service.getServices());
+        //holder.txtserviceType.setText(service.getServices());
 
-
-//        JSONArray jsonArray = null;
+//        if(service.getServices().equals("caregiver")){
+//
+//            JSONArray jsonArray = null;
 //            try {
-//                jsonArray = new JSONArray(service.getServices());
+//                jsonArray = new JSONArray(service.getServices_caregiver());
 //
 //                String[] strArr = new String[jsonArray.length()];
 //
@@ -109,96 +106,132 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 //            } catch (JSONException e) {
 //                e.printStackTrace();
 //            }
-
-
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
+//        } else {
+//
+//            JSONArray jsonArray = null;
+//            try {
+//                jsonArray = new JSONArray(service.getServices_household());
+//
+//                String[] strArr = new String[jsonArray.length()];
+//
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    strArr[i] = jsonArray.getString(i);
+//                }
+//
+//                holder.txtServices.setText(strArr.length + " Services");
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
 
         holder.linearLayout.setOnClickListener(v -> {
-            if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
-//                String caseStatus = caseStatusModel.getCase_status();
-//                if ("0".equals(caseStatus) || "2".equals(caseStatus)) {
-                    Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
-
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
-                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
-
-                    Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(va -> dialog.dismiss());
-//                }
+            Household household = HouseholdDao.getHousehold(service.getHousehold_id());
+            if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
+                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
-            }
+                if (v.getId() == R.id.itemm) {
 
-            if (v != null && v.getId() == R.id.itemm) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    openFormUsingFormUtils(context, "service_report_vca", service);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
-
-        holder.delete.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete this VCA service");
-            builder.setNegativeButton("NO", (dialog, id) -> {
-                //  Action for 'NO' Button
-                dialog.cancel();
-
-            }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                service.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_vca");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
-                    vcaScreeningForm.put("entity_id", service.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-
-                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(context);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    saveRegistration(childIndexEventClient,true);
 
 
-                } catch (Exception e) {
-                    Timber.e(e);
+                    try {
+                        openFormUsingFormUtils(context, "service_report_household", service);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
+            }
 
-            }));
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Alert");
-            alert.show();
         });
+        holder.delete.setOnClickListener(v -> {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("You are about to delete this household service ");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
+
+                }).setPositiveButton("YES",((dialogInterface, i) -> {
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(context);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    service.setDelete_status("1");
+                    JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_household");
+                    try {
+                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
+                        vcaScreeningForm.put("entity_id", service .getBase_entity_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+
+                        ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                        if (childIndexEventClient == null) {
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient,true);
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                    refreshActivity();
+
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
+
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+
+
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, VCAServiceModel service) throws JSONException {
+    public void refreshActivity() {
+        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
+    }
+
+    private Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Activity activity = (HouseholdServicesOnlyActivity) context;
+            activity.recreate();
+        }
+    };
+    public void showDialogBox(String householdId,String message){
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        Household house = HouseholdDao.getHousehold(householdId);
+        dialogMessage.setText(house.getCaregiver_name() + message);
+
+        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+
+    }
+
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -214,10 +247,40 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         formToBeOpened = formUtils.getFormJson(formName);
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
-
         formToBeOpened.put("entity_id", service.getBase_entity_id());
+        HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
+        householdReport.setServices(service.getServices());
+        householdReport.setServices_household(service.getServices_household());
 
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
+        if (service.getHealth_services() == null && service.getServices_caregiver() != null){
+            householdReport.setHealth_services(service.getServices_caregiver());
+        } else {
+            householdReport.setHealth_services(service.getHealth_services());
+        }
+
+        householdReport.setOther_health_services(service.getOther_health_services());
+        householdReport.setSchooled_services(service.getSchooled_services());
+        householdReport.setOther_schooled_services(service.getOther_schooled_services());
+        householdReport.setSafe_services(service.getSafe_services());
+        householdReport.setOther_safe_services(service.getOther_safe_services());
+        householdReport.setStable_services(service.getStable_services());
+        householdReport.setOther_stable_services(service.getOther_stable_services());
+        householdReport.setHh_level_services(service.getHh_level_services());
+        householdReport.setOther_hh_level_services(service.getOther_hh_level_services());
+        householdReport.setDate(service.getDate());
+        householdReport.setIs_hiv_positive(service.getIs_hiv_positive());
+        householdReport.setArt_clinic(service.getArt_clinic());
+        householdReport.setDate_last_vl(service.getDate_last_vl());
+        householdReport.setVl_last_result(service.getVl_last_result());
+        householdReport.setDate_next_vl(service.getDate_next_vl());
+        householdReport.setCaregiver_mmd(service.getCaregiver_mmd());
+        householdReport.setLevel_mmd(service.getLevel_mmd());
+        householdReport.setHousehold_id(service.getHousehold_id());
+        householdReport.setBase_entity_id(service.getBase_entity_id());
+        householdReport.setOther_services_caregiver(service.getOther_services_caregiver());
+        householdReport.setOther_services_household(service.getOther_services_household());
+        householdReport.setDelete_status(service.getDelete_status());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
 
         startFormActivity(formToBeOpened);
 
@@ -237,6 +300,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         ((Activity) context).startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
 
     }
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -260,12 +324,12 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
             switch (encounterType) {
 
-                case "VCA Service Report":
+                case "Household Service Report":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_vca_service_report");
+                                encounterType, "ec_household_service_report");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);
@@ -364,4 +428,5 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         }
     }
+
 }

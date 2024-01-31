@@ -65,6 +65,15 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
     ObjectMapper oMapper;
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+
+    private DomainPlanAdapter.OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(DomainPlanAdapter.OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
 
     public HouseholdDomainPlanAdapter(ArrayList<CasePlanModel> caseplans, Context context, String formName) {
         this.context = context;
@@ -188,6 +197,9 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                     }
                     saveRegistration(childIndexEventClient,true);
 
+                    if (onDataUpdateListener != null) {
+                        onDataUpdateListener.onDataUpdate();
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -364,6 +376,9 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onDataUpdateListener != null) {
+                        onDataUpdateListener.onDataUpdate();
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);

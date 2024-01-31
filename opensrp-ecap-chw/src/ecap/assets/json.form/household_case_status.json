@@ -90,6 +90,19 @@
           ]
         },
         {
+          "key": "info",
+          "openmrs_entity_parent": "",
+          "openmrs_entity": "concept",
+          "openmrs_entity_id": "instructions",
+          "type": "hidden",
+          "text": "",
+          "text_color": "#000000",
+          "label_text_style": "bold",
+          "toaster_info_title": "Instructions",
+          "toaster_type": "info"
+        },
+
+        {
           "key": "de_registration_date",
           "openmrs_entity_parent": "",
           "openmrs_entity": "person_attribute",
