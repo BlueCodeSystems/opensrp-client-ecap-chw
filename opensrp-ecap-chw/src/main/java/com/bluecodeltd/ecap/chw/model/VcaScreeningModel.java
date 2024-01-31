@@ -122,6 +122,7 @@ public class VcaScreeningModel {
     private String reason;
     private String transfer_reason;
     private String other_reason;
+    private String exited_graduation_reason;
     private String phone;
 
     public String getPhone() {
@@ -1090,5 +1091,13 @@ public class VcaScreeningModel {
 
     public void setSubpop5(String subpop5) {
         this.subpop5 = subpop5;
+    }
+
+    public String getExited_graduation_reason() {
+        return exited_graduation_reason;
+    }
+
+    public void setExited_graduation_reason(String exited_graduation_reason) {
+        this.exited_graduation_reason = exited_graduation_reason;
     }
 }

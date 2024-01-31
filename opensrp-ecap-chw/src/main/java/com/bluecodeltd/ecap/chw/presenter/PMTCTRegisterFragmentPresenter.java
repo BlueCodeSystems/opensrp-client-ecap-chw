@@ -19,7 +19,7 @@ public class PMTCTRegisterFragmentPresenter implements IndexRegisterFragmentCont
 
     @Override
     public String getDefaultSortQuery() {
-        return "ec_hiv_testing_service.first_name ASC ";
+        return "ec_pmtct_mother.caregiver_name ASC ";
     }
 
     @Override
@@ -30,12 +30,12 @@ public class PMTCTRegisterFragmentPresenter implements IndexRegisterFragmentCont
     @Override
     public void initializeQueries(String s) {
 
-        String hivTestingService = Constants.EcapClientTable.EC_HIV_TESTING_SERVICE;
+        String pmtct = Constants.EcapClientTable.EC_MOTHER_PMTCT;
 
-        String countSelect = "SELECT COUNT(*) FROM " + hivTestingService + " WHERE client_number IS NOT NULL ";
-        String mainSelect = "SELECT *, ec_hiv_testing_service.client_number as _id,ec_hiv_testing_service.health_facility AS facility, first_name,gender FROM ec_hiv_testing_service";
+        String countSelect = "SELECT COUNT(*) FROM " + pmtct + " WHERE is_closed IS NOT NULL ";
+        String mainSelect = "SELECT *, ec_pmtct_mother.pmtct_id as _id,ec_pmtct_mother.facility FROM ec_pmtct_mother WHERE pmtct_id IS NOT NULL";
 
-        getView().initializeQueryParams(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, countSelect, mainSelect);
+        getView().initializeQueryParams(Constants.EcapClientTable.EC_MOTHER_PMTCT, countSelect, mainSelect);
         getView().initializeAdapter();
         getView().countExecute();
         getView().filterandSortInInitializeQueries();

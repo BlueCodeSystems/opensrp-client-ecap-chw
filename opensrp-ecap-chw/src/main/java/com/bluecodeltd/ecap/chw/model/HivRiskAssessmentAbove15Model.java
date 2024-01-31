@@ -22,6 +22,8 @@ public class HivRiskAssessmentAbove15Model {
     private String phone;
     private String unique_id;
     private String household_id;
+    private String delete_status;
+    private String date_edited;
 
     public String getPhone() {
         return phone;
@@ -181,5 +183,21 @@ public class HivRiskAssessmentAbove15Model {
 
     public void setHousehold_id(String household_id) {
         this.household_id = household_id;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
     }
 }
