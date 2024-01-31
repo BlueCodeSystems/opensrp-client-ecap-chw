@@ -13,21 +13,20 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
-import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -53,141 +52,39 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
-
+public class GraduationAssessmentAdapter extends RecyclerView.Adapter<GraduationAssessmentAdapter.ViewHolder> {
     Context context;
-
-    List<VcaVisitationModel> visits;
+    List<GraduationModel> graduationAssessment;
     ObjectMapper oMapper;
 
-    public VisitAdapter(List<VcaVisitationModel> visits, Context context){
-
-        super();
-
-        this.visits = visits;
+    public GraduationAssessmentAdapter(Context context, List<GraduationModel> graduationAssessment) {
         this.context = context;
+        this.graduationAssessment = graduationAssessment;
     }
 
+    @NonNull
     @Override
-    public VisitAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
-
-        VisitAdapter.ViewHolder viewHolder = new VisitAdapter.ViewHolder(v);
-
+    public GraduationAssessmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gradaution_list, parent, false);
+        GraduationAssessmentAdapter.ViewHolder viewHolder = new GraduationAssessmentAdapter.ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(VisitAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull GraduationAssessmentAdapter.ViewHolder holder, int position) {
 
-        final VcaVisitationModel visit = visits.get(position);
+        final GraduationModel visit = graduationAssessment.get(position);
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getVisit_date());
+        holder.txtDate.setText(visit.getDate_assessment());
+        Household householdModel = HouseholdDao.getHousehold(visit.getHousehold_id());
 
-        holder.linearLayout.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.itemm) {
-
-                try {
-
-                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
-
-        holder.editme.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
-
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
-
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
-
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        });
-
-        holder.delete.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete this VCA visit");
-            builder.setNegativeButton("NO", (dialog, id) -> {
-                //  Action for 'NO' Button
-                dialog.cancel();
-
-            }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                visit.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( visit, Map.class));
-                    vcaScreeningForm.put("entity_id", visit.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-
-                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
-                    }
-                    saveRegistration(childIndexEventClient,true);
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                Intent returnToProfile = new Intent(context, IndexDetailsActivity.class);
-                returnToProfile.putExtra("Child",  visit.getUnique_id());
-                context.startActivity(returnToProfile);
-                ((Activity) context).finish();
-
-            }));
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Alert");
-            alert.show();
-        });
-
-        Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
-
-        if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
-            holder.exPandableView.setVisibility(View.GONE);
-            holder.expMore.setVisibility(View.GONE);
-            holder.expLess.setVisibility(View.GONE);
-        }
+//        if (householdModel.getCaregiver_hiv_status().equals("positive")){
+//            holder.exPandableView.setVisibility(View.GONE);
+//            holder.expMore.setVisibility(View.GONE);
+//            holder.expLess.setVisibility(View.GONE);
+//        }
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
@@ -223,34 +120,131 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         });
 
 
-        if (childModel != null) {
-            String hivStatus = childModel.getIs_hiv_positive();
-            if ("yes".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Positive");
-            } else if ("unknown".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Unknown");
-            } else {
-                holder.intialHivStatus.setText("Negative");
+//        if(householdModel.getCaregiver_hiv_status() != null && householdModel.getCaregiver_hiv_status().equals("positive")){
+//            holder.intialHivStatus.setText("Positive");
+//        } else if(householdModel.getCaregiver_hiv_status().equals("unknown")) {
+//            holder.intialHivStatus.setText("Unknown");
+//        } else {
+//            holder.intialHivStatus.setText("Negative");
+//        }
+        holder.initialHivStatusDate.setText(householdModel.getScreening_date());
+
+//        if(visit.getHiv_status() != null && visit.getHiv_status().equals("positive")){
+//            holder.updateHivStatus.setText("Positive");
+//        } else if (visit.getHiv_status().equals("unknown")) {
+//            holder.updateHivStatus.setText("Unknown");
+//
+//        } else {
+//            holder.updateHivStatus.setText("Negative");
+//        }
+        holder.updatedHivStatusDate.setText(visit.getDate_assessment());
+
+
+        holder.linearLayout.setOnClickListener(v -> {
+
+            if (v.getId() == R.id.itemm) {
+
+                try {
+
+                    openFormUsingFormUtils(context, "graduation", visit);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+        holder.editme.setOnClickListener(v -> {
+            Household household = HouseholdDao.getHousehold(visit.getHousehold_id());
+            if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
+                showDialogBox(visit.getHousehold_id(), "`s has been inactive or de-registered");
+            } else{
+                if (v.getId() == R.id.edit_me) {
+
+                    try {
+
+                        openFormUsingFormUtils(context, "graduation", visit);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
 
-            holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
-        }
+        });
+        holder.delete.setOnClickListener(v -> {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("You are about to delete this household graduation ");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
 
-        if (visit != null) {
-            String visitHivStatus = visit.getIs_hiv_positive();
-            if ("yes".equalsIgnoreCase(visitHivStatus)) {
-                holder.updateHivStatus.setText("Positive");
-            } else if ("unknown".equalsIgnoreCase(visitHivStatus)) {
-                holder.updateHivStatus.setText("Unknown");
-            } else {
-                holder.updateHivStatus.setText("Negative");
+                }).setPositiveButton("YES",((dialogInterface, i) -> {
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(context);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    visit.setDelete_status("1");
+                    JSONObject vcaScreeningForm = formUtils.getFormJson("graduation");
+                    try {
+                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(visit, Map.class));
+                        vcaScreeningForm.put("entity_id", visit .getBase_entity_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+
+                        ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                        if (childIndexEventClient == null) {
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient,true);
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                    Intent householdProfile = new Intent(context, HouseholdDetails.class);
+                    householdProfile.putExtra("householdId",visit.getHousehold_id());
+                    context.startActivity(householdProfile);
+                    ((Activity) context).finish();
+
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
+
+            } catch (Exception e) {
+                Timber.e(e);
             }
+        });
 
-            holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
-        }
+    }
+    public void showDialogBox(String householdId,String message){
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.show();
+
+        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+        Household house = HouseholdDao.getHousehold(householdId);
+        dialogMessage.setText(house.getCaregiver_name() + message);
+
+        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, VcaVisitationModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, GraduationModel visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -309,16 +303,17 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             switch (encounterType) {
 
-                case "Household Visitation Form 0-20 years":
+                case "Graduation":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_VCA);
+                                encounterType, Constants.EcapClientTable.EC_GRADUATION);
                         tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
+
                     break;
             }
         } catch (JSONException e) {
@@ -385,7 +380,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
 
-        return visits.size();
+        return graduationAssessment.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -393,7 +388,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate;
 
         LinearLayout linearLayout, exPandableView;
-        ImageView expMore, expLess,editme, delete;
+        ImageView expMore, expLess,editme,delete;
 
         public ViewHolder(View itemView) {
 
@@ -411,6 +406,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
 
+
         }
 
 
@@ -419,5 +415,4 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         }
     }
-
 }

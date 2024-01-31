@@ -196,7 +196,144 @@
                     app:srcCompat="@drawable/baseline_mode_edit_24"   />
 
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/anc_details"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/callFabAnc"
+                    android:background="#666666"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/add_anc_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="ANC Details"
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabAnc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add"  />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/labour_details"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/callFabLabour"
+                    android:background="#666666"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/add_labour_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="Labor and Delivery Details"
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabLabour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add"  />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/postnatal_details"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/callFabPostnatal"
+                    android:background="#666666"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/add_postnatal_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="Postnatal Care"
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabPostnatal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add"  />
+
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/child_form"
                 android:onClick="onClick"
@@ -225,7 +362,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="Add Child"
+                        android:text="HEI Monitoring"
                         android:textColor="@color/white"
                         android:textStyle="italic"
                         android:visibility="visible" />
@@ -243,6 +380,7 @@
                     app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
+
 
         </LinearLayout>
 

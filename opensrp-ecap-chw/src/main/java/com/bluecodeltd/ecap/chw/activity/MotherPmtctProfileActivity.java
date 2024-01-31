@@ -1,15 +1,11 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
-import static com.vijay.jsonwizard.utils.FormUtils.fields;
-import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
-import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,18 +19,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,7 +47,6 @@ import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
@@ -88,14 +85,17 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
-    private RelativeLayout cLayout, mLayout;
+    private RelativeLayout cLayout, mLayout,ancLayout,labourLayout,postnatalLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
+    public PtctMotherModel ptctMotherModel;
+    public PtmctMotherMonitoringModel ptmctMotherMonitoringModel;
     Random Number;
     int Rnumber;
     ObjectMapper householdMapper;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +111,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         txtAge = findViewById(R.id.mother_age);
         mLayout = findViewById(R.id.mother_form);
         cLayout = findViewById(R.id.child_form);
+        ancLayout = findViewById(R.id.anc_details);
+        labourLayout = findViewById(R.id.labour_details);
+        postnatalLayout = findViewById(R.id.postnatal_details);
         String clientId ="";
 
         //commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
@@ -120,17 +123,40 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         }
 
-           CommonPersonObject personObject = getCommonRepository("ec_pmtct_mother").findByBaseEntityId(clientId);
-           CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
-           client.setColumnmaps(personObject.getColumnmaps());
+        ptctMotherModel = PMTCTMotherDao.getPMCTMother(clientId);
+        ptmctMotherMonitoringModel = PtmctMotherMonitoringDao.getPMCTMother(clientId);
+
+        if (ptctMotherModel != null) {
+            String mothersFullName = ptctMotherModel.getMothers_full_name();
+            if (mothersFullName != null) {
+                motherName.setText(mothersFullName);
+            } else {
+                motherName.setText("");
+            }
+
+            String mothersAge = ptctMotherModel.getMothers_age();
+            if (mothersAge != null) {
+                txtAge.setText(getClientAge(mothersAge));
+            } else {
+                txtAge.setText("N/A");
+            }
+        } else {
+            // Handle the case where ptctMotherModel is null, if necessary
+            motherName.setText("Name not available");
+            txtAge.setText("Age not available");
+        }
+//           CommonPersonObject personObject = getCommonRepository("ec_pmtct_mother").findByBaseEntityId(clientId);
+//           CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
+//           client.setColumnmaps(personObject.getColumnmaps());
 //        commonPersonObjectClient = client;
 //
 //        //Refresh activity using Intent
-//        refresh = getIntent().getExtras().getString("1");
+//        refresh = getIntent().getExtras().getStri HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
+//        Child childIndex =mymap.get("Child")ng("1");
 //
 //        family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
 //
-        motherName.setText(client.getColumnmaps().get("caregiver_name"));
+//        motherName.setText(client.getColumnmaps().get("caregiver_name"));
 //        String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
 //        String age = getAge(birthdate);
 //        txtAge.setText(age);
@@ -179,15 +205,47 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new MotherOverviewFragment());
-        //mPagerAdapter.addFragment(new MotherChildrenFragment());
+        mPagerAdapter.addFragment(new PostnatalCareFragment());
 
 
         mViewPager.setAdapter(mPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText("Overview");
-        //mTabLayout.getTabAt(1).setText("Children");
+        mTabLayout.getTabAt(1).setText("Postnatal");
 
+    }
+    private String getClientAge(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today =LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+        if(periodBetweenDateOfBirthAndNow.getYears() >0)
+        {
+            if(periodBetweenDateOfBirthAndNow.getYears() == 1){
+
+                return periodBetweenDateOfBirthAndNow.getYears() +" Year Old";
+
+            } else {
+                return periodBetweenDateOfBirthAndNow.getYears() +" Years Old";
+            }
+
+        }
+        else if (periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() > 0){
+
+            if (periodBetweenDateOfBirthAndNow.getMonths() == 1){
+
+                return periodBetweenDateOfBirthAndNow.getMonths() +" Month Old";
+
+            } else {
+                return periodBetweenDateOfBirthAndNow.getMonths() +" Months Old";
+            }
+
+        }
+        else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
+            return periodBetweenDateOfBirthAndNow.getDays() +" Days Old";
+        }
+        else return "Age Not Set";
     }
 
 
@@ -216,7 +274,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             case R.id.mother_form:
 
                 try {
-                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"mother_index");
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"mother_pmtct");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -226,7 +284,34 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             case R.id.child_form:
 
                 try {
-                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"child");
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"mother_pmtct_monitoring");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.anc_details:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"anc_details");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.labour_details:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"labour_delivery");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case R.id.postnatal_details:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this,"postnatal_care");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -274,43 +359,73 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         switch (formName) {
 
-            case "mother_index":
+            case "mother_pmtct":
 
                 householdMapper = new ObjectMapper();
 
-                formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
-                formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(family, Map.class));
+                formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+              //  formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
 
                 break;
 
-            case "child":
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MotherPmtctProfileActivity.this);
-                Object obj = sp.getAll();
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(obj, Map.class));
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", this.commonPersonObjectClient.getColumnmaps().get("household_id"));
+            case "mother_pmtct_monitoring":
+                householdMapper = new ObjectMapper();
+                if(ptmctMotherMonitoringModel == null){
+                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
 
-                Number = new Random();
-                Rnumber = Number.nextInt(900000000);
-                String newEntityId =  Integer.toString(Rnumber);
+                } else {
+                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
 
-
-                //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-                JSONObject stepOneUniqueId = getFieldJSONObject(fields(formToBeOpened, STEP1), "unique_id");
-
-                if (stepOneUniqueId != null) {
-                    stepOneUniqueId.remove(JsonFormUtils.VALUE);
-                    try {
-                        stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
 
+                break;
+            case "anc_details":
+                householdMapper = new ObjectMapper();
+                if(ptmctMotherMonitoringModel == null){
+                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
 
                 break;
+
+            case "labour_delivery":
+                householdMapper = new ObjectMapper();
+                if(ptmctMotherMonitoringModel == null){
+                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+
+                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
+
+                break;
+            case "postnatal_care":
+                householdMapper = new ObjectMapper();
+                PtctMotherModel model = new PtctMotherModel();
+                model.setPmtct_id(ptctMotherModel.getPmtct_id());
+//                if(ptmctMotherMonitoringModel == null){
+//                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(model, Map.class));
+
+//                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
+
+                break;
+
+
         }
         startFormActivity(formToBeOpened);
 
@@ -381,7 +496,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         getData();
         setupViewPager();
-        updateChildTabTitle();
+//        updateChildTabTitle();
     }
 
     @NonNull
@@ -411,24 +526,24 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Mother Register":
+                case "Mother Pmtct":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_MOTHER_INDEX);
+                                encounterType, "ec_pmtct_mother");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
 
-                case "Child":
+                case "Mother Pmtct Monitoring":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                                encounterType, "ec_pmtct_mother_monitoring");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -520,6 +635,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(View.VISIBLE);
+            ancLayout.setVisibility(View.VISIBLE);
+            labourLayout.setVisibility(View.VISIBLE);
+            postnatalLayout.setVisibility(View.VISIBLE);
 
         }
     }
@@ -529,5 +647,18 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         isFabOpen = false;
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
+        ancLayout.setVisibility(View.GONE);
+        labourLayout.setVisibility(View.GONE);
+        postnatalLayout.setVisibility(View.GONE);
     }
+    public HashMap<String, PtctMotherModel> getClientDetails() {
+
+        HashMap<String, PtctMotherModel> map = new HashMap<>();
+
+        map.put("client",ptctMotherModel);
+
+        return map;
+
+    }
+
 }

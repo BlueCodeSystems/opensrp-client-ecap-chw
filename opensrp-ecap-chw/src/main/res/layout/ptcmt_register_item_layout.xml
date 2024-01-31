@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/register_columns"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:id="@+id/itemm"
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+
+        <View
+            android:id="@+id/mystatusx"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            />
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:id="@+id/case_plan_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/grey_left_border"
+            android:paddingBottom="@dimen/register_list_top_bottom_padding"
+            android:paddingEnd="@dimen/register_list_item_padding"
+            android:paddingLeft="@dimen/register_list_item_padding"
+            android:paddingRight="@dimen/register_list_item_padding"
+            android:paddingStart="@dimen/register_list_item_padding"
+            android:paddingTop="@dimen/register_list_top_bottom_padding">
+
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/index_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/rounded_corner_index"
+                android:padding="8dp"
+                android:text="Index"
+                android:textColor="@color/dark_grey_text"
+                android:textSize="12dp"
+                />
+
+            <ImageView
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:id="@+id/index_warning"
+                android:src="@drawable/ic_icon_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="2dp"
+                />
+
+
+            <ImageView
+                android:id="@+id/index_visit"
+                android:src="@drawable/active_bulb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                />
+
+            <ImageView
+                android:visibility="gone"
+                android:tint="@color/light_grey_text"
+                android:id="@+id/index_case_plan"
+                android:src="@drawable/ic_baseline_content_paste_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/familyNameTextView"
+                style="@style/CustomFontTextViewStyle.ClientList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:text="Patient Name"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/gender_age"
+                style="@style/CustomFontTextViewStyle.ClientList.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Female : 3 Years Old"
+                android:textColor="@color/light_grey_text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/client_type"
+                style="@style/CustomFontTextViewStyle.ClientList.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Client Type: SNT"
+                android:textColor="@color/light_grey_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/villageTextView"
+                style="@style/CustomFontTextViewStyle.ClientList.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Lavington #445"
+                android:textColor="@color/light_grey_text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

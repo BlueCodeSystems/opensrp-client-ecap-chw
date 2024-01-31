@@ -20,7 +20,8 @@ public class CaregiverHivAssessmentModel {
     private String date_of_hiv_test;
     private String caseworker_name;
     private String phone;
-
+    private String delete_status;
+    private String date_edited;
     public String getHousehold_id() {
         return household_id;
     }
@@ -171,5 +172,21 @@ public class CaregiverHivAssessmentModel {
 
     public void setDate_of_hiv_test(String date_of_hiv_test) {
         this.date_of_hiv_test = date_of_hiv_test;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
     }
 }

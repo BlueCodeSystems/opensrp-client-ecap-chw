@@ -9,13 +9,9 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
-import com.bluecodeltd.ecap.chw.activity.HTSRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.PMTCTRegisterFragmentPresenter;
-import com.bluecodeltd.ecap.chw.presenter.PMTCTRegisterPresenter;
-import com.bluecodeltd.ecap.chw.provider.HivTestingServicesRegisterProvider;
 import com.bluecodeltd.ecap.chw.provider.PMTCTRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.github.javiersantos.appupdater.AppUpdater;
@@ -31,8 +27,6 @@ import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
-
-import es.dmoral.toasty.Toasty;
 
 public class PMTCTRegisterFragment extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
 
@@ -145,8 +139,9 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
 
             CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
             String childId = client.getColumnmaps().get("base_entity_id");
-         Toasty.success(getActivity(),"Clicked the person",Toasty.LENGTH_LONG).show();
-           goToMotherDetailActivity(childId,client);
+            String clientId = client.getColumnmaps().get("pmtct_id");
+//         Toasty.success(getActivity(),"Clicked the person",Toasty.LENGTH_LONG).show();
+           goToMotherDetailActivity(clientId,client);
         }
     }
 
