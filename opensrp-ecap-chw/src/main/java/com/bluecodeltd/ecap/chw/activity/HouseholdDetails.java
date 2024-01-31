@@ -422,12 +422,12 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Populate Caregiver Details
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
 
-                    if(graduationModel != null) {
-
-                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, graduationMapper.convertValue(graduationModel, Map.class));
-
-                    }
+//                    if(graduationModel != null) {
+//
+//                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
+//                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, graduationMapper.convertValue(graduationModel, Map.class));
+//
+//                    }
 
                     //Populate for Benchmark 3
                     String bench3 = GradDao.bench3Answers(householdId);
