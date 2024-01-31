@@ -86,9 +86,22 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         intent_household_id = bundle.getString("householdId");
         String intent_cname = bundle.getString("householdName");
 
-        hh_id.setText("Household ID : " + intent_household_id);
-        vcaname.setText(intent_cname+ " " +"Household");
-        txtReferral.setText("No referrals have been added for " +intent_cname+ " " +"household");
+
+        if (intent_household_id != null) {
+            hh_id.setText("Household ID : " + intent_household_id);
+        } else {
+            hh_id.setText("Household ID : Not available");
+        }
+
+        if (intent_cname != null) {
+            vcaname.setText(intent_cname + " Household");
+            txtReferral.setText("No referrals have been added for " + intent_cname + " household");
+        } else {
+            vcaname.setText("Household");
+            txtReferral.setText("No referrals have been added for this household");
+        }
+
+
 
         updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_household_id);
 

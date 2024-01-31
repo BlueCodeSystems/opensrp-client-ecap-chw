@@ -203,7 +203,33 @@ public class HouseholdOverviewFragment extends Fragment {
         txtVlLastDate.setText(house.getDate_of_last_viral_load() != null ? house.getDate_of_last_viral_load() : "Not Set");
 
         txtVlResult.setText(house.getViral_load_results() != null ? house.getViral_load_results() : "Not Set");
-        txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
+
+
+        List<HouseholdServiceReportModel> sModel = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());
+
+        String viralLoadResult = null;
+
+        if (!sModel.isEmpty()) {
+            HouseholdServiceReportModel serviceM= sModel.get(0);
+            viralLoadResult = serviceM.getVl_last_result();
+        } else {
+            viralLoadResult = house.getViral_load_results();
+        }
+
+        try {
+            if (viralLoadResult != null) {
+                int intValue = Integer.parseInt(viralLoadResult);
+                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
+            } else {
+                txtIsSuppressed.setText("Not set");
+            }
+        } catch (NumberFormatException e) {
+            txtIsSuppressed.setText("Update VL Results");
+        }
+
+
+//        txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
+
         txtIsMMD.setText(house.getCaregiver_mmd() != null ? house.getCaregiver_mmd() : "Not Set");
         txtLevelMMD.setText(house.getLevel_mmd() != null ? house.getLevel_mmd() : "Not Set");
 

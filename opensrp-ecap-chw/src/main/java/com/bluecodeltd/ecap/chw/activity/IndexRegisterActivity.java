@@ -1,9 +1,13 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
+import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
+import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
@@ -19,15 +23,11 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
@@ -35,7 +35,6 @@ import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -45,6 +44,11 @@ import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.clientandeventmodel.Client;
+import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.db.EventClient;
+import org.smartregister.domain.tag.FormTag;
+import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
@@ -52,12 +56,14 @@ import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdJsonFormUtils;
 import org.smartregister.opd.utils.OpdUtils;
 import org.smartregister.repository.UniqueIdRepository;
+import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -77,6 +83,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     TextView textCartItemCount;
     int mCartItemCount = 0;
     private ArrayList<VcaVisitationModel> notificationsList = new ArrayList<>();
+    String is_screened;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +169,6 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         }
 
 
-
         //******** POPULATE JSON FORM VCA UNIQUE ID ******//
         JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
 
@@ -174,6 +180,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                 e.printStackTrace();
             }
         }
+
+
 
         try {
             //******** POPULATE JSON FORM WITH HOUSEHOLD ID ******//
@@ -201,11 +209,88 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     }
 
+    public void startFormActivityFromTheVcaProfile(JSONObject jsonObject) {
+
+        oMapper = new ObjectMapper();
+        oMapper_hh_screen = new ObjectMapper();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
+        String code = sp.getString("code", "00000");
+        Object obj = sp.getAll();
+
+        //******** HOUSEHOLD ID ******//
+        Number = new Random();
+        Rnumber = Number.nextInt(100000000);
+        String xId =  Integer.toString(Rnumber);
+        String household_id = code + "/" + xId;
+
+
+        Number = new Random();
+        Rnumber = Number.nextInt(900000000);
+        String newEntityId =  Integer.toString(Rnumber);
+
+        //******** POPULATE AS INDEX VCA ******//
+        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP3), "index_check_box");
+
+        if (indexCheckObject != null) {
+            indexCheckObject.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            try {
+                indexCheckObject.put(JsonFormUtils.VALUE, "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+//        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+//
+//        if (stepOneUniqueId != null) {
+//            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+//            try {
+//                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+
+        try {
+            //******** POPULATE JSON FORM WITH HOUSEHOLD ID ******//
+            CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
+
+            JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
+
+            if (stepHouseholdId != null) {
+                stepHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                try {
+                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        Form form = new Form();
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+
+    }
+
     @Override
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
         if(requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK){
 
             String jsonString = data.getStringExtra(OpdConstants.JSON_FORM_EXTRA.JSON);
+
+
+
+
             try {
 
                 JSONObject jsonFormObject = new JSONObject(jsonString);
@@ -257,10 +342,124 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     }
 
                 }
+                else if (Constants.EcapEncounterType.VCA_VISIT.equalsIgnoreCase(
+                        jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+                    try {
+
+                        ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+
+                        if (childIndexEventClient == null) {
+                            return;
+                        }
+
+                        saveRegistration(childIndexEventClient, false);
+
+                        Toasty.success(IndexRegisterActivity.this, "Visit Updated", Toast.LENGTH_LONG, true).show();
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                }
             } catch (JSONException e) {
                 Timber.e(e);
             }
         }
+    }
+
+
+    public ChildIndexEventClient processRegistration(String jsonString){
+
+        try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
+
+            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+
+            String entityId = formJsonObject.optString("entity_id");
+
+            if(entityId.isEmpty()){
+                entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+
+
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+
+
+            JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+
+            switch (encounterType) {
+
+                case "Household Visitation Form 0-20 years":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_household_visitation_for_vca_0_20_years");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+
+        return null;
+    }
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+
+        Runnable runnable = () -> {
+
+            Event event = childIndexEventClient.getEvent();
+            Client client = childIndexEventClient.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+
+                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+
+                    if (isEditMode) {
+                        JSONObject mergedClientJsonObject =
+                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                    //Get saved event for processing
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+
+        };
+
+        try {
+            AppExecutors appExecutors = new AppExecutors();
+            appExecutors.diskIO().execute(runnable);
+            return true;
+        } catch (Exception exception) {
+            Timber.e(exception);
+            return false;
+        }
+    }
+    private ECSyncHelper getECSyncHelper() {
+        return ChwApplication.getInstance().getEcSyncHelper();
     }
 
     public void openForm(String formName, JSONObject jsonFormObject){
@@ -376,6 +575,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     new ChwBottomNavigationListener(this));
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
+            bottomNavigationView.getMenu().removeItem(R.id.action_hts);
          //   bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
 
         }

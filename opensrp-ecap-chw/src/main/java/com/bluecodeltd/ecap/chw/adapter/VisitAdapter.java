@@ -183,7 +183,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
 
-        if (childModel.getIs_hiv_positive().equals("yes")){
+        if (childModel != null && "yes".equals(childModel.getIs_hiv_positive())) {
             holder.exPandableView.setVisibility(View.GONE);
             holder.expMore.setVisibility(View.GONE);
             holder.expLess.setVisibility(View.GONE);

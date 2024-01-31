@@ -18,6 +18,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,6 +78,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,10 +105,12 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -114,10 +118,10 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//    }
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -182,10 +186,31 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
         child = IndexPersonDao.getChildByBaseId(childId);
-        gender = indexVCA.getGender();
-        uniqueId = indexVCA.getUnique_id();
+        gender = null;
 
-        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+
+        if (indexVCA != null) {
+            if (indexVCA.getGender() != null) {
+                gender = indexVCA.getGender();
+            } else {
+            }
+            uniqueId = null;
+            if (indexVCA.getUnique_id() != null) {
+                uniqueId = indexVCA.getUnique_id();
+            } else {
+            }
+        } else {
+
+        }
+
+//        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
+        if (indexVCA != null) {
+            String householdId = indexVCA.getHousehold_id();
+            if (householdId != null) {
+                is_screened = HouseholdDao.checkIfScreened(householdId);
+            }
+        }
+
         is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
 
         fabHiv = findViewById(R.id.hiv_risk);
@@ -245,9 +270,22 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-        } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-            fab.setVisibility(View.INVISIBLE);
         }
+
+//        String subpop1 = child.getSubpop1();
+//        String subpop2 = child.getSubpop2();
+//        String subpop3 = child.getSubpop3();
+//        String subpop4 = child.getSubpop4();
+//        String subpop5 = child.getSubpop5();
+//        String subpop6 = child.getSubpop6();
+//
+//        if (subpop1 != null || subpop2 != null || subpop3 != null ||
+//                subpop4 != null || subpop5 != null || subpop6 != null) {
+//            fab.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            fab.setVisibility(View.INVISIBLE);
+//        }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -290,7 +328,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     public HashMap<String, Child> getData() {
         String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
         String gender =  indexVCA.getGender();
-        String birthdate = indexVCA.getAdolescent_birthdate();
+        String birthdate = checkAndConvertDateFormat(indexVCA.getAdolescent_birthdate());
 
         if(birthdate != null){
             txtAge.setText(getAge(birthdate));
@@ -300,9 +338,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtAge.setText("Not Set");
         }
 
-        txtName.setText(full_name);
-        txtGender.setText(gender.toUpperCase());
-        txtChildid.setText("ID : " + indexVCA.getUnique_id());
+        try {
+            txtName.setText(full_name);
+            txtGender.setText(gender.toUpperCase());
+            txtChildid.setText("ID : " + indexVCA.getUnique_id());
+        } catch (NullPointerException e) {
+            txtGender.setText("");
+            e.printStackTrace();
+        }
+
 
         HashMap<String, Child> map = new HashMap<>();
 
@@ -311,7 +355,21 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return map;
 
     }
-
+    private String checkAndConvertDateFormat(String date){
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return date;
+        } else {
+            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            try {
+                LocalDate localDate = LocalDate.parse(date, oldFormatter);
+                return localDate.format(newFormatter);
+            } catch (DateTimeParseException e) {
+                Log.e("TAG", "Invalid date format: " + e.getMessage());
+                return "Invalid date format";
+            }
+        }
+    }
     public HashMap<String, newCaregiverModel> getUpdatedCaregiverData() {
 
         HashMap<String, newCaregiverModel> map = new HashMap<>();
@@ -441,9 +499,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.fab:
                 if(child.getCase_status() != null && (child.getCase_status().equals("0") || child.getCase_status().equals("2"))){
                     showDeregisteredStatus();
-                } else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-               fab.setVisibility(View.INVISIBLE);
-            } else {
+                }
+//                else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
+//               fab.setVisibility(View.INVISIBLE);
+//            }
+                else {
                     animateFAB();
                 }
                 break;
@@ -546,7 +606,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             Intent intent = new Intent(this, HouseholdDetails.class);
             intent.putExtra("childId",  child.getUnique_id());
             intent.putExtra("householdId",  child.getHousehold_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
+//            intent.putExtra("householdId",  child.getHousehold_id());
            // intent.putExtra("household",  child.getHousehold_id());
 
             startActivity(intent);
@@ -1139,8 +1199,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case "case_status":
             case "vca_screening":
+                if(indexVCA.getIs_on_hiv_treatment() == null){
+                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
+                    indexVCAMap.remove("date_started_art");
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                }
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
 
@@ -1284,15 +1350,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
 
                 case R.id.call:
-                    String caregiverPhoneNumber = child.getCaregiver_phone();
-                    if (!caregiverPhoneNumber.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-
-                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                        startActivity(callIntent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    try {
+                        String caregiverPhoneNumber = child.getCaregiver_phone();
+                        if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                            startActivity(callIntent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        Log.e("Phone Number Error", "Exception", e);
                     }
 
                 return true;

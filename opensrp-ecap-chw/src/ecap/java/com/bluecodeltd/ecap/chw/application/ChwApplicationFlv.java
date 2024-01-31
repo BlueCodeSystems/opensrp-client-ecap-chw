@@ -151,7 +151,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "first_name",
                 "middle_name",
                 "last_name",
-                "client_number"
+                "client_number",
+                "testing_modality"
         });
 
 

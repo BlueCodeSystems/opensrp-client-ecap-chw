@@ -98,11 +98,9 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         hh_id.setText(intent_householdId);
         cname.setText(intent_cname);
 
-        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
-
+        if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
-
         }
 
 
@@ -370,6 +368,13 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
     public void refresh(){
         finish();
         startActivity(getIntent());
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HouseholdDetails.class);
+        intent.putExtra("householdId", intent_householdId);
+        startActivity(intent);
+        finish();
     }
 
 }

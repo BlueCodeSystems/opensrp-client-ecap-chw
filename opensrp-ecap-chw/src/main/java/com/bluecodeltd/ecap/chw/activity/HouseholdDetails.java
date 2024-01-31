@@ -98,11 +98,13 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -173,6 +175,7 @@ public class HouseholdDetails extends AppCompatActivity {
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
         house = getHousehold(householdId);
+        refreshActivity(house);
 
         caregiver = CaregiverDao.getCaregiver(householdId);
 
@@ -232,11 +235,13 @@ public class HouseholdDetails extends AppCompatActivity {
             cname.setText(house.getCaregiver_name() + " Household");
         }
 
-        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
-
-            updatedCaregiverName.setVisibility(View.VISIBLE);
-            updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
-
+        try {
+            if(updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
+                updatedCaregiverName.setVisibility(View.VISIBLE);
+                updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
+            }
+        } catch (NullPointerException e) {
+            Log.e("TAG", "Error: " + e.getMessage());
         }
 
         countFemales = IndexPersonDao.countFemales(householdId);
@@ -264,7 +269,21 @@ public class HouseholdDetails extends AppCompatActivity {
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
-
+    private String checkAndConvertDateFormat(String date){
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return date;
+        } else {
+            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            try {
+                LocalDate localDate = LocalDate.parse(date, oldFormatter);
+                return localDate.format(newFormatter);
+            } catch (DateTimeParseException e) {
+                Log.e("TAG", "Invalid date format: " + e.getMessage());
+                return "Invalid date format";
+            }
+        }
+    }
 
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {
@@ -645,16 +664,32 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    JSONObject subPop = getFieldJSONObject(fields(indexRegisterForm, "step2"), "sub_population");
+                    if (house.getSub_population() != null) {
+                        String subPopulationString = house.getSub_population();
+                        JSONArray subPopulations = new JSONArray(subPopulationString);
+                        JSONArray options = subPop.getJSONArray("options");
 
-                    JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
+                        for (int i = 0; i < options.length(); i++) {
+                            JSONObject option = options.getJSONObject(i);
+                            String key = option.getString("key");
+                            if (subPopulations.toString().contains("\"" + key + "\"")) {
+                                option.put("value", "true");
+                            } else {
+                                option.put("value", "false");
+                            }
+                        }
+                    }
+                    else {
+                        JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
 
-                    subPopulation.getJSONObject(0).put("value", house.getSubpop1());
-                    subPopulation.getJSONObject(1).put("value", house.getSubpop2());
-                    subPopulation.getJSONObject(2).put("value", house.getSubpop3());
-                    subPopulation.getJSONObject(3).put("value", house.getSubpop4());
-                    subPopulation.getJSONObject(5).put("value", house.getSubpop());
-                    subPopulation.getJSONObject(4).put("value", house.getSubpop5());
-
+                        subPopulation.getJSONObject(0).put("value", house.getSubpop1());
+                        subPopulation.getJSONObject(1).put("value", house.getSubpop2());
+                        subPopulation.getJSONObject(2).put("value", house.getSubpop3());
+                        subPopulation.getJSONObject(3).put("value", house.getSubpop4());
+                        subPopulation.getJSONObject(5).put("value", house.getSubpop());
+                        subPopulation.getJSONObject(4).put("value", house.getSubpop5());
+                    }
                     indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
@@ -1000,7 +1035,9 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Caregiver Case Plan":
-                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).optString("value");
+
+                        JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                        String dateId = date.optString("value");
 
                         JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
                         String cp_Id = cpId.optString("value");
@@ -1446,26 +1483,29 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
     public void countNumberOfMales(List<String> allBirthDates){
-            int totalNumberOfMalesBelowFive = 0;
-            int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
-            DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
-            if( allBirthDates != null)
-            {
+        int totalNumberOfMalesBelowFive = 0;
+        int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if( allBirthDates != null)
+        {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                {
-                    totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                    {
+                        totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                    }
+                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
+                    {
+                        totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
+                    }
                 }
-                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
-                {
-                    totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
-                 }
             }
-            }
+        }
 
         lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
         malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
@@ -1474,28 +1514,30 @@ public class HouseholdDetails extends AppCompatActivity {
     public void countNumberOfFemales(List<String> allBirthDates){
         int totalNumberOfFemalesBelowFive = 0;
         int totalNumberOfFemalesBetweenTenAndSeventeen =0 ;
-        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if( allBirthDates != null)
         {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                {
-                    totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
-                }
-                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
-                {
-                    totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                    {
+                        totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
+                    }
+                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
+                    {
+                        totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                    }
                 }
             }
         }
 
         lessThanFiveFemales = String.valueOf(totalNumberOfFemalesBelowFive);
         FemalesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfFemalesBetweenTenAndSeventeen);
-
     }
 
     public void countChildren10to17(List<String> allBirthDates){
@@ -1528,25 +1570,26 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public void countNumberofChildren(List<String> allBirthDates){
         int totalNumberOfChildren = 0;
-        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if( allBirthDates != null)
         {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
 
-                if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
-                {
-                    totalNumberOfChildren = totalNumberOfChildren + 1;
+                    if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+                    {
+                        totalNumberOfChildren = totalNumberOfChildren + 1;
+                    }
                 }
-
             }
         }
 
         totalChildren = String.valueOf(totalNumberOfChildren);
-
     }
 
     public int countNumberofChildren10to17(List<String> allBirthDates){
@@ -1608,14 +1651,17 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.call:
-                String caregiverPhoneNumber = house.getCaregiver_phone();
-                if (!caregiverPhoneNumber.equals("")) {
-
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                    startActivity(callIntent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                try {
+                    String caregiverPhoneNumber = house.getCaregiver_phone();
+                    if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                        startActivity(callIntent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Log.e("Phone Number Error", "Exception", e);
                 }
 
                 return true;
@@ -1661,11 +1707,28 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
             case R.id.case_status:
-                try {
-                    openFormUsingFormUtils(getBaseContext(),"household_case_status");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+//                Boolean status = IndexPersonDao.checkGraduationStatus(householdId);
+//                if(status.equals(false)){
+//                    showDialogBox("You need to deregister all the vcas in the household");
+//                } else {
+                    try {
+                        openFormUsingFormUtils(getBaseContext(),"household_case_status");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+//                }
+//                FormUtils formUtils = null;
+//                try {
+//                    formUtils = new FormUtils(HouseholdDetails.this);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                JSONObject indexRegisterForm = formUtils.getFormJson("household_case_status");
+//
+//                startFormActivity(indexRegisterForm);
+
+
+
 
                 break;
             case R.id.update_caregiver_details:
@@ -1827,10 +1890,38 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
                 formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
+                if(vcaGradStatus.equals(false)){
+                    JSONObject status = getFieldJSONObject(fields(formToBeOpened, "step1"), "household_case_status");
+                    JSONArray options = status.getJSONArray("options");
+
+                    for (int i = 0; i < options.length(); i++) {
+                        JSONObject option = options.getJSONObject(i);
+                        if ("0".equals(option.getString("key"))) {
+                            options.remove(i);
+                            break;
+                        }
+                    }
+                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                    info.put("type", "toaster_notes");
+                    info.put("text","If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
+
+                } else {
+                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                    info.put("type", "hidden");
+                }
+
                 break;
             case "update_caregiver_details":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
-                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                if (updatedCaregiver != null){
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
+                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                }
+
+
                 break;
 
         }
@@ -1853,5 +1944,12 @@ public class HouseholdDetails extends AppCompatActivity {
         Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
         startActivity(returnToHouseholdIndexActivity);
         finish();
+    }
+    public void refreshActivity(Household house){
+        if(house == null){
+            finish();
+            startActivity(getIntent());
+        }
+
     }
 }

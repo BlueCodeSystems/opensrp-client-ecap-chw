@@ -278,6 +278,16 @@
             "key": "subpop",
             "text": "Children of Female Sex Workers (FSWs)",
             "value": "false"
+          },
+          {
+            "key": "Siblings of the Index/Other family members",
+            "text": "Siblings of the Index/Other family members"
+
+          },
+          {
+            "key": "PBFW",
+            "text": "PBFW"
+
           }
         ],
         "v_required": {
@@ -767,20 +777,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
-        "type": "edit_text",
-        "read_only": "true",
+        "type": "date_picker",
         "hint": "Date of next VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
         "relevance": {
           "step2:active_on_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
-          }
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "service_report_household_calculation.yml"
-            }
           }
         }
       },

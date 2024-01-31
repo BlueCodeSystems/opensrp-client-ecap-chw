@@ -2,27 +2,24 @@ package com.bluecodeltd.ecap.chw.repository;
 
 import android.content.Context;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
-import org.smartregister.chw.anc.repository.VisitDetailsRepository;
-import org.smartregister.chw.anc.repository.VisitRepository;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import org.smartregister.chw.core.BuildConfig;
-import org.smartregister.chw.core.application.CoreChwApplication;
-import org.smartregister.chw.core.repository.StockUsageReportRepository;
-import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.util.ChildDBConstants;
 import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtils;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtilsFlv;
-import org.smartregister.domain.db.Column;
+
+import net.sqlcipher.database.SQLiteDatabase;
+
+import org.smartregister.chw.anc.repository.VisitDetailsRepository;
+import org.smartregister.chw.anc.repository.VisitRepository;
+import org.smartregister.chw.core.BuildConfig;
+import org.smartregister.chw.core.repository.StockUsageReportRepository;
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.immunization.repository.RecurringServiceRecordRepository;
 import org.smartregister.immunization.repository.VaccineRepository;
 import org.smartregister.immunization.util.IMDatabaseUtils;
 import org.smartregister.reporting.ReportingLibrary;
-import org.smartregister.repository.AlertRepository;
-import org.smartregister.repository.EventClientRepository;
 import org.smartregister.util.DatabaseMigrationUtils;
 
 import java.util.ArrayList;
@@ -47,60 +44,6 @@ public class ChwRepositoryFlv {
                     break;
                 case 3:
                     upgradeToVersion3(db);
-                    break;
-                case 4:
-                    upgradeToVersion4(db);
-                    break;
-                case 5:
-                    upgradeToVersion5(db);
-                    break;
-                case 7:
-                    upgradeToVersion7(db);
-                    break;
-                case 8:
-                    upgradeToVersion8(db);
-                    break;
-                case 9:
-                    upgradeToVersion9(db);
-                    break;
-                case 10:
-                    upgradeToVersion10(db);
-                    break;
-                case 12:
-                    upgradeToVersion12(db);
-                    break;
-                case 13:
-                    upgradeToVersion13(db);
-                    break;
-                case 14:
-                    upgradeToVersion14(db);
-                    break;
-                case 15:
-                    upgradeToVersion15(db);
-                    break;
-                case 16:
-                    upgradeToVersion16(db);
-                    break;
-                case 17:
-                    upgradeToVersion17(db);
-                    break;
-                case 18:
-                    upgradeToVersion18(db);
-                    break;
-                case 19:
-                    upgradeToVersion19(db);
-                    break;
-                case 20:
-                    upgradeToVersion20(db);
-                    break;
-                case 21:
-                    upgradeToVersion21(db);
-                    break;
-                case 22:
-                    upgradeToVersion22(db);
-                    break;
-                case 23:
-                    upgradeToVersion23(context, db);
                     break;
                 default:
                     break;
@@ -131,39 +74,18 @@ public class ChwRepositoryFlv {
 
     private static void upgradeToVersion3(SQLiteDatabase db) {
         try {
-            Column[] columns = {EventClientRepository.event_column.formSubmissionId};
-            EventClientRepository.createIndex(db, EventClientRepository.Table.event, columns);
-
-            db.execSQL(VaccineRepository.ALTER_ADD_CREATED_AT_COLUMN);
-            VaccineRepository.migrateCreatedAt(db);
-
-            db.execSQL(RecurringServiceRecordRepository.ALTER_ADD_CREATED_AT_COLUMN);
-            RecurringServiceRecordRepository.migrateCreatedAt(db);
+            db.execSQL("ALTER TABLE ec_household ADD sub_population VARCHAR");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion3 ");
-        }
-        try {
-            Column[] columns = {EventClientRepository.event_column.formSubmissionId};
-            EventClientRepository.createIndex(db, EventClientRepository.Table.event, columns);
-
-
-        } catch (Exception e) {
-            Timber.e(e, "upgradeToVersion3 " + e.getMessage());
         }
     }
 
     private static void upgradeToVersion4(SQLiteDatabase db) {
         try {
-            db.execSQL(AlertRepository.ALTER_ADD_OFFLINE_COLUMN);
-            db.execSQL(AlertRepository.OFFLINE_INDEX);
-            db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_TEAM_COL);
-            db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_TEAM_ID_COL);
-            db.execSQL(RecurringServiceRecordRepository.UPDATE_TABLE_ADD_TEAM_COL);
-            db.execSQL(RecurringServiceRecordRepository.UPDATE_TABLE_ADD_TEAM_ID_COL);
+            db.execSQL("CREATE TABLE ec_pmtct_mother(id VARCHAR PRIMARY KEY,relationalid VARCHAR, details VARCHAR, base_entity_id VARCHAR,is_closed VARCHAR,province VARCHAR,district VARCHAR,ward VARCHAR,facility VARCHAR,partner VARCHAR,pmtct_id VARCHAR,date_enrolled_ecap VARCHAR,date_enrolled_pmtct VARCHAR,household_id VARCHAR,caregiver_name VARCHAR,caregiver_sex VARCHAR,date_started_art VARCHAR,art_number VARCHAR,mothers_smh_no VARCHAR,homeaddress VARCHAR,landmark VARCHAR,phone_number VARCHAR,mothers_landline VARCHAR,date_of_st_contact VARCHAR,gest_age VARCHAR,done_hiv_test VARCHAR,date_tested VARCHAR,delete_status VARCHAR,hiv_result VARCHAR,vl_result VARCHAR,partner_tested VARCHAR)");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion4 ");
         }
-
     }
 
     private static void upgradeToVersion5(SQLiteDatabase db) {

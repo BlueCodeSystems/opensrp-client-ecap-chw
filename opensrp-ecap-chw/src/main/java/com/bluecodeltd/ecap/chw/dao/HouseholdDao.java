@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.util.Log;
+
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.FamilyServiceModel;
@@ -173,19 +175,15 @@ public class HouseholdDao extends AbstractDao {
         }
     }
     public static String countNumberoFHouseholds () {
-
-        String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND status IS NULL OR status != '1'";
-
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
-
-        List<String> values = AbstractDao.readData(sql, dataMap);
-
-        if(values != null && values.size() > 0 ){
-            return values.get(0);
-        } else {
+        try {
+            String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND (status IS NULL OR status != '1')";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "houses");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return (values != null && !values.isEmpty()) ? values.get(0) : "0";
+        } catch (Exception e) {
+            Log.e("countNumberoFHouseholds", "Exception", e);
             return "0";
         }
-
     }
 
     public static String countNumberOfHouseholdsByCaseworkerPhone ( String caseworkerPhoneNumber)
@@ -227,6 +225,19 @@ public class HouseholdDao extends AbstractDao {
         String sql = "SELECT *,A.* FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B ON A.household_id = B.household_id";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+        if (values == null || values.size() == 0)
+        {
+            return new Household();
+        }
+
+        return values.get(0);
+
+    }
+    public static Household getVcaSubPop (String householdID, String uniqueID) {
+
+        String sql = "SELECT *,A.* FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "' AND unique_id = '" + uniqueID + "') AS A LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B ON A.household_id = B.household_id";
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
         if (values == null || values.size() == 0)
         {
             return new Household();
@@ -472,6 +483,7 @@ public class HouseholdDao extends AbstractDao {
             record.setNew_relation(getCursorValue(c, "new_relation"));
             record.setNew_caregiver_hiv_status(getCursorValue(c, "new_caregiver_hiv_status"));
             record.setNew_caregiver_phone(getCursorValue(c, "new_caregiver_phone"));
+            record.setSub_population(getCursorValue(c, "sub_population"));
 
 
             return record;
