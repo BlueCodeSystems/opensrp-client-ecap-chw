@@ -10,6 +10,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -224,6 +227,17 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
                 Timber.e(e);
             }
         });
+        String sVisit = visit.getPostnatal_care_visit();
+        if(sVisit != null){
+
+            SpannableString spannableString = new SpannableString(sVisit);
+            spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, sVisit.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.txtVisit.setText("Visit at: "+ spannableString);
+        } else{
+            holder.txtVisit.setVisibility(View.GONE);
+        }
+
 
     }
     public void showDialogBox(String householdId,String message){
@@ -380,7 +394,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate;
+        TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate,txtVisit;
 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme,delete;
@@ -400,6 +414,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
+            txtVisit = itemView.findViewById(R.id.visit);
 
 
         }
