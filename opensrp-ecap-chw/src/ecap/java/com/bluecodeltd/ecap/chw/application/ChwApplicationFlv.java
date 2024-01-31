@@ -109,7 +109,7 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
     @Override
     public String[] getFTSTables() {
-        return new String[]{CoreConstants.TABLE_NAME.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.EC_MOTHER_INDEX, Constants.EcapClientTable.EC_HOUSEHOLD,CoreConstants.TABLE_NAME.EC_HIV_TESTING_SERVICE};
+        return new String[]{CoreConstants.TABLE_NAME.EC_CLIENT_INDEX, CoreConstants.TABLE_NAME.EC_MOTHER_INDEX, Constants.EcapClientTable.EC_HOUSEHOLD,CoreConstants.TABLE_NAME.EC_HIV_TESTING_SERVICE,CoreConstants.TABLE_NAME.EC_MOTHER_PMTCT};
     }
 
     @Override
@@ -153,6 +153,12 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "last_name",
                 "client_number",
                 "testing_modality"
+        });
+        map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                "mothers_full_name",
+                "pmtct_id",
+                "household_id"
         });
 
 
@@ -200,6 +206,12 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "middle_name",
                 "last_name",
                 "client_number"
+        });
+        map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                "mothers_full_name",
+                "pmtct_id",
+                "household_id"
         });
         return map;
     }
