@@ -7899,6 +7899,13 @@
           }
         },
         {
+          "column_name": "postnatal_care_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.postnatal_care_visit"
+          }
+        },
+        {
 
           "column_name": "date_enrolled_pmtct",
           "type": "Client",

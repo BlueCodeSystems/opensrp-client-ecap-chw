@@ -161,6 +161,7 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setNumber_of_condoms_distributed_at_18_months(getCursorValue(c, "number_of_condoms_distributed_at_18_months"));
             record.setComments_at_postnatal_care_visit_18(getCursorValue(c, "comments_at_postnatal_care_visit_18"));
             record.setMothers_outcome(getCursorValue(c, "mothers_outcome"));
+            record.setPostnatal_care_visit(getCursorValue(c, "postnatal_care_visit"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
             return record;
