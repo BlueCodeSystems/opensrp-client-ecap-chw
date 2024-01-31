@@ -184,7 +184,7 @@
           "hint": "Other Reason",
           "edit_type": "name",
           "relevance": {
-            "step1:reason": {
+            "step1:de_registration_reason": {
               "type": "string",
               "ex": "equalTo(., \"other\")"
             }

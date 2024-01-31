@@ -1,11 +1,12 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class GraduationModel {
-
     private String base_entity_id;
-    private String caseworker_name;
+    private String household_id;
     private String date_assessment;
     private String previous_asmt_date;
+    private String hiv_status_enrolled;
+    private String caregiver_hiv_status_enrolled;
     private String virally_suppressed;
     private String suppressed_caregiver;
     private String prevention;
@@ -23,6 +24,8 @@ public class GraduationModel {
     private String year_school;
     private String repeat_school;
     private String additional_information;
+    private String graduation_status;
+    private String delete_status;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -32,12 +35,12 @@ public class GraduationModel {
         this.base_entity_id = base_entity_id;
     }
 
-    public String getCaseworker_name() {
-        return caseworker_name;
+    public String getHousehold_id() {
+        return household_id;
     }
 
-    public void setCaseworker_name(String caseworker_name) {
-        this.caseworker_name = caseworker_name;
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 
     public String getDate_assessment() {
@@ -56,12 +59,36 @@ public class GraduationModel {
         this.previous_asmt_date = previous_asmt_date;
     }
 
+    public String getHiv_status_enrolled() {
+        return hiv_status_enrolled;
+    }
+
+    public void setHiv_status_enrolled(String hiv_status_enrolled) {
+        this.hiv_status_enrolled = hiv_status_enrolled;
+    }
+
+    public String getCaregiver_hiv_status_enrolled() {
+        return caregiver_hiv_status_enrolled;
+    }
+
+    public void setCaregiver_hiv_status_enrolled(String caregiver_hiv_status_enrolled) {
+        this.caregiver_hiv_status_enrolled = caregiver_hiv_status_enrolled;
+    }
+
     public String getVirally_suppressed() {
         return virally_suppressed;
     }
 
     public void setVirally_suppressed(String virally_suppressed) {
         this.virally_suppressed = virally_suppressed;
+    }
+
+    public String getSuppressed_caregiver() {
+        return suppressed_caregiver;
+    }
+
+    public void setSuppressed_caregiver(String suppressed_caregiver) {
+        this.suppressed_caregiver = suppressed_caregiver;
     }
 
     public String getPrevention() {
@@ -184,11 +211,19 @@ public class GraduationModel {
         this.additional_information = additional_information;
     }
 
-    public String getSuppressed_caregiver() {
-        return suppressed_caregiver;
+    public String getGraduation_status() {
+        return graduation_status;
     }
 
-    public void setSuppressed_caregiver(String suppressed_caregiver) {
-        this.suppressed_caregiver = suppressed_caregiver;
+    public void setGraduation_status(String graduation_status) {
+        this.graduation_status = graduation_status;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 }

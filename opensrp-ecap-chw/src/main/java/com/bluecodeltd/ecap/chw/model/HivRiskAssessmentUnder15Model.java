@@ -23,22 +23,8 @@ public class HivRiskAssessmentUnder15Model {
     private String phone;
     private String household_id;
     private String unique_id;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getCaseworker_name() {
-        return caseworker_name;
-    }
-
-    public void setCaseworker_name(String caseworker_name) {
-        this.caseworker_name = caseworker_name;
-    }
+    private String delete_status;
+    private String date_edited;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -80,6 +66,13 @@ public class HivRiskAssessmentUnder15Model {
         this.start_date = start_date;
     }
 
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
 
     public String getArt_number() {
         return art_number;
@@ -169,12 +162,20 @@ public class HivRiskAssessmentUnder15Model {
         this.date_of_hiv_test = date_of_hiv_test;
     }
 
-    public String getFacility() {
-        return facility;
+    public String getCaseworker_name() {
+        return caseworker_name;
     }
 
-    public void setFacility(String facility) {
-        this.facility = facility;
+    public void setCaseworker_name(String caseworker_name) {
+        this.caseworker_name = caseworker_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getHousehold_id() {
@@ -191,5 +192,21 @@ public class HivRiskAssessmentUnder15Model {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
     }
 }

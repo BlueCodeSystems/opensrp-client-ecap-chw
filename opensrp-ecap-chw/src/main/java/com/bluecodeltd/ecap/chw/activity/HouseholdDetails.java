@@ -56,6 +56,8 @@ import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.domain.Mother;
+import com.bluecodeltd.ecap.chw.fragment.CaregiverHivAssessmentFragment;
+import com.bluecodeltd.ecap.chw.fragment.GraduationAssessmentFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
@@ -313,6 +315,15 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter.addFragment(new HouseholdChildrenFragment());
         mPagerAdapter.addFragment(new HouseholdCasePlanFragment());
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
+        mPagerAdapter.addFragment(new GraduationAssessmentFragment());
+
+
+        String hivStatus = house.getCaregiver_hiv_status();
+
+        if (hivStatus != null && "negative".equalsIgnoreCase(hivStatus)) {
+            mPagerAdapter.addFragment(new CaregiverHivAssessmentFragment());
+        }
+
 
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
@@ -320,8 +331,12 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
-        mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
         mTabLayout.getTabAt(2).setText("CP");
+        mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
+        mTabLayout.getTabAt(4).setText("Grad");
+        if (mPagerAdapter.getCount() > 5) {
+            mTabLayout.getTabAt(5).setText("HIV ASSESSMENT");
+        }
 
     }
 

@@ -18,11 +18,9 @@ import androidx.preference.PreferenceManager;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
-import com.bluecodeltd.ecap.chw.fragment.HivTestingServiceRegisterFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTRegisterFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
-import com.bluecodeltd.ecap.chw.presenter.HivTestingRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.PMTCTRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
@@ -112,7 +110,7 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
     public void startFormActivity(String formName, String entityId, String metaData) {
         try {
             String locationId = Utils.context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-            ((HivTestingRegisterPresenter) this.presenter).startForm(formName, entityId, metaData, locationId);
+            ((PMTCTRegisterPresenter) this.presenter).startForm(formName, entityId, metaData, locationId);
 
         } catch (Exception e) {
             Timber.e(e);
@@ -143,18 +141,18 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
         Rnumber = Number.nextInt(900000000);
         String newEntityId =  Integer.toString(Rnumber);
 
-        //******** POPULATE AS INDEX VCA ******//
-        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP1), "index_check_box");
-
-        if (indexCheckObject != null) {
-            indexCheckObject.remove(JsonFormUtils.VALUE);
-            try {
-                indexCheckObject.put(JsonFormUtils.VALUE, "1");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        //******** POPULATE FACILITY ******//
+//        //******** POPULATE AS INDEX VCA ******//
+//        JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP1), "index_check_box");
+//
+//        if (indexCheckObject != null) {
+//            indexCheckObject.remove(JsonFormUtils.VALUE);
+//            try {
+//                indexCheckObject.put(JsonFormUtils.VALUE, "1");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        //******** POPULATE FACILITY ******//
         JSONObject facilityObject = getFieldJSONObject(fields(jsonObject, STEP1), "health_facility");
 
         if (facilityObject != null) {
@@ -165,69 +163,69 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
                 e.printStackTrace();
             }
         }
-        //******** POPULATE PARTNER ******//
-        JSONObject partnerObject = getFieldJSONObject(fields(jsonObject, STEP1), "implementing_partner");
+//        //******** POPULATE PARTNER ******//
+//        JSONObject partnerObject = getFieldJSONObject(fields(jsonObject, STEP1), "implementing_partner");
 
-        if (partnerObject != null) {
-            partnerObject.remove(JsonFormUtils.VALUE);
-            try {
-                partnerObject.put(JsonFormUtils.VALUE, partner);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
+//        if (partnerObject != null) {
+//            partnerObject.remove(JsonFormUtils.VALUE);
+//            try {
+//                partnerObject.put(JsonFormUtils.VALUE, partner);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
 
-        //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "client_number");
 
-        if (stepOneUniqueId != null) {
-            stepOneUniqueId.remove(JsonFormUtils.VALUE);
-            try {
-                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
 
+//        //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+//        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "client_number");
+//
+//        if (stepOneUniqueId != null) {
+//            stepOneUniqueId.remove(JsonFormUtils.VALUE);
+//            try {
+//                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
         try {
             //******** POPULATE JSON FORM WITH HOUSEHOLD ID ******//
             CoreJsonFormUtils.populateJsonForm(jsonObject,oMapper.convertValue(obj, Map.class));
 
-            JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
+            JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "pmtct_id");
 
-            if (stepHouseholdId != null) {
-                stepHouseholdId.remove(JsonFormUtils.VALUE);
-                try {
-                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+//            if (stepHouseholdId != null) {
+//                stepHouseholdId.remove(JsonFormUtils.VALUE);
+//                try {
+//                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JSONObject dateClientCreated = getFieldJSONObject(fields(jsonObject, STEP1), "date_client_created");
-        if (dateClientCreated  != null) {
-            dateClientCreated.remove(JsonFormUtils.VALUE);
-            try {
-                dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        JSONObject dateEdited = getFieldJSONObject(fields(jsonObject, STEP1), "date_edited");
-        if (dateEdited  != null) {
-            dateEdited.remove(JsonFormUtils.VALUE);
-            try {
-                dateEdited.put(JsonFormUtils.VALUE, getFormattedDate());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+//        JSONObject dateClientCreated = getFieldJSONObject(fields(jsonObject, STEP1), "date_client_created");
+//        if (dateClientCreated  != null) {
+//            dateClientCreated.remove(JsonFormUtils.VALUE);
+//            try {
+//                dateClientCreated.put(JsonFormUtils.VALUE, getFormattedDate());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        JSONObject dateEdited = getFieldJSONObject(fields(jsonObject, STEP1), "date_edited");
+//        if (dateEdited  != null) {
+//            dateEdited.remove(JsonFormUtils.VALUE);
+//            try {
+//                dateEdited.put(JsonFormUtils.VALUE, getFormattedDate());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -261,7 +259,7 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
 
                    gotToChildProfile(uniqueId);
 
-                } else if(Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
+                } else if(Constants.EcapEncounterType.MOTHER_PMTCT.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))){
 
                     RegisterParams registerParam = new RegisterParams();
@@ -270,9 +268,9 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
                     showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
-                    hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");
+                   // hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");
 
-                    goToHouseholdProfile(hid);
+                    //goToHouseholdProfile(hid);
 
                 }
 
@@ -431,8 +429,8 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
-            bottomNavigationView.getMenu().removeItem(R.id.action_identifcation);
-         //   bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add VCA");
+            bottomNavigationView.getMenu().removeItem(R.id.action_hts);
+            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
 
         }
     }

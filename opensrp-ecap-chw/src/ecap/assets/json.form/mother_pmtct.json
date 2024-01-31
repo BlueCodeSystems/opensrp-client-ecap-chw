@@ -1,0 +1,385 @@
+{
+  "count": "1",
+  "encounter_type": "Mother Pmtct",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Basic Program Information"
+      },
+      {
+        "key": "is_closed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_closed",
+        "type": "hidden"
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "province",
+        "type": "edit_text",
+        "hint": "Province",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "district",
+        "type": "edit_text",
+        "hint": "District",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "read_only": "false",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
+        "type": "edit_text",
+        "hint": "Implementing Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Name of Community Case Worker",
+        "read_only": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "PMTCT Mothers Details"
+      },
+      {
+        "key": "date_enrolled_ecap",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_enrolled_ecap",
+        "type": "date_picker",
+        "hint": "Date Enrolled in USAID ECAPII Program",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date enrolled"
+        }
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "edit_text",
+        "read_only": "false",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the ECAPII comprehensive program ID"
+        }
+      },
+      {
+        "key": "date_enrolled_pmtct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_enrolled_pmtct",
+        "type": "date_picker",
+        "hint": "Date Enrolled in Community PMTCT Program",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date enrolled"
+        }
+      },
+
+      {
+        "key": "mothers_full_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mothers_full_name",
+        "type": "edit_text",
+        "hint": "Name (Surname&First Name)",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name can only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "nick_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nick_name",
+        "type": "edit_text",
+        "hint": "Client's Nick Name",
+        "look_up": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name can only contain letters"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "mothers_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mothers_age",
+        "type": "date_picker",
+        "hint": "Age",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today-10y",
+        "v_required": {
+          "value": true,
+          "err": "Please enter age"
+        }
+      },
+      {
+        "key": "date_initiated_on_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_initiated_on_art",
+        "type": "date_picker",
+        "hint": "Date Initiated on ART",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "edit_type": "name"
+      },
+      {
+        "key": "mothers_smh_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mothers_smh_no",
+        "type": "edit_text",
+        "hint": "Mother’s SMH No."
+      },
+      {
+        "key": "ecap_id_question",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecap_id_question",
+        "type": "native_radio",
+        "label": "Do you have the ECAP II household ID?",
+        "read_only": false,
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Do you have the ECAP II household ID"
+        }
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name",
+        "relevance": {
+          "step1:ecap_id_question": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "Please enter the household ID"
+        }
+      },
+      {
+        "key": "home_address",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "home_address",
+        "type": "edit_text",
+        "hint": "Address",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the home address"
+        }
+      },
+
+      {
+        "key": "nearest_landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nearest_landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark"
+      },
+      {
+        "key": "mothers_phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mothers_phone",
+        "type": "edit_text",
+        "hint": "Phone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      }
+
+    ]
+  }
+}

@@ -1,0 +1,849 @@
+{
+  "count": "1",
+  "encounter_type": "Mother Pmtct",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "display_back_button": "true",
+    "fields": [
+
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Postnatal Care"
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "date_of_st_post_natal_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_st_post_natal_care",
+        "type": "date_picker",
+        "hint": "Date of 1st Post Natal Care",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      },
+      {
+        "key": "mother_tested_for_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_tested_for_hiv",
+        "type": "date_picker",
+        "hint": "When was the mother tested for HIV?",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      },
+      {
+        "key": "postnatal_care_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "postnatal_care_visit",
+        "type": "native_radio",
+        "label": "Postnatal Care Visit",
+        "options": [
+          {
+            "key": "6 weeks",
+            "text": "6 weeks"
+          },
+          {
+            "key": "6 months",
+            "text": "6 months"
+          },
+          {
+            "key": "9 months",
+            "text": "9 months"
+          },
+          {
+            "key": "12 months",
+            "text": "12 months"
+          },
+          {
+            "key": "18 months",
+            "text": "18 months"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the postnatal care visit"
+        }
+      },
+      {
+        "key": "hiv_test_result_r_nr_at_6_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_result_r_nr_at_6_weeks",
+        "type": "native_radio",
+        "label": "HIV Test Result (R/NR)(6 weeks)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
+      },
+      {
+        "key": "art_initiated_at_6_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_initiated_at_6_weeks",
+        "type": "native_radio",
+        "label": "ART Initiated(6 weeks)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
+      },
+      {
+        "key": "art_adherence_counselling_support_at_6_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_adherence_counselling_support_at_6_weeks",
+        "type": "native_radio",
+        "label": "ART Adherence Counseling and Support(6 weeks)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
+      },
+      {
+        "key": "family_planning_counselling_at_6_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "family_planning_counselling_at_6_weeks",
+        "type": "native_radio",
+        "label": "Family Planning Counseling(6 weeks)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
+      },
+      {
+        "key": "comments_at_postnatal_care_visit_6_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_at_postnatal_care_visit_6_weeks",
+        "type": "edit_text",
+        "hint": "Comments (6 weeks)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_test_result_r_nr_at_6_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_result_r_nr_at_6_months",
+        "type": "native_radio",
+        "label": "HIV Test Result (R/NR) (6 months)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_initiated_at_6_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_initiated_at_6_months",
+        "type": "native_radio",
+        "label": "ART Initiated (6 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
+      },
+      {
+        "key": "family_planning_counselling_at_6_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "family_planning_counselling_at_6_months",
+        "type": "native_radio",
+        "label": "Family Planning Counseling(6 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
+      },
+      {
+        "key": "number_of_condoms_distributed_at_6_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_of_condoms_distributed_at_6_months",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of Condoms Distributed(6 months) ",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
+      },
+      {
+        "key": "comments_at_postnatal_care_visit_6",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_at_postnatal_care_visit_6",
+        "type": "edit_text",
+        "hint": "Comments (6 months)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
+      },
+
+      {
+        "key": "hiv_test_result_r_nr_at_9_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_result_r_nr_at_9_months",
+        "type": "native_radio",
+        "label": "HIV Test Result (R/NR) (9 months)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_initiated_at_9_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_initiated_at_9_months",
+        "type": "native_radio",
+        "label": "ART Initiated (9 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_adherence_counselling_support_at_9_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_adherence_counselling_support_at_9_months",
+        "type": "native_radio",
+        "label": "ART Adherence Counseling and Support (9 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
+      },
+      {
+        "key": "family_planning_counselling_at_9_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "family_planning_counselling_at_9_months",
+        "type": "native_radio",
+        "label": "Family Planning Counseling (9 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
+      },
+      {
+        "key": "number_of_condoms_distributed_at_9_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_of_condoms_distributed_at_9_months",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of Condoms Distributed (9 months) ",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
+      },
+      {
+        "key": "comments_at_postnatal_care_visit_9",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_at_postnatal_care_visit_9",
+        "type": "edit_text",
+        "hint": "Comments (9 months)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
+      },
+
+      {
+        "key": "hiv_test_result_r_nr_at_12_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_result_r_nr_at_12_months",
+        "type": "native_radio",
+        "label": "HIV Test Result (R/NR) (12 months)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_initiated_at_12_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_initiated_at_12_months",
+        "type": "native_radio",
+        "label": "ART Initiated (12 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_adherence_counselling_support_at_12_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_adherence_counselling_support_at_12_months",
+        "type": "native_radio",
+        "label": "ART Adherence Counseling and Support  (12 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
+      },
+      {
+        "key": "family_planning_counselling_at_12_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "family_planning_counselling_at_12_months",
+        "type": "native_radio",
+        "label": "Family Planning Counseling (12 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
+      },
+      {
+        "key": "number_of_condoms_distributed_at_12_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_of_condoms_distributed_at_12_months",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of Condoms Distributed (12 months)",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
+      },
+      {
+        "key": "comments_at_postnatal_care_visit_12",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_at_postnatal_care_visit_12",
+        "type": "edit_text",
+        "hint": "Comments (12 months)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
+      },
+
+      {
+        "key": "hiv_test_result_r_nr_at_18_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_result_r_nr_at_18_months",
+        "type": "native_radio",
+        "label": "HIV Test Result (R/NR) (18 months)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_initiated_at_18_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_initiated_at_18_months",
+        "type": "native_radio",
+        "label": "ART Initiated (18 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
+      },
+      {
+        "key": "art_adherence_counselling_support_at_18_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_adherence_counselling_support_at_18_months",
+        "type": "native_radio",
+        "label": "ART Adherence Counseling and Support (18 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
+      },
+      {
+        "key": "family_planning_counselling_at_18_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "family_planning_counselling_at_18_months",
+        "type": "native_radio",
+        "label": "Family Planning Counseling (18 months)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
+      },
+      {
+        "key": "number_of_condoms_distributed_at_18_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_of_condoms_distributed_at_18_months",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of Condoms Distributed (18 months)",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
+      },
+      {
+        "key": "comments_at_postnatal_care_visit_18",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_at_postnatal_care_visit_18",
+        "type": "edit_text",
+        "hint": "Comments (18 months)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:postnatal_care_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Mother's Outcome"
+      },
+      {
+        "key": "mothers_outcome",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mothers_outcome",
+        "type": "native_radio",
+        "label": "Mothers Outcome",
+        "options": [
+          {
+            "key": "Dead",
+            "text": "Dead"
+          },
+          {
+            "key": "Lost to follow up",
+            "text": "Lost to follow up"
+          },
+          {
+            "key": "Transited out and Exited from the program",
+            "text": "Transited out and Exited from the program"
+          }
+        ]
+      }
+    ]
+  }
+}

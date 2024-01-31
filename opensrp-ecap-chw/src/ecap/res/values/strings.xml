@@ -41,6 +41,7 @@
     <string name="saving_index">Saving Index Person</string>
     <string name="all_index_title">VCA Register</string>
     <string name="hts_services">HTS Register</string>
+    <string name="pmtct_services">PMTCT</string>
     <string name="all_mother_title">Mothers Register</string>
     <string name="all_households_title">All Households</string>
     <string name="referrals">Referrals</string>

@@ -9,12 +9,10 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
-import com.bluecodeltd.ecap.chw.activity.HTSRegisterFragmentPresenter;
+import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.PMTCTRegisterFragmentPresenter;
-import com.bluecodeltd.ecap.chw.presenter.PMTCTRegisterPresenter;
-import com.bluecodeltd.ecap.chw.provider.HivTestingServicesRegisterProvider;
+import com.bluecodeltd.ecap.chw.provider.PMTCTRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.github.javiersantos.appupdater.AppUpdater;
 
@@ -64,7 +62,7 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
         CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(View.VISIBLE);
-            titleView.setText(getString(R.string.hts_services));
+            titleView.setText(getString(R.string.pmtct_services));
             titleView.setFontVariant(FontVariant.REGULAR);
             titleView.setClickable(false);
 
@@ -140,17 +138,18 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
         } else if (view.getId() == R.id.register_columns){
 
             CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
-            String childId = client.getColumnmaps().get("client_number");
-//            Toasty.success(getActivity(),"Clicked the person",Toasty.LENGTH_LONG).show();
-            goToIndexDetailActivity(childId,client);
+            String childId = client.getColumnmaps().get("base_entity_id");
+            String clientId = client.getColumnmaps().get("pmtct_id");
+//         Toasty.success(getActivity(),"Clicked the person",Toasty.LENGTH_LONG).show();
+           goToMotherDetailActivity(clientId,client);
         }
     }
 
-    protected void goToIndexDetailActivity(String clientId, CommonPersonObjectClient client) {
+    protected void goToMotherDetailActivity(String clientId, CommonPersonObjectClient client) {
 
-        Intent intent = new Intent(getActivity(), HTSDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), MotherPmtctProfileActivity.class);
         intent.putExtra("client_id",  clientId);
-       // intent.putExtra("baseId",  client);
+       intent.putExtra("baseId",  client);
         startActivity(intent);
     }
 
@@ -161,11 +160,10 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
-        HivTestingServicesRegisterProvider registerProvider = new HivTestingServicesRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
+        PMTCTRegisterProvider registerProvider = new PMTCTRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
-
 
     }
 
