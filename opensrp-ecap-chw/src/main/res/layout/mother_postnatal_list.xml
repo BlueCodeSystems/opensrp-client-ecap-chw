@@ -8,6 +8,15 @@
     android:layout_marginTop="5dp"
     android:elevation="20dp"
     >
+    <TextView
+        android:id="@+id/visit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="200dp"
+        android:text="Visit at: 6 weeks"
+         />
     <ImageView
         android:id="@+id/expand_more"
         android:layout_width="wrap_content"
@@ -99,11 +108,14 @@
 
 
 
+
         </LinearLayout>
 
 
 
+
     </LinearLayout>
+
 
 
     <View
