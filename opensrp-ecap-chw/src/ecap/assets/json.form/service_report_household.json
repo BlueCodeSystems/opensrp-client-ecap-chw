@@ -267,6 +267,9 @@
         "label": "HIV/HEALTHY ",
         "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Age-appropriate HIV treatment literacy",
@@ -464,6 +467,9 @@
         "label": "SCHOOLED ",
         "label_info_text": "Tick (x) schooled  Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Child received school uniform",
@@ -546,6 +552,9 @@
         "label": "SAFE ",
         "label_info_text": "Tick (x) SAFE Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Safety plan developed",
@@ -617,6 +626,9 @@
         "label": "STABLE ",
         "label_info_text": "Tick (x) stable Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Linked to WE Program",
@@ -696,6 +708,9 @@
         "label": " HH LEVEL SERVICES ",
         "label_info_text": "Tick (x) other hh level services Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Family or psychosocial support for family conflict mitigation",

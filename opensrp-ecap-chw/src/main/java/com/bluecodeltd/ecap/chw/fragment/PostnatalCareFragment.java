@@ -77,8 +77,28 @@ public class PostnatalCareFragment extends Fragment {
         vieww = inflater.inflate(R.layout.fragment_postnatal_care, container, false);
 
         HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
-            PtctMotherModel motherDetails = mymap.get("client");
-        String pmtctId = motherDetails.getPmtct_id();
+
+// Initialize motherDetails as null.
+        PtctMotherModel motherDetails = null;
+
+        String pmtctId = null;
+
+
+        if (mymap != null) {
+            motherDetails = mymap.get("client");
+
+            if (motherDetails != null) {
+                pmtctId = motherDetails.getPmtct_id();
+
+                if (pmtctId == null || pmtctId.isEmpty()) {
+                }
+            } else {
+
+            }
+        } else {
+
+        }
+
 
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
