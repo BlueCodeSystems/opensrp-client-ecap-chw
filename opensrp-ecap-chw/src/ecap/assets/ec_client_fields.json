@@ -868,6 +868,13 @@
           }
         },
         {
+          "column_name": "household_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_location"
+          }
+        },
+        {
           "column_name": "partner",
           "type": "Client",
           "json_mapping": {
@@ -3500,6 +3507,13 @@
           }
         },
         {
+          "column_name": "vca_service_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_service_location"
+          }
+        },
+        {
           "column_name": "date",
           "type": "Client",
           "json_mapping": {
@@ -4016,6 +4030,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "referral_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_location"
           }
         },
         {
@@ -4661,6 +4682,13 @@
           }
         },
         {
+          "column_name": "visit_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.visit_location"
+          }
+        },
+        {
           "column_name": "visit_date",
           "type": "Client",
           "json_mapping": {
@@ -5006,6 +5034,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "vca_visit_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_visit_location"
           }
         },
         {
@@ -7011,6 +7046,13 @@
       "name": "ec_household_service_report",
       "columns": [
 
+        {
+          "column_name": "hh_service_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_service_location"
+          }
+        },
         {
           "column_name": "services",
           "type": "Client",
