@@ -366,7 +366,7 @@ actions:
 name: step1_positive_mother
 description: positive_mother
 priority: 1
-condition: "step1_is_hiv_positive.contains('no')"
+condition: "step1_is_hiv_positive.contains('no') && helper.formatDate(step1_adolescent_birthdate,'y') <= 2"
 actions:
   - "isRelevant = true"
 ---

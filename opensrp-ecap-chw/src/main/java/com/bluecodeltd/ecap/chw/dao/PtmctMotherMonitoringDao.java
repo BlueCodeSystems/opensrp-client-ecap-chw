@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PtmctMotherMonitoringDao extends AbstractDao {
@@ -20,6 +21,17 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<PtmctMotherMonitoringModel> getPmctMotherHei(String pmtctID) {
+
+        String sql = "SELECT * FROM ec_pmtct_mother_monitoring WHERE pmtct_id = '" + pmtctID + "' ";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static DataMap<PtmctMotherMonitoringModel> getPtmctMotherMonitoringModelMap() {
         return c -> {
@@ -27,6 +39,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             PtmctMotherMonitoringModel record = new PtmctMotherMonitoringModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setUnique_id(getCursorValue(c,"unique_id"));
             record.setInfant_first_name(getCursorValue(c, "infant_first_name"));
             record.setInfant_middle_name(getCursorValue(c, "infant_middle_name"));
             record.setInfant_lastname(getCursorValue(c, "infant_lastname"));

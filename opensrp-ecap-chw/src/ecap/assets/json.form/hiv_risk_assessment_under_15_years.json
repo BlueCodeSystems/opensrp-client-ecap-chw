@@ -268,10 +268,10 @@
         }
       },
       {
-        "key": "Question",
+        "key": "hiv_exposure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Question",
+        "openmrs_entity_id": "hiv_exposure",
         "type": "native_radio",
         "label": "Has the beneficiary had new HIV exposure since the last test?",
         "options": [
