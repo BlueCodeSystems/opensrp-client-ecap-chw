@@ -1011,8 +1011,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+//                        finish();
+//                        startActivity(getIntent());
+                        Intent intent = getIntent();
                         finish();
-                        startActivity(getIntent());
+                        startActivity(intent);
                         break;
                     case "WE Services Caregiver":
 
