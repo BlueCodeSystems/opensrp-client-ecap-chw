@@ -19,6 +19,20 @@
               "ec_pmtct_mother_monitoring"
             ]
           },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Postnatal",
+            "creates_case": [
+              "ec_pmtct_mother_postnatal"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct ANC",
+            "creates_case": [
+              "ec_pmtct_mother_anc"
+            ]
+          },
 
           {
             "field": "eventType",

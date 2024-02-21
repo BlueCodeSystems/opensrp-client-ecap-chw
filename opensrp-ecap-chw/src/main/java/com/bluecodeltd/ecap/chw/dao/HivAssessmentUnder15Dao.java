@@ -43,6 +43,7 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setOn_art(getCursorValue(c, "on_art"));
             record.setStart_date(getCursorValue(c, "start_date"));
             record.setFacility(getCursorValue(c, "facility"));
+            record.setHiv_exposure(getCursorValue(c,"hiv_exposure"));
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setBiological_mother(getCursorValue(c, "biological_mother"));
             record.setDeceased_parents(getCursorValue(c, "deceased_parents"));
