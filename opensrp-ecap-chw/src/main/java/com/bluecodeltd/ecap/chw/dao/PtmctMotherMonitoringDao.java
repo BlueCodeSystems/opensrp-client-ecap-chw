@@ -23,7 +23,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
     }
     public static List<PtmctMotherMonitoringModel> getPmctMotherHei(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother_monitoring WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
 
         List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
         if (values == null || values.size() == 0)
@@ -34,7 +34,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
     }
     public static PtmctMotherMonitoringModel getPMCTChildHei(String uniqueID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother_monitoring WHERE unique_id = '" + uniqueID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_child WHERE unique_id = '" + uniqueID + "' ";
 
         List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
 

@@ -362,7 +362,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="HEI Monitoring"
+                        android:text="Add Child"
                         android:textColor="@color/white"
                         android:textStyle="italic"
                         android:visibility="visible" />

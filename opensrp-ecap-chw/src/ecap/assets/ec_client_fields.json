@@ -8084,7 +8084,7 @@
       ]
     },
     {
-      "name": "ec_pmtct_mother_monitoring",
+      "name": "ec_pmtct_mother_child",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -8165,10 +8165,36 @@
           }
         },
         {
-          "column_name": "dbs_at_birth_due_date",
+          "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.dbs_at_birth_due_date"
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_pmtct_child_monitoring",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "pmtct_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pmtct_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
           }
         },
         {
