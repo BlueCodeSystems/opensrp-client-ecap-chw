@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Mother Pmtct Monitoring",
+  "encounter_type": "Mother Pmtct Child",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -122,7 +122,7 @@
           "err": "Name can only contain letters"
         },
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is required"
         }
       },

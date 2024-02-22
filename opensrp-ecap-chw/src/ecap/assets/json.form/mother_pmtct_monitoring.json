@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Mother Pmtct Monitoring",
+  "encounter_type": "Ptmct Child Monitoring",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -58,15 +58,6 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "Basic Program Information"
-      },
-      {
         "key": "is_closed",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -78,7 +69,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pmtct_id",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
         "hint": "ECAPII Comprehensive Program ID",
         "edit_type": "name"
@@ -89,145 +80,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "hidden"
-      },
-      {
-        "key": "infant_first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_first_name",
-        "type": "edit_text",
-        "hint": "Infant's Firstname",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "infant_middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_middle_name",
-        "type": "edit_text",
-        "hint": "Infant's Middle Name",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "infant_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_lastname",
-        "type": "edit_text",
-        "hint": "Infant's Lastname",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "infants_date_of_birth",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infants_date_of_birth",
-        "type": "date_picker",
-        "hint": "Date of Birth",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter date of birth"
-        }
-      },
-      {
-        "key": "infants_sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infants_sex",
-        "type": "native_radio",
-        "label": "Sex",
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "weight_at_birth",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "weight_at_birth",
-        "type": "edit_text",
-        "hint": "Weight at Birth",
-        "edit_type": "number"
-      },
-      {
-        "key": "infant_feeding_options",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_feeding_options",
-        "type": "native_radio",
-        "label": "Infant Feeding Options at Birth (Tick 1 that Applies)",
-        "options": [
-          {
-            "key": "Exclusive Breast Feeding",
-            "text": "Exclusive Breast Feeding"
-          },
-          {
-            "key": "Complimentary Feeding",
-            "text": "Complimentary Feeding"
-          },
-          {
-            "key": "Non Breast Feeding",
-            "text": "Non Breast Feeding"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "under_five_clinic_card",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "under_five_clinic_card",
-        "type": "edit_text",
-        "hint": "Under 5 Card Number",
-        "edit_type": "number"
       },
       {
         "key": "spacer",
@@ -245,22 +97,6 @@
         "type": "toaster_notes",
         "toaster_type": "info",
         "text": "DBS AT BIRTH"
-      },
-      {
-        "key": "dbs_at_birth_due_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "dbs_at_birth_due_date",
-        "type": "date_picker",
-        "hint": "DBS at Birth (Due Date)",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date"
-        }
       },
       {
         "key": "dbs_at_birth_due_date",

@@ -46,8 +46,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
-import com.bluecodeltd.ecap.chw.fragment.HTSFragmentOverview;
-import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
+import com.bluecodeltd.ecap.chw.fragment.PmctChildMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
@@ -140,7 +139,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
-    PtmctMotherMonitoringModel hivTestingServiceModel;
+    PtmctMotherMonitoringModel pmtct;
     String full_name = "";
     String birthdate = "";
 
@@ -182,7 +181,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //
         clientId = getIntent().getExtras().getString("client_id");
-        hivTestingServiceModel = PtmctMotherMonitoringDao.getPMCTChildHei(clientId);
+        pmtct = PtmctMotherMonitoringDao.getPMCTChildHei(clientId);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -211,8 +210,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
 
         try {
-            if (hivTestingServiceModel != null && hivTestingServiceModel.getInfant_first_name() != null && hivTestingServiceModel.getInfant_lastname() != null) {
-                String full_name = hivTestingServiceModel.getInfant_first_name() + " " + hivTestingServiceModel.getInfant_lastname();
+            if (pmtct != null && pmtct.getInfant_first_name() != null && pmtct.getInfant_lastname() != null) {
+                String full_name = pmtct.getInfant_first_name() + " " + pmtct.getInfant_lastname();
                 txtName.setText(full_name);
             }
         } catch (Exception e) {
@@ -220,8 +219,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
         }
 
         try {
-            if(hivTestingServiceModel != null && hivTestingServiceModel.getInfants_date_of_birth() != null && !hivTestingServiceModel.getInfants_date_of_birth().isEmpty()){
-                txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getInfants_date_of_birth()));
+            if(pmtct != null && pmtct.getInfants_date_of_birth() != null && !pmtct.getInfants_date_of_birth().isEmpty()){
+                txtAge.setText("AGE: "+getAge(pmtct.getInfants_date_of_birth()));
             } else {
                 txtAge.setText("Not Set");
             }
@@ -240,7 +239,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
 //        updateTasksTabTitle();
-//        returnViewPager();
+        returnViewPager();
 //        updateTasksTabTitle();
 
     }
@@ -307,7 +306,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
         HashMap<String, PtmctMotherMonitoringModel> map = new HashMap<>();
 
-        map.put("client",hivTestingServiceModel);
+        map.put("client", pmtct);
 
         return map;
 
@@ -446,7 +445,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             case R.id.assessment:
                 try {
-                    openFormUsingFormUtils(HeiDetailsActivity.this,"hiv_testing_links");
+                    openFormUsingFormUtils(HeiDetailsActivity.this,"mother_pmtct_monitoring");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -509,7 +508,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     case "HIV Risk Assessment Above 15":
                     case "HIV Risk Assessment Below 15":
                     case "HIV Testing Links":
-                    case "Mother Pmtct Monitoring":
+                    case "Mother Pmtct Child":
 
                         finish();
                         startActivity(getIntent());
@@ -596,14 +595,25 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             switch (encounterType) {
 
-                case "Mother Pmtct Monitoring":
+                case "Mother Pmtct Child":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_pmtct_mother_monitoring");
+                                encounterType, "ec_pmtct_mother_child");
                         tagSyncMetadata(event);
-                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Ptmct Child Monitoring":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_child_monitoring");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
@@ -828,7 +838,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             case "case_plan":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtct, Map.class));
 //                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
              /*   if(vcaCasePlanModel == null){
@@ -878,8 +888,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 break;
             case "pmct_child_hei":
 
-                formToBeOpened.put("entity_id", this.hivTestingServiceModel.getBase_entity_id());
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
+                formToBeOpened.put("entity_id", this.pmtct.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtct, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
                 JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
                 if (dateEdited  != null) {
@@ -891,29 +901,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     }
                 }
                 break;
-            case "hiv_testing_links":
-//                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivTestingServiceModel, Map.class));
-//                populateCaseworkerPhoneAndName(formToBeOpened);
-                JSONObject clientNumber = getFieldJSONObject(fields(formToBeOpened, "step1"), "client_number");
-                JSONObject dateLinked = getFieldJSONObject(fields(formToBeOpened, "step1"), "date_linked");
-                JSONObject caseWorkerName = getFieldJSONObject(fields(formToBeOpened, "step1"), "caseworker_name");
+            case "mother_pmtct_monitoring":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtct, Map.class));
 
-                if (clientNumber  != null) {
-                    clientNumber .remove(JsonFormUtils.VALUE);
-                    try {
-                        clientNumber.put(JsonFormUtils.VALUE, hivTestingServiceModel.getUnique_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (dateLinked  != null) {
-                    dateLinked.remove(JsonFormUtils.VALUE);
-                    try {
-                        dateLinked.put(JsonFormUtils.VALUE, getFormattedDate());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+
 
 
                 break;
@@ -1113,19 +1104,19 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new HTSFragmentOverview());
+        fragments.add(new PmctChildMonitoringFragment());
 //        if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
-            fragments.add(new HTSlinksFragment());
+//            fragments.add(new HTSlinksFragment());
 //        }
 
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("OVERVIEW");
-        if (tabLayout.getTabAt(1) != null) {
-            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
-        }
+        tabLayout.getTabAt(0).setText("Monitoring");
+//        if (tabLayout.getTabAt(1) != null) {
+//            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
+//        }
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
@@ -1133,7 +1124,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         visitTabTitle.setText("INDEX/SNT CONTACT");
         htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
 
-        int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getUnique_id());
+        int htsLinks = HTSLinksDao.htsCount(pmtct.getUnique_id());
 
         htsCount.setText(String.valueOf(htsLinks));
 
@@ -1147,6 +1138,15 @@ public class HeiDetailsActivity extends AppCompatActivity {
         } else {
             Log.e("HTSDetailsActivity", "mTabLayout is null");
         }
+    }
+    public HashMap<String, PtmctMotherMonitoringModel> getClientDetails() {
+
+        HashMap<String, PtmctMotherMonitoringModel> map = new HashMap<>();
+
+        map.put("client",pmtct);
+
+        return map;
+
     }
 
     public void buildDialog(){

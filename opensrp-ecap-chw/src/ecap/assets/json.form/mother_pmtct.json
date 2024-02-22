@@ -293,7 +293,7 @@
           "err": "Name can only contain letters"
         },
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is required"
         }
       },
