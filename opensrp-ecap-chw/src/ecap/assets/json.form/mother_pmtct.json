@@ -190,7 +190,7 @@
         "type": "edit_text",
         "read_only": "true",
         "hint": "Household ID",
-        "edit_type": "name",
+        "edit_type": "hidden",
         "relevance": {
           "step1:ecap_id_question": {
             "type": "string",

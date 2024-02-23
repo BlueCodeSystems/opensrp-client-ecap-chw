@@ -8247,6 +8247,13 @@
           }
         },
         {
+          "column_name": "_6_weeks_dbs_ctx",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes._6_weeks_dbs_ctx"
+          }
+        },
+        {
           "column_name": "_6_weeks_dbs_hiv_test_p_n",
           "type": "Client",
           "json_mapping": {

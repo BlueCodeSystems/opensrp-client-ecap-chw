@@ -50,6 +50,7 @@ public class PtmctMotherMonitoringModel {
     private String _6_months_date;
     private String _6_months_hiv_status_p_n;
     private String _6_months_ctx;
+    private String _6_weeks_dbs_ctx;
     private String _6_months_iycf_counselling;
     private String _6_months_infant_feeding_options;
     private String _6_months_outcome;
@@ -129,6 +130,14 @@ public class PtmctMotherMonitoringModel {
     private String date_referred_for_art_if_hiv_positive;
     private String date_enrolled_in_art;
     private String delete_status;
+
+    public String get_6_weeks_dbs_ctx() {
+        return _6_weeks_dbs_ctx;
+    }
+
+    public void set_6_weeks_dbs_ctx(String _6_weeks_dbs_ctx) {
+        this._6_weeks_dbs_ctx = _6_weeks_dbs_ctx;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;

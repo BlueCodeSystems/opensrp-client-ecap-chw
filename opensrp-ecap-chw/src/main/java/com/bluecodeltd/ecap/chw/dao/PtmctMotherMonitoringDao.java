@@ -45,6 +45,18 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<PtmctMotherMonitoringModel> getChildMonitoring(String uniqueID) {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(dbs_at_birth_due_date,7,4) || '-' || substr(dbs_at_birth_due_date,4,2) || '-' || substr(dbs_at_birth_due_date,1,2)) as sortable_date  FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueID + "'  ORDER BY sortable_date DESC";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static DataMap<PtmctMotherMonitoringModel> getPtmctMotherMonitoringModelMap() {
         return c -> {
@@ -75,6 +87,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             record.set_2_months_date(getCursorValue(c, "_2_months_date"));
             record.set_2_months_hiv_status_p_n(getCursorValue(c, "_2_months_hiv_status_p_n"));
             record.set_2_months_ctx(getCursorValue(c, "_2_months_ctx"));
+            record.set_6_weeks_dbs_ctx(getCursorValue(c,"_6_weeks_dbs_ctx"));
             record.set_2_months_iycf_counselling(getCursorValue(c, "_2_months_iycf_counselling"));
             record.set_2_months_infant_feeding_options(getCursorValue(c, "_2_months_infant_feeding_options"));
             record.set_2_months_outcome(getCursorValue(c, "_2_months_outcome"));

@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
-import com.bluecodeltd.ecap.chw.adapter.PostnatalMotherAdapter;
-import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
-import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.adapter.PmctChildMonitoringAdapter;
+import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class PmctChildMonitoringFragment extends Fragment {
     }
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<PtctMotherModel> assessmentList = new ArrayList<>();
+    private ArrayList<PtmctMotherMonitoringModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
     /**
@@ -85,16 +84,16 @@ public class PmctChildMonitoringFragment extends Fragment {
 // Initialize motherDetails as null.
         PtmctMotherMonitoringModel motherDetails = null;
 
-        String pmtctId = null;
+        String uniqueId = null;
 
 
         if (mymap != null) {
             motherDetails = mymap.get("client");
 
             if (motherDetails != null) {
-                pmtctId = motherDetails.getPmtct_id();
+                uniqueId = motherDetails.getUnique_id();
 
-                if (pmtctId == null || pmtctId.isEmpty()) {
+                if (uniqueId == null || uniqueId.isEmpty()) {
                 }
             } else {
 
@@ -109,13 +108,13 @@ public class PmctChildMonitoringFragment extends Fragment {
 
         assessmentList.clear();
 
-        assessmentList.addAll(PMTCTMotherDao.getPostnatalMother(pmtctId));
+        assessmentList.addAll(PtmctMotherMonitoringDao.getChildMonitoring(uniqueId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new PostnatalMotherAdapter( getContext(), assessmentList);
+        recyclerViewadapter = new PmctChildMonitoringAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
 
