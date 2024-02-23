@@ -507,7 +507,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     case "VCA Assessment":
                     case "HIV Risk Assessment Above 15":
                     case "HIV Risk Assessment Below 15":
-                    case "HIV Testing Links":
+                    case "Ptmct Child Monitoring":
                     case "Mother Pmtct Child":
 
                         finish();

@@ -232,7 +232,7 @@
         "key": "_6_weeks_dbs_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "6_weeks_dbs_date",
+        "openmrs_entity_id": "_6_weeks_dbs_date",
         "type": "date_picker",
         "hint": "Date  (6 weeks) ",
         "look_up": "true",
@@ -369,7 +369,7 @@
         "key": "_2_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "2_months_infant_feeding_options",
+        "openmrs_entity_id": "_2_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (2 months)",
         "options": [
@@ -395,7 +395,7 @@
         "key": "_2_months_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "2_months_outcome",
+        "openmrs_entity_id": "_2_months_outcome",
         "type": "native_radio",
         "label": "Outcome (Dead, Lost to follow up,Transited out, Exit) (2 months)",
         "options": [
@@ -1145,7 +1145,7 @@
         "key": "_10_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "10_months_infant_feeding_options",
+        "openmrs_entity_id": "_10_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (10 months)",
         "options": [
@@ -1242,7 +1242,7 @@
         "key": "_11_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "11_months_infant_feeding_options",
+        "openmrs_entity_id": "_11_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (11 months)",
         "options": [
@@ -1753,7 +1753,7 @@
         "key": "_16_months_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "16_months_outcome",
+        "openmrs_entity_id": "_16_months_outcome",
         "type": "native_radio",
         "label": "Outcome (Dead, Lost to follow up,Transited out, Exit) (16 months)",
         "options": [
@@ -1921,7 +1921,7 @@
         "key": "_18_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "18_months_infant_feeding_options",
+        "openmrs_entity_id": "_18_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (18 months)",
         "options": [
@@ -1947,7 +1947,7 @@
         "key": "_18_months_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "18_months_outcome",
+        "openmrs_entity_id": "_18_months_outcome",
         "type": "native_radio",
         "label": "Outcome (Dead, Lost to follow up,Transited out, Exit) (18 months)",
         "options": [
