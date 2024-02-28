@@ -664,3 +664,115 @@ priority: 1
 condition: "( helper.formatDate(step1_adolescent_birthdate,'y') > 9 && helper.formatDate(step1_adolescent_birthdate,'y') < 20) && step1_gender.contains('female') && !step1_is_hiv_positive.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step1_abym_years
+description: abym_years
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_sexually_active
+description: abym_sexually
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_sex_older_women
+description: abym_sex_older_women
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_transactional_sex
+description: abym_transactional_sex
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_sex_work
+description: abym_sex_work
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_economically_insecure
+description: abym_economically_insecure
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_violent_partner
+description: abym_violent_partner
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_diagnosed
+description: abym_diagnosed
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_hiv_tested
+description: abym_hiv_tested
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_test_positive
+description: abym_test_positive
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_undergone_vmmc
+description: abym_undergone_vmmc
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_undergone_vmmc
+description: abym_undergone_vmmc
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_in_school
+description: abym_in_school
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_economic_strengthening
+description: abym_economic_strengthening
+priority: 1
+condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_preventions_other
+description: abym_preventions_other
+priority: 1
+condition: "step1_abym_preventions.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_suppop_abym
+description: suppop_abym
+priority: 1
+condition: "step1_abym_years.contains('yes')  && step1_abym_sexually_active.contains('yes') && step1_abym_sex_older_women.contains('yes') && step1_abym_transactional_sex.contains('yes') && step1_abym_sex_work.contains('yes') && step1_abym_economically_insecure.contains('yes') && step1_abym_violent_partner.contains('yes') &&  step1_abym_diagnosed.contains('yes')"
+actions:
+  - "isRelevant = true"
