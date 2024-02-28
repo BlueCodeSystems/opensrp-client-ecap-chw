@@ -2411,6 +2411,111 @@
           "json_mapping": {
             "field": "attributes.exited_graduation_reason"
           }
+        },
+        {
+          "column_name": "abym_years",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_years"
+          }
+        },
+        {
+          "column_name": "abym_sexually_active",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_sexually_active"
+          }
+        },
+        {
+          "column_name": "abym_preventions",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_preventions"
+          }
+        },
+        {
+          "column_name": "abym_preventions_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_preventions_other"
+          }
+        },
+        {
+          "column_name": "abym_sex_older_women",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_sex_older_women"
+          }
+        },
+        {
+          "column_name": "abym_transactional_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_transactional_sex"
+          }
+        },
+        {
+          "column_name": "abym_sex_work",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_sex_work"
+          }
+        },
+        {
+          "column_name": "abym_economically_insecure",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_economically_insecure"
+          }
+        },
+        {
+          "column_name": "abym_violent_partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_violent_partner"
+          }
+        },
+        {
+          "column_name": "abym_diagnosed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_diagnosed"
+          }
+        },
+        {
+          "column_name": "abym_hiv_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_hiv_tested"
+          }
+        },
+        {
+          "column_name": "abym_test_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_test_positive"
+          }
+        },
+        {
+          "column_name": "abym_undergone_vmmc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_undergone_vmmc"
+          }
+        },
+        {
+          "column_name": "abym_in_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_in_school"
+          }
+        },
+        {
+          "column_name": "abym_economic_strengthening",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_economic_strengthening"
+          }
         }
       ]
     },
