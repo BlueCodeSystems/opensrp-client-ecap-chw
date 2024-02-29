@@ -33,6 +33,21 @@ public class PmctMotherAncDao extends AbstractDao {
         return values;
 
     }
+
+    public static String countMotherAnc (String pmtctID){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_anc WHERE pmtct_id = '" + pmtctID + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
     public static DataMap<PmctMotherAncModel> getPmctMotherAncModelMap() {
         return c -> {
 

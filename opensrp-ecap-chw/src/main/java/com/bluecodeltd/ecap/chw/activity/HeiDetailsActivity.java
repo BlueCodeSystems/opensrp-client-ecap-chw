@@ -40,7 +40,6 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
 import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -131,6 +130,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
     ObjectMapper oMapper, clientMapper;
     Child child;
+    private TextView childTabCount;
 
     VcaAssessmentModel vcaAssessmentModel;
     ReferralModel referralModel;
@@ -240,7 +240,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 //        updateTasksTabTitle();
         returnViewPager();
-//        updateTasksTabTitle();
+        updateAncTabTitle();
 
     }
     public void animateFAB(){
@@ -1118,26 +1118,17 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
 //        }
     }
-    private void updateTasksTabTitle() {
-        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
-        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
-        visitTabTitle.setText("INDEX/SNT CONTACT");
-        htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
+    private void updateAncTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("MONITORING");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-        int htsLinks = HTSLinksDao.htsCount(pmtct.getUnique_id());
 
-        htsCount.setText(String.valueOf(htsLinks));
+        String countANC = PtmctMotherMonitoringDao.countChildMonitoring(pmtct.getUnique_id());
+        childTabCount.setText(countANC);
 
-        if ( tabLayout != null) {
-            TabLayout.Tab tab =  tabLayout.getTabAt(1);
-            if (tab != null) {
-                tab.setCustomView(taskTabTitleLayout);
-            } else {
-                Log.e("HTSDetailsActivity", "Error");
-            }
-        } else {
-            Log.e("HTSDetailsActivity", "mTabLayout is null");
-        }
+        tabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
     public HashMap<String, PtmctMotherMonitoringModel> getClientDetails() {
 

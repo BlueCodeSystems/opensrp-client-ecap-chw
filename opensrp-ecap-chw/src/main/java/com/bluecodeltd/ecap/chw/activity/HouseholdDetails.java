@@ -226,6 +226,9 @@ public class HouseholdDetails extends AppCompatActivity {
         updateTasksTabTitle();
         updateChildTabTitle();
         updateCaseplanTitle();
+        updateHivRiskTabTitle();
+        updateOverviewTabTitle();
+        updateGradTabTitle();
         txtDistrict.setText(householdId);
 
 
@@ -356,7 +359,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private void updateCaseplanTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.household_plan_tab_title, null);
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
-        casePlanTabTitle.setText("CP");
+        casePlanTabTitle.setText("CASE PLAN");
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
         int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());
 
@@ -382,6 +385,45 @@ public class HouseholdDetails extends AppCompatActivity {
         childTabCount.setText(childrenCount);
 
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+    }
+    private void updateHivRiskTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("HIV RISK ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = CaregiverVisitationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(5).setCustomView(taskTabTitleLayout);
+    }
+    private void updateGradTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("GRADUATION ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = CaregiverVisitationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
+    }
+    private void updateOverviewTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("OVERVIEW");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = CaregiverVisitationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
 
 
