@@ -27,9 +27,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
+import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.AncPmctFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
@@ -180,8 +180,11 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-       setupViewPager();
-        //updateChildTabTitle();
+        setupViewPager();
+        updateAncTabTitle();
+        updatePostnatalTitle();
+        updateHeiTitle();
+        updateOverviewTitle();
 
     }
 
@@ -198,19 +201,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         return motherHashMap;
     }
 
-    private void updateChildTabTitle() {
-        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
-        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
-        visitTabTitle.setText("CHILDREN");
-        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-
-        String children = IndexPersonDao.countChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
-
-        childTabCount.setText(children);
-
-        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
-    }
 
 
     private void setupViewPager(){
@@ -229,6 +220,59 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         mTabLayout.getTabAt(2).setText("POSTNATAL");
         mTabLayout.getTabAt(3).setText("HEI");
 
+    }
+
+    private void updateAncTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("ANC");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+
+        String countANC = PmctMotherAncDao.countMotherAnc(clientId);
+        childTabCount.setText(countANC);
+
+        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+    }
+    private void updatePostnatalTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("POSTNATAL");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+
+        String countMotherPostnatal = PMTCTMotherDao.countMotherPostnatal(clientId);
+
+        childTabCount.setText(countMotherPostnatal);
+
+        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+    }
+    private void updateHeiTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("HEI");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+
+        String countHie = PtmctMotherMonitoringDao.countMotherHei(clientId);
+
+        childTabCount.setText(countHie);
+
+        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+    }
+    private void updateOverviewTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("OVERVIEW");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+
+//        String children = IndexPersonDao.countChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
+
+        childTabCount.setText("10");
+        childTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
     private String getClientAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");

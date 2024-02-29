@@ -32,6 +32,19 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
         return values;
 
     }
+    public static String countMotherHei (String pmtctID){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
     public static PtmctMotherMonitoringModel getPMCTChildHei(String uniqueID) {
 
         String sql = "SELECT * FROM ec_pmtct_mother_child WHERE unique_id = '" + uniqueID + "' ";
@@ -55,6 +68,19 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             return new ArrayList<>();
 
         return values;
+
+    }
+    public static String countChildMonitoring (String uniqueId){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueId + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
 
     }
 
