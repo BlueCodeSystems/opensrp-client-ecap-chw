@@ -183,26 +183,6 @@
         }
       },
       {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Household ID",
-        "edit_type": "hidden",
-        "relevance": {
-          "step1:ecap_id_question": {
-            "type": "string",
-            "ex": "equalTo(., \"Yes\")"
-          }
-        },
-        "v_required": {
-          "value": false,
-          "err": "Please enter the household ID"
-        }
-      },
-      {
         "key": "date_enrolled_ecap",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

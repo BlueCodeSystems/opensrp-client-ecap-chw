@@ -8303,6 +8303,13 @@
           }
         },
         {
+          "column_name": "child_monitoring_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_monitoring_visit"
+          }
+        },
+        {
           "column_name": "dbs_at_birth_due_date",
           "type": "Client",
           "json_mapping": {

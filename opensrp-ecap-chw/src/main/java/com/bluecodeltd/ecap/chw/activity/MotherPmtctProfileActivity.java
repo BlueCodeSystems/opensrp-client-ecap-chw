@@ -375,13 +375,15 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 PtctMotherModel model = PMTCTMotherDao.getPostnatalDate(ptctMotherModel.getPmtct_id());
 
 
-                if(getTodaysDateFormatted().equals(model.getDate_of_st_post_natal_care())){
+                String todaysDate = getTodaysDateFormatted();
+                String postNatalCareDate = model != null ? model.getDate_of_st_post_natal_care() : null;
 
+                if (todaysDate != null && todaysDate.equals(postNatalCareDate)) {
                     Toast.makeText(
                             MotherPmtctProfileActivity.this, "You cannot conduct a postnatal visit twice a day",
                             Toast.LENGTH_SHORT
                     ).show();
-                } else{
+                } else {
                     try {
                         openFormUsingFormUtils(MotherPmtctProfileActivity.this,"postnatal_care");
                     } catch (JSONException e) {
