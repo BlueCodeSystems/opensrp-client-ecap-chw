@@ -32,7 +32,7 @@ import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.AncPmctFragment;
-import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
 import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
@@ -206,7 +206,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new MotherOverviewFragment());
+        mPagerAdapter.addFragment(new PMTCTMotherOverviewFragment());
         mPagerAdapter.addFragment(new AncPmctFragment());
         mPagerAdapter.addFragment(new PostnatalCareFragment());
         mPagerAdapter.addFragment(new PmctMotherHeiFragment());

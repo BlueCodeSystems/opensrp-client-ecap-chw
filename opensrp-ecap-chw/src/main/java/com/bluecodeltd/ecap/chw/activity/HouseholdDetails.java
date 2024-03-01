@@ -226,7 +226,7 @@ public class HouseholdDetails extends AppCompatActivity {
         updateTasksTabTitle();
         updateChildTabTitle();
         updateCaseplanTitle();
-        updateHivRiskTabTitle();
+
         updateOverviewTabTitle();
         updateGradTabTitle();
         txtDistrict.setText(householdId);
@@ -339,6 +339,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.getTabAt(4).setText("Grad");
         if (mPagerAdapter.getCount() > 5) {
             mTabLayout.getTabAt(5).setText("HIV ASSESSMENT");
+            updateHivRiskTabTitle();
         }
 
     }
