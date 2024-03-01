@@ -91,6 +91,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
             record.setUnique_id(getCursorValue(c,"unique_id"));
+            record.setChild_monitoring_visit(getCursorValue(c,"child_monitoring_visit"));
             record.setInfant_first_name(getCursorValue(c, "infant_first_name"));
             record.setInfant_middle_name(getCursorValue(c, "infant_middle_name"));
             record.setInfant_lastname(getCursorValue(c, "infant_lastname"));

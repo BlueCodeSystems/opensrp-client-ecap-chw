@@ -4,6 +4,7 @@ public class PtmctMotherMonitoringModel {
     private String base_entity_id;
     private String pmtct_id;
     private String unique_id;
+    private String child_monitoring_visit;
     private String infant_first_name;
     private String infant_middle_name;
     private String infant_lastname;
@@ -130,6 +131,14 @@ public class PtmctMotherMonitoringModel {
     private String date_referred_for_art_if_hiv_positive;
     private String date_enrolled_in_art;
     private String delete_status;
+
+    public String getChild_monitoring_visit() {
+        return child_monitoring_visit;
+    }
+
+    public void setChild_monitoring_visit(String child_monitoring_visit) {
+        this.child_monitoring_visit = child_monitoring_visit;
+    }
 
     public String get_6_weeks_dbs_ctx() {
         return _6_weeks_dbs_ctx;
