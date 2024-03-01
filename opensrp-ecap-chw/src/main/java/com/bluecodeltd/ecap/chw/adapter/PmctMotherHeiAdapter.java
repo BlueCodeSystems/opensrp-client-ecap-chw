@@ -1,16 +1,19 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 
 import java.time.LocalDate;
@@ -43,6 +46,15 @@ Context context;
            final PtmctMotherMonitoringModel monitoringModel = model.get(position);
                 holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
                 holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
+                holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent heiProfile = new Intent(context, HeiDetailsActivity.class);
+                        heiProfile.putExtra("client_id",monitoringModel.getUnique_id());
+                        context.startActivity(heiProfile);
+                    }
+                });
+
     }
 
     @Override
@@ -52,10 +64,12 @@ Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView fullName,age;
+        RelativeLayout relativeLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             fullName = itemView.findViewById(R.id.familyNameTextView);
             age = itemView.findViewById(R.id.child_age);
+            relativeLayout = itemView.findViewById(R.id.register_columns);
         }
     }
 

@@ -82,7 +82,22 @@ public class ChwRepositoryFlv {
 
     private static void upgradeToVersion4(SQLiteDatabase db) {
         try {
-            db.execSQL("CREATE TABLE ec_pmtct_mother(id VARCHAR PRIMARY KEY,relationalid VARCHAR, details VARCHAR, base_entity_id VARCHAR,is_closed VARCHAR,province VARCHAR,district VARCHAR,ward VARCHAR,facility VARCHAR,partner VARCHAR,pmtct_id VARCHAR,date_enrolled_ecap VARCHAR,date_enrolled_pmtct VARCHAR,household_id VARCHAR,caregiver_name VARCHAR,caregiver_sex VARCHAR,date_started_art VARCHAR,art_number VARCHAR,mothers_smh_no VARCHAR,homeaddress VARCHAR,landmark VARCHAR,phone_number VARCHAR,mothers_landline VARCHAR,date_of_st_contact VARCHAR,gest_age VARCHAR,done_hiv_test VARCHAR,date_tested VARCHAR,delete_status VARCHAR,hiv_result VARCHAR,vl_result VARCHAR,partner_tested VARCHAR)");
+            db.execSQL("ALTER TABLE ec_client_index\n" +
+                    "ADD COLUMN abym_years TEXT,\n" +
+                    "ADD COLUMN abym_sexually_active TEXT,\n" +
+                    "ADD COLUMN abym_preventions TEXT,\n" +
+                    "ADD COLUMN abym_preventions_other TEXT,\n" +
+                    "ADD COLUMN abym_sex_older_women TEXT,\n" +
+                    "ADD COLUMN abym_transactional_sex TEXT,\n" +
+                    "ADD COLUMN abym_sex_work TEXT,\n" +
+                    "ADD COLUMN abym_economically_insecure TEXT,\n" +
+                    "ADD COLUMN abym_violent_partner TEXT,\n" +
+                    "ADD COLUMN abym_diagnosed TEXT,\n" +
+                    "ADD COLUMN abym_hiv_tested TEXT,\n" +
+                    "ADD COLUMN abym_test_positive TEXT,\n" +
+                    "ADD COLUMN abym_undergone_vmmc TEXT,\n" +
+                    "ADD COLUMN abym_in_school TEXT,\n" +
+                    "ADD COLUMN abym_economic_strengthening TEXT");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion4 ");
         }
