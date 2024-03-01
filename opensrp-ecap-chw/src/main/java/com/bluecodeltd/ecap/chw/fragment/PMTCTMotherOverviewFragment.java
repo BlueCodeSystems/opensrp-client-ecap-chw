@@ -10,7 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.MotherDetail;
+import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -42,16 +43,47 @@ public class PMTCTMotherOverviewFragment extends Fragment {
 
    }
 
-    public void setViews(){
 
-        HashMap<String, CommonPersonObjectClient> mymap = ( (MotherDetail) requireActivity()).getData();
-        mother = mymap.get("mother");
 
-        txtHouseholdId.setText(mother.getColumnmaps().get("household_id"));
-        txtAddress.setText(mother.getColumnmaps().get("homeaddress"));
-        txtPhone.setText(mother.getColumnmaps().get("caregiver_phone"));
-        txtTreatment.setText(mother.getColumnmaps().get("active_on_treatment"));
-        txtArt.setText(mother.getColumnmaps().get("caregiver_art_number"));
+        public void setViews(){
 
-    }
+            HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
+            if (mymap != null) {
+                PtctMotherModel motherDetails = mymap.get("client");
+
+                if (motherDetails != null) {
+                    String pmtctId = motherDetails.getPmtct_id();
+                    txtHouseholdId.setText(pmtctId != null ? pmtctId : "Not set");
+
+                    String homeAddress = motherDetails.getHome_address();
+                    txtAddress.setText(homeAddress != null ? homeAddress : "Not set");
+
+                    String mothersPhone = motherDetails.getMothers_phone();
+                    txtPhone.setText(mothersPhone != null ? mothersPhone : "Not set");
+
+                    String treatmentInitiated = motherDetails.getTreatment_initiated();
+                    txtTreatment.setText(treatmentInitiated != null ? treatmentInitiated : "Not set");
+
+                    String artNumber = motherDetails.getArt_number();
+                    txtArt.setText(artNumber != null ? artNumber : "Not set");
+                } else {
+
+                    txtHouseholdId.setText("Not set");
+                    txtAddress.setText("Not set");
+                    txtPhone.setText("Not set");
+                    txtTreatment.setText("Not set");
+                    txtArt.setText("Not set");
+                }
+            } else {
+
+                txtHouseholdId.setText("Not set");
+                txtAddress.setText("Not set");
+                txtPhone.setText("Not set");
+                txtTreatment.setText("Not set");
+                txtArt.setText("Not set");
+            }
+
+        }
+
+
 }
