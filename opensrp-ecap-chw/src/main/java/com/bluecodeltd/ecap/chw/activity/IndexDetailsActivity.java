@@ -317,6 +317,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
+        updateOverviewTabTitle();
         updateVisitsTabTitle();
         updatePlanTabTitle();
 
@@ -453,9 +454,29 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         mTabLayout.getTabAt(2).setText("VISITS");
         if (mPagerAdapter.getCount() > 3) {
             mTabLayout.getTabAt(3).setText("HIV ASSESSMENT");
+            updateHivAssessmentTabTitle();
         }
     }
+    private void updateOverviewTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("OVERVIEW");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
+    }
+    private void updateHivAssessmentTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("HIV ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+    }
     private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);

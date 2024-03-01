@@ -39,6 +39,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
+            android:name=".activity.HeiDetailsActivity"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar"/>
+        <activity
             android:name=".HouseholdServicesOnlyActivity"
             android:exported="false" />
         <activity
@@ -78,7 +82,6 @@
         <activity
             android:name=".activity.HivTestingServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".activity.PMTCTRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -101,7 +104,6 @@
             android:name=".activity.MotherDetail"
             android:label="Mother Details"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".activity.MotherPmtctProfileActivity"
             android:label="Mother PMTCT"

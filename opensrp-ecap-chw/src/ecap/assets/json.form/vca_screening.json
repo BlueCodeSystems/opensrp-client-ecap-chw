@@ -1831,6 +1831,407 @@
         }
       },
       {
+        "key": "abym",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "abym",
+        "type": "label",
+        "text": "At Risk Adolescent Boys and Young Men (ABYM)"
+      },
+      {
+        "key": "abym_years",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_years",
+        "type": "native_radio",
+        "label": "Is the ABYM -17 years?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_sexually_active",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_sexually_active",
+        "type": "native_radio",
+        "label": "Is the ABYM sexually active?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_preventions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_preventions",
+        "label": "If sexually active, is the ABYM using any of these HIV prevention methods? ",
+        "label_info_text": "If sexually active, is the ABYM using any of these HIV prevention methods?",
+        "type": "check_box",
+        "exclusive": [
+          "None of the prevention methods"
+        ],
+        "options": [
+          {
+            "key": "PrEP",
+            "text": "PrEP"
+          },
+          {
+            "key": "Condoms",
+            "text": "Condoms"
+          },
+          {
+            "key": "PEP",
+            "text": "PEP"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          },
+          {
+            "key": "None of the prevention methods",
+            "text": "None of the prevention methods"
+          }
+
+        ],
+        "v_required": {
+          "value": false,
+          "err": ""
+        },
+        "relevance": {
+          "step1:abym_sexually": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "abym_preventions_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_preventions_other",
+        "type": "edit_text",
+        "hint": "Specify other HIV prevention methods",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_sex_older_women",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_sex_older_women",
+        "type": "native_radio",
+        "label": "Is the ABYM having sex with older women or MSM?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_transactional_sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_transactional_sex",
+        "type": "native_radio",
+        "label": "Is the ABYM engaged in transactional sex?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_sex_work",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_sex_work",
+        "type": "native_radio",
+        "label": "Is the ABYM engaged in sex work?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_economically_insecure",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_economically_insecure",
+        "type": "native_radio",
+        "label": "Is the ABYM economically or food insecure?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_violent_partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_violent_partner",
+        "type": "native_radio",
+        "label": "Does the ABYM have a partner who is violent or has experienced violence?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_diagnosed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_diagnosed",
+        "type": "native_radio",
+        "label": "Has the ABYM ever been diagnosed with a Sexually Transmitted Illness (STI)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_hiv_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_hiv_tested",
+        "type": "native_radio",
+        "label": "Has the ABYM been tested for HIV?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_test_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_test_positive",
+        "type": "native_radio",
+        "label": "Did the ABYM test HIV+ ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_undergone_vmmc",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_undergone_vmmc",
+        "type": "native_radio",
+        "label": "Has the ABYM undergone VMMC?  ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_in_school",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_in_school",
+        "type": "native_radio",
+        "label": "Is the ABYM in school?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "abym_economic_strengthening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "abym_economic_strengthening",
+        "type": "native_radio",
+        "label": "Is the ABYM receiving an economic strengthening intervention?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+
+
+
+      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -2143,6 +2544,24 @@
         "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
+        "toaster_info_title": "Sub Population",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "suppop_abym",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "suppop_abym",
+        "type": "toaster_notes",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent boys and young men ",
+        "toaster_type": "info",
+        "toaster_info_text": "At Risk Adolescent boys and young men ",
         "toaster_info_title": "Sub Population",
         "relevance": {
           "rules-engine": {
