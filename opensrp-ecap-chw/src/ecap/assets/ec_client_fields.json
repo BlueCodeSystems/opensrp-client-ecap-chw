@@ -812,6 +812,13 @@
           }
         },
         {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {

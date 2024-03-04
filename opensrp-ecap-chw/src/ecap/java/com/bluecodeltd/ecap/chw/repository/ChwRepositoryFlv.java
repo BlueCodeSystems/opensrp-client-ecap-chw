@@ -84,6 +84,8 @@ public class ChwRepositoryFlv {
 
     private static void upgradeToVersion5(SQLiteDatabase db) {
         try {
+            db.execSQL("ALTER TABLE ec_household ADD COLUMN last_interacted_with TEXT");
+
             db.execSQL("ALTER TABLE ec_client_index\n" +
                     "ADD COLUMN abym_years TEXT,\n" +
                     "ADD COLUMN abym_sexually_active TEXT,\n" +
