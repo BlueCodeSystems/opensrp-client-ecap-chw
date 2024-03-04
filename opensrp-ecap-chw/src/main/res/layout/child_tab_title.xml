@@ -13,7 +13,7 @@
         android:gravity="center"
         android:textAlignment="center"
         android:text="CHILDREN"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:textAllCaps="true"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

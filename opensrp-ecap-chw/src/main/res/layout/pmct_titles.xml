@@ -6,14 +6,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/visits_title"
+        android:id="@+id/children_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:textSize="12sp"
         android:gravity="center"
         android:textAlignment="center"
-        android:text="VISITS"
+        android:text="CHILDREN"
+        android:textSize="12sp"
         android:textAllCaps="true"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,17 +21,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/visits_count"
+        android:id="@+id/children_count"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="3dp"
-        android:background="@color/colorGreen"
+        android:background="#FF1D8A"
         android:text="0"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/visits_title"
+        app:layout_constraintLeft_toRightOf="@+id/children_title"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
