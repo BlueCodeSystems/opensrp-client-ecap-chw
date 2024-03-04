@@ -34,6 +34,7 @@ public class PMTCTMotherOverviewFragment extends Fragment {
         txtPhone = view.findViewById(R.id.phone);
         txtTreatment = view.findViewById(R.id.treatment);
         txtArt = view.findViewById(R.id.art_number);
+        txtHouseholdId.setVisibility(View.GONE);
 
         fab = getActivity().findViewById(R.id.fabx);
 

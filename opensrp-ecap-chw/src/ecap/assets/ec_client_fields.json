@@ -819,6 +819,13 @@
           }
         },
         {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
           "column_name": "status",
           "type": "Client",
           "json_mapping": {
