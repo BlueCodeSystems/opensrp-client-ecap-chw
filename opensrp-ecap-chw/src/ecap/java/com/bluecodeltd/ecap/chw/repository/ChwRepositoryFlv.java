@@ -44,6 +44,9 @@ public class ChwRepositoryFlv {
                 case 3:
                     upgradeToVersion3(db);
                     break;
+                case 4:
+                    upgradeToVersion4(db);
+                    break;
                 case 5:
                     upgradeToVersion5(db);
                     break;
@@ -81,274 +84,375 @@ public class ChwRepositoryFlv {
             Timber.e(e, "upgradeToVersion3 ");
         }
     }
-
-    private static void upgradeToVersion5(SQLiteDatabase db) {
+    private static void upgradeToVersion4(SQLiteDatabase db) {
         try {
-            db.execSQL("ALTER TABLE ec_household ADD COLUMN last_interacted_with TEXT");
+            String sqlCreateTableHivTestingService = "CREATE TABLE IF NOT EXISTS ec_hiv_testing_service (" +
+                    "base_entity_id TEXT, " +
+                    "relational_id TEXT, " +
+                    "last_interacted_with TEXT, " +
+                    "caseworker_name TEXT, " +
+                    "phone TEXT, " +
+                    "implementing_partner TEXT, " +
+                    "health_facility TEXT, " +
+                    "district TEXT, " +
+                    "province TEXT, " +
+                    "client_number TEXT, " +
+                    "testing_modality TEXT, " +
+                    "first_name TEXT, " +
+                    "middle_name TEXT, " +
+                    "last_name TEXT, " +
+                    "art_number TEXT, " +
+                    "gender TEXT, " +
+                    "birthdate TEXT, " +
+                    "entry_point TEXT, " +
+                    "ecap_id TEXT, " +
+                    "sub_population TEXT, " +
+                    "address TEXT, " +
+                    "landmark TEXT, " +
+                    "contact_phone TEXT, " +
+                    "hiv_status TEXT, " +
+                    "date_tested TEXT, " +
+                    "hiv_result TEXT, " +
+                    "test_done_hf TEXT, " +
+                    "hiv_recent_test TEXT, " +
+                    "art_date TEXT, " +
+                    "art_date_initiated TEXT, " +
+                    "comment TEXT, " +
+                    "checked_by TEXT, " +
+                    "delete_status TEXT, " +
+                    "date_client_created TEXT, " +
+                    "date_edited TEXT" +
+                    ")";
 
-            db.execSQL("ALTER TABLE ec_client_index\n" +
-                    "ADD COLUMN abym_years TEXT,\n" +
-                    "ADD COLUMN abym_sexually_active TEXT,\n" +
-                    "ADD COLUMN abym_preventions TEXT,\n" +
-                    "ADD COLUMN abym_preventions_other TEXT,\n" +
-                    "ADD COLUMN abym_sex_older_women TEXT,\n" +
-                    "ADD COLUMN abym_transactional_sex TEXT,\n" +
-                    "ADD COLUMN abym_sex_work TEXT,\n" +
-                    "ADD COLUMN abym_economically_insecure TEXT,\n" +
-                    "ADD COLUMN abym_violent_partner TEXT,\n" +
-                    "ADD COLUMN abym_diagnosed TEXT,\n" +
-                    "ADD COLUMN abym_hiv_tested TEXT,\n" +
-                    "ADD COLUMN abym_test_positive TEXT,\n" +
-                    "ADD COLUMN abym_undergone_vmmc TEXT,\n" +
-                    "ADD COLUMN abym_in_school TEXT,\n" +
-                    "ADD COLUMN abym_economic_strengthening TEXT");
+            db.execSQL(sqlCreateTableHivTestingService);
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS ec_pmtct_mother (\n" +
-                    "    base_entity_id TEXT,\n" +
-                    "    last_interacted_with TEXT,\n" +
-                    "    province TEXT,\n" +
-                    "    district TEXT,\n" +
-                    "    ward TEXT,\n" +
-                    "    facility TEXT,\n" +
-                    "    partner TEXT,\n" +
-                    "    caseworker_name TEXT,\n" +
-                    "    date_enrolled_ecap TEXT,\n" +
-                    "    pmtct_id TEXT,\n" +
-                    "    ecap_id_question TEXT,\n" +
-                    "    household_id TEXT,\n" +
-                    "    postnatal_care_visit TEXT,\n" +
-                    "    date_enrolled_pmtct TEXT,\n" +
-                    "    mothers_full_name TEXT,\n" +
-                    "    nick_name TEXT,\n" +
-                    "    mothers_age TEXT,\n" +
-                    "    date_initiated_on_art TEXT,\n" +
-                    "    art_number TEXT,\n" +
-                    "    mothers_smh_no TEXT,\n" +
-                    "    home_address TEXT,\n" +
-                    "    nearest_landmark TEXT,\n" +
-                    "    mothers_phone TEXT,\n" +
-                    "    date_of_st_contact TEXT,\n" +
-                    "    date_of_delivery TEXT,\n" +
-                    "    place_of_delivery TEXT,\n" +
-                    "    on_art_at_time_of_delivery TEXT,\n" +
-                    "    delete_status TEXT\n" +
-                    ")");
+            String sqlCreateTableHivTestingLinks = "CREATE TABLE IF NOT EXISTS ec_hiv_testing_links (" +
+                    "base_entity_id TEXT, " +
+                    "relational_id TEXT, " +
+                    "client_number TEXT, " +
+                    "date_linked TEXT, " +
+                    "first_name TEXT, " +
+                    "middle_name TEXT, " +
+                    "last_name TEXT, " +
+                    "ecap_id TEXT, " +
+                    "sub_population TEXT, " +
+                    "birthdate TEXT, " +
+                    "relationship TEXT, " +
+                    "other_relationship TEXT, " +
+                    "address TEXT, " +
+                    "landmark TEXT, " +
+                    "phone TEXT, " +
+                    "hiv_status TEXT, " +
+                    "date_tested TEXT, " +
+                    "hiv_result TEXT, " +
+                    "test_done_hf TEXT, " +
+                    "hiv_recent_test TEXT, " +
+                    "art_date TEXT, " +
+                    "art_date_initiated TEXT, " +
+                    "comment TEXT, " +
+                    "caseworker_name TEXT, " +
+                    "checked_by TEXT, " +
+                    "delete_status TEXT" +
+                    ")";
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS ec_pmtct_mother_child (\n" +
-                    "    base_entity_id TEXT,\n" +
-                    "    pmtct_id TEXT,\n" +
-                    "    unique_id TEXT,\n" +
-                    "    infant_first_name TEXT,\n" +
-                    "    infant_middle_name TEXT,\n" +
-                    "    infant_lastname TEXT,\n" +
-                    "    infants_date_of_birth TEXT,\n" +
-                    "    infants_sex TEXT,\n" +
-                    "    weight_at_birth TEXT,\n" +
-                    "    infant_feeding_options TEXT,\n" +
-                    "    under_five_clinic_card TEXT,\n" +
-                    "    delete_status TEXT\n" +
-                    ")");
+            db.execSQL(sqlCreateTableHivTestingLinks);
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS ec_pmtct_mother_postnatal (\n" +
-                    "    base_entity_id TEXT,\n" +
-                    "    relational_id TEXT,\n" +
-                    "    pmtct_id TEXT,\n" +
-                    "    date_of_st_post_natal_care TEXT,\n" +
-                    "    mother_tested_for_hiv TEXT,\n" +
-                    "    postnatal_care_visit TEXT,\n" +
-                    "    hiv_test_result_r_nr_at_6_weeks TEXT,\n" +
-                    "    art_initiated_at_6_weeks TEXT,\n" +
-                    "    art_adherence_counselling_support_at_6_weeks TEXT,\n" +
-                    "    family_planning_counselling_at_6_weeks TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_6_weeks TEXT,\n" +
-                    "    hiv_test_result_r_nr_at_6_months TEXT,\n" +
-                    "    art_initiated_at_6_months TEXT,\n" +
-                    "    family_planning_counselling_at_6_months TEXT,\n" +
-                    "    number_of_condoms_distributed_at_6_months TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_6 TEXT,\n" +
-                    "    hiv_test_result_r_nr_at_9_weeks TEXT,\n" +
-                    "    art_initiated_at_9_weeks TEXT,\n" +
-                    "    art_adherence_counselling_support_at_9_weeks TEXT,\n" +
-                    "    family_planning_counselling_at_9_weeks TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_9_weeks TEXT,\n" +
-                    "    hiv_test_result_r_nr_at_9_months TEXT,\n" +
-                    "    art_initiated_at_9_months TEXT,\n" +
-                    "    family_planning_counselling_at_9_months TEXT,\n" +
-                    "    number_of_condoms_distributed_at_9_months TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_9 TEXT,\n" +
-                    "    hiv_test_result_r_nr_at_12_weeks TEXT,\n" +
-                    "    art_initiated_at_12_weeks TEXT,\n" +
-                    "    art_adherence_counselling_support_at_12_weeks TEXT,\n" +
-                    "    family_planning_counselling_at_12_weeks TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_12_weeks TEXT,\n" +
-                    "    hiv_test_result_r_nr_at_12_months TEXT,\n" +
-                    "    art_initiated_at_12_months TEXT,\n" +
-                    "    family_planning_counselling_at_12_months TEXT,\n" +
-                    "    number_of_condoms_distributed_at_12_months TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_12 TEXT,\n" +
-                    "    family_planning_counselling_at_18_months TEXT,\n" +
-                    "    number_of_condoms_distributed_at_18_months TEXT,\n" +
-                    "    comments_at_postnatal_care_visit_18 TEXT,\n" +
-                    "    mothers_outcome TEXT,\n" +
-                    "    delete_status TEXT\n" +
-                    ")");
-
-            db.execSQL("CREATE TABLE IF NOT EXISTS ec_pmtct_mother_anc (\n" +
-                    "    base_entity_id TEXT,\n" +
-                    "    relational_id TEXT,\n" +
-                    "    pmtct_id TEXT,\n" +
-                    "    date_of_st_contact TEXT,\n" +
-                    "    gestation_age_in_weeks TEXT,\n" +
-                    "    hiv_tested TEXT,\n" +
-                    "    date_tested TEXT,\n" +
-                    "    result_of_hiv_test TEXT,\n" +
-                    "    recency_test_result_if_applicable TEXT,\n" +
-                    "    vl_result_at_trimester_1 TEXT,\n" +
-                    "    vl_result_at_trimester_2 TEXT,\n" +
-                    "    vl_result_at_trimester_3 TEXT,\n" +
-                    "    male_partner_tested TEXT,\n" +
-                    "    date_male_partner_tested TEXT,\n" +
-                    "    result_r_nr TEXT,\n" +
-                    "    treatment_initiated TEXT,\n" +
-                    "    date_initiated_on_treatment TEXT,\n" +
-                    "    on_art_st_anc TEXT,\n" +
-                    "    tb_screening TEXT,\n" +
-                    "    syphilis_testing TEXT,\n" +
-                    "    syphilis_test_type TEXT,\n" +
-                    "    syphilis_other TEXT,\n" +
-                    "    date_tested_for_syphilis TEXT,\n" +
-                    "    syphilis_result TEXT,\n" +
-                    "    delete_status TEXT\n" +
-                    ")");
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS ec_pmtct_child_monitoring (   \n" +
-        "    base_entity_id TEXT,\n" +
-        "    pmtct_id TEXT,\n" +
-        "    unique_id TEXT,\n" +
-        "    child_monitoring_visit TEXT,\n" +
-        "    dbs_at_birth_due_date TEXT,\n" +
-        "    dbs_at_birth_actual_date TEXT,\n" +
-        "    test_result_at_birth TEXT,\n" +
-        "    date_tested TEXT,\n" +
-        "    nvp_prophylaxis_for_infant TEXT,\n" +
-        "    nvp_date_given TEXT,\n" +
-        "    _6_weeks_dbs_date TEXT,\n" +
-        "    _6_weeks_dbs_ctx TEXT,\n" +
-        "    _6_weeks_dbs_hiv_test_p_n TEXT,\n" +
-        "    _6_weeks_dbs_iycf_counselling TEXT,\n" +
-        "    _6_weeks_infant_feeding_options TEXT,\n" +
-        "    _6_weeks_dbs_outcome TEXT,\n" +
-        "    _2_months_date TEXT,\n" +
-        "    _2_months_hiv_status_p_n TEXT,\n" +
-        "    _2_months_ctx TEXT,\n" +
-        "    _2_months_iycf_counselling TEXT,\n" +
-        "    _2_months_infant_feeding_options TEXT,\n" +
-        "    _2_months_outcome TEXT,\n" +
-        "    _3_months_date TEXT,\n" +
-        "    _3_months_hiv_status_p_n TEXT,\n" +
-        "    _3_months_ctx TEXT,\n" +
-        "    _3_months_iycf_counselling TEXT,\n" +
-        "    _3_months_infant_feeding_options TEXT,\n" +
-        "    _3_months_outcome TEXT,\n" +
-        "    _4_months_date TEXT,\n" +
-        "    _4_months_hiv_status_p_n TEXT,\n" +
-        "    _4_months_ctx TEXT,\n" +
-        "    _4_months_iycf_counselling TEXT,\n" +
-        "    _4_months_infant_feeding_options TEXT,\n" +
-        "    _4_months_outcome TEXT,\n" +
-        "    _5_months_date TEXT,\n" +
-        "    _5_months_hiv_status_p_n TEXT,\n" +
-        "    _5_months_ctx TEXT,\n" +
-        "    _5_months_iycf_counselling TEXT,\n" +
-        "    _5_months_infant_feeding_options TEXT,\n" +
-        "    _5_months_outcome TEXT,\n" +
-        "    _6_months_date TEXT,\n" +
-        "    _6_months_hiv_status_p_n TEXT,\n" +
-        "    _6_months_ctx TEXT,\n" +
-        "    _6_months_iycf_counselling TEXT,\n" +
-        "    _6_months_infant_feeding_options TEXT,\n" +
-        "    _6_months_outcome TEXT,\n" +
-        "    _7_months_date TEXT,\n" +
-        "    _7_months_hiv_status_p_n TEXT,\n" +
-        "    _7_months_ctx TEXT,\n" +
-        "    _7_months_iycf_counselling TEXT,\n" +
-        "    _7_months_infant_feeding_options TEXT,\n" +
-        "    _7_months_outcome TEXT,\n" +
-        "    _8_months_date TEXT,\n" +
-        "    _8_months_hiv_status_p_n TEXT,\n" +
-        "    _8_months_ctx TEXT,\n" +
-        "    _8_months_iycf_counselling TEXT,\n" +
-        "    _8_months_infant_feeding_options TEXT,\n" +
-        "    _8_months_outcome TEXT,\n" +
-        "    _9_months_date TEXT,\n" +
-        "    _9_months_hiv_status_p_n TEXT,\n" +
-        "    _9_months_ctx TEXT,\n" +
-        "    _9_months_iycf_counselling TEXT,\n" +
-        "    _9_months_infant_feeding_options TEXT,\n" +
-        "    _9_months_outcome TEXT,\n" +
-        "    _10_months_date TEXT,\n" +
-        "    _10_months_hiv_status_p_n TEXT,\n" +
-        "    _10_months_ctx TEXT,\n" +
-        "    _10_months_iycf_counselling TEXT,\n" +
-        "    _10_months_infant_feeding_options TEXT,\n" +
-        "    _10_months_outcome TEXT,\n" +
-        "    _11_months_date TEXT,\n" +
-        "    _11_months_hiv_status_p_n TEXT,\n" +
-        "    _11_months_ctx TEXT,\n" +
-        "    _11_months_iycf_counselling TEXT,\n" +
-        "    _11_months_infant_feeding_options TEXT,\n" +
-        "    _11_months_outcome TEXT\n" +
-        "    _12_months_date TEXT,\n" +
-        "    _12_months_hiv_status_p_n TEXT,\n" +
-        "    _12_months_ctx TEXT,\n" +
-        "    _12_months_iycf_counselling TEXT,\n" +
-        "    _12_months_infant_feeding_options TEXT,\n" +
-        "    _12_months_outcome TEXT,\n" +
-        "    _13_months_date TEXT,\n" +
-        "    _13_months_hiv_status_p_n TEXT,\n" +
-        "    _13_months_ctx TEXT,\n" +
-        "    _13_months_iycf_counselling TEXT,\n" +
-        "    _13_months_infant_feeding_options TEXT,\n" +
-        "    _13_months_outcome TEXT,\n" +
-        "    _14_months_date TEXT,\n" +
-        "    _14_months_hiv_status_p_n TEXT,\n" +
-        "    _14_months_ctx TEXT,\n" +
-        "    _14_months_iycf_counselling TEXT,\n" +
-        "    _14_months_infant_feeding_options TEXT,\n" +
-        "    _14_months_outcome TEXT,\n" +
-        "    _15_months_date TEXT,\n" +
-        "    _15_months_hiv_status_p_n TEXT,\n" +
-        "    _15_months_ctx TEXT,\n" +
-        "    _15_months_iycf_counselling TEXT,\n" +
-        "    _15_months_infant_feeding_options TEXT,\n" +
-        "    _15_months_outcome TEXT,\n" +
-        "    _16_months_date TEXT,\n" +
-        "    _16_months_hiv_status_p_n TEXT,\n" +
-        "    _16_months_ctx TEXT,\n" +
-        "    _16_months_iycf_counselling TEXT,\n" +
-        "    _16_months_infant_feeding_options TEXT,\n" +
-        "    _16_months_outcome TEXT,\n" +
-        "    _17_months_date TEXT,\n" +
-        "    _17_months_hiv_status_p_n TEXT,\n" +
-        "    _17_months_ctx TEXT,\n" +
-        "    _17_months_iycf_counselling TEXT,\n" +
-        "    _17_months_infant_feeding_options TEXT,\n" +
-        "    _17_months_outcome TEXT,\n" +
-        "    _18_months_date TEXT,\n" +
-        "    _18_months_hiv_status_p_n TEXT,\n" +
-        "    _18_months_ctx TEXT,\n" +
-        "    _18_months_iycf_counselling TEXT,\n" +
-        "    _18_months_infant_feeding_options TEXT,\n" +
-        "    _18_months_outcome TEXT,\n" +
-        "    final_outcome TEXT,\n" +
-        "    date_referred_for_art_if_hiv_positive TEXT,\n" +
-        "    date_enrolled_in_art TEXT,\n" +
-        "    delete_status TEXT )\n" +
-        "    ");
 
 
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion4 ");
+        }
+    }
+
+    private static void upgradeToVersion5(SQLiteDatabase db) {
+        try {
+            db.execSQL("ALTER TABLE ec_household ADD COLUMN last_interacted_with TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN household_location");
+            db.execSQL("ALTER TABLE ec_household_visitation_for_vca_0_20_years ADD COLUMN vca_visit_location");
+            db.execSQL("ALTER TABLE ec_household_visitation_for_caregiver ADD COLUMN visit_location");
+            db.execSQL("ALTER TABLE ec_referral ADD COLUMN referral_location");
+
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_years TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_sexually_active TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_preventions TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_preventions_other TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_sex_older_women TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_transactional_sex TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_sex_work TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_economically_insecure TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_violent_partner TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_diagnosed TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_hiv_tested TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_test_positive TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_undergone_vmmc TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_in_school TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_economic_strengthening TEXT");
+
+            String sql = "CREATE TABLE IF NOT EXISTS ec_pmtct_mother (" +
+                    "base_entity_id TEXT, " +
+                    "last_interacted_with TEXT, " +
+                    "province TEXT, " +
+                    "district TEXT, " +
+                    "ward TEXT, " +
+                    "facility TEXT, " +
+                    "partner TEXT, " +
+                    "caseworker_name TEXT, " +
+                    "date_enrolled_ecap TEXT, " +
+                    "pmtct_id TEXT, " +
+                    "ecap_id_question TEXT, " +
+                    "household_id TEXT, " +
+                    "postnatal_care_visit TEXT, " +
+                    "date_enrolled_pmtct TEXT, " +
+                    "mothers_full_name TEXT, " +
+                    "nick_name TEXT, " +
+                    "mothers_age TEXT, " +
+                    "date_initiated_on_art TEXT, " +
+                    "art_number TEXT, " +
+                    "mothers_smh_no TEXT, " +
+                    "home_address TEXT, " +
+                    "nearest_landmark TEXT, " +
+                    "mothers_phone TEXT, " +
+                    "date_of_st_contact TEXT, " +
+                    "date_of_delivery TEXT, " +
+                    "place_of_delivery TEXT, " +
+                    "on_art_at_time_of_delivery TEXT, " +
+                    "delete_status TEXT)";
+            db.execSQL(sql);
+
+            String sqlCreateTable = "CREATE TABLE IF NOT EXISTS ec_pmtct_mother_child (" +
+                    "base_entity_id TEXT, " +
+                    "pmtct_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "infant_first_name TEXT, " +
+                    "infant_middle_name TEXT, " +
+                    "infant_lastname TEXT, " +
+                    "infants_date_of_birth TEXT, " +
+                    "infants_sex TEXT, " +
+                    "weight_at_birth TEXT, " +
+                    "infant_feeding_options TEXT, " +
+                    "under_five_clinic_card TEXT, " +
+                    "delete_status TEXT)";
+
+            db.execSQL(sqlCreateTable);
+
+            String sqlCreatePostnatal = "CREATE TABLE IF NOT EXISTS ec_pmtct_mother_postnatal (" +
+                    "base_entity_id TEXT, " +
+                    "relational_id TEXT, " +
+                    "pmtct_id TEXT, " +
+                    "date_of_st_post_natal_care TEXT, " +
+                    "mother_tested_for_hiv TEXT, " +
+                    "postnatal_care_visit TEXT, " +
+                    "hiv_test_result_r_nr_at_6_weeks TEXT, " +
+                    "art_initiated_at_6_weeks TEXT, " +
+                    "art_adherence_counselling_support_at_6_weeks TEXT, " +
+                    "family_planning_counselling_at_6_weeks TEXT, " +
+                    "comments_at_postnatal_care_visit_6_weeks TEXT, " +
+                    "hiv_test_result_r_nr_at_6_months TEXT, " +
+                    "art_initiated_at_6_months TEXT, " +
+                    "family_planning_counselling_at_6_months TEXT, " +
+                    "number_of_condoms_distributed_at_6_months TEXT, " +
+                    "comments_at_postnatal_care_visit_6 TEXT, " +
+                    "hiv_test_result_r_nr_at_9_weeks TEXT, " +
+                    "art_initiated_at_9_weeks TEXT, " +
+                    "art_adherence_counselling_support_at_9_weeks TEXT, " +
+                    "family_planning_counselling_at_9_weeks TEXT, " +
+                    "comments_at_postnatal_care_visit_9_weeks TEXT, " +
+                    "hiv_test_result_r_nr_at_9_months TEXT, " +
+                    "art_initiated_at_9_months TEXT, " +
+                    "family_planning_counselling_at_9_months TEXT, " +
+                    "number_of_condoms_distributed_at_9_months TEXT, " +
+                    "comments_at_postnatal_care_visit_9 TEXT, " +
+                    "hiv_test_result_r_nr_at_12_weeks TEXT, " +
+                    "art_initiated_at_12_weeks TEXT, " +
+                    "art_adherence_counselling_support_at_12_weeks TEXT, " +
+                    "family_planning_counselling_at_12_weeks TEXT, " +
+                    "comments_at_postnatal_care_visit_12_weeks TEXT, " +
+                    "hiv_test_result_r_nr_at_12_months TEXT, " +
+                    "art_initiated_at_12_months TEXT, " +
+                    "family_planning_counselling_at_12_months TEXT, " +
+                    "number_of_condoms_distributed_at_12_months TEXT, " +
+                    "comments_at_postnatal_care_visit_12 TEXT, " +
+                    "family_planning_counselling_at_18_months TEXT, " +
+                    "number_of_condoms_distributed_at_18_months TEXT, " +
+                    "comments_at_postnatal_care_visit_18 TEXT, " +
+                    "mothers_outcome TEXT, " +
+                    "delete_status TEXT)";
+
+            db.execSQL(sqlCreatePostnatal);
+
+            String sqlCreateTableANC = "CREATE TABLE IF NOT EXISTS ec_pmtct_mother_anc (" +
+                    "base_entity_id TEXT, " +
+                    "relational_id TEXT, " +
+                    "pmtct_id TEXT, " +
+                    "date_of_st_contact TEXT, " +
+                    "gestation_age_in_weeks TEXT, " +
+                    "hiv_tested TEXT, " +
+                    "date_tested TEXT, " +
+                    "result_of_hiv_test TEXT, " +
+                    "recency_test_result_if_applicable TEXT, " +
+                    "vl_result_at_trimester_1 TEXT, " +
+                    "vl_result_at_trimester_2 TEXT, " +
+                    "vl_result_at_trimester_3 TEXT, " +
+                    "male_partner_tested TEXT, " +
+                    "date_male_partner_tested TEXT, " +
+                    "result_r_nr TEXT, " +
+                    "treatment_initiated TEXT, " +
+                    "date_initiated_on_treatment TEXT, " +
+                    "on_art_st_anc TEXT, " +
+                    "tb_screening TEXT, " +
+                    "syphilis_testing TEXT, " +
+                    "syphilis_test_type TEXT, " +
+                    "syphilis_other TEXT, " +
+                    "date_tested_for_syphilis TEXT, " +
+                    "syphilis_result TEXT, " +
+                    "delete_status TEXT)";
+
+            db.execSQL(sqlCreateTableANC);
+
+
+            String sqlCreateTableChildMonitoring = "CREATE TABLE IF NOT EXISTS ec_pmtct_child_monitoring (" +
+                    "base_entity_id TEXT, " +
+                    "pmtct_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "child_monitoring_visit TEXT, " +
+                    "dbs_at_birth_due_date TEXT, " +
+                    "dbs_at_birth_actual_date TEXT, " +
+                    "test_result_at_birth TEXT, " +
+                    "date_tested TEXT, " +
+                    "nvp_prophylaxis_for_infant TEXT, " +
+                    "nvp_date_given TEXT, " +
+                    "_6_weeks_dbs_date TEXT, " +
+                    "_6_weeks_dbs_ctx TEXT, " +
+                    "_6_weeks_dbs_hiv_test_p_n TEXT, " +
+                    "_6_weeks_dbs_iycf_counselling TEXT, " +
+                    "_6_weeks_infant_feeding_options TEXT, " +
+                    "_6_weeks_dbs_outcome TEXT, " +
+                    "_2_months_date TEXT, " +
+                    "_2_months_hiv_status_p_n TEXT, " +
+                    "_2_months_ctx TEXT, " +
+                    "_2_months_iycf_counselling TEXT, " +
+                    "_2_months_infant_feeding_options TEXT, " +
+                    "_2_months_outcome TEXT, " +
+                    "_3_months_date TEXT, " +
+                    "_3_months_hiv_status_p_n TEXT, " +
+                    "_3_months_ctx TEXT, " +
+                    "_3_months_iycf_counselling TEXT, " +
+                    "_3_months_infant_feeding_options TEXT, " +
+                    "_3_months_outcome TEXT, " +
+                    "_4_months_date TEXT, " +
+                    "_4_months_hiv_status_p_n TEXT, " +
+                    "_4_months_ctx TEXT, " +
+                    "_4_months_iycf_counselling TEXT, " +
+                    "_4_months_infant_feeding_options TEXT, " +
+                    "_4_months_outcome TEXT, " +
+
+                    "_5_months_date TEXT, " +
+                    "_5_months_hiv_status_p_n TEXT, " +
+                    "_5_months_ctx TEXT, " +
+                    "_5_months_iycf_counselling TEXT, " +
+                    "_5_months_infant_feeding_options TEXT, " +
+                    "_5_months_outcome TEXT, " +
+
+                    "_6_months_date TEXT, " +
+                    "_6_months_hiv_status_p_n TEXT, " +
+                    "_6_months_ctx TEXT, " +
+                    "_6_months_iycf_counselling TEXT, " +
+                    "_6_months_infant_feeding_options TEXT, " +
+                    "_6_months_outcome TEXT, " +
+
+                    "_7_months_date TEXT, " +
+                    "_7_months_hiv_status_p_n TEXT, " +
+                    "_7_months_ctx TEXT, " +
+                    "_7_months_iycf_counselling TEXT, " +
+                    "_7_months_infant_feeding_options TEXT, " +
+                    "_7_months_outcome TEXT, " +
+
+                    "_8_months_date TEXT, " +
+                    "_8_months_hiv_status_p_n TEXT, " +
+                    "_8_months_ctx TEXT, " +
+                    "_8_months_iycf_counselling TEXT, " +
+                    "_8_months_infant_feeding_options TEXT, " +
+                    "_8_months_outcome TEXT, " +
+
+                    "_9_months_date TEXT, " +
+                    "_9_months_hiv_status_p_n TEXT, " +
+                    "_9_months_ctx TEXT, " +
+                    "_9_months_iycf_counselling TEXT, " +
+                    "_9_months_infant_feeding_options TEXT, " +
+                    "_9_months_outcome TEXT, " +
+
+                    "_10_months_date TEXT, " +
+                    "_10_months_hiv_status_p_n TEXT, " +
+                    "_10_months_ctx TEXT, " +
+                    "_10_months_iycf_counselling TEXT, " +
+                    "_10_months_infant_feeding_options TEXT, " +
+                    "_10_months_outcome TEXT, " +
+
+                    "_11_months_date TEXT, " +
+                    "_11_months_hiv_status_p_n TEXT, " +
+                    "_11_months_ctx TEXT, " +
+                    "_11_months_iycf_counselling TEXT, " +
+                    "_11_months_infant_feeding_options TEXT, " +
+                    "_11_months_outcome TEXT, " +
+
+                    "_12_months_date TEXT, " +
+                    "_12_months_hiv_status_p_n TEXT, " +
+                    "_12_months_ctx TEXT, " +
+                    "_12_months_iycf_counselling TEXT, " +
+                    "_12_months_infant_feeding_options TEXT, " +
+                    "_12_months_outcome TEXT, " +
+
+                    "_13_months_date TEXT, " +
+                    "_13_months_hiv_status_p_n TEXT, " +
+                    "_13_months_ctx TEXT, " +
+                    "_13_months_iycf_counselling TEXT, " +
+                    "_13_months_infant_feeding_options TEXT, " +
+                    "_13_months_outcome TEXT, " +
+
+                    "_14_months_date TEXT, " +
+                    "_14_months_hiv_status_p_n TEXT, " +
+                    "_14_months_ctx TEXT, " +
+                    "_14_months_iycf_counselling TEXT, " +
+                    "_14_months_infant_feeding_options TEXT, " +
+                    "_14_months_outcome TEXT, " +
+
+                    "_15_months_date TEXT, " +
+                    "_15_months_hiv_status_p_n TEXT, " +
+                    "_15_months_ctx TEXT, " +
+                    "_15_months_iycf_counselling TEXT, " +
+                    "_15_months_infant_feeding_options TEXT, " +
+                    "_15_months_outcome TEXT, " +
+
+                    "_16_months_date TEXT, " +
+                    "_16_months_hiv_status_p_n TEXT, " +
+                    "_16_months_ctx TEXT, " +
+                    "_16_months_iycf_counselling TEXT, " +
+                    "_16_months_infant_feeding_options TEXT, " +
+                    "_16_months_outcome TEXT, " +
+
+                    "_17_months_date TEXT, " +
+                    "_17_months_hiv_status_p_n TEXT, " +
+                    "_17_months_ctx TEXT, " +
+                    "_17_months_iycf_counselling TEXT, " +
+                    "_17_months_infant_feeding_options TEXT, " +
+                    "_17_months_outcome TEXT, " +
+
+                    "_18_months_date TEXT, " +
+                    "_18_months_hiv_status_p_n TEXT, " +
+                    "_18_months_ctx TEXT, " +
+                    "_18_months_iycf_counselling TEXT, " +
+                    "_18_months_infant_feeding_options TEXT, " +
+                    "_18_months_outcome TEXT, " +
+
+                    "final_outcome TEXT, " +
+                    "date_referred_for_art_if_hiv_positive TEXT, " +
+                    "date_enrolled_in_art TEXT, " +
+                    "delete_status TEXT)";
+
+            db.execSQL(sqlCreateTableChildMonitoring);
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion5 ");
         }
     }
 
