@@ -215,7 +215,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         }
 
-        is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
+        is_hiv_positive = null;
+
+        if (indexVCA != null && indexVCA.getUnique_id() != null ) {
+            String uniqueId = indexVCA.getUnique_id();
+            if (uniqueId != null) {
+                is_hiv_positive = VCAScreeningDao.checkStatus(uniqueId);
+            }
+        }
 
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
