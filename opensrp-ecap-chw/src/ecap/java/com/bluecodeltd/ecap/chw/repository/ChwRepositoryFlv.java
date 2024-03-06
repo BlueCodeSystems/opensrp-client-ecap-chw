@@ -21,6 +21,7 @@ import org.smartregister.immunization.util.IMDatabaseUtils;
 import org.smartregister.reporting.ReportingLibrary;
 import org.smartregister.util.DatabaseMigrationUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,7 +49,7 @@ public class ChwRepositoryFlv {
                     upgradeToVersion4(db);
                     break;
                 case 5:
-                    upgradeToVersion5(db);
+                    upgradeToVersion5(context,db);
                     break;
                 default:
                     break;
@@ -164,7 +165,7 @@ public class ChwRepositoryFlv {
         }
     }
 
-    private static void upgradeToVersion5(SQLiteDatabase db) {
+    private static void upgradeToVersion5(Context context,SQLiteDatabase db) {
         try {
             db.execSQL("ALTER TABLE ec_household ADD COLUMN last_interacted_with TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN household_location");
@@ -451,12 +452,62 @@ public class ChwRepositoryFlv {
 
             db.execSQL(sqlCreateTableChildMonitoring);
 
+            clearAppData(context);
+
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion5 ");
         }
     }
 
+    private static void clearAppData(Context context) {
+        // Clear cache
+        clearAppCache(context);
 
+        // Clear internal storage files
+        clearInternalStorage(context);
+    }
+
+    private static void clearAppCache(Context context) {
+        try {
+            File cacheDirectory = context.getCacheDir();
+            deleteDir(cacheDirectory);
+        } catch (Exception e) {
+            Timber.e(e, "clearAppCache: Error clearing app cache");
+        }
+    }
+
+    private static void clearInternalStorage(Context context) {
+        try {
+            File filesDir = context.getFilesDir();
+            deleteDir(filesDir);
+
+            File databaseDir = context.getDatabasePath("dummy").getParentFile();
+            deleteDir(databaseDir);
+
+            File sharedPrefsDir = new File(context.getFilesDir(), "../shared_prefs");
+            deleteDir(sharedPrefsDir);
+        } catch (Exception e) {
+            Timber.e(e, "clearInternalStorage: Error clearing app internal storage");
+        }
+    }
+
+    // Recursive method to delete a directory and its contents
+    private static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if (dir != null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
 
     private static void upgradeToVersion7(SQLiteDatabase db) {
         try {
