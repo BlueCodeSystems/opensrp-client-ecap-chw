@@ -39,6 +39,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
+            android:name=".SignatureActivity"
+            android:exported="false" />
+        <activity
             android:name=".HouseholdServicesOnlyActivity"
             android:exported="false" />
         <activity
@@ -78,7 +81,6 @@
         <activity
             android:name=".activity.HivTestingServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".activity.PMTCTRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -92,6 +94,9 @@
             android:label="Reports"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.SignatureActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.Profile"
             android:exported="true" />
         <activity
@@ -101,7 +106,6 @@
             android:name=".activity.MotherDetail"
             android:label="Mother Details"
             android:theme="@style/ChwTheme.NoActionBar" />
-
         <activity
             android:name=".activity.MotherPmtctProfileActivity"
             android:label="Mother PMTCT"

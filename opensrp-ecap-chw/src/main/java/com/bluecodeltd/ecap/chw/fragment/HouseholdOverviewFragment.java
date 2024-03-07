@@ -1,11 +1,15 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +41,7 @@ public class HouseholdOverviewFragment extends Fragment {
     Household house;
     CaregiverAssessmentModel caregiverAssessmentModel;
     String nutritionWarning;
+    ImageView signatureIV;
     private TextView txtFemalesBetweenTenAndSeventeen;
     private TextView txtFemalesLessThanFive;
     RelativeLayout relativeLayout;
@@ -52,7 +57,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncome = view.findViewById(R.id.income);
         txtIncomeSource = view.findViewById(R.id.income_source);
         txtBeds = view.findViewById(R.id.beds);
-        txtMalaria = view.findViewById(R.id.malaria);
+        //txtMalaria = view.findViewById(R.id.malaria);
         txtMalesLessThanFive = view.findViewById(R.id.males);
         txtFemalesLessThanFive = view.findViewById(R.id.females);
         //txtFemales = view.findViewById(R.id.females);
@@ -60,6 +65,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtNumber = view.findViewById(R.id.emergency_number);
         txtPhone = view.findViewById(R.id.h_phone);
         txtDate  = view.findViewById(R.id.h_date);
+        signatureIV = view.findViewById(R.id.signature_view);
         txtEdited_by = view.findViewById(R.id.h_edited_by);
         txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
         txtFemalesBetweenTenAndSeventeen = view.findViewById(R.id.femalesBetweenTenAndSeventeen);
@@ -91,6 +97,17 @@ public class HouseholdOverviewFragment extends Fragment {
 
         return view;
 
+    }
+
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        // Decode Base64 encoded string to byte array
+        byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+        // Convert byte array to Bitmap
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+        // Set the Bitmap to ImageView
+        imageView.setImageBitmap(decodedBitmap);
     }
 
     @SuppressLint("RestrictedApi")
@@ -142,11 +159,15 @@ public class HouseholdOverviewFragment extends Fragment {
         String phone = house.getPhone();
         String date_edited = house.getDate_edited();
         String edited_by = house.getCaseworker_name();
+        String encodedSignature = house.getSignature();
 
+        if(encodedSignature!= null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, signatureIV);
+        }
         txtIncome.setText(income);
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
-        txtMalaria.setText(household_member_had_malaria);
+        //txtMalaria.setText(household_member_had_malaria);
 
 
         if(lessThanFiveMales != null)
@@ -232,6 +253,9 @@ public class HouseholdOverviewFragment extends Fragment {
 
         txtIsMMD.setText(house.getCaregiver_mmd() != null ? house.getCaregiver_mmd() : "Not Set");
         txtLevelMMD.setText(house.getLevel_mmd() != null ? house.getLevel_mmd() : "Not Set");
+
+
+
 
 
         List<HouseholdServiceReportModel> serviceModels = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());

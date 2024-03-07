@@ -19,6 +19,7 @@ import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONException;
@@ -171,11 +172,17 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
                 if (Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
-                    RegisterParams registerParam = new RegisterParams();
-                    registerParam.setEditMode(false);
-                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(R.string.saving_dialog_title);
-                    householdIndexPresenter().saveForm(jsonString, registerParam);
+//                    RegisterParams registerParam = new RegisterParams();
+//                    registerParam.setEditMode(false);
+//                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
+//                    showProgressDialog(R.string.saving_dialog_title);
+              //householdIndexPresenter().saveForm(jsonString, registerParam);
+
+                    //Gson gson = new Gson();
+                    //String json = gson.toJson(formToBeOpened);
+                    Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+                    passClosureForm.putExtra("closure", jsonString);
+                    startActivity(passClosureForm);
 
                 }
             } catch (JSONException e) {
