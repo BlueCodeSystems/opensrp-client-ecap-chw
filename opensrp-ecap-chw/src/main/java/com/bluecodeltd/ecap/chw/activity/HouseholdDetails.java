@@ -179,7 +179,7 @@ public class HouseholdDetails extends AppCompatActivity {
         house = getHousehold(householdId);
         refreshActivity(house);
 
-        caregiver = CaregiverDao.getCaregiver(householdId);
+       caregiver = CaregiverDao.getCaregiver(householdId);
 
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();

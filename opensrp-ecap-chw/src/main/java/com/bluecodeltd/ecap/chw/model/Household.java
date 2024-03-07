@@ -102,6 +102,7 @@ public class Household {
     private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
     private String sub_population;
+    private String signature;
 
 
     public String getCase_status() {
@@ -730,6 +731,14 @@ public class Household {
 
     public void setConsent_check_box(String consent_check_box) {
         this.consent_check_box = consent_check_box;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public String getPhone() {
