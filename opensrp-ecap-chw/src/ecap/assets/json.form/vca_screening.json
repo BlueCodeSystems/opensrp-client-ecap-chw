@@ -1830,6 +1830,7 @@
           }
         }
       },
+
       {
         "key": "abym",
         "openmrs_entity_parent": "",
@@ -1927,7 +1928,14 @@
           "err": ""
         },
         "relevance": {
-          "step1:abym_sexually": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        },
+        "relevance": {
+          "step1:abym_sexually_active": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1969,14 +1977,12 @@
             "key": "no",
             "text": "No"
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
-          }
+        ],  "relevance": {
+        "step1:abym_sexually_active": {
+          "type": "string",
+          "ex": "equalTo(., \"yes\")"
         }
+      }
       },
       {
         "key": "abym_transactional_sex",
@@ -1996,10 +2002,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:abym_sexually_active": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2021,10 +2026,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:abym_sexually_active": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2046,10 +2050,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:abym_sexually_active": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2096,10 +2099,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:abym_sexually_active": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2228,8 +2230,6 @@
           }
         }
       },
-
-
 
       {
         "key": "spacer",
