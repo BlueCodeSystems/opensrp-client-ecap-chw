@@ -763,6 +763,13 @@ condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.
 actions:
   - "isRelevant = true"
 ---
+name: step1_abym_preventions
+description: abym_preventions
+priority: 1
+condition: "step1_abym_sexually_active.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_abym_preventions_other
 description: abym_preventions_other
 priority: 1

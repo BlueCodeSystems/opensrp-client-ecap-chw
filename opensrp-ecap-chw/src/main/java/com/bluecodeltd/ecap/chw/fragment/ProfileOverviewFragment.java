@@ -17,8 +17,10 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.AbymSubpopulationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
+import com.bluecodeltd.ecap.chw.model.AbymSubpopulationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
@@ -34,7 +36,7 @@ import java.util.Objects;
 public class ProfileOverviewFragment extends Fragment {
 
     RelativeLayout myview;
-    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2;
+    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2, abymSubpopulation;
     ImageButton imgBtn;
     TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
@@ -63,6 +65,7 @@ public class ProfileOverviewFragment extends Fragment {
         txtSubPopulation = view.findViewById(R.id.sub_population);
         subPopLayout1 = view.findViewById(R.id.subPopLayout1);
         subPopLayout2 = view.findViewById(R.id.subPopLayout2);
+        abymSubpopulation = view.findViewById(R.id.abym_layout);
         myview = view.findViewById(R.id.myview);
         txtReferred = view.findViewById(R.id.referred);
         txtEnrolled = view.findViewById(R.id.enrolled);
@@ -278,6 +281,25 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText("N/A");
         }
 
+        AbymSubpopulationModel abym = AbymSubpopulationDao.getAbymSubpopulation(childIndex.getUnique_id());
+        if(abym != null){
+
+            if (isYes(abym.getAbym_years()) &&
+                    isYes(abym.getAbym_sex_older_women()) &&
+                    isYes(abym.getAbym_transactional_sex()) &&
+                    isYes(abym.getAbym_sex_work()) &&
+                    isYes(abym.getAbym_economically_insecure()) &&
+                    isYes(abym.getAbym_violent_partner()) &&
+                    isYes(abym.getAbym_diagnosed())) {
+
+                abymSubpopulation.setVisibility(View.VISIBLE);
+
+            } else {
+                abymSubpopulation.setVisibility(View.GONE);
+            }
+
+        }
+
         List<VCAServiceModel> sModel = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
 
         String viralLoadResult = null;
@@ -395,7 +417,9 @@ imgBtn.setOnClickListener(new View.OnClickListener() {
 
     }
 
-
+    private boolean isYes(String value) {
+        return value != null && value.equals("yes");
+    }
     public String keysToValues(String keys) {
         Map<String, String> keyValues = new HashMap<>();
         keyValues.put("subpop1", "C/ALHIV");
