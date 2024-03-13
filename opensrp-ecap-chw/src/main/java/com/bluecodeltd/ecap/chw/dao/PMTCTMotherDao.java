@@ -61,15 +61,40 @@ public class PMTCTMotherDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static PtctMotherModel getPostnatalDate(String pmtctID) {
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC LIMIT 1";
+
+        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
+    }
     public static List<PtctMotherModel> getPostnatalMother(String pmtctID) {
 
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
         if (values == null || values.size() == 0)
             return new ArrayList<>();
 
         return values;
+
+    }
+    public static String countMotherPostnatal (String pmtctID){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
 
     }
 

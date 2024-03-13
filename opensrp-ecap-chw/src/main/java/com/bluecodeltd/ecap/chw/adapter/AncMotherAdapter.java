@@ -28,7 +28,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
-import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.PmctMotherAncModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -54,32 +54,32 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMotherAdapter.ViewHolder> {
+public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.ViewHolder> {
     Context context;
-    List<PtctMotherModel> postnatal;
+    List<PmctMotherAncModel> postnatal;
     ObjectMapper oMapper;
 
-    public PostnatalMotherAdapter(Context context, List<PtctMotherModel> postnatal) {
+    public AncMotherAdapter(Context context, List<PmctMotherAncModel> postnatal) {
         this.context = context;
         this.postnatal = postnatal;
     }
 
     @NonNull
     @Override
-    public PostnatalMotherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mother_postnatal_list, parent, false);
-        PostnatalMotherAdapter.ViewHolder viewHolder = new PostnatalMotherAdapter.ViewHolder(v);
+    public AncMotherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mother_postnatal_anc_list, parent, false);
+        AncMotherAdapter.ViewHolder viewHolder = new AncMotherAdapter.ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostnatalMotherAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AncMotherAdapter.ViewHolder holder, int position) {
 
-        final PtctMotherModel visit = postnatal.get(position);
+        final PmctMotherAncModel visit = postnatal.get(position);
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getDate_of_st_post_natal_care());
+        holder.txtDate.setText(visit.getDate_of_st_contact());
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -142,7 +142,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
                 try {
 
-                    openFormUsingFormUtils(context, "postnatal_care", visit);
+                    openFormUsingFormUtils(context, "anc_details", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -154,17 +154,17 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
         holder.editme.setOnClickListener(v -> {
 
-                if (v.getId() == R.id.edit_me) {
+            if (v.getId() == R.id.edit_me) {
 
-                    try {
+                try {
 
-                        openFormUsingFormUtils(context, "postnatal_care", visit);
+                    openFormUsingFormUtils(context, "anc_details", visit);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+            }
 
 
         });
@@ -221,19 +221,20 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
                 Timber.e(e);
             }
         });
-        String sVisit = visit.getPostnatal_care_visit();
+        String sVisit = visit.getGestation_age_in_weeks();
         if(sVisit != null){
 
             SpannableString spannableString = new SpannableString(sVisit);
             spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, sVisit.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            holder.txtVisit.setText("Visit at: "+ spannableString);
+            holder.txtVisit.setText("Gestation Age: "+ spannableString);
         } else{
             holder.txtVisit.setVisibility(View.GONE);
         }
 
 
     }
+
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
@@ -248,7 +249,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, PtctMotherModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, PmctMotherAncModel visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -307,12 +308,12 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
             switch (encounterType) {
 
-                case "Mother Pmtct":
+                case "Mother Pmtct ANC":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_pmtct_mother");
+                                encounterType, "ec_pmtct_mother_anc");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

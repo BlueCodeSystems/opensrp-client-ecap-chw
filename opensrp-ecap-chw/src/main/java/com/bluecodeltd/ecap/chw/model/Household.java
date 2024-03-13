@@ -103,7 +103,15 @@ public class Household {
     private String new_caregiver_phone;
     private String sub_population;
     private String signature;
+    private  String relationship_other;
 
+    public String getRelationship_other() {
+        return relationship_other;
+    }
+
+    public void setRelationship_other(String relationship_other) {
+        this.relationship_other = relationship_other;
+    }
 
     public String getCase_status() {
         return case_status;

@@ -160,6 +160,29 @@
         "text": "PMTCT Mothers Details"
       },
       {
+        "key": "ecap_id_question",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecap_id_question",
+        "type": "native_radio",
+        "label": "Do you have the ECAP II household ID?",
+        "read_only": false,
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Do you have the ECAP II household ID"
+        }
+      },
+      {
         "key": "date_enrolled_ecap",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -173,6 +196,12 @@
         "v_required": {
           "value": true,
           "err": "Please enter the date enrolled"
+        },
+        "relevance": {
+          "step1:ecap_id_question": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
         }
       },
       {
@@ -187,6 +216,12 @@
         "v_required": {
           "value": true,
           "err": "Please enter the ECAPII comprehensive program ID"
+        },
+        "relevance": {
+          "step1:ecap_id_question": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
         }
       },
       {
@@ -238,7 +273,7 @@
           "err": "Name can only contain letters"
         },
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is required"
         }
       },
@@ -297,49 +332,7 @@
         "type": "edit_text",
         "hint": "Mother’s SMH No."
       },
-      {
-        "key": "ecap_id_question",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ecap_id_question",
-        "type": "native_radio",
-        "label": "Do you have the ECAP II household ID?",
-        "read_only": false,
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Do you have the ECAP II household ID"
-        }
-      },
-      {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Household ID",
-        "edit_type": "name",
-        "relevance": {
-          "step1:ecap_id_question": {
-            "type": "string",
-            "ex": "equalTo(., \"Yes\")"
-          }
-        },
-        "v_required": {
-          "value": false,
-          "err": "Please enter the household ID"
-        }
-      },
+
       {
         "key": "home_address",
         "openmrs_entity_parent": "",

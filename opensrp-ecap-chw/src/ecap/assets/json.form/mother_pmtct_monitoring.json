@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Mother Pmtct Monitoring",
+  "encounter_type": "Ptmct Child Monitoring",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -58,15 +58,6 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "Basic Program Information"
-      },
-      {
         "key": "is_closed",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -78,149 +69,17 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pmtct_id",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
         "hint": "ECAPII Comprehensive Program ID",
         "edit_type": "name"
       },
       {
-        "key": "infant_first_name",
+        "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_first_name",
-        "type": "edit_text",
-        "hint": "Infant's Firstname",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "infant_middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_middle_name",
-        "type": "edit_text",
-        "hint": "Infant's Middle Name",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "infant_lastname",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_lastname",
-        "type": "edit_text",
-        "hint": "Infant's Lastname",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "infants_date_of_birth",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infants_date_of_birth",
-        "type": "date_picker",
-        "hint": "Date of Birth",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter date of birth"
-        }
-      },
-      {
-        "key": "infants_sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infants_sex",
-        "type": "native_radio",
-        "label": "Sex",
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "weight_at_birth",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "weight_at_birth",
-        "type": "edit_text",
-        "hint": "Weight at Birth",
-        "edit_type": "number"
-      },
-      {
-        "key": "infant_feeding_options",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_feeding_options",
-        "type": "native_radio",
-        "label": "Infant Feeding Options at Birth (Tick 1 that Applies)",
-        "options": [
-          {
-            "key": "Exclusive Breast Feeding",
-            "text": "Exclusive Breast Feeding"
-          },
-          {
-            "key": "Complimentary Feeding",
-            "text": "Complimentary Feeding"
-          },
-          {
-            "key": "Non Breast Feeding",
-            "text": "Non Breast Feeding"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "under_five_clinic_card",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "under_five_clinic_card",
-        "type": "edit_text",
-        "hint": "Under 5 Card Number",
-        "edit_type": "number"
+        "openmrs_entity_id": "unique_id",
+        "type": "hidden"
       },
       {
         "key": "spacer",
@@ -238,22 +97,6 @@
         "type": "toaster_notes",
         "toaster_type": "info",
         "text": "DBS AT BIRTH"
-      },
-      {
-        "key": "dbs_at_birth_due_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "dbs_at_birth_due_date",
-        "type": "date_picker",
-        "hint": "DBS at Birth (Due Date)",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date"
-        }
       },
       {
         "key": "dbs_at_birth_due_date",
@@ -384,12 +227,93 @@
         "toaster_type": "info",
         "text": "Pediatic Care Follow Up (Routine Infant Testing and Follow Up Visit)"
       },
-
+      {
+        "key": "child_monitoring_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_monitoring_visit",
+        "type": "native_radio",
+        "label": "Child monitoring visit",
+        "options": [
+          {
+            "key": "6 weeks",
+            "text": "6 weeks"
+          },
+          {
+            "key": "2 months",
+            "text": "2 months"
+          },
+          {
+            "key": "3 months",
+            "text": "3 months"
+          },
+          {
+            "key": "4 months",
+            "text": "4 months"
+          },
+          {
+            "key": "5 months",
+            "text": "5 months"
+          },
+          {
+            "key": "6 months",
+            "text": "6 months"
+          },
+          {
+            "key": "7 months",
+            "text": "7 months"
+          },
+          {
+            "key": "9 months",
+            "text": "9 months"
+          },
+          {
+            "key": "10 months",
+            "text": "10 months"
+          },
+          {
+            "key": "11 months",
+            "text": "11 months"
+          },
+          {
+            "key": "12 months",
+            "text": "12 months"
+          },
+          {
+            "key": "13 months",
+            "text": "13 months"
+          },
+          {
+            "key": "14 months",
+            "text": "14 months"
+          },
+          {
+            "key": "15 months",
+            "text": "15 months"
+          },
+          {
+            "key": "16 months",
+            "text": "16 months"
+          },
+          {
+            "key": "17 months",
+            "text": "17 months"
+          },
+          {
+            "key": "18 months",
+            "text": "18 months"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the postnatal care visit"
+        }
+      },
       {
         "key": "_6_weeks_dbs_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "6_weeks_dbs_date",
+        "openmrs_entity_id": "_6_weeks_dbs_date",
         "type": "date_picker",
         "hint": "Date  (6 weeks) ",
         "look_up": "true",
@@ -399,15 +323,28 @@
         "v_required": {
           "value": true,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
+
       {
         "key": "_6_weeks_dbs_hiv_test_p_n",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_weeks_dbs_hiv_test_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (6 weeks) "
+        "hint": "HIV Status (P/N) (6 weeks) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
       },
       {
         "key": "_6_weeks_dbs_ctx",
@@ -415,7 +352,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_weeks_dbs_ctx",
         "type": "edit_text",
-        "hint": "CTX (6 weeks) "
+        "hint": "CTX (6 weeks) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
       },
       {
         "key": "_6_weeks_dbs_iycf_counselling",
@@ -423,7 +366,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_weeks_dbs_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (6 weeks) "
+        "hint": "IYCF Counselling (6 weeks) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
+        }
       },
       {
         "key": "_6_weeks_infant_feeding_options",
@@ -449,6 +398,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
       {
@@ -479,6 +434,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 weeks\")"
+          }
         }
       },
 
@@ -496,6 +457,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"2 months\")"
+          }
         }
       },
       {
@@ -504,7 +471,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_2_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (2 months) "
+        "hint": "HIV Status (P/N) (2 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"2 months\")"
+          }
+        }
       },
       {
         "key": "_2_months_ctx",
@@ -512,7 +485,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_2_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (months) "
+        "hint": "CTX (months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"2 months\")"
+          }
+        }
       },
       {
         "key": "_2_months_iycf_counselling",
@@ -520,13 +499,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_2_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (2 months) "
+        "hint": "IYCF Counselling (2 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"2 months\")"
+          }
+        }
       },
       {
         "key": "_2_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "2_months_infant_feeding_options",
+        "openmrs_entity_id": "_2_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (2 months)",
         "options": [
@@ -546,13 +531,19 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"2 months\")"
+          }
         }
       },
       {
         "key": "_2_months_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "2_months_outcome",
+        "openmrs_entity_id": "_2_months_outcome",
         "type": "native_radio",
         "label": "Outcome (Dead, Lost to follow up,Transited out, Exit) (2 months)",
         "options": [
@@ -576,6 +567,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"2 months\")"
+          }
         }
       },
 
@@ -593,6 +590,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"3 months\")"
+          }
         }
       },
       {
@@ -601,7 +604,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_3_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (3 months) "
+        "hint": "HIV Status (P/N) (3 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"3 months\")"
+          }
+        }
       },
       {
         "key": "_3_months_ctx",
@@ -609,7 +618,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_3_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (months) "
+        "hint": "CTX (months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"3 months\")"
+          }
+        }
       },
       {
         "key": "_3_months_iycf_counselling",
@@ -617,7 +632,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_3_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (3 months) "
+        "hint": "IYCF Counselling (3 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"3 months\")"
+          }
+        }
       },
       {
         "key": "_3_months_infant_feeding_options",
@@ -643,6 +664,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"3 months\")"
+          }
         }
       },
       {
@@ -673,6 +700,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"3 months\")"
+          }
         }
       },
 
@@ -690,6 +723,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"4 months\")"
+          }
         }
       },
       {
@@ -698,7 +737,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_4_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (4 months) "
+        "hint": "HIV Status (P/N) (4 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"4 months\")"
+          }
+        }
       },
       {
         "key": "_4_months_ctx",
@@ -706,7 +751,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_4_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (months) "
+        "hint": "CTX (months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"4 months\")"
+          }
+        }
       },
       {
         "key": "_4_months_iycf_counselling",
@@ -714,7 +765,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_4_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (4 months) "
+        "hint": "IYCF Counselling (4 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"4 months\")"
+          }
+        }
       },
       {
         "key": "_4_months_infant_feeding_options",
@@ -740,6 +797,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"4 months\")"
+          }
         }
       },
       {
@@ -770,6 +833,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"4 months\")"
+          }
         }
       },
 
@@ -787,6 +856,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"5 months\")"
+          }
         }
       },
       {
@@ -795,7 +870,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_5_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (5 months) "
+        "hint": "HIV Status (P/N) (5 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"5 months\")"
+          }
+        }
       },
       {
         "key": "_5_months_ctx",
@@ -803,7 +884,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_5_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (months) "
+        "hint": "CTX (months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"5 months\")"
+          }
+        }
       },
       {
         "key": "_5_months_iycf_counselling",
@@ -811,7 +898,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_5_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (5 months) "
+        "hint": "IYCF Counselling (5 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"5 months\")"
+          }
+        }
       },
       {
         "key": "_5_months_infant_feeding_options",
@@ -837,6 +930,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"5 months\")"
+          }
         }
       },
       {
@@ -867,6 +966,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"5 months\")"
+          }
         }
       },
 
@@ -884,6 +989,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
         }
       },
       {
@@ -892,7 +1003,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (6 months) "
+        "hint": "HIV Status (P/N) (6 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
       },
       {
         "key": "_6_months_ctx",
@@ -900,7 +1017,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (months) "
+        "hint": "CTX (months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
       },
       {
         "key": "_6_months_iycf_counselling",
@@ -908,7 +1031,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (6 months) "
+        "hint": "IYCF Counselling (6 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
+        }
       },
       {
         "key": "_6_months_infant_feeding_options",
@@ -934,6 +1063,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
         }
       },
       {
@@ -964,6 +1099,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"6 months\")"
+          }
         }
       },
 
@@ -981,6 +1122,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"7 months\")"
+          }
         }
       },
       {
@@ -989,7 +1136,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_7_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (7 months) "
+        "hint": "HIV Status (P/N) (7 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"7 months\")"
+          }
+        }
       },
       {
         "key": "_7_months_ctx",
@@ -997,7 +1150,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_7_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (7 months) "
+        "hint": "CTX (7 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"7 months\")"
+          }
+        }
       },
       {
         "key": "_7_months_iycf_counselling",
@@ -1005,7 +1164,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_7_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (7 months) "
+        "hint": "IYCF Counselling (7 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"7 months\")"
+          }
+        }
       },
       {
         "key": "_7_months_infant_feeding_options",
@@ -1031,6 +1196,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"7 months\")"
+          }
         }
       },
       {
@@ -1061,6 +1232,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"7 months\")"
+          }
         }
       },
 
@@ -1078,6 +1255,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"8 months\")"
+          }
         }
       },
       {
@@ -1086,7 +1269,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_8_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (8 months) "
+        "hint": "HIV Status (P/N) (8 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"8 months\")"
+          }
+        }
       },
       {
         "key": "_8_months_ctx",
@@ -1094,7 +1283,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_8_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (8 months) "
+        "hint": "CTX (8 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"8 months\")"
+          }
+        }
       },
       {
         "key": "_8_months_iycf_counselling",
@@ -1102,7 +1297,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_8_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (8 months) "
+        "hint": "IYCF Counselling (8 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"8 months\")"
+          }
+        }
       },
       {
         "key": "_8_months_infant_feeding_options",
@@ -1128,6 +1329,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"8 months\")"
+          }
         }
       },
       {
@@ -1158,6 +1365,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"8 months\")"
+          }
         }
       },
 
@@ -1175,6 +1388,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
       {
@@ -1183,7 +1402,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_9_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (9 months) "
+        "hint": "HIV Status (P/N) (9 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
       },
       {
         "key": "_9_months_ctx",
@@ -1191,7 +1416,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_9_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (9 months) "
+        "hint": "CTX (9 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
       },
       {
         "key": "_9_months_iycf_counselling",
@@ -1199,7 +1430,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_9_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (9 months) "
+        "hint": "IYCF Counselling (9 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
+        }
       },
       {
         "key": "_9_months_infant_feeding_options",
@@ -1225,6 +1462,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
       {
@@ -1255,6 +1498,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"9 months\")"
+          }
         }
       },
 
@@ -1272,6 +1521,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"10 months\")"
+          }
         }
       },
       {
@@ -1280,7 +1535,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_10_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (10 months) "
+        "hint": "HIV Status (P/N) (10 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"10 months\")"
+          }
+        }
       },
       {
         "key": "_10_months_ctx",
@@ -1288,7 +1549,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_10_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (10 months) "
+        "hint": "CTX (10 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"10 months\")"
+          }
+        }
       },
       {
         "key": "_10_months_iycf_counselling",
@@ -1296,13 +1563,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_10_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (10 months) "
+        "hint": "IYCF Counselling (10 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"10 months\")"
+          }
+        }
       },
       {
         "key": "_10_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "10_months_infant_feeding_options",
+        "openmrs_entity_id": "_10_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (10 months)",
         "options": [
@@ -1322,6 +1595,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"10 months\")"
+          }
         }
       },
       {
@@ -1352,6 +1631,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"10 months\")"
+          }
         }
       },
 
@@ -1369,6 +1654,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"11 months\")"
+          }
         }
       },
       {
@@ -1377,7 +1668,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_11_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (11 months) "
+        "hint": "HIV Status (P/N) (11 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"11 months\")"
+          }
+        }
       },
       {
         "key": "_11_months_ctx",
@@ -1385,7 +1682,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_11_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (11 months) "
+        "hint": "CTX (11 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"11 months\")"
+          }
+        }
       },
       {
         "key": "_11_months_iycf_counselling",
@@ -1393,13 +1696,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_11_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (11 months) "
+        "hint": "IYCF Counselling (11 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"11 months\")"
+          }
+        }
       },
       {
         "key": "_11_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "11_months_infant_feeding_options",
+        "openmrs_entity_id": "_11_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (11 months)",
         "options": [
@@ -1419,6 +1728,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"11 months\")"
+          }
         }
       },
       {
@@ -1449,6 +1764,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"11 months\")"
+          }
         }
       },
 
@@ -1466,6 +1787,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
       {
@@ -1474,7 +1801,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_12_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (12 months) "
+        "hint": "HIV Status (P/N) (12 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
       },
       {
         "key": "_12_months_ctx",
@@ -1482,7 +1815,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_12_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (12 months) "
+        "hint": "CTX (12 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
       },
       {
         "key": "_12_months_iycf_counselling",
@@ -1490,7 +1829,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_12_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (12 months) "
+        "hint": "IYCF Counselling (12 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
+        }
       },
       {
         "key": "_12_months_infant_feeding_options",
@@ -1516,6 +1861,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
       {
@@ -1546,6 +1897,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"12 months\")"
+          }
         }
       },
 
@@ -1563,6 +1920,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"13 months\")"
+          }
         }
       },
       {
@@ -1571,7 +1934,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_13_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (13 months) "
+        "hint": "HIV Status (P/N) (13 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"13 months\")"
+          }
+        }
       },
       {
         "key": "_13_months_ctx",
@@ -1579,7 +1948,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_13_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (13 months) "
+        "hint": "CTX (13 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"13 months\")"
+          }
+        }
       },
       {
         "key": "_13_months_iycf_counselling",
@@ -1587,7 +1962,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_13_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (13 months) "
+        "hint": "IYCF Counselling (13 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"13 months\")"
+          }
+        }
       },
       {
         "key": "_13_months_infant_feeding_options",
@@ -1613,6 +1994,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"13 months\")"
+          }
         }
       },
       {
@@ -1643,6 +2030,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"13 months\")"
+          }
         }
       },
 
@@ -1660,6 +2053,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"14 months\")"
+          }
         }
       },
       {
@@ -1668,7 +2067,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_14_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (14 months) "
+        "hint": "HIV Status (P/N) (14 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"14 months\")"
+          }
+        }
       },
       {
         "key": "_14_months_ctx",
@@ -1676,7 +2081,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_14_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (14 months) "
+        "hint": "CTX (14 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"14 months\")"
+          }
+        }
       },
       {
         "key": "_14_months_iycf_counselling",
@@ -1684,7 +2095,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_14_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (14 months) "
+        "hint": "IYCF Counselling (14 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"14 months\")"
+          }
+        }
       },
       {
         "key": "_14_months_infant_feeding_options",
@@ -1710,6 +2127,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"14 months\")"
+          }
         }
       },
       {
@@ -1740,6 +2163,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"14 months\")"
+          }
         }
       },
 
@@ -1757,6 +2186,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"15 months\")"
+          }
         }
       },
       {
@@ -1765,7 +2200,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_15_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (15 months) "
+        "hint": "HIV Status (P/N) (15 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"15 months\")"
+          }
+        }
       },
       {
         "key": "_15_months_ctx",
@@ -1773,7 +2214,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_15_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (15 months) "
+        "hint": "CTX (15 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"15 months\")"
+          }
+        }
       },
       {
         "key": "_15_months_iycf_counselling",
@@ -1781,7 +2228,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_15_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (15 months) "
+        "hint": "IYCF Counselling (15 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"15 months\")"
+          }
+        }
       },
       {
         "key": "_15_months_infant_feeding_options",
@@ -1807,6 +2260,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"15 months\")"
+          }
         }
       },
       {
@@ -1837,6 +2296,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"15 months\")"
+          }
         }
       },
 
@@ -1854,6 +2319,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"16 months\")"
+          }
         }
       },
       {
@@ -1862,7 +2333,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_16_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (16 months) "
+        "hint": "HIV Status (P/N) (16 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"16 months\")"
+          }
+        }
       },
       {
         "key": "_16_months_ctx",
@@ -1870,7 +2347,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_16_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (16 months) "
+        "hint": "CTX (16 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"16 months\")"
+          }
+        }
       },
       {
         "key": "_16_months_iycf_counselling",
@@ -1878,7 +2361,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_16_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (16 months) "
+        "hint": "IYCF Counselling (16 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"16 months\")"
+          }
+        }
       },
       {
         "key": "_16_months_infant_feeding_options",
@@ -1904,13 +2393,19 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"16 months\")"
+          }
         }
       },
       {
         "key": "_16_months_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "16_months_outcome",
+        "openmrs_entity_id": "_16_months_outcome",
         "type": "native_radio",
         "label": "Outcome (Dead, Lost to follow up,Transited out, Exit) (16 months)",
         "options": [
@@ -1934,6 +2429,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"16 months\")"
+          }
         }
       },
 
@@ -1951,6 +2452,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"17 months\")"
+          }
         }
       },
       {
@@ -1959,7 +2466,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_17_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (17 months) "
+        "hint": "HIV Status (P/N) (17 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"17 months\")"
+          }
+        }
       },
       {
         "key": "_17_months_ctx",
@@ -1967,7 +2480,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_17_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (17 months) "
+        "hint": "CTX (17 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"17 months\")"
+          }
+        }
       },
       {
         "key": "_17_months_iycf_counselling",
@@ -1975,7 +2494,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_17_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (17 months) "
+        "hint": "IYCF Counselling (17 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"17 months\")"
+          }
+        }
       },
       {
         "key": "_17_months_infant_feeding_options",
@@ -2001,6 +2526,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"17 months\")"
+          }
         }
       },
       {
@@ -2031,6 +2562,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"17 months\")"
+          }
         }
       },
 
@@ -2048,6 +2585,12 @@
         "v_required": {
           "value": false,
           "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
       {
@@ -2056,7 +2599,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_18_months_hiv_status_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (18 months) "
+        "hint": "HIV Status (P/N) (18 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
       },
       {
         "key": "_18_months_ctx",
@@ -2064,7 +2613,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_18_months_ctx",
         "type": "edit_text",
-        "hint": "CTX (18 months) "
+        "hint": "CTX (18 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
       },
       {
         "key": "_18_months_iycf_counselling",
@@ -2072,13 +2627,19 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_18_months_iycf_counselling",
         "type": "edit_text",
-        "hint": "IYCF Counselling (18 months) "
+        "hint": "IYCF Counselling (18 months) ",
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
+        }
       },
       {
         "key": "_18_months_infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "18_months_infant_feeding_options",
+        "openmrs_entity_id": "_18_months_infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (18 months)",
         "options": [
@@ -2098,13 +2659,19 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
       {
         "key": "_18_months_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "18_months_outcome",
+        "openmrs_entity_id": "_18_months_outcome",
         "type": "native_radio",
         "label": "Outcome (Dead, Lost to follow up,Transited out, Exit) (18 months)",
         "options": [
@@ -2128,6 +2695,12 @@
         "v_required": {
           "value": false,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:child_monitoring_visit": {
+            "type": "string",
+            "ex": "equalTo(., \"18 months\")"
+          }
         }
       },
 

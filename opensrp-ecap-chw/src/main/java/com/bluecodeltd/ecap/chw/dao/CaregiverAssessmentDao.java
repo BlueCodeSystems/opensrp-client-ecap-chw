@@ -59,6 +59,7 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setOther_source_main(getCursorValue(c, "other_source_main"));
             record.setSource_earner(getCursorValue(c, "source_earner"));
             record.setOther_earner_other(getCursorValue(c, "other_earner_other"));
+            record.setLast_time(getCursorValue(c, "last_time"));
             record.setHh_head_spouse(getCursorValue(c, "hh_head_spouse"));
             record.setAny_adult(getCursorValue(c, "any_adult"));
             record.setHousehold_stable(getCursorValue(c, "household_stable"));
@@ -68,6 +69,7 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setEarly_childhood(getCursorValue(c, "early_childhood"));
             record.setChildren_adolescent_a(getCursorValue(c, "children_adolescent_a"));
             record.setChildren_adolescent_b(getCursorValue(c, "children_adolescent_b"));
+            record.setDrinking_water(getCursorValue(c, "drinking_water"));
             record.setOther_water_other(getCursorValue(c, "other_water_other"));
             record.setToilet_facility(getCursorValue(c, "toilet_facility"));
             record.setSanitary_products(getCursorValue(c, "sanitary_products"));
@@ -86,7 +88,6 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setNot_registered(getCursorValue(c, "not_registered"));
             record.setQuestions(getCursorValue(c, "questions"));
             record.setCaregiver_question(getCursorValue(c, "caregiver_question"));
-
             return record;
         };
     }

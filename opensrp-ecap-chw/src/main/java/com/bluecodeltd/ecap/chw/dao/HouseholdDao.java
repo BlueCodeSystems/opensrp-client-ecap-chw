@@ -444,6 +444,7 @@ public class HouseholdDao extends AbstractDao {
             record.setE_relationship(getCursorValue(c, "e_relationship"));
             record.setContact_address(getCursorValue(c, "contact_address"));
             record.setContact_number(getCursorValue(c, "contact_number"));
+            record.setRelationship_other(getCursorValue(c,"relationship_other"));
             record.setSecure(getCursorValue(c, "secure"));
             record.setApproved_family(getCursorValue(c, "approved_family"));
             record.setAdolescent_village(getCursorValue(c, "adolescent_village"));
