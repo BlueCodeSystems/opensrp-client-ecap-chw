@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexFragmentContract;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexFragmentPresenter;
@@ -98,7 +96,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     protected String getDefaultSortQuery() {
-        return null;
+        return "last_interacted_with DESC";
     }
 
     @Override

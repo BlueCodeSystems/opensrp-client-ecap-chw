@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Mother Pmtct",
+  "encounter_type": "Mother Pmtct ANC",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -83,7 +83,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_of_st_contact",
         "type": "date_picker",
-        "hint": "Date of 1st ANC visit",
+        "hint": "Date of ANC visit",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
           "value": true,
           "err": "Please enter First ANC Date"

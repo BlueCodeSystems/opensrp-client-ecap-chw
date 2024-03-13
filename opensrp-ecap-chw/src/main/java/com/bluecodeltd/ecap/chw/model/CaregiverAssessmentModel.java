@@ -4,6 +4,7 @@ public class CaregiverAssessmentModel {
 
     private String base_entity_id;
     private String household_id;
+    private String relational_id;
     private String household_type;
     private String monthly_expenses;
     private String caregiver_hiv_status;
@@ -36,6 +37,7 @@ public class CaregiverAssessmentModel {
     private String other_source_main;
     private String source_earner;
     private String other_earner_other;
+    private String last_time;
     private String hh_head_spouse;
     private String any_adult;
     private String household_stable;
@@ -79,6 +81,14 @@ public class CaregiverAssessmentModel {
 
     public void setHousehold_id(String household_id) {
         this.household_id = household_id;
+    }
+
+    public String getRelational_id() {
+        return relational_id;
+    }
+
+    public void setRelational_id(String relational_id) {
+        this.relational_id = relational_id;
     }
 
     public String getHousehold_type() {
@@ -335,6 +345,14 @@ public class CaregiverAssessmentModel {
 
     public void setOther_earner_other(String other_earner_other) {
         this.other_earner_other = other_earner_other;
+    }
+
+    public String getLast_time() {
+        return last_time;
+    }
+
+    public void setLast_time(String last_time) {
+        this.last_time = last_time;
     }
 
     public String getHh_head_spouse() {

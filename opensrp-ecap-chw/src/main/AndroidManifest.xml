@@ -39,11 +39,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
-            android:name=".SignatureActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HouseholdServicesOnlyActivity"
-            android:exported="false" />
+            android:name=".activity.HeiDetailsActivity"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar"/>
         <activity
             android:name=".ShowOnlyHouseholdServicesActivity"
             android:exported="false"

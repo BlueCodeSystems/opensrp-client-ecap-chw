@@ -34,7 +34,6 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
-import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -217,23 +216,23 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         }
 
        //Setting up the notification bell
-        serviceModel = VCAServiceReportDao.getVcaService(indexVCA.getUnique_id());
-        if (serviceModel != null && indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
-            String schooled = removeBrackets(serviceModel.getSchooled_services());
-            String stable = removeBrackets(serviceModel.getStable_services());
-
-            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
-
-            if (compareAge >= 18 && compareAge <= 20
-                    && (indexVCA.getCase_status() == null || "1".equals(indexVCA.getCase_status()))
-                    && ("not applicable".equals(schooled) || "not applicable".equals(stable))) {
-                notification_wrapper.setVisibility(View.VISIBLE);
-            } else {
-                notification_wrapper.setVisibility(View.GONE);
-            }
-        } else {
-
-        }
+//        serviceModel = VCAServiceReportDao.getVcaService(indexVCA.getUnique_id());
+//        if (serviceModel != null && indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
+//            String schooled = removeBrackets(serviceModel.getSchooled_services());
+//            String stable = removeBrackets(serviceModel.getStable_services());
+//
+//            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
+//
+//            if (compareAge >= 18 && compareAge <= 20
+//                    && (indexVCA.getCase_status() == null || "1".equals(indexVCA.getCase_status()))
+//                    && ("not applicable".equals(schooled) || "not applicable".equals(stable))) {
+//                notification_wrapper.setVisibility(View.VISIBLE);
+//            } else {
+//                notification_wrapper.setVisibility(View.GONE);
+//            }
+//        } else {
+//
+//        }
 
 
         //Onclick of the notification bell
