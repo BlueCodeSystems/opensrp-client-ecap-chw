@@ -87,7 +87,7 @@ public class SignatureActivity extends AppCompatActivity {
 
 
         // Get the JSON string from the Bundle
-        String jsonString = getIntent().getStringExtra("closure");
+        String jsonString = getIntent().getStringExtra("jsonForm");
         try {
             screeningFormObject = new JSONObject(jsonString);
         } catch (JSONException e) {
@@ -120,12 +120,13 @@ public class SignatureActivity extends AppCompatActivity {
 
                 boolean is_edit_mode = false;
 
-                String encounterType = screeningFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
+                String encounterType = screeningFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
                 if(!screeningFormObject.optString("entity_id").isEmpty()){
                     is_edit_mode = true;
                 }
-                householdId = FormUtils.getFieldJSONObject(FormUtils.fields(screeningFormObject, STEP2), "household_id").optString("value");
+
+                //householdId = FormUtils.getFieldJSONObject(FormUtils.fields(screeningFormObject, STEP2), "household_id").optString("value");
 
                 String signatureString = screeningFormObject.toString();
                 try {

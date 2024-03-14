@@ -181,7 +181,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
                     //Gson gson = new Gson();
                     //String json = gson.toJson(formToBeOpened);
                     Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
-                    passClosureForm.putExtra("closure", jsonString);
+                    passClosureForm.putExtra("jsonForm", jsonString);
                     startActivity(passClosureForm);
 
                 }

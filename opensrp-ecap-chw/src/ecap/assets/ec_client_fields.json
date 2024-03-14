@@ -1608,6 +1608,13 @@
           }
         },
         {
+          "column_name": "signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.signature"
+          }
+        },
+        {
           "column_name": "date_edited",
           "type": "Client",
           "json_mapping": {
