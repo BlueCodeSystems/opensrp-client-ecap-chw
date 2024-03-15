@@ -62,7 +62,11 @@ public class SignatureActivity extends AppCompatActivity {
     public SignaturePad signaturePad;
     JSONObject screeningFormObject;
     String householdId;
-
+    String intent_vcaid;
+    String hivstatus;
+    String household_id;
+    String c_name;
+    String intent_cname;
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
@@ -83,6 +87,11 @@ public class SignatureActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);  signaturePad = findViewById(R.id.signature_pad);
         clearSignature = findViewById(R.id.clearSignarture);
         saveSignature = findViewById(R.id.saveSignature);
+        intent_vcaid = getIntent().getExtras().getString("vcaid");
+        intent_cname = getIntent().getExtras().getString("vcaname");
+        hivstatus = getIntent().getExtras().getString("hivstatus");
+        household_id = getIntent().getExtras().getString("hh_id");
+        c_name = getIntent().getExtras().getString("vcaname");
         householdId = " ";
 
 
@@ -139,7 +148,28 @@ public class SignatureActivity extends AppCompatActivity {
 
                     saveRegistration(childIndexEventClient, is_edit_mode);
 
-                    finish();
+                    switch (encounterType) {
+                        case "Household Screening":
+                            if(!householdId.equals("")) {
+                                goToHouseholdProfile(householdId);
+                            }
+                            break;
+
+                        case  "VCA Service Report":
+
+                            Intent openVcaIntent = new Intent(getBaseContext(),VcaServiceActivity.class);
+                            openVcaIntent.putExtra("vcaid",intent_vcaid);
+                            openVcaIntent.putExtra("vcaid",intent_vcaid);
+                            openVcaIntent.putExtra("vcaname",c_name);
+                            openVcaIntent.putExtra("hivtstatus",hivstatus);
+                            openVcaIntent.putExtra("hh_id",household_id);
+                            finish();
+                            startActivity(openVcaIntent);
+                            getIntent();
+                            Toasty.success(getBaseContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                    }
+
+
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -196,7 +226,17 @@ public class SignatureActivity extends AppCompatActivity {
                             goToHouseholdProfile(householdId);
                         }
                         break;
+
+                    case  "VCA Service Report":
+//                        finish();
+                        Intent openVcaServices = new Intent();
+
+                      startActivity(new Intent(getBaseContext(),VcaServiceActivity.class).putExtra("vcaid",intent_vcaid));
+                      Toasty.success(getBaseContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
                 }
+
+
+
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -371,12 +411,25 @@ public class SignatureActivity extends AppCompatActivity {
 
                     break;
 
+
                 case "Child Safety Plan":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "VCA Service Report":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_VCA_SERVICE_REPORT);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
                         return new ChildIndexEventClient(event, client);

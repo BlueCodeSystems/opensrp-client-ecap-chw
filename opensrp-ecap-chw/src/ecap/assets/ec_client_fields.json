@@ -3641,6 +3641,13 @@
           }
         },
         {
+          "column_name": "signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.signature"
+          }
+        },
+        {
           "column_name": "vca_service_location",
           "type": "Client",
           "json_mapping": {
