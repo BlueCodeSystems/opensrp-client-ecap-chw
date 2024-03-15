@@ -100,12 +100,13 @@ public class VcaServiceActivity extends AppCompatActivity {
         vcaname.setText(intent_cname);
 
 
-        familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
+
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
         recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
         recyclerViewadapter.notifyDataSetChanged();
@@ -221,16 +222,23 @@ public class VcaServiceActivity extends AppCompatActivity {
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
-
-            try {
-
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
-
-                if (childIndexEventClient == null) {
-                    return;
-                }
-
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
+            Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+            passClosureForm.putExtra("jsonForm", jsonFormObject.toString());
+            passClosureForm.putExtra("vcaid",intent_vcaid);
+            passClosureForm.putExtra("vcaname",c_name);
+            passClosureForm.putExtra("hivtstatus",hivstatus);
+            passClosureForm.putExtra("hh_id",household_id);
+            finish();
+            startActivity(passClosureForm);
+//            try {
+//
+//                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+//
+//                if (childIndexEventClient == null) {
+//                    return;
+//                }
+//
+//                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
 
                 switch (EncounterType) {
@@ -239,18 +247,20 @@ public class VcaServiceActivity extends AppCompatActivity {
                       Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
                       familyServiceList.clear();
                       familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-
+                      recyclerViewadapter.notifyDataSetChanged();
                         break;
 
                 }
 
-            } catch (Exception e) {
-                Timber.e(e);
-            }
+//            } catch (Exception e) {
+//                Timber.e(e);
+//            }
         }
-        finish();
-        startActivity(getIntent());
+//        finish();
+//        startActivity(getIntent());
+        recyclerViewadapter.notifyDataSetChanged();
     }
+
 
     public ChildIndexEventClient processRegistration(String jsonString){
 

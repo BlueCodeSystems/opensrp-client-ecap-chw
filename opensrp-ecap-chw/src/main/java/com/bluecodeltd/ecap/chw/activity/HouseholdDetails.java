@@ -275,7 +275,7 @@ public class HouseholdDetails extends AppCompatActivity {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
     private String checkAndConvertDateFormat(String date){
-        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+        if ( date != null && date.matches("\\d{2}-\\d{2}-\\d{4}")) {
             return date;
         } else {
             DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
