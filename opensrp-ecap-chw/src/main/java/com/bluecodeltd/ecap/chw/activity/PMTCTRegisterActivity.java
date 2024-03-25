@@ -134,7 +134,7 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
         Number = new Random();
         Rnumber = Number.nextInt(100000000);
         String xId =  Integer.toString(Rnumber);
-        String household_id = code + "/" + xId;
+        String household_id =  xId;
 
 
         Number = new Random();
@@ -196,14 +196,14 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
 
             JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "pmtct_id");
 
-//            if (stepHouseholdId != null) {
-//                stepHouseholdId.remove(JsonFormUtils.VALUE);
-//                try {
-//                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+            if (stepHouseholdId != null) {
+                stepHouseholdId.remove(JsonFormUtils.VALUE);
+                try {
+                    stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
