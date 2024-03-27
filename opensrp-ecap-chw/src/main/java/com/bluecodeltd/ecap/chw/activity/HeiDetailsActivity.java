@@ -47,6 +47,7 @@ import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctChildMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.UnderFiveCardFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
@@ -240,7 +241,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 //        updateTasksTabTitle();
         returnViewPager();
+        updateOverviewTabTitle();
         updateAncTabTitle();
+
 
     }
     public void animateFAB(){
@@ -1104,7 +1107,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new UnderFiveCardFragment());
         fragments.add(new PmctChildMonitoringFragment());
+
 //        if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
 //            fragments.add(new HTSlinksFragment());
 //        }
@@ -1113,10 +1118,23 @@ public class HeiDetailsActivity extends AppCompatActivity {
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("Monitoring");
+        tabLayout.getTabAt(0).setText("Overview");
+        tabLayout.getTabAt(1).setText("Monitoring");
+
+
 //        if (tabLayout.getTabAt(1) != null) {
 //            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
 //        }
+    }
+
+    private void updateOverviewTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("OVERVIEW");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+        childTabCount.setVisibility(View.GONE);
+
+        tabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
     private void updateAncTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
@@ -1128,8 +1146,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
         String countANC = PtmctMotherMonitoringDao.countChildMonitoring(pmtct.getUnique_id());
         childTabCount.setText(countANC);
 
-        tabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
+        tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
+
     public HashMap<String, PtmctMotherMonitoringModel> getClientDetails() {
 
         HashMap<String, PtmctMotherMonitoringModel> map = new HashMap<>();
