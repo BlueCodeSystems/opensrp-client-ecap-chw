@@ -452,7 +452,7 @@ public class ChwRepositoryFlv {
 
             db.execSQL(sqlCreateTableChildMonitoring);
 
-            clearAppData(context);
+           // clearAppData(context);
 
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion5 ");

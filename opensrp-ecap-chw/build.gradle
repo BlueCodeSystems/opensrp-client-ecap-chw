@@ -285,8 +285,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 23
-            versionName "v6.2.0"
+            versionCode 24
+            versionName "v6.2.1"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
