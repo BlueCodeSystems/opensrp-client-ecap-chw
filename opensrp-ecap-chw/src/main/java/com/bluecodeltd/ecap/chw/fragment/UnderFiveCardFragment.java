@@ -119,14 +119,22 @@ public class UnderFiveCardFragment extends Fragment {
         childFeedingOption.setText("Infant Feeding Option: " + (motherDetails.getInfant_feeding_options() != null ? motherDetails.getInfant_feeding_options() : "Not set"));
 
 
-        childMonitoring = new PtmctMotherMonitoringModel();
+//        childMonitoring = new PtmctMotherMonitoringModel();
         childMonitoring = PtmctMotherMonitoringDao.getRecentChildVisit(uniqueId);
 
-        dbsDueDate.setText(childMonitoring.getDbs_at_birth_due_date() != null ? childMonitoring.getDbs_at_birth_due_date() : "Not set");
-        dbsActualDate.setText(childMonitoring.getDbs_at_birth_actual_date() != null ? childMonitoring.getDbs_at_birth_actual_date() : "Not set");
-        dateTested.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
-        nvpDate.setText(childMonitoring.getNvp_date_given() != null ? childMonitoring.getNvp_date_given() : "Not set");
-        childMonitoringVisit.setText(childMonitoring.getChild_monitoring_visit() != null ? childMonitoring.getChild_monitoring_visit() : "Not set");
+        if (childMonitoring != null) {
+            dbsDueDate.setText(childMonitoring.getDbs_at_birth_due_date() != null ? childMonitoring.getDbs_at_birth_due_date() : "Not set");
+            dbsActualDate.setText(childMonitoring.getDbs_at_birth_actual_date() != null ? childMonitoring.getDbs_at_birth_actual_date() : "Not set");
+            dateTested.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
+            nvpDate.setText(childMonitoring.getNvp_date_given() != null ? childMonitoring.getNvp_date_given() : "Not set");
+            childMonitoringVisit.setText(childMonitoring.getChild_monitoring_visit() != null ? childMonitoring.getChild_monitoring_visit() : "Not set");
+        } else {
+            dbsDueDate.setText("Not Conducted");
+            dbsActualDate.setText("Not Conducted");
+            dateTested.setText("Not Conducted");
+            nvpDate.setText("Not Conducted");
+            childMonitoringVisit.setText("Not Conducted");
+        }
 
 
 
