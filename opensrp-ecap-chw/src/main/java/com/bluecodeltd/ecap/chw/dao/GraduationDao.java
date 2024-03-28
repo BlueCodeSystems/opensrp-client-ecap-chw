@@ -21,6 +21,17 @@ public class GraduationDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static int countVisits(String householdID){
+
+        String sql = "SELECT COUNT(*) AS visitCount FROM ec_graduation WHERE household_id = '" + householdID + "'";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "visitCount");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        return Integer.parseInt(values.get(0));
+
+    }
     public static List<GraduationModel> getAssessment(String householdID) {
 
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_assessment,7,4) || '-' || substr(date_assessment,4,2) || '-' || substr(date_assessment,1,2)) as sortable_date FROM ec_graduation WHERE household_id = '" + householdID + "'  ORDER BY sortable_date DESC";

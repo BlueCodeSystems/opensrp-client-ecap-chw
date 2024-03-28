@@ -47,6 +47,9 @@ Context context;
            final PtmctMotherMonitoringModel monitoringModel = model.get(position);
                 holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
                 holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
+
+
+
                 holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
