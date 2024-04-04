@@ -555,13 +555,6 @@
         }
       },
       {
-        "key": "date_of_last_viral_load",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_last_viral_load",
-        "type": "hidden"
-      },
-      {
         "key": "caregiver_art_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1902,7 +1895,7 @@
       {
         "key": "household_eaten",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten",
         "hint": "Has the household eaten at least 2\nmeals a day, every day, for the last\nmonth?",
         "type": "spinner",

@@ -49,11 +49,20 @@ public class GraduationDao extends AbstractDao {
 
             GraduationModel record = new GraduationModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setEnrollment_date(getCursorValue(c, "enrollment_date"));
+            record.setAsmt(getCursorValue(c, "asmt"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
+            record.setCaregiver_sex(getCursorValue(c, "caregiver_sex"));
+            record.setCaregiver_birth_date(getCursorValue(c, "caregiver_birth_date"));
             record.setDate_assessment(getCursorValue(c, "date_assessment"));
+            record.setPrevious_asmt_date(getCursorValue(c, "previous_asmt_date"));
+            record.setHiv_status_enrolled(getCursorValue(c, "hiv_status_enrolled"));
+            record.setCaregiver_hiv_status_enrolled(getCursorValue(c, "caregiver_hiv_status_enrolled"));
             record.setVirally_suppressed(getCursorValue(c, "virally_suppressed"));
-            record.setSuppressed_caregiver(getCursorValue(c,"suppressed_caregiver"));
+            record.setSuppressed_caregiver(getCursorValue(c, "suppressed_caregiver"));
             record.setPrevention(getCursorValue(c, "prevention"));
-            record.setUndernourished(getCursorValue(c,"undernourished"));
+            record.setUndernourished(getCursorValue(c, "undernourished"));
             record.setSchool_fees(getCursorValue(c, "school_fees"));
             record.setMedical_costs(getCursorValue(c, "medical_costs"));
             record.setRecord_abuse(getCursorValue(c, "record_abuse"));
@@ -67,6 +76,9 @@ public class GraduationDao extends AbstractDao {
             record.setYear_school(getCursorValue(c, "year_school"));
             record.setRepeat_school(getCursorValue(c, "repeat_school"));
             record.setAdditional_information(getCursorValue(c, "additional_information"));
+            record.setGraduation_status(getCursorValue(c, "graduation_status"));
+            record.setDelete_status(getCursorValue(c, "delete_status"));
+
 
             return record;
         };

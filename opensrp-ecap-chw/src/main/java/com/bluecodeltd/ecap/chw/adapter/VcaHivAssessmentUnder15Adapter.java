@@ -67,7 +67,7 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
     @NonNull
     @Override
     public VcaHivAssessmentUnder15Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.vca_hiv_sigle_hiv_assessment, parent, false);
         VcaHivAssessmentUnder15Adapter.ViewHolder viewHolder = new VcaHivAssessmentUnder15Adapter.ViewHolder(v);
         return viewHolder;
     }
@@ -78,7 +78,7 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(assessmentUnder15Model.getDate_edited());
+        holder.txtDate.setText(assessmentUnder15Model.getAssessment_date());
 
         holder.linearLayout.setOnClickListener(v -> {
 
