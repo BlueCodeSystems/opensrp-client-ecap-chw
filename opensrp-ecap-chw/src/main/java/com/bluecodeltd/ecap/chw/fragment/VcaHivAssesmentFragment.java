@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.VcaHivAssessmentUnder15Adapter;
-import com.bluecodeltd.ecap.chw.adapter.VcaHiveAssessmentAbove15Adapter;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
@@ -92,18 +91,22 @@ public class VcaHivAssesmentFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
-            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
-            if (compareAge > 15){
-                recyclerViewadapter = new VcaHiveAssessmentAbove15Adapter(getContext(), assessmentList2);
-            } else {
-                recyclerViewadapter = new VcaHivAssessmentUnder15Adapter(getContext(), assessmentList);
-            }
-        } else {
-        }
+        recyclerViewadapter = new VcaHivAssessmentUnder15Adapter(getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+
+//        if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
+//            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
+//            if (compareAge > 15){
+//                assessmentList.addAll(HivAssessmentUnder15Dao.getHivAssessment(childId));
+//                recyclerViewadapter = new VcaHivAssessmentUnder15Adapter(getContext(), assessmentList);
+
+//            } else {
+//                assessmentList2.addAll(HivAssessmentAbove15Dao.getHivAssessment(childId));
+//                recyclerViewadapter = new VcaHiveAssessmentAbove15Adapter(getContext(), assessmentList2);
+//            }
+//        } else {
+//        }
+
 
         if (recyclerViewadapter.getItemCount() > 0){
 

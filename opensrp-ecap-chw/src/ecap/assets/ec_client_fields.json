@@ -3145,6 +3145,48 @@
           }
         },
         {
+          "column_name": "enrollment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.enrollment_date"
+          }
+        },
+        {
+          "column_name": "asmt",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.asmt"
+          }
+        },
+        {
+          "column_name": "caregiver_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_name"
+          }
+        },
+        {
+          "column_name": "caregiver_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_sex"
+          }
+        },
+        {
+          "column_name": "caregiver_birth_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_birth_date"
+          }
+        },
+        {
+          "column_name": "enrollment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.enrollment_date"
+          }
+        },
+        {
           "column_name": "date_assessment",
           "type": "Client",
           "json_mapping": {
@@ -6277,6 +6319,13 @@
           }
         },
         {
+          "column_name": "assessment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.assessment_date"
+          }
+        },
+        {
           "column_name": "hiv_test",
           "type": "Client",
           "json_mapping": {
@@ -6599,6 +6648,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "assessment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.assessment_date"
           }
         },
         {

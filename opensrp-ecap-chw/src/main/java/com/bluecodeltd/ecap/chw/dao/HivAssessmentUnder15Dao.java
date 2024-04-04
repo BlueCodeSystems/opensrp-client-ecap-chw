@@ -23,7 +23,13 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
     }
     public static List<HivRiskAssessmentUnder15Model> getHivAssessment(String childID) {
 
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2)) as sortable_date FROM ec_hiv_assessment_below_15 WHERE unique_id = '" + childID + "' ORDER BY sortable_date DESC";
+        String sql = "SELECT *,\n" +
+                "                (substr(COALESCE(assessment_date, '00000000'), 7, 4) || '-' ||\n" +
+                "                 substr(COALESCE(assessment_date, '00000000'), 4, 2) || '-' ||\n" +
+                "                 substr(COALESCE(assessment_date, '00000000'), 1, 2)) as sortable_date\n" +
+                " FROM ec_hiv_assessment_below_15 WHERE unique_id = '" + childID + "'\n" +
+                " ORDER BY sortable_date DESC";
+
 
         List<HivRiskAssessmentUnder15Model> values = AbstractDao.readData(sql, getHivRiskAssessmentUnder15ModelMap());
         if (values == null || values.size() == 0)
@@ -60,6 +66,7 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
+            record.setAssessment_date(getCursorValue(c,"assessment_date"));
 
             return record;
         };
