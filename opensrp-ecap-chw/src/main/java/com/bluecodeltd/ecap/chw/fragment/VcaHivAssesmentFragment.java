@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.VcaHivAssessmentUnder15Adapter;
+import com.bluecodeltd.ecap.chw.adapter.VcaHiveAssessmentAbove15Adapter;
+import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
@@ -36,8 +38,8 @@ public class VcaHivAssesmentFragment extends Fragment {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<HivRiskAssessmentUnder15Model> assessmentList = new ArrayList<>();
-    private ArrayList<HivRiskAssessmentAbove15Model> assessmentList2 = new ArrayList<>();
+
+
     private LinearLayout linearLayout;
     View vieww;
     public VcaScreeningModel indexVCA;
@@ -83,36 +85,16 @@ public class VcaHivAssesmentFragment extends Fragment {
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
 
-        assessmentList.clear();
 
-        assessmentList.addAll(HivAssessmentUnder15Dao.getHivAssessment(childId));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new VcaHivAssessmentUnder15Adapter(getContext(), assessmentList);
-        recyclerView.setAdapter(recyclerViewadapter);
-
-//        if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
-//            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
-//            if (compareAge > 15){
-//                assessmentList.addAll(HivAssessmentUnder15Dao.getHivAssessment(childId));
-//                recyclerViewadapter = new VcaHivAssessmentUnder15Adapter(getContext(), assessmentList);
-
-//            } else {
-//                assessmentList2.addAll(HivAssessmentAbove15Dao.getHivAssessment(childId));
-//                recyclerViewadapter = new VcaHiveAssessmentAbove15Adapter(getContext(), assessmentList2);
-//            }
-//        } else {
-//        }
-
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
+        if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
+            int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
+            if (compareAge <= 15){
+                getAssessmentUnder15(recyclerView,recyclerViewadapter,childId);
+            } else {
+                getAssessmentAbove15(recyclerView,recyclerViewadapter,childId);
+            }
+        } else {
         }
-
 
         return vieww;
 
@@ -137,6 +119,46 @@ public class VcaHivAssesmentFragment extends Fragment {
             e.printStackTrace();
             return -1;
         }
+    }
+    public void getAssessmentUnder15(RecyclerView recyclerView, RecyclerView.Adapter recyclerViewadapter, String childId){
+        ArrayList<HivRiskAssessmentUnder15Model> assessmentList = new ArrayList<>();
+
+        assessmentList.clear();
+
+        assessmentList.addAll(HivAssessmentUnder15Dao.getHivAssessment(childId));
+
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewadapter = new VcaHivAssessmentUnder15Adapter(getContext(), assessmentList);
+        recyclerView.setAdapter(recyclerViewadapter);
+
+        if (recyclerViewadapter.getItemCount() > 0){
+
+            linearLayout.setVisibility(View.GONE);
+        }
+
+    }
+    public void getAssessmentAbove15(RecyclerView recyclerView, RecyclerView.Adapter recyclerViewadapter, String childId){
+        ArrayList<HivRiskAssessmentAbove15Model> assessmentList2 = new ArrayList<>();
+
+        assessmentList2.clear();
+
+        assessmentList2.addAll(HivAssessmentAbove15Dao.getHivAssessment(childId));
+
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewadapter = new VcaHiveAssessmentAbove15Adapter(getContext(), assessmentList2);
+        recyclerView.setAdapter(recyclerViewadapter);
+
+        if (recyclerViewadapter.getItemCount() > 0){
+
+            linearLayout.setVisibility(View.GONE);
+        }
+
     }
 
 }
