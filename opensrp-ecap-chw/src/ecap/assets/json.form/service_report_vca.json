@@ -170,9 +170,9 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "step1:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "step1:date_last_vl": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step1:date_last_vl)"
           }
         }
       },
