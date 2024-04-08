@@ -27,7 +27,6 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
-import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,7 +66,7 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
     @NonNull
     @Override
     public VcaHivAssessmentUnder15Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.vca_hiv_sigle_hiv_assessment, parent, false);
         VcaHivAssessmentUnder15Adapter.ViewHolder viewHolder = new VcaHivAssessmentUnder15Adapter.ViewHolder(v);
         return viewHolder;
     }
@@ -78,7 +77,7 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(assessmentUnder15Model.getDate_edited());
+        holder.txtDate.setText(assessmentUnder15Model.getAssessment_date());
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -173,73 +172,73 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
             alert.show();
         });
 
-        Child childModel = IndexPersonDao.getChildByBaseId(assessmentUnder15Model.getUnique_id());
+//        Child childModel = IndexPersonDao.getChildByBaseId(assessmentUnder15Model.getUnique_id());
+//
+//        if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
+//            holder.exPandableView.setVisibility(View.GONE);
+//            holder.expMore.setVisibility(View.GONE);
+//            holder.expLess.setVisibility(View.GONE);
+//        }
+//        holder.linearLayout.setOnClickListener(v -> {
+//
+//            if (v.getId() == R.id.itemm) {
+//
+//                holder.exPandableView.setVisibility(View.VISIBLE);
+//                holder.expMore.setVisibility(View.GONE);
+//                holder.expLess.setVisibility(View.VISIBLE);
+//            }
+//        });
 
-        if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
-            holder.exPandableView.setVisibility(View.GONE);
-            holder.expMore.setVisibility(View.GONE);
-            holder.expLess.setVisibility(View.GONE);
-        }
-        holder.linearLayout.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.itemm) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
-            }
-        });
-
-        holder.expMore.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_more) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
-            }
-        });
-
-        holder.expLess.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_less) {
-
-                holder.exPandableView.setVisibility(View.GONE);
-                holder.expMore.setVisibility(View.VISIBLE);
-                holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
-            }
-        });
+//        holder.expMore.setOnClickListener(v -> {
+//
+//            if (v.getId() == R.id.expand_more) {
+//
+//                holder.exPandableView.setVisibility(View.VISIBLE);
+//                holder.expMore.setVisibility(View.GONE);
+//                holder.expLess.setVisibility(View.VISIBLE);
+//                holder.editme.setVisibility(View.GONE);
+//                holder.delete.setVisibility(View.GONE);
+//            }
+//        });
+//
+//        holder.expLess.setOnClickListener(v -> {
+//
+//            if (v.getId() == R.id.expand_less) {
+//
+//                holder.exPandableView.setVisibility(View.GONE);
+//                holder.expMore.setVisibility(View.VISIBLE);
+//                holder.expLess.setVisibility(View.GONE);
+//                holder.editme.setVisibility(View.VISIBLE);
+//                holder.delete.setVisibility(View.VISIBLE);
+//            }
+//        });
 
 
-        if (childModel != null) {
-            String hivStatus = childModel.getIs_hiv_positive();
-            if ("yes".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Positive");
-            } else if ("unknown".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Unknown");
-            } else {
-                holder.intialHivStatus.setText("Negative");
-            }
-
-            holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
-        }
-
-        if (assessmentUnder15Model != null) {
-            String visitHivStatus = assessmentUnder15Model.getHiv_test_result();
-            if ("yes".equalsIgnoreCase(visitHivStatus)) {
-                holder.updateHivStatus.setText("Positive");
-            } else if ("unknown".equalsIgnoreCase(visitHivStatus)) {
-                holder.updateHivStatus.setText("Unknown");
-            } else {
-                holder.updateHivStatus.setText("Negative");
-            }
-
-            holder.updatedHivStatusDate.setText(assessmentUnder15Model.getDate_edited() != null ? assessmentUnder15Model.getDate_edited() : "Date not set");
-        }
+//        if (childModel != null) {
+//            String hivStatus = childModel.getIs_hiv_positive();
+//            if ("yes".equalsIgnoreCase(hivStatus)) {
+//                holder.intialHivStatus.setText("Positive");
+//            } else if ("unknown".equalsIgnoreCase(hivStatus)) {
+//                holder.intialHivStatus.setText("Unknown");
+//            } else {
+//                holder.intialHivStatus.setText("Negative");
+//            }
+//
+//            holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
+//        }
+//
+//        if (assessmentUnder15Model != null) {
+//            String visitHivStatus = assessmentUnder15Model.getHiv_test_result();
+//            if ("yes".equalsIgnoreCase(visitHivStatus)) {
+//                holder.updateHivStatus.setText("Positive");
+//            } else if ("unknown".equalsIgnoreCase(visitHivStatus)) {
+//                holder.updateHivStatus.setText("Unknown");
+//            } else {
+//                holder.updateHivStatus.setText("Negative");
+//            }
+//
+//            holder.updatedHivStatusDate.setText(assessmentUnder15Model.getDate_edited() != null ? assessmentUnder15Model.getDate_edited() : "Date not set");
+//        }
     }
     public void openFormUsingFormUtils(Context context, String formName, HivRiskAssessmentUnder15Model visit) throws JSONException {
 

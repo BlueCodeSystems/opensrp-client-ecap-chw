@@ -288,6 +288,11 @@
             "key": "PBFW",
             "text": "PBFW"
 
+          },
+          {
+            "key": "At Risk Adolescent Boys and Young Men (ABYM)",
+            "text": "At Risk Adolescent Boys and Young Men (ABYM)"
+
           }
         ],
         "v_required": {
@@ -413,6 +418,14 @@
           "value": true,
           "err": "Village is Required"
         }
+      },
+      {
+        "key": "household_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
       },
       {
         "key": "screening_date",

@@ -110,18 +110,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "asmt",
-        "read_only": true,
+        "read_only": false,
         "type": "native_radio",
         "label": "Has Family previously been assessed for graduation?",
         "options": [
           {
-            "key": "no",
-            "text": "No"
-          },
-          {
             "key": "yes",
             "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
           }
+
         ]
       },
       {
@@ -130,9 +131,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "previous_asmt_date",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Date of previous assessment",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:asmt": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
         "key": "caregiver_name",

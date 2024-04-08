@@ -14,9 +14,37 @@
           },
           {
             "field": "eventType",
+            "field_value": "Mother Pmtct Child",
+            "creates_case": [
+              "ec_pmtct_mother_child"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Ptmct Child Monitoring",
+            "creates_case": [
+              "ec_pmtct_child_monitoring"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Mother Pmtct Monitoring",
             "creates_case": [
               "ec_pmtct_mother_monitoring"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Postnatal",
+            "creates_case": [
+              "ec_pmtct_mother_postnatal"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct ANC",
+            "creates_case": [
+              "ec_pmtct_mother_anc"
             ]
           },
 

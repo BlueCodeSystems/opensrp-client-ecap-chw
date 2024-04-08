@@ -441,6 +441,14 @@
         "hint": "Nearest Landmark"
       },
       {
+        "key": "household_location",
+        "openmrs_entity_parent": "usual_residence",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+      {
         "key": "screening_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

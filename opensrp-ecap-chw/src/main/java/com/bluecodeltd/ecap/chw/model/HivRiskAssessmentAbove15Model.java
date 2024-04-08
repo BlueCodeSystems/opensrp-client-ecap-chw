@@ -24,6 +24,7 @@ public class HivRiskAssessmentAbove15Model {
     private String household_id;
     private String delete_status;
     private String date_edited;
+    private String assessment_date;
 
     public String getPhone() {
         return phone;
@@ -199,5 +200,13 @@ public class HivRiskAssessmentAbove15Model {
 
     public void setDate_edited(String date_edited) {
         this.date_edited = date_edited;
+    }
+
+    public String getAssessment_date() {
+        return assessment_date;
+    }
+
+    public void setAssessment_date(String assessment_date) {
+        this.assessment_date = assessment_date;
     }
 }

@@ -215,7 +215,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         }
 
-        is_hiv_positive = VCAScreeningDao.checkStatus(indexVCA.getUnique_id());
+        is_hiv_positive = null;
+
+        if (indexVCA != null && indexVCA.getUnique_id() != null ) {
+            String uniqueId = indexVCA.getUnique_id();
+            if (uniqueId != null) {
+                is_hiv_positive = VCAScreeningDao.checkStatus(uniqueId);
+            }
+        }
 
         fabHiv = findViewById(R.id.hiv_risk);
         fabHiv2 = findViewById(R.id.hiv_risk2);
@@ -317,6 +324,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
+        updateOverviewTabTitle();
         updateVisitsTabTitle();
         updatePlanTabTitle();
 
@@ -453,9 +461,29 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         mTabLayout.getTabAt(2).setText("VISITS");
         if (mPagerAdapter.getCount() > 3) {
             mTabLayout.getTabAt(3).setText("HIV ASSESSMENT");
+            updateHivAssessmentTabTitle();
         }
     }
+    private void updateOverviewTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("OVERVIEW");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
+    }
+    private void updateHivAssessmentTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("HIV ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+    }
     private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
@@ -1304,31 +1332,31 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case "hiv_risk_assessment_under_15_years":
 
-                if(hivRiskAssessmentUnder15Model == null){
+//                if(hivRiskAssessmentUnder15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
-                } else {
-
-                    formToBeOpened.put("entity_id", this.hivRiskAssessmentUnder15Model.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivRiskAssessmentUnder15Model, Map.class));
-                }
+//                } else {
+//
+//                    formToBeOpened.put("entity_id", this.hivRiskAssessmentUnder15Model.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivRiskAssessmentUnder15Model, Map.class));
+//                }
 
                 break;
 
             case "hiv_risk_assessment_above_15_years":
 
-                if(hivRiskAssessmentAbove15Model == null){
+//                if(hivRiskAssessmentAbove15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
-                } else {
-
-                    formToBeOpened.put("entity_id", this.hivRiskAssessmentAbove15Model.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivRiskAssessmentAbove15Model, Map.class));
-                }
+//                } else {
+//
+//                    formToBeOpened.put("entity_id", this.hivRiskAssessmentAbove15Model.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(hivRiskAssessmentAbove15Model, Map.class));
+//                }
 
                 break;
 

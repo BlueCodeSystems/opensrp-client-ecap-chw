@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PtmctMotherMonitoringDao extends AbstractDao {
@@ -20,6 +21,83 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<PtmctMotherMonitoringModel> getPmctMotherHei(String pmtctID) {
+
+        String sql = "SELECT * FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+    public static String countMotherHei (String pmtctID){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+    public static PtmctMotherMonitoringModel getPMCTChildHei(String uniqueID) {
+
+        String sql = "SELECT * FROM ec_pmtct_mother_child WHERE unique_id = '" + uniqueID + "' ";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
+    }
+    public static List<PtmctMotherMonitoringModel> getChildMonitoring(String uniqueID) {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(dbs_at_birth_due_date,7,4) || '-' || substr(dbs_at_birth_due_date,4,2) || '-' || substr(dbs_at_birth_due_date,1,2)) as sortable_date  FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueID + "'  ORDER BY sortable_date DESC";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+    public static PtmctMotherMonitoringModel getRecentChildVisit(String uniqueID) {
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(dbs_at_birth_due_date,7,4) || '-' || substr(dbs_at_birth_due_date,4,2) || '-' || substr(dbs_at_birth_due_date,1,2)) as sortable_date " +
+                "FROM ec_pmtct_child_monitoring " +
+                "WHERE unique_id = '" + uniqueID + "' " +
+                "ORDER BY sortable_date DESC LIMIT 1";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+
+        return values.get(0);
+    }
+
+    public static String countChildMonitoring (String uniqueId){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueId + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
 
     public static DataMap<PtmctMotherMonitoringModel> getPtmctMotherMonitoringModelMap() {
         return c -> {
@@ -27,6 +105,8 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             PtmctMotherMonitoringModel record = new PtmctMotherMonitoringModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setUnique_id(getCursorValue(c,"unique_id"));
+            record.setChild_monitoring_visit(getCursorValue(c,"child_monitoring_visit"));
             record.setInfant_first_name(getCursorValue(c, "infant_first_name"));
             record.setInfant_middle_name(getCursorValue(c, "infant_middle_name"));
             record.setInfant_lastname(getCursorValue(c, "infant_lastname"));
@@ -49,6 +129,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             record.set_2_months_date(getCursorValue(c, "_2_months_date"));
             record.set_2_months_hiv_status_p_n(getCursorValue(c, "_2_months_hiv_status_p_n"));
             record.set_2_months_ctx(getCursorValue(c, "_2_months_ctx"));
+            record.set_6_weeks_dbs_ctx(getCursorValue(c,"_6_weeks_dbs_ctx"));
             record.set_2_months_iycf_counselling(getCursorValue(c, "_2_months_iycf_counselling"));
             record.set_2_months_infant_feeding_options(getCursorValue(c, "_2_months_infant_feeding_options"));
             record.set_2_months_outcome(getCursorValue(c, "_2_months_outcome"));

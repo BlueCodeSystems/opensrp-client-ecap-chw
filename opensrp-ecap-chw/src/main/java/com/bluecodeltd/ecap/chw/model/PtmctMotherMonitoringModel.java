@@ -3,6 +3,8 @@ package com.bluecodeltd.ecap.chw.model;
 public class PtmctMotherMonitoringModel {
     private String base_entity_id;
     private String pmtct_id;
+    private String unique_id;
+    private String child_monitoring_visit;
     private String infant_first_name;
     private String infant_middle_name;
     private String infant_lastname;
@@ -49,6 +51,7 @@ public class PtmctMotherMonitoringModel {
     private String _6_months_date;
     private String _6_months_hiv_status_p_n;
     private String _6_months_ctx;
+    private String _6_weeks_dbs_ctx;
     private String _6_months_iycf_counselling;
     private String _6_months_infant_feeding_options;
     private String _6_months_outcome;
@@ -129,12 +132,36 @@ public class PtmctMotherMonitoringModel {
     private String date_enrolled_in_art;
     private String delete_status;
 
+    public String getChild_monitoring_visit() {
+        return child_monitoring_visit;
+    }
+
+    public void setChild_monitoring_visit(String child_monitoring_visit) {
+        this.child_monitoring_visit = child_monitoring_visit;
+    }
+
+    public String get_6_weeks_dbs_ctx() {
+        return _6_weeks_dbs_ctx;
+    }
+
+    public void set_6_weeks_dbs_ctx(String _6_weeks_dbs_ctx) {
+        this._6_weeks_dbs_ctx = _6_weeks_dbs_ctx;
+    }
+
     public String getBase_entity_id() {
         return base_entity_id;
     }
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 
     public String getPmtct_id() {

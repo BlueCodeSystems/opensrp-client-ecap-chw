@@ -812,10 +812,24 @@
           }
         },
         {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
           "column_name": "household_id",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
           }
         },
         {
@@ -865,6 +879,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "household_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_location"
           }
         },
         {
@@ -2404,6 +2425,111 @@
           "json_mapping": {
             "field": "attributes.exited_graduation_reason"
           }
+        },
+        {
+          "column_name": "abym_years",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_years"
+          }
+        },
+        {
+          "column_name": "abym_sexually_active",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_sexually_active"
+          }
+        },
+        {
+          "column_name": "abym_preventions",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_preventions"
+          }
+        },
+        {
+          "column_name": "abym_preventions_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_preventions_other"
+          }
+        },
+        {
+          "column_name": "abym_sex_older_women",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_sex_older_women"
+          }
+        },
+        {
+          "column_name": "abym_transactional_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_transactional_sex"
+          }
+        },
+        {
+          "column_name": "abym_sex_work",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_sex_work"
+          }
+        },
+        {
+          "column_name": "abym_economically_insecure",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_economically_insecure"
+          }
+        },
+        {
+          "column_name": "abym_violent_partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_violent_partner"
+          }
+        },
+        {
+          "column_name": "abym_diagnosed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_diagnosed"
+          }
+        },
+        {
+          "column_name": "abym_hiv_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_hiv_tested"
+          }
+        },
+        {
+          "column_name": "abym_test_positive",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_test_positive"
+          }
+        },
+        {
+          "column_name": "abym_undergone_vmmc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_undergone_vmmc"
+          }
+        },
+        {
+          "column_name": "abym_in_school",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_in_school"
+          }
+        },
+        {
+          "column_name": "abym_economic_strengthening",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.abym_economic_strengthening"
+          }
         }
       ]
     },
@@ -3019,6 +3145,48 @@
           }
         },
         {
+          "column_name": "enrollment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.enrollment_date"
+          }
+        },
+        {
+          "column_name": "asmt",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.asmt"
+          }
+        },
+        {
+          "column_name": "caregiver_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_name"
+          }
+        },
+        {
+          "column_name": "caregiver_sex",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_sex"
+          }
+        },
+        {
+          "column_name": "caregiver_birth_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_birth_date"
+          }
+        },
+        {
+          "column_name": "enrollment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.enrollment_date"
+          }
+        },
+        {
           "column_name": "date_assessment",
           "type": "Client",
           "json_mapping": {
@@ -3497,6 +3665,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "vca_service_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_service_location"
           }
         },
         {
@@ -4016,6 +4191,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "referral_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_location"
           }
         },
         {
@@ -4661,6 +4843,13 @@
           }
         },
         {
+          "column_name": "visit_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.visit_location"
+          }
+        },
+        {
           "column_name": "visit_date",
           "type": "Client",
           "json_mapping": {
@@ -5006,6 +5195,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "vca_visit_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_visit_location"
           }
         },
         {
@@ -6123,6 +6319,13 @@
           }
         },
         {
+          "column_name": "assessment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.assessment_date"
+          }
+        },
+        {
           "column_name": "hiv_test",
           "type": "Client",
           "json_mapping": {
@@ -6228,10 +6431,24 @@
           }
         },
         {
+          "column_name": "hiv_exposure",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_exposure"
+          }
+        },
+        {
           "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
           }
         }
       ]
@@ -6431,6 +6648,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "assessment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.assessment_date"
           }
         },
         {
@@ -7011,6 +7235,13 @@
       "name": "ec_household_service_report",
       "columns": [
 
+        {
+          "column_name": "hh_service_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_service_location"
+          }
+        },
         {
           "column_name": "services",
           "type": "Client",
@@ -7991,147 +8222,11 @@
             "field": "attributes.date_of_st_contact"
           }
         },
-        {
-          "column_name": "gestation_age_in_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.gestation_age_in_weeks"
-          }
-        },
-        {
-          "column_name": "hiv_tested",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_tested"
-          }
-        },
-        {
-          "column_name": "date_tested",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_tested"
-          }
-        },
-        {
-          "column_name": "result_of_hiv_test",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.result_of_hiv_test"
-          }
-        },
-        {
-          "column_name": "recency_test_result_if_applicable",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.recency_test_result_if_applicable"
-          }
-        },
-        {
-          "column_name": "vl_result_at_trimester_1",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vl_result_at_trimester_1"
-          }
-        },
-        {
-          "column_name": "vl_result_at_trimester_2",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vl_result_at_trimester_2"
-          }
-        },
-        {
-          "column_name": "vl_result_at_trimester_3",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.vl_result_at_trimester_3"
-          }
-        },
-        {
-          "column_name": "male_partner_tested",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.male_partner_tested"
-          }
-        },
-        {
-          "column_name": "date_male_partner_tested",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_male_partner_tested"
-          }
-        },
-        {
-          "column_name": "result_r_nr",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.result_r_nr"
-          }
-        },
-        {
-          "column_name": "treatment_initiated",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.treatment_initiated"
-          }
-        },
-        {
-          "column_name": "date_initiated_on_treatment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_initiated_on_treatment"
-          }
-        },
-        {
-          "column_name": "on_art_st_anc",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.on_art_st_anc"
-          }
-        },
-        {
-          "column_name": "tb_screening",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.tb_screening"
-          }
-        },
 
-        {
-          "column_name": "syphilis_testing",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.syphilis_testing"
-          }
-        },
-        {
-          "column_name": "syphilis_test_type",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.syphilis_test_type"
-          }
-        },
-        {
-          "column_name": "syphilis_other",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.syphilis_other"
-          }
-        },
-        {
-          "column_name": "date_tested_for_syphilis",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_tested_for_syphilis"
-          }
-        },
-        {
-          "column_name": "syphilis_result",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.syphilis_result"
-          }
-        },
+
+
+
+
         {
           "column_name": "date_of_delivery",
           "type": "Client",
@@ -8153,314 +8248,7 @@
             "field": "attributes.on_art_at_time_of_delivery"
           }
         },
-        {
-          "column_name": "date_of_st_post_natal_care",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_of_st_post_natal_care"
-          }
-        },
-        {
-          "column_name": "mother_tested_for_hiv",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mother_tested_for_hiv"
-          }
-        },
-        {
-          "column_name": "postnatal_care_visit",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.postnatal_care_visit"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "art_adherence_counselling_support_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_6_weeks"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_6_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_6_months"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_6_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_6_months"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_6_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_6_months"
-          }
-        },
-        {
-          "column_name": "number_of_condoms_distributed_at_6_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_6_months"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_6",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_6"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_9_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_9_weeks"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_9_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_9_weeks"
-          }
-        },
-        {
-          "column_name": "art_adherence_counselling_support_at_9_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_9_weeks"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_9_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_9_weeks"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_9_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_9_weeks"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_9_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_9_months"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_9_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_9_months"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_9_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_9_months"
-          }
-        },
-        {
-          "column_name": "number_of_condoms_distributed_at_9_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_9_months"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_9",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_9"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_12_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_12_weeks"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_12_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_12_weeks"
-          }
-        },
-        {
-          "column_name": "art_adherence_counselling_support_at_12_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_12_weeks"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_12_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_12_weeks"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_12_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_12_weeks"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_12_months"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_12_months"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_12_months"
-          }
-        },
-        {
-          "column_name": "number_of_condoms_distributed_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_12_months"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_12",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_12"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "art_adherence_counselling_support_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_6_weeks"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_6_weeks",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_6_weeks"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_6_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_6_months"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_6_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_6_months"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_18_months"
-          }
-        },
-        {
-          "column_name": "number_of_condoms_distributed_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_18_months"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_18",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_18"
-          }
-        },
-        {
-          "column_name": "mothers_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mothers_outcome"
-          }
-        },
+
         {
           "column_name": "delete_status",
           "type": "Client",
@@ -8471,7 +8259,7 @@
       ]
     },
     {
-      "name": "ec_pmtct_mother_monitoring",
+      "name": "ec_pmtct_mother_child",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -8485,6 +8273,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.pmtct_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
           }
         },
         {
@@ -8545,10 +8340,43 @@
           }
         },
         {
-          "column_name": "dbs_at_birth_due_date",
+          "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.dbs_at_birth_due_date"
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_pmtct_child_monitoring",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "pmtct_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pmtct_id"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "child_monitoring_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_monitoring_visit"
           }
         },
         {
@@ -8598,6 +8426,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes._6_weeks_dbs_date"
+          }
+        },
+        {
+          "column_name": "_6_weeks_dbs_ctx",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes._6_weeks_dbs_ctx"
           }
         },
         {
@@ -9386,7 +9221,7 @@
       ]
     },
     {
-      "name": "ec_pmtct_test",
+      "name": "ec_pmtct_mother_postnatal",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -9403,725 +9238,318 @@
           }
         },
         {
-          "column_name": "_2_months_date",
+          "column_name": "pmtct_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_date"
+            "field": "attributes.pmtct_id"
           }
         },
         {
-          "column_name": "_2_months_hiv_status_p_n",
+          "column_name": "date_of_st_post_natal_care",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_hiv_status_p_n"
+            "field": "attributes.date_of_st_post_natal_care"
           }
         },
         {
-          "column_name": "_2_months_ctx",
+          "column_name": "mother_tested_for_hiv",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_ctx"
+            "field": "attributes.mother_tested_for_hiv"
           }
         },
         {
-          "column_name": "_2_months_iycf_counselling",
+          "column_name": "postnatal_care_visit",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_iycf_counselling"
+            "field": "attributes.postnatal_care_visit"
           }
         },
         {
-          "column_name": "_2_months_iycf_counselling",
+          "column_name": "hiv_test_result_r_nr_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_iycf_counselling"
+            "field": "attributes.hiv_test_result_r_nr_at_6_weeks"
           }
         },
         {
-          "column_name": "_2_months_infant_feeding_options",
+          "column_name": "art_initiated_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_infant_feeding_options"
+            "field": "attributes.art_initiated_at_6_weeks"
           }
         },
         {
-          "column_name": "_2_months_outcome",
+          "column_name": "art_adherence_counselling_support_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._2_months_outcome"
+            "field": "attributes.art_adherence_counselling_support_at_6_weeks"
           }
         },
         {
-          "column_name": "_3_months_date",
+          "column_name": "family_planning_counselling_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._3_months_date"
+            "field": "attributes.family_planning_counselling_at_6_weeks"
           }
         },
         {
-          "column_name": "_3_months_hiv_status_p_n",
+          "column_name": "comments_at_postnatal_care_visit_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._3_months_hiv_status_p_n"
+            "field": "attributes.comments_at_postnatal_care_visit_6_weeks"
           }
         },
         {
-          "column_name": "_3_months_ctx",
+          "column_name": "hiv_test_result_r_nr_at_6_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._3_months_ctx"
+            "field": "attributes.hiv_test_result_r_nr_at_6_months"
           }
         },
         {
-          "column_name": "_3_months_iycf_counselling",
+          "column_name": "art_initiated_at_6_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._3_months_iycf_counselling"
+            "field": "attributes.art_initiated_at_6_months"
           }
         },
         {
-          "column_name": "_3_months_infant_feeding_options",
+          "column_name": "family_planning_counselling_at_6_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._3_months_infant_feeding_options"
+            "field": "attributes.family_planning_counselling_at_6_months"
           }
         },
         {
-          "column_name": "_3_months_outcome",
+          "column_name": "number_of_condoms_distributed_at_6_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._3_months_outcome"
+            "field": "attributes.number_of_condoms_distributed_at_6_months"
           }
         },
         {
-          "column_name": "_4_months_date",
+          "column_name": "comments_at_postnatal_care_visit_6",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._4_months_date"
+            "field": "attributes.comments_at_postnatal_care_visit_6"
           }
         },
         {
-          "column_name": "_4_months_hiv_status_p_n",
+          "column_name": "hiv_test_result_r_nr_at_9_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._4_months_hiv_status_p_n"
+            "field": "attributes.hiv_test_result_r_nr_at_9_weeks"
           }
         },
         {
-          "column_name": "_4_months_ctx",
+          "column_name": "art_initiated_at_9_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._4_months_ctx"
+            "field": "attributes.art_initiated_at_9_weeks"
           }
         },
         {
-          "column_name": "_4_months_iycf_counselling",
+          "column_name": "art_adherence_counselling_support_at_9_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._4_months_iycf_counselling"
+            "field": "attributes.art_adherence_counselling_support_at_9_weeks"
           }
         },
         {
-          "column_name": "_4_months_infant_feeding_options",
+          "column_name": "family_planning_counselling_at_9_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._4_months_infant_feeding_options"
+            "field": "attributes.family_planning_counselling_at_9_weeks"
           }
         },
         {
-          "column_name": "_4_months_outcome",
+          "column_name": "comments_at_postnatal_care_visit_9_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._4_months_outcome"
+            "field": "attributes.comments_at_postnatal_care_visit_9_weeks"
           }
         },
         {
-          "column_name": "_5_months_date",
+          "column_name": "hiv_test_result_r_nr_at_9_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._5_months_date"
+            "field": "attributes.hiv_test_result_r_nr_at_9_months"
           }
         },
         {
-          "column_name": "_5_months_hiv_status_p_n",
+          "column_name": "art_initiated_at_9_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._5_months_hiv_status_p_n"
+            "field": "attributes.art_initiated_at_9_months"
           }
         },
         {
-          "column_name": "_5_months_ctx",
+          "column_name": "family_planning_counselling_at_9_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._5_months_ctx"
+            "field": "attributes.family_planning_counselling_at_9_months"
           }
         },
         {
-          "column_name": "_5_months_iycf_counselling",
+          "column_name": "number_of_condoms_distributed_at_9_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._5_months_iycf_counselling"
+            "field": "attributes.number_of_condoms_distributed_at_9_months"
           }
         },
         {
-          "column_name": "_5_months_infant_feeding_options",
+          "column_name": "comments_at_postnatal_care_visit_9",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._5_months_infant_feeding_options"
+            "field": "attributes.comments_at_postnatal_care_visit_9"
           }
         },
         {
-          "column_name": "_5_months_outcome",
+          "column_name": "hiv_test_result_r_nr_at_12_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._5_months_outcome"
+            "field": "attributes.hiv_test_result_r_nr_at_12_weeks"
           }
         },
         {
-          "column_name": "_6_months_date",
+          "column_name": "art_initiated_at_12_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_months_date"
+            "field": "attributes.art_initiated_at_12_weeks"
           }
         },
         {
-          "column_name": "_6_months_hiv_status_p_n",
+          "column_name": "art_adherence_counselling_support_at_12_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_months_hiv_status_p_n"
+            "field": "attributes.art_adherence_counselling_support_at_12_weeks"
           }
         },
         {
-          "column_name": "_6_months_ctx",
+          "column_name": "family_planning_counselling_at_12_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_months_ctx"
+            "field": "attributes.family_planning_counselling_at_12_weeks"
           }
         },
         {
-          "column_name": "_6_months_iycf_counselling",
+          "column_name": "comments_at_postnatal_care_visit_12_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_months_iycf_counselling"
+            "field": "attributes.comments_at_postnatal_care_visit_12_weeks"
           }
         },
         {
-          "column_name": "_6_months_infant_feeding_options",
+          "column_name": "hiv_test_result_r_nr_at_12_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_months_infant_feeding_options"
+            "field": "attributes.hiv_test_result_r_nr_at_12_months"
           }
         },
         {
-          "column_name": "_6_months_outcome",
+          "column_name": "art_initiated_at_12_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_months_outcome"
+            "field": "attributes.art_initiated_at_12_months"
           }
         },
         {
-          "column_name": "_7_months_date",
+          "column_name": "family_planning_counselling_at_12_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._7_months_date"
+            "field": "attributes.family_planning_counselling_at_12_months"
           }
         },
         {
-          "column_name": "_7_months_hiv_status_p_n",
+          "column_name": "number_of_condoms_distributed_at_12_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._7_months_hiv_status_p_n"
+            "field": "attributes.number_of_condoms_distributed_at_12_months"
           }
         },
         {
-          "column_name": "_7_months_ctx",
+          "column_name": "comments_at_postnatal_care_visit_12",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._7_months_ctx"
+            "field": "attributes.comments_at_postnatal_care_visit_12"
           }
         },
         {
-          "column_name": "_7_months_iycf_counselling",
+          "column_name": "hiv_test_result_r_nr_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._7_months_iycf_counselling"
+            "field": "attributes.hiv_test_result_r_nr_at_6_weeks"
           }
         },
         {
-
-          "column_name": "_7_months_infant_feeding_options",
+          "column_name": "art_initiated_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._7_months_infant_feeding_options"
+            "field": "attributes.art_initiated_at_6_weeks"
           }
         },
         {
-          "column_name": "_7_months_outcome",
+          "column_name": "art_adherence_counselling_support_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._7_months_outcome"
+            "field": "attributes.art_adherence_counselling_support_at_6_weeks"
           }
         },
         {
-          "column_name": "_8_months_date",
+          "column_name": "family_planning_counselling_at_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._8_months_date"
+            "field": "attributes.family_planning_counselling_at_6_weeks"
           }
         },
         {
-          "column_name": "_8_months_hiv_status_p_n",
+          "column_name": "comments_at_postnatal_care_visit_6_weeks",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._8_months_hiv_status_p_n"
+            "field": "attributes.comments_at_postnatal_care_visit_6_weeks"
           }
         },
         {
-          "column_name": "_8_months_ctx",
+          "column_name": "hiv_test_result_r_nr_at_6_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._8_months_ctx"
+            "field": "attributes.hiv_test_result_r_nr_at_6_months"
           }
         },
         {
-          "column_name": "_8_months_iycf_counselling",
+          "column_name": "art_initiated_at_6_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._8_months_iycf_counselling"
+            "field": "attributes.art_initiated_at_6_months"
           }
         },
         {
-          "column_name": "_8_months_infant_feeding_options",
+          "column_name": "family_planning_counselling_at_18_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._8_months_infant_feeding_options"
+            "field": "attributes.family_planning_counselling_at_18_months"
           }
         },
         {
-          "column_name": "_8_months_outcome",
+          "column_name": "number_of_condoms_distributed_at_18_months",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._8_months_outcome"
+            "field": "attributes.number_of_condoms_distributed_at_18_months"
           }
         },
         {
-          "column_name": "_9_months_date",
+          "column_name": "comments_at_postnatal_care_visit_18",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._9_months_date"
+            "field": "attributes.comments_at_postnatal_care_visit_18"
           }
         },
         {
-          "column_name": "_9_months_hiv_status_p_n",
+          "column_name": "mothers_outcome",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._9_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_9_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._9_months_ctx"
-          }
-        },
-        {
-          "column_name": "_9_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._9_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_9_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._9_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_9_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._9_months_outcome"
-          }
-        },
-        {
-          "column_name": "_10_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._10_months_date"
-          }
-        },
-        {
-          "column_name": "_10_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._10_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_10_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._10_months_ctx"
-          }
-        },
-        {
-          "column_name": "_10_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._10_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_10_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._10_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_10_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._10_months_outcome"
-          }
-        },
-        {
-          "column_name": "_11_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._11_months_date"
-          }
-        },
-        {
-          "column_name": "_11_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._11_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_11_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._11_months_ctx"
-          }
-        },
-        {
-          "column_name": "_11_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._11_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_11_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._11_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_11_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._11_months_outcome"
-          }
-        },
-        {
-          "column_name": "_12_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._12_months_date"
-          }
-        },
-        {
-          "column_name": "_12_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._12_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_12_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._12_months_ctx"
-          }
-        },
-        {
-          "column_name": "_12_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._12_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_12_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._12_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_12_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._12_months_outcome"
-          }
-        },
-        {
-          "column_name": "_13_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._13_months_date"
-          }
-        },
-        {
-          "column_name": "_13_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._13_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_13_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._13_months_ctx"
-          }
-        },
-        {
-          "column_name": "_13_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._13_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_13_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._13_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_13_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._13_months_outcome"
-          }
-        },
-        {
-          "column_name": "_14_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._14_months_date"
-          }
-        },
-        {
-          "column_name": "_14_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._14_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_14_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._14_months_ctx"
-          }
-        },
-        {
-          "column_name": "_14_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._14_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_14_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._14_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_14_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._14_months_outcome"
-          }
-        },
-        {
-          "column_name": "_15_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._15_months_date"
-          }
-        },
-        {
-          "column_name": "_15_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._15_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_15_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._15_months_ctx"
-          }
-        },
-        {
-          "column_name": "_15_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._15_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_15_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._15_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_15_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._15_months_outcome"
-          }
-        },
-        {
-          "column_name": "_16_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._16_months_date"
-          }
-        },
-        {
-          "column_name": "_16_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._16_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_16_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._16_months_ctx"
-          }
-        },
-        {
-          "column_name": "_16_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._16_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_16_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._16_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_16_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._16_months_outcome"
-          }
-        },
-        {
-          "column_name": "_17_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._17_months_date"
-          }
-        },
-        {
-          "column_name": "_17_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._17_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_17_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._17_months_ctx"
-          }
-        },
-        {
-          "column_name": "_17_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._17_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_17_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._17_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_17_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._17_months_outcome"
-          }
-        },
-        {
-          "column_name": "_18_months_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._18_months_date"
-          }
-        },
-        {
-          "column_name": "_18_months_hiv_status_p_n",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._18_months_hiv_status_p_n"
-          }
-        },
-        {
-          "column_name": "_18_months_ctx",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._18_months_ctx"
-          }
-        },
-        {
-          "column_name": "_18_months_iycf_counselling",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._18_months_iycf_counselling"
-          }
-        },
-        {
-          "column_name": "_18_months_infant_feeding_options",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._18_months_infant_feeding_options"
-          }
-        },
-        {
-          "column_name": "_18_months_outcome",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes._18_months_outcome"
+            "field": "attributes.mothers_outcome"
           }
         },
         {
@@ -10132,6 +9560,190 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_pmtct_mother_anc",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "pmtct_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pmtct_id"
+          }
+        },
+        {
+          "column_name": "date_of_st_contact",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_st_contact"
+          }
+        },
+        {
+          "column_name": "gestation_age_in_weeks",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gestation_age_in_weeks"
+          }
+        },
+
+        {
+          "column_name": "hiv_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_tested"
+          }
+        },
+        {
+          "column_name": "date_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_tested"
+          }
+        },
+        {
+          "column_name": "result_of_hiv_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.result_of_hiv_test"
+          }
+        },
+        {
+          "column_name": "recency_test_result_if_applicable",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.recency_test_result_if_applicable"
+          }
+        },
+        {
+          "column_name": "vl_result_at_trimester_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_at_trimester_1"
+          }
+        },
+        {
+          "column_name": "vl_result_at_trimester_2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_at_trimester_2"
+          }
+        },
+        {
+          "column_name": "vl_result_at_trimester_3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_at_trimester_3"
+          }
+        },
+        {
+          "column_name": "male_partner_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.male_partner_tested"
+          }
+        },
+        {
+          "column_name": "date_male_partner_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_male_partner_tested"
+          }
+        },
+        {
+          "column_name": "result_r_nr",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.result_r_nr"
+          }
+        },
+        {
+          "column_name": "treatment_initiated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_initiated"
+          }
+        },
+        {
+          "column_name": "date_initiated_on_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_initiated_on_treatment"
+          }
+        },
+        {
+          "column_name": "on_art_st_anc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.on_art_st_anc"
+          }
+        },
+        {
+          "column_name": "tb_screening",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_screening"
+          }
+        },
+
+        {
+          "column_name": "syphilis_testing",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.syphilis_testing"
+          }
+        },
+        {
+          "column_name": "syphilis_test_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.syphilis_test_type"
+          }
+        },
+        {
+          "column_name": "syphilis_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.syphilis_other"
+          }
+        },
+        {
+          "column_name": "date_tested_for_syphilis",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_tested_for_syphilis"
+          }
+        },
+        {
+          "column_name": "syphilis_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.syphilis_result"
+          }
+        },
+
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
     }
+
   ]
 }
