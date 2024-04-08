@@ -161,6 +161,23 @@ public class VCAScreeningDao extends AbstractDao {
             record.setScreening_location(getCursorValue(c,"screening_location"));
             record.setPhone(getCursorValue(c,"phone"));
             record.setExited_graduation_reason(getCursorValue(c,"exited_graduation_reason"));
+            record.setAbym_years(getCursorValue(c, "abym_years"));
+            record.setAbym_sexually_active(getCursorValue(c, "abym_sexually_active"));
+            record.setAbym_preventions(getCursorValue(c, "abym_preventions"));
+            record.setAbym_preventions_other(getCursorValue(c, "abym_preventions_other"));
+            record.setAbym_sex_older_women(getCursorValue(c, "abym_sex_older_women"));
+            record.setAbym_transactional_sex(getCursorValue(c, "abym_transactional_sex"));
+            record.setAbym_sex_work(getCursorValue(c, "abym_sex_work"));
+            record.setAbym_economically_insecure(getCursorValue(c, "abym_economically_insecure"));
+            record.setAbym_violent_partner(getCursorValue(c, "abym_violent_partner"));
+            record.setAbym_diagnosed(getCursorValue(c, "abym_diagnosed"));
+            record.setAbym_hiv_tested(getCursorValue(c, "abym_hiv_tested"));
+            record.setAbym_test_positive(getCursorValue(c, "abym_test_positive"));
+            record.setAbym_undergone_vmmc(getCursorValue(c, "abym_undergone_vmmc"));
+            record.setAbym_in_school(getCursorValue(c, "abym_in_school"));
+            record.setAbym_economic_strengthening(getCursorValue(c, "abym_economic_strengthening"));
+
+
             return record;
         };
     }

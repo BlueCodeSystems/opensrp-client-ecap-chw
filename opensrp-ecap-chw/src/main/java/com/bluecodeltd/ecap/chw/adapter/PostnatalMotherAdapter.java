@@ -80,13 +80,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getDate_of_st_post_natal_care());
-//        Household householdModel = HouseholdDao.getHousehold(visit.getHousehold_id());
 
-//        if (householdModel.getCaregiver_hiv_status().equals("positive")){
-//            holder.exPandableView.setVisibility(View.GONE);
-//            holder.expMore.setVisibility(View.GONE);
-//            holder.expLess.setVisibility(View.GONE);
-//        }
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
