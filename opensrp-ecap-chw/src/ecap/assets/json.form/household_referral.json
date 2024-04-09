@@ -127,6 +127,14 @@
           }
         }
       },
+      {
+        "key": "referral_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
 
       {
         "key": "receiving_organization",

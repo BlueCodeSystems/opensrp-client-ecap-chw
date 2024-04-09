@@ -448,6 +448,7 @@
         "openmrs_data_type": "text",
         "type": "gps"
       },
+
       {
         "key": "screening_date",
         "openmrs_entity_parent": "",
