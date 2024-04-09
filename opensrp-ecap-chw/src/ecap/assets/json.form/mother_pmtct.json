@@ -292,7 +292,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mothers_age",
         "type": "date_picker",
-        "hint": "Age",
+        "hint": "Date of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
