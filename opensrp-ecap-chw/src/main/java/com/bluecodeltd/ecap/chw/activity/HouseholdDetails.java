@@ -692,6 +692,11 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.put("entity_id", this.house.getBid());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
+                    JSONObject recentLocation = getFieldJSONObject(fields(indexRegisterForm, "step2"), "recent_location");
+                    recentLocation.put("type", "toaster_notes");
+                    recentLocation.put("text","Latitude: -15.378761 \nLongitude: 28.320772 1249.0 \nAccuracy: 7.504");
+
+
 
                     JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step2"), "phone");
                     if (cphone != null) {
@@ -1746,6 +1751,7 @@ public class HouseholdDetails extends AppCompatActivity {
                            for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
                            {
                                Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+
                                changeHouseholdStatus(householdToDelete);
                            }
                        }
