@@ -21,6 +21,16 @@ public class VCAServiceModel {
     private String other_stable_services;
     private String delete_status;
 
+    private  String vca_service_location;
+
+    public String getVca_service_location() {
+        return vca_service_location;
+    }
+
+    public void setVca_service_location(String vca_service_location) {
+        this.vca_service_location = vca_service_location;
+    }
+
     public String getBase_entity_id() {
         return base_entity_id;
     }

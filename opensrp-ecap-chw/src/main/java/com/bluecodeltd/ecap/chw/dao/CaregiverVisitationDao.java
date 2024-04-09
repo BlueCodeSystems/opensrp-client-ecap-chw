@@ -70,6 +70,7 @@ public class CaregiverVisitationDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setVisit_date(getCursorValue(c, "visit_date"));
+            record.setVisit_location(getCursorValue(c,"visit_location"));
             record.setCaregiver_hiv_status(getCursorValue(c, "caregiver_hiv_status"));
             record.setCaregiver_art(getCursorValue(c, "caregiver_art"));
             record.setClinical_care(getCursorValue(c, "clinical_care"));
