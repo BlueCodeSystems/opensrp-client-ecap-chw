@@ -170,7 +170,7 @@ actions:
 name: step4_date_next_vl
 description: date_next_vl relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes')"
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes') && step4_date_last_vl != ''"
 actions:
   - "isRelevant = true"
 ---
