@@ -27,6 +27,15 @@ public class HouseholdServiceReportModel {
     private String other_services_caregiver;
     private String other_services_household;
     private String delete_status;
+    private String hh_service_location;
+
+    public String getHh_service_location() {
+        return hh_service_location;
+    }
+
+    public void setHh_service_location(String hh_service_location) {
+        this.hh_service_location = hh_service_location;
+    }
 
     public String getServices() {
         return services;
