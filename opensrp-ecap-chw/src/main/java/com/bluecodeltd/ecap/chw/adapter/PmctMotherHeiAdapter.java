@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,7 +47,12 @@ Context context;
            final PtmctMotherMonitoringModel monitoringModel = model.get(position);
                 holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
                 holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
-                holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+
+
+
+                holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent heiProfile = new Intent(context, HeiDetailsActivity.class);
@@ -64,11 +70,13 @@ Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView fullName,age;
+        ImageView genderIcon;
         RelativeLayout relativeLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             fullName = itemView.findViewById(R.id.familyNameTextView);
             age = itemView.findViewById(R.id.child_age);
+            genderIcon = itemView.findViewById(R.id.gender_icon);
             relativeLayout = itemView.findViewById(R.id.register_columns);
         }
     }

@@ -455,6 +455,7 @@
         "openmrs_data_type": "text",
         "type": "gps"
       },
+
       {
         "key": "screening_date",
         "openmrs_entity_parent": "",
@@ -822,9 +823,9 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "step2:active_on_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "step2:date_of_last_viral_load": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step2:date_of_last_viral_load)"
           }
         }
       },

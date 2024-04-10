@@ -170,7 +170,7 @@ actions:
 name: step4_date_next_vl
 description: date_next_vl relevance
 priority: 1
-condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes')"
+condition: "step1_is_hiv_positive.contains('yes') && step2_consent_check_box.contains('consent_check_box') && step4_acceptance.contains('yes') && step4_date_last_vl != ''"
 actions:
   - "isRelevant = true"
 ---
@@ -760,6 +760,13 @@ name: step1_abym_economic_strengthening
 description: abym_economic_strengthening
 priority: 1
 condition: "( helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && helper.formatDate(step1_adolescent_birthdate,'y') <= 17) && step1_gender.contains('male')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_abym_preventions
+description: abym_preventions
+priority: 1
+condition: "step1_abym_sexually_active.contains('yes')"
 actions:
   - "isRelevant = true"
 ---

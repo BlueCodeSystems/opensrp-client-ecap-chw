@@ -28,6 +28,7 @@ public class HivRiskAssessmentUnder15Model {
     private String hiv_exposure;
     private String facility;
     private String delete_status;
+    private String assessment_date;
 
 
     public String getHousehold_id() {
@@ -236,5 +237,13 @@ public class HivRiskAssessmentUnder15Model {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getAssessment_date() {
+        return assessment_date;
+    }
+
+    public void setAssessment_date(String assessment_date) {
+        this.assessment_date = assessment_date;
     }
 }

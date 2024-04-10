@@ -51,6 +51,9 @@ public class ChwRepositoryFlv {
                 case 5:
                     upgradeToVersion5(context,db);
                     break;
+                case 6:
+                    upgradeToVersion6(db);
+                    break;
                 default:
                     break;
             }
@@ -188,6 +191,13 @@ public class ChwRepositoryFlv {
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_undergone_vmmc TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_in_school TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN abym_economic_strengthening TEXT");
+
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN enrollment_date TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN asmt TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN caregiver_name TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN caregiver_sex TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN caregiver_birth_date TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN enrollment_date TEXT");
 
             String sql = "CREATE TABLE IF NOT EXISTS ec_pmtct_mother (" +
                     "base_entity_id TEXT, " +
@@ -450,12 +460,31 @@ public class ChwRepositoryFlv {
                     "date_enrolled_in_art TEXT, " +
                     "delete_status TEXT)";
 
+
+
             db.execSQL(sqlCreateTableChildMonitoring);
 
-            clearAppData(context);
+           // clearAppData(context);
 
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion5 ");
+        }
+    }
+    private static void upgradeToVersion6(SQLiteDatabase db) {
+        try {
+
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN enrollment_date TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN asmt TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN caregiver_name TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN caregiver_sex TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN caregiver_birth_date TEXT");
+            db.execSQL("ALTER TABLE ec_graduation ADD COLUMN enrollment_date TEXT");
+            db.execSQL("ALTER TABLE ec_hiv_assessment_below_15 ADD COLUMN assessment_date");
+            db.execSQL("ALTER TABLE ec_hiv_assessment_above_15 ADD COLUMN assessment_date");
+
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion6 ");
         }
     }
 

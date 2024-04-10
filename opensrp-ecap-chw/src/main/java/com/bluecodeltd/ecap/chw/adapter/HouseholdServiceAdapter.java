@@ -262,6 +262,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         }
 
         householdReport.setOther_health_services(service.getOther_health_services());
+        householdReport.setHh_service_location(service.getHh_service_location());
         householdReport.setSchooled_services(service.getSchooled_services());
         householdReport.setOther_schooled_services(service.getOther_schooled_services());
         householdReport.setSafe_services(service.getSafe_services());
