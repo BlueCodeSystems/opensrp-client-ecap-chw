@@ -81,6 +81,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
@@ -1029,6 +1030,13 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
+            if(EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
+                Intent openSignatureIntent = new Intent(this, SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                startActivity(openSignatureIntent);
+            }
+            else
+            {
             try {
 
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
@@ -1085,8 +1093,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     case "Grad":
                     case "Graduation":
-                    case "Household Visitation For Caregiver":
-                    case "Hiv Assessment For Caregiver":
                     case "Household Case Status":
 
                         closeFab();
@@ -1111,9 +1117,16 @@ public class HouseholdDetails extends AppCompatActivity {
                 Timber.e(e);
             }
 
-        }
+        }}
 
     }
+
+    public Intent openSignatureActivity(JSONObject jsonFormObject){
+        Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+        openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+        return openSignatureIntent;
+    }
+
 
     private void AddVulnarabilitiesToCasePlan(String dateId,String cpId) {
         Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
