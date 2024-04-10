@@ -108,6 +108,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -691,6 +693,13 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
                     indexRegisterForm.put("entity_id", this.house.getBid());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
+
+                    JSONObject recentLocation = getFieldJSONObject(fields(indexRegisterForm, "step2"), "recent_location");
+
+
+//                    recentLocation.put("text",formatGpsCoordinates(house.getHousehold_location() != null ? house.getHousehold_location() : ""));
+//                    recentLocation.put("text","Latitude: -15.378761 \nLongitude: 28.320772 1249.0 \nAccuracy: 7.504");
+
 
 
                     JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step2"), "phone");
@@ -1746,6 +1755,7 @@ public class HouseholdDetails extends AppCompatActivity {
                            for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
                            {
                                Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+
                                changeHouseholdStatus(householdToDelete);
                            }
                        }
@@ -1996,6 +2006,25 @@ public class HouseholdDetails extends AppCompatActivity {
         //Setting the title manually
         alert.setTitle("VCA Screening");
         alert.show();
+    }
+    public String formatGpsCoordinates(String input) {
+
+        String pattern = "(-?\\d+\\.\\d+)\\s+<tel:(\\d*)\\|(-?\\d+\\.\\d+)\\s+(\\d+)>\\.0\\s+(\\d+\\.\\d+)";
+
+        Pattern r = Pattern.compile(pattern);
+
+        Matcher m = r.matcher(input);
+
+        if (m.find()) {
+            String latitude = m.group(1);
+            String longitude = m.group(3) + " " + m.group(4);
+            String accuracy = m.group(5);
+
+            // Return formatted string
+            return "Latitude: " + latitude + " \nLongitude: " + longitude + ".0 \nAccuracy: " + accuracy;
+        } else {
+            return "Location Not Set";
+        }
     }
 
     @Override

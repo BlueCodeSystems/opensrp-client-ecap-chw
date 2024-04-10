@@ -6,6 +6,7 @@ public class VcaVisitationModel {
     private String first_name;
     private String last_name;
     private String birthdate;
+    private String vca_visit_location;
     private String hei;
     private String base_entity_id;
     private String age;
@@ -105,6 +106,14 @@ public class VcaVisitationModel {
 
     private String delete_status;
     private String status_color;
+
+    public String getVca_visit_location() {
+        return vca_visit_location;
+    }
+
+    public void setVca_visit_location(String vca_visit_location) {
+        this.vca_visit_location = vca_visit_location;
+    }
 
     public String getIndicate_vl_result() {
         return indicate_vl_result;
