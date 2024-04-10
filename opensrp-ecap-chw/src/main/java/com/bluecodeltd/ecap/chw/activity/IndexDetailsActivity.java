@@ -726,63 +726,75 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             }
             String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
+            if (encounterType.equals("Referral")) {
 
-            try {
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                startActivity(openSignatureIntent);
+            } else if(encounterType.equals("Household Visitation Form 0-20 years")){
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                startActivity(openSignatureIntent);
+            } else
+            {
+                try{
 
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+                    ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
-                if (childIndexEventClient == null) {
-                    return;
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+
+                    saveRegistration(childIndexEventClient, is_edit_mode);
+
+
+                    switch (encounterType) {
+                        case "VCA Case Plan":
+
+                            JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                            String dateId = cpdate.optString("value");
+
+                            JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                            String cp_Id = cpId.optString("value");
+
+                            finish();
+                            startActivity(getIntent());
+                            openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
+
+                            break;
+
+                        case "Household Visitation Form 0-20 years":
+                        case "Member Sub Population":
+                        case "Sub Population":
+                        case "VCA Assessment":
+                        case "HIV Risk Assessment Above 15":
+                        case "HIV Risk Assessment Below 15":
+
+                            finish();
+                            startActivity(getIntent());
+
+                            break;
+                        case "Case Record Status":
+
+                            finish();
+                            startActivity(getIntent());
+                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                            startActivity(i);
+
+                            break;
+
+                    }
+
+                    Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
+                } catch (Exception e) {
+                    Timber.e(e);
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
-
-                switch (encounterType) {
-                    case "VCA Case Plan":
-
-                        JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = cpdate.optString("value");
-
-                        JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                        String cp_Id = cpId.optString("value");
-
-                        finish();
-                        startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId,cp_Id);
-
-                        break;
-
-                    case "Household Visitation Form 0-20 years":
-                    case "Member Sub Population":
-                    case "Sub Population":
-                    case "VCA Assessment":
-                    case "HIV Risk Assessment Above 15":
-                    case "HIV Risk Assessment Below 15":
-
-                        finish();
-                        startActivity(getIntent());
-
-                        break;
-                    case "Case Record Status":
-
-                        finish();
-                        startActivity(getIntent());
-                        Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                        startActivity(i);
-
-                        break;
-
-                }
-
-                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-
+        }
         }
 
     }
@@ -999,6 +1011,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                                 encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Hiv Assessment For Caregiver":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HIV_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;

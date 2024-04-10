@@ -116,7 +116,7 @@ public class SignatureActivity extends AppCompatActivity {
                 Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
                 String base64Signature = encodeBitmapToBase64(signatureBitmap);
 
-                JSONObject signatureField = getFieldJSONObject(fields(screeningFormObject, "step2"), "signature");
+                JSONObject signatureField = getFieldJSONObject(fields(screeningFormObject, "step1"), "signature");
 
                 if (signatureField != null) {
                     signatureField.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
@@ -167,9 +167,22 @@ public class SignatureActivity extends AppCompatActivity {
                             startActivity(openVcaIntent);
                             getIntent();
                             Toasty.success(getBaseContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                            break;
+                        case "Household Visitation Form 0-20 years":
+
+                        case "Household Visitation For Caregiver":
+                            finish();
+                            Toasty.success(getBaseContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
+                            break;
+
+                        case "Hiv Assessment For Caregiver":
+                            finish();
+                            Toasty.success(getBaseContext(), "HIV assessment Saved", Toast.LENGTH_LONG, true).show();
+                            break;
+                        default:
+                            finish();
+                            break;
                     }
-
-
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -186,64 +199,6 @@ public class SignatureActivity extends AppCompatActivity {
         Intent householdProfile = new Intent(getBaseContext(),HouseholdDetails.class);
         householdProfile.putExtra("householdId",id);
         startActivity(householdProfile);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == org.smartregister.family.util.JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-
-            boolean is_edit_mode = false;
-
-            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
-
-            JSONObject jsonFormObject = null;
-            try {
-                jsonFormObject = new JSONObject(jsonString);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
-
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
-                is_edit_mode = true;
-            }
-            householdId = FormUtils.getFieldJSONObject(FormUtils.fields(jsonFormObject, STEP2), "household_id").optString("value");
-
-
-            try {
-
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
-
-                if (childIndexEventClient == null) {
-                    return;
-                }
-
-                saveRegistration(childIndexEventClient, is_edit_mode);
-
-                switch (encounterType) {
-                    case "Household Screening":
-                        if(!householdId.equals("")) {
-                            goToHouseholdProfile(householdId);
-                        }
-                        break;
-
-                    case  "VCA Service Report":
-//                        finish();
-                        Intent openVcaServices = new Intent();
-
-                      startActivity(new Intent(getBaseContext(),VcaServiceActivity.class).putExtra("vcaid",intent_vcaid));
-                      Toasty.success(getBaseContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                }
-
-
-
-
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-
-        }
-
     }
 
 
@@ -364,6 +319,8 @@ public class SignatureActivity extends AppCompatActivity {
                     }
                     break;
 
+
+
                 case "Household Visitation For Caregiver":
 
                     if (fields != null) {
@@ -432,6 +389,53 @@ public class SignatureActivity extends AppCompatActivity {
                                 encounterType, Constants.EcapClientTable.EC_VCA_SERVICE_REPORT);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Referral":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_REFERRAL);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Household Visitation Form 0-20 years":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_HOUSEHOLD_VCA);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Hiv Assessment For Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HIV_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+
+                case "Household Service Report":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_HOUSEHOLD_SERVICE);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;

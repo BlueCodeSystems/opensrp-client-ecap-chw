@@ -222,8 +222,12 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
-
-            try {
+            if (EncounterType.equals("Household Service Report")) {
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                startActivity(openSignatureIntent);
+            } else{
+                try {
 
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
@@ -231,22 +235,24 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
+
+                    saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
 
 
-                switch (EncounterType) {
+                    switch (EncounterType) {
 
-                    case "Household Service Report":
+                        case "Household Service Report":
 
-                        Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        refreshData();
+                            Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                            refreshData();
 
 
-                        break;
+                            break;
 
+                    }
+                } catch(Exception e){
+                    Timber.e(e);
                 }
-            } catch (Exception e) {
-                Timber.e(e);
             }
         }
     }

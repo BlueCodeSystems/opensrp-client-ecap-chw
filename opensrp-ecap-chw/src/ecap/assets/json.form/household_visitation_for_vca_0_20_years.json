@@ -65,19 +65,6 @@
         "edit_type": "name",
         "read_only": "true"
       },
-
-      {
-        "key": "vca_visit_location",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vca_visit_location",
-        "openmrs_data_type": "text",
-        "type": "gps",
-        "v_required": {
-          "value": true,
-          "err": "Visit location is required"
-        }
-      },
       {
         "key": "age",
         "openmrs_entity_parent": "",
@@ -93,6 +80,13 @@
             }
           }
         }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
       },
       {
         "key": "caseworker_name",
@@ -163,11 +157,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_visit_location",
         "openmrs_data_type": "text",
-        "type": "gps",
-        "v_required": {
-          "value": true,
-          "err": "Visit location is required"
-        }
+        "type": "gps"
       },
       {
         "key": "visit_date",
