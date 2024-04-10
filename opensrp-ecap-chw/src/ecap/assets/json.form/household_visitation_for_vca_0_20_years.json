@@ -157,7 +157,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_visit_location",
         "openmrs_data_type": "text",
-        "type": "gps"
+        "type": "gps",
+        "v_required": {
+          "value": false,
+          "err": "Visit location is required"
+        }
       },
       {
         "key": "visit_date",

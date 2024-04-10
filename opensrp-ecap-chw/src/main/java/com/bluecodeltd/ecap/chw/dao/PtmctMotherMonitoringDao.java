@@ -70,6 +70,21 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
         return values;
 
     }
+    public static PtmctMotherMonitoringModel getRecentChildVisit(String uniqueID) {
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(dbs_at_birth_due_date,7,4) || '-' || substr(dbs_at_birth_due_date,4,2) || '-' || substr(dbs_at_birth_due_date,1,2)) as sortable_date " +
+                "FROM ec_pmtct_child_monitoring " +
+                "WHERE unique_id = '" + uniqueID + "' " +
+                "ORDER BY sortable_date DESC LIMIT 1";
+
+        List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
+
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+
+        return values.get(0);
+    }
+
     public static String countChildMonitoring (String uniqueId){
 
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueId + "' ";

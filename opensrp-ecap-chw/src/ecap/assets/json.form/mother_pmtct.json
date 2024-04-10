@@ -160,6 +160,15 @@
         "text": "PMTCT Mothers Details"
       },
       {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "edit_type",
+        "read_only": "false",
+        "edit_type": "name"
+      },
+      {
         "key": "ecap_id_question",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -205,10 +214,10 @@
         }
       },
       {
-        "key": "pmtct_id",
+        "key": "ecap_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "pmtct_id",
+        "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
         "read_only": "false",
         "hint": "ECAPII Comprehensive Program ID",
@@ -283,7 +292,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mothers_age",
         "type": "date_picker",
-        "hint": "Age",
+        "hint": "Date of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {

@@ -78,7 +78,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pmtct_id",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
         "hint": "ECAPII Comprehensive Program ID",
         "edit_type": "name"

@@ -104,6 +104,8 @@ public class Household {
     private String sub_population;
     private String signature;
     private  String relationship_other;
+    private String household_location;
+
 
     public String getRelationship_other() {
         return relationship_other;
@@ -908,4 +910,11 @@ public class Household {
         this.sub_population = sub_population;
     }
 
+    public String getHousehold_location() {
+        return household_location;
+    }
+
+    public void setHousehold_location(String household_location) {
+        this.household_location = household_location;
+    }
 }

@@ -127,6 +127,7 @@ public class VcaVisitationDao extends AbstractDao {
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
+            record.setVca_visit_location(getCursorValue(c,"vca_visit_location"));
             record.setHei(getCursorValue(c, "hei"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setAge(getCursorValue(c, "age"));

@@ -1,6 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static com.vijay.jsonwizard.constants.JsonFormConstants.OPTIONS_FIELD_NAME;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
@@ -110,6 +109,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -407,10 +408,10 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabTitle.setText("GRADUATION ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        int visits = CaregiverVisitationDao.countVisits(householdId);
+        int visits = GraduationDao.countVisits(householdId);
 
         visitTabCount.setText(String.valueOf(visits));
-        visitTabCount.setVisibility(View.GONE);
+//        visitTabCount.setVisibility(View.GONE);
 
         mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
     }
@@ -504,33 +505,33 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
                     //Benchmark **** 1 **** logic
-                    Boolean checkForVCAHivStatus = IndexPersonDao.checkHivStatusInHousehold(householdId);
-
-                    Boolean allChildrenHIVStatus = IndexPersonDao.doTheVCAsMeetBenchmarkOne(householdId);
-
-                    if(checkForVCAHivStatus.equals(true)){
-
-                            allTested = "yes";
-                        } else {
-                            allTested = "no";
-                        }
-
-                    JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
-                    hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
-
-                    Boolean checkForHivStatus = HouseholdDao.checkCaregiverHivStatusInHousehold(householdId);
-
-                    Boolean isCaregiverHIVStatusEligibleInHousehold = HouseholdDao.isCaregiverHIVStatusEligibleInHousehold(householdId);
-
-                   if(checkForHivStatus.equals(true)){
-                           caregiverTested = "yes";
-                       } else {
-                           caregiverTested = "no";
-                       }
-
-
-                    JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
-                    tested.put(JsonFormUtils.VALUE, caregiverTested);
+//                    Boolean checkForVCAHivStatus = IndexPersonDao.checkHivStatusInHousehold(householdId);
+//
+//                    Boolean allChildrenHIVStatus = IndexPersonDao.doTheVCAsMeetBenchmarkOne(householdId);
+//
+//                    if(checkForVCAHivStatus.equals(true)){
+//
+//                            allTested = "yes";
+//                        } else {
+//                            allTested = "no";
+//                        }
+//
+//                    JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+//                    hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
+//
+//                    Boolean checkForHivStatus = HouseholdDao.checkCaregiverHivStatusInHousehold(householdId);
+//
+//                    Boolean isCaregiverHIVStatusEligibleInHousehold = HouseholdDao.isCaregiverHIVStatusEligibleInHousehold(householdId);
+//
+//                   if(checkForHivStatus.equals(true)){
+//                           caregiverTested = "yes";
+//                       } else {
+//                           caregiverTested = "no";
+//                       }
+//
+//
+//                    JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
+//                    tested.put(JsonFormUtils.VALUE, caregiverTested);
 
                     // Benchmark **** 2 ****logic
 
@@ -562,7 +563,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Benchmark **** 2 **** logic updated
 
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
-                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
+//                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
                     JSONObject suppressed_caregiver = getFieldJSONObject(fields(indexRegisterForm, "step3"), "suppressed_caregiver");
 
@@ -573,31 +574,31 @@ public class HouseholdDetails extends AppCompatActivity {
                     Boolean  isCaregiverPositive = HouseholdDao.isCaregiverPositive(householdId);
                     Boolean checkIfVcasWithVLBelow1000MeetingRequirement = IndexPersonDao.doTheVCAsMeetBenchmarkTwo(householdId);
                     Boolean checkForCaregiverVL = HouseholdServiceReportDao.checkForHouseholdViralLoad(householdId);
-
-                    if(hasPositiveVCA.equals(true)){
-                        suppressed.put("hidden", false);
-                        toast_applicable.put("type", "hidden");
-
-                            if (checkIfVcasWithVLBelow1000MeetingRequirement.equals(true)){
-                                suppressed.put(JsonFormUtils.VALUE, "yes");
-                            } else {
-                                suppressed.put(JsonFormUtils.VALUE, "no");
-                            }
-
-                    } else {
-                        suppressed.put(JsonFormUtils.VALUE, "N/A");
-                    }
-
-                    if( isCaregiverPositive.equals(true)){
-                        if (checkForCaregiverVL.equals(true)) {
-                            suppressed_caregiver.put(JsonFormUtils.VALUE, "yes");
-                        } else {
-                            suppressed_caregiver.put(JsonFormUtils.VALUE, "no");
-                        }
-                    } else {
-                        suppressed_caregiver.put(JsonFormUtils.VALUE, "N/A");
-                    }
-
+//
+//                    if(hasPositiveVCA.equals(true)){
+//                        suppressed.put("hidden", false);
+//                        toast_applicable.put("type", "hidden");
+//
+//                            if (checkIfVcasWithVLBelow1000MeetingRequirement.equals(true)){
+//                                suppressed.put(JsonFormUtils.VALUE, "yes");
+//                            } else {
+//                                suppressed.put(JsonFormUtils.VALUE, "no");
+//                            }
+//
+//                    } else {
+//                        suppressed.put(JsonFormUtils.VALUE, "N/A");
+//                    }
+//
+//                    if( isCaregiverPositive.equals(true)){
+//                        if (checkForCaregiverVL.equals(true)) {
+//                            suppressed_caregiver.put(JsonFormUtils.VALUE, "yes");
+//                        } else {
+//                            suppressed_caregiver.put(JsonFormUtils.VALUE, "no");
+//                        }
+//                    } else {
+//                        suppressed_caregiver.put(JsonFormUtils.VALUE, "N/A");
+//                    }
+//
 
 
 
@@ -607,42 +608,42 @@ public class HouseholdDetails extends AppCompatActivity {
                     Boolean hasVCAInAgeRange = GradDao.hasVCAInAgeRange(householdId);
                     JSONObject prevention = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
 
-                        if(hasVCAInAgeRange.equals(true)) {
-                            if(isEveryVCAKnowledgeableAboutHIVPrevention.equals(false)) {
-                                prevention.put(JsonFormUtils.VALUE, "no");
-                            } else {
-                                prevention.put(JsonFormUtils.VALUE, "yes");
-                            }
-                        }
-
-                    else {
-                        toast_reminder_benchmark_3.put("type", "toaster_notes");
-                        toast_reminder_benchmark_3.put("text", cname.getText().toString()+" doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention");
-                        prevention.put(JsonFormUtils.VALUE, "N/A");
-
-                    }
+//                        if(hasVCAInAgeRange.equals(true)) {
+//                            if(isEveryVCAKnowledgeableAboutHIVPrevention.equals(false)) {
+//                                prevention.put(JsonFormUtils.VALUE, "no");
+//                            } else {
+//                                prevention.put(JsonFormUtils.VALUE, "yes");
+//                            }
+//                        }
+//
+//                    else {
+//                        toast_reminder_benchmark_3.put("type", "toaster_notes");
+//                        toast_reminder_benchmark_3.put("text", cname.getText().toString()+" doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention");
+//                        prevention.put(JsonFormUtils.VALUE, "N/A");
+//
+//                    }
 
                     //Benchmark **** 4 **** logic
 
                     Boolean hasAtLeastOneVCAUnderFiveYearsOld = IndexPersonDao.hasAtLeastOneVCAUnderFiveYearsOld(householdId);
                     JSONObject malnutrition = getFieldJSONObject(fields(indexRegisterForm, "step5"), "undernourished");
                     JSONObject underFiveToast = getFieldJSONObject(fields(indexRegisterForm, "step5"), "toaster_underFive");
-                    if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)){
-                        malnutrition.put(JsonFormUtils.READ_ONLY, false);
-                        JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
-                        for(int i = 0; i < options.length(); i++){
-                            JSONObject option = options.getJSONObject(i);
-                            if(option.getString("key").equals("N/A")){
-                                options.remove(i);
-                                break;
-                            }
-                        }
-                    }else {
-                       malnutrition.put(JsonFormUtils.READ_ONLY, true);
-                       malnutrition.put(JsonFormUtils.VALUE,"N/A");
-                       underFiveToast.put("type", "toaster_notes");
-                       underFiveToast.put("text", cname.getText().toString()+" doesnt any adolescents aged 5 and below who need to be assessed for undernourishment");
-                   }
+//                    if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)){
+//                        malnutrition.put(JsonFormUtils.READ_ONLY, false);
+//                        JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
+//                        for(int i = 0; i < options.length(); i++){
+//                            JSONObject option = options.getJSONObject(i);
+//                            if(option.getString("key").equals("N/A")){
+//                                options.remove(i);
+//                                break;
+//                            }
+//                        }
+//                    }else {
+//                       malnutrition.put(JsonFormUtils.READ_ONLY, true);
+//                       malnutrition.put(JsonFormUtils.VALUE,"N/A");
+//                       underFiveToast.put("type", "toaster_notes");
+//                       underFiveToast.put("text", cname.getText().toString()+" doesnt any adolescents aged 5 and below who need to be assessed for undernourishment");
+//                   }
 
 
                     startFormActivity(indexRegisterForm);
@@ -693,6 +694,13 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
                     indexRegisterForm.put("entity_id", this.house.getBid());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
+
+                    JSONObject recentLocation = getFieldJSONObject(fields(indexRegisterForm, "step2"), "recent_location");
+
+
+//                    recentLocation.put("text",formatGpsCoordinates(house.getHousehold_location() != null ? house.getHousehold_location() : ""));
+//                    recentLocation.put("text","Latitude: -15.378761 \nLongitude: 28.320772 1249.0 \nAccuracy: 7.504");
+
 
 
                     JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step2"), "phone");
@@ -1760,6 +1768,7 @@ public class HouseholdDetails extends AppCompatActivity {
                            for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
                            {
                                Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+
                                changeHouseholdStatus(householdToDelete);
                            }
                        }
@@ -2010,6 +2019,25 @@ public class HouseholdDetails extends AppCompatActivity {
         //Setting the title manually
         alert.setTitle("VCA Screening");
         alert.show();
+    }
+    public String formatGpsCoordinates(String input) {
+
+        String pattern = "(-?\\d+\\.\\d+)\\s+<tel:(\\d*)\\|(-?\\d+\\.\\d+)\\s+(\\d+)>\\.0\\s+(\\d+\\.\\d+)";
+
+        Pattern r = Pattern.compile(pattern);
+
+        Matcher m = r.matcher(input);
+
+        if (m.find()) {
+            String latitude = m.group(1);
+            String longitude = m.group(3) + " " + m.group(4);
+            String accuracy = m.group(5);
+
+            // Return formatted string
+            return "Latitude: " + latitude + " \nLongitude: " + longitude + ".0 \nAccuracy: " + accuracy;
+        } else {
+            return "Location Not Set";
+        }
     }
 
     @Override

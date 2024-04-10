@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     @Override
     public ChildrenAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_child, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.household_members, parent, false);
 
         ChildrenAdapter.ViewHolder viewHolder = new ChildrenAdapter.ViewHolder(v);
 
@@ -307,6 +308,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         });
 
+        holder.genderIcon.setImageResource((child.getGender() != null && child.getGender().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+
+
     }
 
 
@@ -462,6 +466,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         RelativeLayout lview;
         Button muacButton;
         ImageButton gradBtn;
+        ImageView genderIcon;
 
         public ViewHolder(View itemView) {
 
@@ -475,6 +480,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             muacButton = itemView.findViewById(R.id.muac);
             gradBtn = itemView.findViewById(R.id.grad_id);
             is_index = itemView.findViewById(R.id.index_icon);
+            genderIcon = itemView.findViewById(R.id.gender_icon);
 
         }
 
