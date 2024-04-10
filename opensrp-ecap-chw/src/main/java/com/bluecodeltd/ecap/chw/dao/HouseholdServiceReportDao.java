@@ -71,6 +71,7 @@ public class HouseholdServiceReportDao extends AbstractDao {
             HouseholdServiceReportModel record = new HouseholdServiceReportModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setServices(getCursorValue(c, "services"));
+            record.setHh_service_location(getCursorValue(c, "hh_service_location"));
             record.setServices_household(getCursorValue(c, "services_household"));
             record.setServices_caregiver(getCursorValue(c, "services_caregiver"));
             record.setHealth_services(getCursorValue(c, "health_services"));

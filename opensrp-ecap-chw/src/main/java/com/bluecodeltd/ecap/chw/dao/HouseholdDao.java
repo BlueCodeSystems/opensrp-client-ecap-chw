@@ -485,6 +485,7 @@ public class HouseholdDao extends AbstractDao {
             record.setNew_caregiver_hiv_status(getCursorValue(c, "new_caregiver_hiv_status"));
             record.setNew_caregiver_phone(getCursorValue(c, "new_caregiver_phone"));
             record.setSub_population(getCursorValue(c, "sub_population"));
+            record.setHousehold_location(getCursorValue(c,"household_location"));
 
 
             return record;

@@ -53,6 +53,7 @@ public class ReferralDao extends AbstractDao {
 
             ReferralModel record = new ReferralModel();
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setReferral_location(getCursorValue(c, "referral_location"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
