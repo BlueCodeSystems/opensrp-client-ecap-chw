@@ -1,14 +1,9 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
-import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.family.util.JsonFormUtils.fields;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.getFieldJSONObject;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,6 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -31,7 +29,6 @@ import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.material.appbar.AppBarLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.utils.FormUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -150,9 +147,12 @@ public class SignatureActivity extends AppCompatActivity {
 
                     switch (encounterType) {
                         case "Household Screening":
-                            if(!householdId.equals("")) {
-                                goToHouseholdProfile(householdId);
-                            }
+//                            if(!householdId.equals("")) {
+//                                goToHouseholdProfile(householdId);
+//                            }
+                          Intent refreshActivity = new Intent(SignatureActivity.this,HouseholdIndexActivity.class);
+                          startActivity(refreshActivity);
+                          finish();
                             break;
 
                         case  "VCA Service Report":
