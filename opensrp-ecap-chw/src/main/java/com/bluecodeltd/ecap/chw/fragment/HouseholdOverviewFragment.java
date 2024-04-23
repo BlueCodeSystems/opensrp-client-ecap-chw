@@ -28,12 +28,14 @@ import com.rey.material.widget.Button;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtGpsLocation,txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
     LinearLayout linearLayout, muacView;
     Button screenBtn;
     ImageButton arrowButton;
@@ -46,6 +48,7 @@ public class HouseholdOverviewFragment extends Fragment {
     private TextView txtFemalesLessThanFive;
     RelativeLayout relativeLayout;
     LinearLayout layout;
+
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Nullable
@@ -92,6 +95,8 @@ public class HouseholdOverviewFragment extends Fragment {
 
 
         fab = getActivity().findViewById(R.id.fabx);
+        txtGpsLocation = view.findViewById(R.id.gps_location);
+
 
         setViews();
 
@@ -304,6 +309,8 @@ public class HouseholdOverviewFragment extends Fragment {
 
 
         }
+
+        txtGpsLocation.setText(house.getHousehold_location() != null ? formatGpsCoordinates(house.getHousehold_location()) : "Not Set");
         if(is_screened != null && is_screened.equals("true")){
 
             screenBtn.setVisibility(View.GONE);
@@ -318,6 +325,22 @@ public class HouseholdOverviewFragment extends Fragment {
             housetitle.setVisibility(View.GONE);
             linearLayout.setVisibility(View.GONE);
 
+        }
+    }
+
+    public static String formatGpsCoordinates(String location) {
+
+        String pattern = "(-?\\d+\\.\\d+)\\s+(-?\\d+\\.\\d+)\\s+(\\d+\\.\\d+)\\s+(\\d+\\.\\d+)";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(location);
+        if (m.find()) {
+            String latitude = m.group(1);
+            String longitude = m.group(2);
+            String altitude = m.group(3);
+            String accuracy = m.group(4);
+            return "Latitude: " + latitude + "\nLongitude: " + longitude + "\nAltitude: " + altitude + "\nAccuracy: " + accuracy;
+        } else {
+            return "Invalid input format";
         }
     }
 }

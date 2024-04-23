@@ -83,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
     ProgressBar loadingDataProgressBar;
     Switch  facilityInformationSwitch;
     String phone = "";
-    private final int FIVE_SECONDS = 2000;
+    private final int FORTY_FIVE_MINUTES = 2700000;
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
@@ -473,10 +473,10 @@ public class DashboardActivity extends AppCompatActivity {
     public void refreshData() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
-                handler.postDelayed(runnable, FIVE_SECONDS);
+                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
                 loadData();
             }
-        }, FIVE_SECONDS);
+        }, FORTY_FIVE_MINUTES);
     }
     @Override
     protected void onPause() {
