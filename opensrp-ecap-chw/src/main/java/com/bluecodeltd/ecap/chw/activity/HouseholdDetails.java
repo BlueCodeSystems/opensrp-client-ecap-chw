@@ -80,7 +80,6 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
@@ -276,8 +275,12 @@ public class HouseholdDetails extends AppCompatActivity {
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
     }
-    private String checkAndConvertDateFormat(String date){
-        if ( date != null && date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+    private String checkAndConvertDateFormat(String date) {
+        if (date == null || date.isEmpty()) {
+            return "Date is null or empty";
+        }
+
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
             return date;
         } else {
             DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
@@ -291,6 +294,7 @@ public class HouseholdDetails extends AppCompatActivity {
             }
         }
     }
+
 
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {

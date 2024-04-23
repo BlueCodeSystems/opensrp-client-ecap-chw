@@ -40,7 +40,7 @@ public class ChwRepositoryFlv {
         while (upgradeTo <= newVersion) {
             switch (upgradeTo) {
                 case 2:
-                    upgradeToVersion2(context, db);
+                    upgradeToVersion2(db);
                     break;
                 case 3:
                     upgradeToVersion3(db);
@@ -49,7 +49,7 @@ public class ChwRepositoryFlv {
                     upgradeToVersion4(db);
                     break;
                 case 5:
-                    upgradeToVersion5(context,db);
+                    upgradeToVersion5(db);
                     break;
                 case 6:
                     upgradeToVersion6(db);
@@ -62,7 +62,7 @@ public class ChwRepositoryFlv {
     }
 
 
-    private static void upgradeToVersion2(Context context, SQLiteDatabase db) {
+    private static void upgradeToVersion2(SQLiteDatabase db) {
         try {
             db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_EVENT_ID_COL);
             db.execSQL(VaccineRepository.EVENT_ID_INDEX);
@@ -168,7 +168,7 @@ public class ChwRepositoryFlv {
         }
     }
 
-    private static void upgradeToVersion5(Context context,SQLiteDatabase db) {
+    private static void upgradeToVersion5(SQLiteDatabase db) {
         try {
             db.execSQL("ALTER TABLE ec_household ADD COLUMN last_interacted_with TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN household_location");

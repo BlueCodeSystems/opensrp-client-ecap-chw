@@ -179,7 +179,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
     private void startHome(boolean remote) {
         Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
-                ChildRegisterActivity.class : DashboardActivity.class);
+                ChildRegisterActivity.class : IndexRegisterActivity.class);
         intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);
         intent.putExtra("username", txtUsername.getText().toString().trim());
         intent.putExtra("password", txtPassword.getText().toString().trim());
