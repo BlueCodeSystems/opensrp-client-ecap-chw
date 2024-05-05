@@ -736,6 +736,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 startActivity(openSignatureIntent);
             } else if(encounterType.equals("Household Visitation Form 0-20 years")){
                 Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("Child",childId);
                 openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
                 startActivity(openSignatureIntent);
             } else
@@ -794,7 +795,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     Timber.e(e);
                 }
 
-        }
+            }
         }
 
     }
@@ -1501,8 +1502,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+        Intent returnToHouseholdIndexActivity = new Intent(IndexDetailsActivity.this, IndexRegisterActivity.class);
+        startActivity(returnToHouseholdIndexActivity);
+        finish();
 
     }
  public void createDialogForScreening(String entryPoint, String message){

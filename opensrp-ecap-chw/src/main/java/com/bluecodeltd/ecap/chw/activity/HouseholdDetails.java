@@ -1042,9 +1042,10 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
-            if(EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
+            if(EncounterType.equals("Household Screening") || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
                 Intent openSignatureIntent = new Intent(this, SignatureActivity.class);
                 openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                openSignatureIntent.putExtra("householdId",householdId);
                 startActivity(openSignatureIntent);
             }
             else
