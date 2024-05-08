@@ -164,12 +164,12 @@ public class SignatureActivity extends AppCompatActivity {
 
                         case  "Household Service Report":
                             Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                            finish();
+
                             Intent openHouseholdIntent = new Intent(SignatureActivity.this,HouseholdServiceActivity.class);
                             openHouseholdIntent.putExtra("cname",intent_caregivername);
                             openHouseholdIntent.putExtra("householdId",householdId);
-
                             startActivity(openHouseholdIntent);
+                            finish();
 
 
                             break;
@@ -182,8 +182,8 @@ public class SignatureActivity extends AppCompatActivity {
                             openVcaIntent.putExtra("vcaname",c_name);
                             openVcaIntent.putExtra("hivtstatus",hivstatus);
                             openVcaIntent.putExtra("hh_id",household_id);
-                            finish();
                             startActivity(openVcaIntent);
+                            finish();
 
 
 
@@ -192,8 +192,8 @@ public class SignatureActivity extends AppCompatActivity {
                             Toasty.success(getApplicationContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
                             Intent intent = new Intent(SignatureActivity.this,IndexDetailsActivity.class);
                             intent.putExtra("Child",childId);
-                            finish();
                             startActivity(intent);
+                            finish();
 
                             break;
 
@@ -201,8 +201,8 @@ public class SignatureActivity extends AppCompatActivity {
                             Toasty.success(getApplicationContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
                             Intent openHouseholdProfile = new Intent(SignatureActivity.this,HouseholdDetails.class);
                             openHouseholdProfile.putExtra("householdId",householdId);
-                            finish();
                             startActivity(openHouseholdProfile);
+                            finish();
                             break;
 
                         case "Hiv Assessment For Caregiver":
