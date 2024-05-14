@@ -83,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
     ProgressBar loadingDataProgressBar;
     Switch  facilityInformationSwitch;
     String phone = "";
-    private final int FORTY_FIVE_MINUTES = 2700000;
+    private final int FORTY_FIVE_MINUTES = 3000;
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;

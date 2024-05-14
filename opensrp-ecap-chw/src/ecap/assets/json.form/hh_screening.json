@@ -243,56 +243,85 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": true,
         "label": "Sub Population :",
         "options": [
           {
             "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
+            "text": "C/ALHIV",
             "value": "false"
           },
           {
             "key": "subpop2",
-            "text": "HIV Exposed Infants (HEIs)",
-            "value": "false"
-          },
-          {
-            "key": "subpop3",
-            "text": "Children of Women Living with HIV",
-            "value": "false"
-          },
-          {
-            "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
-          },
-          {
-            "key": "subpop5",
-            "text": "Survivors of Sexual Violence",
+            "text": "HEI",
             "value": "false"
           },
           {
             "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
+            "text": "CFSW",
             "value": "false"
           },
           {
-            "key": "Siblings of the Index/Other family members",
-            "text": "Siblings of the Index/Other family members"
-
+            "key": "subpop3",
+            "text": "CWLHIV",
+            "value": "false"
+          },
+          {
+            "key": "subpop5",
+            "text": "SSGBV",
+            "value": "false"
+          },
+          {
+            "key": "subpop4",
+            "text": "At risk adolescent girls and young women (AGYW)",
+            "value": "false"
+          },
+          {
+            "key": "ABYM",
+            "text": "At risk adolescent boys and young men (ABYM)",
+            "value": "false"
+          },
+          {
+            "key": "Child/Adolescent in Child Headed Household",
+            "text": "Child/Adolescent in Child Headed Household",
+            "value": "false"
           },
           {
             "key": "PBFW",
-            "text": "PBFW"
+            "text": "Child/Adolescent of HIV+ pregnant OR breastfeeding woman (PBFW)"
 
           },
           {
-            "key": "At Risk Adolescent Boys and Young Men (ABYM)",
-            "text": "At Risk Adolescent Boys and Young Men (ABYM)"
+            "key": "Child/Adolescent in Chronically ill Headed Household",
+            "text": "Child/Adolescent in Chronically ill Headed Household",
+            "value": "false"
+          },
+          {
+            "key": "Child/Adolescent in Female Headed Household",
+            "text": "Child/Adolescent in Female Headed Household"
+          },
 
+          {
+            "key": "Child/Adolescent Living with Disability",
+            "text": "Child/Adolescent Living with Disability"
+          },
+          {
+            "key": "Child/Adolescent in Aged Headed Household (65+)",
+            "text": "Child/Adolescent in Aged Headed Household (65+)"
+          },
+          {
+            "key": "Malnourished Under 5 Children",
+            "text": "Malnourished Under 5 Children"
+          },
+          {
+            "key": "Sibling to index VCA/OTHER family member",
+            "text": "Sibling to index VCA/OTHER family member"
+          },
+          {
+            "key": "Primary Caregiver",
+            "text": "Primary Caregiver"
           }
         ],
         "v_required": {
