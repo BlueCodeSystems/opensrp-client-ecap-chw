@@ -295,7 +295,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '6'
+            buildConfigField "int", "DATABASE_VERSION", '7'
         }
     }
     buildFeatures {

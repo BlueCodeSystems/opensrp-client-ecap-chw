@@ -54,6 +54,9 @@ public class ChwRepositoryFlv {
                 case 6:
                     upgradeToVersion6(db);
                     break;
+                case 7:
+                    upgradeToVersion7(db);
+                    break;
                 default:
                     break;
             }
@@ -487,6 +490,22 @@ public class ChwRepositoryFlv {
             Timber.e(e, "upgradeToVersion6 ");
         }
     }
+    private static void upgradeToVersion7(SQLiteDatabase db) {
+        try {
+
+            db.execSQL("ALTER TABLE ec_vca_service_report ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household_service_report ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household_visitation_for_caregiver ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household_visitation_for_vca_0_20_years ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_referral ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household ADD COLUMN signature TEXT");
+
+
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion6 ");
+        }
+    }
 
     private static void clearAppData(Context context) {
         // Clear cache
@@ -538,15 +557,7 @@ public class ChwRepositoryFlv {
         }
     }
 
-    private static void upgradeToVersion7(SQLiteDatabase db) {
-        try {
-            for (String query : RepositoryUtilsFlv.UPGRADE_V8) {
-                db.execSQL(query);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "upgradeToVersion7 ");
-        }
-    }
+
 
     private static void upgradeToVersion8(SQLiteDatabase db) {
         try {

@@ -163,7 +163,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public void goToHome(boolean remote) {
         if (remote) {
-            Utils.startAsyncTask(new SaveTeamLocationsTask(), null);
+            Utils.startAsyncTask(new SaveTeamLocationsTask(), (Object) null);
         }
 
         if (hasPinLogin()) {
@@ -201,7 +201,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             startActivity(intent);
             finish();
         } else {
-          // Changed something here
+            // Changed something here
             Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
                     ChildRegisterActivity.class : IndexRegisterActivity.class);
             intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);
