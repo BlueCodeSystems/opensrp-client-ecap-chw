@@ -87,63 +87,16 @@
         "read_only": "true",
         "edit_type": "name"
       },
+
       {
-        "key": "facility_within_ward_question",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "facility_within_ward_question",
-        "type": "native_radio",
-        "label": "Is the facility within the ward?",
-        "read_only": "true",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Is the facility within the ward"
-        }
-      },
-      {
-        "key": "facility_not_within_ward",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "facility_not_within_ward",
-        "type": "edit_text",
-        "hint": "Facility",
-        "read_only": "true",
-        "v_required": {
-          "value": true,
-          "err":  "Facility name is required"
-        },
-        "relevance": {
-          "step1:facility_within_ward_question": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "health_facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health Facility",
         "read_only": "true",
-        "edit_type": "name",
-        "relevance": {
-          "step1:facility_within_ward_question": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
+        "edit_type": "name"
       },
       {
         "key": "partner",

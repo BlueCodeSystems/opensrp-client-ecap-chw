@@ -290,78 +290,47 @@
         "options": [
           {
             "key": "subpop1",
-            "text": "C/ALHIV",
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
             "value": "false"
           },
           {
             "key": "subpop2",
-            "text": "HEI",
-            "value": "false"
-          },
-          {
-            "key": "subpop",
-            "text": "CFSW",
+            "text": "HIV Exposed Infants (HEIs)",
             "value": "false"
           },
           {
             "key": "subpop3",
-            "text": "CWLHIV",
-            "value": "false"
-          },
-          {
-            "key": "subpop5",
-            "text": "SSGBV",
+            "text": "Children of Women Living with HIV",
             "value": "false"
           },
           {
             "key": "subpop4",
-            "text": "At risk adolescent girls and young women (AGYW)",
+            "text": "At Risk Adolescent Girls and Young Women (AGYW)",
             "value": "false"
           },
           {
-            "key": "ABYM",
-            "text": "At risk adolescent boys and young men (ABYM)",
+            "key": "subpop5",
+            "text": "Survivors of Sexual Violence",
             "value": "false"
           },
           {
-            "key": "Child/Adolescent in Child Headed Household",
-            "text": "Child/Adolescent in Child Headed Household",
+            "key": "subpop",
+            "text": "Children of Female Sex Workers (FSWs)",
             "value": "false"
+          },
+          {
+            "key": "Siblings of the Index and other family members",
+            "text": "Siblings of the Index/Other family members"
+
           },
           {
             "key": "PBFW",
-            "text": "Child/Adolescent of HIV+ pregnant OR breastfeeding woman (PBFW)"
+            "text": "PBFW"
 
           },
           {
-            "key": "Child/Adolescent in Chronically ill Headed Household",
-            "text": "Child/Adolescent in Chronically ill Headed Household",
-            "value": "false"
-          },
-          {
-            "key": "Child/Adolescent in Female Headed Household",
-            "text": "Child/Adolescent in Female Headed Household"
-          },
-
-          {
-            "key": "Child/Adolescent Living with Disability",
-            "text": "Child/Adolescent Living with Disability"
-          },
-          {
-            "key": "Child/Adolescent in Aged Headed Household (65+)",
-            "text": "Child/Adolescent in Aged Headed Household (65+)"
-          },
-          {
-            "key": "Malnourished Under 5 Children",
-            "text": "Malnourished Under 5 Children"
-          },
-          {
-            "key": "Sibling to index VCA/OTHER family member",
-            "text": "Sibling to index VCA/OTHER family member"
-          },
-          {
-            "key": "Primary Caregiver",
-            "text": "Primary Caregiver"
+            "key": "ABYM",
+            "text": "At risk adolescent boys and young men (ABYM)"
           }
         ],
         "v_required": {
