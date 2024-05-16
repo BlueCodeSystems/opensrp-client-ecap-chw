@@ -834,6 +834,13 @@
           }
         },
         {
+          "column_name": "new_caregiver_death_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.new_caregiver_death_date"
+          }
+        },
+        {
           "column_name": "signature",
           "type": "Client",
           "json_mapping": {

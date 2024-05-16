@@ -4,6 +4,7 @@ public class Household {
 
 
     private String unique_id;
+    private String new_caregiver_death_date;
     private String caseworker_name;
     //household_case_status
     private String household_case_status;
@@ -106,6 +107,15 @@ public class Household {
     private  String relationship_other;
     private String household_location;
 
+
+
+    public String getNew_caregiver_death_date() {
+        return new_caregiver_death_date;
+    }
+
+    public void setNew_caregiver_death_date(String new_caregiver_death_date) {
+        this.new_caregiver_death_date = new_caregiver_death_date;
+    }
 
     public String getRelationship_other() {
         return relationship_other;

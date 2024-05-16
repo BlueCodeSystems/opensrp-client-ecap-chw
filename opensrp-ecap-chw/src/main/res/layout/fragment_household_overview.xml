@@ -295,7 +295,6 @@
                 android:paddingLeft="@dimen/contact_drawable_padding"
                 android:paddingTop="@dimen/contact_small_padding"
                 android:paddingBottom="@dimen/contact_small_padding"
-                android:src="@drawable/ic_person_black_24dp"
             />
         </LinearLayout>
 
