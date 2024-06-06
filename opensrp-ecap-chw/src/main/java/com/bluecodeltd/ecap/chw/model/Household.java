@@ -107,7 +107,25 @@ public class Household {
     private  String relationship_other;
     private String household_location;
 
+    private String household_receiving_caseworker;
 
+    private String district_moved_to;
+
+    public String getHousehold_receiving_caseworker() {
+        return household_receiving_caseworker;
+    }
+
+    public void setHousehold_receiving_caseworker(String household_receiving_caseworker) {
+        this.household_receiving_caseworker = household_receiving_caseworker;
+    }
+
+    public String getDistrict_moved_to() {
+        return district_moved_to;
+    }
+
+    public void setDistrict_moved_to(String district_moved_to) {
+        this.district_moved_to = district_moved_to;
+    }
 
     public String getNew_caregiver_death_date() {
         return new_caregiver_death_date;

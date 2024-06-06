@@ -1490,7 +1490,23 @@
           "json_mapping": {
             "field": "attributes.sub_population"
           }
+        },
+        {
+          "column_name": "household_receiving_caseworker",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_receiving_caseworker"
+          }
+        },
+
+        {
+          "column_name": "district_moved_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district_moved_to"
+          }
         }
+
 
 
 
@@ -2551,6 +2567,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.abym_economic_strengthening"
+          }
+        },
+        {
+          "column_name": "vca_receiving_caseworker",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_receiving_caseworker"
+          }
+        },
+        {
+          "column_name": "district_moved_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district_moved_to"
           }
         }
       ]
