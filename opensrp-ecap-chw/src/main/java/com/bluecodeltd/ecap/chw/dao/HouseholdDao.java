@@ -488,7 +488,8 @@ public class HouseholdDao extends AbstractDao {
             record.setSub_population(getCursorValue(c, "sub_population"));
             record.setHousehold_location(getCursorValue(c,"household_location"));
             record.setNew_caregiver_death_date(getCursorValue(c,"new_caregiver_death_date"));
-
+            record.setHousehold_receiving_caseworker(getCursorValue(c, "household_receiving_caseworker"));
+            record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
             return record;
         };
