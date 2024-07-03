@@ -21,6 +21,18 @@ public class GraduationDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static GraduationModel getGraduationStatus (String hhID) {
+
+        String sql = "SELECT graduation_status FROM ec_graduation WHERE household_id = '" + hhID + "' ORDER BY date_assessment DESC LIMIT 1";
+
+        List<GraduationModel> values = AbstractDao.readData(sql, getGraduationModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+        return values.get(0);
+    }
     public static int countVisits(String householdID){
 
         String sql = "SELECT COUNT(*) AS visitCount FROM ec_graduation WHERE household_id = '" + householdID + "'";
