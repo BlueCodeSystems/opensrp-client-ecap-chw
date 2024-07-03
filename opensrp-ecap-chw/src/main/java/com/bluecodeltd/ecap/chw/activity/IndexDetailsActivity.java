@@ -44,6 +44,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -62,6 +63,7 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
@@ -1261,6 +1263,51 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         switch (formName) {
 
             case "case_status":
+                if(indexVCA.getIs_on_hiv_treatment() == null){
+                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
+                    indexVCAMap.remove("date_started_art");
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                }
+
+                //Populate Caseworker Name
+                populateCaseworkerPhoneAndName(formToBeOpened);
+
+                if(indexVCA.getIndex_check_box() != null && !indexVCA.getIndex_check_box().equals("1")){
+                    formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
+                    formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
+                }
+                GraduationModel graduationModel = GraduationDao.getGraduationStatus(child.getHousehold_id());
+                if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
+
+                JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
+                    if (graduationStatus != null) {
+                        graduationStatus.put("type", "toaster_notes");
+                        graduationStatus.put("text", indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " household needs to meet all eight graduation benchmarks in order to graduate");
+                    }
+
+                    JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "reason");
+                    if (reasonField != null) {
+                        JSONArray optionsArray = reasonField.getJSONArray("options");
+                        if (optionsArray != null) {
+                            for (int i = 0; i < optionsArray.length(); i++) {
+                                JSONObject option = optionsArray.getJSONObject(i);
+                                if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
+                                    optionsArray.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+                formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+
+                break;
+
             case "vca_screening":
                 if(indexVCA.getIs_on_hiv_treatment() == null){
                     @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
