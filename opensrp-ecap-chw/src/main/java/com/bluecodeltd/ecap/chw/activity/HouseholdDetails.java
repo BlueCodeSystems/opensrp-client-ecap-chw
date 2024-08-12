@@ -1988,6 +1988,8 @@ public class HouseholdDetails extends AppCompatActivity {
                             break;
                         }
                     }
+
+
                     JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
                     info.put("type", "toaster_notes");
                     info.put("text","If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
@@ -1996,6 +1998,31 @@ public class HouseholdDetails extends AppCompatActivity {
                     JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
                     info.put("type", "hidden");
                 }
+
+                GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
+                if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
+
+                    JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
+                    if (graduationStatus != null) {
+                        graduationStatus.put("type", "toaster_notes");
+                        graduationStatus.put("text", house.getCaregiver_name() + "' "  + " household needs to meet all eight graduation benchmarks in order to graduate");
+                    }
+
+                    JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "de_registration_reason");
+                    if (reasonField != null) {
+                        JSONArray optionsArray = reasonField.getJSONArray("options");
+                        if (optionsArray != null) {
+                            for (int i = 0; i < optionsArray.length(); i++) {
+                                JSONObject option = optionsArray.getJSONObject(i);
+                                if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
+                                    optionsArray.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
 
                 break;
             case "update_caregiver_details":
