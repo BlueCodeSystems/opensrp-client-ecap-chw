@@ -309,6 +309,7 @@ dependencies {
     implementation "io.ona.rdt-capture:lib:2.1.0"
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 
   //  implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
          implementation(project(":opensrp-ecap-chw-core")) {

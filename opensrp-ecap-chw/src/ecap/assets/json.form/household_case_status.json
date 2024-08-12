@@ -153,6 +153,25 @@
         }
       },
       {
+        "key": "graduation_benchmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "graduation_benchmark",
+        "type": "hidden",
+        "text": "All graduation benmark need to be met",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:household_case_status": {
+            "type": "string",
+            "ex": "equalTo(., \"0\")"
+          }
+        }
+      },
+      {
         "key": "exited_graduation_reason",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

@@ -2866,10 +2866,9 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step4:vl_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
