@@ -568,6 +568,11 @@ public class ChwRepositoryFlv {
             db.execSQL("ALTER TABLE ec_household ADD COLUMN household_receiving_caseworker TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN district_moved_to TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN vca_receiving_caseworker TEXT");
+            db.execSQL("ALTER TABLE ec_pmtct_mother ADD COLUMN first_name TEXT");
+            db.execSQL("ALTER TABLE ec_pmtct_mother ADD COLUMN last_name TEXT");
+            db.execSQL("ALTER TABLE ec_pmtct_mother ADD COLUMN sm_number TEXT");
+
+
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion8 ");
         }
