@@ -81,134 +81,6 @@
         "openmrs_entity_id": "unique_id",
         "type": "hidden"
       },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "DBS AT BIRTH"
-      },
-      {
-        "key": "dbs_at_birth_due_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "dbs_at_birth_due_date",
-        "type": "date_picker",
-        "hint": "DBS at Birth (Due Date)",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date"
-        }
-      },
-      {
-        "key": "dbs_at_birth_actual_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "dbs_at_birth_actual_date",
-        "type": "date_picker",
-        "hint": "DBS at Birth (Actual Date)",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date"
-        }
-      },
-      {
-        "key": "test_result_at_birth",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "test_result_at_birth",
-        "type": "edit_text",
-        "hint": "Test result at birth ",
-        "edit_type": "number"
-      },
-      {
-        "key": "date_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_tested",
-        "type": "date_picker",
-        "hint": "Date tested",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date"
-        }
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "IPV  AT BIRTH"
-      },
-
-      {
-        "key": "nvp_prophylaxis_for_infant",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "nvp_prophylaxis_for_infant",
-        "type": "native_radio",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "label": "NVP Prophylaxis for Infant",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ]
-      },
-      {
-        "key": "nvp_date_given",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "nvp_date_given",
-        "type": "date_picker",
-        "hint": "NVP Date Given",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date"
-        }
-      },
 
       {
         "key": "spacer",
@@ -228,12 +100,12 @@
         "text": "Pediatic Care Follow Up (Routine Infant Testing and Follow Up Visit)"
       },
       {
-        "key": "child_monitoring_visit",
+        "key": "pediatic_care_follow_up",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_monitoring_visit",
+        "openmrs_entity_id": "pediatic_care_follow_up",
         "type": "native_radio",
-        "label": "Child monitoring visit",
+        "label": "Pediatic Care Follow Up",
         "options": [
           {
             "key": "6 weeks",
@@ -302,6 +174,10 @@
           {
             "key": "18 months",
             "text": "18 months"
+          },
+          {
+            "key": "24 months",
+            "text": "24 months"
           }
         ],
         "v_required": {
@@ -310,12 +186,12 @@
         }
       },
       {
-        "key": "_6_weeks_dbs_date",
+        "key": "date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "_6_weeks_dbs_date",
+        "openmrs_entity_id": "date",
         "type": "date_picker",
-        "hint": "Date  (6 weeks) ",
+        "hint": "Date",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
@@ -323,64 +199,59 @@
         "v_required": {
           "value": true,
           "err": "Please enter the date"
-        },
-        "relevance": {
-          "step1:child_monitoring_visit": {
-            "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
-          }
         }
       },
 
       {
-        "key": "_6_weeks_dbs_hiv_test_p_n",
+        "key": "hiv_test_p_n",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "_6_weeks_dbs_hiv_test_p_n",
+        "openmrs_entity_id": "hiv_test_p_n",
         "type": "edit_text",
-        "hint": "HIV Status (P/N) (6 weeks) ",
-        "relevance": {
-          "step1:child_monitoring_visit": {
-            "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
-          }
-        }
+        "hint": "HIV Status (ND/D for <1 year and R/NR for >1 year)"
       },
       {
-        "key": "_6_weeks_dbs_ctx",
+        "key": "azt_3tc_npv",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "_6_weeks_dbs_ctx",
-        "type": "edit_text",
-        "hint": "CTX (6 weeks) ",
-        "relevance": {
-          "step1:child_monitoring_visit": {
-            "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
+        "openmrs_entity_id": "azt_3tc_npv",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "AZT+3TC+NVP at Birth",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
           }
-        }
+        ]
       },
       {
-        "key": "_6_weeks_dbs_iycf_counselling",
+        "key": "ctx",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "_6_weeks_dbs_iycf_counselling",
+        "openmrs_entity_id": "ctx",
         "type": "edit_text",
-        "hint": "IYCF Counselling (6 weeks) ",
-        "relevance": {
-          "step1:child_monitoring_visit": {
-            "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
-          }
-        }
+        "hint": "CTX"
       },
       {
-        "key": "_6_weeks_infant_feeding_options",
+        "key": "iycf_counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "iycf_counselling",
+        "type": "edit_text",
+        "hint": "IYCF Counselling"
+      },
+      {
+        "key": "infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "_6_weeks_infant_feeding_options",
         "type": "native_radio",
-        "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding) (6 weeks)",
+        "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding)",
         "options": [
           {
             "key": "Exclusive Breast Feeding",
@@ -398,48 +269,28 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
-        },
-        "relevance": {
-          "step1:child_monitoring_visit": {
-            "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
-          }
         }
       },
       {
-        "key": "_6_weeks_dbs_outcome",
+        "key": "high_risk_hei",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "_6_weeks_dbs_outcome",
+        "openmrs_entity_id": "high_risk_hei",
         "type": "native_radio",
-        "label": "Outcome (Dead, Lost to follow up,Transited out, Exit)",
+        "label": "High Risk HEI (Indicate Yes if mother's VL is >1000 and is breastfeeding copies/ml",
         "options": [
           {
-            "key": "Dead",
-            "text": "Dead"
+            "key": "yes",
+            "text": "Yes"
           },
           {
-            "key": "Lost to follow up",
-            "text": "Lost to follow up"
-          },
-          {
-            "key": "Transited out",
-            "text": "Transited out"
-          },
-          {
-            "key": "Exit",
-            "text": "Exit"
+            "key": "no",
+            "text": "No"
           }
         ],
         "v_required": {
           "value": false,
           "err": "This field is required"
-        },
-        "relevance": {
-          "step1:child_monitoring_visit": {
-            "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
-          }
         }
       },
 

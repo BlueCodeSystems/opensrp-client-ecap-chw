@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -31,7 +34,6 @@ import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.AncPmctFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
 import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
@@ -138,7 +140,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
 
         if (ptctMotherModel != null) {
-            String mothersFullName = ptctMotherModel.getMothers_full_name();
+            String mothersFullName = ptctMotherModel.getFirst_name()+" "+ptctMotherModel.getLast_name();
             if (mothersFullName != null) {
                 motherName.setText(mothersFullName);
             } else {
@@ -181,7 +183,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         setupViewPager();
-        updateAncTabTitle();
+//        updateAncTabTitle();
         updatePostnatalTitle();
         updateHeiTitle();
         updateOverviewTitle();
@@ -207,7 +209,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new PMTCTMotherOverviewFragment());
-        mPagerAdapter.addFragment(new AncPmctFragment());
+//        mPagerAdapter.addFragment(new AncPmctFragment());
         mPagerAdapter.addFragment(new PostnatalCareFragment());
         mPagerAdapter.addFragment(new PmctMotherHeiFragment());
 
@@ -216,24 +218,24 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText("OVERVIEW");
-        mTabLayout.getTabAt(1).setText("ANC");
-        mTabLayout.getTabAt(2).setText("POSTNATAL");
-        mTabLayout.getTabAt(3).setText("HEI");
+//        mTabLayout.getTabAt(1).setText("ANC");
+        mTabLayout.getTabAt(1).setText("POSTNATAL");
+        mTabLayout.getTabAt(2).setText("HEI");
 
     }
 
-    private void updateAncTabTitle() {
-        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
-        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
-        visitTabTitle.setText("ANC");
-        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
-
-
-        String countANC = PmctMotherAncDao.countMotherAnc(clientId);
-        childTabCount.setText(countANC);
-
-        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
-    }
+//    private void updateAncTabTitle() {
+//        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+//        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+//        visitTabTitle.setText("ANC");
+//        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+//
+//
+//        String countANC = PmctMotherAncDao.countMotherAnc(clientId);
+//        childTabCount.setText(countANC);
+//
+//        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+//    }
     private void updatePostnatalTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
@@ -245,7 +247,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         childTabCount.setText(countMotherPostnatal);
 
-        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
     private void updateHeiTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
@@ -258,7 +260,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         childTabCount.setText(countHie);
 
-        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
     private void updateOverviewTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
@@ -769,6 +771,40 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         return map;
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.pmtct_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+
+                break;
+            case R.id.case_status:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this, "pmtct_outcome");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                break;
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
     public static String getTodaysDateFormatted() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");

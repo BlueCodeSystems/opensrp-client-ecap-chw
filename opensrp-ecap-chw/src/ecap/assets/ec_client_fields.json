@@ -8246,6 +8246,20 @@
           }
         },
         {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
           "column_name": "nick_name",
           "type": "Client",
           "json_mapping": {
@@ -8303,10 +8317,10 @@
         },
 
         {
-          "column_name": "date_of_st_contact",
+          "column_name": "sm_number",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_st_contact"
+            "field": "attributes.sm_number"
           }
         },
 

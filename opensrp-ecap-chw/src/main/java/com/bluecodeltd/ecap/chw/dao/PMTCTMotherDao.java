@@ -115,6 +115,8 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
             record.setDate_enrolled_pmtct(getCursorValue(c, "date_enrolled_pmtct"));
             record.setMothers_full_name(getCursorValue(c, "mothers_full_name"));
+            record.setFirst_name(getCursorValue(c,"first_name"));
+            record.setLast_name(getCursorValue(c,"last_name"));
             record.setNick_name(getCursorValue(c, "nick_name"));
             record.setMothers_age(getCursorValue(c, "mothers_age"));
             record.setDate_initiated_on_art(getCursorValue(c, "date_initiated_on_art"));
