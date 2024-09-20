@@ -32,7 +32,7 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
-import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
@@ -256,7 +256,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
 
-        String countHie = PtmctMotherMonitoringDao.countMotherHei(clientId);
+        String countHie = PmtctChildDao.countMotherHei(clientId);
 
         childTabCount.setText(countHie);
 
@@ -649,7 +649,7 @@ break;
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_pmtct_mother_child");
+                                encounterType, "ec_pmtct_child");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -677,6 +677,7 @@ break;
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
             }
         } catch (JSONException e) {
         Timber.e(e);

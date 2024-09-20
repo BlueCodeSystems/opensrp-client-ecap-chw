@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 
 import java.util.HashMap;
@@ -76,10 +77,10 @@ public class UnderFiveCardFragment extends Fragment {
         // Inflate the layout for this fragment
         inflateView = inflater.inflate(R.layout.fragment_under_five_card, container, false);
 
-        HashMap<String, PtmctMotherMonitoringModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
+        HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
 
 // Initialize motherDetails as null.
-        PtmctMotherMonitoringModel motherDetails = null;
+        PmtctChildModel motherDetails = null;
 
         String uniqueId = null;
 
@@ -111,12 +112,21 @@ public class UnderFiveCardFragment extends Fragment {
         childMonitoringVisit = inflateView.findViewById(R.id.child_monitoring_visit);
         imageviewProfile = inflateView.findViewById(R.id.imageview_profile);
 
-        imageviewProfile.setImageResource((motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+        try {
+            imageviewProfile.setImageResource((motherDetails != null && motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male"))
+                    ? R.drawable.child_boy_infant
+                    : R.drawable.child_girl_infant);
+        } catch (NullPointerException e) {
+            // Handle the exception, maybe set a default image or log the error
+//            imageviewProfile.setImageResource(R.drawable.default_infant_image);
+            e.printStackTrace();
+        }
 
-        cardNumber.setText("Under 5 Card Number: " + (motherDetails.getUnder_five_clinic_card() != null ? motherDetails.getUnder_five_clinic_card() : "Not set"));
-        childBirthDate.setText("Date of Birth: " + (motherDetails.getInfants_date_of_birth() != null ? motherDetails.getInfants_date_of_birth() : "Not set"));
-        weight.setText("Weight at Birth: " + (motherDetails.getWeight_at_birth() != null ? motherDetails.getWeight_at_birth() + "kg" : "Not set"));
-        childFeedingOption.setText("Infant Feeding Option: " + (motherDetails.getInfant_feeding_options() != null ? motherDetails.getInfant_feeding_options() : "Not set"));
+
+//        cardNumber.setText("Under 5 Card Number: " + (motherDetails.getUnder_five_clinic_card() != null ? motherDetails.getUnder_five_clinic_card() : "Not set"));
+//        childBirthDate.setText("Date of Birth: " + (motherDetails.getInfants_date_of_birth() != null ? motherDetails.getInfants_date_of_birth() : "Not set"));
+//        weight.setText("Weight at Birth: " + (motherDetails.getWeight_at_birth() != null ? motherDetails.getWeight_at_birth() + "kg" : "Not set"));
+//        childFeedingOption.setText("Infant Feeding Option: " + (motherDetails.getInfant_feeding_options() != null ? motherDetails.getInfant_feeding_options() : "Not set"));
 
 
 //        childMonitoring = new PtmctMotherMonitoringModel();
