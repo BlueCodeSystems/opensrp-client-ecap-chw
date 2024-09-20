@@ -33,12 +33,16 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctMotherOutComeDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
 import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PmctMotherAncModel;
+import com.bluecodeltd.ecap.chw.model.PmctMotherOutcomeModel;
+import com.bluecodeltd.ecap.chw.model.PmtctDeliveryDetailsModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -100,6 +104,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     public PtctMotherModel ptctMotherModel;
     public PtmctMotherMonitoringModel ptmctMotherMonitoringModel;
     public PmctMotherAncModel pmctMotherAncModel;
+    public PmtctDeliveryDetailsModel pmtctDeliveryDetailsModel;
+    public PmctMotherOutcomeModel pmctMotherOutcomeModel;
     Random Number;
     int Rnumber;
     ObjectMapper householdMapper;
@@ -135,8 +141,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         ptctMotherModel = PMTCTMotherDao.getPMCTMother(clientId);
 
-//        ptmctMotherMonitoringModel = PtmctMotherMonitoringDao.getPMCTMother(clientId);
+        pmtctDeliveryDetailsModel = PmtctDeliveryDao.getPmtctDeliveryDetails(clientId);
         pmctMotherAncModel = PmctMotherAncDao.getPMCTMotherAnc(clientId);
+        pmctMotherOutcomeModel = PmtctMotherOutComeDao.getPMCTmothersOutcome(clientId);
 
 
         if (ptctMotherModel != null) {
@@ -488,17 +495,17 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
             case "labour_delivery":
                 householdMapper = new ObjectMapper();
-//                if(ptmctMotherMonitoringModel == null){
-                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                if(pmtctDeliveryDetailsModel == null){
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
-
-//                }
-//                else {
-//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
-//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
-//                }
+                }
+                else {
+                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(pmtctDeliveryDetailsModel, Map.class));
+                }
 
                 break;
+
+
             case "postnatal_care":
                 householdMapper = new ObjectMapper();
                 PtctMotherModel model = new PtctMotherModel();
@@ -517,18 +524,13 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
             case "pmtct_outcome":
                 householdMapper = new ObjectMapper();
-//                if(pmctMotherAncModel == null){
-                PtctMotherModel motherPMTCT = new PtctMotherModel();
-                motherPMTCT.setPmtct_id(ptctMotherModel.getPmtct_id());
-//                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());?\
-
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(motherPMTCT, Map.class));
-
-//                }
-//                else {
-//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
-//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
-//                }
+                if(pmctMotherOutcomeModel == null){
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+                }
+                else {
+                    formToBeOpened.put("entity_id",  this.pmtctDeliveryDetailsModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(pmtctDeliveryDetailsModel, Map.class));
+                }
 
 break;
 
@@ -672,6 +674,17 @@ break;
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, "ec_pmtct_mother_postnatal");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "Mother Pmtct Delivery":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_delivery_details");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

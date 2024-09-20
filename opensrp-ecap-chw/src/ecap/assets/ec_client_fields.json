@@ -10022,6 +10022,46 @@
       ]
     },
     {
+      "name": "ec_pmtct_mother_outcome",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "pmtct_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pmtct_id"
+          }
+        },
+        {
+          "column_name": "mothers_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mothers_outcome"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_pmtct_mother_anc",
       "columns": [
         {
@@ -10203,7 +10243,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_pmtct_delivery_details",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "pmtct_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pmtct_id"
+          }
+        },
+        {
+          "column_name": "date_of_delivery",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_delivery"
+          }
+        },
+        {
+          "column_name": "place_of_delivery",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.place_of_delivery"
+          }
+        },
+        {
+          "column_name": "on_art_at_time_of_delivery",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.on_art_at_time_of_delivery"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
     }
-
   ]
 }
