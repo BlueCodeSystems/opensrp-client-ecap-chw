@@ -377,21 +377,21 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 PtctMotherModel model = PMTCTMotherDao.getPostnatalDate(ptctMotherModel.getPmtct_id());
 
 
-                String todaysDate = getTodaysDateFormatted();
-                String postNatalCareDate = model != null ? model.getDate_of_st_post_natal_care() : null;
-
-                if (todaysDate != null && todaysDate.equals(postNatalCareDate)) {
-                    Toast.makeText(
-                            MotherPmtctProfileActivity.this, "You cannot conduct a postnatal visit twice a day",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                } else {
+//                String todaysDate = getTodaysDateFormatted();
+//                String postNatalCareDate = model != null ? model.getDate_of_st_post_natal_care() : null;
+//
+//                if (todaysDate != null && todaysDate.equals(postNatalCareDate)) {
+//                    Toast.makeText(
+//                            MotherPmtctProfileActivity.this, "You cannot conduct a postnatal visit twice a day",
+//                            Toast.LENGTH_SHORT
+//                    ).show();
+//                } else {
                     try {
                         openFormUsingFormUtils(MotherPmtctProfileActivity.this,"postnatal_care");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
+//                }
 
 
 
@@ -515,6 +515,22 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 break;
 
+            case "pmtct_outcome":
+                householdMapper = new ObjectMapper();
+//                if(pmctMotherAncModel == null){
+                PtctMotherModel motherPMTCT = new PtctMotherModel();
+                motherPMTCT.setPmtct_id(ptctMotherModel.getPmtct_id());
+//                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());?\
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(motherPMTCT, Map.class));
+
+//                }
+//                else {
+//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
+//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
+//                }
+
+break;
 
         }
         startFormActivity(formToBeOpened);
