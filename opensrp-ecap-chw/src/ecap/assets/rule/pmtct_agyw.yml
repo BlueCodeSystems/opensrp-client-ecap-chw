@@ -1,0 +1,196 @@
+---
+name: step1_agyw_info
+description: agyw_info relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_sm_number
+description: agyw_sm_number relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_date_1st_visit
+description: agyw_date_1st_visit relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_gestation_age_in_weeks
+description: agyw_gestation_age_in_weeks relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_hiv_tested
+description: agyw_hiv_tested relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_male_hiv_tested
+description: agyw_male_hiv_testedrelevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_result_1st_trimester
+description: hiv_result_1st_trimester relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_result_2nd_trimester
+description: hiv_result_2nd_trimester relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_result_3rd_trimester
+description: hiv_result_3rd_trimester relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_preventive_services
+description: preventive_services relevance
+priority: 1
+condition: "(helper.formatDate(step1_mothers_age, 'y') >= 10) && (helper.formatDate(step1_mothers_age, 'y') <= 17)"
+actions:
+  - "isRelevant = true"
+---
+name: step1_Hiv_18_info
+description: Hiv_18_info relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_initiated_art
+description: date_initiated_art relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18 || step1_agyw_result_of_hiv_test.contains('R')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_art_number
+description: art_number relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18 || step1_agyw_result_of_hiv_test.contains('R')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_sm_number
+description: sm_number relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_1st_visit
+description: date_1st_visit relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_gestation_age_in_weeks
+description: gestation_age_in_weeks relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_tested
+description: hiv_tested relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_male_hiv_tested
+description: male_hiv_tested relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_treatment_initiated
+description: treatment_initiated relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_on_treatment_anc_visit
+description: on_treatment_anc_visit relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_tb_screening
+description: tb_screening relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_syphylis_testing
+description: syphylis_testing relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vl_result_1st_trimester
+description: vl_result_1st_trimester relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vl_result_2nd_trimester
+description: vl_result_2nd_trimester relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vl_result_3rd_trimester
+description: vl_result_3rd_trimester relevance
+priority: 1
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
+actions:
+  - "isRelevant = true"
+---
+name: step1_unsuppressed_vl_1st
+description: unsuppressed_vl_1st relevance
+priority: 1
+condition: "!step1_vl_result_1st_trimester.isEmpty"
+actions:
+  - "isRelevant = true"
+---
+name: step1_unsuppressed_vl_2nd
+description: unsuppressed_vl_2nd relevance
+priority: 1
+condition: "!step1_vl_result_2nd_trimester.isEmpty"
+actions:
+  - "isRelevant = true"
+---
+name: step1_unsuppressed_vl_3rd
+description: unsuppressed_vl_3rd relevance
+priority: 1
+condition: "!step1_vl_result_3rd_trimester.isEmpty"
+actions:
+  - "isRelevant = true"

@@ -812,37 +812,6 @@
         "openmrs_entity_id": "2",
         "type": "spacer",
         "spacer_height": "15dp"
-      },
-      {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "Mother's Outcome"
-      },
-      {
-        "key": "mothers_outcome",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mothers_outcome",
-        "type": "native_radio",
-        "label": "Mothers Outcome",
-        "options": [
-          {
-            "key": "Dead",
-            "text": "Dead"
-          },
-          {
-            "key": "Lost to follow up",
-            "text": "Lost to follow up"
-          },
-          {
-            "key": "Transited out and Exited from the program",
-            "text": "Transited out and Exited from the program"
-          }
-        ]
       }
     ]
   }
