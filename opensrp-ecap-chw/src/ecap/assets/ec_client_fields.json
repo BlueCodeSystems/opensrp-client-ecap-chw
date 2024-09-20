@@ -8545,8 +8545,6 @@
         }
       ]
     },
-
-
     {
       "name": "ec_pmtct_mother_child",
       "columns": [
@@ -8991,31 +8989,31 @@
           }
         },
         {
-          "column_name": "child_monitoring_visit",
+          "column_name": "pediatic_care_follow_up",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.child_monitoring_visit"
+            "field": "attributes.pediatic_care_follow_up"
           }
         },
         {
-          "column_name": "dbs_at_birth_due_date",
+          "column_name": "date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.dbs_at_birth_due_date"
+            "field": "attributes.date"
           }
         },
         {
-          "column_name": "dbs_at_birth_actual_date",
+          "column_name": "hiv_test_p_n",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.dbs_at_birth_actual_date"
+            "field": "attributes.hiv_test_p_n"
           }
         },
         {
-          "column_name": "test_result_at_birth",
+          "column_name": "azt_3tc_npv",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.test_result_at_birth"
+            "field": "attributes.azt_3tc_npv"
           }
         },
         {
@@ -9026,60 +9024,60 @@
           }
         },
         {
-          "column_name": "nvp_prophylaxis_for_infant",
+          "column_name": "ctx",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.nvp_prophylaxis_for_infant"
+            "field": "attributes.ctx"
           }
         },
         {
-          "column_name": "nvp_date_given",
+          "column_name": "iycf_counselling",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.nvp_date_given"
+            "field": "attributes.iycf_counselling"
           }
         },
         {
-          "column_name": "_6_weeks_dbs_date",
+          "column_name": "infant_feeding_options",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_weeks_dbs_date"
+            "field": "attributes.infant_feeding_options"
           }
         },
         {
-          "column_name": "_6_weeks_dbs_ctx",
+          "column_name": "high_risk_hei",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_weeks_dbs_ctx"
+            "field": "attributes.high_risk_hei"
           }
         },
         {
-          "column_name": "_6_weeks_dbs_hiv_test_p_n",
+          "column_name": "final_outcome",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_weeks_dbs_hiv_test_p_n"
+            "field": "attributes.final_outcome"
           }
         },
 
         {
-          "column_name": "_6_weeks_dbs_iycf_counselling",
+          "column_name": "final_outcome",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_weeks_dbs_iycf_counselling"
+            "field": "attributes.final_outcome"
           }
         },
         {
-          "column_name": "_6_weeks_infant_feeding_options",
+          "column_name": "date_referred_for_art_if_hiv_positive",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_weeks_infant_feeding_options"
+            "field": "attributes.date_referred_for_art_if_hiv_positive"
           }
         },
         {
-          "column_name": "_6_weeks_dbs_outcome",
+          "column_name": "date_enrolled_in_art",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes._6_weeks_dbs_outcome"
+            "field": "attributes.date_enrolled_in_art"
           }
         },
 
@@ -9839,7 +9837,7 @@
       ]
     },
     {
-      "name": "ec_pmtct_mother_postnatal",
+      "name": "ec_pmtct_child",
       "columns": [
         {
           "column_name": "base_entity_id",
@@ -9863,220 +9861,155 @@
           }
         },
         {
-          "column_name": "date_of_st_post_natal_care",
+          "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_of_st_post_natal_care"
+            "field": "attributes.unique_id"
           }
         },
         {
-          "column_name": "mother_tested_for_hiv",
+          "column_name": "infant_first_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_tested_for_hiv"
+            "field": "attributes.infant_first_name"
           }
         },
         {
-          "column_name": "postnatal_care_visit",
+          "column_name": "infant_middle_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.postnatal_care_visit"
+            "field": "attributes.infant_middle_name"
           }
         },
         {
-          "column_name": "hiv_test_result_r_nr_at_6_weeks",
+          "column_name": "infant_lastname",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_6_weeks"
+            "field": "attributes.infant_lastname"
           }
         },
         {
-          "column_name": "art_initiated_at_6_weeks",
+          "column_name": "infants_date_of_birth",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_initiated_at_6_weeks"
+            "field": "attributes.infants_date_of_birth"
           }
         },
         {
-          "column_name": "art_adherence_counselling_support_at_6_weeks",
+          "column_name": "infants_sex",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_6_weeks"
+            "field": "attributes.infants_sex"
           }
         },
         {
-          "column_name": "family_planning_counselling_at_6_weeks",
+          "column_name": "weight_at_birth",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_6_weeks"
+            "field": "attributes.weight_at_birth"
           }
         },
         {
-          "column_name": "comments_at_postnatal_care_visit_6_weeks",
+          "column_name": "infant_feeding_options",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_6_weeks"
+            "field": "attributes.infant_feeding_options"
           }
         },
         {
-          "column_name": "hiv_test_result_r_nr_at_6_months",
+          "column_name": "under_five_clinic_card",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_6_months"
+            "field": "attributes.under_five_clinic_card"
           }
         },
         {
-          "column_name": "art_initiated_at_6_months",
+          "column_name": "dbs_at_birth_due_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_initiated_at_6_months"
+            "field": "attributes.dbs_at_birth_due_date"
           }
         },
         {
-          "column_name": "family_planning_counselling_at_6_months",
+          "column_name": "dbs_at_birth_actual_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_6_months"
+            "field": "attributes.dbs_at_birth_actual_date"
           }
         },
         {
-          "column_name": "number_of_condoms_distributed_at_6_months",
+          "column_name": "test_result_at_birth",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_6_months"
+            "field": "attributes.test_result_at_birth"
           }
         },
         {
-          "column_name": "comments_at_postnatal_care_visit_6_months",
+          "column_name": "date_tested",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_6_months"
+            "field": "attributes.date_tested"
           }
         },
         {
-          "column_name": "hiv_test_result_r_nr_at_9_months",
+          "column_name": "azt_3tc_npv",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_9_months"
+            "field": "attributes.azt_3tc_npv"
           }
         },
         {
-          "column_name": "art_initiated_at_9_months",
+          "column_name": "azt_3tc_npv_date",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_initiated_at_9_months"
+            "field": "attributes.azt_3tc_npv_date"
           }
         },
         {
-          "column_name": "art_adherence_counselling_support_at_9_months",
+          "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_9_months"
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_pmtct_child_outcome",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
           }
         },
         {
-          "column_name": "family_planning_counselling_at_9_months",
+          "column_name": "relational_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_9_months"
+            "field": "relationships.family"
           }
         },
         {
-          "column_name": "number_of_condoms_distributed_at_9_months",
+          "column_name": "pmtct_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_9_months"
+            "field": "attributes.pmtct_id"
           }
         },
         {
-          "column_name": "comments_at_postnatal_care_visit_9",
+          "column_name": "unique_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_9"
+            "field": "attributes.unique_id"
           }
         },
         {
-          "column_name": "hiv_test_result_r_nr_at_12_months",
+          "column_name": "child_outcome",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_12_months"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_12_months"
-          }
-        },
-        {
-          "column_name": "art_adherence_counselling_support_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_12_months"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_12_months"
-          }
-        },
-        {
-          "column_name": "number_of_condoms_distributed_at_12_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_12_months"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_12",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_12"
-          }
-        },
-        {
-          "column_name": "hiv_test_result_r_nr_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_test_result_r_nr_at_18_months"
-          }
-        },
-        {
-          "column_name": "art_initiated_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_initiated_at_18_months"
-          }
-        },
-        {
-          "column_name": "art_adherence_counselling_support_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.art_adherence_counselling_support_at_18_months"
-          }
-        },
-        {
-          "column_name": "family_planning_counselling_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.family_planning_counselling_at_18_months"
-          }
-        },
-        {
-          "column_name": "number_of_condoms_distributed_at_18_months",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.number_of_condoms_distributed_at_18_months"
-          }
-        },
-        {
-          "column_name": "comments_at_postnatal_care_visit_18",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comments_at_postnatal_care_visit_18"
+            "field": "attributes.child_outcome"
           }
         },
         {

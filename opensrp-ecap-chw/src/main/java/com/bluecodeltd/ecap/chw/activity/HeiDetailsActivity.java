@@ -18,6 +18,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,7 +43,9 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildOutcomeDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -49,10 +54,12 @@ import com.bluecodeltd.ecap.chw.fragment.PmctChildMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.UnderFiveCardFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildOutcomeModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -140,7 +147,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
-    PtmctMotherMonitoringModel pmtct;
+    PmtctChildModel pmtctChild;
+    PmtctChildOutcomeModel childOutcomeModel;
+    ChildMonitoringModel childMonitoring;
     String full_name = "";
     String birthdate = "";
 
@@ -182,7 +191,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //
         clientId = getIntent().getExtras().getString("client_id");
-        pmtct = PtmctMotherMonitoringDao.getPMCTChildHei(clientId);
+//        pmtctChild = PmtctChildDao.getPmctChildHei(clientId);
+        pmtctChild = PmtctChildDao.getPMCTChild(clientId);
+        childMonitoring = ChildMonitoringDao.getPMCTChildMonitoring(clientId);
+        childOutcomeModel = PmtctChildOutcomeDao.getPMCTChildOutcome(clientId);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -211,8 +223,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
 
         try {
-            if (pmtct != null && pmtct.getInfant_first_name() != null && pmtct.getInfant_lastname() != null) {
-                String full_name = pmtct.getInfant_first_name() + " " + pmtct.getInfant_lastname();
+            if (pmtctChild != null && pmtctChild.getInfant_first_name() != null && pmtctChild.getInfant_lastname() != null) {
+                String full_name = pmtctChild.getInfant_first_name() + " " + pmtctChild.getInfant_lastname();
                 txtName.setText(full_name);
             }
         } catch (Exception e) {
@@ -220,8 +232,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
         }
 
         try {
-            if(pmtct != null && pmtct.getInfants_date_of_birth() != null && !pmtct.getInfants_date_of_birth().isEmpty()){
-                txtAge.setText("AGE: "+getAge(pmtct.getInfants_date_of_birth()));
+            if(pmtctChild != null && pmtctChild.getInfants_date_of_birth() != null && !pmtctChild.getInfants_date_of_birth().isEmpty()){
+                txtAge.setText("AGE: "+getAge(pmtctChild.getInfants_date_of_birth()));
             } else {
                 txtAge.setText("Not Set");
             }
@@ -305,11 +317,11 @@ public class HeiDetailsActivity extends AppCompatActivity {
         return map;
 
     }
-    public HashMap<String, PtmctMotherMonitoringModel> getLinkID() {
+    public HashMap<String, PmtctChildModel> getLinkID() {
 
-        HashMap<String, PtmctMotherMonitoringModel> map = new HashMap<>();
+        HashMap<String, PmtctChildModel> map = new HashMap<>();
 
-        map.put("client", pmtct);
+        map.put("client", pmtctChild);
 
         return map;
 
@@ -448,7 +460,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             case R.id.assessment:
                 try {
-                    openFormUsingFormUtils(HeiDetailsActivity.this,"mother_pmtct_monitoring");
+                    openFormUsingFormUtils(HeiDetailsActivity.this,"pmtct_child_monitoring");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -560,8 +572,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
             cursor = getCommonRepository(CoreConstants.TABLE_NAME.EC_CLIENT_INDEX).rawCustomQueryForAdapter("SELECT * FROM " + CoreConstants.TABLE_NAME.EC_CLIENT_INDEX + " WHERE base_entity_id = " + "'" + baseEntityId + "'");
             if (cursor != null && cursor.moveToFirst()) {
                 CommonPersonObject personObject = getCommonRepository(CoreConstants.TABLE_NAME.EC_CLIENT_INDEX).readAllcommonforCursorAdapter(cursor);
-                client = new VCAModel(personObject.getCaseId(),
-                        personObject.getDetails(), "");
+                client = new VCAModel(personObject.getCaseId(), personObject.getDetails(), "");
                 client.setColumnmaps(personObject.getColumnmaps());
             }
         } catch (Exception ex) {
@@ -603,7 +614,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_pmtct_mother_child");
+                                encounterType, "ec_pmtct_child");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -620,6 +631,18 @@ public class HeiDetailsActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+                case "Ptmct Child Outcome":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_child_outcome");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -841,7 +864,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             case "case_plan":
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtct, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
 //                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
              /*   if(vcaCasePlanModel == null){
@@ -891,8 +914,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 break;
             case "pmct_child_hei":
 
-                formToBeOpened.put("entity_id", this.pmtct.getBase_entity_id());
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtct, Map.class));
+                formToBeOpened.put("entity_id", this.pmtctChild.getBase_entity_id());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
                 JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
                 if (dateEdited  != null) {
@@ -904,11 +927,20 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     }
                 }
                 break;
-            case "mother_pmtct_monitoring":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtct, Map.class));
+            case "pmtct_child_monitoring":
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
 
 
+                break;
 
+            case "pmtct_child_outcome":
+                if(childOutcomeModel == null){
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
+                } else{
+                    formToBeOpened.put("entity_id", this.childOutcomeModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(childOutcomeModel, Map.class));
+
+                }
 
                 break;
 
@@ -923,107 +955,39 @@ public class HeiDetailsActivity extends AppCompatActivity {
         return today.format(formatter);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//            switch (item.getItemId()) {
-//                case R.id.refresh:
-//                    finish();
-//                    startActivity(getIntent());
-//
-//                    break;
-//
-//                case R.id.call:
-//                    String caregiverPhoneNumber = child.getCaregiver_phone();
-//                    if (!caregiverPhoneNumber.equals("")) {
-//                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-//
-//                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-//                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-//                        startActivity(callIntent);
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                return true;
-//            case R.id.case_status:
-//
-//                try {
-//                    openFormUsingFormUtils(HTSDetailsActivity.this, "case_status");
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//
-//            case R.id.delete_record:
-//
-//                    if(txtGender.getText().toString().equals("MALE")){
-//                        gender = "his";
-//                    } else {
-//                        gender = "her";
-//                    }
-//
-//                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-//                    builder.setNegativeButton("NO", (dialog, id) -> {
-//                        //  Action for 'NO' Button
-//                        dialog.cancel();
-//
-//                    }).setPositiveButton("YES",((dialogInterface, i) -> {
-//                        FormUtils formUtils = null;
-//                        try {
-//                            formUtils = new FormUtils(this);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                        child.setDeleted("1");
-//                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
-//                            try {
-//                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
-//                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//
-//                            try {
-//
-//                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-//                                if (childIndexEventClient == null) {
-//                                    return;
-//                                }
-//                                saveRegistration(childIndexEventClient,true);
-//
-//
-//                            } catch (Exception e) {
-//                                Timber.e(e);
-//                            }
-//
-//
-//
-//                        Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-//                        super.onBackPressed();
-//                    }));
-//
-//                    //Creating dialog box
-//                    AlertDialog alert = builder.create();
-//                    //Setting the title manually
-//                    alert.setTitle("Alert");
-//                    alert.show();
-//
-//                break;
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.pmtct_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+
+                break;
+            case R.id.case_status:
+
+                try {
+                    openFormUsingFormUtils(HeiDetailsActivity.this, "pmtct_child_outcome");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                break;
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @Override
@@ -1143,17 +1107,17 @@ public class HeiDetailsActivity extends AppCompatActivity {
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
 
-        String countANC = PtmctMotherMonitoringDao.countChildMonitoring(pmtct.getUnique_id());
+        String countANC = ChildMonitoringDao.countChildMonitoring(pmtctChild.getUnique_id());
         childTabCount.setText(countANC);
 
         tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
-    public HashMap<String, PtmctMotherMonitoringModel> getClientDetails() {
+    public HashMap<String, PmtctChildModel> getClientDetails() {
 
-        HashMap<String, PtmctMotherMonitoringModel> map = new HashMap<>();
+        HashMap<String, PmtctChildModel> map = new HashMap<>();
 
-        map.put("client",pmtct);
+        map.put("client", pmtctChild);
 
         return map;
 

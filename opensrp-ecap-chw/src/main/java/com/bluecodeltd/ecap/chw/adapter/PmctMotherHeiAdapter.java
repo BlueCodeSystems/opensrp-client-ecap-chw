@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -24,10 +24,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class PmctMotherHeiAdapter extends  RecyclerView.Adapter<PmctMotherHeiAdapter.ViewHolder>{
-ArrayList<PtmctMotherMonitoringModel> model;
+ArrayList<PmtctChildModel> model;
 Context context;
 
-    public PmctMotherHeiAdapter(ArrayList<PtmctMotherMonitoringModel> model, Context context) {
+    public PmctMotherHeiAdapter(ArrayList<PmtctChildModel> model, Context context) {
         this.model = model;
         this.context = context;
     }
@@ -44,7 +44,7 @@ Context context;
     @Override
     public void onBindViewHolder(@NonNull PmctMotherHeiAdapter.ViewHolder holder, int position) {
 
-           final PtmctMotherMonitoringModel monitoringModel = model.get(position);
+           final PmtctChildModel monitoringModel = model.get(position);
                 holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
                 holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
 

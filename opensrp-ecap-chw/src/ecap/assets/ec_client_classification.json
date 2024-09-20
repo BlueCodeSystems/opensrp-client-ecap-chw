@@ -16,9 +16,17 @@
             "field": "eventType",
             "field_value": "Mother Pmtct Child",
             "creates_case": [
-              "ec_pmtct_mother_child"
+              "ec_pmtct_child"
             ]
           },
+          {
+            "field": "eventType",
+            "field_value": "Ptmct Child Outcome",
+            "creates_case": [
+              "ec_pmtct_child_outcome"
+            ]
+          },
+
           {
             "field": "eventType",
             "field_value": "Ptmct Child Monitoring",
