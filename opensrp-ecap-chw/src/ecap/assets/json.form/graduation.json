@@ -203,7 +203,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_status_enrolled",
         "type": "native_radio",
-        "read_only": false,
+        "read_only": true,
         "label": "Has each child and adolescent below 18 years of age in the household; and enrolled in the project, been documented as “HIV status positive,” “HIV status negative,” or “test not required based on HIV risk assessment”? ",
         "options": [
           {
@@ -222,7 +222,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status_enrolled",
         "type": "native_radio",
-        "read_only": false,
+        "read_only": true,
         "label": "Has the caregiver (parent/guardian) in the household been documented as “HIV status positive,” “HIV status negative,” or “test not required based on HIV risk assessment”?",
         "options": [
           {
@@ -285,7 +285,7 @@
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. Answer the questions for each child, adolescent,  youth and primary guardian in the household enrolled in the Project and living with HIV",
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
-        "read_only" : false,
+        "read_only" : true,
         "label": "Has each VCA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
         "options": [
           {
@@ -309,7 +309,7 @@
         "openmrs_entity_id": "suppressed_caregiver",
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
-        "read_only" : false,
+        "read_only" : true,
         "label": "Has the caregiver as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)? ",
         "options": [
           {
@@ -387,8 +387,8 @@
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile",
         "label_info_title":"Benchmark 3: Knowledgeable about HIV prevention",
         "type": "native_radio",
-        "read_only" : false,
-        "label": "Do all adolescents 12 to 17 have good HIV prevention knowledge?",
+        "read_only" : true,
+        "label": "Do all adolescents 10 to 17 have good HIV prevention knowledge?",
         "options": [
           {
             "key": "yes",
@@ -484,6 +484,7 @@
         "openmrs_entity_id": "undernourished",
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
+        "read_only" : true,
         "type": "native_radio",
         "label": "Are there no children below the age of 5 who are malnourished?",
         "options": [

@@ -84,10 +84,10 @@
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "read_only": "false",
-        "edit_type": "name",
-        "look_up": "true"
+        "read_only": "true",
+        "edit_type": "name"
       },
+
       {
         "key": "facility",
         "openmrs_entity_parent": "",
@@ -96,8 +96,7 @@
         "type": "edit_text",
         "hint": "Health Facility",
         "read_only": "true",
-        "edit_type": "name",
-        "look_up": "true"
+        "edit_type": "name"
       },
       {
         "key": "partner",
@@ -116,7 +115,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "read_only": true,
+        "read_only": false,
         "hint": "Home Address"
       },
       {
@@ -146,7 +145,7 @@
         "openmrs_entity_id": "landmark",
         "type": "edit_text",
         "hint": "Nearest Landmark",
-        "read_only": true
+        "read_only": false
       },
 
       {
@@ -246,9 +245,10 @@
         "type": "native_radio",
         "label": "Is the Child in School?",
         "relevance": {
-          "step1:age": {
-            "type": "string",
-            "ex": "greaterThanEqualTo(., \"5\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_relevance.yml"
+            }
           }
         },
         "options": [
@@ -293,6 +293,54 @@
           }
         }
       },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Subpopulation"
+      },
+      {
+        "key": "child_ever_experienced_sexual_violence",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_ever_experienced_sexual_violence",
+        "type": "native_radio",
+        "label": "Has the child/adolescent ever experienced sexual violence?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
+        }
+      },
+
+
       {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
@@ -397,6 +445,36 @@
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
+      },
+
+      {
+        "key": "subpopulation",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpopulation",
+        "type": "hidden",
+        "label": "Does the household member belong to another subpopulation?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "family_member_calculation.yml"
+            }
+          }
+        }
       }
     ]
   },
@@ -428,83 +506,87 @@
         "key": "immunization",
         "label": "Has the child received the following vaccinations?",
         "type": "check_box",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity_parent": "immunization",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "immunization",
+        "exclusive": [
+          "BIRTH-BCG",
+          "BIRTH-OPV0"
+        ],
         "options": [
           {
-            "key": "bcg",
+            "key": "BIRTH-BCG",
             "text": "BIRTH-BCG",
             "value": false
           },
           {
-            "key": "opv0",
+            "key": "BIRTH-OPV0",
             "text": "BIRTH-OPV0",
             "value": false
           },
           {
-            "key": "dtp1",
+            "key": "6 WEEKS-DTP1",
             "text": "6 WEEKS-DTP1",
             "value": false
           },
           {
-            "key": "OPV1",
+            "key": "6 WEEKS-OPV1",
             "text": "6 WEEKS-OPV1",
             "value": false
           },
           {
-            "key": "PCV1",
+            "key": "6 WEEKS-PCV1",
             "text": "6 WEEKS-PCV1",
             "value": false
           },
           {
-            "key": "ROT1",
+            "key": "6 WEEKS-ROT1",
             "text": "6 WEEKS-ROT1",
             "value": false
           },
           {
-            "key": "DTP2",
+            "key": "10 WEEKS-DTP2",
             "text": "10 WEEKS-DTP2",
             "value": false
           },
           {
-            "key": "OPV2",
+            "key": "10 WEEKS-OPV2",
             "text": "10 WEEKS-OPV2",
             "value": false
           },
           {
-            "key": "PCV2",
+            "key": "10 WEEKS-PCV2",
             "text": "10 WEEKS-PCV2",
             "value": false
           },
           {
-            "key": "ROT2",
+            "key": "10 WEEKS-ROT2",
             "text": "10 WEEKS-ROT2",
             "value": false
           },
           {
-            "key": "DTP3",
+            "key": "14 WEEKS-DTP3",
             "text": "14 WEEKS-DTP3",
             "value": false
           },
           {
-            "key": "OPV3",
+            "key": "14 WEEKS-OPV3",
             "text": "14 WEEKS-OPV3",
             "value": false
           },
           {
-            "key": "PCV3",
+            "key": "14 WEEKS-PCV3",
             "text": "14 WEEKS-PCV3",
             "value": false
           },
           {
-            "key": "MEASL R1",
-            "text": "9 MNTHS-MEASL R1",
+            "key": "9 MONTHS-MEASL R1",
+            "text": "9 MONTHS-MEASL R1",
             "value": false
           },
           {
-            "key": "MEASL R1",
-            "text": "18MNTHS-MEASL R1",
+            "key": "18 MONTHS-MEASL R1",
+            "text": "18 M0NTHS-MEASL R1",
             "value": false
           }
         ],
@@ -554,10 +636,6 @@
         "hint": "MUAC Score",
         "edit_type": "number",
         "look_up": "true",
-        "v_regex": {
-          "value": "^[0-9 ]+(.|,)?[0-9 ]*$",
-          "err": " MUAC Score should be a whole or decimal number"
-        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -684,7 +762,8 @@
               "rules-file": "family_member_relevance.yml"
             }
           }
-        }},
+        }
+      },
       {
         "key": "caregiver_phone",
         "openmrs_entity_parent": "",
@@ -701,35 +780,6 @@
         "v_regex": {
           "value": "((07||09)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
-      },
-      {
-        "key": "child_ever_experienced_sexual_violence",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_ever_experienced_sexual_violence",
-        "type": "native_radio",
-        "label": "Has the child/adolescent ever experienced sexual violence?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes"
-          },
-          {
-            "key": "no",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "family_member_calculation.yml"
-            }
-          }
         }
       },
       {
