@@ -320,7 +320,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/date_tested"
+                    android:id="@+id/hiv_status_r_nr"
                     android:textAllCaps="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

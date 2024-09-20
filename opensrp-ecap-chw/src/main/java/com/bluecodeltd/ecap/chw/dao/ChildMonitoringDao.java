@@ -45,6 +45,21 @@ public class ChildMonitoringDao  extends AbstractDao {
         return values.get(0);
 
     }
+
+    public static ChildMonitoringModel getRecentChildVisit(String uniqueID) {
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date " +
+                "FROM ec_pmtct_child_monitoring " +
+                "WHERE unique_id = '" + uniqueID + "' " +
+                "ORDER BY sortable_date DESC LIMIT 1";
+
+        List<ChildMonitoringModel> values = AbstractDao.readData(sql, getChildMonitoringModelMap());
+
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+
+        return values.get(0);
+    }
     public static DataMap<ChildMonitoringModel> getChildMonitoringModelMap() {
         return c -> {
 
