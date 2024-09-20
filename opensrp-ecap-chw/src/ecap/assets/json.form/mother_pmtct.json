@@ -377,7 +377,7 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "Please enter the date enrolled"
         },
         "relevance": {
