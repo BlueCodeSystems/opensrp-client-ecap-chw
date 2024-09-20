@@ -80,6 +80,13 @@
         }
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
         "key": "hh_service_location",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -400,13 +407,18 @@
             "text": "Adherence Support"
           },
           {
-            "key": "not applicable",
-            "text": "Not Applicable"
+            "key": "DART (Directly Administered ART)",
+            "text": "DART (Directly Administered ART)"
           },
           {
             "key": "other",
             "text": "Other Specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
           }
+
         ],
         "relevance": {
           "step1:services": {

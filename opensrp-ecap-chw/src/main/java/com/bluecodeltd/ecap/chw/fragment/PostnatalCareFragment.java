@@ -16,6 +16,8 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
 import com.bluecodeltd.ecap.chw.adapter.PostnatalMotherAdapter;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctMotherPostnatalDao;
+import com.bluecodeltd.ecap.chw.model.PmtctMotherPostnatalModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class PostnatalCareFragment extends Fragment {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<PtctMotherModel> assessmentList = new ArrayList<>();
+    private ArrayList<PmtctMotherPostnatalModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
     private static final String ARG_PARAM1 = "param1";
@@ -105,7 +107,7 @@ public class PostnatalCareFragment extends Fragment {
 
         assessmentList.clear();
 
-        assessmentList.addAll(PMTCTMotherDao.getPostnatalMother(pmtctId));
+        assessmentList.addAll(PmtctMotherPostnatalDao.getPostnatalMother(pmtctId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);

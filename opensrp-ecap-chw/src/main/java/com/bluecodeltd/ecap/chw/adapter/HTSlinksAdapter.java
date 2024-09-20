@@ -132,7 +132,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView landmark = dialogView.findViewById(R.id.landmark);
         TextView phone = dialogView.findViewById(R.id.phone);
         TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
-        TextView date_tested = dialogView.findViewById(R.id.date_tested);
+        TextView date_tested = dialogView.findViewById(R.id.hiv_status_r_nr);
         TextView test_results = dialogView.findViewById(R.id.test_results);
         TextView date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
         TextView initial_art_date = dialogView.findViewById(R.id.initial_art_date);
