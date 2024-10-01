@@ -381,7 +381,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 break;
             case R.id.postnatal_details:
-                PtctMotherModel model = PMTCTMotherDao.getPostnatalDate(ptctMotherModel.getPmtct_id());
+//                PtctMotherModel model = PMTCTMotherDao.getPostnatalDate(ptctMotherModel.getPmtct_id());
 
 
 //                String todaysDate = getTodaysDateFormatted();
@@ -528,8 +528,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
                 }
                 else {
-                    formToBeOpened.put("entity_id",  this.pmtctDeliveryDetailsModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(pmtctDeliveryDetailsModel, Map.class));
+                    formToBeOpened.put("entity_id",  this.pmctMotherOutcomeModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(pmctMotherOutcomeModel, Map.class));
                 }
 
 break;
@@ -685,6 +685,17 @@ break;
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, "ec_pmtct_delivery_details");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "PMTCT Mother Outcome":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_mother_outcome");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

@@ -61,18 +61,18 @@ public class PMTCTMotherDao extends AbstractDao {
 
         return values.get(0);
     }
-    public static PtctMotherModel getPostnatalDate(String pmtctID) {
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC LIMIT 1";
-
-        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
-
-        if (values.size() == 0) {
-            return null;
-        }
-
-
-        return values.get(0);
-    }
+//    public static PtctMotherModel getPostnatalDate(String pmtctID) {
+//        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC LIMIT 1";
+//
+//        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
+//
+//        if (values.size() == 0) {
+//            return null;
+//        }
+//
+//
+//        return values.get(0);
+//    }
     public static List<PtctMotherModel> getPostnatalMother(String pmtctID) {
 
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
@@ -130,6 +130,9 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setAgyw_male_hiv_tested(getCursorValue(c, "agyw_male_hiv_tested"));
             record.setAgyw_male_date_tested(getCursorValue(c, "agyw_male_date_tested"));
             record.setAgyw_male_result_of_hiv_test(getCursorValue(c, "agyw_male_result_of_hiv_test"));
+            record.setHiv_result_1st_trimester(getCursorValue(c, "agyw_hiv_result_1st_trimester"));
+            record.setHiv_result_2nd_trimester(getCursorValue(c, "agyw_hiv_result_2nd_trimester"));
+            record.setHiv_result_3rd_trimester(getCursorValue(c, "agyw_hiv_result_3rd_trimester"));
             record.setHiv_result_1st_trimester(getCursorValue(c, "hiv_result_1st_trimester"));
             record.setHiv_result_2nd_trimester(getCursorValue(c, "hiv_result_2nd_trimester"));
             record.setHiv_result_3rd_trimester(getCursorValue(c, "hiv_result_3rd_trimester"));
@@ -160,6 +163,12 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setDate_of_delivery(getCursorValue(c, "date_of_delivery"));
             record.setPlace_of_delivery(getCursorValue(c, "place_of_delivery"));
             record.setOn_art_at_time_of_delivery(getCursorValue(c, "on_art_at_time_of_delivery"));
+            record.setAgyw_positive_male_partner(getCursorValue(c, "agyw_positive_male_partner"));
+            record.setRecency_test_result(getCursorValue(c, "recency_test_result"));
+            record.setApplicable_recency_result(getCursorValue(c, "applicable_recency_result"));
+
+
+
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
             return record;
