@@ -185,9 +185,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_6_weeks": {
             "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -213,9 +213,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_6_weeks": {
             "type": "string",
-            "ex": "equalTo(., \"6 weeks\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -312,9 +312,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_6_months": {
             "type": "string",
-            "ex": "equalTo(., \"6 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -427,9 +427,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_9_months": {
             "type": "string",
-            "ex": "equalTo(., \"9 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -455,9 +455,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_9_months": {
             "type": "string",
-            "ex": "equalTo(., \"9 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -570,9 +570,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_12_months": {
             "type": "string",
-            "ex": "equalTo(., \"12 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -598,9 +598,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_12_months": {
             "type": "string",
-            "ex": "equalTo(., \"12 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -713,9 +713,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_18_months": {
             "type": "string",
-            "ex": "equalTo(., \"18 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -741,9 +741,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:postnatal_care_visit": {
+          "step1:hiv_test_result_r_nr_at_18_months": {
             "type": "string",
-            "ex": "equalTo(., \"18 months\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },

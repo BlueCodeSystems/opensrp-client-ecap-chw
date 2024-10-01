@@ -30,6 +30,9 @@ public class PtctMotherModel {
     private String agyw_male_hiv_tested;
     private String agyw_male_date_tested;
     private String agyw_male_result_of_hiv_test;
+    private String agyw_hiv_result_1st_trimester;
+    private String agyw_hiv_result_2nd_trimester;
+    private String agyw_hiv_result_3rd_trimester;
     private String hiv_result_1st_trimester;
     private String hiv_result_2nd_trimester;
     private String hiv_result_3rd_trimester;
@@ -60,7 +63,11 @@ public class PtctMotherModel {
     private String date_of_delivery;
     private String place_of_delivery;
     private String on_art_at_time_of_delivery;
+
     private String delete_status;
+    private String agyw_positive_male_partner;
+    private String recency_test_result;
+    private String applicable_recency_result;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -532,5 +539,53 @@ public class PtctMotherModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getAgyw_positive_male_partner() {
+        return agyw_positive_male_partner;
+    }
+
+    public void setAgyw_positive_male_partner(String agyw_positive_male_partner) {
+        this.agyw_positive_male_partner = agyw_positive_male_partner;
+    }
+
+    public String getRecency_test_result() {
+        return recency_test_result;
+    }
+
+    public void setRecency_test_result(String recency_test_result) {
+        this.recency_test_result = recency_test_result;
+    }
+
+    public String getApplicable_recency_result() {
+        return applicable_recency_result;
+    }
+
+    public void setApplicable_recency_result(String applicable_recency_result) {
+        this.applicable_recency_result = applicable_recency_result;
+    }
+
+    public String getAgyw_hiv_result_1st_trimester() {
+        return agyw_hiv_result_1st_trimester;
+    }
+
+    public void setAgyw_hiv_result_1st_trimester(String agyw_hiv_result_1st_trimester) {
+        this.agyw_hiv_result_1st_trimester = agyw_hiv_result_1st_trimester;
+    }
+
+    public String getAgyw_hiv_result_2nd_trimester() {
+        return agyw_hiv_result_2nd_trimester;
+    }
+
+    public void setAgyw_hiv_result_2nd_trimester(String agyw_hiv_result_2nd_trimester) {
+        this.agyw_hiv_result_2nd_trimester = agyw_hiv_result_2nd_trimester;
+    }
+
+    public String getAgyw_hiv_result_3rd_trimester() {
+        return agyw_hiv_result_3rd_trimester;
+    }
+
+    public void setAgyw_hiv_result_3rd_trimester(String agyw_hiv_result_3rd_trimester) {
+        this.agyw_hiv_result_3rd_trimester = agyw_hiv_result_3rd_trimester;
     }
 }

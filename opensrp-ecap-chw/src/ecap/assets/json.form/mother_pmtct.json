@@ -74,6 +74,16 @@
         "type": "hidden"
       },
       {
+        "key": "sm_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sm_number",
+        "type": "edit_text",
+        "hint": "SM Number",
+        "edit_type": "number",
+        "read_only": "true"
+      },
+      {
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -349,22 +359,7 @@
         }
       },
 
-      {
-        "key": "agyw_sm_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "agyw_sm_number",
-        "type": "edit_text",
-        "hint": "SM Number",
-        "edit_type": "number",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "pmtct_agyw.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "agyw_date_1st_visit",
         "openmrs_entity_parent": "",
@@ -395,11 +390,11 @@
         "openmrs_entity_id": "agyw_gestation_age_in_weeks",
         "type": "edit_text",
         "hint": "Gestation age in weeks",
-        "edit_type": "name",
+        "edit_type": "number",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter last name"
+          "err": "Please enter gestation age in weeks"
         },
         "relevance": {
           "rules-engine": {
@@ -479,7 +474,7 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:hiv_tested": {
+          "step1:agyw_hiv_tested": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -555,17 +550,62 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step1:male_hiv_tested": {
+          "step1:agyw_male_hiv_tested": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
         }
       },
       {
-        "key": "hiv_result_1st_trimester",
+        "key": "agyw_positive_male_partner",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_result_1st_trimester",
+        "openmrs_entity_id": "agyw_positive_male_partner",
+        "type": "native_radio",
+        "label": "If Male partner HIV+, is AGYW on PrEP",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:agyw_male_result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_prep",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "If No, refer to PrEP & other preventive services",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "step1:agyw_positive_male_partner": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "agyw_hiv_result_1st_trimester",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "agyw_hiv_result_1st_trimester",
         "type": "edit_text",
         "hint": "HIV Result 1st Trimester",
         "relevance": {
@@ -576,10 +616,10 @@
         }
       },
       {
-        "key": "hiv_result_2nd_trimester",
+        "key": "agyw_hiv_result_2nd_trimester",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_result_2nd_trimester",
+        "openmrs_entity_id": "agyw_hiv_result_2nd_trimester",
         "type": "edit_text",
         "hint": "HIV Result 2nd Trimester",
         "relevance": {
@@ -590,10 +630,10 @@
         }
       },
       {
-        "key": "hiv_result_3rd_trimester",
+        "key": "agyw_hiv_result_3rd_trimester",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_result_3rd_trimester",
+        "openmrs_entity_id": "agyw_hiv_result_3rd_trimester",
         "type": "edit_text",
         "hint": "HIV Result 3rd Trimester(6 weeks before EDD)",
         "relevance": {
@@ -716,22 +756,6 @@
         }
       },
       {
-        "key": "sm_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sm_number",
-        "type": "edit_text",
-        "hint": "SM Number",
-        "edit_type": "number",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "pmtct_agyw.yml"
-            }
-          }
-        }
-      },
-      {
         "key": "date_1st_visit",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -761,11 +785,11 @@
         "openmrs_entity_id": "gestation_age_in_weeks",
         "type": "edit_text",
         "hint": "Gestation age in weeks",
-        "edit_type": "name",
+        "edit_type": "number",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter last name"
+          "err": "Please enter gestation age in weeks"
         },
         "relevance": {
           "rules-engine": {
@@ -824,6 +848,42 @@
         }
       },
       {
+        "key": "recency_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "recency_test_result",
+        "type": "native_radio",
+        "label": "Recency Test Result If Applicable or Available",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "applicable_recency_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "applicable_recency_result",
+        "type": "edit_text",
+        "hint": "Recency Test Result if Available",
+        "relevance": {
+          "step1:recency_test_result": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "result_of_hiv_test",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -848,6 +908,20 @@
           "step1:hiv_tested": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_result_1st_trimester",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_result_1st_trimester",
+        "type": "edit_text",
+        "hint": "HIV Result 1st Trimester",
+        "relevance": {
+          "step1:agyw_result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"NR\")"
           }
         }
       },
@@ -878,34 +952,12 @@
         }
       },
       {
-        "key": "male_date_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "male_date_tested",
-        "type": "date_picker",
-        "hint": "Date male partner tested",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter date tested"
-        },
-        "relevance": {
-          "step1:male_hiv_tested": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
         "key": "male_result_of_hiv_test",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "male_result_of_hiv_test",
         "type": "native_radio",
-        "label": "Male partner result of HIV Test (R/NR)",
+        "label": "Mqqale Result of HIV Test (R/NR)",
         "options": [
           {
             "key": "R",
@@ -927,6 +979,29 @@
           }
         }
       },
+      {
+        "key": "male_date_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "male_date_tested",
+        "type": "date_picker",
+        "hint": "Date male partner tested",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date tested"
+        },
+        "relevance": {
+          "step1:male_hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
 
       {
         "key": "treatment_initiated",
