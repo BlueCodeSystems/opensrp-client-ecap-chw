@@ -8522,17 +8522,17 @@
           }
         },
         {
-          "column_name": "syphylis_testing",
+          "column_name": "syphilis_testing",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.syphylis_testing"
+            "field": "attributes.syphilis_testing"
           }
         },
         {
-          "column_name": "date_tested_syphylis",
+          "column_name": "date_tested_syphilis",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_tested_syphylis"
+            "field": "attributes.date_tested_syphilis"
           }
         },
         {
@@ -8921,17 +8921,17 @@
           }
         },
         {
-          "column_name": "syphylis_testing",
+          "column_name": "syphilis_testing",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.syphylis_testing"
+            "field": "attributes.syphilis_testing"
           }
         },
         {
-          "column_name": "date_tested_syphylis",
+          "column_name": "date_tested_syphilis",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_tested_syphylis"
+            "field": "attributes.date_tested_syphilis"
           }
         },
         {
