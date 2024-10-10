@@ -79,14 +79,14 @@ actions:
 name: step1_date_initiated_art
 description: date_initiated_art relevance
 priority: 1
-condition: "helper.formatDate(step1_mothers_age, 'y') >= 18 || step1_agyw_result_of_hiv_test.contains('R')"
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
 actions:
   - "isRelevant = true"
 ---
 name: step1_art_number
 description: art_number relevance
 priority: 1
-condition: "helper.formatDate(step1_mothers_age, 'y') >= 18 || step1_agyw_result_of_hiv_test.contains('R')"
+condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
 actions:
   - "isRelevant = true"
 ---
@@ -146,8 +146,8 @@ condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
 actions:
   - "isRelevant = true"
 ---
-name: step1_syphylis_testing
-description: syphylis_testing relevance
+name: step1_syphilis_testing
+description: syphilis_testing relevance
 priority: 1
 condition: "helper.formatDate(step1_mothers_age, 'y') >= 18"
 actions:
@@ -192,5 +192,26 @@ name: step1_unsuppressed_vl_3rd
 description: unsuppressed_vl_3rd relevance
 priority: 1
 condition: "!step1_vl_result_3rd_trimester.isEmpty"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_unsuppressed_vl_1st
+description: unsuppressed_vl_1st relevance
+priority: 1
+condition: "!step1_agyw_vl_result_1st_trimester.isEmpty"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_unsuppressed_vl_2nd
+description: unsuppressed_vl_2nd relevance
+priority: 1
+condition: "!step1_agyw_vl_result_2nd_trimester.isEmpty"
+actions:
+  - "isRelevant = true"
+---
+name: step1_agyw_unsuppressed_vl_3rd
+description: unsuppressed_vl_3rd relevance
+priority: 1
+condition: "!step1_agyw_vl_result_3rd_trimester.isEmpty"
 actions:
   - "isRelevant = true"
