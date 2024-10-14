@@ -1,22 +1,20 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class ChildMonitoringModel {
+
     private String base_entity_id;
     private String pmtct_id;
     private String unique_id;
     private String pediatic_care_follow_up;
     private String date;
-    private String hiv_test_p_n;
+    private String hiv_test;
     private String azt_3tc_npv;
-    private String date_tested;
     private String ctx;
+    private String date_tested;
     private String iycf_counselling;
     private String infant_feeding_options;
     private String high_risk_hei;
-    private String final_outcome;
-    private String date_referred_for_art_if_hiv_positive;
-    private String date_enrolled_in_art;
-    private String delete_status;
+    private String deleted_status;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -58,12 +56,12 @@ public class ChildMonitoringModel {
         this.date = date;
     }
 
-    public String getHiv_test_p_n() {
-        return hiv_test_p_n;
+    public String getHiv_test() {
+        return hiv_test;
     }
 
-    public void setHiv_test_p_n(String hiv_test_p_n) {
-        this.hiv_test_p_n = hiv_test_p_n;
+    public void setHiv_test(String hiv_test) {
+        this.hiv_test = hiv_test;
     }
 
     public String getAzt_3tc_npv() {
@@ -74,20 +72,20 @@ public class ChildMonitoringModel {
         this.azt_3tc_npv = azt_3tc_npv;
     }
 
-    public String getDate_tested() {
-        return date_tested;
-    }
-
-    public void setDate_tested(String date_tested) {
-        this.date_tested = date_tested;
-    }
-
     public String getCtx() {
         return ctx;
     }
 
     public void setCtx(String ctx) {
         this.ctx = ctx;
+    }
+
+    public String getDate_tested() {
+        return date_tested;
+    }
+
+    public void setDate_tested(String date_tested) {
+        this.date_tested = date_tested;
     }
 
     public String getIycf_counselling() {
@@ -114,35 +112,11 @@ public class ChildMonitoringModel {
         this.high_risk_hei = high_risk_hei;
     }
 
-    public String getDelete_status() {
-        return delete_status;
+    public String getDeleted_status() {
+        return deleted_status;
     }
 
-    public String getFinal_outcome() {
-        return final_outcome;
-    }
-
-    public void setFinal_outcome(String final_outcome) {
-        this.final_outcome = final_outcome;
-    }
-
-    public String getDate_referred_for_art_if_hiv_positive() {
-        return date_referred_for_art_if_hiv_positive;
-    }
-
-    public void setDate_referred_for_art_if_hiv_positive(String date_referred_for_art_if_hiv_positive) {
-        this.date_referred_for_art_if_hiv_positive = date_referred_for_art_if_hiv_positive;
-    }
-
-    public String getDate_enrolled_in_art() {
-        return date_enrolled_in_art;
-    }
-
-    public void setDate_enrolled_in_art(String date_enrolled_in_art) {
-        this.date_enrolled_in_art = date_enrolled_in_art;
-    }
-
-    public void setDelete_status(String delete_status) {
-        this.delete_status = delete_status;
+    public void setDeleted_status(String deleted_status) {
+        this.deleted_status = deleted_status;
     }
 }

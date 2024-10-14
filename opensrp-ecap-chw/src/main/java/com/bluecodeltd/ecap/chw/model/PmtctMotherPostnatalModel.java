@@ -7,36 +7,15 @@ public class PmtctMotherPostnatalModel {
     private String date_of_st_post_natal_care;
     private String mother_tested_for_hiv;
     private String postnatal_care_visit;
-    private String hiv_test_result_r_nr_at_6_weeks;
-    private String art_initiated_at_6_weeks;
-    private String art_adherence_counselling_support_at_6_weeks;
-    private String family_planning_counselling_at_6_weeks;
-    private String comments_at_postnatal_care_visit_6_weeks;
-    private String hiv_test_result_r_nr_at_6_months;
-    private String art_initiated_at_6_months;
-    private String family_planning_counselling_at_6_months;
-    private String number_of_condoms_distributed_at_6_months;
-    private String comments_at_postnatal_care_visit_6_months;
-    private String hiv_test_result_r_nr_at_9_months;
-    private String art_initiated_at_9_months;
-    private String art_adherence_counselling_support_at_9_months;
-    private String family_planning_counselling_at_9_months;
-    private String number_of_condoms_distributed_at_9_months;
-    private String comments_at_postnatal_care_visit_9;
-    private String hiv_test_result_r_nr_at_12_months;
-    private String art_initiated_at_12_months;
-    private String art_adherence_counselling_support_at_12_months;
-    private String family_planning_counselling_at_12_months;
-    private String number_of_condoms_distributed_at_12_months;
-    private String comments_at_postnatal_care_visit_12;
-    private String hiv_test_result_r_nr_at_18_months;
-    private String art_initiated_at_18_months;
-    private String art_adherence_counselling_support_at_18_months;
-    private String family_planning_counselling_at_18_months;
-    private String number_of_condoms_distributed_at_18_months;
-    private String comments_at_postnatal_care_visit_18;
+    private String art_initiated;
+    private String art_adherence_counselling_support;
+    private String vl_result;
+    private String family_planning_counselling;
+    private String number_of_condoms_distributed;
+    private String comments_at_postnatal_care_visit;
     private String delete_status;
 
+    // Getters and Setters
     public String getBase_entity_id() {
         return base_entity_id;
     }
@@ -85,228 +64,52 @@ public class PmtctMotherPostnatalModel {
         this.postnatal_care_visit = postnatal_care_visit;
     }
 
-    public String getHiv_test_result_r_nr_at_6_weeks() {
-        return hiv_test_result_r_nr_at_6_weeks;
+    public String getArt_initiated() {
+        return art_initiated;
     }
 
-    public void setHiv_test_result_r_nr_at_6_weeks(String hiv_test_result_r_nr_at_6_weeks) {
-        this.hiv_test_result_r_nr_at_6_weeks = hiv_test_result_r_nr_at_6_weeks;
+    public void setArt_initiated(String art_initiated) {
+        this.art_initiated = art_initiated;
     }
 
-    public String getArt_initiated_at_6_weeks() {
-        return art_initiated_at_6_weeks;
+    public String getArt_adherence_counselling_support() {
+        return art_adherence_counselling_support;
     }
 
-    public void setArt_initiated_at_6_weeks(String art_initiated_at_6_weeks) {
-        this.art_initiated_at_6_weeks = art_initiated_at_6_weeks;
+    public void setArt_adherence_counselling_support(String art_adherence_counselling_support) {
+        this.art_adherence_counselling_support = art_adherence_counselling_support;
     }
 
-    public String getArt_adherence_counselling_support_at_6_weeks() {
-        return art_adherence_counselling_support_at_6_weeks;
+    public String getVl_result() {
+        return vl_result;
     }
 
-    public void setArt_adherence_counselling_support_at_6_weeks(String art_adherence_counselling_support_at_6_weeks) {
-        this.art_adherence_counselling_support_at_6_weeks = art_adherence_counselling_support_at_6_weeks;
+    public void setVl_result(String vl_result) {
+        this.vl_result = vl_result;
     }
 
-    public String getFamily_planning_counselling_at_6_weeks() {
-        return family_planning_counselling_at_6_weeks;
+    public String getFamily_planning_counselling() {
+        return family_planning_counselling;
     }
 
-    public void setFamily_planning_counselling_at_6_weeks(String family_planning_counselling_at_6_weeks) {
-        this.family_planning_counselling_at_6_weeks = family_planning_counselling_at_6_weeks;
+    public void setFamily_planning_counselling(String family_planning_counselling) {
+        this.family_planning_counselling = family_planning_counselling;
     }
 
-    public String getComments_at_postnatal_care_visit_6_weeks() {
-        return comments_at_postnatal_care_visit_6_weeks;
+    public String getNumber_of_condoms_distributed() {
+        return number_of_condoms_distributed;
     }
 
-    public void setComments_at_postnatal_care_visit_6_weeks(String comments_at_postnatal_care_visit_6_weeks) {
-        this.comments_at_postnatal_care_visit_6_weeks = comments_at_postnatal_care_visit_6_weeks;
+    public void setNumber_of_condoms_distributed(String number_of_condoms_distributed) {
+        this.number_of_condoms_distributed = number_of_condoms_distributed;
     }
 
-    public String getHiv_test_result_r_nr_at_6_months() {
-        return hiv_test_result_r_nr_at_6_months;
+    public String getComments_at_postnatal_care_visit() {
+        return comments_at_postnatal_care_visit;
     }
 
-    public void setHiv_test_result_r_nr_at_6_months(String hiv_test_result_r_nr_at_6_months) {
-        this.hiv_test_result_r_nr_at_6_months = hiv_test_result_r_nr_at_6_months;
-    }
-
-    public String getArt_initiated_at_6_months() {
-        return art_initiated_at_6_months;
-    }
-
-    public void setArt_initiated_at_6_months(String art_initiated_at_6_months) {
-        this.art_initiated_at_6_months = art_initiated_at_6_months;
-    }
-
-    public String getFamily_planning_counselling_at_6_months() {
-        return family_planning_counselling_at_6_months;
-    }
-
-    public void setFamily_planning_counselling_at_6_months(String family_planning_counselling_at_6_months) {
-        this.family_planning_counselling_at_6_months = family_planning_counselling_at_6_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_6_months() {
-        return number_of_condoms_distributed_at_6_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_6_months(String number_of_condoms_distributed_at_6_months) {
-        this.number_of_condoms_distributed_at_6_months = number_of_condoms_distributed_at_6_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_6_months() {
-        return comments_at_postnatal_care_visit_6_months;
-    }
-
-    public void setComments_at_postnatal_care_visit_6_months(String comments_at_postnatal_care_visit_6_months) {
-        this.comments_at_postnatal_care_visit_6_months = comments_at_postnatal_care_visit_6_months;
-    }
-
-    public String getHiv_test_result_r_nr_at_9_months() {
-        return hiv_test_result_r_nr_at_9_months;
-    }
-
-    public void setHiv_test_result_r_nr_at_9_months(String hiv_test_result_r_nr_at_9_months) {
-        this.hiv_test_result_r_nr_at_9_months = hiv_test_result_r_nr_at_9_months;
-    }
-
-    public String getArt_initiated_at_9_months() {
-        return art_initiated_at_9_months;
-    }
-
-    public void setArt_initiated_at_9_months(String art_initiated_at_9_months) {
-        this.art_initiated_at_9_months = art_initiated_at_9_months;
-    }
-
-    public String getArt_adherence_counselling_support_at_9_months() {
-        return art_adherence_counselling_support_at_9_months;
-    }
-
-    public void setArt_adherence_counselling_support_at_9_months(String art_adherence_counselling_support_at_9_months) {
-        this.art_adherence_counselling_support_at_9_months = art_adherence_counselling_support_at_9_months;
-    }
-
-    public String getFamily_planning_counselling_at_9_months() {
-        return family_planning_counselling_at_9_months;
-    }
-
-    public void setFamily_planning_counselling_at_9_months(String family_planning_counselling_at_9_months) {
-        this.family_planning_counselling_at_9_months = family_planning_counselling_at_9_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_9_months() {
-        return number_of_condoms_distributed_at_9_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_9_months(String number_of_condoms_distributed_at_9_months) {
-        this.number_of_condoms_distributed_at_9_months = number_of_condoms_distributed_at_9_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_9() {
-        return comments_at_postnatal_care_visit_9;
-    }
-
-    public void setComments_at_postnatal_care_visit_9(String comments_at_postnatal_care_visit_9) {
-        this.comments_at_postnatal_care_visit_9 = comments_at_postnatal_care_visit_9;
-    }
-
-    public String getHiv_test_result_r_nr_at_12_months() {
-        return hiv_test_result_r_nr_at_12_months;
-    }
-
-    public void setHiv_test_result_r_nr_at_12_months(String hiv_test_result_r_nr_at_12_months) {
-        this.hiv_test_result_r_nr_at_12_months = hiv_test_result_r_nr_at_12_months;
-    }
-
-    public String getArt_initiated_at_12_months() {
-        return art_initiated_at_12_months;
-    }
-
-    public void setArt_initiated_at_12_months(String art_initiated_at_12_months) {
-        this.art_initiated_at_12_months = art_initiated_at_12_months;
-    }
-
-    public String getArt_adherence_counselling_support_at_12_months() {
-        return art_adherence_counselling_support_at_12_months;
-    }
-
-    public void setArt_adherence_counselling_support_at_12_months(String art_adherence_counselling_support_at_12_months) {
-        this.art_adherence_counselling_support_at_12_months = art_adherence_counselling_support_at_12_months;
-    }
-
-    public String getFamily_planning_counselling_at_12_months() {
-        return family_planning_counselling_at_12_months;
-    }
-
-    public void setFamily_planning_counselling_at_12_months(String family_planning_counselling_at_12_months) {
-        this.family_planning_counselling_at_12_months = family_planning_counselling_at_12_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_12_months() {
-        return number_of_condoms_distributed_at_12_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_12_months(String number_of_condoms_distributed_at_12_months) {
-        this.number_of_condoms_distributed_at_12_months = number_of_condoms_distributed_at_12_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_12() {
-        return comments_at_postnatal_care_visit_12;
-    }
-
-    public void setComments_at_postnatal_care_visit_12(String comments_at_postnatal_care_visit_12) {
-        this.comments_at_postnatal_care_visit_12 = comments_at_postnatal_care_visit_12;
-    }
-
-    public String getHiv_test_result_r_nr_at_18_months() {
-        return hiv_test_result_r_nr_at_18_months;
-    }
-
-    public void setHiv_test_result_r_nr_at_18_months(String hiv_test_result_r_nr_at_18_months) {
-        this.hiv_test_result_r_nr_at_18_months = hiv_test_result_r_nr_at_18_months;
-    }
-
-    public String getArt_initiated_at_18_months() {
-        return art_initiated_at_18_months;
-    }
-
-    public void setArt_initiated_at_18_months(String art_initiated_at_18_months) {
-        this.art_initiated_at_18_months = art_initiated_at_18_months;
-    }
-
-    public String getArt_adherence_counselling_support_at_18_months() {
-        return art_adherence_counselling_support_at_18_months;
-    }
-
-    public void setArt_adherence_counselling_support_at_18_months(String art_adherence_counselling_support_at_18_months) {
-        this.art_adherence_counselling_support_at_18_months = art_adherence_counselling_support_at_18_months;
-    }
-
-    public String getFamily_planning_counselling_at_18_months() {
-        return family_planning_counselling_at_18_months;
-    }
-
-    public void setFamily_planning_counselling_at_18_months(String family_planning_counselling_at_18_months) {
-        this.family_planning_counselling_at_18_months = family_planning_counselling_at_18_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_18_months() {
-        return number_of_condoms_distributed_at_18_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_18_months(String number_of_condoms_distributed_at_18_months) {
-        this.number_of_condoms_distributed_at_18_months = number_of_condoms_distributed_at_18_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_18() {
-        return comments_at_postnatal_care_visit_18;
-    }
-
-    public void setComments_at_postnatal_care_visit_18(String comments_at_postnatal_care_visit_18) {
-        this.comments_at_postnatal_care_visit_18 = comments_at_postnatal_care_visit_18;
+    public void setComments_at_postnatal_care_visit(String comments_at_postnatal_care_visit) {
+        this.comments_at_postnatal_care_visit = comments_at_postnatal_care_visit;
     }
 
     public String getDelete_status() {

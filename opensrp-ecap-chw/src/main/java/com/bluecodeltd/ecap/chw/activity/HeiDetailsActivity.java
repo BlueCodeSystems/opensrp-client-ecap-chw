@@ -135,6 +135,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private UniqueIdRepository uniqueIdRepository;
     public String gender;
+    public  Button motherProfile;
 
     ObjectMapper oMapper, clientMapper;
     Child child;
@@ -173,6 +174,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);
+
+        motherProfile = findViewById(R.id.motherProfile);
 
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -257,7 +260,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
         updateAncTabTitle();
 
 
+        motherProfile.setOnClickListener(v -> goToMotherDetailActivity(pmtctChild.getPmtct_id()));
     }
+
     public void animateFAB(){
 
 
@@ -928,7 +933,12 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 }
                 break;
             case "pmtct_child_monitoring":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
+                PmtctChildModel modifiedChildModel = new PmtctChildModel();
+                modifiedChildModel.setUnique_id(pmtctChild.getUnique_id());
+                modifiedChildModel.setPmtct_id(pmtctChild.getPmtct_id());
+//                if(childMonitoring == null){
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(modifiedChildModel, Map.class));
+
 
 
                 break;
@@ -990,12 +1000,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
 
-    }
     public void createDialogForScreening(String entryPoint, String message){
         if(entryPoint != null ) {
             if (entryPoint.equals("123") && is_screened.equals("false")) {
@@ -1129,5 +1134,21 @@ public class HeiDetailsActivity extends AppCompatActivity {
         //Setting the title manually
         alert.setTitle("VCA Screening");
         alert.show();
+    }
+    protected void goToMotherDetailActivity(String clientId) {
+
+        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+        intent.putExtra("client_id",  clientId);
+        startActivity(intent);
+        this.finish();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+        startActivity(intent);
+        this.finish();
+
     }
 }

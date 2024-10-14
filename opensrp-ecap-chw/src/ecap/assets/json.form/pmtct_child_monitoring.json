@@ -81,7 +81,6 @@
         "openmrs_entity_id": "unique_id",
         "type": "hidden"
       },
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -202,11 +201,11 @@
         }
       },
       {
-        "key": "hiv_test_p_n",
+        "key": "hiv_test",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_test_p_n",
-        "hint": "Test result at birth",
+        "openmrs_entity_id": "hiv_test",
+        "hint": "HIV Status",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -229,7 +228,7 @@
         "openmrs_entity_id": "azt_3tc_npv",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "AZT+3TC+NVP at Birth",
+        "label": "AZT+3TC+NVP",
         "options": [
           {
             "key": "yes",
@@ -267,7 +266,7 @@
         "openmrs_entity_id": "iycf_counselling",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "CTX",
+        "label": "IYCF Counselling",
         "options": [
           {
             "key": "yes",
@@ -283,7 +282,7 @@
         "key": "infant_feeding_options",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "_6_weeks_infant_feeding_options",
+        "openmrs_entity_id": "infant_feeding_options",
         "type": "native_radio",
         "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding)",
         "options": [
@@ -327,7 +326,6 @@
           "err": "This field is required"
         }
       }
-
     ]
   }
 }
