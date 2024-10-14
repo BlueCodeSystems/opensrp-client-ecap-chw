@@ -97,8 +97,16 @@
             "text": "Lost to follow up"
           },
           {
-            "key": "Transited out and Exited from the program",
-            "text": "Transited out and Exited from the program"
+            "key": "Transited out",
+            "text": "Transited out"
+          },
+          {
+            "key": "Exited PMTCT Program",
+            "text": "Exited PMTCT Program"
+          },
+          {
+            "key": "Exited OVC program",
+            "text": "Exited OVC program"
           }
         ]
       }

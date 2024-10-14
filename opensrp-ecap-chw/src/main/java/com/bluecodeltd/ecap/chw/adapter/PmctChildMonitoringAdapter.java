@@ -182,7 +182,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    visit.setDelete_status("1");
+                    visit.setDeleted_status("1");
                     JSONObject vcaScreeningForm = formUtils.getFormJson("postnatal_care");
                     try {
                         CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(visit, Map.class));

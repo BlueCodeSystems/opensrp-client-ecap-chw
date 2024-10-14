@@ -135,7 +135,7 @@ public class UnderFiveCardFragment extends Fragment {
         if (childMonitoring != null) {
             followUpVisitDate.setText(childMonitoring.getPediatic_care_follow_up() != null ? childMonitoring.getPediatic_care_follow_up() : "Not set");
             pediaticDate.setText(childMonitoring.getDate() != null ? childMonitoring.getDate() : "Not set");
-            hiv_status.setText(childMonitoring.getHiv_test_p_n() != null ? childMonitoring.getHiv_test_p_n() : "Not set");
+            hiv_status.setText(childMonitoring.getHiv_test() != null ? childMonitoring.getHiv_test() : "Not set");
 //            childMonitoringVisit.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
         } else {
             followUpVisitDate.setText("Not Conducted");

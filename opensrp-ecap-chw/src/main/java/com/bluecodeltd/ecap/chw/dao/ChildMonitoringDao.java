@@ -69,18 +69,14 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setPediatic_care_follow_up(getCursorValue(c, "pediatic_care_follow_up"));
             record.setDate(getCursorValue(c, "date"));
-            record.setHiv_test_p_n(getCursorValue(c, "hiv_test_p_n"));
+            record.setHiv_test(getCursorValue(c, "hiv_test"));
             record.setAzt_3tc_npv(getCursorValue(c, "azt_3tc_npv"));
-            record.setDate_tested(getCursorValue(c, "date_tested"));
             record.setCtx(getCursorValue(c, "ctx"));
+            record.setDate_tested(getCursorValue(c, "date_tested"));
             record.setIycf_counselling(getCursorValue(c, "iycf_counselling"));
             record.setInfant_feeding_options(getCursorValue(c, "infant_feeding_options"));
             record.setHigh_risk_hei(getCursorValue(c, "high_risk_hei"));
-            record.setDelete_status(getCursorValue(c,"delete_status"));
-
-            record.setFinal_outcome(getCursorValue(c, "final_outcome"));
-            record.setDate_referred_for_art_if_hiv_positive(getCursorValue(c, "date_referred_for_art_if_hiv_positive"));
-            record.setDate_enrolled_in_art(getCursorValue(c,"date_enrolled_in_art"));
+            record.setDeleted_status(getCursorValue(c,"delete_status"));
 
             return record;
         };

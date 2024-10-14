@@ -4,6 +4,7 @@ public class PtctMotherModel {
 
     private String base_entity_id;
     private String last_interacted_with;
+    private String sm_number;
     private String province;
     private String district;
     private String ward;
@@ -21,53 +22,53 @@ public class PtctMotherModel {
     private String home_address;
     private String nearest_landmark;
     private String mothers_phone;
-    private String agyw_sm_number;
     private String agyw_date_1st_visit;
     private String agyw_gestation_age_in_weeks;
     private String agyw_hiv_tested;
     private String agyw_date_tested;
     private String agyw_result_of_hiv_test;
+    private String agyw_recency_test_result;
+    private String agyw_applicable_recency_result;
     private String agyw_male_hiv_tested;
     private String agyw_male_date_tested;
     private String agyw_male_result_of_hiv_test;
+    private String agyw_positive_male_partner;
+    private String agyw_date_initiated_art;
+    private String agyw_art_number;
+    private String agyw_on_treatment_anc_visit;
+    private String agyw_tb_screening;
+    private String agyw_syphilis_testing;
+    private String agyw_date_tested_syphilis;
+    private String agyw_syphilis_test_result;
     private String agyw_hiv_result_1st_trimester;
     private String agyw_hiv_result_2nd_trimester;
     private String agyw_hiv_result_3rd_trimester;
-    private String hiv_result_1st_trimester;
-    private String hiv_result_2nd_trimester;
-    private String hiv_result_3rd_trimester;
+    private String agyw_vl_result_1st_trimester;
+    private String agyw_unsuppressed_vl_1st;
+    private String agyw_vl_result_2nd_trimester;
+    private String agyw_unsuppressed_vl_2nd;
+    private String agyw_vl_result_3rd_trimester;
+    private String agyw_unsuppressed_vl_3rd;
     private String preventive_services;
     private String other_preventive_service;
     private String date_initiated_art;
     private String art_number;
-    private String sm_number;
     private String date_1st_visit;
     private String gestation_age_in_weeks;
     private String hiv_tested;
     private String date_tested;
     private String result_of_hiv_test;
+    private String recency_test_result;
     private String male_hiv_tested;
     private String male_date_tested;
     private String male_result_of_hiv_test;
     private String treatment_initiated;
-    private String on_treatment_anc_visit;
     private String tb_screening;
-    private String syphylis_testing;
-    private String date_tested_syphylis;
-    private String vl_result_1st_trimester;
-    private String unsuppressed_vl_1st;
-    private String vl_result_2nd_trimester;
-    private String unsuppressed_vl_2nd;
-    private String vl_result_3rd_trimester;
+    private String syphilis_testing;
+    private String date_tested_syphilis;
+    private String syphilis_test_result;
     private String unsuppressed_vl_3rd;
-    private String date_of_delivery;
-    private String place_of_delivery;
-    private String on_art_at_time_of_delivery;
-
     private String delete_status;
-    private String agyw_positive_male_partner;
-    private String recency_test_result;
-    private String applicable_recency_result;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -83,6 +84,14 @@ public class PtctMotherModel {
 
     public void setLast_interacted_with(String last_interacted_with) {
         this.last_interacted_with = last_interacted_with;
+    }
+
+    public String getSm_number() {
+        return sm_number;
+    }
+
+    public void setSm_number(String sm_number) {
+        this.sm_number = sm_number;
     }
 
     public String getProvince() {
@@ -221,14 +230,6 @@ public class PtctMotherModel {
         this.mothers_phone = mothers_phone;
     }
 
-    public String getAgyw_sm_number() {
-        return agyw_sm_number;
-    }
-
-    public void setAgyw_sm_number(String agyw_sm_number) {
-        this.agyw_sm_number = agyw_sm_number;
-    }
-
     public String getAgyw_date_1st_visit() {
         return agyw_date_1st_visit;
     }
@@ -269,6 +270,22 @@ public class PtctMotherModel {
         this.agyw_result_of_hiv_test = agyw_result_of_hiv_test;
     }
 
+    public String getAgyw_recency_test_result() {
+        return agyw_recency_test_result;
+    }
+
+    public void setAgyw_recency_test_result(String agyw_recency_test_result) {
+        this.agyw_recency_test_result = agyw_recency_test_result;
+    }
+
+    public String getAgyw_applicable_recency_result() {
+        return agyw_applicable_recency_result;
+    }
+
+    public void setAgyw_applicable_recency_result(String agyw_applicable_recency_result) {
+        this.agyw_applicable_recency_result = agyw_applicable_recency_result;
+    }
+
     public String getAgyw_male_hiv_tested() {
         return agyw_male_hiv_tested;
     }
@@ -293,28 +310,140 @@ public class PtctMotherModel {
         this.agyw_male_result_of_hiv_test = agyw_male_result_of_hiv_test;
     }
 
-    public String getHiv_result_1st_trimester() {
-        return hiv_result_1st_trimester;
+    public String getAgyw_positive_male_partner() {
+        return agyw_positive_male_partner;
     }
 
-    public void setHiv_result_1st_trimester(String hiv_result_1st_trimester) {
-        this.hiv_result_1st_trimester = hiv_result_1st_trimester;
+    public void setAgyw_positive_male_partner(String agyw_positive_male_partner) {
+        this.agyw_positive_male_partner = agyw_positive_male_partner;
     }
 
-    public String getHiv_result_2nd_trimester() {
-        return hiv_result_2nd_trimester;
+    public String getAgyw_date_initiated_art() {
+        return agyw_date_initiated_art;
     }
 
-    public void setHiv_result_2nd_trimester(String hiv_result_2nd_trimester) {
-        this.hiv_result_2nd_trimester = hiv_result_2nd_trimester;
+    public void setAgyw_date_initiated_art(String agyw_date_initiated_art) {
+        this.agyw_date_initiated_art = agyw_date_initiated_art;
     }
 
-    public String getHiv_result_3rd_trimester() {
-        return hiv_result_3rd_trimester;
+    public String getAgyw_art_number() {
+        return agyw_art_number;
     }
 
-    public void setHiv_result_3rd_trimester(String hiv_result_3rd_trimester) {
-        this.hiv_result_3rd_trimester = hiv_result_3rd_trimester;
+    public void setAgyw_art_number(String agyw_art_number) {
+        this.agyw_art_number = agyw_art_number;
+    }
+
+    public String getAgyw_on_treatment_anc_visit() {
+        return agyw_on_treatment_anc_visit;
+    }
+
+    public void setAgyw_on_treatment_anc_visit(String agyw_on_treatment_anc_visit) {
+        this.agyw_on_treatment_anc_visit = agyw_on_treatment_anc_visit;
+    }
+
+    public String getAgyw_tb_screening() {
+        return agyw_tb_screening;
+    }
+
+    public void setAgyw_tb_screening(String agyw_tb_screening) {
+        this.agyw_tb_screening = agyw_tb_screening;
+    }
+
+    public String getAgyw_syphilis_testing() {
+        return agyw_syphilis_testing;
+    }
+
+    public void setAgyw_syphilis_testing(String agyw_syphilis_testing) {
+        this.agyw_syphilis_testing = agyw_syphilis_testing;
+    }
+
+    public String getAgyw_date_tested_syphilis() {
+        return agyw_date_tested_syphilis;
+    }
+
+    public void setAgyw_date_tested_syphilis(String agyw_date_tested_syphilis) {
+        this.agyw_date_tested_syphilis = agyw_date_tested_syphilis;
+    }
+
+    public String getAgyw_syphilis_test_result() {
+        return agyw_syphilis_test_result;
+    }
+
+    public void setAgyw_syphilis_test_result(String agyw_syphilis_test_result) {
+        this.agyw_syphilis_test_result = agyw_syphilis_test_result;
+    }
+
+    public String getAgyw_hiv_result_1st_trimester() {
+        return agyw_hiv_result_1st_trimester;
+    }
+
+    public void setAgyw_hiv_result_1st_trimester(String agyw_hiv_result_1st_trimester) {
+        this.agyw_hiv_result_1st_trimester = agyw_hiv_result_1st_trimester;
+    }
+
+    public String getAgyw_hiv_result_2nd_trimester() {
+        return agyw_hiv_result_2nd_trimester;
+    }
+
+    public void setAgyw_hiv_result_2nd_trimester(String agyw_hiv_result_2nd_trimester) {
+        this.agyw_hiv_result_2nd_trimester = agyw_hiv_result_2nd_trimester;
+    }
+
+    public String getAgyw_hiv_result_3rd_trimester() {
+        return agyw_hiv_result_3rd_trimester;
+    }
+
+    public void setAgyw_hiv_result_3rd_trimester(String agyw_hiv_result_3rd_trimester) {
+        this.agyw_hiv_result_3rd_trimester = agyw_hiv_result_3rd_trimester;
+    }
+
+    public String getAgyw_vl_result_1st_trimester() {
+        return agyw_vl_result_1st_trimester;
+    }
+
+    public void setAgyw_vl_result_1st_trimester(String agyw_vl_result_1st_trimester) {
+        this.agyw_vl_result_1st_trimester = agyw_vl_result_1st_trimester;
+    }
+
+    public String getAgyw_unsuppressed_vl_1st() {
+        return agyw_unsuppressed_vl_1st;
+    }
+
+    public void setAgyw_unsuppressed_vl_1st(String agyw_unsuppressed_vl_1st) {
+        this.agyw_unsuppressed_vl_1st = agyw_unsuppressed_vl_1st;
+    }
+
+    public String getAgyw_vl_result_2nd_trimester() {
+        return agyw_vl_result_2nd_trimester;
+    }
+
+    public void setAgyw_vl_result_2nd_trimester(String agyw_vl_result_2nd_trimester) {
+        this.agyw_vl_result_2nd_trimester = agyw_vl_result_2nd_trimester;
+    }
+
+    public String getAgyw_unsuppressed_vl_2nd() {
+        return agyw_unsuppressed_vl_2nd;
+    }
+
+    public void setAgyw_unsuppressed_vl_2nd(String agyw_unsuppressed_vl_2nd) {
+        this.agyw_unsuppressed_vl_2nd = agyw_unsuppressed_vl_2nd;
+    }
+
+    public String getAgyw_vl_result_3rd_trimester() {
+        return agyw_vl_result_3rd_trimester;
+    }
+
+    public void setAgyw_vl_result_3rd_trimester(String agyw_vl_result_3rd_trimester) {
+        this.agyw_vl_result_3rd_trimester = agyw_vl_result_3rd_trimester;
+    }
+
+    public String getAgyw_unsuppressed_vl_3rd() {
+        return agyw_unsuppressed_vl_3rd;
+    }
+
+    public void setAgyw_unsuppressed_vl_3rd(String agyw_unsuppressed_vl_3rd) {
+        this.agyw_unsuppressed_vl_3rd = agyw_unsuppressed_vl_3rd;
     }
 
     public String getPreventive_services() {
@@ -347,14 +476,6 @@ public class PtctMotherModel {
 
     public void setArt_number(String art_number) {
         this.art_number = art_number;
-    }
-
-    public String getSm_number() {
-        return sm_number;
-    }
-
-    public void setSm_number(String sm_number) {
-        this.sm_number = sm_number;
     }
 
     public String getDate_1st_visit() {
@@ -397,6 +518,14 @@ public class PtctMotherModel {
         this.result_of_hiv_test = result_of_hiv_test;
     }
 
+    public String getRecency_test_result() {
+        return recency_test_result;
+    }
+
+    public void setRecency_test_result(String recency_test_result) {
+        this.recency_test_result = recency_test_result;
+    }
+
     public String getMale_hiv_tested() {
         return male_hiv_tested;
     }
@@ -429,14 +558,6 @@ public class PtctMotherModel {
         this.treatment_initiated = treatment_initiated;
     }
 
-    public String getOn_treatment_anc_visit() {
-        return on_treatment_anc_visit;
-    }
-
-    public void setOn_treatment_anc_visit(String on_treatment_anc_visit) {
-        this.on_treatment_anc_visit = on_treatment_anc_visit;
-    }
-
     public String getTb_screening() {
         return tb_screening;
     }
@@ -445,60 +566,28 @@ public class PtctMotherModel {
         this.tb_screening = tb_screening;
     }
 
-    public String getSyphylis_testing() {
-        return syphylis_testing;
+    public String getSyphilis_testing() {
+        return syphilis_testing;
     }
 
-    public void setSyphylis_testing(String syphylis_testing) {
-        this.syphylis_testing = syphylis_testing;
+    public void setSyphilis_testing(String syphilis_testing) {
+        this.syphilis_testing = syphilis_testing;
     }
 
-    public String getDate_tested_syphylis() {
-        return date_tested_syphylis;
+    public String getDate_tested_syphilis() {
+        return date_tested_syphilis;
     }
 
-    public void setDate_tested_syphylis(String date_tested_syphylis) {
-        this.date_tested_syphylis = date_tested_syphylis;
+    public void setDate_tested_syphilis(String date_tested_syphilis) {
+        this.date_tested_syphilis = date_tested_syphilis;
     }
 
-    public String getVl_result_1st_trimester() {
-        return vl_result_1st_trimester;
+    public String getSyphilis_test_result() {
+        return syphilis_test_result;
     }
 
-    public void setVl_result_1st_trimester(String vl_result_1st_trimester) {
-        this.vl_result_1st_trimester = vl_result_1st_trimester;
-    }
-
-    public String getUnsuppressed_vl_1st() {
-        return unsuppressed_vl_1st;
-    }
-
-    public void setUnsuppressed_vl_1st(String unsuppressed_vl_1st) {
-        this.unsuppressed_vl_1st = unsuppressed_vl_1st;
-    }
-
-    public String getVl_result_2nd_trimester() {
-        return vl_result_2nd_trimester;
-    }
-
-    public void setVl_result_2nd_trimester(String vl_result_2nd_trimester) {
-        this.vl_result_2nd_trimester = vl_result_2nd_trimester;
-    }
-
-    public String getUnsuppressed_vl_2nd() {
-        return unsuppressed_vl_2nd;
-    }
-
-    public void setUnsuppressed_vl_2nd(String unsuppressed_vl_2nd) {
-        this.unsuppressed_vl_2nd = unsuppressed_vl_2nd;
-    }
-
-    public String getVl_result_3rd_trimester() {
-        return vl_result_3rd_trimester;
-    }
-
-    public void setVl_result_3rd_trimester(String vl_result_3rd_trimester) {
-        this.vl_result_3rd_trimester = vl_result_3rd_trimester;
+    public void setSyphilis_test_result(String syphilis_test_result) {
+        this.syphilis_test_result = syphilis_test_result;
     }
 
     public String getUnsuppressed_vl_3rd() {
@@ -513,79 +602,7 @@ public class PtctMotherModel {
         return delete_status;
     }
 
-    public String getDate_of_delivery() {
-        return date_of_delivery;
-    }
-
-    public void setDate_of_delivery(String date_of_delivery) {
-        this.date_of_delivery = date_of_delivery;
-    }
-
-    public String getPlace_of_delivery() {
-        return place_of_delivery;
-    }
-
-    public void setPlace_of_delivery(String place_of_delivery) {
-        this.place_of_delivery = place_of_delivery;
-    }
-
-    public String getOn_art_at_time_of_delivery() {
-        return on_art_at_time_of_delivery;
-    }
-
-    public void setOn_art_at_time_of_delivery(String on_art_at_time_of_delivery) {
-        this.on_art_at_time_of_delivery = on_art_at_time_of_delivery;
-    }
-
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
-    }
-
-    public String getAgyw_positive_male_partner() {
-        return agyw_positive_male_partner;
-    }
-
-    public void setAgyw_positive_male_partner(String agyw_positive_male_partner) {
-        this.agyw_positive_male_partner = agyw_positive_male_partner;
-    }
-
-    public String getRecency_test_result() {
-        return recency_test_result;
-    }
-
-    public void setRecency_test_result(String recency_test_result) {
-        this.recency_test_result = recency_test_result;
-    }
-
-    public String getApplicable_recency_result() {
-        return applicable_recency_result;
-    }
-
-    public void setApplicable_recency_result(String applicable_recency_result) {
-        this.applicable_recency_result = applicable_recency_result;
-    }
-
-    public String getAgyw_hiv_result_1st_trimester() {
-        return agyw_hiv_result_1st_trimester;
-    }
-
-    public void setAgyw_hiv_result_1st_trimester(String agyw_hiv_result_1st_trimester) {
-        this.agyw_hiv_result_1st_trimester = agyw_hiv_result_1st_trimester;
-    }
-
-    public String getAgyw_hiv_result_2nd_trimester() {
-        return agyw_hiv_result_2nd_trimester;
-    }
-
-    public void setAgyw_hiv_result_2nd_trimester(String agyw_hiv_result_2nd_trimester) {
-        this.agyw_hiv_result_2nd_trimester = agyw_hiv_result_2nd_trimester;
-    }
-
-    public String getAgyw_hiv_result_3rd_trimester() {
-        return agyw_hiv_result_3rd_trimester;
-    }
-
-    public void setAgyw_hiv_result_3rd_trimester(String agyw_hiv_result_3rd_trimester) {
-        this.agyw_hiv_result_3rd_trimester = agyw_hiv_result_3rd_trimester;
     }
 }
