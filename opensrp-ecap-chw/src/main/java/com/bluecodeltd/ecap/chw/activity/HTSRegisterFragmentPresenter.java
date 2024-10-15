@@ -17,6 +17,7 @@ public class HTSRegisterFragmentPresenter implements IndexRegisterFragmentContra
         return this.view;
     }
 
+
     @Override
     public String getDefaultSortQuery() {
         return "ec_hiv_testing_service.first_name ASC ";
@@ -32,7 +33,7 @@ public class HTSRegisterFragmentPresenter implements IndexRegisterFragmentContra
 
         String hivTestingService = Constants.EcapClientTable.EC_HIV_TESTING_SERVICE;
 
-        String countSelect = "SELECT COUNT(*) FROM " + hivTestingService + " WHERE client_number IS NOT NULL ";
+        String countSelect = "SELECT COUNT(*) FROM " + hivTestingService + " WHERE client_number IS NOT NULL";
         String mainSelect = "SELECT *, ec_hiv_testing_service.client_number as _id,ec_hiv_testing_service.health_facility AS facility, first_name,gender FROM ec_hiv_testing_service";
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, countSelect, mainSelect);

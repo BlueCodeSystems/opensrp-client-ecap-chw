@@ -31,6 +31,21 @@ public class HTSLinksDao extends AbstractDao {
 
         return values;
     }
+    public static HTSlinksModel getLinks (String clientID) {
+
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_linked,7,4) || '-' || substr(date_linked,4,2) || '-' || substr(date_linked,1,2)) as sortable_date FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "'" +
+                " AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC ";
+
+        List<HTSlinksModel> values = AbstractDao.readData(sql, getHTSlinksModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
+    }
 
     public static DataMap<HTSlinksModel> getHTSlinksModelMap() {
         return c -> {
