@@ -986,19 +986,23 @@ public class HTSDetailsActivity extends AppCompatActivity {
                         gender = "her";
                     }
 
-                    builder.setMessage("You are about to delete this service and all  links.");
-                    builder.setNegativeButton("NO", (dialog, id) -> {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
+                    Boolean checkForLinks = HTSLinksDao.hasLinksCheck(clientId);
+                    if (checkForLinks == false) {
 
-                    }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        FormUtils formUtils = null;
-                        try {
-                            formUtils = new FormUtils(this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        hivTestingServiceModel.setDelete_status("1");
+
+                        builder.setMessage("You are about to delete this record");
+                        builder.setNegativeButton("NO", (dialog, id) -> {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+
+                        }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                            FormUtils formUtils = null;
+                            try {
+                                formUtils = new FormUtils(this);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            hivTestingServiceModel.setDelete_status("1");
                             JSONObject vcaScreeningForm = formUtils.getFormJson("hiv_testing_service");
                             try {
                                 CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(hivTestingServiceModel, Map.class));
@@ -1014,13 +1018,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
                                 if (childIndexEventClient == null) {
                                     return;
                                 }
-                                saveRegistration(childIndexEventClient,true);
-
-
-
-
-
-
+                                saveRegistration(childIndexEventClient, true);
 
 
                             } catch (Exception e) {
@@ -1028,19 +1026,20 @@ public class HTSDetailsActivity extends AppCompatActivity {
                             }
 
 
+                            Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
 
-                        Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-//                        deleteHtsLink();
 
-                        super.onBackPressed();
-                    }));
+                            super.onBackPressed();
+                        }));
 
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Alert");
-                    alert.show();
-
+                        //Creating dialog box
+                        AlertDialog alert = builder.create();
+                        //Setting the title manually
+                        alert.setTitle("Alert");
+                        alert.show();
+                    } else{
+                        Toasty.success(HTSDetailsActivity.this, "Delete the link(s) before deleting the record", Toast.LENGTH_LONG, true).show();
+                    }
                 break;
 
         }
