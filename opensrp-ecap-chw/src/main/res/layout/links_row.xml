@@ -99,7 +99,17 @@
             android:textSize="12dp"
             />
 
-
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/delete_icon"
+            android:padding="8dp"
+            android:text="Show Details"
+            android:textColor="@color/dark_grey_text"
+            android:textSize="12dp"/>
 
     </LinearLayout>
 
