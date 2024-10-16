@@ -1029,7 +1029,11 @@ public class HTSDetailsActivity extends AppCompatActivity {
                             Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
 
 
-                            super.onBackPressed();
+//                            super.onBackPressed();
+
+                            Intent returnToRegister = new Intent(this, HivTestingServiceActivity.class);
+                            startActivity(returnToRegister);
+                            finish();
                         }));
 
                         //Creating dialog box
