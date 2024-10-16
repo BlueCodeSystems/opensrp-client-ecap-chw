@@ -80,7 +80,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_full_name", true);
+        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String clientId = Utils.getValue(personObjectClient.getColumnmaps(), "pmtct_id", false);
 //        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_sex", true);
@@ -95,7 +95,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
             age = getAge(birthdate);
         }
 
-        pmtctRegisterViewHolder.setupViews(firstName,"ID : " + clientId, gender, age,client_type);
+        pmtctRegisterViewHolder.setupViews(firstName+" "+lastName,"ID : " + clientId, gender, age,client_type);
         pmtctRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         pmtctRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         pmtctRegisterViewHolder.itemView.setTag(smartRegisterClient);

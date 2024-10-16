@@ -204,12 +204,14 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "first_name",
                 "middle_name",
                 "last_name",
-                "client_number"
+                "client_number",
+                "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
                 "mothers_full_name",
                 "pmtct_id",
-                "household_id"
+                "household_id",
+                "delete_status"
         });
         return map;
     }

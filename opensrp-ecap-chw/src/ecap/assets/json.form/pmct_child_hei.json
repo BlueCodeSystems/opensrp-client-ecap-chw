@@ -156,7 +156,7 @@
         "duration": {
           "label": "Age"
         },
-        "min_date": "today-100y",
+        "min_date": "today-2y",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -228,8 +228,158 @@
         "type": "edit_text",
         "hint": "Under 5 Card Number"
 
-      }
+      },
+      {
+        "key": "under_five_clinic_card",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "under_five_clinic_card",
+        "type": "edit_text",
+        "hint": "DBS at Birth"
 
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "DBS AT BIRTH"
+      },
+      {
+        "key": "dbs_at_birth_due_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dbs_at_birth_due_date",
+        "type": "date_picker",
+        "hint": "DBS at Birth (Due Date)",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date"
+        }
+      },
+      {
+        "key": "dbs_at_birth_actual_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dbs_at_birth_actual_date",
+        "type": "date_picker",
+        "hint": "DBS at Birth (Actual Date)",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date"
+        }
+      },
+
+      {
+        "key": "test_result_at_birth",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "test_result_at_birth",
+        "hint": "Test result at birth",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "ND",
+          "D"
+        ],
+        "keys": [
+          "ND",
+          "D"
+        ]
+      },
+      {
+        "key": "date_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_tested",
+        "type": "date_picker",
+        "hint": "Date tested",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date"
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Prophylaxis at birth"
+      },
+
+      {
+        "key": "azt_3tc_npv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "azt_3tc_npv",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "AZT+3TC+NVP at Birth",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "azt_3tc_npv_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "azt_3tc_npv_date",
+        "type": "date_picker",
+        "hint": "AZT+3TC+NVP Date",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date"
+        },
+        "relevance": {
+          "step1:azt_3tc_npv": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      }
     ]
   }
 }

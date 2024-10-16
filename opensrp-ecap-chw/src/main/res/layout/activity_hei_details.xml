@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                       >
 
                         <Button
                             android:onClick="onClick"
@@ -158,7 +158,8 @@
                             android:paddingBottom="0dp"
                             android:text="Service Reports"
                             android:textAllCaps="false"
-                            tools:text="Service Reports" />
+                            tools:text="Service Reports"
+                            android:visibility="gone"/>
                         <Button
                             android:layout_marginLeft="10dp"
                             android:onClick="onClick"
@@ -173,12 +174,13 @@
                             android:paddingBottom="0dp"
                             android:text="Referrals"
                             android:textAllCaps="false"
-                            tools:text="Referrals" />
+                            tools:text="Referrals"
+                            android:visibility="gone"/>
 
                         <Button
                             android:layout_marginLeft="10dp"
                             android:onClick="onClick"
-                            android:id="@+id/household_profile"
+                            android:id="@+id/motherProfile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15dp"
@@ -187,9 +189,9 @@
                             android:paddingTop="0dp"
                             android:paddingEnd="@dimen/profile_btn_registration_info_padding"
                             android:paddingBottom="0dp"
-                            android:text="Household Profile"
+                            android:text="Mother Profile"
                             android:textAllCaps="false"
-                            tools:text="Household Profile" />
+                            tools:text="Mother Profile" />
 
 
 

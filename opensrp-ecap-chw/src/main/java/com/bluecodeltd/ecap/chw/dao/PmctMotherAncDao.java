@@ -11,15 +11,21 @@ public class PmctMotherAncDao extends AbstractDao {
 
     public static PmctMotherAncModel getPMCTMotherAnc(String pmtctID) {
 
+        if (pmtctID == null || pmtctID.isEmpty()) {
+            System.err.println("pmtctID is null or empty.");
+            return null;
+        }
+
+
         String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE pmtct_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
 
-        if (values.size() == 0) {
-            return null;
+        if (values == null || values.isEmpty()) {
+            return null; // No results found
         }
 
-        return values.get(0);
+        return values.get(0); // Return the first result
     }
 
     public static List<PmctMotherAncModel> getPostnatalAncMother(String pmtctID) {

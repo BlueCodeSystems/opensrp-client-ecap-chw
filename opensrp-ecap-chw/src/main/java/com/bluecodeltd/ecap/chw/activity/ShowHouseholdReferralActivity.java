@@ -87,11 +87,12 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         String intent_cname = bundle.getString("householdName");
 
 
-        if (intent_household_id != null) {
-            hh_id.setText("Household ID : " + intent_household_id);
-        } else {
-            hh_id.setText("Household ID : Not available");
+        if (intent_household_id != null && hh_id != null) {
+            hh_id.setText("Household ID: " + intent_household_id);
+        } else if (hh_id != null) {
+            hh_id.setText("Household ID: Not available");
         }
+
 
         if (intent_cname != null) {
             vcaname.setText(intent_cname + " Household");

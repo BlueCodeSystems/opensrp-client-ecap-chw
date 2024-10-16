@@ -3,92 +3,72 @@ package com.bluecodeltd.ecap.chw.model;
 public class PtctMotherModel {
 
     private String base_entity_id;
+    private String last_interacted_with;
+    private String sm_number;
     private String province;
     private String district;
     private String ward;
     private String facility;
     private String partner;
     private String caseworker_name;
-    private String date_enrolled_ecap;
     private String pmtct_id;
+    private String ecap_id_question;
+    private String date_enrolled_ecap;
+    private String ecap_id;
     private String date_enrolled_pmtct;
-    private String mothers_full_name;
-    private String nick_name;
+    private String first_name;
+    private String last_name;
     private String mothers_age;
-    private String date_initiated_on_art;
-    private String art_number;
-    private String mothers_smh_no;
     private String home_address;
     private String nearest_landmark;
     private String mothers_phone;
-    private String date_of_st_contact;
+    private String agyw_date_1st_visit;
+    private String agyw_gestation_age_in_weeks;
+    private String agyw_hiv_tested;
+    private String agyw_date_tested;
+    private String agyw_result_of_hiv_test;
+    private String agyw_recency_test_result;
+    private String agyw_applicable_recency_result;
+    private String agyw_male_hiv_tested;
+    private String agyw_male_date_tested;
+    private String agyw_male_result_of_hiv_test;
+    private String agyw_positive_male_partner;
+    private String agyw_date_initiated_art;
+    private String agyw_art_number;
+    private String agyw_on_treatment_anc_visit;
+    private String agyw_tb_screening;
+    private String agyw_syphilis_testing;
+    private String agyw_date_tested_syphilis;
+    private String agyw_syphilis_test_result;
+    private String agyw_hiv_result_1st_trimester;
+    private String agyw_hiv_result_2nd_trimester;
+    private String agyw_hiv_result_3rd_trimester;
+    private String agyw_vl_result_1st_trimester;
+    private String agyw_unsuppressed_vl_1st;
+    private String agyw_vl_result_2nd_trimester;
+    private String agyw_unsuppressed_vl_2nd;
+    private String agyw_vl_result_3rd_trimester;
+    private String agyw_unsuppressed_vl_3rd;
+    private String preventive_services;
+    private String other_preventive_service;
+    private String date_initiated_art;
+    private String art_number;
+    private String date_1st_visit;
     private String gestation_age_in_weeks;
     private String hiv_tested;
     private String date_tested;
     private String result_of_hiv_test;
-    private String recency_test_result_if_applicable;
-    private String vl_result_at_trimester_1;
-    private String vl_result_at_trimester_2;
-    private String vl_result_at_trimester_3;
-    private String male_partner_tested;
-    private String date_male_partner_tested;
-    private String result_r_nr;
+    private String recency_test_result;
+    private String male_hiv_tested;
+    private String male_date_tested;
+    private String male_result_of_hiv_test;
     private String treatment_initiated;
-    private String date_initiated_on_treatment;
-    private String on_art_st_anc;
     private String tb_screening;
     private String syphilis_testing;
-    private String syphilis_test_type;
-    private String syphilis_other;
-    private String date_tested_for_syphilis;
-    private String syphilis_result;
-    private String date_of_delivery;
-    private String place_of_delivery;
-    private String on_art_at_time_of_delivery;
-    private String date_of_st_post_natal_care;
-    private String mother_tested_for_hiv;
-    private String hiv_test_result_r_nr_at_6_weeks;
-    private String art_initiated_at_6_weeks;
-    private String art_adherence_counselling_support_at_6_weeks;
-    private String family_planning_counselling_at_6_weeks;
-    private String comments_at_postnatal_care_visit_6_weeks;
-    private String hiv_test_result_r_nr_at_6_months;
-    private String art_initiated_at_6_months;
-    private String family_planning_counselling_at_6_months;
-    private String number_of_condoms_distributed_at_6_months;
-    private String comments_at_postnatal_care_visit_6;
-    private String hiv_test_result_r_nr_at_9_weeks;
-    private String art_initiated_at_9_weeks;
-    private String art_adherence_counselling_support_at_9_weeks;
-    private String family_planning_counselling_at_9_weeks;
-    private String comments_at_postnatal_care_visit_9_weeks;
-    private String hiv_test_result_r_nr_at_9_months;
-    private String art_initiated_at_9_months;
-    private String family_planning_counselling_at_9_months;
-    private String number_of_condoms_distributed_at_9_months;
-    private String comments_at_postnatal_care_visit_9;
-    private String hiv_test_result_r_nr_at_12_weeks;
-    private String art_initiated_at_12_weeks;
-    private String art_adherence_counselling_support_at_12_weeks;
-    private String family_planning_counselling_at_12_weeks;
-    private String comments_at_postnatal_care_visit_12_weeks;
-    private String hiv_test_result_r_nr_at_12_months;
-    private String art_initiated_at_12_months;
-    private String family_planning_counselling_at_12_months;
-    private String number_of_condoms_distributed_at_12_months;
-    private String comments_at_postnatal_care_visit_12;
-    private String hiv_test_result_r_nr_at_6_weeks_2;
-    private String art_initiated_at_6_weeks_2;
-    private String art_adherence_counselling_support_at_6_weeks_2;
-    private String family_planning_counselling_at_18_months;
-    private String number_of_condoms_distributed_at_18_months;
-    private String comments_at_postnatal_care_visit_18;
-    private String mothers_outcome;
+    private String date_tested_syphilis;
+    private String syphilis_test_result;
+    private String unsuppressed_vl_3rd;
     private String delete_status;
-    private String ecap_id_question;
-    private String Household_id;
-    private String postnatal_care_visit;
-
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -96,6 +76,22 @@ public class PtctMotherModel {
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getLast_interacted_with() {
+        return last_interacted_with;
+    }
+
+    public void setLast_interacted_with(String last_interacted_with) {
+        this.last_interacted_with = last_interacted_with;
+    }
+
+    public String getSm_number() {
+        return sm_number;
+    }
+
+    public void setSm_number(String sm_number) {
+        this.sm_number = sm_number;
     }
 
     public String getProvince() {
@@ -146,6 +142,22 @@ public class PtctMotherModel {
         this.caseworker_name = caseworker_name;
     }
 
+    public String getPmtct_id() {
+        return pmtct_id;
+    }
+
+    public void setPmtct_id(String pmtct_id) {
+        this.pmtct_id = pmtct_id;
+    }
+
+    public String getEcap_id_question() {
+        return ecap_id_question;
+    }
+
+    public void setEcap_id_question(String ecap_id_question) {
+        this.ecap_id_question = ecap_id_question;
+    }
+
     public String getDate_enrolled_ecap() {
         return date_enrolled_ecap;
     }
@@ -154,12 +166,12 @@ public class PtctMotherModel {
         this.date_enrolled_ecap = date_enrolled_ecap;
     }
 
-    public String getPmtct_id() {
-        return pmtct_id;
+    public String getEcap_id() {
+        return ecap_id;
     }
 
-    public void setPmtct_id(String pmtct_id) {
-        this.pmtct_id = pmtct_id;
+    public void setEcap_id(String ecap_id) {
+        this.ecap_id = ecap_id;
     }
 
     public String getDate_enrolled_pmtct() {
@@ -170,20 +182,20 @@ public class PtctMotherModel {
         this.date_enrolled_pmtct = date_enrolled_pmtct;
     }
 
-    public String getMothers_full_name() {
-        return mothers_full_name;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setMothers_full_name(String mothers_full_name) {
-        this.mothers_full_name = mothers_full_name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getNick_name() {
-        return nick_name;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setNick_name(String nick_name) {
-        this.nick_name = nick_name;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getMothers_age() {
@@ -192,30 +204,6 @@ public class PtctMotherModel {
 
     public void setMothers_age(String mothers_age) {
         this.mothers_age = mothers_age;
-    }
-
-    public String getDate_initiated_on_art() {
-        return date_initiated_on_art;
-    }
-
-    public void setDate_initiated_on_art(String date_initiated_on_art) {
-        this.date_initiated_on_art = date_initiated_on_art;
-    }
-
-    public String getArt_number() {
-        return art_number;
-    }
-
-    public void setArt_number(String art_number) {
-        this.art_number = art_number;
-    }
-
-    public String getMothers_smh_no() {
-        return mothers_smh_no;
-    }
-
-    public void setMothers_smh_no(String mothers_smh_no) {
-        this.mothers_smh_no = mothers_smh_no;
     }
 
     public String getHome_address() {
@@ -242,12 +230,260 @@ public class PtctMotherModel {
         this.mothers_phone = mothers_phone;
     }
 
-    public String getDate_of_st_contact() {
-        return date_of_st_contact;
+    public String getAgyw_date_1st_visit() {
+        return agyw_date_1st_visit;
     }
 
-    public void setDate_of_st_contact(String date_of_st_contact) {
-        this.date_of_st_contact = date_of_st_contact;
+    public void setAgyw_date_1st_visit(String agyw_date_1st_visit) {
+        this.agyw_date_1st_visit = agyw_date_1st_visit;
+    }
+
+    public String getAgyw_gestation_age_in_weeks() {
+        return agyw_gestation_age_in_weeks;
+    }
+
+    public void setAgyw_gestation_age_in_weeks(String agyw_gestation_age_in_weeks) {
+        this.agyw_gestation_age_in_weeks = agyw_gestation_age_in_weeks;
+    }
+
+    public String getAgyw_hiv_tested() {
+        return agyw_hiv_tested;
+    }
+
+    public void setAgyw_hiv_tested(String agyw_hiv_tested) {
+        this.agyw_hiv_tested = agyw_hiv_tested;
+    }
+
+    public String getAgyw_date_tested() {
+        return agyw_date_tested;
+    }
+
+    public void setAgyw_date_tested(String agyw_date_tested) {
+        this.agyw_date_tested = agyw_date_tested;
+    }
+
+    public String getAgyw_result_of_hiv_test() {
+        return agyw_result_of_hiv_test;
+    }
+
+    public void setAgyw_result_of_hiv_test(String agyw_result_of_hiv_test) {
+        this.agyw_result_of_hiv_test = agyw_result_of_hiv_test;
+    }
+
+    public String getAgyw_recency_test_result() {
+        return agyw_recency_test_result;
+    }
+
+    public void setAgyw_recency_test_result(String agyw_recency_test_result) {
+        this.agyw_recency_test_result = agyw_recency_test_result;
+    }
+
+    public String getAgyw_applicable_recency_result() {
+        return agyw_applicable_recency_result;
+    }
+
+    public void setAgyw_applicable_recency_result(String agyw_applicable_recency_result) {
+        this.agyw_applicable_recency_result = agyw_applicable_recency_result;
+    }
+
+    public String getAgyw_male_hiv_tested() {
+        return agyw_male_hiv_tested;
+    }
+
+    public void setAgyw_male_hiv_tested(String agyw_male_hiv_tested) {
+        this.agyw_male_hiv_tested = agyw_male_hiv_tested;
+    }
+
+    public String getAgyw_male_date_tested() {
+        return agyw_male_date_tested;
+    }
+
+    public void setAgyw_male_date_tested(String agyw_male_date_tested) {
+        this.agyw_male_date_tested = agyw_male_date_tested;
+    }
+
+    public String getAgyw_male_result_of_hiv_test() {
+        return agyw_male_result_of_hiv_test;
+    }
+
+    public void setAgyw_male_result_of_hiv_test(String agyw_male_result_of_hiv_test) {
+        this.agyw_male_result_of_hiv_test = agyw_male_result_of_hiv_test;
+    }
+
+    public String getAgyw_positive_male_partner() {
+        return agyw_positive_male_partner;
+    }
+
+    public void setAgyw_positive_male_partner(String agyw_positive_male_partner) {
+        this.agyw_positive_male_partner = agyw_positive_male_partner;
+    }
+
+    public String getAgyw_date_initiated_art() {
+        return agyw_date_initiated_art;
+    }
+
+    public void setAgyw_date_initiated_art(String agyw_date_initiated_art) {
+        this.agyw_date_initiated_art = agyw_date_initiated_art;
+    }
+
+    public String getAgyw_art_number() {
+        return agyw_art_number;
+    }
+
+    public void setAgyw_art_number(String agyw_art_number) {
+        this.agyw_art_number = agyw_art_number;
+    }
+
+    public String getAgyw_on_treatment_anc_visit() {
+        return agyw_on_treatment_anc_visit;
+    }
+
+    public void setAgyw_on_treatment_anc_visit(String agyw_on_treatment_anc_visit) {
+        this.agyw_on_treatment_anc_visit = agyw_on_treatment_anc_visit;
+    }
+
+    public String getAgyw_tb_screening() {
+        return agyw_tb_screening;
+    }
+
+    public void setAgyw_tb_screening(String agyw_tb_screening) {
+        this.agyw_tb_screening = agyw_tb_screening;
+    }
+
+    public String getAgyw_syphilis_testing() {
+        return agyw_syphilis_testing;
+    }
+
+    public void setAgyw_syphilis_testing(String agyw_syphilis_testing) {
+        this.agyw_syphilis_testing = agyw_syphilis_testing;
+    }
+
+    public String getAgyw_date_tested_syphilis() {
+        return agyw_date_tested_syphilis;
+    }
+
+    public void setAgyw_date_tested_syphilis(String agyw_date_tested_syphilis) {
+        this.agyw_date_tested_syphilis = agyw_date_tested_syphilis;
+    }
+
+    public String getAgyw_syphilis_test_result() {
+        return agyw_syphilis_test_result;
+    }
+
+    public void setAgyw_syphilis_test_result(String agyw_syphilis_test_result) {
+        this.agyw_syphilis_test_result = agyw_syphilis_test_result;
+    }
+
+    public String getAgyw_hiv_result_1st_trimester() {
+        return agyw_hiv_result_1st_trimester;
+    }
+
+    public void setAgyw_hiv_result_1st_trimester(String agyw_hiv_result_1st_trimester) {
+        this.agyw_hiv_result_1st_trimester = agyw_hiv_result_1st_trimester;
+    }
+
+    public String getAgyw_hiv_result_2nd_trimester() {
+        return agyw_hiv_result_2nd_trimester;
+    }
+
+    public void setAgyw_hiv_result_2nd_trimester(String agyw_hiv_result_2nd_trimester) {
+        this.agyw_hiv_result_2nd_trimester = agyw_hiv_result_2nd_trimester;
+    }
+
+    public String getAgyw_hiv_result_3rd_trimester() {
+        return agyw_hiv_result_3rd_trimester;
+    }
+
+    public void setAgyw_hiv_result_3rd_trimester(String agyw_hiv_result_3rd_trimester) {
+        this.agyw_hiv_result_3rd_trimester = agyw_hiv_result_3rd_trimester;
+    }
+
+    public String getAgyw_vl_result_1st_trimester() {
+        return agyw_vl_result_1st_trimester;
+    }
+
+    public void setAgyw_vl_result_1st_trimester(String agyw_vl_result_1st_trimester) {
+        this.agyw_vl_result_1st_trimester = agyw_vl_result_1st_trimester;
+    }
+
+    public String getAgyw_unsuppressed_vl_1st() {
+        return agyw_unsuppressed_vl_1st;
+    }
+
+    public void setAgyw_unsuppressed_vl_1st(String agyw_unsuppressed_vl_1st) {
+        this.agyw_unsuppressed_vl_1st = agyw_unsuppressed_vl_1st;
+    }
+
+    public String getAgyw_vl_result_2nd_trimester() {
+        return agyw_vl_result_2nd_trimester;
+    }
+
+    public void setAgyw_vl_result_2nd_trimester(String agyw_vl_result_2nd_trimester) {
+        this.agyw_vl_result_2nd_trimester = agyw_vl_result_2nd_trimester;
+    }
+
+    public String getAgyw_unsuppressed_vl_2nd() {
+        return agyw_unsuppressed_vl_2nd;
+    }
+
+    public void setAgyw_unsuppressed_vl_2nd(String agyw_unsuppressed_vl_2nd) {
+        this.agyw_unsuppressed_vl_2nd = agyw_unsuppressed_vl_2nd;
+    }
+
+    public String getAgyw_vl_result_3rd_trimester() {
+        return agyw_vl_result_3rd_trimester;
+    }
+
+    public void setAgyw_vl_result_3rd_trimester(String agyw_vl_result_3rd_trimester) {
+        this.agyw_vl_result_3rd_trimester = agyw_vl_result_3rd_trimester;
+    }
+
+    public String getAgyw_unsuppressed_vl_3rd() {
+        return agyw_unsuppressed_vl_3rd;
+    }
+
+    public void setAgyw_unsuppressed_vl_3rd(String agyw_unsuppressed_vl_3rd) {
+        this.agyw_unsuppressed_vl_3rd = agyw_unsuppressed_vl_3rd;
+    }
+
+    public String getPreventive_services() {
+        return preventive_services;
+    }
+
+    public void setPreventive_services(String preventive_services) {
+        this.preventive_services = preventive_services;
+    }
+
+    public String getOther_preventive_service() {
+        return other_preventive_service;
+    }
+
+    public void setOther_preventive_service(String other_preventive_service) {
+        this.other_preventive_service = other_preventive_service;
+    }
+
+    public String getDate_initiated_art() {
+        return date_initiated_art;
+    }
+
+    public void setDate_initiated_art(String date_initiated_art) {
+        this.date_initiated_art = date_initiated_art;
+    }
+
+    public String getArt_number() {
+        return art_number;
+    }
+
+    public void setArt_number(String art_number) {
+        this.art_number = art_number;
+    }
+
+    public String getDate_1st_visit() {
+        return date_1st_visit;
+    }
+
+    public void setDate_1st_visit(String date_1st_visit) {
+        this.date_1st_visit = date_1st_visit;
     }
 
     public String getGestation_age_in_weeks() {
@@ -282,60 +518,36 @@ public class PtctMotherModel {
         this.result_of_hiv_test = result_of_hiv_test;
     }
 
-    public String getRecency_test_result_if_applicable() {
-        return recency_test_result_if_applicable;
+    public String getRecency_test_result() {
+        return recency_test_result;
     }
 
-    public void setRecency_test_result_if_applicable(String recency_test_result_if_applicable) {
-        this.recency_test_result_if_applicable = recency_test_result_if_applicable;
+    public void setRecency_test_result(String recency_test_result) {
+        this.recency_test_result = recency_test_result;
     }
 
-    public String getVl_result_at_trimester_1() {
-        return vl_result_at_trimester_1;
+    public String getMale_hiv_tested() {
+        return male_hiv_tested;
     }
 
-    public void setVl_result_at_trimester_1(String vl_result_at_trimester_1) {
-        this.vl_result_at_trimester_1 = vl_result_at_trimester_1;
+    public void setMale_hiv_tested(String male_hiv_tested) {
+        this.male_hiv_tested = male_hiv_tested;
     }
 
-    public String getVl_result_at_trimester_2() {
-        return vl_result_at_trimester_2;
+    public String getMale_date_tested() {
+        return male_date_tested;
     }
 
-    public void setVl_result_at_trimester_2(String vl_result_at_trimester_2) {
-        this.vl_result_at_trimester_2 = vl_result_at_trimester_2;
+    public void setMale_date_tested(String male_date_tested) {
+        this.male_date_tested = male_date_tested;
     }
 
-    public String getVl_result_at_trimester_3() {
-        return vl_result_at_trimester_3;
+    public String getMale_result_of_hiv_test() {
+        return male_result_of_hiv_test;
     }
 
-    public void setVl_result_at_trimester_3(String vl_result_at_trimester_3) {
-        this.vl_result_at_trimester_3 = vl_result_at_trimester_3;
-    }
-
-    public String getMale_partner_tested() {
-        return male_partner_tested;
-    }
-
-    public void setMale_partner_tested(String male_partner_tested) {
-        this.male_partner_tested = male_partner_tested;
-    }
-
-    public String getDate_male_partner_tested() {
-        return date_male_partner_tested;
-    }
-
-    public void setDate_male_partner_tested(String date_male_partner_tested) {
-        this.date_male_partner_tested = date_male_partner_tested;
-    }
-
-    public String getResult_r_nr() {
-        return result_r_nr;
-    }
-
-    public void setResult_r_nr(String result_r_nr) {
-        this.result_r_nr = result_r_nr;
+    public void setMale_result_of_hiv_test(String male_result_of_hiv_test) {
+        this.male_result_of_hiv_test = male_result_of_hiv_test;
     }
 
     public String getTreatment_initiated() {
@@ -344,22 +556,6 @@ public class PtctMotherModel {
 
     public void setTreatment_initiated(String treatment_initiated) {
         this.treatment_initiated = treatment_initiated;
-    }
-
-    public String getDate_initiated_on_treatment() {
-        return date_initiated_on_treatment;
-    }
-
-    public void setDate_initiated_on_treatment(String date_initiated_on_treatment) {
-        this.date_initiated_on_treatment = date_initiated_on_treatment;
-    }
-
-    public String getOn_art_st_anc() {
-        return on_art_st_anc;
-    }
-
-    public void setOn_art_st_anc(String on_art_st_anc) {
-        this.on_art_st_anc = on_art_st_anc;
     }
 
     public String getTb_screening() {
@@ -378,372 +574,28 @@ public class PtctMotherModel {
         this.syphilis_testing = syphilis_testing;
     }
 
-    public String getSyphilis_test_type() {
-        return syphilis_test_type;
+    public String getDate_tested_syphilis() {
+        return date_tested_syphilis;
     }
 
-    public void setSyphilis_test_type(String syphilis_test_type) {
-        this.syphilis_test_type = syphilis_test_type;
+    public void setDate_tested_syphilis(String date_tested_syphilis) {
+        this.date_tested_syphilis = date_tested_syphilis;
     }
 
-    public String getSyphilis_other() {
-        return syphilis_other;
+    public String getSyphilis_test_result() {
+        return syphilis_test_result;
     }
 
-    public void setSyphilis_other(String syphilis_other) {
-        this.syphilis_other = syphilis_other;
+    public void setSyphilis_test_result(String syphilis_test_result) {
+        this.syphilis_test_result = syphilis_test_result;
     }
 
-    public String getDate_tested_for_syphilis() {
-        return date_tested_for_syphilis;
+    public String getUnsuppressed_vl_3rd() {
+        return unsuppressed_vl_3rd;
     }
 
-    public void setDate_tested_for_syphilis(String date_tested_for_syphilis) {
-        this.date_tested_for_syphilis = date_tested_for_syphilis;
-    }
-
-    public String getSyphilis_result() {
-        return syphilis_result;
-    }
-
-    public void setSyphilis_result(String syphilis_result) {
-        this.syphilis_result = syphilis_result;
-    }
-
-    public String getDate_of_delivery() {
-        return date_of_delivery;
-    }
-
-    public void setDate_of_delivery(String date_of_delivery) {
-        this.date_of_delivery = date_of_delivery;
-    }
-
-    public String getPlace_of_delivery() {
-        return place_of_delivery;
-    }
-
-    public void setPlace_of_delivery(String place_of_delivery) {
-        this.place_of_delivery = place_of_delivery;
-    }
-
-    public String getOn_art_at_time_of_delivery() {
-        return on_art_at_time_of_delivery;
-    }
-
-    public void setOn_art_at_time_of_delivery(String on_art_at_time_of_delivery) {
-        this.on_art_at_time_of_delivery = on_art_at_time_of_delivery;
-    }
-
-    public String getDate_of_st_post_natal_care() {
-        return date_of_st_post_natal_care;
-    }
-
-    public void setDate_of_st_post_natal_care(String date_of_st_post_natal_care) {
-        this.date_of_st_post_natal_care = date_of_st_post_natal_care;
-    }
-
-    public String getMother_tested_for_hiv() {
-        return mother_tested_for_hiv;
-    }
-
-    public void setMother_tested_for_hiv(String mother_tested_for_hiv) {
-        this.mother_tested_for_hiv = mother_tested_for_hiv;
-    }
-
-    public String getHiv_test_result_r_nr_at_6_weeks() {
-        return hiv_test_result_r_nr_at_6_weeks;
-    }
-
-    public void setHiv_test_result_r_nr_at_6_weeks(String hiv_test_result_r_nr_at_6_weeks) {
-        this.hiv_test_result_r_nr_at_6_weeks = hiv_test_result_r_nr_at_6_weeks;
-    }
-
-    public String getArt_initiated_at_6_weeks() {
-        return art_initiated_at_6_weeks;
-    }
-
-    public void setArt_initiated_at_6_weeks(String art_initiated_at_6_weeks) {
-        this.art_initiated_at_6_weeks = art_initiated_at_6_weeks;
-    }
-
-    public String getArt_adherence_counselling_support_at_6_weeks() {
-        return art_adherence_counselling_support_at_6_weeks;
-    }
-
-    public void setArt_adherence_counselling_support_at_6_weeks(String art_adherence_counselling_support_at_6_weeks) {
-        this.art_adherence_counselling_support_at_6_weeks = art_adherence_counselling_support_at_6_weeks;
-    }
-
-    public String getFamily_planning_counselling_at_6_weeks() {
-        return family_planning_counselling_at_6_weeks;
-    }
-
-    public void setFamily_planning_counselling_at_6_weeks(String family_planning_counselling_at_6_weeks) {
-        this.family_planning_counselling_at_6_weeks = family_planning_counselling_at_6_weeks;
-    }
-
-    public String getComments_at_postnatal_care_visit_6_weeks() {
-        return comments_at_postnatal_care_visit_6_weeks;
-    }
-
-    public void setComments_at_postnatal_care_visit_6_weeks(String comments_at_postnatal_care_visit_6_weeks) {
-        this.comments_at_postnatal_care_visit_6_weeks = comments_at_postnatal_care_visit_6_weeks;
-    }
-
-    public String getHiv_test_result_r_nr_at_6_months() {
-        return hiv_test_result_r_nr_at_6_months;
-    }
-
-    public void setHiv_test_result_r_nr_at_6_months(String hiv_test_result_r_nr_at_6_months) {
-        this.hiv_test_result_r_nr_at_6_months = hiv_test_result_r_nr_at_6_months;
-    }
-
-    public String getArt_initiated_at_6_months() {
-        return art_initiated_at_6_months;
-    }
-
-    public void setArt_initiated_at_6_months(String art_initiated_at_6_months) {
-        this.art_initiated_at_6_months = art_initiated_at_6_months;
-    }
-
-    public String getFamily_planning_counselling_at_6_months() {
-        return family_planning_counselling_at_6_months;
-    }
-
-    public void setFamily_planning_counselling_at_6_months(String family_planning_counselling_at_6_months) {
-        this.family_planning_counselling_at_6_months = family_planning_counselling_at_6_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_6_months() {
-        return number_of_condoms_distributed_at_6_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_6_months(String number_of_condoms_distributed_at_6_months) {
-        this.number_of_condoms_distributed_at_6_months = number_of_condoms_distributed_at_6_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_6() {
-        return comments_at_postnatal_care_visit_6;
-    }
-
-    public void setComments_at_postnatal_care_visit_6(String comments_at_postnatal_care_visit_6) {
-        this.comments_at_postnatal_care_visit_6 = comments_at_postnatal_care_visit_6;
-    }
-
-    public String getHiv_test_result_r_nr_at_9_weeks() {
-        return hiv_test_result_r_nr_at_9_weeks;
-    }
-
-    public void setHiv_test_result_r_nr_at_9_weeks(String hiv_test_result_r_nr_at_9_weeks) {
-        this.hiv_test_result_r_nr_at_9_weeks = hiv_test_result_r_nr_at_9_weeks;
-    }
-
-    public String getArt_initiated_at_9_weeks() {
-        return art_initiated_at_9_weeks;
-    }
-
-    public void setArt_initiated_at_9_weeks(String art_initiated_at_9_weeks) {
-        this.art_initiated_at_9_weeks = art_initiated_at_9_weeks;
-    }
-
-    public String getArt_adherence_counselling_support_at_9_weeks() {
-        return art_adherence_counselling_support_at_9_weeks;
-    }
-
-    public void setArt_adherence_counselling_support_at_9_weeks(String art_adherence_counselling_support_at_9_weeks) {
-        this.art_adherence_counselling_support_at_9_weeks = art_adherence_counselling_support_at_9_weeks;
-    }
-
-    public String getFamily_planning_counselling_at_9_weeks() {
-        return family_planning_counselling_at_9_weeks;
-    }
-
-    public void setFamily_planning_counselling_at_9_weeks(String family_planning_counselling_at_9_weeks) {
-        this.family_planning_counselling_at_9_weeks = family_planning_counselling_at_9_weeks;
-    }
-
-    public String getComments_at_postnatal_care_visit_9_weeks() {
-        return comments_at_postnatal_care_visit_9_weeks;
-    }
-
-    public void setComments_at_postnatal_care_visit_9_weeks(String comments_at_postnatal_care_visit_9_weeks) {
-        this.comments_at_postnatal_care_visit_9_weeks = comments_at_postnatal_care_visit_9_weeks;
-    }
-
-    public String getHiv_test_result_r_nr_at_9_months() {
-        return hiv_test_result_r_nr_at_9_months;
-    }
-
-    public void setHiv_test_result_r_nr_at_9_months(String hiv_test_result_r_nr_at_9_months) {
-        this.hiv_test_result_r_nr_at_9_months = hiv_test_result_r_nr_at_9_months;
-    }
-
-    public String getArt_initiated_at_9_months() {
-        return art_initiated_at_9_months;
-    }
-
-    public void setArt_initiated_at_9_months(String art_initiated_at_9_months) {
-        this.art_initiated_at_9_months = art_initiated_at_9_months;
-    }
-
-    public String getFamily_planning_counselling_at_9_months() {
-        return family_planning_counselling_at_9_months;
-    }
-
-    public void setFamily_planning_counselling_at_9_months(String family_planning_counselling_at_9_months) {
-        this.family_planning_counselling_at_9_months = family_planning_counselling_at_9_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_9_months() {
-        return number_of_condoms_distributed_at_9_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_9_months(String number_of_condoms_distributed_at_9_months) {
-        this.number_of_condoms_distributed_at_9_months = number_of_condoms_distributed_at_9_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_9() {
-        return comments_at_postnatal_care_visit_9;
-    }
-
-    public void setComments_at_postnatal_care_visit_9(String comments_at_postnatal_care_visit_9) {
-        this.comments_at_postnatal_care_visit_9 = comments_at_postnatal_care_visit_9;
-    }
-
-    public String getHiv_test_result_r_nr_at_12_weeks() {
-        return hiv_test_result_r_nr_at_12_weeks;
-    }
-
-    public void setHiv_test_result_r_nr_at_12_weeks(String hiv_test_result_r_nr_at_12_weeks) {
-        this.hiv_test_result_r_nr_at_12_weeks = hiv_test_result_r_nr_at_12_weeks;
-    }
-
-    public String getArt_initiated_at_12_weeks() {
-        return art_initiated_at_12_weeks;
-    }
-
-    public void setArt_initiated_at_12_weeks(String art_initiated_at_12_weeks) {
-        this.art_initiated_at_12_weeks = art_initiated_at_12_weeks;
-    }
-
-    public String getArt_adherence_counselling_support_at_12_weeks() {
-        return art_adherence_counselling_support_at_12_weeks;
-    }
-
-    public void setArt_adherence_counselling_support_at_12_weeks(String art_adherence_counselling_support_at_12_weeks) {
-        this.art_adherence_counselling_support_at_12_weeks = art_adherence_counselling_support_at_12_weeks;
-    }
-
-    public String getFamily_planning_counselling_at_12_weeks() {
-        return family_planning_counselling_at_12_weeks;
-    }
-
-    public void setFamily_planning_counselling_at_12_weeks(String family_planning_counselling_at_12_weeks) {
-        this.family_planning_counselling_at_12_weeks = family_planning_counselling_at_12_weeks;
-    }
-
-    public String getComments_at_postnatal_care_visit_12_weeks() {
-        return comments_at_postnatal_care_visit_12_weeks;
-    }
-
-    public void setComments_at_postnatal_care_visit_12_weeks(String comments_at_postnatal_care_visit_12_weeks) {
-        this.comments_at_postnatal_care_visit_12_weeks = comments_at_postnatal_care_visit_12_weeks;
-    }
-
-    public String getHiv_test_result_r_nr_at_12_months() {
-        return hiv_test_result_r_nr_at_12_months;
-    }
-
-    public void setHiv_test_result_r_nr_at_12_months(String hiv_test_result_r_nr_at_12_months) {
-        this.hiv_test_result_r_nr_at_12_months = hiv_test_result_r_nr_at_12_months;
-    }
-
-    public String getArt_initiated_at_12_months() {
-        return art_initiated_at_12_months;
-    }
-
-    public void setArt_initiated_at_12_months(String art_initiated_at_12_months) {
-        this.art_initiated_at_12_months = art_initiated_at_12_months;
-    }
-
-    public String getFamily_planning_counselling_at_12_months() {
-        return family_planning_counselling_at_12_months;
-    }
-
-    public void setFamily_planning_counselling_at_12_months(String family_planning_counselling_at_12_months) {
-        this.family_planning_counselling_at_12_months = family_planning_counselling_at_12_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_12_months() {
-        return number_of_condoms_distributed_at_12_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_12_months(String number_of_condoms_distributed_at_12_months) {
-        this.number_of_condoms_distributed_at_12_months = number_of_condoms_distributed_at_12_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_12() {
-        return comments_at_postnatal_care_visit_12;
-    }
-
-    public void setComments_at_postnatal_care_visit_12(String comments_at_postnatal_care_visit_12) {
-        this.comments_at_postnatal_care_visit_12 = comments_at_postnatal_care_visit_12;
-    }
-
-    public String getHiv_test_result_r_nr_at_6_weeks_2() {
-        return hiv_test_result_r_nr_at_6_weeks_2;
-    }
-
-    public void setHiv_test_result_r_nr_at_6_weeks_2(String hiv_test_result_r_nr_at_6_weeks_2) {
-        this.hiv_test_result_r_nr_at_6_weeks_2 = hiv_test_result_r_nr_at_6_weeks_2;
-    }
-
-    public String getArt_initiated_at_6_weeks_2() {
-        return art_initiated_at_6_weeks_2;
-    }
-
-    public void setArt_initiated_at_6_weeks_2(String art_initiated_at_6_weeks_2) {
-        this.art_initiated_at_6_weeks_2 = art_initiated_at_6_weeks_2;
-    }
-
-    public String getArt_adherence_counselling_support_at_6_weeks_2() {
-        return art_adherence_counselling_support_at_6_weeks_2;
-    }
-
-    public void setArt_adherence_counselling_support_at_6_weeks_2(String art_adherence_counselling_support_at_6_weeks_2) {
-        this.art_adherence_counselling_support_at_6_weeks_2 = art_adherence_counselling_support_at_6_weeks_2;
-    }
-
-    public String getFamily_planning_counselling_at_18_months() {
-        return family_planning_counselling_at_18_months;
-    }
-
-    public void setFamily_planning_counselling_at_18_months(String family_planning_counselling_at_18_months) {
-        this.family_planning_counselling_at_18_months = family_planning_counselling_at_18_months;
-    }
-
-    public String getNumber_of_condoms_distributed_at_18_months() {
-        return number_of_condoms_distributed_at_18_months;
-    }
-
-    public void setNumber_of_condoms_distributed_at_18_months(String number_of_condoms_distributed_at_18_months) {
-        this.number_of_condoms_distributed_at_18_months = number_of_condoms_distributed_at_18_months;
-    }
-
-    public String getComments_at_postnatal_care_visit_18() {
-        return comments_at_postnatal_care_visit_18;
-    }
-
-    public void setComments_at_postnatal_care_visit_18(String comments_at_postnatal_care_visit_18) {
-        this.comments_at_postnatal_care_visit_18 = comments_at_postnatal_care_visit_18;
-    }
-
-    public String getMothers_outcome() {
-        return mothers_outcome;
-    }
-
-    public void setMothers_outcome(String mothers_outcome) {
-        this.mothers_outcome = mothers_outcome;
+    public void setUnsuppressed_vl_3rd(String unsuppressed_vl_3rd) {
+        this.unsuppressed_vl_3rd = unsuppressed_vl_3rd;
     }
 
     public String getDelete_status() {
@@ -752,29 +604,5 @@ public class PtctMotherModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
-    }
-
-    public String getEcap_id_question() {
-        return ecap_id_question;
-    }
-
-    public void setEcap_id_question(String ecap_id_question) {
-        this.ecap_id_question = ecap_id_question;
-    }
-
-    public String getHousehold_id() {
-        return Household_id;
-    }
-
-    public void setHousehold_id(String household_id) {
-        Household_id = household_id;
-    }
-
-    public String getPostnatal_care_visit() {
-        return postnatal_care_visit;
-    }
-
-    public void setPostnatal_care_visit(String postnatal_care_visit) {
-        this.postnatal_care_visit = postnatal_care_visit;
     }
 }

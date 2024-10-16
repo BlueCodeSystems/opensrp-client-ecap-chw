@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
@@ -96,6 +97,56 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
                 }
             }
         });
+
+        holder.deleteRecord.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("You are about to delete this record");
+            builder.setNegativeButton("NO", (dialog, id) -> {
+                //  Action for 'NO' Button
+                dialog.cancel();
+
+            }).setPositiveButton("YES",((dialogInterface, i) -> {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                client.setDelete_status("1");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("hiv_testing_links");
+                try {
+                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( client, Map.class));
+                    vcaScreeningForm.put("entity_id", client.getBase_entity_id());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true);
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                Intent returnToProfile = new Intent(context, HTSDetailsActivity.class);
+                returnToProfile.putExtra("client_id",  client.getClient_number());
+                context.startActivity(returnToProfile);
+                ((Activity) context).finish();
+
+            }));
+
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("Alert");
+            alert.show();
+        });
     }
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
@@ -132,7 +183,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView landmark = dialogView.findViewById(R.id.landmark);
         TextView phone = dialogView.findViewById(R.id.phone);
         TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
-        TextView date_tested = dialogView.findViewById(R.id.date_tested);
+        TextView date_tested = dialogView.findViewById(R.id.hiv_status_r_nr);
         TextView test_results = dialogView.findViewById(R.id.test_results);
         TextView date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
         TextView initial_art_date = dialogView.findViewById(R.id.initial_art_date);
@@ -232,13 +283,14 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
     public class View extends RecyclerView.ViewHolder {
         TextView clientNameTextView, clientAgeTextView,clientDetails;
-        ImageView editClient;
+        ImageView editClient,deleteRecord;
         public View(@NonNull android.view.View itemView) {
             super(itemView);
             clientNameTextView = itemView.findViewById(R.id.clientNameTextView);
             clientAgeTextView = itemView.findViewById(R.id.clientAgeTextView);
             clientDetails = itemView.findViewById(R.id.details);
             editClient = itemView.findViewById(R.id.edit_client);
+            deleteRecord = itemView.findViewById(R.id.delete);
         }
     }
 
@@ -319,7 +371,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
 
         Runnable runnable = () -> {
 

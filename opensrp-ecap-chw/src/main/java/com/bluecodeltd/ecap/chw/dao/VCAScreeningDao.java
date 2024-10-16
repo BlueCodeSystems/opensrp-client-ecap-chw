@@ -176,6 +176,8 @@ public class VCAScreeningDao extends AbstractDao {
             record.setAbym_undergone_vmmc(getCursorValue(c, "abym_undergone_vmmc"));
             record.setAbym_in_school(getCursorValue(c, "abym_in_school"));
             record.setAbym_economic_strengthening(getCursorValue(c, "abym_economic_strengthening"));
+            record.setVca_receiving_caseworker(getCursorValue(c, "vca_receiving_caseworker"));
+            record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
 
             return record;

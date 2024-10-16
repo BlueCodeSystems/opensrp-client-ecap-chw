@@ -44,6 +44,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -62,6 +63,7 @@ import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
@@ -726,63 +728,76 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             }
             String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;
             }
+            if (encounterType.equals("Referral")) {
 
-            try {
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                startActivity(openSignatureIntent);
+            } else if(encounterType.equals("Household Visitation Form 0-20 years")){
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("Child",childId);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                startActivity(openSignatureIntent);
+            } else
+            {
+                try{
 
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+                    ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
-                if (childIndexEventClient == null) {
-                    return;
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+
+                    saveRegistration(childIndexEventClient, is_edit_mode);
+
+
+                    switch (encounterType) {
+                        case "VCA Case Plan":
+
+                            JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                            String dateId = cpdate.optString("value");
+
+                            JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                            String cp_Id = cpId.optString("value");
+
+                            finish();
+                            startActivity(getIntent());
+                            openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
+
+                            break;
+
+                        case "Household Visitation Form 0-20 years":
+                        case "Member Sub Population":
+                        case "Sub Population":
+                        case "VCA Assessment":
+                        case "HIV Risk Assessment Above 15":
+                        case "HIV Risk Assessment Below 15":
+
+                            finish();
+                            startActivity(getIntent());
+
+                            break;
+                        case "Case Record Status":
+
+                            finish();
+                            startActivity(getIntent());
+                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                            startActivity(i);
+
+                            break;
+
+                    }
+
+                    Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+
+                } catch (Exception e) {
+                    Timber.e(e);
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
-
-                switch (encounterType) {
-                    case "VCA Case Plan":
-
-                        JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = cpdate.optString("value");
-
-                        JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                        String cp_Id = cpId.optString("value");
-
-                        finish();
-                        startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId,cp_Id);
-
-                        break;
-
-                    case "Household Visitation Form 0-20 years":
-                    case "Member Sub Population":
-                    case "Sub Population":
-                    case "VCA Assessment":
-                    case "HIV Risk Assessment Above 15":
-                    case "HIV Risk Assessment Below 15":
-
-                        finish();
-                        startActivity(getIntent());
-
-                        break;
-                    case "Case Record Status":
-
-                        finish();
-                        startActivity(getIntent());
-                        Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                        startActivity(i);
-
-                        break;
-
-                }
-
-                Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
-            } catch (Exception e) {
-                Timber.e(e);
             }
-
         }
 
     }
@@ -999,6 +1014,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                                 encounterType, Constants.EcapClientTable.EC_CHILD_SAFETY_PLAN);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Hiv Assessment For Caregiver":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_CAREGIVER_HIV_ASSESSMENT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
@@ -1237,6 +1263,51 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         switch (formName) {
 
             case "case_status":
+                if(indexVCA.getIs_on_hiv_treatment() == null){
+                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
+                    indexVCAMap.remove("date_started_art");
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                }
+
+                //Populate Caseworker Name
+                populateCaseworkerPhoneAndName(formToBeOpened);
+
+                if(indexVCA.getIndex_check_box() != null && !indexVCA.getIndex_check_box().equals("1")){
+                    formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
+                    formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
+                }
+                GraduationModel graduationModel = GraduationDao.getGraduationStatus(child.getHousehold_id());
+                if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
+
+                JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
+                    if (graduationStatus != null) {
+                        graduationStatus.put("type", "toaster_notes");
+                        graduationStatus.put("text", indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " household needs to meet all eight graduation benchmarks in order to graduate");
+                    }
+
+                    JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "reason");
+                    if (reasonField != null) {
+                        JSONArray optionsArray = reasonField.getJSONArray("options");
+                        if (optionsArray != null) {
+                            for (int i = 0; i < optionsArray.length(); i++) {
+                                JSONObject option = optionsArray.getJSONObject(i);
+                                if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
+                                    optionsArray.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+                formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+
+                break;
+
             case "vca_screening":
                 if(indexVCA.getIs_on_hiv_treatment() == null){
                     @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
@@ -1478,8 +1549,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+        Intent returnToHouseholdIndexActivity = new Intent(IndexDetailsActivity.this, IndexRegisterActivity.class);
+        startActivity(returnToHouseholdIndexActivity);
+        finish();
 
     }
  public void createDialogForScreening(String entryPoint, String message){

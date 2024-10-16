@@ -15,8 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.PmctChildMonitoringAdapter;
-import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
+import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
+import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class PmctChildMonitoringFragment extends Fragment {
     }
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<PtmctMotherMonitoringModel> assessmentList = new ArrayList<>();
+    private ArrayList<ChildMonitoringModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
     /**
@@ -79,10 +80,10 @@ public class PmctChildMonitoringFragment extends Fragment {
 
         vieww = inflater.inflate(R.layout.fragment_pmct_child_monitoring, container, false);
 
-        HashMap<String, PtmctMotherMonitoringModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
+        HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
 
 // Initialize motherDetails as null.
-        PtmctMotherMonitoringModel motherDetails = null;
+        PmtctChildModel motherDetails = null;
 
         String uniqueId = null;
 
@@ -108,7 +109,7 @@ public class PmctChildMonitoringFragment extends Fragment {
 
         assessmentList.clear();
 
-        assessmentList.addAll(PtmctMotherMonitoringDao.getChildMonitoring(uniqueId));
+        assessmentList.addAll(ChildMonitoringDao.getPmctChildMonitoringList(uniqueId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
