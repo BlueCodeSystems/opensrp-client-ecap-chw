@@ -108,7 +108,7 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
     }
     @Override
     protected String getDefaultSortQuery() {
-        return "";
+        return "delete_status IS NULL";
     }
 
     @Override
