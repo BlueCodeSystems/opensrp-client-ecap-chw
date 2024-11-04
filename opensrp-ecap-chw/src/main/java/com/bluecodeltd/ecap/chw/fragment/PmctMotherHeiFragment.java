@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
 import com.bluecodeltd.ecap.chw.adapter.PmctMotherHeiAdapter;
-import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,8 +43,8 @@ public class PmctMotherHeiFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<PtmctMotherMonitoringModel> assessmentList = new ArrayList<>();
+    RecyclerView.Adapter childAdapter;
+    private ArrayList<PmtctChildModel> pmtctChild = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
 
@@ -107,19 +107,19 @@ public class PmctMotherHeiFragment extends Fragment {
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
 
-        assessmentList.clear();
+        pmtctChild.clear();
 
-        assessmentList.addAll(PtmctMotherMonitoringDao.getPmctMotherHei(pmtctId));
+        pmtctChild.addAll(PmtctChildDao.getPmctChildHei(pmtctId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new PmctMotherHeiAdapter( assessmentList,getContext());
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        childAdapter = new PmctMotherHeiAdapter(pmtctChild,getContext());
+        recyclerView.setAdapter(childAdapter);
+        childAdapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        if (childAdapter.getItemCount() > 0){
 
             linearLayout.setVisibility(View.GONE);
         }

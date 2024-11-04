@@ -384,6 +384,7 @@ public class HouseholdDao extends AbstractDao {
 
             Household record = new Household();
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setSignature(getCursorValue(c, "signature"));
             //household_case_status
             record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
             record.setFirst_name(getCursorValue(c, "first_name"));
@@ -486,7 +487,9 @@ public class HouseholdDao extends AbstractDao {
             record.setNew_caregiver_phone(getCursorValue(c, "new_caregiver_phone"));
             record.setSub_population(getCursorValue(c, "sub_population"));
             record.setHousehold_location(getCursorValue(c,"household_location"));
-
+            record.setNew_caregiver_death_date(getCursorValue(c,"new_caregiver_death_date"));
+            record.setHousehold_receiving_caseworker(getCursorValue(c, "household_receiving_caseworker"));
+            record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
             return record;
         };

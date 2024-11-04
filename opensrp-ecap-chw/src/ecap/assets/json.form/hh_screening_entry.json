@@ -77,6 +77,13 @@
         "toaster_info_title": "Information Toaster Info Title"
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -320,6 +327,10 @@
             "key": "PBFW",
             "text": "PBFW"
 
+          },
+          {
+            "key": "ABYM",
+            "text": "At risk adolescent boys and young men (ABYM)"
           }
         ],
         "v_required": {
@@ -1109,6 +1120,13 @@
           "value": true,
           "err": "This is a Required field."
         }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
       },
       {
         "key": "date_approved",

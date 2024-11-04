@@ -40,7 +40,7 @@ public class ChwRepositoryFlv {
         while (upgradeTo <= newVersion) {
             switch (upgradeTo) {
                 case 2:
-                    upgradeToVersion2(context, db);
+                    upgradeToVersion2(db);
                     break;
                 case 3:
                     upgradeToVersion3(db);
@@ -49,10 +49,16 @@ public class ChwRepositoryFlv {
                     upgradeToVersion4(db);
                     break;
                 case 5:
-                    upgradeToVersion5(context,db);
+                    upgradeToVersion5(db);
                     break;
                 case 6:
                     upgradeToVersion6(db);
+                    break;
+                case 7:
+                    upgradeToVersion7(db);
+                    break;
+                case 8:
+                    upgradeToVersion8(db);
                     break;
                 default:
                     break;
@@ -62,7 +68,7 @@ public class ChwRepositoryFlv {
     }
 
 
-    private static void upgradeToVersion2(Context context, SQLiteDatabase db) {
+    private static void upgradeToVersion2(SQLiteDatabase db) {
         try {
             db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_EVENT_ID_COL);
             db.execSQL(VaccineRepository.EVENT_ID_INDEX);
@@ -168,7 +174,7 @@ public class ChwRepositoryFlv {
         }
     }
 
-    private static void upgradeToVersion5(Context context,SQLiteDatabase db) {
+    private static void upgradeToVersion5(SQLiteDatabase db) {
         try {
             db.execSQL("ALTER TABLE ec_household ADD COLUMN last_interacted_with TEXT");
             db.execSQL("ALTER TABLE ec_client_index ADD COLUMN household_location");
@@ -487,6 +493,22 @@ public class ChwRepositoryFlv {
             Timber.e(e, "upgradeToVersion6 ");
         }
     }
+    private static void upgradeToVersion7(SQLiteDatabase db) {
+        try {
+
+            db.execSQL("ALTER TABLE ec_vca_service_report ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household_service_report ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household_visitation_for_caregiver ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household_visitation_for_vca_0_20_years ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_referral ADD COLUMN signature TEXT");
+            db.execSQL("ALTER TABLE ec_household ADD COLUMN signature TEXT");
+
+
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion7 ");
+        }
+    }
 
     private static void clearAppData(Context context) {
         // Clear cache
@@ -538,21 +560,19 @@ public class ChwRepositoryFlv {
         }
     }
 
-    private static void upgradeToVersion7(SQLiteDatabase db) {
-        try {
-            for (String query : RepositoryUtilsFlv.UPGRADE_V8) {
-                db.execSQL(query);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "upgradeToVersion7 ");
-        }
-    }
+
 
     private static void upgradeToVersion8(SQLiteDatabase db) {
         try {
-            for (String query : RepositoryUtilsFlv.UPGRADE_V9) {
-                db.execSQL(query);
-            }
+            db.execSQL("ALTER TABLE ec_household ADD COLUMN district_moved_to TEXT");
+            db.execSQL("ALTER TABLE ec_household ADD COLUMN household_receiving_caseworker TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN district_moved_to TEXT");
+            db.execSQL("ALTER TABLE ec_client_index ADD COLUMN vca_receiving_caseworker TEXT");
+            db.execSQL("ALTER TABLE ec_pmtct_mother ADD COLUMN first_name TEXT");
+            db.execSQL("ALTER TABLE ec_pmtct_mother ADD COLUMN last_name TEXT");
+            db.execSQL("ALTER TABLE ec_pmtct_mother ADD COLUMN sm_number TEXT");
+
+
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion8 ");
         }

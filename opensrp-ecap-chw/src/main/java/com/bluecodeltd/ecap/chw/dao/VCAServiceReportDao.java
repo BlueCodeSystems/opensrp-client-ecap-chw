@@ -51,6 +51,41 @@ public class VCAServiceReportDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static boolean checkAllVcaViralLoads(String householdId) {
+        // SQL query to get all viral load results for the given household
+        String sql = "SELECT  ec_vca_service_report.vl_last_result,  ec_vca_service_report.unique_id,ec_client_index.household_id\n" +
+                " FROM ec_vca_service_report\n" +
+                " JOIN ec_client_index ON ec_client_index.unique_id = ec_vca_service_report.unique_id\n" +
+                " WHERE household_id = '" + householdId + "' AND (ec_vca_service_report.delete_status IS NULL OR ec_vca_service_report.delete_status <> '1') \n" +
+                " AND ec_vca_service_report.is_hiv_positive = 'yes' GROUP BY ec_vca_service_report.unique_id";
+        // Map the result set to extract the vl_last_result as an integer
+        AbstractDao.DataMap<Integer> dataMap = c -> getCursorIntValue(c, "vl_last_result");
+
+        List<Integer> values;
+        try {
+            // Execute the query and get the list of vl_last_result values
+            values = AbstractDao.readData(sql, dataMap);
+        } catch (Exception e) {
+            e.printStackTrace(); // Replace with proper logging
+            return false;
+        }
+
+        // Check if all values are less than 1000
+        if (values != null) {
+            for (Integer result : values) {
+                if (result == null || result >= 1000) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
 
 
     public static DataMap<VCAServiceModel> getServiceModelMap() {

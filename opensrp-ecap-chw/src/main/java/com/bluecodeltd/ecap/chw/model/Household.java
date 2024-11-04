@@ -4,6 +4,7 @@ public class Household {
 
 
     private String unique_id;
+    private String new_caregiver_death_date;
     private String caseworker_name;
     //household_case_status
     private String household_case_status;
@@ -102,9 +103,37 @@ public class Household {
     private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
     private String sub_population;
+    private String signature;
     private  String relationship_other;
     private String household_location;
 
+    private String household_receiving_caseworker;
+
+    private String district_moved_to;
+
+    public String getHousehold_receiving_caseworker() {
+        return household_receiving_caseworker;
+    }
+
+    public void setHousehold_receiving_caseworker(String household_receiving_caseworker) {
+        this.household_receiving_caseworker = household_receiving_caseworker;
+    }
+
+    public String getDistrict_moved_to() {
+        return district_moved_to;
+    }
+
+    public void setDistrict_moved_to(String district_moved_to) {
+        this.district_moved_to = district_moved_to;
+    }
+
+    public String getNew_caregiver_death_date() {
+        return new_caregiver_death_date;
+    }
+
+    public void setNew_caregiver_death_date(String new_caregiver_death_date) {
+        this.new_caregiver_death_date = new_caregiver_death_date;
+    }
 
     public String getRelationship_other() {
         return relationship_other;
@@ -740,6 +769,14 @@ public class Household {
 
     public void setConsent_check_box(String consent_check_box) {
         this.consent_check_box = consent_check_box;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public String getPhone() {

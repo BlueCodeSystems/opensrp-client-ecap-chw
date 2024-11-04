@@ -27,8 +27,8 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
 import com.bluecodeltd.ecap.chw.model.Household;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -56,10 +56,10 @@ import timber.log.Timber;
 
 public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMonitoringAdapter.ViewHolder> {
     Context context;
-    List<PtmctMotherMonitoringModel> postnatal;
+    List<ChildMonitoringModel> postnatal;
     ObjectMapper oMapper;
 
-    public PmctChildMonitoringAdapter(Context context, List<PtmctMotherMonitoringModel> postnatal) {
+    public PmctChildMonitoringAdapter(Context context, List<ChildMonitoringModel> postnatal) {
         this.context = context;
         this.postnatal = postnatal;
     }
@@ -74,11 +74,11 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     @Override
     public void onBindViewHolder(@NonNull PmctChildMonitoringAdapter.ViewHolder holder, int position) {
-        final PtmctMotherMonitoringModel visit = postnatal.get(position);
+        final ChildMonitoringModel visit = postnatal.get(position);
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getDbs_at_birth_actual_date());
+        holder.txtDate.setText(visit.getDate());
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -157,7 +157,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
                 try {
 
-                    openFormUsingFormUtils(context, "mother_pmtct_monitoring", visit);
+                    openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -182,7 +182,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    visit.setDelete_status("1");
+                    visit.setDeleted_status("1");
                     JSONObject vcaScreeningForm = formUtils.getFormJson("postnatal_care");
                     try {
                         CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(visit, Map.class));
@@ -220,7 +220,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
                 Timber.e(e);
             }
         });
-        String sVisit = visit.getDbs_at_birth_actual_date();
+        String sVisit = visit.getDate();
         if(sVisit != null){
 
             SpannableString spannableString = new SpannableString(sVisit);
@@ -248,7 +248,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, PtmctMotherMonitoringModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, ChildMonitoringModel visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 

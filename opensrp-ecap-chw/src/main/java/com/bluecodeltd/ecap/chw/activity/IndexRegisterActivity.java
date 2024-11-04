@@ -298,14 +298,19 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
                 if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
-                    RegisterParams registerParam = new RegisterParams();
-                    registerParam.setEditMode(false);
-                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(R.string.saving_dialog_title);
-                    indexRegisterPresenter().saveForm(jsonString, registerParam);
-                    uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
+//                    RegisterParams registerParam = new RegisterParams();
+//                    registerParam.setEditMode(false);
+//                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
+//                    showProgressDialog(R.string.saving_dialog_title);
+//                    indexRegisterPresenter().saveForm(jsonString, registerParam);
+//                    uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
+//
+//                   gotToChildProfile(uniqueId);
+                    Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+                    passClosureForm.putExtra("jsonForm", jsonString);
+                    startActivity(passClosureForm);
 
-                   gotToChildProfile(uniqueId);
+
 
                 } else if(Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))){

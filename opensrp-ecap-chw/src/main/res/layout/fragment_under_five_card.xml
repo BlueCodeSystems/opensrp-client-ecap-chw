@@ -150,7 +150,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="DBS at Birth(Due Date)"
+                    android:text="Pediatic Follow UP Visit"
                     android:paddingLeft="@dimen/contact_drawable_padding"
                     android:paddingTop="@dimen/contact_small_padding"
                     android:paddingBottom="@dimen/contact_small_padding"
@@ -160,7 +160,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/dbs_due_date"
+                    android:id="@+id/pediatic_visit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -183,7 +183,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="DBS at Birth(Actual Date)"
+                    android:text="Date"
                     android:paddingLeft="@dimen/contact_drawable_padding"
                     android:paddingTop="@dimen/contact_small_padding"
                     android:paddingBottom="@dimen/contact_small_padding"
@@ -193,7 +193,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/dbs_actual_date"
+                    android:id="@+id/pediatic_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -215,7 +215,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Date Tested"
+                    android:text="HIV Status"
                     android:paddingLeft="@dimen/contact_drawable_padding"
                     android:paddingTop="@dimen/contact_small_padding"
                     android:paddingBottom="@dimen/contact_small_padding"
@@ -225,7 +225,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/date_tested"
+                    android:id="@+id/hiv_status_r_nr"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -237,70 +237,70 @@
                     />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:weightSum="2"-->
+<!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="NVP Date Given"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+<!--                <TextView-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="NVP Date Given"-->
+<!--                    android:paddingLeft="@dimen/contact_drawable_padding"-->
+<!--                    android:paddingTop="@dimen/contact_small_padding"-->
+<!--                    android:paddingBottom="@dimen/contact_small_padding"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium"-->
+<!--                    android:textColor="@color/black_text_color"-->
+<!--                    />-->
 
-                <TextView
-                    android:id="@+id/nvp_date_start"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+<!--                <TextView-->
+<!--                    android:id="@+id/nvp_date_start"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="start"-->
+<!--                    android:paddingLeft="@dimen/contact_drawable_padding"-->
+<!--                    android:paddingTop="@dimen/contact_small_padding"-->
+<!--                    android:paddingBottom="@dimen/contact_small_padding"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium"-->
+<!--                    android:textColor="@color/black_text_color"-->
+<!--                    />-->
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:weightSum="2"-->
+<!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Child Monitoring Visit"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+<!--                <TextView-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Child Monitoring Visit"-->
+<!--                    android:paddingLeft="@dimen/contact_drawable_padding"-->
+<!--                    android:paddingTop="@dimen/contact_small_padding"-->
+<!--                    android:paddingBottom="@dimen/contact_small_padding"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium"-->
+<!--                    android:textColor="@color/black_text_color"-->
+<!--                    />-->
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/child_monitoring_visit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+<!--                <TextView-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:id="@+id/child_monitoring_visit"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="start"-->
+<!--                    android:paddingLeft="@dimen/contact_drawable_padding"-->
+<!--                    android:paddingTop="@dimen/contact_small_padding"-->
+<!--                    android:paddingBottom="@dimen/contact_small_padding"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium"-->
+<!--                    android:textColor="@color/black_text_color"-->
+<!--                    />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <include layout="@layout/content_base_profile" />
         </androidx.appcompat.widget.LinearLayoutCompat>
