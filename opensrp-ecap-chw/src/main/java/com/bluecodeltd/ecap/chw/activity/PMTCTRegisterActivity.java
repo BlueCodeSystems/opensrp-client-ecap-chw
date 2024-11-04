@@ -46,6 +46,7 @@ import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -217,15 +218,24 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
 //                e.printStackTrace();
 //            }
 //        }
-//        JSONObject dateEdited = getFieldJSONObject(fields(jsonObject, STEP1), "date_edited");
-//        if (dateEdited  != null) {
-//            dateEdited.remove(JsonFormUtils.VALUE);
-//            try {
-//                dateEdited.put(JsonFormUtils.VALUE, getFormattedDate());
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        JSONObject agyw_sm_number = getFieldJSONObject(fields(jsonObject, STEP1), "agyw_sm_number");
+        if (agyw_sm_number  != null) {
+            agyw_sm_number.remove(JsonFormUtils.VALUE);
+            try {
+                agyw_sm_number.put(JsonFormUtils.VALUE, generateRandomNumber(code));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject sm_number = getFieldJSONObject(fields(jsonObject, STEP1), "sm_number");
+        if (sm_number  != null) {
+            sm_number.remove(JsonFormUtils.VALUE);
+            try {
+                sm_number.put(JsonFormUtils.VALUE, generateRandomNumber(code));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
@@ -504,6 +514,20 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             }
         }
     }
+
+
+        // Function to generate the random number in the desired format
+        public static String generateRandomNumber(String facilityCode) {
+            // Generate a random 7-digit number
+            Random random = new Random();
+            int randomSevenDigitNumber = 1000000 + random.nextInt(9000000);  // Ensures 7 digits
+
+            // Get the current year and extract the last 2 digits
+            String year = String.valueOf(Year.now().getValue()).substring(2);
+
+            // Return the generated string in the required format
+            return facilityCode + "/" + randomSevenDigitNumber + "/" + year;
+        }
 
 
 }

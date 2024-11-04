@@ -10,7 +10,7 @@ public class HivTestingServiceDao extends AbstractDao {
 
     public static HivTestingServiceModel getHivServiceClient (String clientID) {
 
-        String sql = "SELECT * FROM ec_hiv_testing_service WHERE client_number = '" + clientID + "' ";
+        String sql = "SELECT * FROM ec_hiv_testing_service WHERE client_number = '" + clientID + "' AND (delete_status IS NULL OR delete_status != '1') ";
 
         List<HivTestingServiceModel> values = AbstractDao.readData(sql, getHIVTestingServiceModelMap());
 

@@ -218,7 +218,8 @@
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -230,7 +231,7 @@
                         android:textColor="@color/white"
                         android:textStyle="italic"
                         android:gravity="center"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -242,6 +243,7 @@
                     android:layout_alignParentRight="true"
                     app:backgroundTint="@color/white"
                     app:fabSize="mini"
+                    android:visibility="gone"
                     app:srcCompat="@android:drawable/ic_input_add"  />
 
             </RelativeLayout>
@@ -359,7 +361,8 @@
                     android:elevation="2dp"
                     android:gravity="center"
                     android:minWidth="50dp"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                  >
 
 
                     <TextView
@@ -370,7 +373,6 @@
                         android:text="Add Child"
                         android:textColor="@color/white"
                         android:textStyle="italic"
-                        android:visibility="visible"
                         android:gravity="center"/>
 
                 </RelativeLayout>

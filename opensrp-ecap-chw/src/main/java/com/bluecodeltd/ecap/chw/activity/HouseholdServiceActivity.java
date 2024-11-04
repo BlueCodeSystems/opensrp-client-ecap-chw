@@ -70,6 +70,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     String intent_householdId;
+    String intent_cname;
     newCaregiverModel updatedCaregiver;
 
     @SuppressLint("MissingInflatedId")
@@ -90,7 +91,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
 
         intent_householdId = getIntent().getExtras().getString("householdId");
-        String intent_cname = getIntent().getExtras().getString("cname");
+        intent_cname = getIntent().getExtras().getString("cname");
 
         updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
 
@@ -137,34 +138,34 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             case R.id.services1:
                 GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(intent_householdId);
                 Household house = HouseholdDao.getHousehold(intent_householdId);
-if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
-    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
+                if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
+                    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
 
-} else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
-        showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+                } else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
+                    showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
 
-} else {
-        try {
-            FormUtils formUtils = new FormUtils(this);
-            JSONObject indexRegisterForm;
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(this);
+                        JSONObject indexRegisterForm;
 
-            indexRegisterForm = formUtils.getFormJson("service_report_household");
+                        indexRegisterForm = formUtils.getFormJson("service_report_household");
 
-            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
-            cId.put("value",hh_id.getText().toString());
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                        cId.put("value",hh_id.getText().toString());
 
-            JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-            hivStatus.put("value",house.getCaregiver_hiv_status());
-
-
-            startFormActivity(indexRegisterForm);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                        JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                        hivStatus.put("value",house.getCaregiver_hiv_status());
 
 
-}
+                        startFormActivity(indexRegisterForm);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
 
 
                 break;
@@ -222,31 +223,39 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
+            if (EncounterType.equals("Household Service Report")) {
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                openSignatureIntent.putExtra("householdId",intent_householdId);
+                openSignatureIntent.putExtra("cname",intent_cname);
+                startActivity(openSignatureIntent);
+            } else{
+                try {
 
-            try {
+                    ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
 
-                if (childIndexEventClient == null) {
-                    return;
+
+                    saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+
+
+                    switch (EncounterType) {
+
+                        case "Household Service Report":
+
+                            Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                            refreshData();
+
+
+                            break;
+
+                    }
+                } catch(Exception e){
+                    Timber.e(e);
                 }
-
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
-
-
-                switch (EncounterType) {
-
-                    case "Household Service Report":
-
-                        Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        refreshData();
-
-
-                        break;
-
-                }
-            } catch (Exception e) {
-                Timber.e(e);
             }
         }
     }

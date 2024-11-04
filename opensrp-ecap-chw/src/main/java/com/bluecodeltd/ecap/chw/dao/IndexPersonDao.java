@@ -639,7 +639,8 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "physical_address"),
                     getCursorValue(c, "date_offered_enrollment"),
 //                    getCursorValue(c, "school_name"),
-                    getCursorValue(c, "schoolName")
+                    getCursorValue(c, "schoolName"),
+                    getCursorValue(c, "signature")
 
 
             );
@@ -740,7 +741,8 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
                     getCursorValue(c, "date_offered_enrollment"),
-                    getCursorValue(c, "school_name")
+                    getCursorValue(c, "school_name"),
+                    getCursorValue(c, "signature")
 
             );
         };
@@ -870,7 +872,8 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "vl_next_result"),
                     getCursorValue(c, "physical_address"),
                     getCursorValue(c, "date_offered_enrollment"),
-                    getCursorValue(c, "school_name")
+                    getCursorValue(c, "school_name"),
+                    getCursorValue(c, "signature")
 
             );
         };

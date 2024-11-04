@@ -83,6 +83,14 @@
         "type": "gps"
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+
+      {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -367,12 +375,16 @@
             "text": "Adherence Support"
           },
           {
-            "key": "not applicable",
-            "text": "Not Applicable"
+            "key": "DART (Directly Administered ART)",
+            "text": "DART (Directly Administered ART)"
           },
           {
             "key": "other",
             "text": "Other Specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
           }
         ],
         "v_required": {

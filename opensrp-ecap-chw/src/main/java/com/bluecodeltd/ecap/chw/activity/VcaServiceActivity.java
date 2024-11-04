@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -55,7 +54,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class VcaServiceActivity extends AppCompatActivity {
@@ -88,7 +86,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         hh_services_link = findViewById(R.id.hh_service_link);
         HouseholdLinkFromVca();
 
-         intent_vcaid = getIntent().getExtras().getString("vcaid");
+        intent_vcaid = getIntent().getExtras().getString("vcaid");
         String intent_cname = getIntent().getExtras().getString("vcaname");
         hivstatus = getIntent().getExtras().getString("hivstatus");
         household_id = getIntent().getExtras().getString("hh_id");
@@ -202,7 +200,6 @@ public class VcaServiceActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
             boolean is_edit_mode = false;
@@ -221,35 +218,45 @@ public class VcaServiceActivity extends AppCompatActivity {
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
-
-            try {
-
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
-
-                if (childIndexEventClient == null) {
-                    return;
-                }
-
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
+            Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+            passClosureForm.putExtra("jsonForm", jsonFormObject.toString());
+            passClosureForm.putExtra("vcaid",intent_vcaid);
+            passClosureForm.putExtra("vcaname",c_name);
+            passClosureForm.putExtra("hivtstatus",hivstatus);
+            passClosureForm.putExtra("hh_id",household_id);
+            finish();
+            startActivity(passClosureForm);
 
 
-                switch (EncounterType) {
+//            try {
+//
+//                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+//
+//                if (childIndexEventClient == null) {
+//                    return;
+//                }
+//
+//                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                    case "VCA Service Report":
-                      Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                      familyServiceList.clear();
-                      familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
 
-                        break;
+            switch (EncounterType) {
 
-                }
+                case "VCA Service Report":
+//                    Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                    familyServiceList.clear();
+                    familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
+                    recyclerViewadapter.notifyDataSetChanged();
+                    break;
 
-            } catch (Exception e) {
-                Timber.e(e);
             }
+
+//            } catch (Exception e) {
+//                Timber.e(e);
+//            }
         }
-        finish();
-        startActivity(getIntent());
+//        finish();
+//        startActivity(getIntent());
+        recyclerViewadapter.notifyDataSetChanged();
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -377,7 +384,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, IndexDetailsActivity.class);
+        Intent intent = new Intent(VcaServiceActivity.this, IndexDetailsActivity.class);
         intent.putExtra("Child", intent_vcaid);
         startActivity(intent);
         finish();

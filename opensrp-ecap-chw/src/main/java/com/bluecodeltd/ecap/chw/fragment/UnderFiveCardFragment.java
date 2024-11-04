@@ -11,8 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
-import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
+import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
+import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 
 import java.util.HashMap;
 
@@ -34,10 +35,10 @@ public class UnderFiveCardFragment extends Fragment {
 
     View inflateView;
     TextView cardNumber,childBirthDate,weight, childFeedingOption;
-    TextView dbsDueDate,dbsActualDate,dateTested,nvpDate,childMonitoringVisit;
+    TextView followUpVisitDate, pediaticDate, hiv_status,childMonitoringVisit;
     ImageView imageviewProfile;
 
-    PtmctMotherMonitoringModel childMonitoring;
+    ChildMonitoringModel childMonitoring;
 
     public UnderFiveCardFragment() {
         // Required empty public constructor
@@ -76,10 +77,10 @@ public class UnderFiveCardFragment extends Fragment {
         // Inflate the layout for this fragment
         inflateView = inflater.inflate(R.layout.fragment_under_five_card, container, false);
 
-        HashMap<String, PtmctMotherMonitoringModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
+        HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
 
 // Initialize motherDetails as null.
-        PtmctMotherMonitoringModel motherDetails = null;
+        PmtctChildModel motherDetails = null;
 
         String uniqueId = null;
 
@@ -104,14 +105,23 @@ public class UnderFiveCardFragment extends Fragment {
         weight = inflateView.findViewById(R.id.child_weight);
         childFeedingOption = inflateView.findViewById(R.id.infant_feeding_option);
 
-        dbsDueDate = inflateView.findViewById(R.id.dbs_due_date);
-        dbsActualDate = inflateView.findViewById(R.id.dbs_actual_date);
-        dateTested = inflateView.findViewById(R.id.date_tested);
-        nvpDate = inflateView.findViewById(R.id.nvp_date_start);
-        childMonitoringVisit = inflateView.findViewById(R.id.child_monitoring_visit);
+        followUpVisitDate = inflateView.findViewById(R.id.pediatic_visit);
+        pediaticDate = inflateView.findViewById(R.id.pediatic_date);
+        hiv_status= inflateView.findViewById(R.id.hiv_status_r_nr);
+//        hiv_status = inflateView.findViewById(R.id.nvp_date_start);
+//        childMonitoringVisit = inflateView.findViewById(R.id.child_monitoring_visit);
         imageviewProfile = inflateView.findViewById(R.id.imageview_profile);
 
-        imageviewProfile.setImageResource((motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+        try {
+            imageviewProfile.setImageResource((motherDetails != null && motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male"))
+                    ? R.drawable.child_boy_infant
+                    : R.drawable.child_girl_infant);
+        } catch (NullPointerException e) {
+            // Handle the exception, maybe set a default image or log the error
+//            imageviewProfile.setImageResource(R.drawable.default_infant_image);
+            e.printStackTrace();
+        }
+
 
         cardNumber.setText("Under 5 Card Number: " + (motherDetails.getUnder_five_clinic_card() != null ? motherDetails.getUnder_five_clinic_card() : "Not set"));
         childBirthDate.setText("Date of Birth: " + (motherDetails.getInfants_date_of_birth() != null ? motherDetails.getInfants_date_of_birth() : "Not set"));
@@ -120,20 +130,19 @@ public class UnderFiveCardFragment extends Fragment {
 
 
 //        childMonitoring = new PtmctMotherMonitoringModel();
-        childMonitoring = PtmctMotherMonitoringDao.getRecentChildVisit(uniqueId);
+        childMonitoring = ChildMonitoringDao.getRecentChildVisit(uniqueId);
 
         if (childMonitoring != null) {
-            dbsDueDate.setText(childMonitoring.getDbs_at_birth_due_date() != null ? childMonitoring.getDbs_at_birth_due_date() : "Not set");
-            dbsActualDate.setText(childMonitoring.getDbs_at_birth_actual_date() != null ? childMonitoring.getDbs_at_birth_actual_date() : "Not set");
-            dateTested.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
-            nvpDate.setText(childMonitoring.getNvp_date_given() != null ? childMonitoring.getNvp_date_given() : "Not set");
-            childMonitoringVisit.setText(childMonitoring.getChild_monitoring_visit() != null ? childMonitoring.getChild_monitoring_visit() : "Not set");
+            followUpVisitDate.setText(childMonitoring.getPediatic_care_follow_up() != null ? childMonitoring.getPediatic_care_follow_up() : "Not set");
+            pediaticDate.setText(childMonitoring.getDate() != null ? childMonitoring.getDate() : "Not set");
+            hiv_status.setText(childMonitoring.getHiv_test() != null ? childMonitoring.getHiv_test() : "Not set");
+//            childMonitoringVisit.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
         } else {
-            dbsDueDate.setText("Not Conducted");
-            dbsActualDate.setText("Not Conducted");
-            dateTested.setText("Not Conducted");
-            nvpDate.setText("Not Conducted");
-            childMonitoringVisit.setText("Not Conducted");
+            followUpVisitDate.setText("Not Conducted");
+            pediaticDate.setText("Not Conducted");
+//            dateTested.setText("Not Conducted");
+            hiv_status.setText("Not Conducted");
+//            childMonitoringVisit.setText("Not Conducted");
         }
 
 

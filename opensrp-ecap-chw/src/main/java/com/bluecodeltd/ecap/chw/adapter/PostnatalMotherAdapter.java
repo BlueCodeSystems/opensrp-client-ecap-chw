@@ -28,7 +28,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
-import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.PmtctMotherPostnatalModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -56,10 +56,10 @@ import timber.log.Timber;
 
 public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMotherAdapter.ViewHolder> {
     Context context;
-    List<PtctMotherModel> postnatal;
+    List<PmtctMotherPostnatalModel> postnatal;
     ObjectMapper oMapper;
 
-    public PostnatalMotherAdapter(Context context, List<PtctMotherModel> postnatal) {
+    public PostnatalMotherAdapter(Context context, List<PmtctMotherPostnatalModel> postnatal) {
         this.context = context;
         this.postnatal = postnatal;
     }
@@ -75,7 +75,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
     @Override
     public void onBindViewHolder(@NonNull PostnatalMotherAdapter.ViewHolder holder, int position) {
 
-        final PtctMotherModel visit = postnatal.get(position);
+        final PmtctMotherPostnatalModel visit = postnatal.get(position);
 
         holder.setIsRecyclable(false);
 
@@ -248,7 +248,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, PtctMotherModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, PmtctMotherPostnatalModel visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 

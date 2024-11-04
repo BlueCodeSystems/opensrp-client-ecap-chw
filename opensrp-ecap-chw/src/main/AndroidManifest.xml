@@ -37,14 +37,12 @@
         android:supportsRtl="true"
         android:theme="@style/ChwTheme"
         android:usesCleartextTraffic="true"
+        android:largeHeap="true"
         tools:replace="android:theme">
         <activity
             android:name=".activity.HeiDetailsActivity"
             android:exported="false"
             android:theme="@style/ChwTheme.NoActionBar"/>
-        <activity
-            android:name=".HouseholdServicesOnlyActivity"
-            android:exported="false" />
         <activity
             android:name=".ShowOnlyHouseholdServicesActivity"
             android:exported="false"
@@ -93,6 +91,9 @@
             android:name=".activity.DashboardActivity"
             android:exported="true"
             android:label="Reports"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.SignatureActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.Profile"

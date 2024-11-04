@@ -141,6 +141,26 @@ public class VcaScreeningModel {
     private String abym_in_school;
     private String abym_economic_strengthening;
 
+    private String vca_receiving_caseworker;
+
+    private String district_moved_to;
+
+    public String getVca_receiving_caseworker() {
+        return vca_receiving_caseworker;
+    }
+
+    public void setVca_receiving_caseworker(String vca_receiving_caseworker) {
+        this.vca_receiving_caseworker = vca_receiving_caseworker;
+    }
+
+    public String getDistrict_moved_to() {
+        return district_moved_to;
+    }
+
+    public void setDistrict_moved_to(String district_moved_to) {
+        this.district_moved_to = district_moved_to;
+    }
+
     public String getPhone() {
         return phone;
     }

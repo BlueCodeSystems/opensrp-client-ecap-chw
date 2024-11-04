@@ -2,28 +2,35 @@
 name: step2_instructions_a
 description: step2_instructions_a relevance
 priority: 1
-condition: "!(helper.formatDate(step1_adolescent_birthdate,'y') <= 5)"
+condition: "helper.formatDate(step1_adolescent_birthdate,'m') <= 5 || helper.formatDate(step1_adolescent_birthdate,'m') > 60"
 actions:
   - "isRelevant = true"
 ---
 name: step2_immunization
 description: step2_immunization relevance
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') <= 5"
+condition: "helper.formatDate(step1_adolescent_birthdate,'m') > 5 && helper.formatDate(step1_adolescent_birthdate,'m') <= 60"
+actions:
+  - "isRelevant = true"
+---
+name: step1_school
+description: school relevance
+priority: 1
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') >= 5"
 actions:
   - "isRelevant = true"
 ---
 name: step2_child_nut_assessment
 description: step2_child_nut_assessment relevance
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') <= 5"
+condition: "helper.formatDate(step1_adolescent_birthdate,'m') > 6 && helper.formatDate(step1_adolescent_birthdate,'m') <= 60 "
 actions:
   - "isRelevant = true"
 ---
 name: step2_muac_score
 description: step2_muac_score
 priority: 1
-condition: "helper.formatDate(step1_adolescent_birthdate,'y') <= 5"
+condition: "helper.formatDate(step1_adolescent_birthdate,'m') > 6 && helper.formatDate(step1_adolescent_birthdate,'m') <= 60"
 actions:
   - "isRelevant = true"
 ---
@@ -88,5 +95,12 @@ name: step3_is_biological
 description: is_biological
 priority: 1
 condition: "step3_relation.contains('parent')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_subpopulation
+description: sub_population
+priority: 1
+condition: "step1_subpopulation.contains('yes')"
 actions:
   - "isRelevant = true"
