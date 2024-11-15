@@ -214,15 +214,11 @@
         "openmrs_data_type": "",
         "values": [
           "ND",
-          "D",
-          "R",
-          "NR"
+          "D"
         ],
         "keys": [
           "ND",
-          "D",
-          "R",
-          "NR"
+          "D"
         ]
       },
       {

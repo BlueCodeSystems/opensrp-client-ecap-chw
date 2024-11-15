@@ -213,14 +213,10 @@
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
-          "ND",
-          "D",
           "R",
           "NR"
         ],
         "keys": [
-          "ND",
-          "D",
           "R",
           "NR"
         ]
