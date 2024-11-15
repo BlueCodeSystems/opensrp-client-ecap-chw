@@ -76,6 +76,13 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setIycf_counselling(getCursorValue(c, "iycf_counselling"));
             record.setInfant_feeding_options(getCursorValue(c, "infant_feeding_options"));
             record.setHigh_risk_hei(getCursorValue(c, "high_risk_hei"));
+            record.setHiv_test_outcome(getCursorValue(c, "hiv_test_outcome"));
+            record.setAzt_3tc_npv_outcome(getCursorValue(c, "azt_3tc_npv_outcome"));
+            record.setCtx_outcome(getCursorValue(c, "ctx_outcome"));
+            record.setDate_tested_outcome(getCursorValue(c, "date_tested_outcome"));
+            record.setIycf_counselling_outcome(getCursorValue(c, "iycf_counselling_outcome"));
+            record.setInfant_feeding_options_outcome(getCursorValue(c, "infant_feeding_options_outcome"));
+            record.setHigh_risk_hei_outcome(getCursorValue(c, "high_risk_hei_outcome"));
             record.setDeleted_status(getCursorValue(c,"delete_status"));
 
             return record;

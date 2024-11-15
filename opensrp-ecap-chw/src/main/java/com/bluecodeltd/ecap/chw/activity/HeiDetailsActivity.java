@@ -97,14 +97,18 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
@@ -543,6 +547,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
                         break;
 
+                    default:
+                        finish();
+                        startActivity(getIntent());
+
                 }
 
                 Toasty.success(HeiDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
@@ -938,7 +946,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 modifiedChildModel.setPmtct_id(pmtctChild.getPmtct_id());
 //                if(childMonitoring == null){
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(modifiedChildModel, Map.class));
-
+                    populateHivStatus(formToBeOpened,pmtctChild.getInfants_date_of_birth());
 
 
                 break;
@@ -1062,6 +1070,39 @@ public class HeiDetailsActivity extends AppCompatActivity {
         }
 
     }
+
+    public void populateHivStatus(JSONObject formToBeOpened, String dateString) {
+        // Parse the input date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        try {
+            Date inputDate = sdf.parse(dateString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(inputDate);
+
+            Calendar oneYearAgo = Calendar.getInstance();
+            oneYearAgo.add(Calendar.YEAR, -1);
+
+            JSONObject hivStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_test");
+
+            if (hivStatus != null) {
+                JSONArray valuesArray = new JSONArray();
+
+                if (calendar.before(oneYearAgo)) {
+                    valuesArray.put("R");
+                    valuesArray.put("NR");
+                } else {
+                    valuesArray.put("ND");
+                    valuesArray.put("D");
+                }
+                hivStatus.put("values", valuesArray);
+                hivStatus.put("keys", valuesArray);
+            }
+        } catch (ParseException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void showDeregisteredStatus(){
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);

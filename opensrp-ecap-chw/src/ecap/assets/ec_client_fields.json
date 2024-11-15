@@ -9116,6 +9116,49 @@
             "field": "attributes.high_risk_hei"
           }
         },
+
+        {
+          "column_name": "hiv_test_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test_outcome"
+          }
+        },
+        {
+          "column_name": "azt_3tc_npv_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.azt_3tc_npv_outcome"
+          }
+        },
+        {
+          "column_name": "ctx_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ctx_outcome"
+          }
+        },
+        {
+          "column_name": "iycf_counselling_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.iycf_counselling_outcome"
+          }
+        },
+        {
+          "column_name": "infant_feeding_options_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.infant_feeding_options_outcome"
+          }
+        },
+        {
+          "column_name": "high_risk_hei_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.high_risk_hei_outcome"
+          }
+        },
         {
           "column_name": "deleted_status",
           "type": "Client",

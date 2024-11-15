@@ -14,6 +14,14 @@ public class ChildMonitoringModel {
     private String iycf_counselling;
     private String infant_feeding_options;
     private String high_risk_hei;
+
+    private String hiv_test_outcome;
+    private String azt_3tc_npv_outcome;
+    private String ctx_outcome;
+    private String date_tested_outcome;
+    private String iycf_counselling_outcome;
+    private String infant_feeding_options_outcome;
+    private String high_risk_hei_outcome;
     private String deleted_status;
 
     public String getBase_entity_id() {
@@ -110,6 +118,62 @@ public class ChildMonitoringModel {
 
     public void setHigh_risk_hei(String high_risk_hei) {
         this.high_risk_hei = high_risk_hei;
+    }
+
+    public String getHiv_test_outcome() {
+        return hiv_test_outcome;
+    }
+
+    public void setHiv_test_outcome(String hiv_test_outcome) {
+        this.hiv_test_outcome = hiv_test_outcome;
+    }
+
+    public String getAzt_3tc_npv_outcome() {
+        return azt_3tc_npv_outcome;
+    }
+
+    public void setAzt_3tc_npv_outcome(String azt_3tc_npv_outcome) {
+        this.azt_3tc_npv_outcome = azt_3tc_npv_outcome;
+    }
+
+    public String getCtx_outcome() {
+        return ctx_outcome;
+    }
+
+    public void setCtx_outcome(String ctx_outcome) {
+        this.ctx_outcome = ctx_outcome;
+    }
+
+    public String getDate_tested_outcome() {
+        return date_tested_outcome;
+    }
+
+    public void setDate_tested_outcome(String date_tested_outcome) {
+        this.date_tested_outcome = date_tested_outcome;
+    }
+
+    public String getIycf_counselling_outcome() {
+        return iycf_counselling_outcome;
+    }
+
+    public void setIycf_counselling_outcome(String iycf_counselling_outcome) {
+        this.iycf_counselling_outcome = iycf_counselling_outcome;
+    }
+
+    public String getInfant_feeding_options_outcome() {
+        return infant_feeding_options_outcome;
+    }
+
+    public void setInfant_feeding_options_outcome(String infant_feeding_options_outcome) {
+        this.infant_feeding_options_outcome = infant_feeding_options_outcome;
+    }
+
+    public String getHigh_risk_hei_outcome() {
+        return high_risk_hei_outcome;
+    }
+
+    public void setHigh_risk_hei_outcome(String high_risk_hei_outcome) {
+        this.high_risk_hei_outcome = high_risk_hei_outcome;
     }
 
     public String getDeleted_status() {
