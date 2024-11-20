@@ -12,8 +12,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
+import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.time.LocalDate;
@@ -44,9 +46,10 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
-        isGraduated = checkGraduationStatus(householdId);
+        GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
 
-        if(isGraduated){
+
+        if(graduationModel !=null && graduationModel.getGraduation_status().equals("1")){
             homeIcon.setImageResource(R.mipmap.graduation);
         } else {
             if(HouseholdDao.getHouseholdByBaseId(isClosed).getStatus() == null || !HouseholdDao.getHouseholdByBaseId(isClosed).getStatus().equals("1") ){
