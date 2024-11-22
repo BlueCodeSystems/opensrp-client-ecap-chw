@@ -59,7 +59,7 @@ import timber.log.Timber;
 public class VcaServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    VCAServiceAdapter recyclerViewadapter;
     private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView vcaname,hh_id;
@@ -100,13 +100,21 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
+
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                recreate();
+            }));
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
         if (recyclerViewadapter.getItemCount() > 0){
 

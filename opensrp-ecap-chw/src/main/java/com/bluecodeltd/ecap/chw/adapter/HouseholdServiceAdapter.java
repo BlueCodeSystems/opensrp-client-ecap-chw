@@ -65,6 +65,15 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
 
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+    private HouseholdServiceAdapter.OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(HouseholdServiceAdapter.OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
+
 
     public HouseholdServiceAdapter(List<HouseholdServiceReportModel> services, Context context){
 
