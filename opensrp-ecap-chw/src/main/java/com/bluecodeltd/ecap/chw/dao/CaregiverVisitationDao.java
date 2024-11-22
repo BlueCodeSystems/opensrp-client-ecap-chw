@@ -114,6 +114,7 @@ public class CaregiverVisitationDao extends AbstractDao {
             record.setSchool_administration_name(getCursorValue(c, "school_administration_name"));
             record.setTelephone(getCursorValue(c, "telephone"));
             record.setSchool_administration_date_signed(getCursorValue(c, "school_administration_date_signed"));
+            record.setSignature(getCursorValue(c, "signature"));
 
 
             return record;

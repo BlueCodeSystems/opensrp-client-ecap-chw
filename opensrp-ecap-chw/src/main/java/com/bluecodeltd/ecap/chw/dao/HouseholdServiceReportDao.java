@@ -96,6 +96,7 @@ public class HouseholdServiceReportDao extends AbstractDao {
             record.setOther_services_caregiver(getCursorValue(c, "other_services_caregiver"));
             record.setOther_services_household(getCursorValue(c, "other_services_household"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
+            record.setSignature(getCursorValue(c, "signature"));
 
             return record;
         };

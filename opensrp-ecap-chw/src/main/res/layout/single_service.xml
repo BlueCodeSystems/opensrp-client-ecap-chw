@@ -11,18 +11,29 @@
 
     <LinearLayout
         android:id="@+id/itemm"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@color/white"
         android:orientation="horizontal">
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/signature_view"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_edit"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
 
+            />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#696969"
             android:orientation="vertical">
+
 
             <org.smartregister.view.customcontrols.CustomFontTextView
                 android:id="@+id/date"
