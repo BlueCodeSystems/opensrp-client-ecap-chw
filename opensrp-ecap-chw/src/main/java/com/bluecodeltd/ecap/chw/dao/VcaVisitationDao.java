@@ -222,6 +222,7 @@ public class VcaVisitationDao extends AbstractDao {
             record.setLength_on_art(getCursorValue(c,"length_on_art"));
             record.setIndicate_vl_result(getCursorValue(c,"indicate_vl_result"));
             record.setStatus_color(getCursorValue(c,"status_color"));
+            record.setSignature(getCursorValue(c,"signature"));
 
             return record;
         };

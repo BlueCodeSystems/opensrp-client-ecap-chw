@@ -72,6 +72,7 @@ public class HTSLinksDao extends AbstractDao {
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setMiddle_name(getCursorValue(c, "middle_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
+            record.setGender(getCursorValue(c,"gender"));
             record.setEcap_id(getCursorValue(c, "ecap_id"));
             record.setSub_population(getCursorValue(c, "sub_population"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
@@ -90,6 +91,7 @@ public class HTSLinksDao extends AbstractDao {
             record.setComment(getCursorValue(c, "comment"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setChecked_by(getCursorValue(c, "checked_by"));
+            record.setArt_number(getCursorValue(c,"art_number"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
 

@@ -112,6 +112,7 @@ public class VCAServiceReportDao extends AbstractDao {
             record.setOther_stable_services(getCursorValue(c, "other_stable_services"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setVca_service_location(getCursorValue(c,"vca_service_location"));
+            record.setSignature(getCursorValue(c,"signature"));
 
             return record;
         };

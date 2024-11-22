@@ -106,6 +106,7 @@ public class VcaVisitationModel {
 
     private String delete_status;
     private String status_color;
+    private String signature;
 
     public String getVca_visit_location() {
         return vca_visit_location;
@@ -929,5 +930,13 @@ public class VcaVisitationModel {
 
     public void setStatus_color(String status_color) {
         this.status_color = status_color;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

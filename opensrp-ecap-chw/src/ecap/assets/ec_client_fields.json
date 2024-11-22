@@ -8021,6 +8021,13 @@
           }
         },
         {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
 
           "column_name": "relationship",
           "type": "Client",
@@ -8062,6 +8069,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
           }
         },
         {

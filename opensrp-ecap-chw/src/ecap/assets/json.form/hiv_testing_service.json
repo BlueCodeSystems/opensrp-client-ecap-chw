@@ -412,12 +412,22 @@
 
           },
           {
+            "key": "Survivors of Sexual Violence",
+            "text": "Survivors of Sexual Violence"
+
+          },
+          {
             "key": "Adolescent Girls and Young Women (AGYW)",
             "text": "Adolescent Girls and Young Women (AGYW)"
           },
           {
-            "key": "Survivors of Sexual Violence",
-            "text": "Survivors of Sexual Violence"
+            "key": "Siblings of the Index/Other family members",
+            "text": "Siblings of the Index/Other family members"
+
+          },
+          {
+            "key": "Caregiver-Women Living With HIV",
+            "text": "Caregiver-Women Living With HIV"
 
           },
           {
@@ -426,25 +436,13 @@
 
           },
           {
-            "key": "Siblings of the Index/Other family members",
-            "text": "Siblings of the Index/Other family members"
-
-          },
-          {
-            "key": "PBFW",
-            "text": "PBFW"
-
+            "key": "Caregiver-General",
+            "text": "Caregiver-General"
           }
         ],
         "v_required": {
           "value": false,
           "err": "Select sub population"
-        },
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
-          }
         }
       },
       {

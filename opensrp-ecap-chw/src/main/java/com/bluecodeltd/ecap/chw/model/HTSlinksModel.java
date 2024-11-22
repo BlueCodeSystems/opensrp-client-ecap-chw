@@ -8,6 +8,7 @@ public class HTSlinksModel {
     private String first_name;
     private String middle_name;
     private String last_name;
+    private String gender;
     private String ecap_id;
     private String sub_population;
     private String birthdate;
@@ -21,6 +22,7 @@ public class HTSlinksModel {
     private String hiv_result;
     private String test_done_hf;
     private String hiv_recent_test;
+    private String art_number;
     private String art_date;
     private String art_date_initiated;
     private String comment;
@@ -234,5 +236,21 @@ public class HTSlinksModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getArt_number() {
+        return art_number;
+    }
+
+    public void setArt_number(String art_number) {
+        this.art_number = art_number;
     }
 }
