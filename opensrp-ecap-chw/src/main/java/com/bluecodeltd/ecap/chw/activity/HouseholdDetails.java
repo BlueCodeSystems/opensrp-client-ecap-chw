@@ -52,6 +52,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDao;
+import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
@@ -628,24 +629,35 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Benchmark **** 4 **** logic
 
                     Boolean hasAtLeastOneVCAUnderFiveYearsOld = IndexPersonDao.hasAtLeastOneVCAUnderFiveYearsOld(householdId);
+                    Boolean checkForMuac = MuacDao.areAllMuacGreen(householdId);
+
                     JSONObject malnutrition = getFieldJSONObject(fields(indexRegisterForm, "step5"), "undernourished");
                     JSONObject underFiveToast = getFieldJSONObject(fields(indexRegisterForm, "step5"), "toaster_underFive");
-                    if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)){
-                        malnutrition.put(JsonFormUtils.READ_ONLY, false);
+
+                    if (hasAtLeastOneVCAUnderFiveYearsOld.equals(true)) {
+//                        malnutrition.put(JsonFormUtils.READ_ONLY, false);
+
+                        if (checkForMuac) {
+                            malnutrition.put(JsonFormUtils.VALUE, "yes");
+                        } else {
+                            malnutrition.put(JsonFormUtils.VALUE, "no");
+                        }
+
                         JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
-                        for(int i = 0; i < options.length(); i++){
+                        for (int i = 0; i < options.length(); i++) {
                             JSONObject option = options.getJSONObject(i);
-                            if(option.getString("key").equals("N/A")){
+                            if (option.getString("key").equals("N/A")) {
                                 options.remove(i);
                                 break;
                             }
                         }
-                    }else {
-                       malnutrition.put(JsonFormUtils.READ_ONLY, true);
-                       malnutrition.put(JsonFormUtils.VALUE,"N/A");
-                       underFiveToast.put("type", "toaster_notes");
-                       underFiveToast.put("text", cname.getText().toString()+" does not have any adolescents aged 5 and below who need to be assessed for undernourishment");
-                   }
+                    } else {
+                        malnutrition.put(JsonFormUtils.READ_ONLY, true);
+                        malnutrition.put(JsonFormUtils.VALUE, "N/A");
+                        underFiveToast.put("type", "toaster_notes");
+                        underFiveToast.put("text", cname.getText().toString() +
+                                " does not have any adolescents aged 5 and below who need to be assessed for undernourishment");
+                    }
 
 
                     startFormActivity(indexRegisterForm);

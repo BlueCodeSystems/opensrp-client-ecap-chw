@@ -65,7 +65,14 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
     List<VCAServiceModel> services;
     ObjectMapper oMapper;
 
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+    private VCAServiceAdapter.OnDataUpdateListener onDataUpdateListener;
 
+    public void setOnDataUpdateListener(VCAServiceAdapter.OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
     public VCAServiceAdapter(List<VCAServiceModel> services, Context context){
 
         super();

@@ -63,7 +63,7 @@ import timber.log.Timber;
 public class HouseholdServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    HouseholdServiceAdapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView cname, hh_id,updatedCaregiverName;
@@ -108,13 +108,21 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
+
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                recreate();
+            }));
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
         if (recyclerViewadapter.getItemCount() > 0){
 
