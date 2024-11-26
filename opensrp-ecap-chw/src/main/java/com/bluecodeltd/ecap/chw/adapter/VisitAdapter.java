@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -112,29 +113,39 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
 
         holder.editme.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+            try {
+                if (caseStatusModel != null && caseStatusModel.getCase_status() != null) {
+                    // Check case status
+                    if (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
+                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        dialogMessage.setText(firstName + " " + lastName +
+                                " was either de-registered or inactive in the program");
 
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        if (v.getId() == R.id.edit_me) {
+                            try {
+                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
-
+                } else {
+                    Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(context, "An unexpected error occurred. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
 

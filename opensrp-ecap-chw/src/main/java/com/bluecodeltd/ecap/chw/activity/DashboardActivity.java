@@ -100,7 +100,18 @@ public class DashboardActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         chart = findViewById(R.id.fragment_verticalbarchart_chart);
         allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
-        allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
+        try {
+            String householdCount = HouseholdDao.countNumberoFHouseholds();
+            if (householdCount != null) {
+                allHouseHoldsCount.setText(householdCount);
+            } else {
+                allHouseHoldsCount.setText("0");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            allHouseHoldsCount.setText("0");
+        }
+
         allVcasCount = findViewById(R.id.allVcasNumber);
         allDueVisits = findViewById(R.id.due_visits);
         dueCardview = findViewById(R.id.due_card_view);
