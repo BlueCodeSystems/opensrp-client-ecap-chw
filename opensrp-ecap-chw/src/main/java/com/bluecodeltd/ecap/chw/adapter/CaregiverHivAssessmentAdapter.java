@@ -127,15 +127,19 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
             holder.intialHivStatus.setText("Negative");
         }
         holder.initialHivStatusDate.setText(householdModel.getScreening_date());
-
-        if(visit.getHiv_status() != null && visit.getHiv_status().equals("positive")){
-            holder.updateHivStatus.setText("Positive");
-        } else if (visit.getHiv_status().equals("unknown")) {
+        try {
+            if (visit.getHiv_status() != null && visit.getHiv_status().equals("positive")) {
+                holder.updateHivStatus.setText("Positive");
+            } else if (visit.getHiv_status().equals("unknown")) {
+                holder.updateHivStatus.setText("Unknown");
+            } else {
+                holder.updateHivStatus.setText("Negative");
+            }
+        } catch (NullPointerException e) {
             holder.updateHivStatus.setText("Unknown");
-
-        } else {
-            holder.updateHivStatus.setText("Negative");
         }
+
+
         holder.updatedHivStatusDate.setText(visit.getStart_date());
 
 

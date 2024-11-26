@@ -1579,35 +1579,36 @@ public class HouseholdDetails extends AppCompatActivity {
         we_service_caregiver.setVisibility(View.GONE);
     }
 
-    public void countNumberOfMales(List<String> allBirthDates){
+    public void countNumberOfMales(List<String> allBirthDates) {
         int totalNumberOfMalesBelowFive = 0;
-        int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
+        int totalNumberOfMalesBetweenTenAndSeventeen = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        if( allBirthDates != null)
-        {
-            for(int i = 0; i < allBirthDates.size(); i++)
-            {
-                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
-                if (!dobInCorrectFormat.equals("Invalid date format")) {
-                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
-                    LocalDate today =LocalDate.now();
-                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
-                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                    {
-                        totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+
+        if (allBirthDates != null) {
+            for (int i = 0; i < allBirthDates.size(); i++) {
+                try {
+                    String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                    if (!"Invalid date format".equals(dobInCorrectFormat)) {
+                        LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                        LocalDate today = LocalDate.now();
+                        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+                        if (periodBetweenDateOfBirthAndNow.getYears() >= 0 && periodBetweenDateOfBirthAndNow.getYears() < 5) {
+                            totalNumberOfMalesBelowFive++;
+                        } else if (periodBetweenDateOfBirthAndNow.getYears() > 10 && periodBetweenDateOfBirthAndNow.getYears() <= 17) {
+                            totalNumberOfMalesBetweenTenAndSeventeen++;
+                        }
                     }
-                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
-                    {
-                        totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
-                    }
+                } catch (Exception e) {
+                    System.err.println("Error processing birth date: " + allBirthDates.get(i) + ". Skipping this entry.");
                 }
             }
         }
 
         lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
         malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
-
     }
+
     public void countNumberOfFemales(List<String> allBirthDates){
         int totalNumberOfFemalesBelowFive = 0;
         int totalNumberOfFemalesBetweenTenAndSeventeen =0 ;

@@ -538,15 +538,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         switch (id){
             case R.id.fab:
-                if(child.getCase_status() != null && (child.getCase_status().equals("0") || child.getCase_status().equals("2"))){
-                    showDeregisteredStatus();
-                }
-//                else if(calculateAge(indexVCA.getAdolescent_birthdate()) >= 19){
-//               fab.setVisibility(View.INVISIBLE);
-//            }
-                else {
+                try {
+                    if (child.getCase_status() != null &&
+                            (child.getCase_status().equals("0") || child.getCase_status().equals("2"))) {
+                        showDeregisteredStatus();
+                    } else {
+                        animateFAB();
+                    }
+                } catch (NullPointerException e) {
                     animateFAB();
                 }
+
                 break;
 
                 case R.id.vca_screening:

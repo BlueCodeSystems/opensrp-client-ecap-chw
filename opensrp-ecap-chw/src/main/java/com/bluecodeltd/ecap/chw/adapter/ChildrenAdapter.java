@@ -221,7 +221,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
         // Enable MUAC Button
-        if(caseStatus != null && txtMuac.equals("1") && (caseStatus.equals("0") || caseStatus.equals("1") || caseStatus.equals("2"))){
+        // Enable MUAC Button
+        if(caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("1")) && isAgeBetween6MonthsAnd5Years(dob)){
 
             holder.muacButton.setVisibility(View.VISIBLE);
 
@@ -229,14 +230,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             if(cModel != null){
 
-                if(Integer.parseInt(getAgeWithoutText(dob)) < 6){
-                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
-                }
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
 
             } else {
 
                 holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_warning, 0, 0, 0);
-
             }
 
         } else {
@@ -313,6 +311,23 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     }
 
+    private static boolean isAgeBetween6MonthsAnd5Years(String birthdate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+            LocalDate today = LocalDate.now();
+            Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+            int years = periodBetweenDateOfBirthAndNow.getYears();
+            int months = periodBetweenDateOfBirthAndNow.getMonths();
+            int totalMonths = years * 12 + months;
+
+            return (totalMonths >= 6) && (years < 5 || (years == 5 && months == 6));
+        } catch (DateTimeParseException e) {
+            System.err.println("Invalid birthdate format: " + e.getMessage());
+            return false;
+        }
+    }
 
 
     private String getAge(String birthdate){

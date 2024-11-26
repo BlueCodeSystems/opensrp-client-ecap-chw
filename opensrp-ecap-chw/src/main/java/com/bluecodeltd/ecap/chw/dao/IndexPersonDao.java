@@ -746,11 +746,16 @@ public class IndexPersonDao  extends AbstractDao {
 
             );
         };
-        List <Child> children =  AbstractDao.readData(sql, dataMap);
-        if (children == null) {
+        List<Child> children = null;
+        try {
+            children = AbstractDao.readData(sql, dataMap);
+        } catch (NullPointerException e) {
+            return new ArrayList<>();
+        } catch (Exception e) {
             return null;
         }
         return children;
+
     }
     public static boolean checkGraduationStatus(String householdID) {
         String sql = "SELECT case_status, last_name, is_hiv_positive " +

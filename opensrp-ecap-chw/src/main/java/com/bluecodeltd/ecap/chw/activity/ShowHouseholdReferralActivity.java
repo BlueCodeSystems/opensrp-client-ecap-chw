@@ -87,19 +87,31 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         String intent_cname = bundle.getString("householdName");
 
 
-        if (intent_household_id != null && hh_id != null) {
-            hh_id.setText("Household ID: " + intent_household_id);
-        } else if (hh_id != null) {
-            hh_id.setText("Household ID: Not available");
-        }
+        try {
+            if (intent_household_id != null && hh_id != null) {
+                hh_id.setText("Household ID: " + intent_household_id);
+            } else if (hh_id != null) {
+                hh_id.setText("Household ID: Not available");
+            }
 
+            if (intent_cname != null) {
+                vcaname.setText(intent_cname + " Household");
+                txtReferral.setText("No referrals have been added for " + intent_cname + " household");
+            } else {
+                vcaname.setText("Household");
+                txtReferral.setText("No referrals have been added for this household");
+            }
+        } catch (NullPointerException e) {
 
-        if (intent_cname != null) {
-            vcaname.setText(intent_cname + " Household");
-            txtReferral.setText("No referrals have been added for " + intent_cname + " household");
-        } else {
-            vcaname.setText("Household");
-            txtReferral.setText("No referrals have been added for this household");
+            if (hh_id != null) {
+                hh_id.setText("Household ID: Not available");
+            }
+            if (vcaname != null) {
+                vcaname.setText("Household");
+            }
+            if (txtReferral != null) {
+                txtReferral.setText("No referrals have been added for this household");
+            }
         }
 
 
