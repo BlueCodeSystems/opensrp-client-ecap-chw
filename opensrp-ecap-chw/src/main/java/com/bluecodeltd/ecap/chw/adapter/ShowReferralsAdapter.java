@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,33 +103,42 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
         });
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(showReferrals.getUnique_id());
 
-        holder.editme.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+        if (caseStatusModel != null) {
+            holder.editme.setOnClickListener(v -> {
+                try {
+                    String caseStatus = caseStatusModel.getCase_status();
+                    if (caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("2"))) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
+                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "referral", showReferrals);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        if (v.getId() == R.id.edit_me) {
+                            try {
+                                openFormUsingFormUtils(context, "referral", showReferrals);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, "An error occurred while handling the action.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        } else {
+
+            Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
+        }
+
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this VCA referral");

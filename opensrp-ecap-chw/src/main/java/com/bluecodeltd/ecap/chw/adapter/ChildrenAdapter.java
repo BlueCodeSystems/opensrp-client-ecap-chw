@@ -306,7 +306,21 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         });
 
-        holder.genderIcon.setImageResource((child.getGender() != null && child.getGender().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+        try {
+            if (child != null && child.getGender() != null) {
+                if (child.getGender().equalsIgnoreCase("male")) {
+                    holder.genderIcon.setImageResource(R.drawable.child_boy_infant);
+                } else {
+                    holder.genderIcon.setImageResource(R.drawable.child_girl_infant);
+                }
+            } else {
+
+                holder.genderIcon.setImageResource(R.drawable.ic_icon_warning);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.genderIcon.setImageResource(R.drawable.ic_icon_warning);
+        }
 
 
     }
