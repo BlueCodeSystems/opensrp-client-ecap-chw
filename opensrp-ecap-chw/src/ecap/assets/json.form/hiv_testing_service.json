@@ -292,7 +292,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Age",
+        "hint": "DOB",
         "expanded": false,
         "duration": {
           "label": "Age"
