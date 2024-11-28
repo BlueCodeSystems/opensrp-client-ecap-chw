@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CaregiverHivAssessmentDao extends AbstractDao {
@@ -19,6 +20,17 @@ public class CaregiverHivAssessmentDao extends AbstractDao {
 
 
         return values.get(0);
+    }
+    public static List<CaregiverHivAssessmentModel > getHivAssessment(String householdID) {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2)) as sortable_date FROM ec_caregiver_hiv_assessment WHERE household_id = '" + householdID + "'  ORDER BY sortable_date DESC";
+
+        List<CaregiverHivAssessmentModel > values = AbstractDao.readData(sql, getCaregiverHivAssessmentModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
     }
 
     public static DataMap<CaregiverHivAssessmentModel> getCaregiverHivAssessmentModelMap() {
@@ -44,6 +56,7 @@ public class CaregiverHivAssessmentDao extends AbstractDao {
             record.setDate_of_hiv_test(getCursorValue(c, "date_of_hiv_test"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
+            record.setDate_edited(getCursorValue(c, "date_edited"));
 
             return record;
         };

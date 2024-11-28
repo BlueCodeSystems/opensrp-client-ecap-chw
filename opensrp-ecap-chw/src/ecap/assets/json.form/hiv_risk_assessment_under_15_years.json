@@ -165,6 +165,30 @@
         }
       },
       {
+        "key": "assessment_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "assessment_date",
+        "type": "date_picker",
+        "hint": "Date of Assessment",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": true,
+          "err": "Assessment Date"
+        },
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
         "key": "hiv_test",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -181,7 +205,7 @@
             "text": "Positive"
           },
           {
-            "key": "never_tested",
+            "key": "never tested",
             "text": "Never tested"
           },
           {
@@ -268,10 +292,10 @@
         }
       },
       {
-        "key": "Question",
+        "key": "hiv_exposure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "Question",
+        "openmrs_entity_id": "hiv_exposure",
         "type": "native_radio",
         "label": "Has the beneficiary had new HIV exposure since the last test?",
         "options": [
@@ -310,7 +334,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -334,7 +358,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -358,7 +382,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -382,7 +406,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -406,7 +430,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -430,7 +454,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -460,7 +484,7 @@
           }
         ],
         "relevance": {
-          "step1:Question": {
+          "step1:hiv_exposure": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -517,12 +541,12 @@
         "label": "Indicate HIV Test Result",
         "options": [
           {
-            "key": "hiv_negative",
-            "text": "HIV negative"
+            "key": "negative",
+            "text": "Negative"
           },
           {
-            "key": "hiv_positive",
-            "text": "hiv_positive"
+            "key": "positive",
+            "text": "Positive"
           }
         ],
         "relevance": {

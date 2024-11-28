@@ -13,6 +13,7 @@ import com.bluecodeltd.ecap.chw.activity.HivTestingServiceActivity;
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
+import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
 
 import org.json.JSONObject;
 import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
@@ -191,6 +192,64 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 try {
 
                     householdIndexActivity.startFormActivity("hh_screening_entry",null,"");
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+        else if ( context instanceof IndexRegisterActivity ) {
+
+                IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
+
+                try {
+
+                    idRegisterActivity.startFormActivity("vca_screening",null,"");
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+            }
+            else if(context instanceof MotherIndexActivity){
+
+                MotherIndexActivity motherIndexActivity = (MotherIndexActivity) context;
+
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("mother_index");
+
+                    motherIndexActivity.startFormActivity(indexRegisterForm);
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            } else if(context instanceof HouseholdIndexActivity) {
+
+                HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
+
+                try {
+
+                    householdIndexActivity.startFormActivity("hh_screening_entry",null,"");
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+            else if(context instanceof PMTCTRegisterActivity){
+
+                PMTCTRegisterActivity motherIndexActivity = (PMTCTRegisterActivity) context;
+
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+
+                    JSONObject indexRegisterForm;
+
+                    indexRegisterForm = formUtils.getFormJson("mother_pmtct");
+
+                    motherIndexActivity.startFormActivity(indexRegisterForm);
 
                 } catch (Exception e) {
                     Timber.e(e);

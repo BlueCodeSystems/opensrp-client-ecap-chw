@@ -83,10 +83,12 @@ public class Constants extends CoreConstants {
         String VCA_ASSESSMENT = "VCA Assessment";
         String CACE_STATUS = "Case Record Status";
         String MOTHER_INDEX = "Mother Register";
+        String MOTHER_PMTCT = "Mother Pmtct";
         String HOUSEHOLD_INDEX = "Household Screening";
         String IDENTIFICATION = "identification";
         String GRADUATION_ASSESSMENT = "OVC Graduation Assessment";
         String HIV_TESTING_SERVICE = "HIV Testing Service";
+        String VCA_VISIT = "Household Visitation Form 0-20 years";
     }
 
     public interface EcapClientTable {
@@ -99,6 +101,7 @@ public class Constants extends CoreConstants {
         String EC_GRADUATION = "ec_graduation";
         String EC_CAREGIVER_PLAN_DOMAIN = "ec_caregiver_case_plan_domain";
         String EC_MOTHER_INDEX = "ec_mother_index";
+        String EC_MOTHER_PMTCT = "ec_pmtct_mother";
         String EC_POPULATION = "ec_sub_population";
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
         String EC_SERVICE_REPORT = "ec_service_report";
@@ -120,6 +123,8 @@ public class Constants extends CoreConstants {
         String EC_WE_SERVICES_VCA = "ec_we_services_vca";
         String EC_HIV_TESTING_SERVICE="ec_hiv_testing_service";
         String EC_HIV_TESTING_LINKS="ec_hiv_testing_links";
+        String EC_VCA_SERVICE_REPORT="ec_vca_service_report";
+        String EC_HOUSEHOLD_SERVICE ="ec_household_service_report";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";

@@ -6,6 +6,13 @@ condition: "step1_hiv_test.contains('negative') || step1_hiv_test.contains('neve
 actions:
   - "isRelevant = true"
 ---
+name: step1_hiv_exposure
+description: hiv_exposure
+priority: 1
+condition: "step1_hiv_test.contains('negative') || step1_hiv_test.contains('never tested')"
+actions:
+  - "isRelevant = true"
+---
 name: step1_toast
 description: toast
 priority: 1

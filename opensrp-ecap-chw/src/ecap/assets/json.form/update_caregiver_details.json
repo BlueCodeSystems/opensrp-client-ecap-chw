@@ -78,6 +78,28 @@
         }
       },
       {
+        "key": "new_caregiver_death_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "new_caregiver_death_date",
+        "type": "date_picker",
+        "hint": "Death date",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter death date"
+        },
+        "relevance": {
+          "step1:reason_for_updating_caregiver": {
+            "type": "string",
+            "ex": "equalTo(., \"Caregiver Died\")"
+          }
+        }
+      },
+      {
         "key": "new_caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

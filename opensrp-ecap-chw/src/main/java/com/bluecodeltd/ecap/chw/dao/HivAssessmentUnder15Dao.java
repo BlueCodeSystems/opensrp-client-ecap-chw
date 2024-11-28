@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HivAssessmentUnder15Dao extends AbstractDao {
@@ -20,6 +21,23 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<HivRiskAssessmentUnder15Model> getHivAssessment(String childID) {
+
+        String sql = "SELECT *,\n" +
+                "                (substr(COALESCE(assessment_date, '00000000'), 7, 4) || '-' ||\n" +
+                "                 substr(COALESCE(assessment_date, '00000000'), 4, 2) || '-' ||\n" +
+                "                 substr(COALESCE(assessment_date, '00000000'), 1, 2)) as sortable_date\n" +
+                " FROM ec_hiv_assessment_below_15 WHERE unique_id = '" + childID + "'\n" +
+                " ORDER BY sortable_date DESC";
+
+
+        List<HivRiskAssessmentUnder15Model> values = AbstractDao.readData(sql, getHivRiskAssessmentUnder15ModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static DataMap<HivRiskAssessmentUnder15Model> getHivRiskAssessmentUnder15ModelMap() {
         return c -> {
@@ -31,6 +49,7 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setOn_art(getCursorValue(c, "on_art"));
             record.setStart_date(getCursorValue(c, "start_date"));
             record.setFacility(getCursorValue(c, "facility"));
+            record.setHiv_exposure(getCursorValue(c,"hiv_exposure"));
             record.setArt_number(getCursorValue(c, "art_number"));
             record.setBiological_mother(getCursorValue(c, "biological_mother"));
             record.setDeceased_parents(getCursorValue(c, "deceased_parents"));
@@ -46,6 +65,8 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setPhone(getCursorValue(c, "phone"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setDelete_status(getCursorValue(c, "delete_status"));
+            record.setAssessment_date(getCursorValue(c,"assessment_date"));
 
             return record;
         };

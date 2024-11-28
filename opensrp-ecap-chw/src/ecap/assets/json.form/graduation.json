@@ -110,18 +110,19 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "asmt",
-        "read_only": true,
+        "read_only": false,
         "type": "native_radio",
         "label": "Has Family previously been assessed for graduation?",
         "options": [
           {
-            "key": "no",
-            "text": "No"
-          },
-          {
             "key": "yes",
             "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
           }
+
         ]
       },
       {
@@ -130,9 +131,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "previous_asmt_date",
         "type": "edit_text",
-        "read_only": "true",
+        "read_only": "false",
         "hint": "Date of previous assessment",
-        "edit_type": "name"
+        "edit_type": "name",
+        "relevance": {
+          "step1:asmt": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
         "key": "caregiver_name",
@@ -381,7 +388,7 @@
         "label_info_title":"Benchmark 3: Knowledgeable about HIV prevention",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Do all adolescents 12 to 17 have good HIV prevention knowledge?",
+        "label": "Do all adolescents 10 to 17 have good HIV prevention knowledge?",
         "options": [
           {
             "key": "yes",
@@ -477,6 +484,7 @@
         "openmrs_entity_id": "undernourished",
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
+        "read_only" : true,
         "type": "native_radio",
         "label": "Are there no children below the age of 5 who are malnourished?",
         "options": [

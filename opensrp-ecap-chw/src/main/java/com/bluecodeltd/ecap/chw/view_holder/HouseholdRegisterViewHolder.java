@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -63,8 +64,21 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                 homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
             }
         }
+        Household house = HouseholdDao.getHousehold(householdId);
 
+        if (house != null) {
+            String householdCaseStatus = house.getHousehold_case_status();
+            String deRegistrationReason = house.getDe_registration_reason();
 
+            if (householdCaseStatus != null &&
+                    ("0".equals(householdCaseStatus) ||
+                            ("2".equals(householdCaseStatus) && deRegistrationReason != null &&
+                                    ("Exited without graduation".equals(deRegistrationReason) ||
+                                            "Moved (Relocated)".equals(deRegistrationReason) ||
+                                            "other".equals(deRegistrationReason))))) {
+                homeIcon.setImageResource(R.drawable.inactive_house);
+            }
+        }
 
         //This prevents Duplication of Icons
         hLayout.removeAllViews();

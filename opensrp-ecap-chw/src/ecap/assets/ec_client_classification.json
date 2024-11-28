@@ -14,6 +14,65 @@
           },
           {
             "field": "eventType",
+            "field_value": "Mother Pmtct Child",
+            "creates_case": [
+              "ec_pmtct_child"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Ptmct Child Outcome",
+            "creates_case": [
+              "ec_pmtct_child_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "PMTCT Mother Outcome",
+            "creates_case": [
+              "ec_pmtct_mother_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Delivery",
+            "creates_case": [
+              "ec_pmtct_delivery_details"
+            ]
+          },
+
+
+          {
+            "field": "eventType",
+            "field_value": "Ptmct Child Monitoring",
+            "creates_case": [
+              "ec_pmtct_child_monitoring"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Monitoring",
+            "creates_case": [
+              "ec_pmtct_mother_monitoring"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Postnatal",
+            "creates_case": [
+              "ec_pmtct_mother_postnatal"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct ANC",
+            "creates_case": [
+              "ec_pmtct_mother_anc"
+            ]
+          },
+
+          {
+            "field": "eventType",
             "field_value": "Sub Population",
             "creates_case": [
               "ec_client_index",
@@ -349,6 +408,13 @@
               "ec_mother_index",
               "ec_household",
               "ec_client_index"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct",
+            "creates_case": [
+              "ec_pmtct_mother"
             ]
           },
           {

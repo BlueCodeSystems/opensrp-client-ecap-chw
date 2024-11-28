@@ -2,8 +2,8 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
-import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -55,7 +54,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class VcaServiceActivity extends AppCompatActivity {
@@ -88,7 +86,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         hh_services_link = findViewById(R.id.hh_service_link);
         HouseholdLinkFromVca();
 
-         intent_vcaid = getIntent().getExtras().getString("vcaid");
+        intent_vcaid = getIntent().getExtras().getString("vcaid");
         String intent_cname = getIntent().getExtras().getString("vcaname");
         hivstatus = getIntent().getExtras().getString("hivstatus");
         household_id = getIntent().getExtras().getString("hh_id");
@@ -130,54 +128,53 @@ public class VcaServiceActivity extends AppCompatActivity {
         switch (id) {
             case R.id.services1:
                 CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid);
-                if(CasePlanDao.checkCasePlan(intent_vcaid) == 0){
+
+                if (caseStatusModel == null) {
+                    break;
+                }
+
+                if (CasePlanDao.checkCasePlan(intent_vcaid) == 0) {
                     Dialog dialog = new Dialog(this);
                     dialog.setContentView(R.layout.dialog_layout);
                     dialog.show();
 
                     TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    dialogMessage.setText("Unable to add service(s) for "+caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " because no Case Plan(s) have been added");
+                    dialogMessage.setText(
+                            "Unable to add service(s) for " + caseStatusModel.getFirst_name() + " " +
+                                    caseStatusModel.getLast_name() + " because no Case Plan(s) have been added"
+                    );
 
                     android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
                     dialogButton.setOnClickListener(view -> dialog.dismiss());
+                } else if (caseStatusModel.getCase_status() != null &&
+                        ("0".equals(caseStatusModel.getCase_status()) || "2".equals(caseStatusModel.getCase_status()))) {
+                    Dialog dialog = new Dialog(this);
+                    dialog.setContentView(R.layout.dialog_layout);
+                    dialog.show();
 
-                } else{
-                    if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                        Dialog dialog = new Dialog(this);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
+                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                    dialogButton.setOnClickListener(view -> dialog.dismiss());
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(this);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
 
-                        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(view -> dialog.dismiss());
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                        cId.put("value", hh_id.getText().toString());
 
-                    } else {
-                        try {
-                            FormUtils formUtils = new FormUtils(this);
-                            JSONObject indexRegisterForm;
+                        JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                        hiv.put("value", hivstatus);
 
-                            indexRegisterForm = formUtils.getFormJson("service_report_vca");
-
-                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                            cId.put("value",hh_id.getText().toString());
-
-                            JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                            hiv.put("value",hivstatus);
-
-
-                            startFormActivity(indexRegisterForm);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        startFormActivity(indexRegisterForm);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
                 }
-
-
-
 
                 break;
         }
@@ -203,7 +200,6 @@ public class VcaServiceActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
             boolean is_edit_mode = false;
@@ -222,35 +218,45 @@ public class VcaServiceActivity extends AppCompatActivity {
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
-
-            try {
-
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
-
-                if (childIndexEventClient == null) {
-                    return;
-                }
-
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
+            Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+            passClosureForm.putExtra("jsonForm", jsonFormObject.toString());
+            passClosureForm.putExtra("vcaid",intent_vcaid);
+            passClosureForm.putExtra("vcaname",c_name);
+            passClosureForm.putExtra("hivtstatus",hivstatus);
+            passClosureForm.putExtra("hh_id",household_id);
+            finish();
+            startActivity(passClosureForm);
 
 
-                switch (EncounterType) {
+//            try {
+//
+//                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+//
+//                if (childIndexEventClient == null) {
+//                    return;
+//                }
+//
+//                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                    case "VCA Service Report":
-                      Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                      familyServiceList.clear();
-                      familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
 
-                        break;
+            switch (EncounterType) {
 
-                }
+                case "VCA Service Report":
+//                    Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                    familyServiceList.clear();
+                    familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
+                    recyclerViewadapter.notifyDataSetChanged();
+                    break;
 
-            } catch (Exception e) {
-                Timber.e(e);
             }
+
+//            } catch (Exception e) {
+//                Timber.e(e);
+//            }
         }
-        finish();
-        startActivity(getIntent());
+//        finish();
+//        startActivity(getIntent());
+        recyclerViewadapter.notifyDataSetChanged();
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -367,7 +373,7 @@ public class VcaServiceActivity extends AppCompatActivity {
 
             if (v.getId() == R.id.hh_service_link) {
 
-                Intent i = new Intent(this, HouseholdServiceActivity.class);
+                Intent i = new Intent(this, HouseholdServicesOnlyActivity.class);
                 i.putExtra("householdId", household_id);
                 i.putExtra("cname", c_name);
                 startActivity(i);
@@ -375,5 +381,12 @@ public class VcaServiceActivity extends AppCompatActivity {
             }
 
         });
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VcaServiceActivity.this, IndexDetailsActivity.class);
+        intent.putExtra("Child", intent_vcaid);
+        startActivity(intent);
+        finish();
     }
 }

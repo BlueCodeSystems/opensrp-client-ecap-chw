@@ -11,8 +11,10 @@ buildscript {
         classpath 'org.apache.commons:commons-lang3:3.10'
         classpath 'com.android.tools.build:gradle:4.0.2'
         classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
     }
 }
 plugins {
@@ -23,6 +25,9 @@ apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
 
 jacoco {
     toolVersion = "0.8.5"
@@ -132,8 +137,8 @@ android {
         applicationId "com.bluecodeltd.chw"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode 12
-        versionName "v6.1.0"
+        versionCode 14
+        versionName "v6.1.2"
         multiDexEnabled true
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
@@ -202,9 +207,9 @@ android {
             //shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '500'
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '3'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '200'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '4'
             buildConfigField "boolean", "TIME_CHECK", "true"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
             buildConfigField "int", "VACCINE_SYNC_PROCESSING_MINUTES", '30'
@@ -220,9 +225,9 @@ android {
         }
 
         debug {
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '500'
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '500'
-            buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '3'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '200'
+            buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '4'
             buildConfigField "boolean", "TIME_CHECK", "false"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
             buildConfigField "int", "VACCINE_SYNC_PROCESSING_MINUTES", '30'
@@ -280,8 +285,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 12
-            versionName "v6.1.0"
+            versionCode 27
+            versionName "v6.2.3"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
@@ -290,7 +295,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '2'
+            buildConfigField "int", "DATABASE_VERSION", '8'
         }
     }
     buildFeatures {
@@ -304,6 +309,7 @@ dependencies {
     implementation "io.ona.rdt-capture:lib:2.1.0"
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 
   //  implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
          implementation(project(":opensrp-ecap-chw-core")) {
@@ -317,6 +323,7 @@ dependencies {
         exclude group: 'io.ona.kujaku', module: 'library'
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
     }
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.3'
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -329,6 +336,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.gcacace:signature-pad:1.3.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     //For viewing PDFs in the app
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
