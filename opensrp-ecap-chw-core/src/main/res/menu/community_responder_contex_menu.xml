@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/call_responder"
+        android:title="@string/call" />
+    <item
+        android:id="@+id/edit_responder"
+        android:title="@string/edit_responder" />
+    <item
+        android:id="@+id/remove_responder"
+        android:title="@string/remove_responder" />
+</menu>
