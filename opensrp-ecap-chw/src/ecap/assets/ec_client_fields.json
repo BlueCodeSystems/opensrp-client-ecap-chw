@@ -8065,6 +8065,14 @@
           }
         },
         {
+          "column_name": "contact_accepts_HTS_offer",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_accepts_HTS_offer"
+          }
+        },
+
+        {
           "column_name": "hiv_status",
           "type": "Client",
           "json_mapping": {

@@ -352,7 +352,7 @@
         "type": "toaster_notes",
         "text": "Benchmark 2 has not been met.",
         "toaster_type": "problem",
-        "toaster_info_text": "Benchmark 2 has not been met, because both questions have not been answered yes.",
+        "toaster_info_text": "Benchmark 2 has not been met",
         "toaster_info_title": "Benchmark 2",
         "relevance": {
           "rules-engine": {

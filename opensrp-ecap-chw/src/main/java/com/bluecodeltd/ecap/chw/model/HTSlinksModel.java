@@ -29,6 +29,7 @@ public class HTSlinksModel {
     private String caseworker_name;
     private String checked_by;
     private String delete_status;
+    private String contact_accepts_HTS_offer;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -252,5 +253,13 @@ public class HTSlinksModel {
 
     public void setArt_number(String art_number) {
         this.art_number = art_number;
+    }
+
+    public String getContact_accepts_HTS_offer() {
+        return contact_accepts_HTS_offer;
+    }
+
+    public void setContact_accepts_HTS_offer(String contact_accepts_HTS_offer) {
+        this.contact_accepts_HTS_offer = contact_accepts_HTS_offer;
     }
 }

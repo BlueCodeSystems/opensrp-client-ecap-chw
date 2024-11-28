@@ -92,6 +92,7 @@ public class HTSLinksDao extends AbstractDao {
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setChecked_by(getCursorValue(c, "checked_by"));
             record.setArt_number(getCursorValue(c,"art_number"));
+            record.setContact_accepts_HTS_offer(getCursorValue(c,"contact_accepts_HTS_offer"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
 
