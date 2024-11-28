@@ -122,7 +122,7 @@ public class GradDao extends AbstractDao {
 
         String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
                 "FROM ec_client_index " +
-                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 12 " +
+                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 10 " +
                 "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 17 " +
                 "AND household_id = '" + householdID + "'";
 

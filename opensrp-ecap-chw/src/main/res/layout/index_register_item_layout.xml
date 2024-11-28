@@ -132,6 +132,42 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
                 />
+
+            <LinearLayout
+                android:id="@+id/notification_wrapper"
+                android:background="@drawable/grey_left_border"
+                android:visibility="gone"
+                android:paddingLeft="@dimen/register_list_item_padding"
+                android:paddingTop="@dimen/register_list_top_bottom_padding"
+                android:paddingRight="@dimen/register_list_item_padding"
+                android:paddingBottom="@dimen/register_list_top_bottom_padding"
+                android:layout_width="90dp"
+                android:layout_height="@dimen/register_list_item_height"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/register_list_item_padding"
+                android:paddingEnd="@dimen/register_list_item_padding"
+                android:layout_alignParentEnd="true">
+                <ImageView
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="@dimen/register_list_due_size"
+                    android:typeface="normal"
+                    android:textColor="@color/grey"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:tint="#00fff6"
+                    android:id="@+id/notifications"
+                    android:src="@drawable/ic_notification"
+                    android:background="@drawable/notification_icon"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:hapticFeedbackEnabled="true"
+                    android:textAllCaps="false"
+                    />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/due_button_wrapper"
                 android:background="@drawable/grey_left_border"

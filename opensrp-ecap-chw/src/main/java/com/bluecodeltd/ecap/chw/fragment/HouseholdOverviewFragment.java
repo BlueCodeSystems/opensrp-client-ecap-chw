@@ -1,11 +1,15 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,12 +28,14 @@ import com.rey.material.widget.Button;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class HouseholdOverviewFragment extends Fragment {
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtGpsLocation,txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
     LinearLayout linearLayout, muacView;
     Button screenBtn;
     ImageButton arrowButton;
@@ -37,10 +43,12 @@ public class HouseholdOverviewFragment extends Fragment {
     Household house;
     CaregiverAssessmentModel caregiverAssessmentModel;
     String nutritionWarning;
+    ImageView signatureIV;
     private TextView txtFemalesBetweenTenAndSeventeen;
     private TextView txtFemalesLessThanFive;
     RelativeLayout relativeLayout;
     LinearLayout layout;
+
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Nullable
@@ -52,7 +60,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtIncome = view.findViewById(R.id.income);
         txtIncomeSource = view.findViewById(R.id.income_source);
         txtBeds = view.findViewById(R.id.beds);
-        txtMalaria = view.findViewById(R.id.malaria);
+        //txtMalaria = view.findViewById(R.id.malaria);
         txtMalesLessThanFive = view.findViewById(R.id.males);
         txtFemalesLessThanFive = view.findViewById(R.id.females);
         //txtFemales = view.findViewById(R.id.females);
@@ -60,6 +68,7 @@ public class HouseholdOverviewFragment extends Fragment {
         txtNumber = view.findViewById(R.id.emergency_number);
         txtPhone = view.findViewById(R.id.h_phone);
         txtDate  = view.findViewById(R.id.h_date);
+        signatureIV = view.findViewById(R.id.signature_view);
         txtEdited_by = view.findViewById(R.id.h_edited_by);
         txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
         txtFemalesBetweenTenAndSeventeen = view.findViewById(R.id.femalesBetweenTenAndSeventeen);
@@ -86,11 +95,24 @@ public class HouseholdOverviewFragment extends Fragment {
 
 
         fab = getActivity().findViewById(R.id.fabx);
+        txtGpsLocation = view.findViewById(R.id.gps_location);
+
 
         setViews();
 
         return view;
 
+    }
+
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        // Decode Base64 encoded string to byte array
+        byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+        // Convert byte array to Bitmap
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+        // Set the Bitmap to ImageView
+        imageView.setImageBitmap(decodedBitmap);
     }
 
     @SuppressLint("RestrictedApi")
@@ -142,11 +164,15 @@ public class HouseholdOverviewFragment extends Fragment {
         String phone = house.getPhone();
         String date_edited = house.getDate_edited();
         String edited_by = house.getCaseworker_name();
+        String encodedSignature = house.getSignature();
 
+        if(encodedSignature!= null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, signatureIV);
+        }
         txtIncome.setText(income);
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);
-        txtMalaria.setText(household_member_had_malaria);
+        //txtMalaria.setText(household_member_had_malaria);
 
 
         if(lessThanFiveMales != null)
@@ -203,9 +229,38 @@ public class HouseholdOverviewFragment extends Fragment {
         txtVlLastDate.setText(house.getDate_of_last_viral_load() != null ? house.getDate_of_last_viral_load() : "Not Set");
 
         txtVlResult.setText(house.getViral_load_results() != null ? house.getViral_load_results() : "Not Set");
-        txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
+
+
+        List<HouseholdServiceReportModel> sModel = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());
+
+        String viralLoadResult = null;
+
+        if (!sModel.isEmpty()) {
+            HouseholdServiceReportModel serviceM= sModel.get(0);
+            viralLoadResult = serviceM.getVl_last_result();
+        } else {
+            viralLoadResult = house.getViral_load_results();
+        }
+
+        try {
+            if (viralLoadResult != null) {
+                int intValue = Integer.parseInt(viralLoadResult);
+                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
+            } else {
+                txtIsSuppressed.setText("Not set");
+            }
+        } catch (NumberFormatException e) {
+            txtIsSuppressed.setText("Update VL Results");
+        }
+
+
+//        txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
+
         txtIsMMD.setText(house.getCaregiver_mmd() != null ? house.getCaregiver_mmd() : "Not Set");
         txtLevelMMD.setText(house.getLevel_mmd() != null ? house.getLevel_mmd() : "Not Set");
+
+
+
 
 
         List<HouseholdServiceReportModel> serviceModels = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());
@@ -254,6 +309,8 @@ public class HouseholdOverviewFragment extends Fragment {
 
 
         }
+
+        txtGpsLocation.setText(house.getHousehold_location() != null ? formatGpsCoordinates(house.getHousehold_location()) : "Not Set");
         if(is_screened != null && is_screened.equals("true")){
 
             screenBtn.setVisibility(View.GONE);
@@ -268,6 +325,22 @@ public class HouseholdOverviewFragment extends Fragment {
             housetitle.setVisibility(View.GONE);
             linearLayout.setVisibility(View.GONE);
 
+        }
+    }
+
+    public static String formatGpsCoordinates(String location) {
+
+        String pattern = "(-?\\d+\\.\\d+)\\s+(-?\\d+\\.\\d+)\\s+(\\d+\\.\\d+)\\s+(\\d+\\.\\d+)";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(location);
+        if (m.find()) {
+            String latitude = m.group(1);
+            String longitude = m.group(2);
+            String altitude = m.group(3);
+            String accuracy = m.group(4);
+            return "Latitude: " + latitude + "\nLongitude: " + longitude + "\nAltitude: " + altitude + "\nAccuracy: " + accuracy;
+        } else {
+            return "Invalid input format";
         }
     }
 }

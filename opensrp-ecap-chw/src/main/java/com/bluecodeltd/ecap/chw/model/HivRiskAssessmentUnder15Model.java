@@ -2,12 +2,18 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class HivRiskAssessmentUnder15Model {
 
+    private String household_id;
+    private String unique_id;
     private String base_entity_id;
+    private String relational_id;
+    private String date_edited;
+    private String caseworker_name;
+    private String phone;
     private String informed_consent;
     private String hiv_test;
     private String on_art;
     private String start_date;
-    private String facility;
+    private String health_facility;
     private String art_number;
     private String biological_mother;
     private String deceased_parents;
@@ -19,17 +25,50 @@ public class HivRiskAssessmentUnder15Model {
     private String hiv_tb;
     private String hiv_test_result;
     private String date_of_hiv_test;
-    private String caseworker_name;
-    private String phone;
-    private String household_id;
-    private String unique_id;
+    private String hiv_exposure;
+    private String facility;
+    private String delete_status;
+    private String assessment_date;
 
-    public String getPhone() {
-        return phone;
+
+    public String getHousehold_id() {
+        return household_id;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
+    }
+
+    public String getBase_entity_id() {
+        return base_entity_id;
+    }
+
+    public void setBase_entity_id(String base_entity_id) {
+        this.base_entity_id = base_entity_id;
+    }
+
+    public String getRelational_id() {
+        return relational_id;
+    }
+
+    public void setRelational_id(String relational_id) {
+        this.relational_id = relational_id;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
     }
 
     public String getCaseworker_name() {
@@ -40,12 +79,12 @@ public class HivRiskAssessmentUnder15Model {
         this.caseworker_name = caseworker_name;
     }
 
-    public String getBase_entity_id() {
-        return base_entity_id;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setBase_entity_id(String base_entity_id) {
-        this.base_entity_id = base_entity_id;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getInformed_consent() {
@@ -80,6 +119,13 @@ public class HivRiskAssessmentUnder15Model {
         this.start_date = start_date;
     }
 
+    public String getHealth_facility() {
+        return health_facility;
+    }
+
+    public void setHealth_facility(String health_facility) {
+        this.health_facility = health_facility;
+    }
 
     public String getArt_number() {
         return art_number;
@@ -169,6 +215,14 @@ public class HivRiskAssessmentUnder15Model {
         this.date_of_hiv_test = date_of_hiv_test;
     }
 
+    public String getHiv_exposure() {
+        return hiv_exposure;
+    }
+
+    public void setHiv_exposure(String hiv_exposure) {
+        this.hiv_exposure = hiv_exposure;
+    }
+
     public String getFacility() {
         return facility;
     }
@@ -177,19 +231,19 @@ public class HivRiskAssessmentUnder15Model {
         this.facility = facility;
     }
 
-    public String getHousehold_id() {
-        return household_id;
+    public String getDelete_status() {
+        return delete_status;
     }
 
-    public void setHousehold_id(String household_id) {
-        this.household_id = household_id;
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 
-    public String getUnique_id() {
-        return unique_id;
+    public String getAssessment_date() {
+        return assessment_date;
     }
 
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
+    public void setAssessment_date(String assessment_date) {
+        this.assessment_date = assessment_date;
     }
 }

@@ -71,10 +71,28 @@
         "openmrs_entity_id": "date",
         "type": "date_picker",
         "hint": "Date when Service/s Provided",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
           "value": true,
           "err": "This field is required"
         }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
+        "key": "hh_service_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_service_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
       },
       {
         "key": "services",
@@ -182,20 +200,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
-        "type": "edit_text",
-        "read_only": "true",
+        "type": "date_picker",
         "hint": "Date of next VL test",
-        "relevance": {
-          "step1:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"positive\")"
-          }
+        "expanded": false,
+        "duration": {
+          "label": ""
         },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "service_report_vca_calculation.yml"
-            }
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:date_last_vl": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step1:date_last_vl)"
           }
         }
       },
@@ -256,6 +274,9 @@
         "label": "HIV/HEALTHY ",
         "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Age-appropriate HIV treatment literacy",
@@ -386,13 +407,18 @@
             "text": "Adherence Support"
           },
           {
-            "key": "not applicable",
-            "text": "Not Applicable"
+            "key": "DART (Directly Administered ART)",
+            "text": "DART (Directly Administered ART)"
           },
           {
             "key": "other",
             "text": "Other Specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
           }
+
         ],
         "relevance": {
           "step1:services": {
@@ -453,6 +479,9 @@
         "label": "SCHOOLED ",
         "label_info_text": "Tick (x) schooled  Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Child received school uniform",
@@ -535,6 +564,9 @@
         "label": "SAFE ",
         "label_info_text": "Tick (x) SAFE Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Safety plan developed",
@@ -606,6 +638,9 @@
         "label": "STABLE ",
         "label_info_text": "Tick (x) stable Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Linked to WE Program",
@@ -685,6 +720,9 @@
         "label": " HH LEVEL SERVICES ",
         "label_info_text": "Tick (x) other hh level services Services Provided",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Family or psychosocial support for family conflict mitigation",

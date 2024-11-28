@@ -3,41 +3,24 @@ package com.bluecodeltd.ecap.chw.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.preference.PreferenceManager;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
 import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.pinlogin.PinLogger;
 import com.bluecodeltd.ecap.chw.pinlogin.PinLoginUtil;
 import com.bluecodeltd.ecap.chw.presenter.LoginPresenter;
 import com.bluecodeltd.ecap.chw.util.Utils;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.google.gson.Gson;
 
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.Constants;
 import org.smartregister.growthmonitoring.service.intent.WeightForHeightIntentService;
 import org.smartregister.repository.AllSharedPreferences;
@@ -52,9 +35,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import timber.log.Timber;
 
@@ -130,7 +111,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             String DBNAME = "drishti.db";
             String COPYDBNAME = "chw";
 
-            toast.show();
+//            toast.show();
             String currentTimeStamp = new SimpleDateFormat("yyyy-MM-dd-HHmmss", Locale.ENGLISH).format(new Date());
             if (hasPermissions()) {
                 copyDatabase(DBNAME, COPYDBNAME + "-" + currentTimeStamp + ".db", this);
@@ -182,7 +163,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public void goToHome(boolean remote) {
         if (remote) {
-            Utils.startAsyncTask(new SaveTeamLocationsTask(), null);
+            Utils.startAsyncTask(new SaveTeamLocationsTask(), (Object) null);
         }
 
         if (hasPinLogin()) {
@@ -220,7 +201,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             startActivity(intent);
             finish();
         } else {
-          // Changed something here
+            // Changed something here
             Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
                     ChildRegisterActivity.class : IndexRegisterActivity.class);
             intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);

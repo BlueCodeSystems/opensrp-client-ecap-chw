@@ -7,16 +7,15 @@ import static org.smartregister.util.JsonFormUtils.STEP1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
-import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.fragment.MotherIndexFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
-import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
@@ -28,7 +27,6 @@ import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
-import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
@@ -40,9 +38,6 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -191,6 +186,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
+            bottomNavigationView.getMenu().removeItem(R.id.action_hts);
             bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
 
         }

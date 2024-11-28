@@ -10,12 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.MotherDetail;
-import com.bluecodeltd.ecap.chw.model.Household;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 
 import java.util.HashMap;
@@ -40,6 +37,9 @@ public class MotherOverviewFragment extends Fragment {
         fab = getActivity().findViewById(R.id.fabx);
 
         setViews();
+
+//
+
 
         return view;
 

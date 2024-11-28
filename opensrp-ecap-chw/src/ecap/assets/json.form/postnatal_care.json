@@ -1,0 +1,247 @@
+{
+  "count": "1",
+  "encounter_type": "Mother Pmtct Postnatal",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "display_back_button": "true",
+    "fields": [
+
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Postnatal Care"
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "date_of_st_post_natal_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_st_post_natal_care",
+        "type": "date_picker",
+        "hint": "Date of 1st Post Natal Care",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      },
+      {
+        "key": "mother_tested_for_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_tested_for_hiv",
+        "type": "date_picker",
+        "hint": "When was the mother tested for HIV?",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date"
+        }
+      },
+      {
+        "key": "postnatal_care_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "postnatal_care_visit",
+        "type": "native_radio",
+        "label": "Postnatal Care Visit",
+        "options": [
+          {
+            "key": "6 weeks",
+            "text": "6 weeks"
+          },
+          {
+            "key": "6 months",
+            "text": "6 months"
+          },
+          {
+            "key": "9 months",
+            "text": "9 months"
+          },
+          {
+            "key": "12 months",
+            "text": "12 months"
+          },
+          {
+            "key": "18 months",
+            "text": "18 months"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the postnatal care visit"
+        }
+      },
+      {
+        "key": "art_initiated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_initiated",
+        "type": "native_radio",
+        "label": "ART Initiated",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "art_adherence_counselling_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_adherence_counselling_support",
+        "type": "native_radio",
+        "label": "ART Adherence Counseling and Support",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "vl_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_result",
+        "type": "native_radio",
+        "label": "VL Result (Unsuppressed VL)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "family_planning_counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "family_planning_counselling",
+        "type": "native_radio",
+        "label": "Family Planning Counseling",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "number_of_condoms_distributed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_of_condoms_distributed",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Number of Condoms Distributed"
+      },
+      {
+        "key": "comments_at_postnatal_care_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_at_postnatal_care_visit",
+        "type": "edit_text",
+        "hint": "Comments",
+        "edit_type": "name"
+      }
+
+    ]
+  }
+}
