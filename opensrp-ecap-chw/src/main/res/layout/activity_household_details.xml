@@ -168,7 +168,7 @@
                 app:tabIndicatorColor="#E2E363"
                 app:tabIndicatorHeight="4dp"
                 app:tabMaxWidth="0dp"
-                app:tabMode="fixed"
+                app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
 
@@ -206,7 +206,7 @@
                 android:visibility="gone">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
@@ -220,13 +220,14 @@
 
                     <TextView
                         android:id="@+id/CallTextViewHint2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="Add Family Member"
                         android:textColor="@color/white"
                         android:textStyle="italic"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        android:gravity="center"/>
 
                 </RelativeLayout>
 

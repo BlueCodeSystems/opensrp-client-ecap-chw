@@ -6,11 +6,13 @@ public class newCaregiverModel {
     private String new_caregiver_birth_date;
     private String new_caregiver_sex;
     private String new_relation;
+    private String new_caregiver_death_date;
     private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
     private String household_id;
     private String household_case_status;
     private  String reason_for_updating_caregiver;
+
 
 
     public String getNew_caregiver_name() {
@@ -91,5 +93,13 @@ public class newCaregiverModel {
 
     public void setReason_for_updating_caregiver(String reason_for_updating_caregiver) {
         this.reason_for_updating_caregiver = reason_for_updating_caregiver;
+    }
+
+    public String getNew_caregiver_death_date() {
+        return new_caregiver_death_date;
+    }
+
+    public void setNew_caregiver_death_date(String new_caregiver_death_date) {
+        this.new_caregiver_death_date = new_caregiver_death_date;
     }
 }

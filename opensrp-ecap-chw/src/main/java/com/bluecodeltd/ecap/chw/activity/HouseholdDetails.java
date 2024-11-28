@@ -52,10 +52,13 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDao;
+import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.domain.Mother;
+import com.bluecodeltd.ecap.chw.fragment.CaregiverHivAssessmentFragment;
+import com.bluecodeltd.ecap.chw.fragment.GraduationAssessmentFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment;
@@ -98,11 +101,13 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -173,8 +178,9 @@ public class HouseholdDetails extends AppCompatActivity {
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
         house = getHousehold(householdId);
+        refreshActivity(house);
 
-        caregiver = CaregiverDao.getCaregiver(householdId);
+       caregiver = CaregiverDao.getCaregiver(householdId);
 
         oMapper = new ObjectMapper();
         caregiverMapper = new ObjectMapper();
@@ -221,6 +227,9 @@ public class HouseholdDetails extends AppCompatActivity {
         updateTasksTabTitle();
         updateChildTabTitle();
         updateCaseplanTitle();
+
+        updateOverviewTabTitle();
+        updateGradTabTitle();
         txtDistrict.setText(householdId);
 
 
@@ -232,11 +241,13 @@ public class HouseholdDetails extends AppCompatActivity {
             cname.setText(house.getCaregiver_name() + " Household");
         }
 
-        if(updatedCaregiver.getNew_caregiver_name()!=null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
-
-            updatedCaregiverName.setVisibility(View.VISIBLE);
-            updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
-
+        try {
+            if(updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
+                updatedCaregiverName.setVisibility(View.VISIBLE);
+                updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
+            }
+        } catch (NullPointerException e) {
+            Log.e("TAG", "Error: " + e.getMessage());
         }
 
         countFemales = IndexPersonDao.countFemales(householdId);
@@ -263,6 +274,25 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public HashMap<String, CaregiverAssessmentModel> getVulnerabilities() {
         return  populateMapWithVulnerabilities(caregiverAssessmentModel);
+    }
+    private String checkAndConvertDateFormat(String date) {
+        if (date == null || date.isEmpty()) {
+            return "Date is null or empty";
+        }
+
+        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return date;
+        } else {
+            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            try {
+                LocalDate localDate = LocalDate.parse(date, oldFormatter);
+                return localDate.format(newFormatter);
+            } catch (DateTimeParseException e) {
+                Log.e("TAG", "Invalid date format: " + e.getMessage());
+                return "Invalid date format";
+            }
+        }
     }
 
 
@@ -294,6 +324,15 @@ public class HouseholdDetails extends AppCompatActivity {
         mPagerAdapter.addFragment(new HouseholdChildrenFragment());
         mPagerAdapter.addFragment(new HouseholdCasePlanFragment());
         mPagerAdapter.addFragment(new HouseholdVisitsFragment());
+        mPagerAdapter.addFragment(new GraduationAssessmentFragment());
+
+
+        String hivStatus = house.getCaregiver_hiv_status();
+
+        if (hivStatus != null && "negative".equalsIgnoreCase(hivStatus)) {
+            mPagerAdapter.addFragment(new CaregiverHivAssessmentFragment());
+        }
+
 
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
@@ -301,8 +340,13 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
         mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
-        mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
         mTabLayout.getTabAt(2).setText("CP");
+        mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
+        mTabLayout.getTabAt(4).setText("Grad");
+        if (mPagerAdapter.getCount() > 5) {
+            mTabLayout.getTabAt(5).setText("HIV ASSESSMENT");
+            updateHivRiskTabTitle();
+        }
 
     }
 
@@ -322,7 +366,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private void updateCaseplanTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.household_plan_tab_title, null);
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
-        casePlanTabTitle.setText("CP");
+        casePlanTabTitle.setText("CASE PLAN");
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
         int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());
 
@@ -348,6 +392,45 @@ public class HouseholdDetails extends AppCompatActivity {
         childTabCount.setText(childrenCount);
 
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+    }
+    private void updateHivRiskTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("HIV RISK ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = CaregiverVisitationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(5).setCustomView(taskTabTitleLayout);
+    }
+    private void updateGradTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("GRADUATION ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = GraduationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+//        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
+    }
+    private void updateOverviewTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("OVERVIEW");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int visits = CaregiverVisitationDao.countVisits(householdId);
+
+        visitTabCount.setText(String.valueOf(visits));
+        visitTabCount.setVisibility(View.GONE);
+
+        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
 
 
@@ -388,12 +471,12 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Populate Caregiver Details
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(house, Map.class));
 
-                    if(graduationModel != null) {
-
-                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, graduationMapper.convertValue(graduationModel, Map.class));
-
-                    }
+//                    if(graduationModel != null) {
+//
+//                        indexRegisterForm.put("entity_id", this.graduationModel.getBase_entity_id());
+//                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, graduationMapper.convertValue(graduationModel, Map.class));
+//
+//                    }
 
                     //Populate for Benchmark 3
                     String bench3 = GradDao.bench3Answers(householdId);
@@ -428,8 +511,6 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Benchmark **** 1 **** logic
                     Boolean checkForVCAHivStatus = IndexPersonDao.checkHivStatusInHousehold(householdId);
 
-                    Boolean allChildrenHIVStatus = IndexPersonDao.doTheVCAsMeetBenchmarkOne(householdId);
-
                     if(checkForVCAHivStatus.equals(true)){
 
                             allTested = "yes";
@@ -442,7 +523,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     Boolean checkForHivStatus = HouseholdDao.checkCaregiverHivStatusInHousehold(householdId);
 
-                    Boolean isCaregiverHIVStatusEligibleInHousehold = HouseholdDao.isCaregiverHIVStatusEligibleInHousehold(householdId);
 
                    if(checkForHivStatus.equals(true)){
                            caregiverTested = "yes";
@@ -484,7 +564,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     //Benchmark **** 2 **** logic updated
 
                     JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
-                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
+//                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
                     JSONObject suppressed_caregiver = getFieldJSONObject(fields(indexRegisterForm, "step3"), "suppressed_caregiver");
 
@@ -494,13 +574,14 @@ public class HouseholdDetails extends AppCompatActivity {
                     Boolean hasPositiveVCA = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
                     Boolean  isCaregiverPositive = HouseholdDao.isCaregiverPositive(householdId);
                     Boolean checkIfVcasWithVLBelow1000MeetingRequirement = IndexPersonDao.doTheVCAsMeetBenchmarkTwo(householdId);
+                    Boolean checkForVCAsVL = VCAServiceReportDao.checkAllVcaViralLoads(householdId);
                     Boolean checkForCaregiverVL = HouseholdServiceReportDao.checkForHouseholdViralLoad(householdId);
 
                     if(hasPositiveVCA.equals(true)){
                         suppressed.put("hidden", false);
                         toast_applicable.put("type", "hidden");
 
-                            if (checkIfVcasWithVLBelow1000MeetingRequirement.equals(true)){
+                            if (checkForVCAsVL.equals(true)){
                                 suppressed.put(JsonFormUtils.VALUE, "yes");
                             } else {
                                 suppressed.put(JsonFormUtils.VALUE, "no");
@@ -563,7 +644,7 @@ public class HouseholdDetails extends AppCompatActivity {
                        malnutrition.put(JsonFormUtils.READ_ONLY, true);
                        malnutrition.put(JsonFormUtils.VALUE,"N/A");
                        underFiveToast.put("type", "toaster_notes");
-                       underFiveToast.put("text", cname.getText().toString()+" doesnt any adolescents aged 5 and below who need to be assessed for undernourishment");
+                       underFiveToast.put("text", cname.getText().toString()+" does not have any adolescents aged 5 and below who need to be assessed for undernourishment");
                    }
 
 
@@ -616,6 +697,13 @@ public class HouseholdDetails extends AppCompatActivity {
                     indexRegisterForm.put("entity_id", this.house.getBid());
                     CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
 
+                    JSONObject recentLocation = getFieldJSONObject(fields(indexRegisterForm, "step2"), "recent_location");
+
+
+//                    recentLocation.put("text",formatGpsCoordinates(house.getHousehold_location() != null ? house.getHousehold_location() : ""));
+//                    recentLocation.put("text","Latitude: -15.378761 \nLongitude: 28.320772 1249.0 \nAccuracy: 7.504");
+
+
 
                     JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step2"), "phone");
                     if (cphone != null) {
@@ -645,16 +733,32 @@ public class HouseholdDetails extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    JSONObject subPop = getFieldJSONObject(fields(indexRegisterForm, "step2"), "sub_population");
+                    if (house.getSub_population() != null) {
+                        String subPopulationString = house.getSub_population();
+                        JSONArray subPopulations = new JSONArray(subPopulationString);
+                        JSONArray options = subPop.getJSONArray("options");
 
-                    JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
+                        for (int i = 0; i < options.length(); i++) {
+                            JSONObject option = options.getJSONObject(i);
+                            String key = option.getString("key");
+                            if (subPopulations.toString().contains("\"" + key + "\"")) {
+                                option.put("value", "true");
+                            } else {
+                                option.put("value", "false");
+                            }
+                        }
+                    }
+                    else {
+                        JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
 
-                    subPopulation.getJSONObject(0).put("value", house.getSubpop1());
-                    subPopulation.getJSONObject(1).put("value", house.getSubpop2());
-                    subPopulation.getJSONObject(2).put("value", house.getSubpop3());
-                    subPopulation.getJSONObject(3).put("value", house.getSubpop4());
-                    subPopulation.getJSONObject(5).put("value", house.getSubpop());
-                    subPopulation.getJSONObject(4).put("value", house.getSubpop5());
-
+                        subPopulation.getJSONObject(0).put("value", house.getSubpop1());
+                        subPopulation.getJSONObject(1).put("value", house.getSubpop2());
+                        subPopulation.getJSONObject(2).put("value", house.getSubpop3());
+                        subPopulation.getJSONObject(3).put("value", house.getSubpop4());
+                        subPopulation.getJSONObject(5).put("value", house.getSubpop());
+                        subPopulation.getJSONObject(4).put("value", house.getSubpop5());
+                    }
                     indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
                     startFormActivity(indexRegisterForm);
@@ -936,6 +1040,14 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
+            if(EncounterType.equals("Household Screening") || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
+                Intent openSignatureIntent = new Intent(this, SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                openSignatureIntent.putExtra("householdId",householdId);
+                startActivity(openSignatureIntent);
+            }
+            else
+            {
             try {
 
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
@@ -961,8 +1073,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+//                        finish();
+//                        startActivity(getIntent());
+                        Intent intent = getIntent();
                         finish();
-                        startActivity(getIntent());
+                        startActivity(intent);
                         break;
                     case "WE Services Caregiver":
 
@@ -989,8 +1104,6 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     case "Grad":
                     case "Graduation":
-                    case "Household Visitation For Caregiver":
-                    case "Hiv Assessment For Caregiver":
                     case "Household Case Status":
 
                         closeFab();
@@ -1000,7 +1113,9 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
 
                     case "Caregiver Case Plan":
-                        String dateId = jsonFormObject.getJSONObject("step1").getJSONArray("fields").getJSONObject(3).optString("value");
+
+                        JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                        String dateId = date.optString("value");
 
                         JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
                         String cp_Id = cpId.optString("value");
@@ -1013,9 +1128,16 @@ public class HouseholdDetails extends AppCompatActivity {
                 Timber.e(e);
             }
 
-        }
+        }}
 
     }
+
+    public Intent openSignatureActivity(JSONObject jsonFormObject){
+        Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+        openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+        return openSignatureIntent;
+    }
+
 
     private void AddVulnarabilitiesToCasePlan(String dateId,String cpId) {
         Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
@@ -1446,26 +1568,29 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
     public void countNumberOfMales(List<String> allBirthDates){
-            int totalNumberOfMalesBelowFive = 0;
-            int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
-            DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
-            if( allBirthDates != null)
-            {
+        int totalNumberOfMalesBelowFive = 0;
+        int totalNumberOfMalesBetweenTenAndSeventeen =0 ;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if( allBirthDates != null)
+        {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                {
-                    totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                    {
+                        totalNumberOfMalesBelowFive =totalNumberOfMalesBelowFive + 1;
+                    }
+                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
+                    {
+                        totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
+                    }
                 }
-                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
-                {
-                    totalNumberOfMalesBetweenTenAndSeventeen =  totalNumberOfMalesBetweenTenAndSeventeen + 1;
-                 }
             }
-            }
+        }
 
         lessThanFiveMales = String.valueOf(totalNumberOfMalesBelowFive);
         malesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfMalesBetweenTenAndSeventeen);
@@ -1474,28 +1599,30 @@ public class HouseholdDetails extends AppCompatActivity {
     public void countNumberOfFemales(List<String> allBirthDates){
         int totalNumberOfFemalesBelowFive = 0;
         int totalNumberOfFemalesBetweenTenAndSeventeen =0 ;
-        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if( allBirthDates != null)
         {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
-                if(periodBetweenDateOfBirthAndNow.getYears() > 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
-                {
-                    totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
-                }
-                else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() < 17)
-                {
-                    totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+                    if(periodBetweenDateOfBirthAndNow.getYears() >= 0 &&  periodBetweenDateOfBirthAndNow.getYears() < 5)
+                    {
+                        totalNumberOfFemalesBelowFive =totalNumberOfFemalesBelowFive + 1;
+                    }
+                    else if(periodBetweenDateOfBirthAndNow.getYears() > 10 &&  periodBetweenDateOfBirthAndNow.getYears() <= 17)
+                    {
+                        totalNumberOfFemalesBetweenTenAndSeventeen =  totalNumberOfFemalesBetweenTenAndSeventeen + 1;
+                    }
                 }
             }
         }
 
         lessThanFiveFemales = String.valueOf(totalNumberOfFemalesBelowFive);
         FemalesBetweenTenAndSevenTeen = String.valueOf(totalNumberOfFemalesBetweenTenAndSeventeen);
-
     }
 
     public void countChildren10to17(List<String> allBirthDates){
@@ -1528,25 +1655,26 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public void countNumberofChildren(List<String> allBirthDates){
         int totalNumberOfChildren = 0;
-        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if( allBirthDates != null)
         {
             for(int i = 0; i < allBirthDates.size(); i++)
             {
-                LocalDate localDateBirthdate = LocalDate.parse(allBirthDates.get(i), formatter);
-                LocalDate today =LocalDate.now();
-                Period periodBetweenDateOfBirthAndNow = getPeriodBetweenDateOfBirthAndNow(localDateBirthdate, today);
+                String dobInCorrectFormat = checkAndConvertDateFormat(allBirthDates.get(i));
+                if (!dobInCorrectFormat.equals("Invalid date format")) {
+                    LocalDate localDateBirthdate = LocalDate.parse(dobInCorrectFormat, formatter);
+                    LocalDate today =LocalDate.now();
+                    Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
 
-                if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
-                {
-                    totalNumberOfChildren = totalNumberOfChildren + 1;
+                    if(periodBetweenDateOfBirthAndNow.getYears() > 2 &&  periodBetweenDateOfBirthAndNow.getYears() < 18)
+                    {
+                        totalNumberOfChildren = totalNumberOfChildren + 1;
+                    }
                 }
-
             }
         }
 
         totalChildren = String.valueOf(totalNumberOfChildren);
-
     }
 
     public int countNumberofChildren10to17(List<String> allBirthDates){
@@ -1608,14 +1736,17 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case R.id.call:
-                String caregiverPhoneNumber = house.getCaregiver_phone();
-                if (!caregiverPhoneNumber.equals("")) {
-
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-                    startActivity(callIntent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                try {
+                    String caregiverPhoneNumber = house.getCaregiver_phone();
+                    if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
+                        startActivity(callIntent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Log.e("Phone Number Error", "Exception", e);
                 }
 
                 return true;
@@ -1640,6 +1771,7 @@ public class HouseholdDetails extends AppCompatActivity {
                            for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
                            {
                                Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+
                                changeHouseholdStatus(householdToDelete);
                            }
                        }
@@ -1661,11 +1793,28 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
             case R.id.case_status:
-                try {
-                    openFormUsingFormUtils(getBaseContext(),"household_case_status");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+//                Boolean status = IndexPersonDao.checkGraduationStatus(householdId);
+//                if(status.equals(false)){
+//                    showDialogBox("You need to deregister all the vcas in the household");
+//                } else {
+                    try {
+                        openFormUsingFormUtils(getBaseContext(),"household_case_status");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+//                }
+//                FormUtils formUtils = null;
+//                try {
+//                    formUtils = new FormUtils(HouseholdDetails.this);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                JSONObject indexRegisterForm = formUtils.getFormJson("household_case_status");
+//
+//                startFormActivity(indexRegisterForm);
+
+
+
 
                 break;
             case R.id.update_caregiver_details:
@@ -1827,10 +1976,65 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
                 formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
+                if(vcaGradStatus.equals(false)){
+                    JSONObject status = getFieldJSONObject(fields(formToBeOpened, "step1"), "household_case_status");
+                    JSONArray options = status.getJSONArray("options");
+
+                    for (int i = 0; i < options.length(); i++) {
+                        JSONObject option = options.getJSONObject(i);
+                        if ("0".equals(option.getString("key"))) {
+                            options.remove(i);
+                            break;
+                        }
+                    }
+
+
+                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                    info.put("type", "toaster_notes");
+                    info.put("text","If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
+
+                } else {
+                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                    info.put("type", "hidden");
+                }
+
+                GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
+                if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
+
+                    JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
+                    if (graduationStatus != null) {
+                        graduationStatus.put("type", "toaster_notes");
+                        graduationStatus.put("text", house.getCaregiver_name() + "' "  + " household needs to meet all eight graduation benchmarks in order to graduate");
+                    }
+
+                    JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "de_registration_reason");
+                    if (reasonField != null) {
+                        JSONArray optionsArray = reasonField.getJSONArray("options");
+                        if (optionsArray != null) {
+                            for (int i = 0; i < optionsArray.length(); i++) {
+                                JSONObject option = optionsArray.getJSONObject(i);
+                                if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
+                                    optionsArray.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
                 break;
             case "update_caregiver_details":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
-                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                if (updatedCaregiver != null){
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
+                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                } else {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                }
+
+
                 break;
 
         }
@@ -1847,11 +2051,19 @@ public class HouseholdDetails extends AppCompatActivity {
         alert.show();
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
         startActivity(returnToHouseholdIndexActivity);
         finish();
+    }
+    public void refreshActivity(Household house){
+        if(house == null){
+            finish();
+            startActivity(getIntent());
+        }
+
     }
 }

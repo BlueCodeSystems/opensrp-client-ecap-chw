@@ -29,6 +29,7 @@ import com.bluecodeltd.ecap.chw.activity.IdentificationRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.LoginActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
+import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
 import com.bluecodeltd.ecap.chw.configs.AllClientsRegisterRowOptions;
@@ -405,6 +406,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.IDENTIFICATION_REGISTER_ACTIVITY, IdentificationRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.DASHBOARD_ACTIVITY, DashboardActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HTS_ACTIVITY, HivTestingServiceActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PMTCT, PMTCTRegisterActivity.class);
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRALS_REGISTER_ACTIVITY, ReferralRegisterActivity.class);
         }

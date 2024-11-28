@@ -182,6 +182,11 @@
             "key": "Siblings of the Index/Other family members",
             "text": "Siblings of the Index/Other family members"
 
+          },
+          {
+            "key": "PBFW",
+            "text": "PBFW"
+
           }
         ],
         "v_required": {
@@ -215,6 +220,8 @@
         "type": "spinner",
         "hint": "Relationship to Index/SNS index",
         "keys": [
+          "Son",
+          "Daughter",
           "Mother",
           "Father",
           "Husband",
@@ -224,6 +231,8 @@
           "Other"
         ],
         "values": [
+          "Son",
+          "Daughter",
           "Mother",
           "Father",
           "Husband",
@@ -271,7 +280,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "landmark",
         "type": "edit_text",
-        "hint": "Landmark of the index contact",
+        "hint": "Landmark",
         "read_only": "false"
       },
       {
@@ -298,12 +307,12 @@
         "label": "Current HIV Status",
         "options": [
           {
-            "key": "negative",
-            "text": "Negative"
+            "key": "Known Negative",
+            "text": "Known Negative"
           },
           {
-            "key": "positive",
-            "text": "Positive"
+            "key": "Known Positive",
+            "text": "Known Positive"
           },
           {
             "key": "Test Not Required (evidenced by an HIV risk assessment)",
@@ -325,7 +334,13 @@
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
-        "max_date": "today"
+        "max_date": "today",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Known Negative\")"
+          }
+        }
       },
       {
         "key": "hiv_result",
@@ -336,18 +351,24 @@
         "label": "HIV Result (HIV+/HIV-)",
         "options": [
           {
-            "key": "negative",
-            "text": "Negative"
+            "key": "Newly Tested HIV-",
+            "text": "Newly Tested HIV-"
           },
           {
-            "key": "positive",
-            "text": "Positive"
+            "key": "Newly Tested HIV+",
+            "text": "Newly Tested HIV+"
           }
 
         ],
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Known Negative\")"
+          }
         }
       },
       {
@@ -375,7 +396,7 @@
         "relevance": {
           "step1:hiv_result": {
             "type": "string",
-            "ex": "equalTo(., \"positive\")"
+            "ex": "equalTo(., \"Newly Tested HIV+\")"
           }
         }
       },
@@ -400,6 +421,12 @@
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          }
         }
       },
       {
@@ -414,10 +441,9 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Newly Tested HIV+\")"
           }
         }
       },
@@ -433,10 +459,9 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Newly Tested HIV+\")"
           }
         }
       },

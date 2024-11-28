@@ -183,7 +183,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
 
-        if (childModel.getIs_hiv_positive().equals("yes")){
+        if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
             holder.exPandableView.setVisibility(View.GONE);
             holder.expMore.setVisibility(View.GONE);
             holder.expLess.setVisibility(View.GONE);
@@ -223,24 +223,31 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         });
 
 
-        if(childModel.getIs_hiv_positive() != null && childModel.getIs_hiv_positive().equals("yes")){
-            holder.intialHivStatus.setText("Positive");
-        } else if(childModel.getIs_hiv_positive().equals("unknown")) {
-            holder.intialHivStatus.setText("Unknown");
-        } else {
-            holder.intialHivStatus.setText("Negative");
-        }
-        holder.initialHivStatusDate.setText(childModel.getDate_screened());
+        if (childModel != null) {
+            String hivStatus = childModel.getIs_hiv_positive();
+            if ("yes".equalsIgnoreCase(hivStatus)) {
+                holder.intialHivStatus.setText("Positive");
+            } else if ("unknown".equalsIgnoreCase(hivStatus)) {
+                holder.intialHivStatus.setText("Unknown");
+            } else {
+                holder.intialHivStatus.setText("Negative");
+            }
 
-        if(visit.getIs_hiv_positive() != null && visit.getIs_hiv_positive().equals("yes")){
-            holder.updateHivStatus.setText("Positive");
-        } else if (visit.getIs_hiv_positive().equals("unknown")) {
-            holder.updateHivStatus.setText("Unknown");
-
-        } else {
-            holder.updateHivStatus.setText("Negative");
+            holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
         }
-        holder.updatedHivStatusDate.setText(visit.getVisit_date());
+
+        if (visit != null) {
+            String visitHivStatus = visit.getIs_hiv_positive();
+            if ("yes".equalsIgnoreCase(visitHivStatus)) {
+                holder.updateHivStatus.setText("Positive");
+            } else if ("unknown".equalsIgnoreCase(visitHivStatus)) {
+                holder.updateHivStatus.setText("Unknown");
+            } else {
+                holder.updateHivStatus.setText("Negative");
+            }
+
+            holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
+        }
     }
 
     public void openFormUsingFormUtils(Context context, String formName, VcaVisitationModel visit) throws JSONException {

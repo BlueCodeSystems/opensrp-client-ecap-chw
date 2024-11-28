@@ -77,6 +77,13 @@
         "toaster_info_title": "Information Toaster Info Title"
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -276,7 +283,7 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
         "label": "Sub Population :",
@@ -310,6 +317,20 @@
             "key": "subpop",
             "text": "Children of Female Sex Workers (FSWs)",
             "value": "false"
+          },
+          {
+            "key": "Siblings of the Index and other family members",
+            "text": "Siblings of the Index/Other family members"
+
+          },
+          {
+            "key": "PBFW",
+            "text": "PBFW"
+
+          },
+          {
+            "key": "ABYM",
+            "text": "At risk adolescent boys and young men (ABYM)"
           }
         ],
         "v_required": {
@@ -430,6 +451,15 @@
         "type": "edit_text",
         "hint": "Nearest Landmark"
       },
+      {
+        "key": "household_location",
+        "openmrs_entity_parent": "usual_residence",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+
       {
         "key": "screening_date",
         "openmrs_entity_parent": "",
@@ -786,23 +816,24 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
-        "type": "edit_text",
-        "read_only": "true",
+        "type": "date_picker",
         "hint": "Date of next VL test",
-        "relevance": {
-          "step2:active_on_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
+        "expanded": false,
+        "duration": {
+          "label": ""
         },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "service_report_household_calculation.yml"
-            }
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step2:date_of_last_viral_load": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step2:date_of_last_viral_load)"
           }
         }
       },
+
       {
 
         "key": "vl_suppressed",
@@ -867,7 +898,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "spinner",
-        "hint": "Level of MMD for child ",
+        "hint": "Level of MMD for caregiver ",
         "values": [
           "Less than 3 months",
           "Between 3-5 months",
@@ -875,7 +906,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Select level of MMD for child"
+          "err": "Select level of MMD for caregiver"
         },
         "relevance": {
           "step2:caregiver_mmd": {
@@ -1089,6 +1120,13 @@
           "value": true,
           "err": "This is a Required field."
         }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
       },
       {
         "key": "date_approved",

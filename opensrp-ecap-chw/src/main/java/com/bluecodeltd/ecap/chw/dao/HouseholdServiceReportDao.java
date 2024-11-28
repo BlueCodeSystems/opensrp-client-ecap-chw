@@ -22,6 +22,20 @@ public class HouseholdServiceReportDao extends AbstractDao {
         return values;
 
     }
+    public static List<HouseholdServiceReportModel> getServicesForHouseholdOnly(String householdId) {
+
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+                "FROM ec_household_service_report\n" +
+                "WHERE household_id = '" + householdId + "' AND services = 'household' AND (delete_status IS NULL OR delete_status <> '1')\n" +
+                "ORDER BY sortable_date DESC";
+
+        List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static List<HouseholdServiceReportModel> getRecentVLServicesByHousehold(String householdId) {
 
         String sql = "SELECT *, is_hiv_positive, date, vl_last_result, level_mmd, caregiver_mmd,household_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
@@ -57,6 +71,7 @@ public class HouseholdServiceReportDao extends AbstractDao {
             HouseholdServiceReportModel record = new HouseholdServiceReportModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setServices(getCursorValue(c, "services"));
+            record.setHh_service_location(getCursorValue(c, "hh_service_location"));
             record.setServices_household(getCursorValue(c, "services_household"));
             record.setServices_caregiver(getCursorValue(c, "services_caregiver"));
             record.setHealth_services(getCursorValue(c, "health_services"));

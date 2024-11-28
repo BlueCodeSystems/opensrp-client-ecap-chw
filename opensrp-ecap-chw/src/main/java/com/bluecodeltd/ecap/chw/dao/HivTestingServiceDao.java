@@ -10,7 +10,7 @@ public class HivTestingServiceDao extends AbstractDao {
 
     public static HivTestingServiceModel getHivServiceClient (String clientID) {
 
-        String sql = "SELECT * FROM ec_hiv_testing_service WHERE client_number = '" + clientID + "' ";
+        String sql = "SELECT * FROM ec_hiv_testing_service WHERE client_number = '" + clientID + "' AND (delete_status IS NULL OR delete_status != '1') ";
 
         List<HivTestingServiceModel> values = AbstractDao.readData(sql, getHIVTestingServiceModelMap());
 
@@ -43,6 +43,18 @@ public class HivTestingServiceDao extends AbstractDao {
             record.setGender(getCursorValue(c, "gender"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
             record.setEntry_point(getCursorValue(c, "entry_point"));
+            record.setAddress(getCursorValue(c, "address"));
+            record.setLandmark(getCursorValue(c, "landmark"));
+            record.setContact_phone(getCursorValue(c, "contact_phone"));
+            record.setHiv_status(getCursorValue(c, "hiv_status"));
+            record.setDate_tested(getCursorValue(c, "date_tested"));
+            record.setHiv_result(getCursorValue(c, "hiv_result"));
+            record.setTest_done_hf(getCursorValue(c, "test_done_hf"));
+            record.setHiv_recent_test(getCursorValue(c, "hiv_recent_test"));
+            record.setArt_date(getCursorValue(c, "art_date"));
+            record.setArt_date_initiated(getCursorValue(c, "art_date_initiated"));
+            record.setComment(getCursorValue(c, "comment"));
+            record.setChecked_by(getCursorValue(c, "checked_by"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setDate_edited(getCursorValue(c,"date_edited"));
             record.setDate_client_created(getCursorValue(c, "date_client_created"));

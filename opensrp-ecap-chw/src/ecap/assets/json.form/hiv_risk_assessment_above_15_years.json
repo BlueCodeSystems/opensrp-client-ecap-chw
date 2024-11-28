@@ -130,7 +130,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_edited",
-        "type": "edit_text",
+        "type": "hidden",
         "hint": "Info Last Edited",
         "read_only": "true",
         "look_up": "true",
@@ -162,6 +162,30 @@
         "v_required": {
           "value": "true",
           "err": "Please select an option"
+        }
+      },
+      {
+        "key": "assessment_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "assessment_date",
+        "type": "date_picker",
+        "hint": "Date of Assessment",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today",
+        "max_date": "today + 100y",
+        "v_required": {
+          "value": false,
+          "err": "Assessment Date"
+        },
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
         }
       },
       {

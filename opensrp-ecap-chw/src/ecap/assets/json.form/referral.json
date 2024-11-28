@@ -61,6 +61,13 @@
         "read_only": "true"
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
         "key": "caseworker_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -122,6 +129,14 @@
             }
           }
         }
+      },
+      {
+        "key": "referral_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
       },
 
       {
