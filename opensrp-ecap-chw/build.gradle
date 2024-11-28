@@ -2,7 +2,6 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://jitpack.io" }
 
@@ -42,9 +41,10 @@ allprojects {
         google()
         mavenLocal()
         mavenCentral()
+        maven { url "https://jitpack.io" }
         maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
+        maven { url "https://dl.bintray.com/ona/kujaku" }
         maven { url 'https://maven.fabric.io/public' }
         /** GitHub packages **/
         maven {
@@ -55,16 +55,16 @@ allprojects {
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
-        maven {
+      /*  maven {
             name = "GitHubPackages"
-            /**
-             * Configure path of the package repository on Github using the GITHUB_USER_ID and * Git Repository */
+            *//**
+             * Configure path of the package repository on Github using the GITHUB_USER_ID and * Git Repository *//*
             url = uri("https://maven.pkg.github.com/io.ona.rdt-capture/lib")
             credentials {
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
-        }
+        }*/
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-model")
@@ -305,8 +305,7 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
 
-  //  implementation('org.smartregister:opensrp-ecap-chw-core:1.0.5-RELEASE@aar') {
-         implementation(project(":opensrp-ecap-chw-core")) {
+    implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'androidx.legacy', module: 'legacy-support-v4'
@@ -331,7 +330,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     //For viewing PDFs in the app
-    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+    implementation 'com.github.mhiew:android-pdf-viewer:3.2.0-beta.3'
     implementation 'androidx.wear:wear:1.0.0'
     //For Push Notifications
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
@@ -350,6 +349,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation("io.insert-koin:koin-androidx-viewmodel:2.0.1")
+
     //For Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
