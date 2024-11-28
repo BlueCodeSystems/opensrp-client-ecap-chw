@@ -322,6 +322,28 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
+      {
+        "key": "contact_accepts_HTS_offer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_accepts_HTS_offer",
+        "type": "native_radio",
+        "label": "Has the contact accepted the HTS offer?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
 
       {
         "key": "hiv_status",
@@ -347,6 +369,12 @@
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:contact_accepts_HTS_offer": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
         }
       },
       {
@@ -464,10 +492,9 @@
         "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_links.yml"
-            }
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Known Positive\")"
           }
         }
       },
@@ -483,10 +510,9 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_links.yml"
-            }
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Known Positive\")"
           }
         }
       },
@@ -502,10 +528,9 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_links.yml"
-            }
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Known Positive\")"
           }
         }
       },
