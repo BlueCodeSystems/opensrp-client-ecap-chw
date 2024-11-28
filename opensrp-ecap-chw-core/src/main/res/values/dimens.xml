@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation Menu dimens -->
+    <dimen name="sync_time_padding_right">16dp</dimen>
+    <dimen name="sync_time_padding">10dp</dimen>
+
+    <!--Child register -->
+    <dimen name="child_register_title_size">16sp</dimen>
+    <dimen name="child_register_list_desc_size">16sp</dimen>
+    <dimen name="child_register_list_item_width">120dp</dimen>
+
+    <!-- Family member profile -->
+    <dimen name="member_profile_pic_width">70dp</dimen>
+    <dimen name="member_profile_list_title_size">18sp</dimen>
+    <dimen name="member_due_list_title_size">17.5sp</dimen>
+
+    <!--Vaccines and child home visits -->
+    <dimen name="vaccine_text_top_margin">10dp</dimen>
+    <dimen name="immunization_status_circle_size">30dp</dimen>
+    <dimen name="child_home_visit_right_margin">20dp</dimen>
+    <dimen name="child_home_visit_left_margin">10dp</dimen>
+    <dimen name="child_home_visit_title_text_size">20sp</dimen>
+
+    <!-- px to sp -->
+    <dimen name="px_16_to_sp">16dp</dimen>
+    <dimen name="px_15_to_sp">15dp</dimen>
+    <dimen name="px_20_to_sp">20dp</dimen>
+    <dimen name="px_14_to_sp">14dp</dimen>
+
+    <!--Change member -->
+    <dimen name="change_dialog_text_size">20dp</dimen>
+    <dimen name="change_member_padding">8dp</dimen>
+    <dimen name="change_member_list_main">20sp</dimen>
+    <dimen name="change_member_list_details">16sp</dimen>
+    <dimen name="change_layout_to_start">30dp</dimen>
+
+    <!--Remove member -->
+    <dimen name="remove_member_padding">25dp</dimen>
+    <dimen name="remove_member_text_size">17sp</dimen>
+    <dimen name="remove_member_prompt_top_padding">25dp</dimen>
+    <dimen name="remove_member_prompt_left_padding">15dp</dimen>
+    <dimen name="remove_member_prompt_margin">7dp</dimen>
+
+    <!-- Referrals-->
+    <dimen name="referral_list_item_width">100dp</dimen>
+    <dimen name="referral_item_margin">8dp</dimen>
+    <dimen name="referral_text_size">13sp</dimen>
+
+    <!--in app reporting-->
+    <dimen name="noti_message_text_size">20sp</dimen>
+    <dimen name="noti_button_text_size">16sp</dimen>
+    <dimen name="indicator_table_divider_height">1.5dp</dimen>
+    <dimen name="max_indicator_name_width">350dp</dimen>
+    <dimen name="table_row_side_margin">20dp</dimen>
+    <dimen name="table_row_middle_margin">15dp</dimen>
+    <dimen name="indicator_table_contents_text_size">18sp</dimen>
+    <dimen name="registerlinkwidth">85dp</dimen>
+    <dimen name="registerlinkheight">85dp</dimen>
+    <dimen name="custom_navigation_icon_size">35dp</dimen>
+    <dimen name="illustration_report_empty_state_size">175dp</dimen>
+    <dimen name="hia2_indicator_hint_font_size">19.5sp</dimen>
+    <dimen name="hia2_indicator_default_font_size">11.5sp</dimen>
+    <dimen name="table_contents_text_size">22sp</dimen>
+    <dimen name="table_contents_text_height">33dp</dimen>
+    <dimen name="table_contents_text_v_margin">5dp</dimen>
+    <dimen name="snack_bar_text_size">20dp</dimen>
+    <dimen name="activity_horizontal_margin">20dp</dimen>
+    <dimen name="activity_vertical_margin">20dp</dimen>
+    <dimen name="dialog_list_padding_vertical">8dp</dimen>
+
+    <dimen name="default_padding">8dp</dimen>
+    <dimen name="family_register_text_size">5sp</dimen>
+    <dimen name="family_register_image_size">22dp</dimen>
+    <dimen name="family_register_count_size">34dp</dimen>
+</resources>
