@@ -1,200 +1,304 @@
 {
-    "count": "1",
-    "encounter_type": "Household Case Status",
-    "entity_id": "",
-    "relational_id": "",
-    "metadata": {
-      "start": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_data_type": "start",
-        "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      },
-      "end": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_data_type": "end",
-        "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      },
-      "today": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "encounter",
-        "openmrs_entity_id": "encounter_date"
-      },
-      "deviceid": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_data_type": "deviceid",
-        "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      },
-      "subscriberid": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_data_type": "subscriberid",
-        "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      },
-      "simserial": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_data_type": "simserial",
-        "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      },
-      "phonenumber": {
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_data_type": "phonenumber",
-        "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      },
-      "encounter_location": "",
-      "look_up": {
-        "entity_id": "",
-        "value": ""
-      }
+  "count": "1",
+  "encounter_type": "Household Case Status",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "step1": {
-      "title": "",
-      "fields": [
-        {
-          "key": "instructions",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "concept",
-          "openmrs_entity_id": "instructions",
-          "type": "toaster_notes",
-          "text": "Case Closure",
-          "text_color": "#000000",
-          "label_text_style": "bold",
-          "toaster_info_text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the USAID ECAPII OVC comprehensive program. The form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
-          "toaster_info_title": "Instructions",
-          "toaster_type": "info"
-        },
-        {
-          "key": "household_case_status",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "household_case_status",
-          "type": "native_radio",
-          "label": "Household Case record status",
-          "options": [
-            {
-              "key": "1",
-              "text": "Active"
-            },
-            {
-              "key": "2",
-              "text": "Inactive"
-            },
-            {
-              "key": "0",
-              "text": "Closed"
-            }
-          ]
-        },
-        {
-          "key": "de_registration_date",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "de_registration_date",
-          "type": "date_picker",
-          "hint": "Date of De-registration",
-          "look_up": "true",
-          "expanded": false,
-          "min_date": "01-01-1900",
-          "max_date": "today",
-          "v_required": {
-            "value": true,
-            "err": "Required"
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "",
+    "fields": [
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Case Closure",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the USAID ECAPII OVC comprehensive program. The form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "info"
+      },
+      {
+        "key": "household_case_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_case_status",
+        "type": "native_radio",
+        "label": "Household Case record status",
+        "options": [
+          {
+            "key": "1",
+            "text": "Active"
           },
-          "relevance": {
-            "step1:household_case_status": {
-              "type": "string",
-              "ex": "equalTo(., \"0\")"
-            }
-          }
-        },
-        {
-          "key": "de_registration_reason",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "de_registration_reason",
-          "type": "native_radio",
-          "label": "Reason for Closing Case",
-          "options": [
-            {
-              "key": "Exited without graduation",
-              "text": "Exited without graduation"
-            },
-            {
-              "key": "Moved (Relocated)",
-              "text": "Moved (Relocated)"
-            },
-            {
-              "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
-              "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
-            },
-            {
-              "key": "other",
-              "text": "Other"
-            }
-          ],
-          "relevance": {
-            "step1:household_case_status": {
-              "type": "string",
-              "ex": "equalTo(., \"0\")"
-            }
+          {
+            "key": "2",
+            "text": "Inactive"
           },
-          "v_required": {
-            "value": true,
-            "err": "Please select Reason for Closing Case"
+          {
+            "key": "0",
+            "text": "Closed"
           }
+        ]
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "hidden",
+        "text": "",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "info"
+      },
+
+      {
+        "key": "de_registration_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "de_registration_date",
+        "type": "date_picker",
+        "hint": "Date of De-registration",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
         },
-        {
-          "key": "transfer_reason",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "transfer_reason",
-          "type": "edit_text",
-          "hint": "Specify organization, program, and name of receiving officer",
-          "edit_type": "",
-          "relevance": {
-            "step1:de_registration_reason": {
-              "type": "string",
-              "ex": "equalTo(., \"Transferred to other OVC program\")"
-            }
-          }
-        },
-        {
-          "key": "other_de_registration_reason",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "person_attribute",
-          "openmrs_entity_id": "other_de_registration_reason",
-          "type": "edit_text",
-          "hint": "Other Reason",
-          "edit_type": "name",
-          "relevance": {
-            "step1:reason": {
-              "type": "string",
-              "ex": "equalTo(., \"other\")"
-            }
-          }
-        },
-        {
-          "key": "death_toast",
-          "openmrs_entity_parent": "",
-          "openmrs_entity": "concept",
-          "openmrs_entity_id": "instructions",
-          "type": "toaster_notes",
-          "text": "Re-register the VCA/HH with a new caregiver",
-          "text_color": "#000000",
-          "label_text_style": "bold",
-          "toaster_info_title": "Instructions",
-          "toaster_type": "warning",
-          "relevance": {
-            "step1:de_registration_reason": {
-              "type": "string",
-              "ex": "equalTo(., \"Caregiver died\")"
-            }
+        "relevance": {
+          "step1:household_case_status": {
+            "type": "string",
+            "ex": "equalTo(., \"0\")"
           }
         }
-      ]
-    }
+      },
+      {
+        "key": "de_registration_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "de_registration_reason",
+        "type": "native_radio",
+        "label": "Reason for Closing Case",
+        "options": [
+          {
+            "key": "Exited without graduation",
+            "text": "Exited without graduation"
+          },
+          {
+            "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
+            "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
+          }
+        ],
+        "relevance": {
+          "step1:household_case_status": {
+            "type": "string",
+            "ex": "equalTo(., \"0\")"
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please select Reason for Closing Case"
+        }
+      },
+      {
+        "key": "graduation_benchmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "graduation_benchmark",
+        "type": "hidden",
+        "text": "All graduation benmark need to be met",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:household_case_status": {
+            "type": "string",
+            "ex": "equalTo(., \"0\")"
+          }
+        }
+      },
+      {
+        "key": "exited_graduation_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "exited_graduation_reason",
+        "type": "native_radio",
+        "label": "Reason for exiting without graduation",
+        "options": [
+          {
+            "key": "Transferred to other OVC program",
+            "text": "Transferred to other OVC program"
+          },
+          {
+            "key": "Transferred to other Ecap II /district",
+            "text": "Transferred to other Ecap II /district"
+          },
+
+          {
+            "key": "Lost to follow-up",
+            "text": "Lost to follow-up"
+          },
+          {
+            "key": "Aging without transition plan",
+            "text": "Aging without transition plan"
+          },
+          {
+            "key": "Caregiver died",
+            "text": "Caregiver died"
+          },
+          {
+            "key": "Moved (Relocated)",
+            "text": "Moved (Relocated)"
+          },
+          {
+            "key": "Declined",
+            "text": "Declined"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "relevance": {
+          "step1:de_registration_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Exited without graduation\")"
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please select Reason for Closing Case"
+        }
+      },
+      {
+        "key": "district_moved_to",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "district_moved_to",
+        "type": "edit_text",
+        "hint": "District",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide district"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+          }
+        }
+      },
+      {
+        "key": "household_receiving_caseworker",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_receiving_caseworker",
+        "type": "edit_text",
+        "hint": "Receiving caseworker",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide caseworker name"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other Ecap II /district\")"
+          }
+        }
+      },
+      {
+        "key": "other_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_reason",
+        "type": "edit_text",
+        "hint": "Other Reason",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Specify"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
+        "key": "death_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Re-register the VCA/HH with a new caregiver",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Caregiver died\")"
+          }
+        }
+      }
+    ]
   }
+}

@@ -72,15 +72,21 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_service, parent, false);
 
-        VCAServiceAdapter.ViewHolder viewHolder = new VCAServiceAdapter.ViewHolder(v);
+        if (v == null) {
 
-        return viewHolder;
+            throw new IllegalStateException("Unable to inflate view R.layout.single_service");
+        }
+        return new VCAServiceAdapter.ViewHolder(v);
+
     }
 
     @Override
     public void onBindViewHolder(VCAServiceAdapter.ViewHolder holder, final int position) {
 
         final VCAServiceModel service = services.get(position);
+        if (services == null || position < 0 || position >= services.size()) {
+            return;
+        }
 
         holder.setIsRecyclable(false);
 
@@ -108,35 +114,36 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
 
         holder.linearLayout.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+            if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
+//                String caseStatus = caseStatusModel.getCase_status();
+//                if ("0".equals(caseStatus) || "2".equals(caseStatus)) {
+                    Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.dialog_layout);
+                    dialog.show();
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
-
+                    Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                    dialogButton.setOnClickListener(va -> dialog.dismiss());
+//                }
             } else {
-                if (v.getId() == R.id.itemm) {
+            }
 
-                    FormUtils formUtils = null;
-                    try {
-                        formUtils = new FormUtils(context);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            if (v != null && v.getId() == R.id.itemm) {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-
-                    try {
-                        openFormUsingFormUtils(context, "service_report_vca", service);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                try {
+                    openFormUsingFormUtils(context, "service_report_vca", service);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 

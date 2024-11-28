@@ -18,6 +18,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,8 +43,8 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao;
 import com.bluecodeltd.ecap.chw.dao.HTSLinksDao;
+import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
@@ -51,9 +54,10 @@ import com.bluecodeltd.ecap.chw.fragment.HTSlinksFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
-import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
+import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
+import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -118,6 +122,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
 
+
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
     public ViewPager mViewPager;
@@ -139,6 +144,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
     HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Model;
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
+
+    HTSlinksModel htslinksModel;
     HivTestingServiceModel hivTestingServiceModel;
     String full_name = "";
     String birthdate = "";
@@ -177,11 +184,14 @@ public class HTSDetailsActivity extends AppCompatActivity {
         fabAssessment = findViewById(R.id.fabAssessment);
         txtScreening = findViewById(R.id.vca_screening);
         addIndexClients = findViewById(R.id.assessment);
-//        builder = new AlertDialog.Builder(HTSDetailsActivity.this);
+
+        builder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
-//
+
+
         clientId = getIntent().getExtras().getString("client_id");
         hivTestingServiceModel = HivTestingServiceDao.getHivServiceClient(clientId);
+        htslinksModel = HTSLinksDao.getLinks(clientId);
 
         txtName = findViewById(R.id.vca_name);
         txtGender = findViewById(R.id.vca_gender);
@@ -189,31 +199,43 @@ public class HTSDetailsActivity extends AppCompatActivity {
         txtChildid = findViewById(R.id.childid);
         genderSpacer = findViewById(R.id.gender_spacer);
         ageSpacer = findViewById(R.id.age_spacer);
-        if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
-            txtAge.setVisibility(View.GONE);
-            txtGender.setVisibility(View.GONE);
-            genderSpacer.setVisibility(View.GONE);
-            ageSpacer.setVisibility(View.GONE);
-        }
-
-
-        if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
-            txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
-        }
-
-
-        if (hivTestingServiceModel != null && hivTestingServiceModel.getFirst_name() != null && hivTestingServiceModel.getLast_name() != null)
-        {
-            full_name = hivTestingServiceModel.getFirst_name() + " " + hivTestingServiceModel.getLast_name();
-        txtName.setText(full_name);
+        try {
+            if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
+                txtAge.setVisibility(View.GONE);
+                txtGender.setVisibility(View.GONE);
+                genderSpacer.setVisibility(View.GONE);
+                ageSpacer.setVisibility(View.GONE);
             }
+        } catch (NullPointerException e) {
+            Log.e("YourActivityName", "NullPointerException", e);
+        }
 
-        if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
-            txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
-            //vcaAge = getAgeWithoutText(birthdate);
+        try {
+            if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
+                txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception", e);
+        }
 
-        } else {
-            txtAge.setText("Not Set");
+
+        try {
+            if (hivTestingServiceModel != null && hivTestingServiceModel.getFirst_name() != null && hivTestingServiceModel.getLast_name() != null) {
+                String full_name = hivTestingServiceModel.getFirst_name() + " " + hivTestingServiceModel.getLast_name();
+                txtName.setText(full_name);
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception", e);
+        }
+
+        try {
+            if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
+                txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
+            } else {
+                txtAge.setText("Not Set");
+            }
+        } catch (Exception e) {
+            Log.e("YourActivityName", "Exception", e);
         }
 
         if (clientId != null && !clientId.isEmpty()){
@@ -242,7 +264,10 @@ public class HTSDetailsActivity extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
-            addIndexClients.setVisibility(View.VISIBLE);
+            if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
+                addIndexClients.setVisibility(View.VISIBLE);
+            }
+
         }
 
     }
@@ -931,107 +956,99 @@ public class HTSDetailsActivity extends AppCompatActivity {
         return today.format(formatter);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.hts_menu, menu);
+        return true;
+    }
 //
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//            switch (item.getItemId()) {
-//                case R.id.refresh:
-//                    finish();
-//                    startActivity(getIntent());
-//
-//                    break;
-//
-//                case R.id.call:
-//                    String caregiverPhoneNumber = child.getCaregiver_phone();
-//                    if (!caregiverPhoneNumber.equals("")) {
-//                        Toast.makeText(getApplicationContext(), "Calling Caregiver...", Toast.LENGTH_LONG).show();
-//
-//                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-//                        callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
-//                        startActivity(callIntent);
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "No number for caregiver found", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                return true;
-//            case R.id.case_status:
-//
-//                try {
-//                    openFormUsingFormUtils(HTSDetailsActivity.this, "case_status");
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//
-//            case R.id.delete_record:
-//
-//                    if(txtGender.getText().toString().equals("MALE")){
-//                        gender = "his";
-//                    } else {
-//                        gender = "her";
-//                    }
-//
-//                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-//                    builder.setNegativeButton("NO", (dialog, id) -> {
-//                        //  Action for 'NO' Button
-//                        dialog.cancel();
-//
-//                    }).setPositiveButton("YES",((dialogInterface, i) -> {
-//                        FormUtils formUtils = null;
-//                        try {
-//                            formUtils = new FormUtils(this);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                        child.setDeleted("1");
-//                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
-//                            try {
-//                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
-//                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//
-//                            try {
-//
-//                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-//                                if (childIndexEventClient == null) {
-//                                    return;
-//                                }
-//                                saveRegistration(childIndexEventClient,true);
-//
-//
-//                            } catch (Exception e) {
-//                                Timber.e(e);
-//                            }
-//
-//
-//
-//                        Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-//                        super.onBackPressed();
-//                    }));
-//
-//                    //Creating dialog box
-//                    AlertDialog alert = builder.create();
-//                    //Setting the title manually
-//                    alert.setTitle("Alert");
-//                    alert.show();
-//
-//                break;
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+
+        // Handle item selection
+            switch (item.getItemId()) {
+                case R.id.refresh:
+                    finish();
+                    startActivity(getIntent());
+
+                    break;
+
+
+
+            case R.id.delete_record:
+
+                    if(txtGender.getText().toString().equals("MALE")){
+                        gender = "his";
+                    } else {
+                        gender = "her";
+                    }
+
+                    Boolean checkForLinks = HTSLinksDao.hasLinksCheck(clientId);
+                    if (checkForLinks == false) {
+
+
+                        builder.setMessage("You are about to delete this record");
+                        builder.setNegativeButton("NO", (dialog, id) -> {
+                            //  Action for 'NO' Button
+                            dialog.cancel();
+
+                        }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                            FormUtils formUtils = null;
+                            try {
+                                formUtils = new FormUtils(this);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            hivTestingServiceModel.setDelete_status("1");
+                            JSONObject vcaScreeningForm = formUtils.getFormJson("hiv_testing_service");
+                            try {
+                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(hivTestingServiceModel, Map.class));
+                                vcaScreeningForm.put("entity_id", hivTestingServiceModel.getBase_entity_id());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+
+                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                                if (childIndexEventClient == null) {
+                                    return;
+                                }
+                                saveRegistration(childIndexEventClient, true);
+
+
+                            } catch (Exception e) {
+                                Timber.e(e);
+                            }
+
+
+                            Toasty.success(HTSDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+
+
+//                            super.onBackPressed();
+
+                            Intent returnToRegister = new Intent(this, HivTestingServiceActivity.class);
+                            startActivity(returnToRegister);
+                            finish();
+                        }));
+
+                        //Creating dialog box
+                        AlertDialog alert = builder.create();
+                        //Setting the title manually
+                        alert.setTitle("Alert");
+                        alert.show();
+                    } else{
+                        Toasty.success(HTSDetailsActivity.this, "Delete the link(s) before deleting the record", Toast.LENGTH_LONG, true).show();
+                    }
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @Override
@@ -1039,6 +1056,36 @@ public class HTSDetailsActivity extends AppCompatActivity {
         super.onBackPressed();
         this.finish();
 
+    }
+    public void deleteHtsLink(){
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        htslinksModel.setDelete_status("1");
+        JSONObject vcaScreeningForm = formUtils.getFormJson("HIV Testing Links");
+        try {
+            CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(htslinksModel, Map.class));
+//            vcaScreeningForm.put("entity_id", hivTestingServiceModel.getBase_entity_id());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+
+            ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+            if (childIndexEventClient == null) {
+                return;
+            }
+            saveRegistration(childIndexEventClient,true);
+
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        Toasty.success(HTSDetailsActivity.this, "Link Deleted", Toast.LENGTH_LONG, true).show();
     }
  public void createDialogForScreening(String entryPoint, String message){
         if(entryPoint != null ) {
@@ -1116,18 +1163,28 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public  void returnViewPager(){
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HTSFragmentOverview());
-        fragments.add(new HTSlinksFragment());
+        if (hivTestingServiceModel != null &&
+                hivTestingServiceModel.getTesting_modality() != null &&
+                (hivTestingServiceModel.getTesting_modality().equals("SNT") ||
+                        hivTestingServiceModel.getTesting_modality().equals("Index"))) {
+
+            fragments.add(new HTSlinksFragment());
+        }
+
+
 
         ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("OVERVIEW");
-        tabLayout.getTabAt(1).setText("HTS LINKS");
+        if (tabLayout.getTabAt(1) != null) {
+            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
+        }
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
-        visitTabTitle.setText("HTS LINKS");
+        visitTabTitle.setText("INDEX/SNT CONTACT");
         htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
 
         int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());

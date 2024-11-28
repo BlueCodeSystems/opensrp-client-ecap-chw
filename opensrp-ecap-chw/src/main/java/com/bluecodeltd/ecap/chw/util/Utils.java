@@ -4,20 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
+import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.ClientReferralActivity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import com.bluecodeltd.ecap.chw.BuildConfig;
-import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.ClientReferralActivity;
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.utils.CoreConstants;
-import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import org.smartregister.growthmonitoring.domain.ZScore;
 import org.smartregister.growthmonitoring.repository.WeightForHeightRepository;
 import org.smartregister.helper.BottomNavigationHelper;
+import org.smartregister.task.SaveTeamLocationsTask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -132,4 +133,6 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
         }
     }
 
+    public static void startAsyncTask(SaveTeamLocationsTask saveTeamLocationsTask, Object params) {
+    }
 }

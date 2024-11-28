@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,12 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.dao.AbymSubpopulationDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
+import com.bluecodeltd.ecap.chw.model.AbymSubpopulationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 
@@ -25,17 +30,19 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
 
     RelativeLayout myview;
-    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone;
+    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2, abymSubpopulation;
     ImageButton imgBtn;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtReferred, txtFacility,txtEditedBy,txtDateEdited,
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
     txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
             new_caregiver_name, overview_section_header3,overview_section_header5,overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
+
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -55,6 +62,10 @@ public class ProfileOverviewFragment extends Fragment {
         sub4 = view.findViewById(R.id.subpop4);
         sub5 = view.findViewById(R.id.subpop5);
         sub6 = view.findViewById(R.id.subpop6);
+        txtSubPopulation = view.findViewById(R.id.sub_population);
+        subPopLayout1 = view.findViewById(R.id.subPopLayout1);
+        subPopLayout2 = view.findViewById(R.id.subPopLayout2);
+        abymSubpopulation = view.findViewById(R.id.abym_layout);
         myview = view.findViewById(R.id.myview);
         txtReferred = view.findViewById(R.id.referred);
         txtEnrolled = view.findViewById(R.id.enrolled);
@@ -111,17 +122,22 @@ public class ProfileOverviewFragment extends Fragment {
         new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "Not Set");
         new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "Not Set");
 
-        if(updateCaregiver.getNew_caregiver_name()!=null && !updateCaregiver.getNew_caregiver_name().isEmpty()){
+        try {
+            if(updateCaregiver.getNew_caregiver_name() != null && !updateCaregiver.getNew_caregiver_name().isEmpty()){
+                overview_section_header3.setText("Previous Caregiver Details");
+                linearlayout_gender.setVisibility(View.VISIBLE);
+                linearlayout_dob.setVisibility(View.VISIBLE);
+                linearlayout_status.setVisibility(View.VISIBLE);
+                linearlayout_relation.setVisibility(View.VISIBLE);
+                linearlayout_phone.setVisibility(View.VISIBLE);
+                linearlayout_name.setVisibility(View.VISIBLE);
+                overview_section_header5.setVisibility(View.VISIBLE);
+            }
 
-            overview_section_header3.setText("Previous Caregiver Details");
 
-            linearlayout_gender.setVisibility(View.VISIBLE);
-            linearlayout_dob.setVisibility(View.VISIBLE);
-            linearlayout_status.setVisibility(View.VISIBLE);
-            linearlayout_relation.setVisibility(View.VISIBLE);
-            linearlayout_phone.setVisibility(View.VISIBLE);
-            linearlayout_name.setVisibility(View.VISIBLE);
-            overview_section_header5.setVisibility(View.VISIBLE);
+        } catch (NullPointerException e) {
+            Log.e("TAG", "Error: " + e.getMessage());
+
         }
 //        if(updateCaregiver.getHousehold_case_status() == null && updateCaregiver.getHousehold_case_status().equals("1") || updateCaregiver.getHousehold_case_status().equals("2")){
 //            overview_section_header5.setVisibility(View.GONE);
@@ -149,6 +165,20 @@ public class ProfileOverviewFragment extends Fragment {
         assert subpop4 != null;
         assert subpop5 != null;
         assert subpop6 != null;
+
+        Household household = HouseholdDao.getVcaSubPop(childIndex.getHousehold_id(),childIndex.getUnique_id());
+        if(household.getSub_population() != null){
+            subPopLayout1.setVisibility(View.GONE);
+            subPopLayout2.setVisibility(View.VISIBLE);
+        }
+        else{
+            subPopLayout1.setVisibility(View.VISIBLE);
+            subPopLayout2.setVisibility(View.GONE);
+        }
+        String subPopulations = household.getSub_population();
+        String subPopulationsValues = (subPopulations != null) ? keysToValues(subPopulations) : null;
+        txtSubPopulation.setText((subPopulationsValues != null) ? subPopulationsValues : "");
+
 
         long timestamp = Long.parseLong(childIndex.getLast_interacted_with());
 
@@ -251,19 +281,47 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText("N/A");
         }
 
-        if (childIndex.getVl_last_result() != null) {
+        AbymSubpopulationModel abym = AbymSubpopulationDao.getAbymSubpopulation(childIndex.getUnique_id());
+        if(abym != null){
+
+            if (isYes(abym.getAbym_years()) &&
+                    isYes(abym.getAbym_sex_older_women()) &&
+                    isYes(abym.getAbym_transactional_sex()) &&
+                    isYes(abym.getAbym_sex_work()) &&
+                    isYes(abym.getAbym_economically_insecure()) &&
+                    isYes(abym.getAbym_violent_partner()) &&
+                    isYes(abym.getAbym_diagnosed())) {
+
+                abymSubpopulation.setVisibility(View.VISIBLE);
+
+            } else {
+                abymSubpopulation.setVisibility(View.GONE);
+            }
+
+        }
+
+        List<VCAServiceModel> sModel = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
+
+        String viralLoadResult = null;
+
+        if (!sModel.isEmpty()) {
+            VCAServiceModel serviceM = sModel.get(0);
+            viralLoadResult = serviceM.getVl_last_result();
+        }
+
+        if (viralLoadResult == null) {
+            viralLoadResult = childIndex.getVl_last_result();
+        }
+
+        if (viralLoadResult != null) {
             try {
-                int checkIfSuppressed = Integer.parseInt(childIndex.getVl_last_result());
-                if (checkIfSuppressed < 1000) {
-                    txtIsSuppressed.setText("yes");
-                } else {
-                    txtIsSuppressed.setText("no");
-                }
+                int intValue = Integer.parseInt(viralLoadResult);
+                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
             } catch (NumberFormatException e) {
-                txtIsSuppressed.setText(childIndex.getVl_last_result());
+                txtIsSuppressed.setText("Update VL Results");
             }
         } else {
-            txtIsSuppressed.setText("Not Set");
+            txtIsSuppressed.setText("Not set");
         }
 
 
@@ -357,6 +415,33 @@ imgBtn.setOnClickListener(new View.OnClickListener() {
 
         return view;
 
+    }
+
+    private boolean isYes(String value) {
+        return value != null && value.equals("yes");
+    }
+    public String keysToValues(String keys) {
+        Map<String, String> keyValues = new HashMap<>();
+        keyValues.put("subpop1", "C/ALHIV");
+        keyValues.put("subpop2", "HEI");
+        keyValues.put("subpop3", "C/WLHIV");
+        keyValues.put("subpop4", "AGYW");
+        keyValues.put("subpop5", "S/SV");
+        keyValues.put("subpop", "C/FSWs");
+        keyValues.put("PBFW", "PBFW");
+        keyValues.put("Siblings of the Index and other family members", "SIBS/INDEX FAMILY");
+        StringBuilder values = new StringBuilder();
+        String[] keysArray = keys.replace("[", "").replace("]", "").replace("\"", "").split(",");
+        for (String key : keysArray) {
+            String value = keyValues.get(key.trim());
+            if (value != null) {
+                if (values.length() > 0) {
+                    values.append(", ");
+                }
+                values.append(value);
+            }
+        }
+        return values.toString();
     }
 
 }

@@ -5,6 +5,7 @@ import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.model.NavigationModel;
 import org.smartregister.chw.core.model.NavigationOption;
+import org.smartregister.chw.core.utils.CoreConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,8 @@ public class NavigationModelFlv implements NavigationModel.Flavor {
             NavigationOption allFamiliesNavigationOption = new NavigationOption(R.mipmap.sidemenu_families, R.mipmap.sidemenu_families_active, R.string.all_households, Constants.DrawerMenu.HOUSEHOLD_REGISTER, 0);
             NavigationOption reportsNavigationOption = new NavigationOption(R.mipmap.ic_home, R.mipmap.ic_home_active, R.string.reports, Constants.DrawerMenu.REPORTS, 0);
             NavigationOption refNavigationOption = new NavigationOption(R.mipmap.sidemenu_referrals, R.mipmap.sidemenu_referrals_active, R.string.hts, Constants.DrawerMenu.HTS, 0);
-            navigationOptions.addAll(Arrays.asList(reportsNavigationOption,indexesNavigationOption, motherNavigationOption, allFamiliesNavigationOption,refNavigationOption));
+            NavigationOption pmtctNavigationOption = new NavigationOption(R.mipmap.sidemenu_pnc, R.mipmap.sidemenu_pnc_active, R.string.pmtct_services, Constants.DrawerMenu.PMTCT, 0);
+            navigationOptions.addAll(Arrays.asList(reportsNavigationOption,indexesNavigationOption, motherNavigationOption, allFamiliesNavigationOption,refNavigationOption,pmtctNavigationOption));
         }
 
         return navigationOptions;

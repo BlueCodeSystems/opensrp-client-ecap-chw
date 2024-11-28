@@ -56,6 +56,9 @@
         "openmrs_entity_id": "date",
         "type": "date_picker",
         "hint": "Date when Service/s Provided",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
           "value": true,
           "err": "This field is required"
@@ -71,6 +74,22 @@
         "edit_type": "name",
         "read_only": "true"
       },
+      {
+        "key": "vca_service_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_service_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+
       {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
@@ -148,23 +167,24 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_next_vl",
-        "type": "edit_text",
-        "read_only": "true",
+        "type": "date_picker",
         "hint": "Date of next VL test",
-        "relevance": {
-          "step1:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
+        "expanded": false,
+        "duration": {
+          "label": ""
         },
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "service_report_vca_calculation.yml"
-            }
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:date_last_vl": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step1:date_last_vl)"
           }
         }
       },
+
       {
         "key": "child_mmd",
         "openmrs_entity_parent": "",
@@ -222,6 +242,9 @@
         "label": "HIV/HEALTHY ",
         "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided for Caregivers",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Age-appropriate HIV treatment literacy",
@@ -352,12 +375,16 @@
             "text": "Adherence Support"
           },
           {
-            "key": "not applicable",
-            "text": "Not Applicable"
+            "key": "DART (Directly Administered ART)",
+            "text": "DART (Directly Administered ART)"
           },
           {
             "key": "other",
             "text": "Other Specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
           }
         ],
         "v_required": {
@@ -394,6 +421,9 @@
         "label": "SCHOOLED ",
         "label_info_text": "Tick (x) schooled  Services Provided for Caregivers",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Child received school uniform",
@@ -470,6 +500,9 @@
         "label": "SAFE ",
         "label_info_text": "Tick (x) SAFE Services Provided for Caregivers",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Safety plan developed",
@@ -535,6 +568,9 @@
         "label": "STABLE ",
         "label_info_text": "Tick (x) stable Services Provided for Caregivers",
         "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "Linked to WE Program",
