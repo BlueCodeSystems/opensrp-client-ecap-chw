@@ -114,8 +114,6 @@ android {
     namespace  = "com.bluecodeltd.ecap.chw"
     useLibrary 'org.apache.http.legacy'
     compileSdk androidCompileSdkVersion
-    compileSdkVersion androidCompileSdkVersion
-    buildToolsVersion androidBuildToolsVersion
 
     lintOptions {
         checkReleaseBuilds false

@@ -35,7 +35,6 @@ android {
     namespace = "org.smartregister.chw.core"
     useLibrary 'org.apache.http.legacy'
     compileSdk androidCompileSdkVersion
-    buildToolsVersion androidBuildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
