@@ -113,7 +113,7 @@ public class HTSlinksFragment extends Fragment {
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
         form.setSaveLabel(getString(R.string.submit));
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(getContext(), org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

@@ -64,17 +64,17 @@ public class FormUtils {
         Intent intent = new Intent(context, Utils.metadata().familyMemberFormActivity);
         intent.putExtra(org.smartregister.family.util.Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
         Form form = new Form();
-        form.setActionBarBackground(R.color.family_actionbar);
+        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
         form.setWizard(false);
-        form.setHomeAsUpIndicator(R.mipmap.ic_cross_white);
-        form.setSaveLabel(context.getResources().getString(R.string.submit));
+        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
+        form.setSaveLabel(context.getResources().getString(org.smartregister.family.R.string.submit));
 
         if (isMultiPartForm(jsonForm)) {
             form.setWizard(true);
-            form.setNavigationBackground(R.color.family_navigation);
+            form.setNavigationBackground(org.smartregister.family.R.color.family_navigation);
             form.setName(title);
-            form.setNextLabel(context.getResources().getString(R.string.next));
-            form.setPreviousLabel(context.getResources().getString(R.string.back));
+            form.setNextLabel(context.getResources().getString(org.smartregister.family.R.string.next));
+            form.setPreviousLabel(context.getResources().getString(org.smartregister.family.R.string.back));
         }
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         return intent;

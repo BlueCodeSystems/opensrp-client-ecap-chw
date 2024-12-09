@@ -76,7 +76,7 @@ public class HomeAlertRule implements ICommonRule {
         LocalDate overdue = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(getOverDueDate()));
         int diff = getMonthsDifference(overdue, todayDate);
         if (diff >= value) {
-            noOfMonthDue = diff + StringUtils.upperCase(context.getString(R.string.abbrv_months));
+            noOfMonthDue = diff + StringUtils.upperCase(context.getString(org.smartregister.family.R.string.abbrv_months));
             return true;
         }
         return false;
@@ -194,7 +194,7 @@ public class HomeAlertRule implements ICommonRule {
         LocalDate overdue = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(overDueDate()));
         int diff = getMonthsDifference(overdue, todayDate);
         if (diff >= value) {
-            noOfMonthDue = diff + StringUtils.upperCase(context.getString(R.string.abbrv_months));
+            noOfMonthDue = diff + StringUtils.upperCase(context.getString(org.smartregister.family.R.string.abbrv_months));
             return true;
         }
         return false;

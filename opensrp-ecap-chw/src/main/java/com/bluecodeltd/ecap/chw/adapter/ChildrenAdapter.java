@@ -143,11 +143,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         if(gradModel == null){
             holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
 
         } else {
 
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
 
         }
         if (!memberAge.equals("Invalid birthdate format")) {
@@ -230,12 +230,12 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             if(cModel != null){
 
                 if(Integer.parseInt(getAgeWithoutText(dob)) < 6){
-                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
+                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.fp.R.drawable.ic_icon_info, 0, 0, 0);
                 }
 
             } else {
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_warning, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.fp.R.drawable.ic_icon_warning, 0, 0, 0);
 
             }
 
@@ -308,7 +308,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         });
 
-        holder.genderIcon.setImageResource((child.getGender() != null && child.getGender().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+        holder.genderIcon.setImageResource((child.getGender() != null && child.getGender().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
 
 
     }

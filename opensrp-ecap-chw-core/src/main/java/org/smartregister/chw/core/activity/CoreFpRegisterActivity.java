@@ -32,17 +32,17 @@ public abstract class CoreFpRegisterActivity extends BaseFpRegisterActivity {
 
 
         Form form = new Form();
-        form.setActionBarBackground(R.color.family_actionbar);
+        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
         form.setWizard(false);
-        form.setHomeAsUpIndicator(R.mipmap.ic_cross_white);
-        form.setSaveLabel(getString(R.string.submit));
+        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
+        form.setSaveLabel(getString(org.smartregister.family.R.string.submit));
 
         if (isMultiPartForm(jsonForm)) {
             form.setWizard(true);
-            form.setNavigationBackground(R.color.family_navigation);
+            form.setNavigationBackground(org.smartregister.family.R.color.family_navigation);
             form.setName(this.getString(R.string.fp_registration));
-            form.setNextLabel(this.getResources().getString(R.string.next));
-            form.setPreviousLabel(this.getResources().getString(R.string.back));
+            form.setNextLabel(this.getResources().getString(org.smartregister.family.R.string.next));
+            form.setPreviousLabel(this.getResources().getString(org.smartregister.family.R.string.back));
         }
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);

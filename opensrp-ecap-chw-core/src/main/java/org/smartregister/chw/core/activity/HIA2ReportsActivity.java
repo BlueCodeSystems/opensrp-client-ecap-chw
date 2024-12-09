@@ -257,8 +257,8 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
     private void initializeProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setTitle(getString(R.string.loading));
-        progressDialog.setMessage(getString(R.string.please_wait_message));
+        progressDialog.setTitle(getString(org.smartregister.family.R.string.loading));
+        progressDialog.setMessage(getString(org.smartregister.family.R.string.please_wait_message));
     }
 
     public void showProgressDialog() {
@@ -401,8 +401,8 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
                     }
 
                     String baseUrl = CoreChwApplication.getInstance().getContext().configuration().dristhiBaseURL();
-                    if (baseUrl.endsWith(context.getString(R.string.url_separator))) {
-                        baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf(context.getString(R.string.url_separator)));
+                    if (baseUrl.endsWith(context.getString(org.smartregister.R.string.url_separator))) {
+                        baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf(context.getString(org.smartregister.R.string.url_separator)));
                     }
                     // create request body
                     JSONObject request = new JSONObject();

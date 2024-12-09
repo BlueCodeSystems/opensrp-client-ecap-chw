@@ -117,8 +117,8 @@ public class CoreStockInventoryReportActivity extends SecuredActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            final Drawable upArrow = getResources().getDrawable(org.smartregister.chw.opensrp_chw_anc.R.drawable.ic_arrow_back_white_24dp);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
             actionBar.setElevation(0);
         }

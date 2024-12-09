@@ -61,7 +61,7 @@ public abstract class BaseChwNotificationFragment extends BaseChwRegisterFragmen
     @Override
     public void setupViews(View view) {
         super.setupViews(view);
-        view.findViewById(R.id.top_right_layout).setVisibility(View.GONE);
+        view.findViewById(org.smartregister.R.id.top_right_layout).setVisibility(View.GONE);
     }
 
     @Override

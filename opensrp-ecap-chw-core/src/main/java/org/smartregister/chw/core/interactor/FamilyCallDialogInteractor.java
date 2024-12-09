@@ -100,8 +100,8 @@ public class FamilyCallDialogInteractor implements FamilyCallDialogContract.Inte
             model.setName(String.format("%s %s", String.format("%s %s", firstName, middleName).trim(), lastName));
 
             model.setRole((primaryCaregiverID.toLowerCase().equals(familyHeadID.toLowerCase()))
-                    ? String.format("%s, %s", context.getString(R.string.head_of_family), context.getString(R.string.care_giver))
-                    : (isHead ? context.getString(R.string.head_of_family)
+                    ? String.format("%s, %s", context.getString(org.smartregister.chw.pnc.R.string.head_of_family), context.getString(R.string.care_giver))
+                    : (isHead ? context.getString(org.smartregister.chw.pnc.R.string.head_of_family)
                     : context.getString(R.string.care_giver)));
         }
 

@@ -73,28 +73,28 @@ public class CoreFpUpcomingServicesInteractor extends BaseAncUpcomingServicesInt
             if (fpMethodUsed.equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_INJECTABLE)) {
                 serviceName = fpMethod;
             } else {
-                serviceName = MessageFormat.format(context.getString(R.string.refill), fpMethod);
+                serviceName = MessageFormat.format(context.getString(org.smartregister.fp.R.string.refill), fpMethod);
             }
         } else if (fpMethodUsed.equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_IUCD) || fpMethodUsed.equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_FEMALE_STERLIZATION)) {
             if (lastVisit == null) {
                 serviceDueDate = alertRule.getDueDate();
                 serviceOverDueDate = alertRule.getOverDueDate();
-                serviceName = MessageFormat.format(context.getString(R.string.follow_up_one), fpMethod);
+                serviceName = MessageFormat.format(context.getString(org.smartregister.fp.R.string.follow_up_one), fpMethod);
             } else {
                 if (fpMethodUsed.equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_IUCD)) {
                     serviceDueDate = (DateTimeFormat.forPattern("dd-MM-yyyy").parseLocalDate(fp_date).plusMonths(4)).toDate();
                     serviceOverDueDate = (DateTimeFormat.forPattern("dd-MM-yyyy").parseLocalDate(fp_date).plusMonths(4).plusWeeks(1)).toDate();
-                    serviceName = MessageFormat.format(context.getString(R.string.follow_up_two), fpMethod);
+                    serviceName = MessageFormat.format(context.getString(org.smartregister.fp.R.string.follow_up_two), fpMethod);
                 } else {
                     count = FpDao.getCountFpVisits(memberObject.getBaseEntityId(), FamilyPlanningConstants.EventType.FP_FOLLOW_UP_VISIT, fpMethod);
                     if (count == 2) {
                         serviceDueDate = (DateTimeFormat.forPattern("dd-MM-yyyy").parseLocalDate(fp_date).plusMonths(1)).toDate();
                         serviceOverDueDate = (DateTimeFormat.forPattern("dd-MM-yyyy").parseLocalDate(fp_date).plusMonths(1).plusWeeks(2)).toDate();
-                        serviceName = MessageFormat.format(context.getString(R.string.follow_up_three), fpMethod);
+                        serviceName = MessageFormat.format(context.getString(org.smartregister.fp.R.string.follow_up_three), fpMethod);
                     } else {
                         serviceDueDate = (DateTimeFormat.forPattern("dd-MM-yyyy").parseLocalDate(fp_date).plusDays(7)).toDate();
                         serviceOverDueDate = (DateTimeFormat.forPattern("dd-MM-yyyy").parseLocalDate(fp_date).plusDays(9)).toDate();
-                        serviceName = MessageFormat.format(context.getString(R.string.follow_up_two), fpMethod);
+                        serviceName = MessageFormat.format(context.getString(org.smartregister.fp.R.string.follow_up_two), fpMethod);
                     }
                 }
             }

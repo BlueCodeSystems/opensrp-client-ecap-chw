@@ -49,7 +49,7 @@ public class NotificationsUtil {
         notificationListAdapter.getNotificationRecords().clear();
         notificationListAdapter.getNotificationRecords().addAll(notifications);
         notificationListAdapter.notifyDataSetChanged();
-        activity.findViewById(R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
-        activity.findViewById(R.id.view_notification_and_referral_row).setVisibility(View.VISIBLE);
+        activity.findViewById(org.smartregister.chw.core.R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
+        activity.findViewById(org.smartregister.chw.core.R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
     }
 }

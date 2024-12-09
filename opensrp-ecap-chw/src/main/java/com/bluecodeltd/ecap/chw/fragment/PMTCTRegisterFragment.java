@@ -42,12 +42,12 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
     @Override
     public void setupViews(View view) {
         super.setupViews(view);
-       Toolbar toolbar = view.findViewById(R.id.register_toolbar);
+       Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
         toolbar.setContentInsetsRelative(0, 0);
         toolbar.setContentInsetStartWithNavigation(0);
         NavigationMenu.getInstance(getActivity(), null, toolbar);
-        View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
+        View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
         navbarContainer.setFocusable(false);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View searchBarLayout = view.findViewById(R.id.search_bar_layout);
@@ -59,7 +59,7 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
         if (logo != null) {
             logo.setVisibility(View.GONE);
         }
-        CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
+        CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(View.VISIBLE);
             titleView.setText(getString(R.string.pmtct_services));
@@ -70,15 +70,15 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
-            getSearchView().setTextColor(getResources().getColor(R.color.text_black));
+            getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
         }
-        View topRightLayout = view.findViewById(R.id.top_right_layout);
+        View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
         topRightLayout.setVisibility(View.GONE);
-        View topLeftLayout = view.findViewById(org.smartregister.chw.core.R.id.top_left_layout);
+        View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
         topLeftLayout.setVisibility(View.GONE);
-        View sortFilterBarLayout = view.findViewById(org.smartregister.chw.core.R.id.register_sort_filter_bar_layout);
+        View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
         sortFilterBarLayout.setVisibility(View.GONE);
-        View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
+        View filterSortLayout = view.findViewById(org.smartregister.R.id.filter_sort_layout);
         filterSortLayout.setVisibility(View.GONE);
 
         builder = new AlertDialog.Builder(getActivity());
@@ -182,7 +182,7 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
-            Utils.showShortToast(getActivity(), getString(org.smartregister.chw.core.R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             getActivity().recreate();
             AppUpdater appUpdater = new AppUpdater(getActivity());
             appUpdater.start();

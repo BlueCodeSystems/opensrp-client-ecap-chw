@@ -102,8 +102,8 @@ public class CoreAncMemberMapActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+            final Drawable upArrow = getResources().getDrawable(org.smartregister.fp.R.drawable.ic_arrow_back_white_24dp);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.family.R.color.white), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
             actionBar.setElevation(0);
         }

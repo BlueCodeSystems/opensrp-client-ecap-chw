@@ -347,7 +347,7 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
 
             // alert if overdue after 14 days
             boolean isOverdue = new LocalDate().isAfter(new LocalDate(alert.startDate()).plusDays(14));
-            String dueState = !isOverdue ? context.getString(R.string.due) : context.getString(R.string.overdue);
+            String dueState = !isOverdue ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
             ExclusiveBreastFeedingAction helper = new ExclusiveBreastFeedingAction(context, alert);
             JSONObject jsonObject = getFormJson(Constants.JSON_FORM.PNC_HOME_VISIT.getExclusiveBreastFeeding(), memberObject.getBaseEntityId());
@@ -464,7 +464,7 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
 
         @Override
         public String getPreProcessedSubTitle() {
-            return MessageFormat.format("{0} {1}", context.getString(R.string.due), new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(dob));
+            return MessageFormat.format("{0} {1}", context.getString(org.smartregister.chw.core.R.string.due), new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(dob));
         }
 
         @Override
@@ -514,9 +514,9 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
         @Override
         public String evaluateSubTitle() {
             if ("No products".equalsIgnoreCase(cord_care)) {
-                return context.getString(R.string.no_products);
+                return context.getString(org.smartregister.chw.core.R.string.no_products);
             } else if ("Chlorhexidine".equalsIgnoreCase(cord_care)) {
-                return context.getString(R.string.chlorhexidine);
+                return context.getString(org.smartregister.chw.core.R.string.chlorhexidine);
             } else if ("Other".equalsIgnoreCase(cord_care)) {
                 return context.getString(R.string.other);
             }
@@ -597,8 +597,8 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
             StringBuilder builder = new StringBuilder();
             builder.append(
                     MessageFormat.format("{0}: {1}\n",
-                            context.getString(R.string.fp_counseling),
-                            "Yes".equalsIgnoreCase(fp_counseling) ? context.getString(R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase()
+                            context.getString(org.smartregister.chw.core.R.string.fp_counseling),
+                            "Yes".equalsIgnoreCase(fp_counseling) ? context.getString(org.smartregister.chw.core.R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase()
                     )
             );
 
@@ -634,14 +634,14 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
                 }
 
                 builder.append(
-                        MessageFormat.format("{0}: {1}", context.getString(R.string.fp_method_chosen), method)
+                        MessageFormat.format("{0}: {1}", context.getString(org.smartregister.chw.core.R.string.fp_method_chosen), method)
                 );
             }
 
             if (StringUtils.isNotBlank(fp_start_date)) {
                 builder.append(
                         MessageFormat.format("\n{0}: {1}",
-                                context.getString(R.string.fp_method_start_date),
+                                context.getString(org.smartregister.chw.core.R.string.fp_method_start_date),
                                 new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(start_date)
                         )
                 );
@@ -696,7 +696,7 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
         public String getPreProcessed() {
             try {
                 scheduleStatus = (visitRule.getOverDueDate().toLocalDate().isBefore(LocalDate.now())) ? BaseAncHomeVisitAction.ScheduleStatus.OVERDUE : BaseAncHomeVisitAction.ScheduleStatus.DUE;
-                String due = (visitRule.getOverDueDate().toLocalDate().isBefore(LocalDate.now())) ? context.getString(R.string.overdue) : context.getString(R.string.due);
+                String due = (visitRule.getOverDueDate().toLocalDate().isBefore(LocalDate.now())) ? context.getString(org.smartregister.chw.core.R.string.overdue) : context.getString(org.smartregister.chw.core.R.string.due);
 
                 subTitle = MessageFormat.format("{0} {1}", due, DateTimeFormat.forPattern("dd MMM yyyy").print(visitRule.getOverDueDate().toLocalDate()));
                 JSONObject jsonObject = new JSONObject(jsonPayload);
@@ -812,7 +812,7 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
             }
 
             if (pnc_visit.equalsIgnoreCase("No")) {
-                return context.getString(R.string.visit_not_done).replace("\n", "");
+                return context.getString(org.smartregister.chw.core.R.string.visit_not_done).replace("\n", "");
             }
 
 
@@ -822,14 +822,14 @@ public abstract class DefaultPncHomeVisitInteractorFlv implements PncHomeVisitIn
                     new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date))
             );
             builder.append(MessageFormat.format("{0}: {1} {2}\n",
-                    context.getString(R.string.babys_weight),
+                    context.getString(org.smartregister.chw.core.R.string.babys_weight),
                     baby_weight,
                     context.getString(R.string.kg))
             );
             builder.append(MessageFormat.format("{0}: {1} {2}",
-                    context.getString(R.string.babys_temperature),
+                    context.getString(org.smartregister.chw.core.R.string.babys_temperature),
                     baby_temp,
-                    context.getString(R.string.degrees_centigrade))
+                    context.getString(org.smartregister.chw.core.R.string.degrees_centigrade))
             );
 
             return builder.toString();

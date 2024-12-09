@@ -82,8 +82,8 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
         form.setName(getString(R.string.client_registration));
         form.setActionBarBackground(R.color.family_actionbar);
         form.setNavigationBackground(R.color.family_navigation);
-        form.setHomeAsUpIndicator(R.mipmap.ic_cross_white);
-        form.setPreviousLabel(getResources().getString(R.string.back));
+        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
+        form.setPreviousLabel(getResources().getString(org.smartregister.family.R.string.back));
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
 
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -102,7 +102,7 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(R.string.saving_dialog_title);
+                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
                     presenter().saveForm(jsonString, registerParam);
                 }
             } catch (JSONException e) {
@@ -116,7 +116,7 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
         bottomNavigationHelper = new BottomNavigationHelper();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         Utils.setupBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
-        bottomNavigationView.getMenu().findItem(R.id.action_register).setTitle(R.string.add_client).setIcon(R.drawable.ic_input_add);
+        bottomNavigationView.getMenu().findItem(R.id.action_register).setTitle(R.string.add_client).setIcon(org.smartregister.chw.core.R.drawable.ic_input_add);
     }
 
     @Override
@@ -135,10 +135,10 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.action_scan_qr:
+            case org.smartregister.chw.opensrp_chw_anc.R.id.action_scan_qr:
                 startQrCodeScanner();
                 return true;
-            case R.id.action_family:
+            case org.smartregister.family.R.id.action_family:
                 switchToBaseFragment();
                 break;
             case R.id.action_register:

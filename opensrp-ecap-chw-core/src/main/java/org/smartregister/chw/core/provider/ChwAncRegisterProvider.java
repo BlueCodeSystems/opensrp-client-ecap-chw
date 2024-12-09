@@ -65,14 +65,14 @@ public class ChwAncRegisterProvider extends AncRegisterProvider {
     }
 
     private void setVisitButtonDueStatus(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.alert_in_progress_blue));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_in_progress_blue));
         dueButton.setText(context.getString(R.string.record_home_visit));
         dueButton.setBackgroundResource(R.drawable.blue_btn_selector);
         dueButton.setOnClickListener(onClickListener);
     }
 
     private void setVisitButtonOverdueStatus(Context context, Button dueButton, String lastVisitDays) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
         if (TextUtils.isEmpty(lastVisitDays)) {
             dueButton.setText(context.getString(R.string.record_visit));
         } else {
@@ -87,16 +87,16 @@ public class ChwAncRegisterProvider extends AncRegisterProvider {
     }
 
     private void setVisitAboveTwentyFourView(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.alert_complete_green));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_complete_green));
         dueButton.setText(context.getString(R.string.visit_done));
-        dueButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(null);
     }
 
     private void setVisitNotDone(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.progress_orange));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.chw.opensrp_chw_anc.R.color.progress_orange));
         dueButton.setText(context.getString(R.string.visit_not_done));
-        dueButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(null);
     }
 

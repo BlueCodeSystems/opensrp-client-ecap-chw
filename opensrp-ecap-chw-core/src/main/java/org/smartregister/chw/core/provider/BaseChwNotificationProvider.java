@@ -74,14 +74,14 @@ public class BaseChwNotificationProvider implements RecyclerViewProvider<ChwNoti
     private void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_NORMAL);
+        view.setTag(org.smartregister.chw.referral.R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_NORMAL);
     }
 
     @Override
     public void getFooterView(RecyclerView.ViewHolder viewHolder, int currentPageCount, int totalPageCount, boolean hasNextPage, boolean hasPreviousPage) {
         FooterViewHolder footerViewHolder = (FooterViewHolder) viewHolder;
         footerViewHolder.pageInfoView.setText(
-                MessageFormat.format(context.getString(R.string.str_page_info), currentPageCount, totalPageCount));
+                MessageFormat.format(context.getString(org.smartregister.R.string.str_page_info), currentPageCount, totalPageCount));
 
         footerViewHolder.nextPageView.setVisibility(hasNextPage ? View.VISIBLE : View.INVISIBLE);
         footerViewHolder.previousPageView.setVisibility(hasPreviousPage ? View.VISIBLE : View.INVISIBLE);
@@ -117,7 +117,7 @@ public class BaseChwNotificationProvider implements RecyclerViewProvider<ChwNoti
 
     @Override
     public RecyclerView.ViewHolder createFooterHolder(ViewGroup parent) {
-        View view = inflater().inflate(R.layout.smart_register_pagination, parent, false);
+        View view = inflater().inflate(org.smartregister.R.layout.smart_register_pagination, parent, false);
         return new FooterViewHolder(view);
     }
 

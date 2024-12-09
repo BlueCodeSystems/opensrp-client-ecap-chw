@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.smartregister.chw.anc.util.Constants;
 import org.smartregister.chw.anc.util.DBConstants;
-import org.smartregister.chw.core.R;
+import org.smartregister.R;
 import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.model.PncRegisterFragmentModel;
@@ -133,7 +133,7 @@ public abstract class CorePncRegisterFragment extends BasePncRegisterFragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View searchBarLayout = view.findViewById(R.id.search_bar_layout);
         searchBarLayout.setLayoutParams(params);
-        searchBarLayout.setBackgroundResource(R.color.chw_primary);
+        searchBarLayout.setBackgroundResource(org.smartregister.chw.core.R.color.chw_primary);
         searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) Utils.convertDpToPixel(10, getActivity()));
 
         CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);

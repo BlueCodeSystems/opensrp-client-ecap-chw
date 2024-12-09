@@ -125,7 +125,7 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
 
                     } else if (form.getString(JsonFormUtils.ENCOUNTER_TYPE).equals(CoreConstants.EventType.PNC_REFERRAL)) {
                         pncMemberProfilePresenter().createReferralEvent(Utils.getAllSharedPreferences(), jsonString);
-                        showToast(this.getString(R.string.referral_submitted));
+                        showToast(this.getString(org.smartregister.chw.core.R.string.referral_submitted));
                     }
 
                 } catch (Exception e) {
@@ -174,13 +174,13 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
     protected void updateUiForVisitsDue() {
         layoutRecordView.setVisibility(View.VISIBLE);
         textview_record_visit.setVisibility(View.VISIBLE);
-        textview_record_visit.setBackgroundResource(R.drawable.rounded_blue_btn);
+        textview_record_visit.setBackgroundResource(org.smartregister.chw.core.R.drawable.rounded_blue_btn);
     }
 
     protected void updateUiForVisitsOverdue() {
         layoutRecordView.setVisibility(View.VISIBLE);
         textview_record_visit.setVisibility(View.VISIBLE);
-        textview_record_visit.setBackgroundResource(R.drawable.rounded_red_btn);
+        textview_record_visit.setBackgroundResource(org.smartregister.chw.core.R.drawable.rounded_red_btn);
     }
 
     private void refreshOnHomeVisitResult() {
@@ -261,15 +261,15 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
 
         OnClickFloatingMenu onClickFloatingMenu = viewId -> {
             switch (viewId) {
-                case R.id.anc_fab:
+                case org.smartregister.chw.core.R.id.anc_fab:
                     redrawFabWithNoPhone();
                     ((AncFloatingMenu) baseAncFloatingMenu).animateFAB();
                     break;
-                case R.id.call_layout:
+                case org.smartregister.chw.core.R.id.call_layout:
                     ((AncFloatingMenu) baseAncFloatingMenu).launchCallWidget();
                     ((AncFloatingMenu) baseAncFloatingMenu).animateFAB();
                     break;
-                case R.id.refer_to_facility_layout:
+                case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                     pncMemberProfilePresenter().referToFacility();
                     ((AncFloatingMenu) baseAncFloatingMenu).animateFAB();
                     break;
@@ -299,10 +299,10 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         flavor.onCreateOptionsMenu(menu, memberObject.getBaseEntityId());
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
-        menu.findItem(R.id.action_malaria_registration).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
-        menu.findItem(R.id.action_malaria_followup_visit).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_registration).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_followup_visit).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(ChwApplication.getApplicationFlavor().hasMalaria());
         return true;
     }
 
@@ -311,11 +311,11 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
         super.onClick(view);
         handleNotificationRowClick(this, view, notificationListAdapter, baseEntityID);
         switch (view.getId()) {
-            case R.id.textview_record_visit:
-            case R.id.textview_record_reccuring_visit:
+            case org.smartregister.chw.pnc.R.id.textview_record_visit:
+            case org.smartregister.chw.pnc.R.id.textview_record_reccuring_visit:
                 PncHomeVisitActivity.startMe(this, memberObject, false);
                 break;
-            case R.id.textview_edit:
+            case org.smartregister.chw.pnc.R.id.textview_edit:
                 PncHomeVisitActivity.startMe(this, memberObject, true);
                 break;
             default:
@@ -351,7 +351,7 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
                 tvEdit.setVisibility(View.VISIBLE);
                 textViewUndo.setVisibility(View.GONE);
                 textViewNotVisitMonth.setVisibility(View.VISIBLE);
-                textViewNotVisitMonth.setText(MessageFormat.format(getContext().getString(R.string.pnc_visit_done), pncDay));
+                textViewNotVisitMonth.setText(MessageFormat.format(getContext().getString(org.smartregister.chw.pnc.R.string.pnc_visit_done), pncDay));
                 imageViewCross.setImageResource(R.drawable.activityrow_visited);
                 textview_record_visit.setVisibility(View.GONE);
             } else {

@@ -120,7 +120,7 @@ public class CoreChildRegisterProvider implements RecyclerViewProvider<RegisterV
 
     @Override
     public RecyclerView.ViewHolder createFooterHolder(ViewGroup parent) {
-        View view = inflater.inflate(R.layout.smart_register_pagination, parent, false);
+        View view = inflater.inflate(org.smartregister.R.layout.smart_register_pagination, parent, false);
         return new FooterViewHolder(view);
     }
 
@@ -161,9 +161,9 @@ public class CoreChildRegisterProvider implements RecyclerViewProvider<RegisterV
         String gender_key = Utils.getValue(pc.getColumnmaps(), DBConstants.KEY.GENDER, true);
         String gender = "";
         if (gender_key.equalsIgnoreCase("Male")) {
-            gender = context.getString(R.string.male);
+            gender = context.getString(org.smartregister.family.R.string.male);
         } else if (gender_key.equalsIgnoreCase("Female")) {
-            gender = context.getString(R.string.female);
+            gender = context.getString(org.smartregister.family.R.string.female);
         }
         fillValue(viewHolder.textViewAddressGender, address + " \u00B7 " + gender);
     }
@@ -180,13 +180,13 @@ public class CoreChildRegisterProvider implements RecyclerViewProvider<RegisterV
     protected void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_NORMAL);
+        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_NORMAL);
     }
 
     protected void attachDosageOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_DOSAGE_STATUS);
+        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_DOSAGE_STATUS);
     }
 
     public LayoutInflater getInflater() {

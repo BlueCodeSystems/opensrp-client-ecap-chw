@@ -94,10 +94,10 @@ public class DraftMonthlyFragment extends Fragment {
     protected void updateStartNewReportButton(final List<Date> dates) {
         boolean hia2ReportsReady = dates != null && !dates.isEmpty();
         if (hia2ReportsReady) {
-            startNewMonthlyReport.setBackground(ContextCompat.getDrawable(startNewMonthlyReport.getContext(), R.drawable.vaccination_today_bg));
-            startNewMonthlyReport.setTextColor(ContextCompat.getColor(startNewMonthlyReport.getContext(), R.color.white));
+            startNewMonthlyReport.setBackground(ContextCompat.getDrawable(startNewMonthlyReport.getContext(), org.smartregister.fp.R.drawable.vaccination_today_bg));
+            startNewMonthlyReport.setTextColor(ContextCompat.getColor(startNewMonthlyReport.getContext(), org.smartregister.R.color.white));
         } else {
-            startNewMonthlyReport.setBackground(ContextCompat.getDrawable(startNewMonthlyReport.getContext(), R.drawable.vaccination_earlier_bg));
+            startNewMonthlyReport.setBackground(ContextCompat.getDrawable(startNewMonthlyReport.getContext(), org.smartregister.fp.R.drawable.vaccination_earlier_bg));
             startNewMonthlyReport.setTextColor(ContextCompat.getColor(startNewMonthlyReport.getContext(), R.color.translucent_client_list_grey));
         }
         startNewMonthlyReport.setOnClickListener(v -> {
@@ -245,7 +245,7 @@ public class DraftMonthlyFragment extends Fragment {
         View snackbarView = snackbar.getView();
         snackbarView.setMinimumHeight(Float.valueOf(textSize).intValue());
 
-        TextView textView = snackbarView.findViewById(R.id.snackbar_text);
+        TextView textView = snackbarView.findViewById(org.smartregister.R.id.snackbar_text);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         snackbar.show();

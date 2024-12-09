@@ -34,7 +34,7 @@ public class DangerSignsAction extends HomeVisitActionHelper {
         stringBuilder.append("\n");
         stringBuilder.append(MessageFormat.format("{0} {1}",
                 context.getString(R.string.danger_signs_counselling),
-                (counseling.equalsIgnoreCase("Yes") ? context.getString(R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase())
+                (counseling.equalsIgnoreCase("Yes") ? context.getString(org.smartregister.chw.core.R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase())
         ));
 
         if (counseling.equalsIgnoreCase("Yes") || counseling.equalsIgnoreCase("No"))

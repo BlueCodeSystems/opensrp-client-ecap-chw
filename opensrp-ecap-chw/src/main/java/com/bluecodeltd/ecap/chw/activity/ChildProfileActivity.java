@@ -101,26 +101,26 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
     public void onClick(View view) {
         super.onClick(view);
         int i = view.getId();
-        if (i == R.id.last_visit_row) {
+        if (i == org.smartregister.chw.core.R.id.last_visit_row) {
             openMedicalHistoryScreen();
-        } else if (i == R.id.vaccine_history) {
+        } else if (i == org.smartregister.chw.core.R.id.vaccine_history) {
             openMedicalHistoryScreen();
-        } else if (i == R.id.most_due_overdue_row) {
+        } else if (i == org.smartregister.chw.core.R.id.most_due_overdue_row) {
             openUpcomingServicePage();
-        } else if (i == R.id.view_due_today) {
+        } else if (i == org.smartregister.chw.core.R.id.view_due_today) {
             openUpcomingServicePage();
-        } else if (i == R.id.textview_record_visit || i == R.id.record_visit_done_bar) {
+        } else if (i == org.smartregister.chw.core.R.id.textview_record_visit || i == org.smartregister.chw.core.R.id.record_visit_done_bar) {
             openVisitHomeScreen(false);
         } else if (i == R.id.family_has_row) {
             openFamilyDueTab();
-        } else if (i == R.id.textview_edit) {
+        } else if (i == org.smartregister.chw.core.R.id.textview_edit) {
             openVisitHomeScreen(true);
         }
-        if (i == R.id.textview_visit_not) {
+        if (i == org.smartregister.chw.core.R.id.textview_visit_not) {
             presenter().updateVisitNotDone(System.currentTimeMillis());
             imageViewCrossChild.setVisibility(View.VISIBLE);
             imageViewCrossChild.setImageResource(R.drawable.activityrow_notvisited);
-        } else if (i == R.id.textview_undo) {
+        } else if (i == org.smartregister.chw.core.R.id.textview_undo) {
             presenter().updateVisitNotDone(0);
         }
         handleNotificationRowClick(this, view, notificationListAdapter, childBaseEntityId);
@@ -161,18 +161,18 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_malaria_registration:
+            case org.smartregister.chw.core.R.id.action_malaria_registration:
                 MalariaRegisterActivity.startMalariaRegistrationActivity(ChildProfileActivity.this, presenter().getChildClient().getCaseId(), ((ChildProfilePresenter) presenter()).getFamilyID());
                 return true;
-            case R.id.action_remove_member:
+            case org.smartregister.chw.core.R.id.action_remove_member:
                 IndividualProfileRemoveActivity.startIndividualProfileActivity(ChildProfileActivity.this, presenter().getChildClient(),
                         ((ChildProfilePresenter) presenter()).getFamilyID()
                         , ((ChildProfilePresenter) presenter()).getFamilyHeadID(), ((ChildProfilePresenter) presenter()).getPrimaryCareGiverID(), ChildRegisterActivity.class.getCanonicalName());
                 return true;
-            case R.id.action_thinkmd_health_assessment:
+            case org.smartregister.chw.core.R.id.action_thinkmd_health_assessment:
                 presenter().launchThinkMDHealthAssessment(getContext());
                 break;
-            case R.id.action_thinkmd_careplan:
+            case org.smartregister.chw.core.R.id.action_thinkmd_careplan:
                 presenter().showThinkMDCarePlan(getContext());
                 break;
             default:
@@ -184,19 +184,19 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.action_sick_child_form).setVisible(ChwApplication.getApplicationFlavor().hasChildSickForm()
+        menu.findItem(org.smartregister.chw.core.R.id.action_sick_child_form).setVisible(ChwApplication.getApplicationFlavor().hasChildSickForm()
                 && flavor.isChildOverTwoMonths(((CoreChildProfilePresenter) presenter).getChildClient())
                 && !ChwApplication.getApplicationFlavor().useThinkMd());
-        menu.findItem(R.id.action_sick_child_follow_up).setVisible(false);
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(false);
-        menu.findItem(R.id.action_malaria_followup_visit).setVisible(false);
-        menu.findItem(R.id.action_thinkmd_health_assessment).setVisible(ChwApplication.getApplicationFlavor().useThinkMd()
+        menu.findItem(org.smartregister.chw.core.R.id.action_sick_child_follow_up).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_followup_visit).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_thinkmd_health_assessment).setVisible(ChwApplication.getApplicationFlavor().useThinkMd()
                 && flavor.isChildOverTwoMonths(((CoreChildProfilePresenter) presenter).getChildClient()));
         if (ChwApplication.getApplicationFlavor().useThinkMd()
                 && StringUtils.isNotBlank(queryColumnWithIdentifier(CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID, childBaseEntityId, CARE_PLAN_DATE))) {
-            menu.findItem(R.id.action_thinkmd_careplan).setVisible(true);
-            menu.findItem(R.id.action_thinkmd_careplan).setTitle(
-                    String.format(getResources().getString(R.string.thinkmd_careplan), queryColumnWithIdentifier(CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID, childBaseEntityId, CARE_PLAN_DATE))
+            menu.findItem(org.smartregister.chw.core.R.id.action_thinkmd_careplan).setVisible(true);
+            menu.findItem(org.smartregister.chw.core.R.id.action_thinkmd_careplan).setTitle(
+                    String.format(getResources().getString(org.smartregister.chw.core.R.string.thinkmd_careplan), queryColumnWithIdentifier(CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID, childBaseEntityId, CARE_PLAN_DATE))
             );
         }
         return true;
