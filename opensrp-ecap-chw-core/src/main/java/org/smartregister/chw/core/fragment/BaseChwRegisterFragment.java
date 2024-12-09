@@ -32,7 +32,7 @@ public abstract class BaseChwRegisterFragment extends BaseRegisterFragment {
 
         // Update Search bar
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        View searchBarLayout = view.findViewById(R.id.search_bar_layout);
+        View searchBarLayout = view.findViewById(org.smartregister.R.id.search_bar_layout);
         searchBarLayout.setLayoutParams(params);
         searchBarLayout.setBackgroundResource(R.color.chw_primary);
         searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) Utils.convertDpToPixel(10, getActivity()));
@@ -41,7 +41,7 @@ public abstract class BaseChwRegisterFragment extends BaseRegisterFragment {
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
-            getSearchView().setTextColor(getResources().getColor(R.color.text_black));
+            getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
         }
 
         // Update title name
@@ -58,19 +58,19 @@ public abstract class BaseChwRegisterFragment extends BaseRegisterFragment {
             titleView.setPadding(0, titleView.getTop(), titleView.getPaddingRight(), titleView.getPaddingBottom());
         }
 
-        View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
+        View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
         navbarContainer.setFocusable(false);
 
-        View topLeftLayout = view.findViewById(R.id.top_left_layout);
+        View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
         topLeftLayout.setVisibility(View.GONE);
 
-        View topRightLayout = view.findViewById(R.id.top_right_layout);
+        View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
         topRightLayout.setVisibility(View.VISIBLE);
 
-        View sortFilterBarLayout = view.findViewById(R.id.register_sort_filter_bar_layout);
+        View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
         sortFilterBarLayout.setVisibility(View.GONE);
 
-        View filterSortLayout = view.findViewById(R.id.filter_sort_layout);
+        View filterSortLayout = view.findViewById(org.smartregister.R.id.filter_sort_layout);
         filterSortLayout.setVisibility(View.GONE);
 
 

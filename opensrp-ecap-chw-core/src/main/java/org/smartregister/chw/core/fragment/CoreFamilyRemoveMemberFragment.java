@@ -129,9 +129,9 @@ public abstract class CoreFamilyRemoveMemberFragment extends BaseFamilyProfileMe
         intent.putExtra(Constants.JSON_FORM_EXTRA.JSON, jsonObject.toString());
 
         Form form = new Form();
-        form.setActionBarBackground(R.color.family_actionbar);
+        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
         form.setWizard(false);
-        form.setSaveLabel(getString(R.string.submit));
+        form.setSaveLabel(getString(org.smartregister.family.R.string.submit));
         if (jsonObject.has(CoreConstants.REGISTER_TYPE.INDEPENDENT)) {
             form.setName(getString(R.string.remove_client));
         }
@@ -216,8 +216,8 @@ public abstract class CoreFamilyRemoveMemberFragment extends BaseFamilyProfileMe
     public class RemoveMemberListener implements android.view.View.OnClickListener {
         @Override
         public void onClick(android.view.View v) {
-            if (v.getTag(R.id.VIEW_ID) == BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW ||
-                    v.getTag(R.id.VIEW_ID) == BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL) {
+            if (v.getTag(org.smartregister.family.R.id.VIEW_ID) == BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW ||
+                    v.getTag(org.smartregister.family.R.id.VIEW_ID) == BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL) {
                 final CommonPersonObjectClient pc = (CommonPersonObjectClient) v.getTag();
 
                 memberName = String.format("%s %s %s", pc.getColumnmaps().get(DBConstants.KEY.FIRST_NAME),

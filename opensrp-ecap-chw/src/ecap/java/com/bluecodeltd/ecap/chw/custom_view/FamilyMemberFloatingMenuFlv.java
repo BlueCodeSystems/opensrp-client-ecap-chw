@@ -17,7 +17,7 @@ public class FamilyMemberFloatingMenuFlv implements FamilyMemberFloatingMenu.Fla
     public void prepareFab(final FamilyMemberFloatingMenu menu, FloatingActionButton fab) {
         fab.setOnClickListener(v -> menu.animateFAB());
 
-        fab.setImageResource(R.drawable.ic_edit_white);
+        fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
     }
 
     @Override

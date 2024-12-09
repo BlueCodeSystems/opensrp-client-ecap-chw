@@ -70,7 +70,7 @@ public class SentMonthlyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.report_expandable_list_view, container, false);
         expandableListView = fragmentView.findViewById(R.id.expandable_list_view);
-        expandableListView.setBackgroundColor(getResources().getColor(R.color.white));
+        expandableListView.setBackgroundColor(getResources().getColor(org.smartregister.R.color.white));
         return fragmentView;
     }
 
@@ -175,8 +175,8 @@ public class SentMonthlyFragment extends Fragment {
     private void initializeProgressDialog() {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
-        progressDialog.setTitle(getString(R.string.loading));
-        progressDialog.setMessage(getString(R.string.please_wait_message));
+        progressDialog.setTitle(getString(org.smartregister.family.R.string.loading));
+        progressDialog.setMessage(getString(org.smartregister.R.string.please_wait_message));
     }
 
     private void showProgressDialog() {

@@ -96,7 +96,7 @@ public class ReferralRegisterActivity extends BaseReferralRegisterActivity {
     private void startRegisterActivity() {
         Intent intent = new Intent(this, ReferralRegisterActivity.class);
         this.startActivity(intent);
-        this.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+        this.overridePendingTransition(org.smartregister.chw.core.R.anim.slide_in_up, org.smartregister.chw.core.R.anim.slide_out_up);
         this.finish();
     }
 

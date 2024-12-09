@@ -30,7 +30,8 @@ public class ReferralFollowupFragmentPresenter extends BaseReferralRegisterFragm
     public void processViewConfigurations() {
         super.processViewConfigurations();
         if (getConfig().getSearchBarText() != null && getView() != null) {
-            getView().updateSearchBarHint(getView().getContext().getString(R.string.search_name_or_id));
+            //TODO implement updateSearchBarHint in the view contract
+//            getView().updateSearchBarHint(getView().getContext().getString(R.string.search_name_or_id));
         }
     }
 

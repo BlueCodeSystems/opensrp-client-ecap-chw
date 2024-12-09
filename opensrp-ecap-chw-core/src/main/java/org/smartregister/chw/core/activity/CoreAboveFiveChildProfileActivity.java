@@ -28,7 +28,7 @@ public abstract class CoreAboveFiveChildProfileActivity extends CoreChildProfile
     public void setLastVisitRowView(String days) {
         super.setLastVisitRowView(days);
         textViewLastVisit.setVisibility(View.GONE);
-        textViewMedicalHistory.setTextColor(getResources().getColor(R.color.black));
+        textViewMedicalHistory.setTextColor(getResources().getColor(org.smartregister.family.R.color.black));
     }
 
     @Override

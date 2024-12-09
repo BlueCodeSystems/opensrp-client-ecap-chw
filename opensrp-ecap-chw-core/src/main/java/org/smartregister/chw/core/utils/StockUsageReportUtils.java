@@ -94,13 +94,13 @@ public class StockUsageReportUtils {
                 formattedItem = context.getString(R.string.alu_24);
                 break;
             case "COC":
-                formattedItem = context.getString(R.string.coc);
+                formattedItem = context.getString(org.smartregister.fp.R.string.coc);
                 break;
             case "POP":
-                formattedItem = context.getString(R.string.pop);
+                formattedItem = context.getString(org.smartregister.fp.R.string.pop);
                 break;
             case "Emergency contraceptive":
-                formattedItem = context.getString(R.string.emergency_contraceptive);
+                formattedItem = context.getString(org.smartregister.fp.R.string.emergency_contraceptive);
                 break;
             case "RDTs":
                 formattedItem = context.getString(R.string.rdts);

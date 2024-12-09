@@ -71,7 +71,7 @@ public class LoginPresenter extends BaseLoginPresenter implements BaseLoginContr
             if (metadata.getLogoUrl() != null) {
                 ImageLoaderRequest.getInstance(getLoginView().getActivityContext()).getImageLoader()
                         .get(metadata.getLogoUrl(), ImageLoader.getImageListener(imageView,
-                                R.drawable.ic_who_logo, R.drawable.ic_who_logo)).getBitmap();
+                                org.smartregister.R.drawable.ic_who_logo, org.smartregister.R.drawable.ic_who_logo)).getBitmap();
             }
 
         } catch (Exception e) {

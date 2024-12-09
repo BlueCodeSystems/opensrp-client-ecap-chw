@@ -161,8 +161,8 @@ public abstract class CoreAncMemberProfileActivity extends BaseAncMemberProfileA
             String monthString = (String) DateFormat.format("MMMM", lastVisitDate);
             layoutRecordView.setVisibility(View.GONE);
             tvEdit.setVisibility(View.VISIBLE);
-            textViewNotVisitMonth.setText(getContext().getString(R.string.anc_visit_done, monthString));
-            imageViewCross.setImageResource(R.drawable.activityrow_visited);
+            textViewNotVisitMonth.setText(getContext().getString(org.smartregister.chw.opensrp_chw_anc.R.string.anc_visit_done, monthString));
+            imageViewCross.setImageResource(org.smartregister.chw.opensrp_chw_anc.R.drawable.activityrow_visited);
 
             textViewUndo.setVisibility(View.GONE);
             textViewAncVisitNot.setVisibility(View.GONE);
@@ -183,7 +183,7 @@ public abstract class CoreAncMemberProfileActivity extends BaseAncMemberProfileA
 
             openVisitMonthView();
             textViewUndo.setVisibility(View.GONE);
-            textview_record_anc_visit.setBackgroundResource(R.drawable.record_btn_anc_selector);
+            textview_record_anc_visit.setBackgroundResource(org.smartregister.chw.opensrp_chw_anc.R.drawable.record_btn_anc_selector);
             getLayoutVisibility();
         } else if (status.equalsIgnoreCase(CoreConstants.VISIT_STATE.NOT_VISIT_THIS_MONTH)) {
 

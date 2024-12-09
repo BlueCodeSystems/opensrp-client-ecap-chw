@@ -163,8 +163,8 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            final Drawable upArrow = getResources().getDrawable(org.smartregister.chw.opensrp_chw_anc.R.drawable.ic_arrow_back_white_24dp);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -363,9 +363,9 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
 
     private String getGenderTranslated(String gender) {
         if (gender.equalsIgnoreCase(Gender.MALE.toString())) {
-            return getResources().getString(R.string.male);
+            return getResources().getString(org.smartregister.family.R.string.male);
         } else if (gender.equalsIgnoreCase(Gender.FEMALE.toString())) {
-            return getResources().getString(R.string.female);
+            return getResources().getString(org.smartregister.family.R.string.female);
         }
         return "";
     }
@@ -401,23 +401,23 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setVisitButtonDueStatus() {
         openVisitButtonView();
         textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_due);
-        textViewRecord.setTextColor(getResources().getColor(R.color.white));
+        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.white));
     }
 
     @Override
     public void setVisitButtonOverdueStatus() {
         openVisitButtonView();
         textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_overdue);
-        textViewRecord.setTextColor(getResources().getColor(R.color.white));
+        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.white));
     }
 
     @Override
     public void setVisitNotDoneThisMonth(boolean withinEditPeriod) {
         openVisitMonthView();
-        textViewNotVisitMonth.setText(R.string.not_visiting_this_month);
-        textViewUndo.setText(R.string.undo);
+        textViewNotVisitMonth.setText(org.smartregister.chw.opensrp_chw_anc.R.string.not_visiting_this_month);
+        textViewUndo.setText(org.smartregister.family.R.string.undo);
         textViewUndo.setVisibility(withinEditPeriod ? View.VISIBLE : View.GONE);
-        imageViewCrossChild.setImageResource(R.drawable.activityrow_notvisited);
+        imageViewCrossChild.setImageResource(org.smartregister.fp.R.drawable.activityrow_notvisited);
     }
 
     @Override
@@ -428,7 +428,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
             viewLastVisitRow.setVisibility(View.GONE);
         } else {
             layoutLastVisitRow.setVisibility(View.VISIBLE);
-            textViewLastVisit.setText(getString(R.string.last_visit_40_days_ago, days));
+            textViewLastVisit.setText(getString(org.smartregister.chw.opensrp_chw_anc.R.string.last_visit_40_days_ago, days));
             viewLastVisitRow.setVisibility(View.VISIBLE);
         }
     }
@@ -438,7 +438,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
         if (!TextUtils.isEmpty(serviceName)) {
             layoutMostDueOverdue.setVisibility(View.VISIBLE);
             viewMostDueRow.setVisibility(View.VISIBLE);
-            textViewNameDue.setText(CoreChildUtils.fromHtml(getString(R.string.vaccine_service_due, serviceName, dueDate)));
+            textViewNameDue.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.vaccine_service_due, serviceName, dueDate)));
         } else {
             layoutMostDueOverdue.setVisibility(View.GONE);
             viewMostDueRow.setVisibility(View.GONE);
@@ -449,14 +449,14 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setServiceNameOverDue(String serviceName, String dueDate) {
         layoutMostDueOverdue.setVisibility(View.VISIBLE);
         viewMostDueRow.setVisibility(View.VISIBLE);
-        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(R.string.vaccine_service_overdue, serviceName, dueDate)));
+        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.vaccine_service_overdue, serviceName, dueDate)));
     }
 
     @Override
     public void setServiceNameUpcoming(String serviceName, String dueDate) {
         layoutMostDueOverdue.setVisibility(View.VISIBLE);
         viewMostDueRow.setVisibility(View.VISIBLE);
-        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(R.string.vaccine_service_upcoming, serviceName, dueDate)));
+        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.vaccine_service_upcoming, serviceName, dueDate)));
     }
 
     public void setDueTodayServices() {
@@ -467,9 +467,9 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     @Override
     public void setVisitLessTwentyFourView(String monthName) {
         textViewNotVisitMonth.setText(getString(R.string.visit_month, monthName));
-        textViewUndo.setText(getString(R.string.edit));
+        textViewUndo.setText(getString(org.smartregister.chw.pnc.R.string.edit));
         textViewUndo.setVisibility(View.GONE);
-        imageViewCrossChild.setImageResource(R.drawable.activityrow_visited);
+        imageViewCrossChild.setImageResource(org.smartregister.chw.pnc.R.drawable.activityrow_visited);
         openVisitMonthView();
     }
 
@@ -477,8 +477,8 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setVisitAboveTwentyFourView() {
         textViewVisitNot.setVisibility(View.GONE);
         openVisitRecordDoneView();
-        textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_above_twentyfr);
-        textViewRecord.setTextColor(getResources().getColor(R.color.light_grey_text));
+        textViewRecord.setBackgroundResource(org.smartregister.chw.pnc.R.drawable.record_btn_selector_above_twentyfr);
+        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.light_grey_text));
     }
 
     @Override
@@ -491,21 +491,21 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setFamilyHasNothingDue() {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         viewFamilyRow.setVisibility(View.VISIBLE);
-        textViewFamilyHas.setText(getString(R.string.family_has_nothing_due));
+        textViewFamilyHas.setText(getString(org.smartregister.chw.opensrp_chw_anc.R.string.family_has_nothing_due));
     }
 
     @Override
     public void setFamilyHasServiceDue() {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         viewFamilyRow.setVisibility(View.VISIBLE);
-        textViewFamilyHas.setText(getString(R.string.family_has_services_due));
+        textViewFamilyHas.setText(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue));
     }
 
     @Override
     public void setFamilyHasServiceOverdue() {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         viewFamilyRow.setVisibility(View.VISIBLE);
-        textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(R.string.family_has_service_overdue)));
+        textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue)));
     }
 
     @Override
@@ -597,7 +597,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
 
     protected void updateTopBar(String gender) {
         if (gender.equalsIgnoreCase(Gender.MALE.toString())) {
-            imageViewProfile.setBorderColor(getResources().getColor(R.color.light_blue));
+            imageViewProfile.setBorderColor(getResources().getColor(org.smartregister.R.color.light_blue));
         } else if (gender.equalsIgnoreCase(Gender.FEMALE.toString())) {
             imageViewProfile.setBorderColor(getResources().getColor(R.color.light_pink));
         }

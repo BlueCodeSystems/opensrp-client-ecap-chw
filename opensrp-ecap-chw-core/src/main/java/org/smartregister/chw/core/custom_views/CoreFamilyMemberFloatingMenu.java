@@ -75,10 +75,10 @@ public abstract class CoreFamilyMemberFloatingMenu extends LinearLayout implemen
         }
 
         if (isFabMenuOpen) {
-            activityMain.setBackgroundResource(R.color.transparent);
+            activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
 
             fab.startAnimation(rotateBack);
-            fab.setImageResource(R.drawable.ic_edit_white);
+            fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
 
             callLayout.startAnimation(fabClose);
             referLayout.startAnimation(fabClose);

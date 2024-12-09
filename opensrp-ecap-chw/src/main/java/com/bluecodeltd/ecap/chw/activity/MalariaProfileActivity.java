@@ -182,11 +182,11 @@ public class MalariaProfileActivity extends CoreMalariaProfileActivity implement
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_registration:
-                startFormForEdit(R.string.registration_info,
+            case org.smartregister.chw.core.R.id.action_registration:
+                startFormForEdit(org.smartregister.chw.core.R.string.registration_info,
                         Constants.JSON_FORM.FAMILY_MEMBER_REGISTER);
                 return true;
-            case R.id.action_remove_member:
+            case org.smartregister.chw.core.R.id.action_remove_member:
                 IndividualProfileRemoveActivity.startIndividualProfileActivity(MalariaProfileActivity.this, getClientDetailsByBaseEntityID(memberObject.getBaseEntityId()), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyHead(), memberObject.getPrimaryCareGiver(), MalariaRegisterActivity.class.getCanonicalName());
                 return true;
             default:
@@ -218,7 +218,7 @@ public class MalariaProfileActivity extends CoreMalariaProfileActivity implement
     public void onClick(View view) {
         super.onClick(view);
         int id = view.getId();
-        if (id == R.id.textview_record_malaria) {
+        if (id == org.smartregister.malaria.R.id.textview_record_malaria) {
             MalariaFollowUpVisitActivity.startMalariaFollowUpActivity(this, memberObject.getBaseEntityId());
         } else if (id == org.smartregister.malaria.R.id.textview_record_anc) {
             if (view.getTag() == ANC) {
@@ -357,14 +357,14 @@ public class MalariaProfileActivity extends CoreMalariaProfileActivity implement
         checkPhoneNumberProvided(StringUtils.isNotBlank(memberObject.getPhoneNumber()));
         OnClickFloatingMenu onClickFloatingMenu = viewId -> {
             switch (viewId) {
-                case R.id.malaria_fab:
+                case org.smartregister.chw.core.R.id.malaria_fab:
                     ((CoreMalariaFloatingMenu) baseMalariaFloatingMenu).animateFAB();
                     break;
-                case R.id.call_layout:
+                case org.smartregister.chw.core.R.id.call_layout:
                     ((CoreMalariaFloatingMenu) baseMalariaFloatingMenu).launchCallWidget();
                     ((CoreMalariaFloatingMenu) baseMalariaFloatingMenu).animateFAB();
                     break;
-                case R.id.refer_to_facility_layout:
+                case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                     referToFacility();
                     ((CoreMalariaFloatingMenu) baseMalariaFloatingMenu).animateFAB();
                     break;
@@ -512,7 +512,7 @@ public class MalariaProfileActivity extends CoreMalariaProfileActivity implement
         visitDone.setVisibility(View.GONE);
 
         if (pncVisitAlertRule.getButtonStatus().equalsIgnoreCase(CoreConstants.VISIT_STATE.DUE) || pncVisitAlertRule.getButtonStatus().equalsIgnoreCase(CoreConstants.VISIT_STATE.OVERDUE)) {
-            textViewRecordAnc.setText(R.string.record_pnc_visit);
+            textViewRecordAnc.setText(org.smartregister.chw.pnc.R.string.record_pnc_visit);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             int topBottomMargin = getMarginPixel(10);
             int rightLeftMargin = getMarginPixel(30);

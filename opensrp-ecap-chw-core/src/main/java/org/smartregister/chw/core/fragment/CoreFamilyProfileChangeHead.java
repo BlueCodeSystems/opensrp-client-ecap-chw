@@ -47,7 +47,7 @@ public abstract class CoreFamilyProfileChangeHead extends Fragment implements Vi
     @Override
     public void onMenuChoiceChange() {
         boolean active = (memberAdapter != null && StringUtils.isNotBlank(memberAdapter.getSelected()));
-        tvAction.setTextColor(getResources().getColor(active ? R.color.white : android.R.color.darker_gray));
+        tvAction.setTextColor(getResources().getColor(active ? org.smartregister.R.color.white : android.R.color.darker_gray));
     }
 
     @Override

@@ -27,7 +27,7 @@ public class ChildRegisterFragment extends CoreChildRegisterFragment {
     protected void onViewClicked(android.view.View view) {
         super.onViewClicked(view);
         if (view.getTag() instanceof CommonPersonObjectClient
-                && view.getTag(R.id.VIEW_ID) == CLICK_VIEW_DOSAGE_STATUS) {
+                && view.getTag(org.smartregister.family.R.id.VIEW_ID) == CLICK_VIEW_DOSAGE_STATUS) {
             CommonPersonObjectClient client = (CommonPersonObjectClient) view.getTag();
             ChildHomeVisitActivity.startMe(getActivity(), new MemberObject(client), false, ChildHomeVisitActivity.class);
         }
@@ -65,7 +65,7 @@ public class ChildRegisterFragment extends CoreChildRegisterFragment {
         super.setupViews(view);
 
         if (ChwApplication.getApplicationFlavor().hasDefaultDueFilterForChildClient()) {
-            android.view.View dueOnlyLayout = view.findViewById(org.smartregister.chw.core.R.id.due_only_layout);
+            android.view.View dueOnlyLayout = view.findViewById(org.smartregister.R.id.due_only_layout);
             dueOnlyLayout.setVisibility(android.view.View.VISIBLE);
             dueOnlyLayout.setOnClickListener(registerActionHandler);
             dueOnlyLayout.setTag(null);

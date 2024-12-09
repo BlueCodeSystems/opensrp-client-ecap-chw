@@ -37,7 +37,7 @@ public class UtilsFlv {
         protected void onPostExecute(Void param) {
             if (malariaFollowUpRule != null && StringUtils.isNotBlank(malariaFollowUpRule.getButtonStatus()) &&
                     !CoreConstants.VISIT_STATE.EXPIRED.equalsIgnoreCase(malariaFollowUpRule.getButtonStatus())) {
-                menu.findItem(R.id.action_malaria_followup_visit).setVisible(true);
+                menu.findItem(org.smartregister.chw.core.R.id.action_malaria_followup_visit).setVisible(true);
             }
         }
     }
@@ -45,15 +45,15 @@ public class UtilsFlv {
         if (MalariaDao.isRegisteredForMalaria(baseEntityId)) {
             Utils.startAsyncTask(new UpdateFollowUpMenuItem(baseEntityId, menu), null);
         } else {
-            menu.findItem(R.id.action_malaria_registration).setVisible(true);
+            menu.findItem(org.smartregister.chw.core.R.id.action_malaria_registration).setVisible(true);
         }
     }
 
     public static void updateFpMenuItems(String baseEntityId, Menu menu) {
         if (FpDao.isRegisteredForFp(baseEntityId)) {
-            menu.findItem(R.id.action_fp_change).setVisible(true);
+            menu.findItem(org.smartregister.chw.core.R.id.action_fp_change).setVisible(true);
         } else {
-            menu.findItem(R.id.action_fp_initiation).setVisible(true);
+            menu.findItem(org.smartregister.chw.core.R.id.action_fp_initiation).setVisible(true);
         }
     }
 

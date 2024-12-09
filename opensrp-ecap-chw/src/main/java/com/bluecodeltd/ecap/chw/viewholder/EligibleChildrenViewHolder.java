@@ -45,7 +45,7 @@ public class EligibleChildrenViewHolder extends ListableViewHolder<EligibleChild
         String age = currentView.getContext().getString(R.string.age);
         tvAge.setText(age + " " + dob);
         tvFamily.setText(eligibleChild.getFamilyName());
-        String due = currentView.getContext().getString(R.string.due);
+        String due = currentView.getContext().getString(org.smartregister.chw.core.R.string.due);
         String[] dueVaccine = eligibleChild.getDueVaccines();
         for (String vaccine : dueVaccine) {
             String val;

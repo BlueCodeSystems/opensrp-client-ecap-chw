@@ -87,7 +87,7 @@ public class FamilyActivityRegisterProvider extends org.smartregister.family.pro
                 patientName = Utils.getName(firstName, middleName, lastName);
                 patientName = patientName + ", " + dobString + " " + eventType;
             } else {
-                patientName = context.getString(R.string.family, familyName) + " " + eventType;
+                patientName = context.getString(org.smartregister.chw.core.R.string.family, familyName) + " " + eventType;
             }
 
             viewHolder.patientNameAge.setFontVariant(FontVariant.REGULAR);
@@ -112,13 +112,13 @@ public class FamilyActivityRegisterProvider extends org.smartregister.family.pro
     private String getVisitType(String visitType) {
         switch (visitType) {
             case CoreConstants.EventType.ANC_HOME_VISIT:
-                return context.getString(R.string.anc_visit_suffix);
+                return context.getString(org.smartregister.chw.core.R.string.anc_visit_suffix);
             case CoreConstants.EventType.PNC_HOME_VISIT:
-                return context.getString(R.string.pnc_visit_suffix);
+                return context.getString(org.smartregister.chw.core.R.string.pnc_visit_suffix);
             case Constants.FORMS.MALARIA_FOLLOW_UP_VISIT:
-                return context.getString(R.string.malaria_visit_suffix);
+                return context.getString(org.smartregister.chw.core.R.string.malaria_visit_suffix);
             case CoreConstants.EventType.WASH_CHECK:
-                return " · " + context.getString(R.string.wash_check);
+                return " · " + context.getString(org.smartregister.chw.core.R.string.wash_check);
             case CoreConstants.EventType.FAMILY_KIT:
                 return " · " + context.getString(R.string.family_kit);
             case CoreConstants.EventType.CHILD_HOME_VISIT:

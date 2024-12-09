@@ -222,13 +222,13 @@ public abstract class CorePncMemberProfileActivity extends BasePncMemberProfileA
 
         if (status == AlertStatus.complete) {
             hasDueServices = false;
-            tvFamilyStatus.setText(getString(R.string.family_has_nothing_due));
+            tvFamilyStatus.setText(getString(org.smartregister.chw.pnc.R.string.family_has_nothing_due));
         } else if (status == AlertStatus.normal) {
             hasDueServices = true;
-            tvFamilyStatus.setText(R.string.family_has_services_due);
+            tvFamilyStatus.setText(org.smartregister.chw.pnc.R.string.family_has_services_due);
         } else if (status == AlertStatus.urgent) {
             hasDueServices = true;
-            tvFamilyStatus.setText(NCUtils.fromHtml(getString(R.string.family_has_service_overdue)));
+            tvFamilyStatus.setText(NCUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue)));
         }
     }
 

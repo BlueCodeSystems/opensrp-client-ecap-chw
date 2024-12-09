@@ -176,7 +176,7 @@ public class BaseChwNotificationDetailsInteractor implements ChwNotificationDeta
     }
 
     private String getClientAge(String dobString) {
-        String translatedYearInitial = context.getResources().getString(R.string.abbrv_years);
+        String translatedYearInitial = context.getResources().getString(org.smartregister.opd.R.string.abbrv_years);
         return OpdUtils.getClientAge(getDuration(dobString), translatedYearInitial);
     }
 }

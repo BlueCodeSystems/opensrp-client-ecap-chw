@@ -113,7 +113,7 @@ public class ExpandedListAdapter<K, L, T> extends BaseExpandableListAdapter {
             TextView detailTextView = (TextView) detailView;
             detailTextView.setText(details);
 
-            detailTextView.setTextColor(context.getResources().getColor(R.color.black));
+            detailTextView.setTextColor(context.getResources().getColor(org.smartregister.family.R.color.black));
             if (childObject.isFinalized()) {
                 detailTextView.setTextColor(context.getResources().getColor(R.color.bluetext));
             }

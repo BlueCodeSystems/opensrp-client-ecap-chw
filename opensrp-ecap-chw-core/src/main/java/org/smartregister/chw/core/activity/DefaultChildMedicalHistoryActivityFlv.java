@@ -151,7 +151,7 @@ public abstract class DefaultChildMedicalHistoryActivityFlv implements CoreChild
 
         List<Visit> visits = visitMap.get(CoreConstants.EventType.CHILD_VACCINE_CARD_RECEIVED);
 
-        String value = getValue(visits).toLowerCase().contains("yes") ? context.getString(R.string.yes) : context.getString(R.string.no);
+        String value = getValue(visits).toLowerCase().contains("yes") ? context.getString(org.smartregister.R.string.yes) : context.getString(org.smartregister.R.string.no);
 
         List<MedicalHistory> medicalHistories = new ArrayList<>();
         MedicalHistory history = new MedicalHistory();
@@ -200,7 +200,7 @@ public abstract class DefaultChildMedicalHistoryActivityFlv implements CoreChild
             AtomicReference<Integer> count = new AtomicReference<>(0);
             medicalHistory(medicalHistories, CoreConstants.EventType.EXCLUSIVE_BREASTFEEDING, context.getString(R.string.exclusive_breastfeeding), getBreastFeedingFormatter(count));
 
-            medicalHistory(medicalHistories, CoreConstants.EventType.VITAMIN_A, context.getString(R.string.vitamin_a), getVitaminAformatter());
+            medicalHistory(medicalHistories, CoreConstants.EventType.VITAMIN_A, context.getString(org.smartregister.R.string.vitamin_a), getVitaminAformatter());
 
             medicalHistory(medicalHistories, CoreConstants.EventType.DEWORMING, context.getString(R.string.deworming), getDewormingFormatter());
 
@@ -224,7 +224,7 @@ public abstract class DefaultChildMedicalHistoryActivityFlv implements CoreChild
             count.getAndSet(count.get() + 1);
             return String.format("%s: %s",
                     context.getString(R.string.exclusive_breastfeeding_months, Integer.toString(count.get())),
-                    context.getString(NCUtils.getText(details).toLowerCase().contains("yes") ? R.string.no : R.string.yes)
+                    context.getString(NCUtils.getText(details).toLowerCase().contains("yes") ? org.smartregister.R.string.no : org.smartregister.R.string.yes)
             );
         };
     }
@@ -336,7 +336,7 @@ public abstract class DefaultChildMedicalHistoryActivityFlv implements CoreChild
 
                     return String.format("%s %s",
                             translatedTitle,
-                            context.getString(NCUtils.getText(details).toLowerCase().contains("yes") ? R.string.yes : R.string.no)
+                            context.getString(NCUtils.getText(details).toLowerCase().contains("yes") ? org.smartregister.R.string.yes : org.smartregister.R.string.no)
                     );
                 };
 
@@ -381,7 +381,7 @@ public abstract class DefaultChildMedicalHistoryActivityFlv implements CoreChild
 
             VisitDetailsFormatter llitn = (title, details, visitDate) -> {
                 String text = NCUtils.getText(details);
-                String translated = context.getString(text.toLowerCase().contains("yes") ? R.string.yes : R.string.no);
+                String translated = context.getString(text.toLowerCase().contains("yes") ? org.smartregister.R.string.yes : org.smartregister.R.string.no);
                 return String.format("%s - %s %s",
                         translated,
                         context.getString(R.string.done),

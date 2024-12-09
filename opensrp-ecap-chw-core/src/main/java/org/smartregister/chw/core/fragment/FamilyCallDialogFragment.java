@@ -68,7 +68,7 @@ public class FamilyCallDialogFragment extends DialogFragment implements FamilyCa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.ChwTheme_Dialog_FullWidth);
+        setStyle(DialogFragment.STYLE_NO_TITLE, org.smartregister.chw.opensrp_chw_anc.R.style.ChwTheme_Dialog_FullWidth);
     }
 
     @Override
