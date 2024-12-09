@@ -248,7 +248,7 @@ public class AncHomeVisitInteractorFlv implements AncHomeVisitInteractor.Flavor 
             return MessageFormat.format("Danger signs: {0}", danger_signs_present) +
                     "\n" +
                     MessageFormat.format("Health facility counselling {0}",
-                            (danger_signs_counseling.equalsIgnoreCase("Yes") ? context.getString(R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase())
+                            (danger_signs_counseling.equalsIgnoreCase("Yes") ? context.getString(org.smartregister.chw.core.R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase())
                     );
         }
 
@@ -363,7 +363,7 @@ public class AncHomeVisitInteractorFlv implements AncHomeVisitInteractor.Flavor 
         public String evaluateSubTitle() {
             StringBuilder stringBuilder = new StringBuilder();
             if (anc_hf_visit.equalsIgnoreCase("No")) {
-                stringBuilder.append(context.getString(R.string.visit_not_done).replace("\n", ""));
+                stringBuilder.append(context.getString(org.smartregister.chw.core.R.string.visit_not_done).replace("\n", ""));
             } else {
                 stringBuilder.append(MessageFormat.format("{0}: {1}\n", context.getString(R.string.date), new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(visitDate)));
                 stringBuilder.append(MessageFormat.format("{0}: {1}\n", context.getString(R.string.tests_done), tests_done));
@@ -555,7 +555,7 @@ public class AncHomeVisitInteractorFlv implements AncHomeVisitInteractor.Flavor 
 
         @Override
         public String evaluateSubTitle() {
-            String subTitle = (!counselling_given.contains("none") ? context.getString(R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase());
+            String subTitle = (!counselling_given.contains("none") ? context.getString(org.smartregister.chw.core.R.string.done).toLowerCase() : context.getString(R.string.not_done).toLowerCase());
             return MessageFormat.format("{0} {1}", context.getString(R.string.counselling), subTitle);
         }
 

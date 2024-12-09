@@ -63,40 +63,40 @@ public class CoreFpProvider extends BaseFpRegisterProvider {
     }
 
     private void setVisitButtonNextDueStatus(Context context, String visitDue, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.light_grey_text));
-        dueButton.setText(context.getString(R.string.fp_visit_day_next_due, visitDue));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.light_grey_text));
+        dueButton.setText(context.getString(org.smartregister.fp.R.string.fp_visit_day_next_due, visitDue));
         dueButton.setBackgroundResource(R.drawable.colorless_btn_selector);
         dueButton.setOnClickListener(null);
     }
 
 
     private void setVisitButtonDueStatus(Context context, String visitDue, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.alert_in_progress_blue));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_in_progress_blue));
         if (visitDue.equalsIgnoreCase("0")) {
-            dueButton.setText(context.getString(R.string.fp_visit_day_due_today));
+            dueButton.setText(context.getString(org.smartregister.fp.R.string.fp_visit_day_due_today));
         } else {
-            dueButton.setText(context.getString(R.string.fp_visit_day_due, visitDue));
+            dueButton.setText(context.getString(org.smartregister.fp.R.string.fp_visit_day_due, visitDue));
         }
         dueButton.setBackgroundResource(R.drawable.blue_btn_selector);
         dueButton.setOnClickListener(onClickListener);
     }
 
     private void setVisitButtonOverdueStatus(Context context, String visitDue, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
         if (visitDue.equalsIgnoreCase("0")) {
-            dueButton.setText(context.getString(R.string.fp_visit_day_overdue_today));
+            dueButton.setText(context.getString(org.smartregister.fp.R.string.fp_visit_day_overdue_today));
 
         } else {
-            dueButton.setText(context.getString(R.string.fp_visit_day_overdue, visitDue));
+            dueButton.setText(context.getString(org.smartregister.fp.R.string.fp_visit_day_overdue, visitDue));
         }
         dueButton.setBackgroundResource(R.drawable.overdue_red_btn_selector);
         dueButton.setOnClickListener(onClickListener);
     }
 
     private void setVisitDone(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.alert_complete_green));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_complete_green));
         dueButton.setText(context.getString(R.string.visit_done));
-        dueButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(null);
     }
 

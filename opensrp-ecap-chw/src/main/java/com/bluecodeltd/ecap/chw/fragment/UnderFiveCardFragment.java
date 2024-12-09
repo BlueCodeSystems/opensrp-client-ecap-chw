@@ -114,8 +114,8 @@ public class UnderFiveCardFragment extends Fragment {
 
         try {
             imageviewProfile.setImageResource((motherDetails != null && motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male"))
-                    ? R.drawable.child_boy_infant
-                    : R.drawable.child_girl_infant);
+                    ? org.smartregister.R.drawable.child_boy_infant
+                    : org.smartregister.R.drawable.child_girl_infant);
         } catch (NullPointerException e) {
             // Handle the exception, maybe set a default image or log the error
 //            imageviewProfile.setImageResource(R.drawable.default_infant_image);

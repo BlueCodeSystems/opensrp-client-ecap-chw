@@ -63,8 +63,8 @@ public abstract class BaseChwNotificationDetailsActivity extends MultiLanguageAc
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            final Drawable upArrow = getResources().getDrawable(org.smartregister.chw.opensrp_chw_anc.R.drawable.ic_arrow_back_white_24dp);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
             actionBar.setElevation(0);
         }
@@ -109,7 +109,7 @@ public abstract class BaseChwNotificationDetailsActivity extends MultiLanguageAc
             markAsDoneTextView.setBackground(ContextCompat.getDrawable(this,
                     R.drawable.disabled_button_background));
             markAsDoneTextView.setTextColor(ContextCompat.getColor(this,
-                    R.color.text_black));
+                    org.smartregister.R.color.text_black));
         }
     }
 
@@ -122,7 +122,7 @@ public abstract class BaseChwNotificationDetailsActivity extends MultiLanguageAc
             textView.setPadding(16, 32, 16, 32);
             textView.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             textView.setSingleLine(false);
-            textView.setTextColor(ContextCompat.getColor(this, R.color.text_black));
+            textView.setTextColor(ContextCompat.getColor(this, org.smartregister.R.color.text_black));
             notificationDetails.addView(textView,
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         }

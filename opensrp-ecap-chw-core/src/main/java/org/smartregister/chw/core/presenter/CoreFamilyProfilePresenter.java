@@ -60,7 +60,7 @@ public abstract class CoreFamilyProfilePresenter extends BaseFamilyProfilePresen
             startChildForm(triple.getLeft(), entityId, triple.getMiddle(), triple.getRight());
         } catch (Exception e) {
             Timber.e(e);
-            getView().displayToast(R.string.error_unable_to_start_form);
+            getView().displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
         }
     }
 
@@ -113,7 +113,7 @@ public abstract class CoreFamilyProfilePresenter extends BaseFamilyProfilePresen
     public void saveChildForm(String jsonString, boolean isEditMode) {
         try {
 
-            getView().showProgressDialog(R.string.saving_dialog_title);
+            getView().showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
 
             Pair<Client, Event> pair = getChildRegisterModel().processRegistration(jsonString);
             if (pair == null) {

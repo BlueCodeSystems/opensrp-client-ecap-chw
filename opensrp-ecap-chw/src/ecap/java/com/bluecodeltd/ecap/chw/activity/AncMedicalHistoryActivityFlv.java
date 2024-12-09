@@ -27,19 +27,19 @@ public class AncMedicalHistoryActivityFlv extends DefaultChwAncMedicalHistoryAct
 
             int x = 0;
             for (Map<String, String> vals : hf_visits) {
-                View view = inflater.inflate(R.layout.medial_history_anc_visit, null);
+                View view = inflater.inflate(org.smartregister.chw.core.R.layout.medial_history_anc_visit, null);
 
-                TextView tvTitle = view.findViewById(R.id.title);
-                TextView tvTests = view.findViewById(R.id.tests);
+                TextView tvTitle = view.findViewById(org.smartregister.chw.core.R.id.title);
+                TextView tvTests = view.findViewById(org.smartregister.chw.core.R.id.tests);
 
-                view.findViewById(R.id.weight).setVisibility(View.GONE);
-                view.findViewById(R.id.bp).setVisibility(View.GONE);
-                view.findViewById(R.id.hb).setVisibility(View.GONE);
-                view.findViewById(R.id.ifa_received).setVisibility(View.GONE);
+                view.findViewById(org.smartregister.chw.core.R.id.weight).setVisibility(View.GONE);
+                view.findViewById(org.smartregister.chw.core.R.id.bp).setVisibility(View.GONE);
+                view.findViewById(org.smartregister.chw.core.R.id.hb).setVisibility(View.GONE);
+                view.findViewById(org.smartregister.chw.core.R.id.ifa_received).setVisibility(View.GONE);
 
 
-                tvTitle.setText(MessageFormat.format(context.getString(R.string.anc_visit_date), (hf_visits.size() - x), vals.get("anc_hf_visit_date")));
-                tvTests.setText(MessageFormat.format(context.getString(R.string.tests_done_details), vals.get("tests_done")));
+                tvTitle.setText(MessageFormat.format(context.getString(org.smartregister.chw.core.R.string.anc_visit_date), (hf_visits.size() - x), vals.get("anc_hf_visit_date")));
+                tvTests.setText(MessageFormat.format(context.getString(org.smartregister.chw.core.R.string.tests_done_details), vals.get("tests_done")));
 
                 linearLayoutHealthFacilityVisitDetails.addView(view, 0);
 

@@ -398,7 +398,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
     private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
-        visitTabTitle.setText(this.getString(R.string.visits));
+        visitTabTitle.setText(this.getString(org.smartregister.opd.R.string.visits));
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
         int visits = VcaVisitationDao.countVisits(uniqueId);
@@ -426,7 +426,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName(getString(R.string.child_details));
+        form.setName(getString(org.smartregister.chw.core.R.string.child_details));
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));

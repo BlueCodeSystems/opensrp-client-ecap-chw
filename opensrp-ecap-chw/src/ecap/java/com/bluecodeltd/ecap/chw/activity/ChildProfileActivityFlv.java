@@ -14,10 +14,10 @@ public class ChildProfileActivityFlv extends DefaultChildProfileActivityFlv {
         return viewId -> {
             if (presenter != null) {
                 switch (viewId) {
-                    case R.id.call_layout:
+                    case org.smartregister.chw.core.R.id.call_layout:
                         FamilyCallDialogFragment.launchDialog(activity, presenter.getFamilyId());
                         break;
-                    case R.id.refer_to_facility_layout:
+                    case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                         presenter.referToFacility();
                         break;
                     default:

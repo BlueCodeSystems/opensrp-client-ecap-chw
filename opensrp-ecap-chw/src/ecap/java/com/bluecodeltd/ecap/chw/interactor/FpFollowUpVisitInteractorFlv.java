@@ -97,7 +97,7 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
         if (details != null && details.size() > 0) {
             org.smartregister.chw.anc.util.JsonFormUtils.populateForm(jsonObject, details);
         }
-        BaseAncHomeVisitAction action = new BaseAncHomeVisitAction.Builder(context, context.getString(R.string.fp_side_effects))
+        BaseAncHomeVisitAction action = new BaseAncHomeVisitAction.Builder(context, context.getString(org.smartregister.fp.R.string.fp_side_effects))
                 .withOptional(false)
                 .withDetails(details)
                 .withBaseEntityID(memberObject.getBaseEntityId())
@@ -107,7 +107,7 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
                 .withJsonPayload(jsonObject.toString())
                 .build();
 
-        actionList.put(context.getString(R.string.fp_side_effects), action);
+        actionList.put(context.getString(org.smartregister.fp.R.string.fp_side_effects), action);
     }
 
     private void evaluateCounselling() throws Exception {
@@ -136,25 +136,25 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
         String familyPlanningMethodTranslated = null;
         switch (familyPlanningMethod){
             case "COC":
-                familyPlanningMethodTranslated = context.getString(R.string.coc);
+                familyPlanningMethodTranslated = context.getString(org.smartregister.fp.R.string.coc);
                 break;
             case "POP":
-                familyPlanningMethodTranslated = context.getString(R.string.pop);
+                familyPlanningMethodTranslated = context.getString(org.smartregister.fp.R.string.pop);
                 break;
             case "Female sterilization":
-                familyPlanningMethodTranslated = context.getString(R.string.female_sterilization);
+                familyPlanningMethodTranslated = context.getString(org.smartregister.fp.R.string.female_sterilization);
                 break;
             case "Injectable":
                 familyPlanningMethodTranslated = context.getString(R.string.injectable);
                 break;
             case "Male condom":
-                familyPlanningMethodTranslated = context.getString(R.string.male_condom);
+                familyPlanningMethodTranslated = context.getString(org.smartregister.fp.R.string.male_condom);
                 break;
             case "Female condom":
-                familyPlanningMethodTranslated = context.getString(R.string.female_condom);
+                familyPlanningMethodTranslated = context.getString(org.smartregister.fp.R.string.female_condom);
                 break;
             case "IUCD":
-                familyPlanningMethodTranslated = context.getString(R.string.iucd);
+                familyPlanningMethodTranslated = context.getString(org.smartregister.fp.R.string.iucd);
                 break;
             default:
                 familyPlanningMethodTranslated = " ";
@@ -178,7 +178,7 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
             }
 
             if (!familyPlanningMethod.equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_INJECTABLE)) {
-                BaseAncHomeVisitAction action = new BaseAncHomeVisitAction.Builder(context, context.getString(R.string.resupply, familyPlanningMethodTranslated))
+                BaseAncHomeVisitAction action = new BaseAncHomeVisitAction.Builder(context, context.getString(org.smartregister.fp.R.string.resupply, familyPlanningMethodTranslated))
                         .withOptional(false)
                         .withDetails(details)
                         .withBaseEntityID(memberObject.getBaseEntityId())
@@ -188,9 +188,9 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
                         .withJsonPayload(jsonObject.toString())
                         .build();
 
-                actionList.put(context.getString(R.string.resupply, familyPlanningMethodTranslated), action);
+                actionList.put(context.getString(org.smartregister.fp.R.string.resupply, familyPlanningMethodTranslated), action);
             } else {
-                BaseAncHomeVisitAction action = new BaseAncHomeVisitAction.Builder(context, context.getString(R.string.next_health_facility_visit))
+                BaseAncHomeVisitAction action = new BaseAncHomeVisitAction.Builder(context, context.getString(org.smartregister.fp.R.string.next_health_facility_visit))
                         .withOptional(false)
                         .withDetails(details)
                         .withBaseEntityID(memberObject.getBaseEntityId())
@@ -200,7 +200,7 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
                         .withJsonPayload(jsonObject.toString())
                         .build();
 
-                actionList.put(context.getString(R.string.next_health_facility_visit), action);
+                actionList.put(context.getString(org.smartregister.fp.R.string.next_health_facility_visit), action);
             }
 
         }
@@ -253,12 +253,12 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
 
             StringBuilder builder = new StringBuilder();
             if (resupply.equalsIgnoreCase(no_condoms)) {
-                builder.append(context.getString(R.string.no_of_condoms)).append(" ").append(resupply);
+                builder.append(context.getString(org.smartregister.fp.R.string.no_of_condoms)).append(" ").append(resupply);
             } else if (resupply.equalsIgnoreCase(no_pillcycles)) {
-                builder.append(context.getString(R.string.no_of_pill_cycles)).append(" ").append(resupply);
+                builder.append(context.getString(org.smartregister.fp.R.string.no_of_pill_cycles)).append(" ").append(resupply);
 
             } else if (resupply.equalsIgnoreCase(last_injection_date)) {
-                builder.append(context.getString(R.string.date_of_next_injection)).append(" ").append(nextInjectionDate);
+                builder.append(context.getString(org.smartregister.fp.R.string.date_of_next_injection)).append(" ").append(nextInjectionDate);
 
             }
 
@@ -330,10 +330,10 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
 
             switch (condom_side_effects) {
                 case "Allergic_reactions":
-                    condomSideEffects = context.getString(R.string.allergic_reactions);
+                    condomSideEffects = context.getString(org.smartregister.fp.R.string.allergic_reactions);
                     break;
                 case "Others":
-                    condomSideEffects = context.getString(R.string.others);
+                    condomSideEffects = context.getString(org.smartregister.fp.R.string.others);
                     break;
                 case "None":
                     condomSideEffects = context.getString(R.string.none);
@@ -349,13 +349,13 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
             String cocpopSideEffects;
             switch (cocpop_side_effects) {
                 case "Heavy_bleeding_":
-                    cocpopSideEffects = context.getString(R.string.heavy_bleading);
+                    cocpopSideEffects = context.getString(org.smartregister.fp.R.string.heavy_bleading);
                     break;
                 case "Irregular_periods":
-                    cocpopSideEffects = context.getString(R.string.irregular_period);
+                    cocpopSideEffects = context.getString(org.smartregister.fp.R.string.irregular_period);
                     break;
                 case "Others":
-                    cocpopSideEffects = context.getString(R.string.others);
+                    cocpopSideEffects = context.getString(org.smartregister.fp.R.string.others);
                     break;
                 case "None":
                     cocpopSideEffects = context.getString(R.string.none);
@@ -371,13 +371,13 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
             String injectSideEffects;
             switch (inject_side_effects) {
                 case "Heavy_bleeding_":
-                    injectSideEffects = context.getString(R.string.heavy_bleading);
+                    injectSideEffects = context.getString(org.smartregister.fp.R.string.heavy_bleading);
                     break;
                 case "Irregular_periods":
-                    injectSideEffects = context.getString(R.string.irregular_period);
+                    injectSideEffects = context.getString(org.smartregister.fp.R.string.irregular_period);
                     break;
                 case "Others":
-                    injectSideEffects = context.getString(R.string.others);
+                    injectSideEffects = context.getString(org.smartregister.fp.R.string.others);
                     break;
                 case "None":
                     injectSideEffects = context.getString(R.string.none);
@@ -393,22 +393,22 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
             String iucdSideEffects;
             switch (IUCD_side_effects) {
                 case "Severe_pain_inside_the_vagina_after_IUD_was_put_in":
-                    iucdSideEffects = context.getString(R.string.severe_pain_inside_the_vagina);
+                    iucdSideEffects = context.getString(org.smartregister.fp.R.string.severe_pain_inside_the_vagina);
                     break;
                 case "Cramping_or_backaches_for_a_few_days_after_the_IUD_is_put_in":
-                    iucdSideEffects = context.getString(R.string.cramps_or_back_ache);
+                    iucdSideEffects = context.getString(org.smartregister.fp.R.string.cramps_or_back_ache);
                     break;
                 case "Spotting_between_periods_and_or_irregular_periods":
-                    iucdSideEffects = context.getString(R.string.spotting);
+                    iucdSideEffects = context.getString(org.smartregister.fp.R.string.spotting);
                     break;
                 case "Heavier_periods_and_worse_menstrual_cramps":
-                    iucdSideEffects = context.getString(R.string.heavier_period);
+                    iucdSideEffects = context.getString(org.smartregister.fp.R.string.heavier_period);
                     break;
                 case "IUCD_explusion":
-                    iucdSideEffects = context.getString(R.string.IUCD_explusion);
+                    iucdSideEffects = context.getString(org.smartregister.fp.R.string.IUCD_explusion);
                     break;
                 case "Others":
-                    iucdSideEffects = context.getString(R.string.others);
+                    iucdSideEffects = context.getString(org.smartregister.fp.R.string.others);
                     break;
                 case "None":
                     iucdSideEffects = context.getString(R.string.none);
@@ -425,16 +425,16 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
             String sterilizationSideEffects;
             switch (sterilization_side_effects) {
                 case "Incisional_bleeding":
-                    sterilizationSideEffects = context.getString(R.string.incisional_bleeding);
+                    sterilizationSideEffects = context.getString(org.smartregister.fp.R.string.incisional_bleeding);
                     break;
                 case "Pus_Discharge_from_incision":
-                    sterilizationSideEffects = context.getString(R.string.pus_discharge_from_incision);
+                    sterilizationSideEffects = context.getString(org.smartregister.fp.R.string.pus_discharge_from_incision);
                     break;
                 case "Swollen_around_the_incision":
-                    sterilizationSideEffects = context.getString(R.string.swollen_around_the_incision);
+                    sterilizationSideEffects = context.getString(org.smartregister.fp.R.string.swollen_around_the_incision);
                     break;
                 case "Others":
-                    sterilizationSideEffects = context.getString(R.string.others);
+                    sterilizationSideEffects = context.getString(org.smartregister.fp.R.string.others);
                     break;
                 case "None":
                     sterilizationSideEffects = context.getString(R.string.none);
@@ -451,13 +451,13 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
 
             switch (action_taken) {
                 case "managed":
-                    actionTaken = context.getString(R.string.managed);
+                    actionTaken = context.getString(org.smartregister.chw.core.R.string.managed);
                     break;
                 case "referred":
-                    actionTaken = context.getString(R.string.referred);
+                    actionTaken = context.getString(org.smartregister.chw.core.R.string.referred);
                     break;
                 case "no_action_taken":
-                    actionTaken = context.getString(R.string.no_action_taken);
+                    actionTaken = context.getString(org.smartregister.chw.core.R.string.no_action_taken);
                     break;
                 default:
                     actionTaken = "";
@@ -478,12 +478,12 @@ public class FpFollowUpVisitInteractorFlv extends DefaultFpFollowUpVisitInteract
             }
 
 
-            StringBuilder builder = new StringBuilder(context.getString(R.string.side_effects)).append(sideEffects);
+            StringBuilder builder = new StringBuilder(context.getString(org.smartregister.fp.R.string.side_effects)).append(sideEffects);
             if (StringUtils.isNotBlank(other)) builder.append(" ").append(other);
 
             if (StringUtils.isNotBlank(action_taken)) {
                 builder.append("\n");
-                builder.append(context.getString(R.string.action)).append(evaluateActionTaken());
+                builder.append(context.getString(org.smartregister.fp.R.string.action)).append(evaluateActionTaken());
             }
 
             return builder.toString();

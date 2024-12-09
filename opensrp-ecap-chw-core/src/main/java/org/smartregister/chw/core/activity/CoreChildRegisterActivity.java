@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.navigation.NavigationBarView;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
@@ -47,13 +48,13 @@ public class CoreChildRegisterActivity extends BaseRegisterActivity implements C
         bottomNavigationView = findViewById(org.smartregister.R.id.bottom_navigation);
 
         if (bottomNavigationView != null) {
-            bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-            bottomNavigationView.getMenu().removeItem(R.id.action_clients);
-            bottomNavigationView.getMenu().removeItem(R.id.action_register);
-            bottomNavigationView.getMenu().removeItem(R.id.action_search);
-            bottomNavigationView.getMenu().removeItem(R.id.action_library);
+            bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
+            bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_clients);
+            bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_register);
+            bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_search);
+            bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_library);
 
-            bottomNavigationView.inflateMenu(R.menu.bottom_nav_family_menu);
+            bottomNavigationView.inflateMenu(org.smartregister.family.R.menu.bottom_nav_family_menu);
 
             bottomNavigationHelper.disableShiftMode(bottomNavigationView);
 
@@ -101,7 +102,7 @@ public class CoreChildRegisterActivity extends BaseRegisterActivity implements C
             }
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(getString(R.string.error_unable_to_start_form));
+            displayToast(getString(org.smartregister.family.R.string.error_unable_to_start_form));
         }
     }
 
@@ -111,10 +112,10 @@ public class CoreChildRegisterActivity extends BaseRegisterActivity implements C
         intent.putExtra(Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
 
         Form form = new Form();
-        form.setName(getString(R.string.add_fam));
-        form.setActionBarBackground(R.color.family_actionbar);
-        form.setNavigationBackground(R.color.family_navigation);
-        form.setHomeAsUpIndicator(R.mipmap.ic_cross_white);
+        form.setName(getString(org.smartregister.family.R.string.add_fam));
+        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
+        form.setNavigationBackground(org.smartregister.family.R.color.family_navigation);
+        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
 
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -159,7 +160,7 @@ public class CoreChildRegisterActivity extends BaseRegisterActivity implements C
 
     @Override
     public void openFamilyListView() {
-        bottomNavigationView.setSelectedItemId(R.id.action_family);
+        bottomNavigationView.setSelectedItemId(org.smartregister.family.R.id.action_family);
     }
 
     @Override

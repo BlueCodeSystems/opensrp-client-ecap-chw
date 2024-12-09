@@ -301,7 +301,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 //                    RegisterParams registerParam = new RegisterParams();
 //                    registerParam.setEditMode(false);
 //                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-//                    showProgressDialog(R.string.saving_dialog_title);
+//                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
 //                    indexRegisterPresenter().saveForm(jsonString, registerParam);
 //                    uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
 //
@@ -318,7 +318,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(R.string.saving_dialog_title);
+                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
                     hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");

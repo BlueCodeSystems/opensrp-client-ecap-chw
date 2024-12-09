@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
-import org.smartregister.chw.core.R;
+import org.smartregister.family.R;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.presenter.CoreAllClientsRegisterFragmentPresenter;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -40,14 +40,14 @@ public class CoreAllClientsRegisterFragment extends BaseOpdRegisterFragment {
 
         NavigationMenu.getInstance(getActivity(), null, toolbar);
 
-        CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
+        CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
             titleView.setPadding(0, titleView.getTop(), titleView.getPaddingRight(), titleView.getPaddingBottom());
             titleView.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
         }
 
         if (getSearchView() != null) {
-            getSearchView().setHint(R.string.search_name_or_id);
+            getSearchView().setHint(org.smartregister.chw.core.R.string.search_name_or_id);
         }
     }
 
@@ -115,6 +115,6 @@ public class CoreAllClientsRegisterFragment extends BaseOpdRegisterFragment {
 
     @Override
     protected int getToolBarTitle() {
-        return R.string.menu_all_clients;
+        return org.smartregister.chw.core.R.string.menu_all_clients;
     }
 }

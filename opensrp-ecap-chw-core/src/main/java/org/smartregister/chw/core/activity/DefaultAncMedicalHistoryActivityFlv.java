@@ -236,9 +236,9 @@ public abstract class DefaultAncMedicalHistoryActivityFlv implements CoreAncMedi
 
         switch (val.toLowerCase()) {
             case "yes":
-                return context.getString(R.string.yes);
+                return context.getString(org.smartregister.R.string.yes);
             case "no":
-                return context.getString(R.string.no);
+                return context.getString(org.smartregister.R.string.no);
             default:
                 return val;
         }

@@ -87,7 +87,7 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }
         toolbar.setNavigationOnClickListener(v -> finish());
@@ -99,7 +99,7 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
         progressBar = findViewById(R.id.progressBarUpcomingServices);
 
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText(getString(R.string.back_to, memberObject.getFullName()));
+        tvTitle.setText(getString(org.smartregister.chw.opensrp_chw_anc.R.string.back_to, memberObject.getFullName()));
 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

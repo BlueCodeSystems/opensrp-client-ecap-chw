@@ -52,16 +52,16 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             if(HouseholdDao.getHouseholdByBaseId(isClosed).getStatus() == null || !HouseholdDao.getHouseholdByBaseId(isClosed).getStatus().equals("1") ){
                 if (screened != null && screened.equals("true")){
 
-                    homeIcon.setImageResource(R.mipmap.ic_home_active);
+                    homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
                 } else {
 
-                    homeIcon.setImageResource(R.mipmap.ic_home);
+                    homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
                 }
 
             } else {
 
-                homeIcon.setImageResource(R.mipmap.ic_home);
-                homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
+                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+                homeIcon.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.referral.R.color.colorRed));
             }
         }
         Household house = HouseholdDao.getHousehold(householdId);
@@ -100,15 +100,15 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
                 if (genderList.get(i).equals("male") && age < 20){
 
-                    image.setImageResource(R.mipmap.ic_boy_child);
+                    image.setImageResource(org.smartregister.family.R.mipmap.ic_boy_child);
 
                 } else if(genderList.get(i).equals("female") && age < 20) {
 
-                    image.setImageResource(R.mipmap.ic_girl_child);
+                    image.setImageResource(org.smartregister.family.R.mipmap.ic_girl_child);
 
                 } else {
-                    image.setImageResource(R.drawable.ic_person_black_24dp);
-                    image.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+                    image.setImageResource(org.smartregister.family.R.drawable.ic_person_black_24dp);
+                    image.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
                 }
 
                 hLayout.addView(image);

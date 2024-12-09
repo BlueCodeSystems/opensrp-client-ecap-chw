@@ -46,7 +46,7 @@ public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAd
 
         for (String content : item.getText()) {
             View view = inflater.inflate(layoutID, null);
-            TextView tvContent = view.findViewById(R.id.tvContent);
+            TextView tvContent = view.findViewById(org.smartregister.chw.core.R.id.tvContent);
             tvContent.setText(content);
 
             myViewHolder.llItems.addView(view);

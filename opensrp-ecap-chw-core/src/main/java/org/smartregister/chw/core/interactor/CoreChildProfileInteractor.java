@@ -146,7 +146,7 @@ public class CoreChildProfileInteractor implements CoreChildProfileContract.Inte
         } else if (name.contains("deworming")) {
             return context.getString(R.string.deworming_number_dose, num);
         } else if (name.contains("vitamin")) {
-            return context.getString(R.string.vitamin_a, num);
+            return context.getString(org.smartregister.R.string.vitamin_a, num);
         } else if (name.contains("mnp")) {
             return context.getString(R.string.mnp_number_pack, num);
         } else {

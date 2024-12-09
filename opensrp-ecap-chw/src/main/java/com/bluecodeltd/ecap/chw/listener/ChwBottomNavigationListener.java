@@ -32,7 +32,7 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_family) {
+        if (item.getItemId() == org.smartregister.family.R.id.action_family) {
             if (context instanceof DashboardActivity) {
 //                BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
 //                baseRegisterActivity.switchToBaseFragment();
@@ -45,7 +45,7 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 Intent intent = new Intent(context,DashboardActivity.class);
                 context.startActivity(intent);
             }
-        } else if (item.getItemId() == R.id.action_scan_qr) {
+        } else if (item.getItemId() == org.smartregister.family.R.id.action_scan_qr) {
             BaseRegisterActivity baseRegisterActivity = (BaseRegisterActivity) context;
             baseRegisterActivity.startQrCodeScanner();
             return false;

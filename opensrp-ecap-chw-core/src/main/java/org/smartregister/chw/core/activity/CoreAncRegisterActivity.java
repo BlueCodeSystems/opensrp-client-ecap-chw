@@ -149,7 +149,7 @@ public class CoreAncRegisterActivity extends BaseAncRegisterActivity {
             intent.putExtra(org.smartregister.family.util.Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
 
             Form form = new Form();
-            form.setActionBarBackground(R.color.family_actionbar);
+            form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
             form.setWizard(false);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
 

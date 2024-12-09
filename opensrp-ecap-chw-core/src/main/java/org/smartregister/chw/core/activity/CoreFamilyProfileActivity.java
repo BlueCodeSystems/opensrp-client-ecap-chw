@@ -93,7 +93,7 @@ public abstract class CoreFamilyProfileActivity extends BaseFamilyProfileActivit
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        MenuItem addMember = menu.findItem(R.id.add_member);
+        MenuItem addMember = menu.findItem(org.smartregister.family.R.id.add_member);
         if (addMember != null) {
             addMember.setVisible(false);
         }

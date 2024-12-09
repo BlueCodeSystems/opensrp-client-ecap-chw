@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.presenter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
+
+import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.AllClientsMemberProfileActivity;
 import org.smartregister.chw.anc.util.NCUtils;
 import com.bluecodeltd.ecap.chw.contract.AllClientsMemberContract;
@@ -70,7 +72,7 @@ public class AllClientsMemberPresenter implements AllClientsMemberContract.Prese
             String villageTown = FamilyDao.getFamilyDetail(client.getCaseId()).getVillageTown();
             currentView.setProfileDetailTwo(villageTown);
             String uniqueId = Utils.getValue(client.getColumnmaps(), DBConstants.KEY.UNIQUE_ID, false);
-            currentView.setProfileDetailThree(String.format(currentView.getString(org.smartregister.chw.core.R.string.id_with_value), uniqueId));
+            currentView.setProfileDetailThree(String.format(currentView.getString(org.smartregister.family.R.string.id_with_value), uniqueId));
             String entityType = Utils.getValue(client.getColumnmaps(), DBConstants.KEY.ENTITY_TYPE, false);
             currentView.setProfileImage(client.getCaseId(), entityType);
         }
