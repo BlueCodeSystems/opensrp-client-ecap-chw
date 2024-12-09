@@ -65,7 +65,7 @@ public class ChwDueRegisterProvider extends FamilyDueRegisterProvider {
             patientName = patientName + ", " + dobString + " " + getVisitType(scheduleName);
             fillValue(viewHolder.patientNameAge, patientName);
         } else {
-            String title = context.getString(R.string.family, familyName) + " " + getVisitType(scheduleName);
+            String title = context.getString(org.smartregister.chw.core.R.string.family, familyName) + " " + getVisitType(scheduleName);
             fillValue(viewHolder.patientNameAge, title);
         }
 
@@ -97,13 +97,13 @@ public class ChwDueRegisterProvider extends FamilyDueRegisterProvider {
     private String getVisitType(String scheduleName) {
         switch (scheduleName) {
             case CoreConstants.SCHEDULE_TYPES.ANC_VISIT:
-                return context.getString(R.string.anc_visit_suffix);
+                return context.getString(org.smartregister.chw.core.R.string.anc_visit_suffix);
             case CoreConstants.SCHEDULE_TYPES.PNC_VISIT:
-                return context.getString(R.string.pnc_visit_suffix);
+                return context.getString(org.smartregister.chw.core.R.string.pnc_visit_suffix);
             case CoreConstants.SCHEDULE_TYPES.MALARIA_VISIT:
-                return context.getString(R.string.malaria_visit_suffix);
+                return context.getString(org.smartregister.chw.core.R.string.malaria_visit_suffix);
             case CoreConstants.SCHEDULE_TYPES.WASH_CHECK:
-                return " · " + context.getString(R.string.wash_check);
+                return " · " + context.getString(org.smartregister.chw.core.R.string.wash_check);
             case CoreConstants.SCHEDULE_TYPES.FAMILY_KIT:
                 return " · " + context.getString(R.string.family_kit);
             case CoreConstants.SCHEDULE_TYPES.ROUTINE_HOUSEHOLD_VISIT:
@@ -116,13 +116,13 @@ public class ChwDueRegisterProvider extends FamilyDueRegisterProvider {
     private void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
+        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
     }
 
     private void attachNextArrowOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW);
+        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW);
     }
 
     private void updateDueColumn(RegisterViewHolder viewHolder, String dueDate, String overDueDate) {

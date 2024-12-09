@@ -77,10 +77,10 @@ public class FamilyFloatingMenu extends LinearLayout implements View.OnClickList
         }
 
         if (isFabMenuOpen) {
-            activityMain.setBackgroundResource(R.color.transparent);
+            activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
 
             fab.startAnimation(rotateBack);
-            fab.setImageResource(R.drawable.ic_edit_white);
+            fab.setImageResource(org.smartregister.family.R.drawable.ic_edit_white);
 
             callLayout.startAnimation(fabClose);
             addNewMember.startAnimation(fabClose);
@@ -118,7 +118,7 @@ public class FamilyFloatingMenu extends LinearLayout implements View.OnClickList
         callTextViewHint.setVisibility(has_phone ? GONE : VISIBLE);
         callLayout.setOnClickListener(has_phone ? this : null);
         callTextView.setTypeface(null, (has_phone ? Typeface.NORMAL : Typeface.ITALIC));
-        callTextView.setTextColor(getResources().getColor(has_phone ? android.R.color.black : R.color.grey));
+        callTextView.setTextColor(getResources().getColor(has_phone ? android.R.color.black : org.smartregister.chw.opensrp_chw_anc.R.color.grey));
 
         ((FloatingActionButton) findViewById(R.id.callFab)).getDrawable().setAlpha(has_phone ? 255 : 122);
     }

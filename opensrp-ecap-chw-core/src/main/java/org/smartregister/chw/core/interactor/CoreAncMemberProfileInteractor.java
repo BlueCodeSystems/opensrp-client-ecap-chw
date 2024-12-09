@@ -54,7 +54,7 @@ public class CoreAncMemberProfileInteractor extends BaseAncMemberProfileInteract
                 appExecutors.mainThread().execute(() -> {
                     callback.refreshLastVisit(lastVisitDate);
                     callback.refreshFamilyStatus(AlertStatus.normal);
-                    callback.refreshUpComingServicesStatus(context.getString(R.string.anc_visit), AlertStatus.normal, new Date());
+                    callback.refreshUpComingServicesStatus(context.getString(org.smartregister.chw.pnc.R.string.anc_visit), AlertStatus.normal, new Date());
                 });
             }
         };

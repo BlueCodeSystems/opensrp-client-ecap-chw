@@ -97,11 +97,11 @@ public class CoreChildRegisterFragment extends BaseChwRegisterFragment implement
             return;
         }
 
-        if (view.getTag() != null && view.getTag(R.id.VIEW_ID) == CLICK_VIEW_NORMAL) {
+        if (view.getTag() != null && view.getTag(org.smartregister.family.R.id.VIEW_ID) == CLICK_VIEW_NORMAL) {
             if (view.getTag() instanceof CommonPersonObjectClient) {
                 goToChildDetailActivity((CommonPersonObjectClient) view.getTag(), false);
             }
-        } else if (view.getId() == R.id.due_only_layout) {
+        } else if (view.getId() == org.smartregister.R.id.due_only_layout) {
             toggleFilterSelection(view);
         }
     }
@@ -110,7 +110,7 @@ public class CoreChildRegisterFragment extends BaseChwRegisterFragment implement
     public void onSyncInProgress(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus)) && dueFilterActive && dueOnlyLayout != null) {
             dueFilter(dueOnlyLayout);
-            Utils.showShortToast(getActivity(), getString(R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             refreshSyncProgressSpinner();
         } else {
             super.onSyncInProgress(fetchStatus);
@@ -121,7 +121,7 @@ public class CoreChildRegisterFragment extends BaseChwRegisterFragment implement
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus)) && (dueFilterActive && dueOnlyLayout != null)) {
             dueFilter(dueOnlyLayout);
-            Utils.showShortToast(getActivity(), getString(R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             refreshSyncProgressSpinner();
         } else {
             super.onSyncComplete(fetchStatus);
@@ -138,7 +138,7 @@ public class CoreChildRegisterFragment extends BaseChwRegisterFragment implement
     @Override
     public void onResume() {
         super.onResume();
-        Toolbar toolbar = view.findViewById(R.id.register_toolbar);
+        Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
         toolbar.setContentInsetsRelative(0, 0);
         toolbar.setContentInsetStartWithNavigation(0);
@@ -209,14 +209,14 @@ public class CoreChildRegisterFragment extends BaseChwRegisterFragment implement
     }
 
     protected TextView getDueOnlyTextView(View dueOnlyLayout) {
-        return dueOnlyLayout.findViewById(R.id.due_only_text_view);
+        return dueOnlyLayout.findViewById(org.smartregister.R.id.due_only_text_view);
     }
 
     private void switchViews(View dueOnlyLayout, boolean isPress) {
         if (isPress) {
-            getDueOnlyTextView(dueOnlyLayout).setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_due_filter_on, 0);
+            getDueOnlyTextView(dueOnlyLayout).setCompoundDrawablesWithIntrinsicBounds(0, 0, org.smartregister.R.drawable.ic_due_filter_on, 0);
         } else {
-            getDueOnlyTextView(dueOnlyLayout).setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_due_filter_off, 0);
+            getDueOnlyTextView(dueOnlyLayout).setCompoundDrawablesWithIntrinsicBounds(0, 0, org.smartregister.R.drawable.ic_due_filter_off, 0);
 
         }
     }
@@ -239,7 +239,7 @@ public class CoreChildRegisterFragment extends BaseChwRegisterFragment implement
         super.setupViews(view);
         this.view = view;
 
-        dueOnlyLayout = view.findViewById(R.id.due_only_layout);
+        dueOnlyLayout = view.findViewById(org.smartregister.R.id.due_only_layout);
         dueOnlyLayout.setVisibility(View.VISIBLE);
         dueOnlyLayout.setOnClickListener(registerActionHandler);
     }

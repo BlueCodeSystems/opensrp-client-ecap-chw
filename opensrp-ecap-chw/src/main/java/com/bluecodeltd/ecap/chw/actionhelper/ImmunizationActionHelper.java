@@ -139,9 +139,9 @@ public class ImmunizationActionHelper implements BaseAncHomeVisitAction.AncHomeV
 
     @Override
     public String getPreProcessedSubTitle() {
-        String due = context.getString(R.string.due);
+        String due = context.getString(org.smartregister.chw.core.R.string.due);
         if (status != null && status.name().equals(AlertStatus.urgent.name())) {
-            due = context.getString(R.string.overdue);
+            due = context.getString(org.smartregister.chw.core.R.string.overdue);
         }
 
         return MessageFormat.format("{0} {1}", due, DateTimeFormat.forPattern("dd MMM yyyy").print(dueDate));
@@ -183,7 +183,7 @@ public class ImmunizationActionHelper implements BaseAncHomeVisitAction.AncHomeV
 
                     builder.append(MessageFormat.format("{0} {1} {2}",
                             completedBuilder.toString(),
-                            context.getString(R.string.given_on_with_spaces),
+                            context.getString(org.smartregister.chw.core.R.string.given_on_with_spaces),
                             new_date.format(native_date.parse(entry.getKey()))
                     ));
                 } catch (ParseException e) {
@@ -209,7 +209,7 @@ public class ImmunizationActionHelper implements BaseAncHomeVisitAction.AncHomeV
 
             builder.append(MessageFormat.format("{0} {1}",
                     pendingBuilder.toString().toUpperCase(),
-                    context.getString(R.string.not_given_with_spaces)
+                    context.getString(org.smartregister.chw.core.R.string.not_given_with_spaces)
             ));
         }
 

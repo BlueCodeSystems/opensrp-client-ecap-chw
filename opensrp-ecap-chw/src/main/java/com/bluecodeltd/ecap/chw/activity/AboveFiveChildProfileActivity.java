@@ -38,7 +38,7 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.action_malaria_followup_visit).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_followup_visit).setVisible(false);
         return true;
     }
 
@@ -98,7 +98,7 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_remove_member:
+            case org.smartregister.chw.core.R.id.action_remove_member:
                 IndividualProfileRemoveActivity.startIndividualProfileActivity(AboveFiveChildProfileActivity.this, presenter().getChildClient(),
                         ((AboveFiveChildProfilePresenter) presenter()).getFamilyID()
                         , ((AboveFiveChildProfilePresenter) presenter()).getFamilyHeadID(), ((AboveFiveChildProfilePresenter) presenter()).getPrimaryCareGiverID(), ChildRegisterActivity.class.getCanonicalName());

@@ -162,7 +162,7 @@
                 android:layout_marginEnd="@dimen/child_home_visit_right_margin"
                 android:layout_marginRight="@dimen/child_home_visit_right_margin"
                 android:background="@color/light_grey" />
-
+<!--
             <org.smartregister.chw.core.custom_views.ImmunizationView
                 android:id="@+id/immunization_view"
                 android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                 android:layout_marginEnd="@dimen/child_home_visit_right_margin"
                 android:layout_marginRight="@dimen/child_home_visit_right_margin">
 
-            </org.smartregister.chw.core.custom_views.HomeVisitGrowthAndNutrition>
+            </org.smartregister.chw.core.custom_views.HomeVisitGrowthAndNutrition>-->
 
 
             <LinearLayout

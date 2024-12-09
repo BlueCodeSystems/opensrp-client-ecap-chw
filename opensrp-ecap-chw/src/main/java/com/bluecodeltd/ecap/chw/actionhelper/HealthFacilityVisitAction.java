@@ -67,7 +67,7 @@ public class HealthFacilityVisitAction implements BaseAncHomeVisitAction.AncHome
                 LocalDate visitDate = dateList.get(0);
 
                 scheduleStatus = (visitDate.isBefore(LocalDate.now())) ? BaseAncHomeVisitAction.ScheduleStatus.OVERDUE : BaseAncHomeVisitAction.ScheduleStatus.DUE;
-                String due = (visitDate.isBefore(LocalDate.now())) ? context.getString(R.string.overdue) : context.getString(R.string.due);
+                String due = (visitDate.isBefore(LocalDate.now())) ? context.getString(org.smartregister.chw.core.R.string.overdue) : context.getString(org.smartregister.chw.core.R.string.due);
 
                 subTitle = MessageFormat.format("{0}{1}", due, DateTimeFormat.forPattern("dd MMM yyyy").print(visitDate));
 
@@ -157,13 +157,13 @@ public class HealthFacilityVisitAction implements BaseAncHomeVisitAction.AncHome
 
         StringBuilder stringBuilder = new StringBuilder();
         if (anc_hf_visit.equalsIgnoreCase("No")) {
-            stringBuilder.append(context.getString(R.string.visit_not_done).replace("\n", ""));
+            stringBuilder.append(context.getString(org.smartregister.chw.core.R.string.visit_not_done).replace("\n", ""));
         } else {
             try {
                 Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(anc_hf_visit_date);
                 stringBuilder.append(MessageFormat.format("{0}: {1}\n", context.getString(R.string.date), new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)));
                 stringBuilder.append(MessageFormat.format("{0}: {1} {2}\n", context.getString(R.string.weight), weight, context.getString(R.string.kg)));
-                stringBuilder.append(MessageFormat.format("{0}: {1}/{2} {3}\n", context.getString(R.string.str_bp).replace(":", ""), sys_bp, dia_bp, context.getString(R.string.mmHg)));
+                stringBuilder.append(MessageFormat.format("{0}: {1}/{2} {3}\n", context.getString(org.smartregister.R.string.str_bp).replace(":", ""), sys_bp, dia_bp, context.getString(R.string.mmHg)));
                 stringBuilder.append(MessageFormat.format("{0}: {1} {2}\n", context.getString(R.string.hb_level), hb_level, context.getString(R.string.gdl)));
                 stringBuilder.append(MessageFormat.format("{0}: {1}\n", context.getString(R.string.ifa_received), ifa_received));
                 stringBuilder.append(MessageFormat.format("{0}: {1}\n", context.getString(R.string.tests_done), tests_done));

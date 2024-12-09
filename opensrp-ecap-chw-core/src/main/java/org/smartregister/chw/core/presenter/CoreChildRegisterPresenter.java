@@ -120,7 +120,7 @@ public class CoreChildRegisterPresenter implements CoreChildRegisterContract.Pre
         try {
 
             if (getView() != null)
-                getView().showProgressDialog(R.string.saving_dialog_title);
+                getView().showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
             JSONObject form = new JSONObject(jsonString);
             if (form.getString(JsonFormUtils.ENCOUNTER_TYPE).equals(Utils.metadata().familyRegister.registerEventType)) {
 
@@ -185,7 +185,7 @@ public class CoreChildRegisterPresenter implements CoreChildRegisterContract.Pre
 
     @Override
     public void onNoUniqueId() {
-        getView().displayShortToast(R.string.no_unique_id);
+        getView().displayShortToast(org.smartregister.family.R.string.no_unique_id);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class CoreChildRegisterPresenter implements CoreChildRegisterContract.Pre
         } catch (Exception e) {
             Timber.e(e);
             if (getView() != null)
-                getView().displayToast(R.string.error_unable_to_start_form);
+                getView().displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
         }
     }
 

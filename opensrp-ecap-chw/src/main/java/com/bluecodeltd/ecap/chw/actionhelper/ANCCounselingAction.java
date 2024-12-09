@@ -123,7 +123,7 @@ public class ANCCounselingAction implements BaseAncHomeVisitAction.AncHomeVisitA
                 stringBuilder.append(s).append(", ");
             }
             stringBuilder.deleteCharAt(stringBuilder.length() - 2);
-            stringBuilder.append(context.getString(R.string.done).toLowerCase());
+            stringBuilder.append(context.getString(org.smartregister.chw.core.R.string.done).toLowerCase());
         }
 
         if (nos.size() > 0) {

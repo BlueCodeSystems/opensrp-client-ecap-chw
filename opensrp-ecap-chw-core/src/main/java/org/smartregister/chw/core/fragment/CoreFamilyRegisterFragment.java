@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import org.smartregister.chw.core.R;
+import org.smartregister.R;
 import org.smartregister.chw.core.contract.CoreFamilyRegisterFragmentContract;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.model.FamilyRegisterFramentModel;
@@ -84,7 +84,7 @@ public abstract class CoreFamilyRegisterFragment extends BaseFamilyRegisterFragm
     public void onSyncInProgress(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus)) && dueFilterActive && dueOnlyLayout != null) {
             dueFilter(dueOnlyLayout);
-            Utils.showShortToast(getActivity(), getString(R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             refreshSyncProgressSpinner();
         } else {
             super.onSyncInProgress(fetchStatus);
@@ -95,7 +95,7 @@ public abstract class CoreFamilyRegisterFragment extends BaseFamilyRegisterFragm
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus)) && (dueFilterActive && dueOnlyLayout != null)) {
             dueFilter(dueOnlyLayout);
-            Utils.showShortToast(getActivity(), getString(R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             refreshSyncProgressSpinner();
         } else {
             super.onSyncComplete(fetchStatus);
@@ -161,7 +161,7 @@ public abstract class CoreFamilyRegisterFragment extends BaseFamilyRegisterFragm
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View searchBarLayout = view.findViewById(R.id.search_bar_layout);
         searchBarLayout.setLayoutParams(params);
-        searchBarLayout.setBackgroundResource(R.color.primary);
+        searchBarLayout.setBackgroundResource(org.smartregister.chw.core.R.color.chw_primary);
         searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) org.smartregister.chw.core.utils.Utils.convertDpToPixel(10, getActivity()));
 
         CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);

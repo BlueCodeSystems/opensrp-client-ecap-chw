@@ -13,7 +13,7 @@ public class ChwP2pModeSelectActivity extends P2pModeSelectActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.peer_to_peer_activity_title);
+        setTitle(org.smartregister.R.string.peer_to_peer_activity_title);
     }
 
     @Override

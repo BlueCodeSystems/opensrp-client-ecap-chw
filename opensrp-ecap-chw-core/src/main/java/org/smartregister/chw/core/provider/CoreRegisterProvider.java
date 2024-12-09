@@ -123,7 +123,7 @@ public abstract class CoreRegisterProvider extends FamilyRegisterProvider {
 
     private void updatePncAncIcons(RegisterViewHolder viewHolder, int womanCount, String register) {
         for (int i = 1; i <= womanCount; i++) {
-            int res = CoreConstants.TABLE_NAME.ANC_MEMBER.equals(register) ? R.mipmap.ic_anc_pink : R.mipmap.row_pnc;
+            int res = CoreConstants.TABLE_NAME.ANC_MEMBER.equals(register) ? org.smartregister.family.R.mipmap.ic_anc_pink : org.smartregister.family.R.mipmap.row_pnc;
             addImageView(viewHolder, res);
         }
     }
@@ -157,7 +157,7 @@ public abstract class CoreRegisterProvider extends FamilyRegisterProvider {
                 }
 
                 String gender = map.get(DBConstants.KEY.GENDER);
-                int res = ("Male".equalsIgnoreCase(gender)) ? R.mipmap.ic_boy_child : R.mipmap.ic_girl_child;
+                int res = ("Male".equalsIgnoreCase(gender)) ? org.smartregister.family.R.mipmap.ic_boy_child : org.smartregister.family.R.mipmap.ic_girl_child;
                 addImageView(viewHolder, res);
             }
         }
@@ -167,9 +167,9 @@ public abstract class CoreRegisterProvider extends FamilyRegisterProvider {
     public abstract void updateDueColumn(Context context, RegisterViewHolder viewHolder, ChildVisit childVisit);
 
     protected void setVisitNotDone(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.progress_orange));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.family.R.color.progress_orange));
         dueButton.setText(context.getString(R.string.visit_not_done));
-        dueButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(null);
     }
 
@@ -178,14 +178,14 @@ public abstract class CoreRegisterProvider extends FamilyRegisterProvider {
     }
 
     protected void setVisitAboveTwentyFourView(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.alert_complete_green));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_complete_green));
         dueButton.setText(context.getString(R.string.visit_done));
-        dueButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+        dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(null);
     }
 
     protected void setVisitButtonOverdueStatus(Context context, Button dueButton, String lastVisitDays) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
         if (TextUtils.isEmpty(lastVisitDays)) {
             dueButton.setText(context.getString(R.string.record_visit));
         } else {
@@ -197,7 +197,7 @@ public abstract class CoreRegisterProvider extends FamilyRegisterProvider {
     }
 
     protected void setVisitButtonDueStatus(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(R.color.alert_in_progress_blue));
+        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_in_progress_blue));
         dueButton.setText(context.getString(R.string.record_home_visit));
         dueButton.setBackgroundResource(R.drawable.blue_btn_selector);
         dueButton.setOnClickListener(onClickListener);

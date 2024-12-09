@@ -42,7 +42,7 @@ public abstract class BaseReferralRegisterFragment extends BaseChwRegisterFragme
     @Override
     public void setupViews(View view) {
         super.setupViews(view);
-        View topRightLayout = view.findViewById(R.id.top_right_layout);
+        View topRightLayout = view.findViewById( org.smartregister.R.id.top_right_layout);
         topRightLayout.setVisibility(View.GONE);
     }
 

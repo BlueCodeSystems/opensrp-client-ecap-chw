@@ -99,11 +99,11 @@ public class ObservationAction implements BaseAncHomeVisitAction.AncHomeVisitAct
 
         String translated_action_taken = "";
         if ("Managed".equalsIgnoreCase(action_taken)) {
-            translated_action_taken = context.getString(R.string.managed);
+            translated_action_taken = context.getString(org.smartregister.chw.core.R.string.managed);
         } else if ("Referred".equalsIgnoreCase(action_taken)) {
-            translated_action_taken = context.getString(R.string.referred);
+            translated_action_taken = context.getString(org.smartregister.chw.core.R.string.referred);
         } else if ("No action taken".equalsIgnoreCase(action_taken)) {
-            translated_action_taken = context.getString(R.string.no_action_taken);
+            translated_action_taken = context.getString(org.smartregister.chw.core.R.string.no_action_taken);
         }
 
         return MessageFormat.format("{0}: {1}\n {2}: {3}",

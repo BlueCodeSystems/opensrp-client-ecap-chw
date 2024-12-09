@@ -157,7 +157,7 @@ public class StartDraftMonthlyFormTask extends AsyncTask<Void, Void, Intent> {
         paramForm.setWizard(true);
         paramForm.setHideNextButton(true);
         paramForm.setHidePreviousButton(true);
-        paramForm.setNavigationBackground(R.color.due_profile_blue);
+        paramForm.setNavigationBackground(org.smartregister.family.R.color.due_profile_blue);
         intent.putExtra("form", paramForm);
         intent.putExtra(JsonFormConstants.SKIP_VALIDATION, false);
         return intent;

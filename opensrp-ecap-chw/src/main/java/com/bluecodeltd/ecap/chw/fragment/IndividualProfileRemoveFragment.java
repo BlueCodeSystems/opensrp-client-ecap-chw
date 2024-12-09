@@ -136,7 +136,7 @@ public class IndividualProfileRemoveFragment extends CoreIndividualProfileRemove
     public void confirmRemove(final JSONObject form) {
         if (StringUtils.isNotBlank(memberName) && getFragmentManager() != null) {
             FamilyRemoveMemberConfirmDialog dialog = FamilyRemoveMemberConfirmDialog.newInstance(
-                    String.format(getString(R.string.confirm_remove_text), memberName)
+                    String.format(getString(org.smartregister.chw.core.R.string.confirm_remove_text), memberName)
             );
             dialog.show(getFragmentManager(), FamilyRemoveMemberFragment.DIALOG_TAG);
             dialog.setOnRemove(() -> {

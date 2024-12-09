@@ -28,9 +28,9 @@ public class CopyToClipboardDialog extends Dialog implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.widget_copy_to_clipboard);
-        findViewById(R.id.copyToClipboardMessage).setOnClickListener(this);
-        ((TextView) findViewById(R.id.copyToClipboardHeader)).setText(content);
+        setContentView(org.smartregister.chw.opensrp_chw_anc.R.layout.widget_copy_to_clipboard);
+        findViewById(org.smartregister.chw.opensrp_chw_anc.R.id.copyToClipboardMessage).setOnClickListener(this);
+        ((TextView) findViewById(org.smartregister.chw.opensrp_chw_anc.R.id.copyToClipboardHeader)).setText(content);
     }
 
     @Override
