@@ -58,7 +58,7 @@ allprojects {
             url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
             authentication { basic(BasicAuthentication) }
             credentials {
-                username = 'mapbox'
+                username = 'mapbox' // Do not change
                 password = localProperties["mapbox.sdk.token"] ?: ""
             }
         }
