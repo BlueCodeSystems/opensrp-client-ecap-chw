@@ -21,6 +21,18 @@ public class VCAServiceReportDao extends AbstractDao {
         return values;
 
     }
+    public static List<VCAServiceModel> getVCAServicesCSV() {
+
+        String sql = "SELECT *,is_hiv_positive, vl_last_result, child_mmd, level_mmd,date, unique_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
+                "FROM ec_vca_service_report WHERE  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date";
+
+        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static List<VCAServiceModel> getServicesByVCAID(String vcaid) {
         String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
                 "FROM ec_vca_service_report\n" +

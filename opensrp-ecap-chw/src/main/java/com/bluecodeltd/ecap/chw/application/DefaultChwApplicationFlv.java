@@ -298,6 +298,8 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
                 "mothers_full_name",
+                "first_name",
+                "last_name",
                 "pmtct_id",
                 "household_id",
                 "delete_status"
@@ -343,6 +345,8 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
                 "mothers_full_name",
+                "first_name",
+                "last_name",
                 "pmtct_id",
                 "household_id",
                 "delete_status"

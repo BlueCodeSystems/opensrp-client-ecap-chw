@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.util.Log;
+
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -7,19 +9,29 @@ import org.smartregister.dao.AbstractDao;
 import java.util.List;
 
 public class CaregiverAssessmentDao extends AbstractDao {
-    public static CaregiverAssessmentModel getCaregiverAssessment (String householdID) {
-
-        String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "' ";
-
-        List<CaregiverAssessmentModel> values = AbstractDao.readData(sql, getCaregiverAssessmentMap());
-
-        if (values.size() == 0) {
+    public static CaregiverAssessmentModel getCaregiverAssessment(String householdID) {
+        if (householdID == null || householdID.isEmpty()) {
+            Log.w("getCaregiverAssessment", "Household ID is null or empty.");
             return null;
         }
 
+        try {
+            String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "'";
 
-        return values.get(0);
+            List<CaregiverAssessmentModel> values = AbstractDao.readData(sql, getCaregiverAssessmentMap());
+
+            if (values == null || values.isEmpty()) {
+                Log.i("getCaregiverAssessment", "No caregiver assessment found for household ID: " + householdID);
+                return null;
+            }
+            return values.get(0);
+        } catch (Exception e) {
+            Log.e("getCaregiverAssessment", "Error fetching caregiver assessment: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
+
 
     public static DataMap<CaregiverAssessmentModel> getCaregiverAssessmentMap() {
         return c -> {

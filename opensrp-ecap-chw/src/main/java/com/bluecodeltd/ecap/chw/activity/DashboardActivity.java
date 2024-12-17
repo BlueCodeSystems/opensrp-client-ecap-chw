@@ -26,11 +26,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.contract.GenerateCSVContract;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.presenter.GenerateCSVPresenter;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -61,7 +63,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
+    private GenerateCSVContract.Presenter presenter;
+
     private AppBarLayout myAppbar;
     private Toolbar toolbar;
     private android.widget.TextView allHouseHoldsCount;
@@ -100,6 +104,7 @@ public class DashboardActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         chart = findViewById(R.id.fragment_verticalbarchart_chart);
         allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
+        presenter = new GenerateCSVPresenter(this);
         try {
             String householdCount = HouseholdDao.countNumberoFHouseholds();
             if (householdCount != null) {
@@ -583,12 +588,25 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.refresh:
                 loadData();
                 break;
+            case R.id.generate_pdf:
+                presenter.generateCSV();
+
+
+
 
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showCSVGeneratedMessage(String filePath) {
 
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+
+    }
 
 
     //format values on top of the bars rto return whole numbers
@@ -600,4 +618,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }

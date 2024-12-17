@@ -34,6 +34,19 @@ public class VcaVisitationDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<VcaVisitationModel> getVcaVisitationCSV () {
+
+        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years" ;
+
+        List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values;
+    }
     public static VcaVisitationModel getVcaVisitationNotification (String vcaID) {
         String sql = "SELECT *, " +
                 "strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date, " +
