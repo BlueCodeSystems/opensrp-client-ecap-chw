@@ -33,6 +33,18 @@ public class CaregiverHivAssessmentDao extends AbstractDao {
 
     }
 
+    public static List<CaregiverHivAssessmentModel > getAllHivAssessment() {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2)) as sortable_date FROM ec_caregiver_hiv_assessment  ORDER BY sortable_date DESC";
+
+        List<CaregiverHivAssessmentModel > values = AbstractDao.readData(sql, getCaregiverHivAssessmentModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+
     public static DataMap<CaregiverHivAssessmentModel> getCaregiverHivAssessmentModelMap() {
         return c -> {
 

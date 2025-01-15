@@ -2,8 +2,12 @@ package com.bluecodeltd.ecap.chw.model;
 
 import android.os.Environment;
 
+import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
+import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
@@ -548,6 +552,340 @@ public class GenerateCSVsModel {
 
 
             }
+
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(file.getAbsolutePath());
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+    public void createHouseholdsVisitationsCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        String fileName = "quarterly_assessment_for_Households.csv";
+        File file = new File(baseDir, fileName);
+
+        FileWriter fileWriter = null;
+        try {
+
+            fileWriter = new FileWriter(file);
+            fileWriter.append("visit_date, household_id, caregiver_hiv_status, caregiver_art, clinical_care, date_art, art_appointment, counselling, art_medication, mmd, mmd_months, six_months, relation, health_facility, vl_last_result, date_hiv, visit_hiv_test, referred_for_testing, hiv_risk, hiv_assessment, prevention_support, referred_facility, number_children, hiv_awareness_status, caregiver_not_aware, hiv_test_referral, school_fees, unpaid_school_fees, linked_economic, referred_mcdss, source_income, list_source, bills_associated, barriers_challenges, economic_strengthening, social_cash, income_source_medical, list_source_medical, case_worker, caseworker_date_signed, case_manager, manager_date_signed, school_administration_name, telephone, school_administration_date_signed, visit_location, delete_status, signature\n");
+            List<CaregiverVisitationModel> householdVisitationModel = CaregiverVisitationDao.getCSVVisits();
+
+            if (householdVisitationModel != null && !householdVisitationModel.isEmpty()) {
+
+                for (CaregiverVisitationModel visitationModel : householdVisitationModel) {
+                    fileWriter.append(escapeCsvValue(visitationModel.getVisit_date())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getHousehold_id())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCaregiver_hiv_status())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCaregiver_art())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getClinical_care())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getDate_art())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getArt_appointment())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCounselling())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getArt_medication())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getMmd())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getMmd_months())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSix_months())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getRelation())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getHealth_facility())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getVl_last_result())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getDate_hiv())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getVisit_hiv_test())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getReferred_for_testing())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getHiv_risk())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getHiv_assessment())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getPrevention_support())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getReferred_facility())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getNumber_children())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getHiv_awareness_status())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCaregiver_not_aware())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getHiv_test_referral())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSchool_fees())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getUnpaid_school_fees())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getLinked_economic())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getReferred_mcdss())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSource_income())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getList_source())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getBills_associated())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getBarriers_challenges())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getEconomic_strengthening())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSocial_cash())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getIncome_source_medical())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getList_source_medical())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCase_worker())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCaseworker_date_signed())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getCase_manager())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getManager_date_signed())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSchool_administration_name())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getTelephone())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSchool_administration_date_signed())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getVisit_location())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getDelete_status())).append(",");
+                    fileWriter.append(escapeCsvValue(visitationModel.getSignature())).append("\n");
+                }
+
+
+
+
+            }
+
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(file.getAbsolutePath());
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+    public void createCaregiverHivAssessmentCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        String fileName = "Caregiver_Hiv_Assessment.csv";
+        File file = new File(baseDir, fileName);
+
+        FileWriter fileWriter = null;
+        try {
+
+            fileWriter = new FileWriter(file);
+            fileWriter.append("household_id, phone, base_entity_id, date_edited, caseworker_name, informed_consent, hiv_test, hiv_status, on_art, start_date,  art_number, symptoms, private_parts, exposed_to_HIV, unprotected_sex, pregnant_breastfeeding, hiv_tb_sti, hiv_test_result, date_of_hiv_test, delete_status\n");
+            List<CaregiverHivAssessmentModel> caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getAllHivAssessment();
+
+            if (caregiverHivAssessmentModel != null && !caregiverHivAssessmentModel.isEmpty()) {
+
+                for (CaregiverHivAssessmentModel caregiverHivAssessmentModel2 : caregiverHivAssessmentModel) {
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getHousehold_id())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getPhone())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getBase_entity_id())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getDate_edited())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getCaseworker_name())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getInformed_consent())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getHiv_test())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getHiv_status())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getOn_art())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getStart_date())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getArt_number())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getSymptoms())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getPrivate_parts())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getExposed_to_HIV())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getUnprotected_sex())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getPregnant_breastfeeding())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getHiv_tb_sti())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getHiv_test_result())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getDate_of_hiv_test())).append(",");
+                    fileWriter.append(escapeCsvValue(caregiverHivAssessmentModel2.getDelete_status())).append("\n");
+                }
+            }
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(file.getAbsolutePath());
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+
+    public void createVcaCasePlansCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        String fileName = "Case_plans_for_VCA.csv";
+        File file = new File(baseDir, fileName);
+
+        FileWriter fileWriter = null;
+        try {
+
+            fileWriter = new FileWriter(file);
+            fileWriter.append("unique_id, case_plan_id, case_plan_date, case_plan_status, type, vulnerability, goal, services, service_referred, institution, due_date, status, comment, delete_status\n");
+            List<CasePlanModel> casePlanModels = IndexPersonDao.getAllDomainsById();
+
+            if (casePlanModels != null && !casePlanModels.isEmpty()) {
+
+                for (CasePlanModel casePlanModel : casePlanModels) {
+                    fileWriter.append(escapeCsvValue(casePlanModel.getBase_entity_id())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getUnique_id())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getCase_plan_id())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getCase_plan_date())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getCase_plan_status())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getType())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getVulnerability())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getGoal())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getServices())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getService_referred())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getInstitution())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getDue_date())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getStatus())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getComment())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getDelete_status())).append(",");
+                }
+            }
+
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(file.getAbsolutePath());
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+    public void createHouseholdCasePlansCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        String fileName = "Case_plans_for_household.csv";
+        File file = new File(baseDir, fileName);
+
+        FileWriter fileWriter = null;
+        try {
+
+            fileWriter = new FileWriter(file);
+            fileWriter.append("household_id, case_plan_id, case_plan_date, case_plan_status, type, vulnerability, goal, services, service_referred, institution, due_date, status, comment, delete_status\n");
+            List<CasePlanModel> casePlanModels = HouseholdDao.getAllDomainsById();
+
+            if (casePlanModels != null && !casePlanModels.isEmpty()) {
+
+                for (CasePlanModel casePlanModel : casePlanModels) {
+                    fileWriter.append(escapeCsvValue(casePlanModel.getCase_plan_id())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getCase_plan_date())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getCase_plan_status())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getType())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getVulnerability())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getGoal())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getServices())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getService_referred())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getInstitution())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getDue_date())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getStatus())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getComment())).append(",");
+                    fileWriter.append(escapeCsvValue(casePlanModel.getDelete_status())).append(",");
+                }
+            }
+
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(file.getAbsolutePath());
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+
+    public void createReferralsCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        String fileName = "referrals.csv";
+        File file = new File(baseDir, fileName);
+
+        FileWriter fileWriter = null;
+        try {
+
+            fileWriter = new FileWriter(file);
+            fileWriter.append("unique_id, household_id, base_entity_id, relational_id, referral_location, referred_date, date_edited, caseworker_name, phone, receiving_organization, date_referred, covid_19, cd4, hiv_adherence, hiv_counseling_testing, post_gbv, substance_abuse, tb_screening, supplementary, prep, f_planning, insecticide, hiv_aids_treatment, f_w_health, vmmc, immunization, condom, routine_care, emergency_care, age_counselling, h_treatment_care, pmtct, hygiene_counselling, transmitted_infections, plha, viral_load, other_health_services, care_facility, post_violence_trauma, legal_assistance, other_safety_services, vca_uniforms_books, re_enrollment, bursaries, other_schooled_services, cash_transfer, cash_support, food_security, other_stability_services, dateCovidProvided, dateCD4Provided, dateHivAdherenceProvided, dateHivCounselingProvided, datePostGbvProvided, dateSubstanceAbuseProvided, dateTBScreeningProvided, dateSupplementaryProvided, datePlanningProvided, dateInsecticideProvided, dateTreatmentProvided, dateHealthProvided, dateVmmcProvided, dateImmunizationProvided, dateCondomProvided, dateCareProvided, dateEmergencyProvided, dateAgeCounsellingProvided, dateTreatmentCareProvided, datePmtctProvided, dateHygienceProvided, datePlhaProvided, dateViralLoadProvided, otherHealth, dateInfectionProvided, datePrepProvided, dateFacilityProvided, dateTraumaProvided, dateAssistanceProvided, dateOtherSafetyProvided, dateUniformsProvided, dateEnrollmentProvided, dateBursariesProvided, dateSchooledProvided, dateCashProvided, dateSupportProvided, dateSecurityProvided, dateStabilityProvided, specify_education, specify_safety, specify_school, specify_stability, delete_status\n");
+            List<ReferralModel> referralModel = ReferralDao.getAllReferrals();
+
+            if (referralModel != null && !referralModel.isEmpty()) {
+
+                for (ReferralModel referralModel2 : referralModel) {
+                    fileWriter.append(escapeCsvValue(referralModel2.getUnique_id())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getHousehold_id())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getBase_entity_id())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getRelational_id())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getReferral_location())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getReferred_date())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDate_edited())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCaseworker_name())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getPhone())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getReceiving_organization())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDate_referred())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCovid_19())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCd4())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getHiv_adherence())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getHiv_counseling_testing())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getPost_gbv())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getSubstance_abuse())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getTb_screening())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getSupplementary())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getPrep())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getF_planning())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getInsecticide())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getHiv_aids_treatment())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getF_w_health())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getVmmc())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getImmunization())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCondom())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getRoutine_care())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getEmergency_care())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getAge_counselling())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getH_treatment_care())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getPmtct())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getHygiene_counselling())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getTransmitted_infections())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getPlha())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getViral_load())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getOther_health_services())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCare_facility())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getPost_violence_trauma())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getLegal_assistance())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getOther_safety_services())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getVca_uniforms_books())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getRe_enrollment())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getBursaries())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getOther_schooled_services())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCash_transfer())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getCash_support())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getFood_security())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getOther_stability_services())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateCovidProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateCD4Provided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateHivAdherenceProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateHivCounselingProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDatePostGbvProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateSubstanceAbuseProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateTBScreeningProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateSupplementaryProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDatePlanningProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateInsecticideProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateTreatmentProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateHealthProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateVmmcProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateImmunizationProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateCondomProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateCareProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateEmergencyProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateAgeCounsellingProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateTreatmentCareProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDatePmtctProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateHygienceProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDatePlhaProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateViralLoadProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getOtherHealth())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateInfectionProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDatePrepProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateFacilityProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateTraumaProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateAssistanceProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateOtherSafetyProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateUniformsProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateEnrollmentProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateBursariesProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateSchooledProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateCashProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateSupportProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateSecurityProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDateStabilityProvided())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getSpecify_education())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getSpecify_safety())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getSpecify_school())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getSpecify_stability())).append(",");
+                    fileWriter.append(escapeCsvValue(referralModel2.getDelete_status())).append("\n");
+                }
+            }
+
 
 
             fileWriter.flush();

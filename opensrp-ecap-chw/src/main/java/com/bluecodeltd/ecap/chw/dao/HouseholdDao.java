@@ -647,6 +647,17 @@ public class HouseholdDao extends AbstractDao {
         return values;
 
     }
+    public static List<CasePlanModel> getAllDomainsById() {
+
+        String sql = "SELECT * FROM ec_caregiver_case_plan_domain WHERE  case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC ";
+
+        List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static GraduationBenchmarkModel getGraduationStatus(String householdID) {
 

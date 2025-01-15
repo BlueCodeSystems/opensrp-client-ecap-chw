@@ -8,6 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReferralDao extends AbstractDao {
+    public static List<ReferralModel> getAllReferrals() {
+
+        String sql = "SELECT * FROM ec_referral";
+
+        List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
+
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
+
     public static ReferralModel getReferral(String vcaID) {
 
         String sql = "SELECT * FROM ec_referral WHERE unique_id = '" + vcaID + "' ";
