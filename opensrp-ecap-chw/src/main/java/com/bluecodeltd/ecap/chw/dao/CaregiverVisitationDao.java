@@ -23,6 +23,18 @@ public class CaregiverVisitationDao extends AbstractDao {
         return values;
 
     }
+    public static List<CaregiverVisitationModel> getCSVVisits() {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date" +
+                " FROM ec_household_visitation_for_caregiver WHERE  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
+
+        List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
 
     public static int countVisits(String householdID){
 

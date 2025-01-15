@@ -444,6 +444,17 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
 
     }
+    public static List<CasePlanModel> getAllDomainsById() {
+
+        String sql = "SELECT * FROM ec_vca_case_plan_domain AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
+
+        List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static CaseStatusModel getCaseStatus(String childID) {
 //        String sql = "SELECT ec_client_index.unique_id, ec_client_index.case_status " +
 //                "FROM ec_client_index " +

@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,9 +12,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -590,10 +594,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 break;
             case R.id.generate_pdf:
                 presenter.generateCSV();
-
-
-
-
+                showCustomDialog(this,"CSV files have been generated. You can find them in the device's file folder.");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -618,6 +619,24 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
     }
+
+
+    public void showCustomDialog(Context context, String message) {
+
+        Dialog dialog = new Dialog(context);
+
+        dialog.setContentView(R.layout.custom_dialog);
+
+        dialog.setCancelable(false);
+        TextView messageTextView = dialog.findViewById(R.id.dialog_message);
+        messageTextView.setText(message);
+
+        Button okButton = dialog.findViewById(R.id.dialog_ok_button);
+        okButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
 
 
 
