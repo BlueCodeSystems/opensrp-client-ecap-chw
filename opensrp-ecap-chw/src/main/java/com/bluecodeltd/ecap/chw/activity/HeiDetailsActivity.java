@@ -181,6 +181,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
         motherProfile = findViewById(R.id.motherProfile);
 
+        builder = new AlertDialog.Builder(HeiDetailsActivity.this);
+
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
@@ -998,6 +1000,60 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
+                break;
+
+            case R.id.delete_record:
+
+                    builder.setMessage("You are about to delete this record");
+                    builder.setNegativeButton("NO", (dialog, id) -> {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+
+                    }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                        FormUtils formUtils = null;
+                        try {
+                            formUtils = new FormUtils(this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        pmtctChild.setDelete_status("1");
+                        JSONObject openForm = formUtils.getFormJson("pmct_child_hei");
+                        try {
+                            CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(pmtctChild, Map.class));
+                            openForm.put("entity_id", pmtctChild.getBase_entity_id());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+
+                            ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
+                            if (childIndexEventClient == null) {
+                                return;
+                            }
+                            saveRegistration(childIndexEventClient, true);
+
+
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+
+
+                        Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+
+                        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+                        startActivity(intent);
+                        this.finish();
+                    }));
+
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Alert");
+                    alert.show();
 
                 break;
 

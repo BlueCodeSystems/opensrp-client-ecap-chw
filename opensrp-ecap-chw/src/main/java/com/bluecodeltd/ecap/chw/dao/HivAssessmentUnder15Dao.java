@@ -21,6 +21,18 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
 
         return values.get(0);
     }
+    public static List<HivRiskAssessmentUnder15Model> getAllHivAssessmentUnder15() {
+
+        String sql = "SELECT * FROM ec_hiv_assessment_below_15";
+
+        List<HivRiskAssessmentUnder15Model> values = AbstractDao.readData(sql, getHivRiskAssessmentUnder15ModelMap());
+
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static List<HivRiskAssessmentUnder15Model> getHivAssessment(String childID) {
 
         String sql = "SELECT *,\n" +

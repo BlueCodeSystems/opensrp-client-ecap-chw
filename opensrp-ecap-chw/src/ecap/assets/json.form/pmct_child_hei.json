@@ -379,6 +379,13 @@
             "ex": "equalTo(., \"yes\")"
           }
         }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden"
       }
     ]
   }

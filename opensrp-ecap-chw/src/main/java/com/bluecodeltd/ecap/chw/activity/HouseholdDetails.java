@@ -225,6 +225,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
         setupViewPager();
+        setupFabVisibility();
         updateTasksTabTitle();
         updateChildTabTitle();
         updateCaseplanTitle();
@@ -349,6 +350,28 @@ public class HouseholdDetails extends AppCompatActivity {
             updateHivRiskTabTitle();
         }
 
+    }
+    private void setupFabVisibility() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 || position == 2 || position == 3) {
+                    fab.setVisibility(View.GONE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void updateTasksTabTitle() {
