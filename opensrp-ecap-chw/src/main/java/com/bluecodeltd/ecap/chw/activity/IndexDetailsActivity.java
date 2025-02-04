@@ -326,6 +326,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager  = findViewById(R.id.viewpager);
 
         setupViewPager();
+        setupFabVisibility();
         updateOverviewTabTitle();
         updateVisitsTabTitle();
         updatePlanTabTitle();
@@ -465,6 +466,28 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             mTabLayout.getTabAt(3).setText("HIV ASSESSMENT");
             updateHivAssessmentTabTitle();
         }
+    }
+    private void setupFabVisibility() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 || position == 2 || position == 3) {
+                    fab.setVisibility(View.GONE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
     private void updateOverviewTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);

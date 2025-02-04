@@ -434,6 +434,25 @@
           "err": "This field is required"
         }
       },
+
+      {
+        "key": "toaster_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HTS",
+        "toaster_type": "info",
+        "toaster_info_text": "Refer for HTS",
+        "relevance": {
+          "step1:agyw_hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+
+
       {
         "key": "agyw_date_tested",
         "openmrs_entity_parent": "",
@@ -1759,6 +1778,13 @@
             }
           }
         }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden"
       }
     ]
   }

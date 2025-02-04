@@ -104,7 +104,7 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "";
+        return "delete_status IS NULL OR delete_status != '1'";
     }
     @Override
     protected String getDefaultSortQuery() {

@@ -4,6 +4,7 @@ import android.os.Environment;
 
 import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
+import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
@@ -762,6 +763,58 @@ public class GenerateCSVsModel {
                     fileWriter.append(escapeCsvValue(casePlanModel.getStatus())).append(",");
                     fileWriter.append(escapeCsvValue(casePlanModel.getComment())).append(",");
                     fileWriter.append(escapeCsvValue(casePlanModel.getDelete_status())).append(",");
+                }
+            }
+
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(file.getAbsolutePath());
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+    public void createVcaHivAssessmentCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        String fileName = "Hiv_assessment_for_vca.csv";
+        File file = new File(baseDir, fileName);
+
+        FileWriter fileWriter = null;
+        try {
+
+            fileWriter = new FileWriter(file);
+            fileWriter.append("unique_id, caseworker_name, phone, informed_consent, assessment_date, hiv_test, on_art, start_date, health_facility, art_number, biological_mother, deceased_parents, tb_symptoms, child_been_sick, frequent_rashes, child_had_pus, hiv_risk, hiv_tb, hiv_test_result, date_of_hiv_test, hiv_exposure, delete_status, facility\n");
+
+            List<HivRiskAssessmentUnder15Model> hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getAllHivAssessmentUnder15();
+
+            if (hivRiskAssessmentUnder15Model != null && !hivRiskAssessmentUnder15Model.isEmpty()) {
+
+                for (HivRiskAssessmentUnder15Model hivRiskAssessmentUnder15Models : hivRiskAssessmentUnder15Model) {
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getUnique_id())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getCaseworker_name())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getPhone())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getInformed_consent())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getAssessment_date())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getHiv_test())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getOn_art())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getStart_date())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getHealth_facility())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getArt_number())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getBiological_mother())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getDeceased_parents())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getTb_symptoms())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getChild_been_sick())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getFrequent_rashes())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getChild_had_pus())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getHiv_risk())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getHiv_tb())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getHiv_test_result())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getDate_of_hiv_test())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getHiv_exposure())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getDelete_status())).append(",");
+                    fileWriter.append(escapeCsvValue(hivRiskAssessmentUnder15Models.getFacility())).append("\n");
                 }
             }
 

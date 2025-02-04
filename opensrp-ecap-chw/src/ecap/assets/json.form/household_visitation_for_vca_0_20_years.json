@@ -811,13 +811,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "eid_test",
-        "type": "edit_text",
+        "type": "date_picker",
         "hint": "Check child’s under-five clinic card When was the last EID test done?",
-        "edit_type": "number",
-        "read_only": "false",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Indicate the number of months "
+          "value": true,
+          "err": "Please enter date"
         },
         "relevance": {
           "rules-engine": {
