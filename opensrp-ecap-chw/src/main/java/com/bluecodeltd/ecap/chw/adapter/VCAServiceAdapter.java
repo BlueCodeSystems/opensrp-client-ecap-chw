@@ -172,7 +172,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                 }
 
                 try {
-                    openFormUsingFormUtils(context, "service_report_vca", service);
+                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -195,7 +195,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                     e.printStackTrace();
                 }
                 service.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_vca");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_vca_edit");
                 try {
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
                     vcaScreeningForm.put("entity_id", service.getBase_entity_id());
@@ -291,7 +291,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
             switch (encounterType) {
 
-                case "VCA Service Report":
+                case "VCA Service Report Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

@@ -107,9 +107,18 @@ public class Household {
     private  String relationship_other;
     private String household_location;
 
+    private String change_caregiver_date;
+
     private String household_receiving_caseworker;
 
     private String district_moved_to;
+
+    private String household_receiving_district;
+    private String location_moved_to;
+
+    private String household_receiving_facility;
+
+    private String ovc_name;
 
     public String getHousehold_receiving_caseworker() {
         return household_receiving_caseworker;
@@ -125,6 +134,14 @@ public class Household {
 
     public void setDistrict_moved_to(String district_moved_to) {
         this.district_moved_to = district_moved_to;
+    }
+
+    public String getHousehold_receiving_district() {
+        return household_receiving_district;
+    }
+
+    public void setHousehold_receiving_district(String household_receiving_district) {
+        this.household_receiving_district = household_receiving_district;
     }
 
     public String getNew_caregiver_death_date() {
@@ -944,5 +961,37 @@ public class Household {
 
     public void setHousehold_location(String household_location) {
         this.household_location = household_location;
+    }
+
+    public String getChange_caregiver_date() {
+        return change_caregiver_date;
+    }
+
+    public void setChange_caregiver_date(String change_caregiver_date) {
+        this.change_caregiver_date = change_caregiver_date;
+    }
+
+    public String getLocation_moved_to() {
+        return location_moved_to;
+    }
+
+    public void setLocation_moved_to(String location_moved_to) {
+        this.location_moved_to = location_moved_to;
+    }
+
+    public String getHousehold_receiving_facility() {
+        return household_receiving_facility;
+    }
+
+    public void setHousehold_receiving_facility(String household_receiving_facility) {
+        this.household_receiving_facility = household_receiving_facility;
+    }
+
+    public String getOvc_name() {
+        return ovc_name;
+    }
+
+    public void setOvc_name(String ovc_name) {
+        this.ovc_name = ovc_name;
     }
 }

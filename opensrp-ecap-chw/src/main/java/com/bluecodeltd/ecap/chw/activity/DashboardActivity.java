@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.actionhelper.CSVGeneratorHelper;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.GenerateCSVContract;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
@@ -71,6 +72,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private GenerateCSVContract.Presenter presenter;
 
     private AppBarLayout myAppbar;
+    private CSVGeneratorHelper csvGenerator;
     private Toolbar toolbar;
     private android.widget.TextView allHouseHoldsCount;
     private android.widget.TextView allVcasCount;
@@ -109,6 +111,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         chart = findViewById(R.id.fragment_verticalbarchart_chart);
         allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
         presenter = new GenerateCSVPresenter(this);
+
+        csvGenerator = new CSVGeneratorHelper();
+
         try {
             String householdCount = HouseholdDao.countNumberoFHouseholds();
             if (householdCount != null) {
@@ -593,8 +598,11 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 loadData();
                 break;
             case R.id.generate_pdf:
-                presenter.generateCSV();
-                showCustomDialog(this,"CSV files have been generated. You can find them in the device's file folder.");
+
+                csvGenerator.generateCSVWithProgress(this, presenter, () ->
+                        showCustomDialog(DashboardActivity.this,
+                                "CSV files have been generated. You can find them in the device's file folder."));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

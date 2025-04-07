@@ -65,7 +65,7 @@ public class HouseholdServiceReportDao extends AbstractDao {
 
     public static boolean checkForHouseholdViralLoad(String householdId) {
         String sql = "SELECT *, is_hiv_positive, date, vl_last_result, level_mmd, caregiver_mmd,household_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date " +
-                "FROM ec_household_service_report WHERE  household_id = '" + householdId + "'AND  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC LIMIT 1";
+                "FROM ec_household_service_report WHERE  household_id = '" + householdId + "'AND services = 'caregiver' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC LIMIT 1";
 
         AbstractDao.DataMap<Integer> dataMap = c -> getCursorIntValue(c, "vl_last_result");
 

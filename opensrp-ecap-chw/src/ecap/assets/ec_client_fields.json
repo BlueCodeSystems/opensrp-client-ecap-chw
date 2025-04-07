@@ -1436,6 +1436,13 @@
           }
         },
         {
+          "column_name": "change_caregiver_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.change_caregiver_date"
+          }
+        },
+        {
           "column_name": "new_caregiver_name",
           "type": "Client",
           "json_mapping": {
@@ -1492,6 +1499,13 @@
           }
         },
         {
+          "column_name": "household_receiving_district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_receiving_district"
+          }
+        },
+        {
           "column_name": "household_receiving_caseworker",
           "type": "Client",
           "json_mapping": {
@@ -1505,7 +1519,29 @@
           "json_mapping": {
             "field": "attributes.district_moved_to"
           }
+        },
+        {
+          "column_name": "location_moved_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.location_moved_to"
+          }
+        },
+        {
+          "column_name": "household_receiving_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_receiving_facility"
+          }
+        },
+        {
+          "column_name": "name_ovc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.name_ovc"
+          }
         }
+
       ]
     },
     {
@@ -1851,6 +1887,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_art_number"
+          }
+        },
+        {
+          "column_name": "date_next_vl_vca",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_next_vl_vca"
           }
         },
         {
@@ -2572,6 +2615,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.district_moved_to"
+          }
+        },
+        {
+          "column_name": "name_ovc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.name_ovc"
           }
         }
       ]

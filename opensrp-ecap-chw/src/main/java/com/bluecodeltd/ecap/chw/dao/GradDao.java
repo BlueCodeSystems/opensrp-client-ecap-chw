@@ -75,16 +75,18 @@ public class GradDao extends AbstractDao {
     public static boolean doTheVCAsMeetBenchMarkThree(String householdID) {
         String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
                 " FROM ec_grad grad\n" +
-                " JOIN (SELECT unique_id, adolescent_birthdate,deleted FROM ec_client_index WHERE (deleted IS NULL OR deleted <> 1)) ec_client_index\n" +
-                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "' AND  strftime('%Y', 'now') - strftime('%Y', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) BETWEEN 12 AND 17";
+                " JOIN (SELECT unique_id, adolescent_birthdate, deleted FROM ec_client_index WHERE (deleted IS NULL OR deleted <> 1)) ec_client_index\n" +
+                " ON grad.unique_id = ec_client_index.unique_id WHERE (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') AND grad.household_id = '" + householdID + "' AND  strftime('%Y', 'now') - strftime('%Y', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) BETWEEN 10 AND 17";
 
         AbstractDao.DataMap<VcaGradCorrectAnswers> dataMap = c -> {
             String birthdateString = getCursorValue(c, "adolescent_birthdate");
             String infection_correct = getCursorValue(c, "infection_correct");
             String protect_correct = getCursorValue(c, "protect_correct");
             String prevention_correct = getCursorValue(c, "prevention_correct");
-            String birthdate = String.valueOf(LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            return new VcaGradCorrectAnswers(birthdate, infection_correct, protect_correct, prevention_correct);
+
+            LocalDate birthdate = LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            return new VcaGradCorrectAnswers(birthdate.toString(), infection_correct, protect_correct, prevention_correct);
         };
 
         List<VcaGradCorrectAnswers> values = AbstractDao.readData(sql, dataMap);
@@ -106,14 +108,11 @@ public class GradDao extends AbstractDao {
                 return false;
             }
 
-            Period age = Period.between(birthdate, today);
-            int years = age.getYears();
-
-            if (years < 12 || years > 17) {
+            int age = Period.between(birthdate, today).getYears();
+            if (age < 10 || age > 17) {
                 return false;
             }
         }
-
         return true;
     }
 

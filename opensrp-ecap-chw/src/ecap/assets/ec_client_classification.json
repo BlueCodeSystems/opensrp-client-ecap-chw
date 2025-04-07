@@ -257,6 +257,13 @@
             "field": "eventType",
             "field_value": "Sick Child Referral",
             "creates_case": [
+              "ec_referral"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Sick Child Referral",
+            "creates_case": [
               "ec_child_referral"
             ]
           },
@@ -463,6 +470,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Referral Edit VCA",
+            "creates_case": [
+              "ec_referral"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Domain",
             "creates_case": [
               "ec_vca_case_plan_domain"
@@ -505,6 +519,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "VCA Service Report Edit",
+            "creates_case": [
+              "ec_vca_service_report"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "WE Services Caregiver",
             "creates_case": [
               "ec_we_services_caregiver"
@@ -527,6 +548,13 @@
           {
             "field": "eventType",
             "field_value": "Household Visitation Form 0-20 years",
+            "creates_case": [
+              "ec_household_visitation_for_vca_0_20_years"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Visitation Form 0-20 years Edit",
             "creates_case": [
               "ec_household_visitation_for_vca_0_20_years"
             ]

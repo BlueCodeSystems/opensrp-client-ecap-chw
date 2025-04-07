@@ -93,7 +93,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
                 try {
 
-                    openFormUsingFormUtils(context, "referral", showReferrals);
+                    openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -123,7 +123,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                     } else {
                         if (v.getId() == R.id.edit_me) {
                             try {
-                                openFormUsingFormUtils(context, "referral", showReferrals);
+                                openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -154,7 +154,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                     e.printStackTrace();
                 }
                 showReferrals.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("referral");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("referral_for_vca_edit");
                 try {
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(showReferrals, Map.class));
                     vcaScreeningForm.put("entity_id", showReferrals.getBase_entity_id());
@@ -248,7 +248,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
             switch (encounterType) {
 
-                case "Referral":
+                case "Referral Edit VCA":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import static android.view.View.GONE;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
@@ -183,6 +184,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView landmark = dialogView.findViewById(R.id.landmark);
         TextView phone = dialogView.findViewById(R.id.phone);
         TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
+        TextView art_number = dialogView.findViewById(R.id.art_number);
         TextView date_tested = dialogView.findViewById(R.id.hiv_status_r_nr);
         TextView test_results = dialogView.findViewById(R.id.test_results);
         TextView date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
@@ -193,6 +195,21 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
         enrolled_on_ARTLayout = dialogView.findViewById(R.id.enrolled_on_ARTLayout);
         initial_artLayout = dialogView.findViewById(R.id.initial_artLayout);
+
+        LinearLayout date = dialogView.findViewById(R.id.date);
+        LinearLayout artLayout = dialogView.findViewById(R.id.artLayout);
+        LinearLayout label = dialogView.findViewById(R.id.label);
+
+
+
+        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Positive")) {
+            date.setVisibility(GONE);
+            label.setVisibility(GONE);
+        }
+        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Negative")) {
+            artLayout.setVisibility(GONE);
+        }
+
 
         if (client != null) {
             if (client.getHiv_status() != null && client.getHiv_status().equals("positive") ||
@@ -242,6 +259,9 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
             String hivStatusValue = client.getHiv_status();
             hiv_status.setText(hivStatusValue != null ? hivStatusValue : "Not Set");
+
+            String artNumberValue = client.getArt_number();
+            art_number.setText(artNumberValue != null ? artNumberValue : "Not Set");
 
             String dateTestedValue = client.getDate_tested();
             date_tested.setText(dateTestedValue != null ? dateTestedValue : "Not Set");

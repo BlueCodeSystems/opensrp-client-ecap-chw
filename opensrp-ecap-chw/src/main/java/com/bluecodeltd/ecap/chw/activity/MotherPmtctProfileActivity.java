@@ -426,6 +426,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
 
 
+
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -533,7 +534,6 @@ break;
     }
 
     public void startFormActivity(JSONObject jsonObject) {
-
         Form form = new Form();
         form.setWizard(false);
         form.setName(getString(R.string.child_details));
@@ -583,6 +583,21 @@ break;
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
                 getUniqueIdRepository().close(vca_id);
+                String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
+                switch (encounterType) {
+
+                    case "Mother Pmtct Child":
+                    case "Mother Pmtct":
+                    case "Mother Pmtct Postnatal":
+                    case "Mother Pmtct Delivery":
+
+                        finish();
+                        startActivity(getIntent());
+
+                        break;
+
+                }
 
                 Toasty.success(MotherPmtctProfileActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
