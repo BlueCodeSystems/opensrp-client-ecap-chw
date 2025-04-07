@@ -2868,6 +2868,28 @@
         "relevance": {
           "step4:vl_check_box": {
             "type": "string",
+            "ex": "equalTo(., \"yees\")"
+          }
+        }
+      },
+      {
+        "key": "date_next_vl_vca",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_next_vl_vca",
+        "type": "date_picker",
+        "hint": "Date of next VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step4:vl_check_box": {
+            "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
         }

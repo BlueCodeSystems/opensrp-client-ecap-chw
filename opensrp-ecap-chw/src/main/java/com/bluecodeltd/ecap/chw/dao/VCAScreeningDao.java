@@ -54,16 +54,18 @@ public class VCAScreeningDao extends AbstractDao {
 
             VcaScreeningModel record = new VcaScreeningModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
+            record.setLast_interacted_with(getCursorValue(c, "last_interacted_with"));
+            record.setDeleted(getCursorValue(c, "deleted"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setSignature(getCursorValue(c, "signature"));
+            record.setDate_edited(getCursorValue(c, "date_edited"));
+            record.setPhone(getCursorValue(c, "phone"));
+            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setProvince(getCursorValue(c, "province"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setWard(getCursorValue(c, "ward"));
             record.setFacility(getCursorValue(c, "facility"));
-            record.setArt_number(getCursorValue(c, "art_number"));
-            record.setViral_load_results_on_file(getCursorValue(c, "viral_load_results_on_file"));
-            record.setIs_tb_screening_results_on_file(getCursorValue(c, "is_tb_screening_results_on_file"));
-            record.setClient_screened(getCursorValue(c, "client_screened"));
             record.setPartner(getCursorValue(c, "partner"));
             record.setAdolescent_first_name(getCursorValue(c, "adolescent_first_name"));
             record.setAdolescent_last_name(getCursorValue(c, "adolescent_last_name"));
@@ -72,9 +74,14 @@ public class VCAScreeningDao extends AbstractDao {
             record.setLandmark(getCursorValue(c, "landmark"));
             record.setAdolescent_gender(getCursorValue(c, "adolescent_gender"));
             record.setSchool(getCursorValue(c, "school"));
+            record.setSchoolName(getCursorValue(c, "schoolName"));
             record.setOther_school(getCursorValue(c, "other_school"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
             record.setIs_on_hiv_treatment(getCursorValue(c, "is_on_hiv_treatment"));
+            record.setArt_number(getCursorValue(c, "art_number"));
+            record.setViral_load_results_on_file(getCursorValue(c, "viral_load_results_on_file"));
+            record.setIs_tb_screening_results_on_file(getCursorValue(c, "is_tb_screening_results_on_file"));
+            record.setClient_screened(getCursorValue(c, "client_screened"));
             record.setClient_result(getCursorValue(c, "client_result"));
             record.setTpt_client_eligibility(getCursorValue(c, "tpt_client_eligibility"));
             record.setTpt_client_initiated(getCursorValue(c, "tpt_client_initiated"));
@@ -84,6 +91,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setPositive_mother(getCursorValue(c, "positive_mother"));
             record.setActive_on_treatment(getCursorValue(c, "active_on_treatment"));
             record.setCaregiver_art_number(getCursorValue(c, "caregiver_art_number"));
+            record.setDate_next_vl_vca(getCursorValue(c, "date_next_vl_vca"));
             record.setAdhering_to_treatment(getCursorValue(c, "adhering_to_treatment"));
             record.setIs_mother_virally_suppressed(getCursorValue(c, "is_mother_virally_suppressed"));
             record.setChild_been_tested_for_hiv(getCursorValue(c, "child_been_tested_for_hiv"));
@@ -106,7 +114,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setAgyw_having_sex_with_older_men(getCursorValue(c, "agyw_having_sex_with_older_men"));
             record.setAgyw_transactional_sex(getCursorValue(c, "agyw_transactional_sex"));
             record.setAgyw_engaged_in_transactional_sex(getCursorValue(c, "agyw_engaged_in_transactional_sex"));
-            record.setAgyw_engaged_in_sex_work(getCursorValue(c, "agyw_engaged_in_sex_work"));
+            record.setAgwy_engaged_in_sex_work(getCursorValue(c, "agwy_engaged_in_sex_work"));
             record.setAgyw_food_or_economically_insecure(getCursorValue(c, "agyw_food_or_economically_insecure"));
             record.setAgyw_marry_early(getCursorValue(c, "agyw_marry_early"));
             record.setAgyw_give_birth_before_the_age_of_18(getCursorValue(c, "agyw_give_birth_before_the_age_of_18"));
@@ -126,27 +134,20 @@ public class VCAScreeningDao extends AbstractDao {
             record.setFsw_child_positive(getCursorValue(c, "fsw_child_positive"));
             record.setFsw_prevention_intervention(getCursorValue(c, "fsw_prevention_intervention"));
             record.setFsw_economic_strengthening_intervention(getCursorValue(c, "fsw_economic_strengthening_intervention"));
-            record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setDate_screened(getCursorValue(c, "date_screened"));
             record.setApproved_by(getCursorValue(c, "approved_by"));
             record.setConsent_check_box(getCursorValue(c, "consent_check_box"));
-            record.setSubpop1_toast(getCursorValue(c, "subpop1_toast"));
-            record.setSubpop6_toast(getCursorValue(c, "subpop6_toast"));
-            record.setSubpop2_toast(getCursorValue(c, "subpop2_toast"));
-            record.setSubpop3_toast(getCursorValue(c, "subpop3_toast"));
-            record.setSubpop4_toast(getCursorValue(c, "subpop4_toast"));
-            record.setSubpop5_toast(getCursorValue(c, "subpop5_toast"));
             record.setSubpop1(getCursorValue(c, "subpop1"));
             record.setSubpop2(getCursorValue(c, "subpop2"));
             record.setSubpop3(getCursorValue(c, "subpop3"));
             record.setSubpop4(getCursorValue(c, "subpop4"));
             record.setSubpop5(getCursorValue(c, "subpop5"));
+            record.setScreening_location(getCursorValue(c, "screening_location"));
             record.setSubpop(getCursorValue(c, "subpop"));
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setGender(getCursorValue(c, "gender"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
-            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
             record.setCase_status(getCursorValue(c, "case_status"));
             record.setDate_referred(getCursorValue(c, "date_referred"));
@@ -160,7 +161,6 @@ public class VCAScreeningDao extends AbstractDao {
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
             record.setVl_last_result(getCursorValue(c, "vl_last_result"));
             record.setDate_next_vl(getCursorValue(c, "date_next_vl"));
-            record.setArt_number(getCursorValue(c, "art_number"));
             record.setChild_mmd(getCursorValue(c, "child_mmd"));
             record.setLevel_mmd(getCursorValue(c, "level_mmd"));
             record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
@@ -174,9 +174,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setReason(getCursorValue(c, "reason"));
             record.setTransfer_reason(getCursorValue(c, "transfer_reason"));
             record.setOther_reason(getCursorValue(c, "other_reason"));
-            record.setScreening_location(getCursorValue(c,"screening_location"));
-            record.setPhone(getCursorValue(c,"phone"));
-            record.setExited_graduation_reason(getCursorValue(c,"exited_graduation_reason"));
+            record.setExited_graduation_reason(getCursorValue(c, "exited_graduation_reason"));
             record.setAbym_years(getCursorValue(c, "abym_years"));
             record.setAbym_sexually_active(getCursorValue(c, "abym_sexually_active"));
             record.setAbym_preventions(getCursorValue(c, "abym_preventions"));
@@ -194,7 +192,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setAbym_economic_strengthening(getCursorValue(c, "abym_economic_strengthening"));
             record.setVca_receiving_caseworker(getCursorValue(c, "vca_receiving_caseworker"));
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
-
+            record.setName_ovc(getCursorValue(c, "name_ovc"));
 
             return record;
         };

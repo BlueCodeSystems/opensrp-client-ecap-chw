@@ -244,8 +244,14 @@ public class ProfileOverviewFragment extends Fragment {
         }
 
 
-        if (childIndex.getSchoolName() != null){
-            txtSchool.setText(childIndex.getSchoolName());
+        if (childIndex.getSchool() != null) {
+            if (childIndex.getSchool().equals("not_in_school")) {
+                txtSchool.setText("Not In School");
+            } else if (childIndex.getSchool().equals("other")) {
+                txtSchool.setText(childIndex.getOther_school() != null ? childIndex.getOther_school() : "N/A");
+            } else {
+                txtSchool.setText(childIndex.getSchoolName() != null ? childIndex.getSchoolName() : "N/A");
+            }
         } else {
             txtSchool.setText("N/A");
         }

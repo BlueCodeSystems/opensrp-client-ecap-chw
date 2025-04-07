@@ -101,7 +101,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -133,7 +133,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                     } else {
                         if (v.getId() == R.id.edit_me) {
                             try {
-                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
@@ -164,7 +164,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                     e.printStackTrace();
                 }
                 visit.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years_edit");
                 try {
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( visit, Map.class));
                     vcaScreeningForm.put("entity_id", visit.getBase_entity_id());
@@ -363,7 +363,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             switch (encounterType) {
 
-                case "Household Visitation Form 0-20 years":
+                case "Household Visitation Form 0-20 years Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

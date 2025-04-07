@@ -175,15 +175,15 @@
             "key": "Transferred to other Ecap II facility/district",
             "text": "Transferred to other Ecap II facility/district"
           },
-
-          {
-            "key": "Lost to follow-up",
-            "text": "Lost to follow-up"
-          },
           {
             "key": "Aging without transition plan",
             "text": "Aging without transition plan"
           },
+          {
+            "key": "Aging out with a transition plan",
+            "text": "Aging out with a transition plan"
+          },
+
           {
             "key": "VCA died",
             "text": "VCA died"
@@ -228,6 +228,25 @@
           "step1:exited_graduation_reason": {
             "type": "string",
             "ex": "equalTo(., \"Transferred to other Ecap II facility/district\")"
+          }
+        }
+      },
+      {
+        "key": "ovc_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ovc_name",
+        "type": "edit_text",
+        "hint": "Name of OVC",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Provide name of OVC"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other OVC program\")"
           }
         }
       },

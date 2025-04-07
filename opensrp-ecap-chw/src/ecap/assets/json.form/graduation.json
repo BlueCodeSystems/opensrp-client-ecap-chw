@@ -130,15 +130,15 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "previous_asmt_date",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "Date of previous assessment",
-        "edit_type": "name",
-        "relevance": {
-          "step1:asmt": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
+        "type": "date_picker",
+        "hint": "Date of this Assessment",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-2020",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field for assessment required"
         }
       },
       {

@@ -187,11 +187,6 @@
             "key": "Transferred to other Ecap II /district",
             "text": "Transferred to other Ecap II /district"
           },
-
-          {
-            "key": "Lost to follow-up",
-            "text": "Lost to follow-up"
-          },
           {
             "key": "Aging without transition plan",
             "text": "Aging without transition plan"
@@ -240,6 +235,82 @@
           "step1:exited_graduation_reason": {
             "type": "string",
             "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+          }
+        }
+      },
+      {
+        "key": "ovc_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ovc_name",
+        "type": "edit_text",
+        "hint": "Name of OVC",
+        "edit_type": "name",
+        "v_required": {
+          "value": false,
+          "err": "Provide name of OVC"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other OVC program\")"
+          }
+        }
+      },
+      {
+        "key": "location_moved_to",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "location_moved_to",
+        "type": "edit_text",
+        "hint": "Location",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide location"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Moved (Relocated)\")"
+          }
+        }
+      },
+      {
+        "key": "household_receiving_district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_receiving_district",
+        "type": "edit_text",
+        "hint": "District",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide district"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other Ecap II /district\")"
+          }
+        }
+      },
+      {
+        "key": "household_receiving_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_receiving_facility",
+        "type": "edit_text",
+        "hint": "Facility",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide facility"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other Ecap II /district\")"
           }
         }
       },
