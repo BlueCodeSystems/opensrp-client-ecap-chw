@@ -1,0 +1,1163 @@
+{
+  "count": "1",
+  "encounter_type": "Household Visitation For Caregiver Edit",
+  "hide_blank_spaces": true,
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Household Visitation For Caregiver",
+    "fields": [
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "visit_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "visit_date",
+        "type": "date_picker",
+        "hint": "Date of Household Visit",
+        "look_up": "true",
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "visit_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "visit_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
+        "key": "health_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Health Section"
+      },
+      {
+        "key": "caregiver_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_hiv_status",
+        "type": "native_radio",
+        "label": "Caregiver's HIV Status",
+        "read_only": false,
+        "options": [
+          {
+            "key": "positive",
+            "text": "HIV Positive",
+            "value": false
+          },
+          {
+            "key": "negative",
+            "text": "HIV Negative",
+            "value": false
+          },
+          {
+            "key": "unknown",
+            "text": "Status Unknown",
+            "value": false
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
+            "value": false
+          }
+        ]
+      },
+
+      {
+        "key": "caregiver_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_art",
+        "type": "native_radio",
+        "label": "Is Primary Caregiver enrolled on ART?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "clinical_care",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "clinical_care",
+        "type": "native_radio",
+        "label": "If Primary Caregiver is HIV+ but not on ART, has s/he been referred to Health Facility for enrollment into clinical care ?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_art": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "date_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_art",
+        "type": "edit_text",
+        "hint": "How long has Primary Caregiver been on ART ",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Indicate the number of months the Primary Caregiver has been on ART "
+        },
+        "relevance": {
+          "step1:caregiver_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "art_appointment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_appointment",
+        "type": "native_radio",
+        "label": "Check the ART appointment card.  Did Caregiver meet the last clinical/pharmacy appointment?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_art": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "counselling",
+        "type": "native_radio",
+        "label": "If Primary Caregiver missed last clinical/pharmacy appointment, not adhering to treatment or VL is greater than 1000, age appropriate adherence counselling was conducted during home visit?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:art_appointment": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "art_medication",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_medication",
+        "type": "native_radio",
+        "label": "If Primary Caregiver is on ART, is s/he adhering to medication? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:art_appointment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mmd",
+        "type": "native_radio",
+        "label": "Is the Primary Caregiver on single or multi-month dispensation (MMD)?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_caregiver.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "mmd_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mmd_months",
+        "type": "edit_text",
+        "hint": "Indicate the number of months of drugs they collected during their last visit",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Indicate the number of MMD months of drugs "
+        },
+        "relevance": {
+          "step1:mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "six_months",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "six_months",
+        "type": "native_radio",
+        "label": "If the Primary Caregiver has been on ART for longer than six months, have they submitted a sample for VL?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_caregiver.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "toaster_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "If Primary Caregiver has not had a VL done, refer to facility for VL testing",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "relevance": {
+          "step1:six_months": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "hint": "Verify with health facility and indicate the VL result",
+        "edit_type": "number",
+        "read_only": false,
+        "relevance": {
+          "step1:six_months": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+
+
+
+
+      {
+        "key": "date_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_hiv",
+        "type": "edit_text",
+        "hint": "How many months was the last HIV test done?",
+        "edit_type": "number",
+        "read_only": false,
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"negative\")"
+          }
+        }
+      },
+
+      {
+        "key": "visit_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "visit_hiv_test",
+        "type": "native_radio",
+        "label": "Has an HIV risk assessment been done?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_caregiver.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "referred_for_testing",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_for_testing",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been referred for HIV testing at health facility if \nthe HIV risk assessment indicates an HIV test is required?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:visit_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "hiv_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_risk",
+        "type": "native_radio",
+        "label": "Has there been a change in the Primary Caregiver’s HIV risky behavior since the last visit?",
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          },
+          {
+            "key": "none",
+            "text": "None",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_caregiver.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_assessment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_assessment",
+        "type": "native_radio",
+        "label": "If there has been a change in the Primary Caregiver’s HIV risk behavior since the last visit has an HIV risk reduction counselling and HIV risk assessment been conducted? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "prevention_support",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prevention_support",
+        "type": "native_radio",
+        "label": "Was Primary Caregiver referred to age appropriate HIV prevention support \nand other biomedical services (e.g. VMMC, Condoms, PMTCT \netc)",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "other_hiv_negative",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_hiv_negative",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_for_caregiver.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "toaster_b",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_title": "Information Toaster Info Title",
+        "text": "If HIV status is unknown",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"unknown\")"
+          }
+        }
+      },
+      {
+        "key": "risk_assessment_counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "risk_assessment_counselling",
+        "type": "native_radio",
+        "label": "Was the HIV risk reduction counselling and assessment done?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"unknown\")"
+          }
+        }
+      },
+
+      {
+        "key": "referred_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_facility",
+        "type": "native_radio",
+        "label": "Has Primary Caregiver been referred to health facility for HIV testing if test is required?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:risk_assessment_counselling": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+
+      {
+        "key": "other_hiv_unknown",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_hiv_unknown",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "step1:referred_facility": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "1",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Dependents’ HIV Status Section"
+      },
+      {
+        "key": "number_children",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "number_children",
+        "type": "edit_text",
+        "hint": "Number of children and adolescents 0-17 years \n cared for by the Primary Caregiver",
+        "edit_type": "number",
+        "read_only": false
+      },
+      {
+        "key": "hiv_awareness_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_awareness_status",
+        "type": "native_radio",
+        "label": "Is the Caregiver aware of the HIV status of all the children 0-17 years?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "caregiver_not_aware",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_not_aware",
+        "type": "native_radio",
+        "label": "If Primary Caregiver is not aware of HIV status of children in household, has \nthe Caseworker provided HIV risk reduction counselling and risk \nassessment for all the children whose status is unknown?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:hiv_awareness_status": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_test_referral",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_referral",
+        "type": "native_radio",
+        "label": "Has a referral been made for HIV test, based on the HIV risk assessment for children whose status is unknown?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:caregiver_not_aware": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Stable Section"
+      },
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "School Fees"
+      },
+      {
+        "key": "school_fees",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_fees",
+        "type": "native_radio",
+        "label": "Was the Primary Caregiver able to pay for school fees for all children of school going age over the past 2 terms? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+
+      {
+        "key": "unpaid_school_fees",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unpaid_school_fees",
+        "type": "native_radio",
+        "label": "If Primary Caregiver was not able to pay for school fees for all \nchildren of school going age, have the barriers/challenges been \ndiscussed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:school_fees": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "linked_economic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "linked_economic",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been referred to market linked economic \nstrengthening activity?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:unpaid_school_fees": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "referred_mcdss",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_mcdss",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been referred to MCDSS for social cash transfer?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:linked_economic": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+        "key": "income_source",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "income_source",
+        "type": "edit_text",
+        "hint": "What was the source of the money used to pay for school fees",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "step1:school_fees": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "list_source",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "list_source",
+        "type": "edit_text",
+        "hint": "List of Sources",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "step1:school_fees": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+
+      {
+        "key": "hd1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
+        "text": "Medical Fees Section"
+      },
+      {
+        "key": "bills_associated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "bills_associated",
+        "type": "native_radio",
+        "label": "Was the Primary Caregiver able to pay for fees associated with medical treatment and care for all children \nand adolescents in the household in the past 6 months? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "barriers_challenges",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "barriers_challenges",
+        "type": "native_radio",
+        "label": "If Primary Caregiver was not able to pay the fees associated with \nmedical treatment and care for all children of school going age, \nhave the barriers/challenges been discussed?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:bills_associated": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
+        "key": "economic_strengthening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "economic_strengthening",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been referred to market linked economic strengthening activity? ",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "step1:barriers_challenges": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "social_cash",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "social_cash",
+        "type": "native_radio",
+        "label": "Has the Primary Caregiver been referred to MCDSS for social cash transfer?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+
+        ],
+        "relevance": {
+          "step1:economic_strengthening": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "income_source_medical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "income_source_medical",
+        "type": "edit_text",
+        "hint": "What was the source of the money used to pay for school fees",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "step1:bills_associated": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "list_source_medical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "list_source_medical",
+        "type": "edit_text",
+        "hint": "List of Sources",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "step1:bills_associated": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "other_medical",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_medical",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "name",
+        "read_only": false,
+        "relevance": {
+          "step1:bills_associated": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+
+      {
+        "key": "case_manager",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "case_manager",
+        "type": "edit_text",
+        "hint": "Verified by Case Manager",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "school_administration_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_name",
+        "type": "edit_text",
+        "hint": "Verified By School Administration",
+        "edit_type": "name",
+        "read_only": "false",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name"
+        }
+      },
+      {
+        "key": "telephone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "telephone",
+        "type": "edit_text",
+        "hint": "School Administration Telephone Number",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with  095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "school_administration_date_signed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "school_administration_date_signed",
+        "type": "date_picker",
+        "hint": "Date Verified By School Administration",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Date Signed"
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "label": "Delete",
+        "options": [
+          {
+            "key": "0",
+            "text": "0",
+            "value": true
+          },
+          {
+            "key": "1",
+            "text": "1"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      }
+    ]
+  }
+}

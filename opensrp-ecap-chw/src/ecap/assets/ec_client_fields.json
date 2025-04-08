@@ -2623,6 +2623,13 @@
           "json_mapping": {
             "field": "attributes.name_ovc"
           }
+        },
+        {
+          "column_name": "location_moved_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.location_moved_to"
+          }
         }
       ]
     },
@@ -8224,13 +8231,6 @@
           }
         },
         {
-          "column_name": "province",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.province"
-          }
-        },
-        {
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
@@ -8265,7 +8265,6 @@
             "field": "attributes.caseworker_name"
           }
         },
-
         {
           "column_name": "pmtct_id",
           "type": "Client",
@@ -8280,8 +8279,6 @@
             "field": "attributes.ecap_id_question"
           }
         },
-
-
         {
           "column_name": "date_enrolled_ecap",
           "type": "Client",
@@ -8297,7 +8294,6 @@
           }
         },
         {
-
           "column_name": "date_enrolled_pmtct",
           "type": "Client",
           "json_mapping": {
@@ -8346,9 +8342,6 @@
             "field": "attributes.mothers_phone"
           }
         },
-
-
-
         {
           "column_name": "agyw_date_1st_visit",
           "type": "Client",
@@ -8609,6 +8602,13 @@
           }
         },
         {
+          "column_name": "applicable_recency_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.applicable_recency_result"
+          }
+        },
+        {
           "column_name": "male_hiv_tested",
           "type": "Client",
           "json_mapping": {
@@ -8637,6 +8637,13 @@
           }
         },
         {
+          "column_name": "on_treatment_anc_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.on_treatment_anc_visit"
+          }
+        },
+        {
           "column_name": "tb_screening",
           "type": "Client",
           "json_mapping": {
@@ -8662,6 +8669,62 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.syphilis_test_result"
+          }
+        },
+        {
+          "column_name": "hiv_result_1st_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result_1st_trimester"
+          }
+        },
+        {
+          "column_name": "hiv_result_2nd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result_2nd_trimester"
+          }
+        },
+        {
+          "column_name": "hiv_result_3rd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result_3rd_trimester"
+          }
+        },
+        {
+          "column_name": "vl_result_1st_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_1st_trimester"
+          }
+        },
+        {
+          "column_name": "unsuppressed_vl_1st",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unsuppressed_vl_1st"
+          }
+        },
+        {
+          "column_name": "vl_result_2nd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_2nd_trimester"
+          }
+        },
+        {
+          "column_name": "unsuppressed_vl_2nd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unsuppressed_vl_2nd"
+          }
+        },
+        {
+          "column_name": "vl_result_3rd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_3rd_trimester"
           }
         },
         {

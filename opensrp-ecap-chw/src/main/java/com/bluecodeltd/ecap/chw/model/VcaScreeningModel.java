@@ -141,6 +141,7 @@ public class VcaScreeningModel {
     private String vca_receiving_caseworker;
     private String district_moved_to;
     private String name_ovc;
+    private  String location_moved_to;
 
     public String getLast_interacted_with() {
         return last_interacted_with;
@@ -1260,6 +1261,14 @@ public class VcaScreeningModel {
 
     public void setName_ovc(String name_ovc) {
         this.name_ovc = name_ovc;
+    }
+
+    public String getLocation_moved_to() {
+        return location_moved_to;
+    }
+
+    public void setLocation_moved_to(String location_moved_to) {
+        this.location_moved_to = location_moved_to;
     }
 }
 

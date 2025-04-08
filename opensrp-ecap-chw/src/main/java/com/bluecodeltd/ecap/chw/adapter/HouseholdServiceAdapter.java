@@ -175,7 +175,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
 
                     try {
-                        openFormUsingFormUtils(context, "service_report_household", service);
+                        openFormUsingFormUtils(context, "service_report_household_edit", service);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -357,7 +357,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
             switch (encounterType) {
 
-                case "Household Service Report":
+                case "Household Service Report Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

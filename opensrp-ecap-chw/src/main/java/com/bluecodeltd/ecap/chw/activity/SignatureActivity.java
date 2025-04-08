@@ -211,6 +211,11 @@ public class SignatureActivity extends AppCompatActivity {
                             finish();
                             break;
 
+                        case "Referral":
+                            Toasty.success(getApplicationContext(), "Referral Saved", Toast.LENGTH_LONG, true).show();
+                            finish();
+                            break;
+
                         default:
                             finish();
                             break;

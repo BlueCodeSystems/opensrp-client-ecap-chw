@@ -446,7 +446,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "hidden",
-        "text": "The test household doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention",
+        "text": "The test household doesn’t have adolescents aged 10 to 17 to be assessed on their knowledge about HIV prevention",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info"

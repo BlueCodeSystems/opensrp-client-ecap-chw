@@ -1140,6 +1140,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     case "Grad":
                     case "Graduation":
                     case "Household Case Status":
+                    case "Household Visitation For Caregiver Edit":
 
                         closeFab();
                         Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
@@ -1343,7 +1344,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
                     break;
 
-                case "Household Visitation For Caregiver":
+                case "Household Visitation For Caregiver Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

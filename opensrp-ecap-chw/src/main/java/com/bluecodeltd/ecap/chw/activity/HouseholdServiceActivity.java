@@ -252,7 +252,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
                     switch (EncounterType) {
 
-                        case "Household Service Report":
+                        case "Household Service Report Edit":
 
                             Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
                             refreshData();
@@ -286,19 +286,26 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
-            tagSyncMetadata(event);
-            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-            return new ChildIndexEventClient(event, client);
+            switch (encounterType) {
+                case "Household Service Report Edit":
 
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_HOUSEHOLD_SERVICE);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
 
-
+            }
         } catch (JSONException e) {
             Timber.e(e);
         }
