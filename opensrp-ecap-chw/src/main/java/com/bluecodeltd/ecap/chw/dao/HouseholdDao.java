@@ -41,6 +41,31 @@ public class HouseholdDao extends AbstractDao {
         updateDB(sql3);
 
     }
+    public static Household getHouseholdByVCA(String uniqueID) {
+
+        String sql = "SELECT * FROM ec_household WHERE household_id = '" + uniqueID + "' AND (status IS NULL OR status != '1')";
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+        if (values == null || values.size() == 0) {
+            return new Household();
+        }
+
+        return values.get(0);
+
+    }
+    public static boolean hasNonNullSubPopulationByVCA(String uniqueID) {
+
+        String sql = "SELECT hh.other_subpopulation " +
+                "FROM ec_client_index AS ci " +
+                "INNER JOIN ec_household AS hh " +
+                "ON ci.household_id = hh.household_id " +
+                "WHERE ci.index_check_box = '1' AND  ci.unique_id = '" + uniqueID + "' AND hh.other_subpopulation IS NOT NULL " +
+                "LIMIT 1";
+
+        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
+
+        return (values != null && !values.isEmpty());
+    }
 
     public static void deleteRecordfromSearch (String hhId, String id, List<Child> children) {
 

@@ -172,7 +172,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_visitation_for_caregiver", visit);
+                    openFormUsingFormUtils(context, "household_visitation_for_caregiver_edit", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -191,7 +191,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
                     try {
 
-                        openFormUsingFormUtils(context, "household_visitation_for_caregiver", visit);
+                        openFormUsingFormUtils(context, "household_visitation_for_caregiver_edit", visit);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -217,7 +217,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                         e.printStackTrace();
                     }
                     visit.setDelete_status("1");
-                    JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_caregiver");
+                    JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_caregiver_edit");
                     try {
                         CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(visit, Map.class));
                         vcaScreeningForm.put("entity_id", visit .getBase_entity_id());
@@ -329,7 +329,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
             switch (encounterType) {
 
-                case "Household Visitation For Caregiver":
+                case "Household Visitation For Caregiver Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

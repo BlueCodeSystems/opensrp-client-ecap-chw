@@ -358,8 +358,6 @@
           }
         }
       },
-
-
       {
         "key": "agyw_date_1st_visit",
         "openmrs_entity_parent": "",
@@ -434,7 +432,6 @@
           "err": "This field is required"
         }
       },
-
       {
         "key": "toaster_5",
         "openmrs_entity_parent": "",
@@ -447,12 +444,10 @@
         "relevance": {
           "step1:agyw_hiv_tested": {
             "type": "string",
-            "ex": "equalTo(., \"Yes\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
-
-
       {
         "key": "agyw_date_tested",
         "openmrs_entity_parent": "",
@@ -576,6 +571,22 @@
         }
       },
       {
+        "key": "toaster_6",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer for HTS",
+        "toaster_type": "info",
+        "toaster_info_text": "Refer for HTS",
+        "relevance": {
+          "step1:agyw_male_hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "agyw_male_date_tested",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -670,7 +681,6 @@
           }
         }
       },
-
       {
         "key": "agyw_date_initiated_art",
         "openmrs_entity_parent": "",
@@ -711,8 +721,6 @@
           }
         }
       },
-
-
       {
         "key": "agyw_on_treatment_anc_visit",
         "openmrs_entity_parent": "",
@@ -847,9 +855,6 @@
           }
         }
       },
-
-
-
       {
         "key": "agyw_hiv_result_1st_trimester",
         "openmrs_entity_parent": "",
@@ -919,7 +924,6 @@
           }
         }
       },
-
       {
         "key": "agyw_vl_result_1st_trimester",
         "openmrs_entity_parent": "",
@@ -1054,54 +1058,7 @@
       },
 
 
-      {
-        "key": "preventive_services",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "preventive_services",
-        "type": "check_box",
-        "label": "Preventive Services Provided/Referred (HIV- at risk AGYW)",
-        "options": [
 
-          {
-            "key": "Conducted HIV risk assessment",
-            "text": "Conducted HIV risk assessment"
-          },
-          {
-            "key": "Accessed PrEP",
-            "text": "Accessed PrEP"
-          },
-          {
-            "key": "Accessed Condoms",
-            "text": "Accessed Condoms"
-          },
-          {
-            "key": "Accessed Other Preventive Service: Please Specify",
-            "text": "Accessed Other Preventive Service: Please Specify"
-          }
-        ],
-        "relevance": {
-          "step1:agyw_result_of_hiv_test": {
-            "type": "string",
-            "ex": "equalTo(., \"NR\")"
-          }
-        }
-      },
-      {
-        "key": "other_preventive_service",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "other_preventive_service",
-        "type": "edit_text",
-        "hint": "Other Preventive Service",
-        "edit_type": "name",
-        "relevance": {
-          "step1:preventive_services": {
-            "type": "string",
-            "ex": "equalTo(., \"Accessed Other Preventive Service: Please Specify\")"
-          }
-        }
-      },
 
 
 
@@ -1285,6 +1242,54 @@
           "step1:hiv_tested": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "preventive_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "preventive_services",
+        "type": "check_box",
+        "label": "Preventive Services Provided/Referred (HIV- at risk AGYW)",
+        "options": [
+
+          {
+            "key": "Conducted HIV risk assessment",
+            "text": "Conducted HIV risk assessment"
+          },
+          {
+            "key": "Accessed PrEP",
+            "text": "Accessed PrEP"
+          },
+          {
+            "key": "Accessed Condoms",
+            "text": "Accessed Condoms"
+          },
+          {
+            "key": "Accessed Other Preventive Service: Please Specify",
+            "text": "Accessed Other Preventive Service: Please Specify"
+          }
+        ],
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"NR\")"
+          }
+        }
+      },
+      {
+        "key": "other_preventive_service",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_preventive_service",
+        "type": "edit_text",
+        "hint": "Other Preventive Service",
+        "edit_type": "name",
+        "relevance": {
+          "step1:preventive_services": {
+            "type": "string",
+            "ex": "equalTo(., \"Accessed Other Preventive Service: Please Specify\")"
           }
         }
       },
@@ -1645,7 +1650,6 @@
           }
         }
       },
-
 
       {
         "key": "vl_result_1st_trimester",

@@ -91,7 +91,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_referral", showReferrals);
+                    openFormUsingFormUtils(context, "household_referral_edit", showReferrals);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -109,7 +109,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
 
                     try {
 
-                        openFormUsingFormUtils(context, "household_referral", showReferrals);
+                        openFormUsingFormUtils(context, "household_referral_edit", showReferrals);
 
 
                     } catch (JSONException e) {

@@ -620,7 +620,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                     try {
 
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"referral_for_vca_edit");
+                        openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
 
                     } catch (Exception e) {
                         e.printStackTrace();

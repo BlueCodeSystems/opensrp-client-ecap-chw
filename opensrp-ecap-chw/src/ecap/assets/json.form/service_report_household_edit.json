@@ -1,0 +1,834 @@
+{
+  "count": "1",
+  "encounter_type": "Household Service Report Edit",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Case Worker Service Report",
+    "fields": [
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date",
+        "type": "date_picker",
+        "hint": "Date when Service/s Provided",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "hh_service_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_service_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
+      },
+      {
+        "key": "services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "services",
+        "type": "native_radio",
+        "label": "Please select who you are providing service for",
+        "label_text_style": "italic",
+        "options": [
+          {
+            "key": "caregiver",
+            "text": "Caregiver"
+          },
+          {
+            "key": "household",
+            "text": "Household"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a Required field."
+        }
+      },
+      {
+        "key": "is_hiv_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_hiv_positive",
+        "type": "native_radio",
+        "label": "What is the HIV status",
+        "options": [
+          {
+            "key": "positive",
+            "text": "Positive"
+          },
+          {
+            "key": "negative",
+            "text": "Negative"
+          },
+          {
+            "key": "unknown",
+            "text": "Unknown"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:services": {
+            "type": "string",
+            "ex": "equalTo(., \"caregiver\")"
+          }
+        }
+      },
+      {
+        "key": "art_clinic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_clinic",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "Name of ART Clinic",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "date_last_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_last_vl",
+        "type": "date_picker",
+        "hint": "Date of last VL test",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "vl_last_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_last_result",
+        "type": "edit_text",
+        "edit_type": "number",
+        "hint": "Last VL results",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "date_next_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_next_vl",
+        "type": "date_picker",
+        "hint": "Date of next VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:date_last_vl": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step1:date_last_vl)"
+          }
+        }
+      },
+      {
+        "key": "caregiver_mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_mmd",
+        "type": "native_radio",
+        "label": "Is the caregiver on MMD?",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        },
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "level_mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "level_mmd",
+        "type": "spinner",
+        "hint": "Level of MMD for caregiver",
+        "values": [
+          "Less than 3 months",
+          "Between 3-5 months",
+          "6 months or more"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Select level of MMD for child"
+        },
+        "relevance": {
+          "step1:caregiver_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "health_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_services",
+        "label": "HIV/HEALTHY ",
+        "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Age-appropriate HIV treatment literacy",
+            "text": "Age-appropriate HIV treatment literacy"
+          },
+          {
+            "key": "Age-appropriate counselling",
+            "text": "Age-appropriate counselling"
+          },
+          {
+            "key": "HIV disclosure support",
+            "text": "HIV disclosure support"
+          },
+          {
+            "key": "HIV treatment and care",
+            "text": "HIV treatment and care"
+          },
+          {
+            "key": "Tracked developmental milestones",
+            "text": "Tracked developmental milestones in HIV infected/exposed infants"
+          },
+          {
+            "key": "HIV adherence support",
+            "text": "HIV adherence support second and third EAC"
+          },
+          {
+            "key": "Age-appropriate HIV prevention support",
+            "text": "Age-appropriate HIV prevention support"
+          },
+          {
+            "key": "Provided condoms",
+            "text": "Provided condoms"
+          },
+          {
+            "key": "Conducted HIV testing/accompanied to health facility for testing",
+            "text": "Conducted HIV testing/accompanied to health facility for testing"
+          },
+          {
+            "key": "Conducted/facilitated VL Sample Collection",
+            "text": "Conducted/facilitated VL Sample Collection"
+          },
+          {
+            "key": "Lost to follow up tracing",
+            "text": "Lost to follow up tracing"
+          },
+          {
+            "key": "Appointment reminders",
+            "text": "Appointment reminders, ART and other drugs collection /delivery"
+          },
+          {
+            "key": "Immunization",
+            "text": "Immunization"
+          },
+          {
+            "key": "Viral Load (PCR)",
+            "text": "Viral Load (PCR)"
+          },
+          {
+            "key": "Routine health care",
+            "text": "Routine health care"
+          },
+          {
+            "key": "VMMC",
+            "text": "VMMC"
+          },
+          {
+            "key": "CD4",
+            "text": "CD4"
+          },
+          {
+            "key": "Emergency Health Care",
+            "text": "Emergency Health Care"
+          },
+          {
+            "key": "Followed up for EAC  followed up for eac lessons",
+            "text": "Followed up for EAC  followed up for eac lessons"
+          },
+          {
+            "key": "Conducted/facilitated VL Sample Collection",
+            "text": "Viral load sample collection"
+          },
+          {
+            "key": "TB Screening",
+            "text": "TB Screening"
+          },
+          {
+            "key": "Health education on Cholera prevention",
+            "text": "Health education on Cholera prevention"
+          },
+          {
+            "key": "Rapid test was done",
+            "text": "Rapid test was done"
+          },
+          {
+            "key": "Sexually transmitted infections (STIs) treatment",
+            "text": "Sexually transmitted infections (STIs) treatment"
+          },
+          {
+            "key": "Malnutrition screening",
+            "text": "Malnutrition screening"
+          },
+          {
+            "key": "Supplementary or Therapeutic feeding",
+            "text": "Supplementary or Therapeutic feeding"
+          },
+          {
+            "key": "Nutrition screening",
+            "text": "Nutrition screening"
+          },
+          {
+            "key": "MUAC screening",
+            "text": "MUAC screening"
+          },
+          {
+            "key": "Conducted COVID testing/accompanied to health facility for testing",
+            "text": "Conducted COVID testing/accompanied to health facility for testing"
+          },
+          {
+            "key": "COVID-19 Vaccine",
+            "text": "COVID-19 Vaccine"
+          },
+          {
+            "key": "COVID Messaging",
+            "text": "COVID Messaging"
+          },
+          {
+            "key": "Adherence Support",
+            "text": "Adherence Support"
+          },
+          {
+            "key": "DART (Directly Administered ART)",
+            "text": "DART (Directly Administered ART)"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          }
+
+        ],
+        "relevance": {
+          "step1:services": {
+            "type": "string",
+            "ex": "equalTo(., \"caregiver\")"
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
+        }
+      },
+      {
+        "key": "other_health_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_health_services",
+        "type": "edit_text",
+        "hint": "Specify any other HIV/HEALTH service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_service_caregiver",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_service_caregiver",
+        "type": "edit_text",
+        "hint": "Specify any other service provided to Caregiver",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "schooled_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "schooled_services",
+        "label": "SCHOOLED ",
+        "label_info_text": "Tick (x) schooled  Services Provided",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Child received school uniform",
+            "text": "Child received school uniform"
+          },
+          {
+            "key": "Child received school shoes",
+            "text": "Child received school shoes"
+          },
+          {
+            "key": "Child received schoolbooks and other materials",
+            "text": "Child received schoolbooks and other materials (pencils, pens etc)"
+          },
+          {
+            "key": "Child received bursary, tuition or school fees from ECAPII",
+            "text": "Child received bursary, tuition or school fees from ECAPII"
+          },
+          {
+            "key": "Child received assistance for re-enrollment",
+            "text": "Child received assistance for re-enrollment"
+          },
+          {
+            "key": "Post violence trauma counselling",
+            "text": "Post violence trauma counselling"
+          },
+          {
+            "key": "Child provided a report of suspected abuse to child protection office,police or other local authority",
+            "text": "Child provided a report of suspected abuse to child protection office, police or other local authority"
+          },
+          {
+            "key": "Received regular assistance or support with homework",
+            "text": "Received regular assistance/ support with homework (e.g., homework club participation)"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_schooled_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_schooled_services",
+        "type": "edit_text",
+        "hint": "Specify any other schooled service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "safe_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "safe_services",
+        "label": "SAFE ",
+        "label_info_text": "Tick (x) SAFE Services Provided",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Safety plan developed",
+            "text": "Safety plan developed"
+          },
+          {
+            "key": " Family/case conferencing to prevent occurrence of child abuse or neglect",
+            "text": " Family/case conferencing to prevent occurrence of child abuse/neglect"
+          },
+          {
+            "key": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation",
+            "text": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation etc."
+          },
+          {
+            "key": "Emergency shelter or Care facility",
+            "text": "Emergency shelter or Care facility"
+          },
+          {
+            "key": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)",
+            "text": "Child participated in evidence-based intervention for preventing HIV and sexual violence (e.g. Chimwemwe program)"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_safe_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_safe_services",
+        "type": "edit_text",
+        "hint": "Specify any other safe service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "stable_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "stable_services",
+        "label": "STABLE ",
+        "label_info_text": "Tick (x) stable Services Provided",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Linked to WE Program",
+            "text": "Linked to WE Program"
+          },
+          {
+            "key": "Linked to other savings group",
+            "text": "Linked to other savings group"
+          },
+          {
+            "key": "Financial literacy training",
+            "text": "Financial literacy training"
+          },
+          {
+            "key": "Business/Entrepreneurship skills training",
+            "text": "Business/Entrepreneurship skills training"
+          },
+          {
+            "key": "Agribusiness training",
+            "text": "Agribusiness training"
+          },
+          {
+            "key": "Linkages to formal financial institutions (banks, credit unions etc)",
+            "text": "Linkages to formal financial institutions (banks, credit unions etc)"
+          },
+          {
+            "key": "Numeracy training",
+            "text": "Numeracy training"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_stable_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_stable_services",
+        "type": "edit_text",
+        "hint": "Specify any other stable service provided ",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "hh_level_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_level_services",
+        "label": " HH LEVEL SERVICES ",
+        "label_info_text": "Tick (x) other hh level services Services Provided",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Family or psychosocial support for family conflict mitigation",
+            "text": "Family/psychosocial support for family conflict mitigation"
+          },
+          {
+            "key": "Household hygiene counselling and WASH",
+            "text": "Household hygiene counselling and WASH"
+          },
+          {
+            "key": "Family case conferencing to prevent occurrence",
+            "text": "Family case conferencing to prevent occurrence"
+          },
+          {
+            "key": "Family received cash support",
+            "text": "Family received cash support"
+          },
+          {
+            "key": "Family received material support",
+            "text": "Family received material support"
+          },
+          {
+            "key": "Linked to evidence-based parenting intervention to prevent HIV and sexual violence their children (e.g. Chimwemwe program)",
+            "text": "Linked to evidence-based parenting interventions to prevent HIV and sexual violence to children (e.g. Chimwemwe program)"
+          },
+          {
+            "key": "Household Post violence trauma counselling",
+            "text": "Household Post violence trauma counselling"
+          },
+          {
+            "key": "Linked to WE program",
+            "text": "Linked to WE program"
+          },
+          {
+            "key": "Linked to other savings groups",
+            "text": "Linked to other savings groups"
+          },
+          {
+            "key": "Linked to social cash transfer (SCT)",
+            "text": "Linked to social cash transfer (SCT)"
+          },
+          {
+            "key": "Linkages to formal financial institutions (banks, credit union etc)",
+            "text": "Linkages to formal financial institutions (banks, credit union etc)"
+          },
+          {
+            "key": "Linked to other livelihood support",
+            "text": "Linked to other livelihood support"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one service. Select 'Not Applicable' if it doesn't apply"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "other_hh_level_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_hh_level_services",
+        "type": "edit_text",
+        "hint": "Specify any other hh level  service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "services.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "label": "Delete",
+        "options": [
+          {
+            "key": "0",
+            "text": "0",
+            "value": true
+          },
+          {
+            "key": "1",
+            "text": "1"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      }
+    ]
+  }
+}

@@ -251,6 +251,25 @@
         }
       },
       {
+        "key": "location_moved_to",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "location_moved_to",
+        "type": "edit_text",
+        "hint": "Location",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide location"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Moved (Relocated)\")"
+          }
+        }
+      },
+      {
         "key": "vca_receiving_caseworker",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
