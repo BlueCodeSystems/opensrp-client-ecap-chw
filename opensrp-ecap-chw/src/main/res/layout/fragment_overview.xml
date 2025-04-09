@@ -113,18 +113,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/black_text_color"
                 />
-            <TextView
-                android:visibility="visible"
-                android:id="@+id/abymSub"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:text="ABYM"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                />
+
             <TextView
                 android:visibility="gone"
                 android:id="@+id/other_subpop_member"
@@ -236,6 +225,50 @@
             <!--                />-->
 
 
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/abymSub"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="ABYM"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/siblingSubPop"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/contact_drawable_padding"
+                android:paddingTop="@dimen/contact_small_padding"
+                android:paddingBottom="@dimen/contact_small_padding"
+                android:text="SIBS/INDEX FAMILY"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black_text_color"
+                />
 
         </LinearLayout>
         <LinearLayout

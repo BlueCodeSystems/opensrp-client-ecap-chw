@@ -295,13 +295,12 @@ public class HouseholdDao extends AbstractDao {
         return values;
     }
 
-    public static Household getVcaSubPop (String householdID, String uniqueID) {
+    public static Household getVcaSubPop(String householdID, String uniqueID) {
 
         String sql = "SELECT *,A.* FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "' AND unique_id = '" + uniqueID + "') AS A LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B ON A.household_id = B.household_id";
 
         List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
-        if (values == null || values.size() == 0)
-        {
+        if (values == null || values.size() == 0) {
             return new Household();
         }
 
