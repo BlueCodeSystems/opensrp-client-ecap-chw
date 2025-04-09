@@ -45,12 +45,14 @@ public class ProfileOverviewFragment extends Fragment {
     LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2,abymSubpopulation;
     ImageButton imgBtn;
     TextView abymTxt,disabledTxt,agedTxt,illnessTxt,childHeadTxt,notChildHeadTx,femaleHeadedTxt,survivorTxt;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6,abymSub,otherSub,otherMemberSub, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6,otherSub,otherMemberSub, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
             txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
             new_caregiver_name, overview_section_header3,overview_section_header5,overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
 
     AbymSubpopulationModel abym;
+
+    LinearLayout abymSub,siblingSubPop;
 
     MuacModel muacModel;
     VcaScreeningModel childScreeningModel;
@@ -73,6 +75,7 @@ public class ProfileOverviewFragment extends Fragment {
         sub5 = view.findViewById(R.id.subpop5);
         sub6 = view.findViewById(R.id.subpop6);
         abymSub = view.findViewById(R.id.abymSub);
+        siblingSubPop = view.findViewById(R.id.siblingSubPop);
         txtSubPopulation = view.findViewById(R.id.sub_population);
         subPopLayout1 = view.findViewById(R.id.subPopLayout1);
         subPopLayout2 = view.findViewById(R.id.subPopLayout2);
@@ -435,9 +438,30 @@ public class ProfileOverviewFragment extends Fragment {
 
         if ( !"female".equals(childIndex.getGender()) && abym != null && "yes".equals(abym.getAbym_years()) ) {
             abymSub.setVisibility(View.VISIBLE);
+        } else{
+            abymSub.setVisibility(View.GONE);
         }
 
+//        HouseholdMemberModel memberModel = HouseholdMemberDao.getMember(childIndex.getUnique_id());
+//        if(memberModel != null && "sibling".equals(memberModel.getMember_type())){
+//            siblingSubPop.setVisibility(View.VISIBLE);
+//        } else {
+//            siblingSubPop.setVisibility(View.GONE);
+//        }
 
+        Household sub = HouseholdDao.getHousehold(childIndex.getHousehold_id());
+        VcaScreeningModel screen = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
+
+        if (sub != null) {
+            String mappedValues = keysToValues(sub.getSub_population());
+            if (mappedValues.contains("SIBS/INDEX FAMILY") && (!screen.getIndex_check_box().equals("yes") && !screen.getIndex_check_box().equals("1"))){
+                siblingSubPop.setVisibility(View.VISIBLE);
+            } else {
+                siblingSubPop.setVisibility(View.GONE);
+            }
+        } else {
+            siblingSubPop.setVisibility(View.GONE); // Default to hidden if no data
+        }
 
 
 

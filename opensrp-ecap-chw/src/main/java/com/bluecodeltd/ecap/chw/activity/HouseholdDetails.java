@@ -644,7 +644,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     else {
                         toast_reminder_benchmark_3.put("type", "toaster_notes");
-                        toast_reminder_benchmark_3.put("text", cname.getText().toString()+" doesn’t have adolescents aged 12 to 17 to be assessed on their knowledge about HIV prevention");
+                        toast_reminder_benchmark_3.put("text", cname.getText().toString()+" doesn’t have adolescents aged 10 to 17 to be assessed on their knowledge about HIV prevention");
                         prevention.put(JsonFormUtils.VALUE, "N/A");
 
                     }

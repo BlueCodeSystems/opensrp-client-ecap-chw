@@ -297,6 +297,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "first_name",
                 "last_name",
                 "pmtct_id",
@@ -343,6 +344,7 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "first_name",
                 "last_name",
                 "pmtct_id",
