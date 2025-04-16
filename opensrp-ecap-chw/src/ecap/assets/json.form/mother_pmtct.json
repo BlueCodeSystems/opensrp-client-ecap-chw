@@ -1206,7 +1206,7 @@
         "relevance": {
           "step1:hiv_tested": {
             "type": "string",
-            "ex": "equalTo(., \"yes\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -1389,7 +1389,7 @@
         "relevance": {
           "step1:male_hiv_tested": {
             "type": "string",
-            "ex": "equalTo(., \"yes\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
