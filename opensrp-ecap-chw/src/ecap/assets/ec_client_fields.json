@@ -2630,6 +2630,13 @@
           "json_mapping": {
             "field": "attributes.location_moved_to"
           }
+        },
+        {
+          "column_name": "ovc_district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ovc_district"
+          }
         }
       ]
     },

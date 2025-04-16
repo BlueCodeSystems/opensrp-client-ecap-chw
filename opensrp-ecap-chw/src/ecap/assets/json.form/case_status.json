@@ -232,6 +232,25 @@
         }
       },
       {
+        "key": "ovc_district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ovc_district",
+        "type": "edit_text",
+        "hint": "District",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide district"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other OVC program\")"
+          }
+        }
+      },
+      {
         "key": "ovc_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
