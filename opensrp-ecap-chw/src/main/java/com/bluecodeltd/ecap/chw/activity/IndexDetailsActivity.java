@@ -1380,10 +1380,82 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             break;
 
                 case "household_visitation_for_vca_0_20_years":
+                    Double vAge = getAndCalculateAge(indexVCA.getAdolescent_birthdate());
+
+                    JSONObject hiv_infection = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_infection");
+                    JSONObject nutrition_status = getFieldJSONObject(fields(formToBeOpened, "step1"), "nutrition_status");
+                    JSONObject against_hiv_risk = getFieldJSONObject(fields(formToBeOpened, "step1"), "against_hiv_risk");
+
+
+
+                    if (vAge >= 10.0 && vAge <= 17.0) {
+                        hiv_infection.put("type", "native_radio");
+//                        prevention_support.put("type", "native_radio");
+//                        against_hiv_risk.put("type", "native_radio");
+                    } else {
+                        hiv_infection.put("type", "hidden");
+//                        prevention_support.put("type", "hidden");
+//                        against_hiv_risk.put("type", "hidden");
+                    }
+
+
+                    JSONObject under_five = getFieldJSONObject(fields(formToBeOpened, "step1"), "under_five");
+                    if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
+                        under_five.put("type", "native_radio");
+                        nutrition_status.put("type", "native_radio");
+                    } else if (vAge <= 5.0) {
+                        under_five.put("type", "native_radio");
+                        nutrition_status.put("type", "native_radio");
+                    } else {
+                        under_five.put("type", "hidden");
+                        nutrition_status.put("type", "hidden");
+                    }
+
+                    JSONObject eid_test = getFieldJSONObject(fields(formToBeOpened, "step1"), "eid_test");
+                    JSONObject age_appropriate = getFieldJSONObject(fields(formToBeOpened, "step1"), "age_appropriate");
+                    JSONObject  child_receiving_breastfeeding = getFieldJSONObject(fields(formToBeOpened, "step1"), " child_receiving_breastfeeding");
+
+
+                    if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
+                        eid_test.put("type", "edit_text");
+                        age_appropriate.put("type", "native_radio");
+//                        child_receiving_breastfeeding.put("type", "native_radio");
+
+                    } else if (vAge <= 2.0) {
+                        eid_test.put("type", "edit_text");
+                        age_appropriate.put("type", "native_radio");
+                    } else {
+                        eid_test.put("type", "hidden");
+                        age_appropriate.put("type", "hidden");
+//                        child_receiving_breastfeeding.put("type", "hidden");
+                    }
+
+                    JSONObject currently_in_school = getFieldJSONObject(fields(formToBeOpened, "step1"), "currently_in_school");
+                    JSONObject verified_by_school = getFieldJSONObject(fields(formToBeOpened, "step1"), "verified_by_school");
+                    JSONObject current_calendar = getFieldJSONObject(fields(formToBeOpened, "step1"), "current_calendar");
+                    JSONObject school_administration_name = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_name");
+                    JSONObject telephone_number = getFieldJSONObject(fields(formToBeOpened, "step1"), "telephone_number");
+                    JSONObject school_administration_date_signed = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_date_signed");
+                    JSONObject school_administration_signature = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_signature");
+
+
+
+                    if(vAge < 5.0){
+                        currently_in_school.put("type", "hidden");
+                        verified_by_school.put("type", "hidden");
+                        current_calendar.put("type", "hidden");
+                        school_administration_name.put("type", "hidden");
+                        telephone_number.put("type", "hidden");
+                        school_administration_date_signed.put("type", "hidden");
+                        school_administration_signature.put("type", "hidden");
+                    }
+
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
+
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
 
-                break;
+
+                    break;
             case "we_services_vca":
                 if(weServiceVcaModel == null){
 
@@ -1829,5 +1901,24 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         screeningModel.setDistrict_moved_to(indexVCA.getDistrict_moved_to());
         screeningModel.setName_ovc(indexVCA.getName_ovc());
         return screeningModel;
+    }
+    private double getAndCalculateAge(String birthdate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today = LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+        int years = periodBetweenDateOfBirthAndNow.getYears();
+        int months = periodBetweenDateOfBirthAndNow.getMonths();
+
+        if (years == 0) {
+            if (months >= 10) return 0.5; // 10–11 months
+            else if (months >= 7) return 0.4; // 7–9 months
+            else if (months >= 4) return 0.3; // 4–6 months
+            else if (months >= 1) return 0.1; // 1–3 months
+            else return 0.0; // < 1 month
+        } else {
+            return (double) years;
+        }
     }
 }

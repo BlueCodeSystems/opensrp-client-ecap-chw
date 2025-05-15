@@ -5,7 +5,9 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class VcaVisitationDao extends AbstractDao {
 
@@ -20,7 +22,88 @@ public class VcaVisitationDao extends AbstractDao {
         return Integer.parseInt(values.get(0));
 
     }
+    public static boolean getNutritionStatusForAgeFiveAndBelowByHousehold(String householdID) {
+        String sql = "WITH RankedVisits AS (\n" +
+                "    SELECT \n" +
+                "        ec_household_visitation_for_vca_0_20_years.nutrition_status,\n" +
+                "        ec_household.household_id,\n" +
+                "        ec_client_index.adolescent_birthdate,\n" +
+                "        ec_client_index.unique_id,\n" +
+                "        ROW_NUMBER() OVER (\n" +
+                "            PARTITION BY ec_household_visitation_for_vca_0_20_years.unique_id\n" +
+                "            ORDER BY strftime('%Y-%m-%d', substr(visit_date, 7, 4) || '-' || substr(visit_date, 4, 2) || '-' || substr(visit_date, 1, 2)) DESC\n" +
+                "        ) AS rn\n" +
+                "    FROM \n" +
+                "        ec_household_visitation_for_vca_0_20_years \n" +
+                "    JOIN \n" +
+                "        ec_client_index \n" +
+                "    ON \n" +
+                "        ec_household_visitation_for_vca_0_20_years.unique_id = ec_client_index.unique_id \n" +
+                "    JOIN \n" +
+                "        ec_household \n" +
+                "    ON \n" +
+                "        ec_client_index.household_id = ec_household.household_id \n" +
+                "    WHERE \n" +
+                "        (ec_household_visitation_for_vca_0_20_years.delete_status IS NULL OR ec_household_visitation_for_vca_0_20_years.delete_status <> '1') \n" +
+                "        AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> '1') \n" +
+                "        AND (ec_household.status IS NULL OR ec_household.status != '1')\n" +
+                "        AND strftime('%Y-%m-%d', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) >= date('now', '-5 years')\n" +
+                "       AND ec_household.household_id = '" + householdID + "'\n" +
+                ")\n" +
+                "SELECT \n" +
+                "    nutrition_status,\n" +
+                "    household_id,\n" +
+                "    adolescent_birthdate,\n" +
+                "    unique_id\n" +
+                "FROM \n" +
+                "    RankedVisits\n" +
+                "WHERE \n" +
+                "    rn = 1";
 
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "nutrition_status");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values.isEmpty()) {
+            return false;
+        }
+
+        for (String status : values) {
+            if (!"Normal".equalsIgnoreCase(status)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean areAllVcasVisited(String householdID) {
+
+        String sql = "SELECT ec_household_visitation_for_vca_0_20_years.*, ec_client_index.household_id " +
+                "FROM ec_household_visitation_for_vca_0_20_years " +
+                "JOIN ec_client_index ON ec_household_visitation_for_vca_0_20_years.unique_id = ec_client_index.unique_id " +
+                "WHERE ec_client_index.household_id = '" + householdID + "' AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') ";
+
+        List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
+
+        if (values.isEmpty()) {
+            return false;
+        }
+
+        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND  (deleted IS NULL OR deleted != '1')";
+        List<VcaVisitationModel> allVcas = AbstractDao.readData(vcaSql, getVcaVisitationModelMap());
+
+        if (allVcas.isEmpty()) {
+            return false;
+        }
+
+        Set<String> visitedVcaIds = new HashSet<>();
+        for (VcaVisitationModel visit : values) {
+            visitedVcaIds.add(visit.getUnique_id());
+        }
+
+        return visitedVcaIds.size() == allVcas.size();
+    }
     public static VcaVisitationModel getVcaVisitation (String vcaID) {
 
         String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years WHERE unique_id = '" + vcaID + "' ";
@@ -140,7 +223,6 @@ public class VcaVisitationDao extends AbstractDao {
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
-            record.setVca_visit_location(getCursorValue(c,"vca_visit_location"));
             record.setHei(getCursorValue(c, "hei"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setAge(getCursorValue(c, "age"));
@@ -190,12 +272,12 @@ public class VcaVisitationDao extends AbstractDao {
             record.setNutrition_status(getCursorValue(c, "nutrition_status"));
             record.setNeglected(getCursorValue(c, "neglected"));
             record.setNeglected_child_exploitation(getCursorValue(c, "neglected_child_exploitation"));
-            record.setVl_last_result(getCursorValue(c, "neglected_child_relationships"));
+            record.setNeglected_child_relationships(getCursorValue(c, "neglected_child_relationships"));
             record.setChild_above_12_a(getCursorValue(c, "child_above_12_a"));
             record.setType_of_neglect(getCursorValue(c, "type_of_neglect"));
             record.setSigns_of_violence(getCursorValue(c, "signs_of_violence"));
             record.setRelationships_neglected(getCursorValue(c, "relationships_neglected"));
-            record.setPhysical_violence(getCursorValue(c, " physical_violence"));
+            record.setPhysical_violence(getCursorValue(c, "physical_violence"));
             record.setExperiencing_neglected(getCursorValue(c, "experiencing_neglected"));
             record.setType_of_neglect_physical(getCursorValue(c, "type_of_neglect_physical"));
             record.setSexually_abused(getCursorValue(c, "sexually_abused"));
@@ -211,6 +293,7 @@ public class VcaVisitationDao extends AbstractDao {
             record.setCurrently_in_school(getCursorValue(c, "currently_in_school"));
             record.setNot_in_school(getCursorValue(c, "not_in_school"));
             record.setChild_missed(getCursorValue(c, "child_missed"));
+            record.setChild_ever_experienced_sexual_violence(getCursorValue(c,"child_ever_experienced_sexual_violence"));
             record.setChallenges_barriers(getCursorValue(c, "challenges_barriers"));
             record.setChild_household(getCursorValue(c, "child_household"));
             record.setChild_household_services(getCursorValue(c, "child_household_services"));
@@ -220,7 +303,7 @@ public class VcaVisitationDao extends AbstractDao {
             record.setCurrent_calendar(getCursorValue(c, "current_calendar"));
             record.setDid_not_progress(getCursorValue(c, "did_not_progress"));
             record.setProgression_child_household(getCursorValue(c, "progression_child_household"));
-            record.setSexually_abused(getCursorValue(c, "progression_child_household_services"));
+            record.setProgression_child_household_services(getCursorValue(c, "progression_child_household_services"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setCaseworker_date_signed(getCursorValue(c, "caseworker_date_signed"));
             record.setCaseworker_signature(getCursorValue(c, "caseworker_signature"));
@@ -236,6 +319,12 @@ public class VcaVisitationDao extends AbstractDao {
             record.setIndicate_vl_result(getCursorValue(c,"indicate_vl_result"));
             record.setStatus_color(getCursorValue(c,"status_color"));
             record.setSignature(getCursorValue(c,"signature"));
+            record.setVca_visit_location(getCursorValue(c,"vca_visit_location"));
+            record.setInfection_risk(getCursorValue(c,"infection_risk"));
+            record.setVl_other(getCursorValue(c,"vl_other"));
+            record.setReferred_health_facility(getCursorValue(c,"referred_health_facility"));
+
+
 
             return record;
         };

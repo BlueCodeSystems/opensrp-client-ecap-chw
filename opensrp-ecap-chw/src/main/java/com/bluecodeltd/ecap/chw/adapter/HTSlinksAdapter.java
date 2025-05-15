@@ -22,11 +22,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -69,16 +69,16 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
     @NonNull
     @Override
-    public HTSlinksAdapter.View onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public View onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         android.view.View binder = LayoutInflater.from(parent.getContext()).inflate(R.layout.links_row, parent, false);
 
-        HTSlinksAdapter.View viewHolder = new HTSlinksAdapter.View(binder);
+        View viewHolder = new View(binder);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HTSlinksAdapter.View holder, int position) {
+    public void onBindViewHolder(@NonNull View holder, int position) {
         final  HTSlinksModel client = links.get(position);
         holder.clientNameTextView.setText(client.getFirst_name()+" "+ client.getLast_name());
         holder.clientAgeTextView.setText("Age: "+getAgeWithoutText(client.getBirthdate()));

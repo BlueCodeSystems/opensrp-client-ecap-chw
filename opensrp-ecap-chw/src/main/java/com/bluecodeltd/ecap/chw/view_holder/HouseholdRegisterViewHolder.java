@@ -52,21 +52,22 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
             if (graduationModel != null && "1".equals(graduationModel.getGraduation_status())) {
                 homeIcon.setImageResource(R.mipmap.graduation);
-            } else {
-                // Get Household details by base ID
-                Household household = HouseholdDao.getHouseholdByBaseId(isClosed);
-                String householdStatus = (household != null) ? household.getStatus() : null;
+                return;
+            }
 
-                if (householdStatus == null || !"1".equals(householdStatus)) {
-                    if ("true".equals(screened)) {
-                        homeIcon.setImageResource(R.mipmap.ic_home_active);
-                    } else {
-                        homeIcon.setImageResource(R.mipmap.ic_home);
-                    }
+            // Get Household details by base ID
+            Household household = HouseholdDao.getHouseholdByBaseId(isClosed);
+            String householdStatus = (household != null) ? household.getStatus() : null;
+
+            if (householdStatus == null || !"1".equals(householdStatus)) {
+                if ("true".equals(screened)) {
+                    homeIcon.setImageResource(R.mipmap.ic_home_active);
                 } else {
                     homeIcon.setImageResource(R.mipmap.ic_home);
-                    homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
                 }
+            } else {
+                homeIcon.setImageResource(R.mipmap.ic_home);
+                homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
             }
 
             // Get Household Case Status

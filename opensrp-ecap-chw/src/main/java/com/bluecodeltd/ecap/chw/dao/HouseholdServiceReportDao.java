@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdServiceReportDao extends AbstractDao {
+    public static boolean hasHouseholdServices(String householdId) {
+        String sql = "SELECT * FROM ec_household_service_report " +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND household_id = '" + householdId + "'";
+
+        List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        return values != null && values.size() > 0;
+    }
     public static List<HouseholdServiceReportModel> getServicesByHousehold(String householdId) {
 
         String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +

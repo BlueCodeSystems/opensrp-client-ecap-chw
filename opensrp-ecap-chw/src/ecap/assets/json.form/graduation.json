@@ -131,14 +131,20 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "previous_asmt_date",
         "type": "date_picker",
-        "hint": "Date of this Assessment",
+        "hint": "Date of previous assessment",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-2020",
+        "min_date": "01-01-1900",
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "This field for assessment required"
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:asmt": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -352,7 +358,7 @@
         "type": "toaster_notes",
         "text": "Benchmark 2 has not been met.",
         "toaster_type": "problem",
-        "toaster_info_text": "Benchmark 2 has not been met",
+        "toaster_info_text": "Benchmark 2 has not been met, because both questions have not been answered yes.",
         "toaster_info_title": "Benchmark 2",
         "relevance": {
           "rules-engine": {
@@ -372,6 +378,17 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "warning"
+      },
+      {
+        "key": "toast_na",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "hidden",
+        "text": "Benchmark 2 is not applicable because no beneficiary has been documented as virally suppressed (with a viral load below 1,000 in the last 12 months)",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info"
       }
     ]
   },

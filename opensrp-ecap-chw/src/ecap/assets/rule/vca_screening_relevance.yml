@@ -366,7 +366,7 @@ actions:
 name: step1_positive_mother
 description: positive_mother
 priority: 1
-condition: "step1_is_hiv_positive.contains('no')"
+condition: "step1_is_hiv_positive.contains('no') && helper.formatDate(step1_adolescent_birthdate,'y') <= 2"
 actions:
   - "isRelevant = true"
 ---
@@ -782,7 +782,7 @@ description: suppop_abym
 priority: 1
 condition: "step1_abym_years.contains('yes')  && step1_abym_sexually_active.contains('yes') && step1_abym_sex_older_women.contains('yes') && step1_abym_transactional_sex.contains('yes') && step1_abym_sex_work.contains('yes') && step1_abym_economically_insecure.contains('yes') && step1_abym_violent_partner.contains('yes') &&  step1_abym_diagnosed.contains('yes')"
 actions:
-  - "isRelevant = true"
+- "isRelevant = true"
 ---
 name: step1_reported_neglect_or_exploitation
 description: reported_neglect_or_exploitation

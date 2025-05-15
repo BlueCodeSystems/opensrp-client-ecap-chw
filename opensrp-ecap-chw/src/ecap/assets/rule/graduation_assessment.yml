@@ -20,7 +20,10 @@ actions:
 name: step3_toaster_bench_2_no
 description: step3_toaster_bench_2_no
 priority: 1
-condition: "step3_virally_suppressed.contains('no') || step3_suppressed_caregiver.contains('no')"
+condition: "step3_virally_suppressed.contains('no') 
+||  step3_suppressed_caregiver.contains('no')
+|| (step3_virally_suppressed.contains('no') && step3_suppressed_caregiver.contains('N/A')) 
+|| (step3_virally_suppressed.contains('yes') && step3_suppressed_caregiver.contains('no'))"
 actions:
   - "isRelevant = true"
 ---

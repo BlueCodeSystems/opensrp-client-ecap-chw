@@ -5,9 +5,42 @@ import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class VCAServiceReportDao extends AbstractDao {
+
+    public static boolean areAllVcasServiced(String householdID) {
+
+        String sql = "SELECT ec_vca_service_report.*, ec_client_index.household_id " +
+                "FROM ec_vca_service_report " +
+                "JOIN ec_client_index ON ec_vca_service_report.unique_id = ec_client_index.unique_id " +
+                "WHERE ec_client_index.household_id = '" + householdID + "' " +
+                "AND (ec_vca_service_report.delete_status IS NULL OR ec_vca_service_report.delete_status <> '1') AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1')";
+
+        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+
+        if (values.isEmpty()) {
+            return false;
+        }
+
+        // Query to get all VCAs in the household
+        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
+        List<VCAServiceModel> allVcas = AbstractDao.readData(vcaSql, getServiceModelMap());
+
+        if (allVcas.isEmpty()) {
+            return false;
+        }
+
+
+        Set<String> servicedVcaIds = new HashSet<>();
+        for (VCAServiceModel service : values) {
+            servicedVcaIds.add(service.getUnique_id());
+        }
+
+        return servicedVcaIds.size() == allVcas.size();
+    }
 
     public static List<VCAServiceModel> getRecentServicesByVCAID(String vcaID) {
 

@@ -14,63 +14,11 @@
           },
           {
             "field": "eventType",
-            "field_value": "Mother Pmtct Child",
+            "field_value": "Mother Pmtct",
             "creates_case": [
-              "ec_pmtct_child"
+              "ec_pmtct_mother"
             ]
           },
-          {
-            "field": "eventType",
-            "field_value": "Ptmct Child Outcome",
-            "creates_case": [
-              "ec_pmtct_child_outcome"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "PMTCT Mother Outcome",
-            "creates_case": [
-              "ec_pmtct_mother_outcome"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Mother Pmtct Delivery",
-            "creates_case": [
-              "ec_pmtct_delivery_details"
-            ]
-          },
-
-
-          {
-            "field": "eventType",
-            "field_value": "Ptmct Child Monitoring",
-            "creates_case": [
-              "ec_pmtct_child_monitoring"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Mother Pmtct Monitoring",
-            "creates_case": [
-              "ec_pmtct_mother_monitoring"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Mother Pmtct Postnatal",
-            "creates_case": [
-              "ec_pmtct_mother_postnatal"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Mother Pmtct ANC",
-            "creates_case": [
-              "ec_pmtct_mother_anc"
-            ]
-          },
-
           {
             "field": "eventType",
             "field_value": "Sub Population",
@@ -257,13 +205,6 @@
             "field": "eventType",
             "field_value": "Sick Child Referral",
             "creates_case": [
-              "ec_referral"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Sick Child Referral",
-            "creates_case": [
               "ec_child_referral"
             ]
           },
@@ -419,13 +360,6 @@
           },
           {
             "field": "eventType",
-            "field_value": "Mother Pmtct",
-            "creates_case": [
-              "ec_pmtct_mother"
-            ]
-          },
-          {
-            "field": "eventType",
             "field_value": "Child",
             "creates_case": [
               "ec_client_index"
@@ -470,20 +404,6 @@
           },
           {
             "field": "eventType",
-            "field_value": "Referral Edit VCA",
-            "creates_case": [
-              "ec_referral"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Referral Edit Household",
-            "creates_case": [
-              "ec_referral"
-            ]
-          },
-          {
-            "field": "eventType",
             "field_value": "Domain",
             "creates_case": [
               "ec_vca_case_plan_domain"
@@ -519,21 +439,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "Household Service Report Edit",
-            "creates_case": [
-              "ec_household_service_report"
-            ]
-          },
-          {
-            "field": "eventType",
             "field_value": "VCA Service Report",
-            "creates_case": [
-              "ec_vca_service_report"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "VCA Service Report Edit",
             "creates_case": [
               "ec_vca_service_report"
             ]
@@ -561,21 +467,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "Household Visitation For Caregiver Edit",
-            "creates_case": [
-              "ec_household_visitation_for_caregiver"
-            ]
-          },
-          {
-            "field": "eventType",
             "field_value": "Household Visitation Form 0-20 years",
-            "creates_case": [
-              "ec_household_visitation_for_vca_0_20_years"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Household Visitation Form 0-20 years Edit",
             "creates_case": [
               "ec_household_visitation_for_vca_0_20_years"
             ]
@@ -663,6 +555,94 @@
             "field_value": "HIV Testing Links",
             "creates_case": [
               "ec_hiv_testing_links"
+            ]
+          },
+
+
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Child",
+            "creates_case": [
+              "ec_pmtct_child"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Ptmct Child Outcome",
+            "creates_case": [
+              "ec_pmtct_child_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "PMTCT Mother Outcome",
+            "creates_case": [
+              "ec_pmtct_mother_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Delivery",
+            "creates_case": [
+              "ec_pmtct_delivery_details"
+            ]
+          },
+
+
+          {
+            "field": "eventType",
+            "field_value": "Ptmct Child Monitoring",
+            "creates_case": [
+              "ec_pmtct_child_monitoring"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Monitoring",
+            "creates_case": [
+              "ec_pmtct_mother_monitoring"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct Postnatal",
+            "creates_case": [
+              "ec_pmtct_mother_postnatal"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother Pmtct ANC",
+            "creates_case": [
+              "ec_pmtct_mother_anc"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Service Report Edit",
+            "creates_case": [
+              "ec_household_service_report"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "VCA Service Report Edit",
+            "creates_case": [
+              "ec_vca_service_report"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Visitation For Caregiver Edit",
+            "creates_case": [
+              "ec_household_visitation_for_caregiver"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Household Visitation Form 0-20 years Edit",
+            "creates_case": [
+              "ec_household_visitation_for_vca_0_20_years"
             ]
           }
         ]
