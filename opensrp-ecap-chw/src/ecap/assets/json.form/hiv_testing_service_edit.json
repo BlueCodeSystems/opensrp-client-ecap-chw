@@ -111,18 +111,61 @@
         }
       },
       {
+        "key": "facility_within_ward_question",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility_within_ward_question",
+        "type": "native_radio",
+        "label": "Is the facility within the ward?",
+        "read_only": "true",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Is the facility within the ward"
+        }
+      },
+      {
+        "key": "facility_not_within_ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility_not_within_ward",
+        "type": "edit_text",
+        "hint": "Facility",
+        "read_only": "true",
+        "v_required": {
+          "value": true,
+          "err":  "Facility name is required"
+        },
+        "relevance": {
+          "step1:facility_within_ward_question": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
+      },
+      {
         "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
         "type": "edit_text",
-        "hint": "Health Facility",
+        "hint": "Facility",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": "true",
-          "err": "Health facility Required"
+        "relevance": {
+          "step1:facility_within_ward_question": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -378,7 +421,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAPII ID (If Applicable)",
+        "hint": " ECAP PLUS (If Applicable)",
         "read_only": "false",
         "relevance": {
           "step1:testing_modality": {
@@ -572,7 +615,7 @@
 
         ],
         "v_required": {
-          "value": false,
+          "value": true,
           "err": "This field is Required"
         },
         "relevance": {

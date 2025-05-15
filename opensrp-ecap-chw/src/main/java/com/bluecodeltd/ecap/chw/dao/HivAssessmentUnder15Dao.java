@@ -35,12 +35,7 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
     }
     public static List<HivRiskAssessmentUnder15Model> getHivAssessment(String childID) {
 
-        String sql = "SELECT *,\n" +
-                "                (substr(COALESCE(assessment_date, '00000000'), 7, 4) || '-' ||\n" +
-                "                 substr(COALESCE(assessment_date, '00000000'), 4, 2) || '-' ||\n" +
-                "                 substr(COALESCE(assessment_date, '00000000'), 1, 2)) as sortable_date\n" +
-                " FROM ec_hiv_assessment_below_15 WHERE unique_id = '" + childID + "'\n" +
-                " ORDER BY sortable_date DESC";
+        String sql = "SELECT * FROM ec_hiv_assessment_below_15 WHERE unique_id = '" + childID + "'";
 
 
         List<HivRiskAssessmentUnder15Model> values = AbstractDao.readData(sql, getHivRiskAssessmentUnder15ModelMap());

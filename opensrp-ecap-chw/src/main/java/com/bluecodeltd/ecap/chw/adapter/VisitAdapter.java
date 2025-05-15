@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
@@ -30,10 +32,12 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,6 +57,9 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -76,18 +83,18 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     }
 
     @Override
-    public VisitAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
 
-        VisitAdapter.ViewHolder viewHolder = new VisitAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(VisitAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final VcaVisitationModel visit = visits.get(position);
 
@@ -166,6 +173,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 visit.setDelete_status("1");
                 JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years_edit");
                 try {
+
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( visit, Map.class));
                     vcaScreeningForm.put("entity_id", visit.getBase_entity_id());
                 } catch (JSONException e) {
@@ -319,6 +327,85 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         formToBeOpened = formUtils.getFormJson(formName);
 
         formToBeOpened.put("entity_id", visit.getBase_entity_id());
+        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(visit.getUnique_id());
+
+
+        Double vAge = getAndCalculateAge(vcaScreeningModel.getAdolescent_birthdate());
+
+        JSONObject hiv_infection = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_infection");
+
+
+        if (vAge >= 10.0 && vAge <= 17.0) {
+            hiv_infection.put("type", "native_radio");
+
+        } else {
+            hiv_infection.put("type", "hidden");
+
+        }
+
+
+        JSONObject under_five = getFieldJSONObject(fields(formToBeOpened, "step1"), "under_five");
+        JSONObject nutrition_status = getFieldJSONObject(fields(formToBeOpened, "step1"), "nutrition_status");
+        if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
+            under_five.put("type", "native_radio");
+            nutrition_status.put("type", "native_radio");
+        } else if (vAge <= 5.0) {
+            under_five.put("type", "native_radio");
+            nutrition_status.put("type", "native_radio");
+        } else {
+            under_five.put("type", "hidden");
+            nutrition_status.put("type", "hidden");
+        }
+
+        JSONObject eid_test = getFieldJSONObject(fields(formToBeOpened, "step1"), "eid_test");
+        JSONObject age_appropriate = getFieldJSONObject(fields(formToBeOpened, "step1"), "age_appropriate");
+
+
+        if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
+            eid_test.put("type", "edit_text");
+            age_appropriate.put("type", "native_radio");
+
+        } else if (vAge <= 2.0) {
+            eid_test.put("type", "edit_text");
+            age_appropriate.put("type", "native_radio");
+        } else {
+            eid_test.put("type", "hidden");
+            age_appropriate.put("type", "hidden");
+
+        }
+
+
+        JSONObject currently_in_school = getFieldJSONObject(fields(formToBeOpened, "step1"), "currently_in_school");
+        JSONObject verified_by_school = getFieldJSONObject(fields(formToBeOpened, "step1"), "verified_by_school");
+        JSONObject current_calendar = getFieldJSONObject(fields(formToBeOpened, "step1"), "current_calendar");
+        JSONObject school_administration_name = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_name");
+        JSONObject telephone_number = getFieldJSONObject(fields(formToBeOpened, "step1"), "telephone_number");
+        JSONObject school_administration_date_signed = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_date_signed");
+        JSONObject school_administration_signature = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_signature");
+
+
+
+        if(vAge < 5.0){
+            currently_in_school.put("type", "hidden");
+            verified_by_school.put("type", "hidden");
+            current_calendar.put("type", "hidden");
+            school_administration_name.put("type", "hidden");
+            telephone_number.put("type", "hidden");
+            school_administration_date_signed.put("type", "hidden");
+            school_administration_signature.put("type", "hidden");
+        }
+
+        JSONObject question = getFieldJSONObject(fields(formToBeOpened, "step1"), "child_ever_experienced_sexual_violence");
+
+//        if(visit.getChild_ever_experienced_sexual_violence().equals("yes")){
+
+        question.put(JsonFormUtils.VALUE, "yes");
+//        } else if (hivRiskAssessmentUnder15Model.getQuestion().equals("no")) {
+//            question.put(JsonFormUtils.VALUE, "no");
+//        } else{
+//            question.put(JsonFormUtils.VALUE, "");
+//        }
+
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
 
@@ -473,6 +560,25 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         @Override
         public void onClick(View v) {
 
+        }
+    }
+    private double getAndCalculateAge(String birthdate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today = LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+        int years = periodBetweenDateOfBirthAndNow.getYears();
+        int months = periodBetweenDateOfBirthAndNow.getMonths();
+
+        if (years == 0) {
+            if (months >= 10) return 0.5; // 10–11 months
+            else if (months >= 7) return 0.4; // 7–9 months
+            else if (months >= 4) return 0.3; // 4–6 months
+            else if (months >= 1) return 0.1; // 1–3 months
+            else return 0.0; // < 1 month
+        } else {
+            return (double) years;
         }
     }
 

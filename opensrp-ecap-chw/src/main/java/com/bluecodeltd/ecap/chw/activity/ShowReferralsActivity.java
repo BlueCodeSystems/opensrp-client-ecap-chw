@@ -178,7 +178,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
-                case "Referral Edit VCA":
+                case "Referral":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

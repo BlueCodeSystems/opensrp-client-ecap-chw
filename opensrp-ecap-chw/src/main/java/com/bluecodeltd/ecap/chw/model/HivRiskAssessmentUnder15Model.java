@@ -29,6 +29,7 @@ public class HivRiskAssessmentUnder15Model {
     private String facility;
     private String delete_status;
     private String assessment_date;
+    private String Question;
 
 
     public String getHousehold_id() {
@@ -245,5 +246,13 @@ public class HivRiskAssessmentUnder15Model {
 
     public void setAssessment_date(String assessment_date) {
         this.assessment_date = assessment_date;
+    }
+
+    public String getQuestion() {
+        return Question;
+    }
+
+    public void setQuestion(String question) {
+        this.Question = question;
     }
 }
