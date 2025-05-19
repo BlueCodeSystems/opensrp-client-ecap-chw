@@ -254,12 +254,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
         if(referralModel == null){
             fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
-        if(hivRiskAssessmentUnder15Model == null){
+//        if(hivRiskAssessmentUnder15Model == null){
             fabHiv.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-        if(hivRiskAssessmentAbove15Model == null){
+//        }
+//        if(hivRiskAssessmentAbove15Model == null){
             fabHiv2.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
+//        }
         if(vcaVisitationModel == null){
             fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
