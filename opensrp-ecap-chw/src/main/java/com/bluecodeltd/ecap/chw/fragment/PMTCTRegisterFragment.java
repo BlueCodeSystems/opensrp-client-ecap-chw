@@ -108,7 +108,7 @@ public class PMTCTRegisterFragment extends BaseRegisterFragment implements Index
     }
     @Override
     protected String getDefaultSortQuery() {
-        return "";
+        return "delete_status IS NULL";
     }
 
     @Override
