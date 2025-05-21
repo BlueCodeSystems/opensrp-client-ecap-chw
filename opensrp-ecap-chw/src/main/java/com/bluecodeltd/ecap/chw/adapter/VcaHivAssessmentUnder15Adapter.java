@@ -267,14 +267,16 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
         JSONObject question = getFieldJSONObject(fields(formToBeOpened, "step1"), "Question");
 
-        if(visit.getQuestion().equals("yes")){
+        String answer = (visit != null && visit.getQuestion() != null) ? visit.getQuestion() : "";
 
+        if ("yes".equalsIgnoreCase(answer)) {
             question.put(JsonFormUtils.VALUE, "yes");
-        } else if (visit.getQuestion().equals("no")) {
+        } else if ("no".equalsIgnoreCase(answer)) {
             question.put(JsonFormUtils.VALUE, "no");
-        } else{
+        } else {
             question.put(JsonFormUtils.VALUE, "");
         }
+
 
 //        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
 

@@ -22,11 +22,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -69,16 +69,16 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
     @NonNull
     @Override
-    public View onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HTSlinksAdapter.View onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         android.view.View binder = LayoutInflater.from(parent.getContext()).inflate(R.layout.links_row, parent, false);
 
-        View viewHolder = new View(binder);
+        HTSlinksAdapter.View viewHolder = new HTSlinksAdapter.View(binder);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull View holder, int position) {
+    public void onBindViewHolder(@NonNull HTSlinksAdapter.View holder, int position) {
         final  HTSlinksModel client = links.get(position);
         holder.clientNameTextView.setText(client.getFirst_name()+" "+ client.getLast_name());
         holder.clientAgeTextView.setText("Age: "+getAgeWithoutText(client.getBirthdate()));
@@ -192,6 +192,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView comment = dialogView.findViewById(R.id.comment);
         TextView caseworker_name = dialogView.findViewById(R.id.caseworker_name);
         TextView checked_by = dialogView.findViewById(R.id.checked_by);
+        TextView artNumTxt = dialogView.findViewById(R.id.artNumTxt);
 
         enrolled_on_ARTLayout = dialogView.findViewById(R.id.enrolled_on_ARTLayout);
         initial_artLayout = dialogView.findViewById(R.id.initial_artLayout);
@@ -202,12 +203,18 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
 
 
-        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Positive")) {
+        if (client.getHiv_status() != null &&
+                (client.getHiv_status().equals("Known Positive") ||
+                        client.getHiv_status().equals("Test Not Required (evidenced by an HIV risk assessment)"))){
             date.setVisibility(GONE);
             label.setVisibility(GONE);
+
         }
-        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Negative")) {
+        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Negative")
+        ||  client.getHiv_status().equals("Test Not Required (evidenced by an HIV risk assessment)")) {
             artLayout.setVisibility(GONE);
+            art_number.setVisibility(GONE);
+            artNumTxt.setVisibility(GONE);
         }
 
 
@@ -302,7 +309,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
     }
 
     public class View extends RecyclerView.ViewHolder {
-        TextView clientNameTextView, clientAgeTextView,clientDetails;
+        TextView clientNameTextView, clientAgeTextView,clientDetails,artNumTxt;
         ImageView editClient,deleteRecord;
         public View(@NonNull android.view.View itemView) {
             super(itemView);
@@ -311,6 +318,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             clientDetails = itemView.findViewById(R.id.details);
             editClient = itemView.findViewById(R.id.edit_client);
             deleteRecord = itemView.findViewById(R.id.delete);
+
         }
     }
 
