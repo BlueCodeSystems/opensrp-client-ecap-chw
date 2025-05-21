@@ -69,6 +69,7 @@ public class CaregiverHivAssessmentDao extends AbstractDao {
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPhone(getCursorValue(c, "phone"));
             record.setDate_edited(getCursorValue(c, "date_edited"));
+            record.setSignature(getCursorValue(c, "signature"));
 
             return record;
         };

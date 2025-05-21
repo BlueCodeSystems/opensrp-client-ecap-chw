@@ -10,6 +10,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,7 +153,7 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
 
                 try {
 
-                    openFormUsingFormUtils(context, "hh_hiv_assessment_caregiver", visit);
+                    openFormUsingFormUtils(context, "hh_hiv_assessment_caregiver_edit", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -168,7 +172,7 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
 
                     try {
 
-                        openFormUsingFormUtils(context, "hh_hiv_assessment_caregiver", visit);
+                        openFormUsingFormUtils(context, "hh_hiv_assessment_caregiver_edit", visit);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -232,6 +236,45 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
             }
         });
 
+
+        Household household = HouseholdDao.getHousehold(visit.getHousehold_id());
+
+        String encodedSignature = visit.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
+
+    }
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+            // Decode the Base64 string into bytes
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+            // Convert bytes to a Bitmap
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+
+                // Set the resized Bitmap to the ImageView
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
     }
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
@@ -306,7 +349,7 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
 
             switch (encounterType) {
 
-                case "Hiv Assessment For Caregiver":
+                case "Hiv Assessment For Caregiver Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -391,6 +434,7 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme,delete;
+        ImageView signatureView;
 
         public ViewHolder(View itemView) {
 
@@ -407,6 +451,7 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
             initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
+            signatureView = itemView.findViewById(R.id.signature_view);
 
 
         }

@@ -57,7 +57,7 @@ public class HivAssessmentAbove15Dao extends AbstractDao {
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setAssessment_date(getCursorValue(c,"assessment_date"));
-
+            record.setDate_edited(getCursorValue(c,"date_edited"));
             return record;
         };
     }

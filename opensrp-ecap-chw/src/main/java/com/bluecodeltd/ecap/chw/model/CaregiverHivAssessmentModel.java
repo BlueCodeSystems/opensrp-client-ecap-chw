@@ -22,6 +22,8 @@ public class CaregiverHivAssessmentModel {
     private String phone;
     private String delete_status;
     private String date_edited;
+
+    private String signature;
     public String getHousehold_id() {
         return household_id;
     }
@@ -188,5 +190,13 @@ public class CaregiverHivAssessmentModel {
 
     public void setDate_edited(String date_edited) {
         this.date_edited = date_edited;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

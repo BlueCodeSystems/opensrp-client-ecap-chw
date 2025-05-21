@@ -452,6 +452,7 @@ public class HouseholdDao extends AbstractDao {
             record.setHousehold_id(getCursorValue(c,"household_id"));
             record.setCase_plan_id(getCursorValue(c,"case_plan_id"));
 
+
             return record;
         };
     }
@@ -572,6 +573,7 @@ public class HouseholdDao extends AbstractDao {
             record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
             record.setHousehold_receiving_facility(getCursorValue(c,"household_receiving_facility"));
             record.setOvc_name(getCursorValue(c,"ovc_name"));
+            record.setUser_select_hiv(getCursorValue(c,"user_select_hiv"));
             return record;
         };
     }
@@ -675,6 +677,7 @@ public class HouseholdDao extends AbstractDao {
             record.setSub_population(getCursorValue(c, "sub_population"));
             record.setHousehold_receiving_caseworker(getCursorValue(c, "household_receiving_caseworker"));
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
+
 
             return record;
         };

@@ -4,6 +4,7 @@ public class Household {
 
 
     private String unique_id;
+    private String user_select_hiv;
     private String new_caregiver_death_date;
     private String caseworker_name;
     //household_case_status
@@ -993,5 +994,13 @@ public class Household {
 
     public void setOvc_name(String ovc_name) {
         this.ovc_name = ovc_name;
+    }
+
+    public String getUser_select_hiv() {
+        return user_select_hiv;
+    }
+
+    public void setUser_select_hiv(String user_select_hiv) {
+        this.user_select_hiv = user_select_hiv;
     }
 }

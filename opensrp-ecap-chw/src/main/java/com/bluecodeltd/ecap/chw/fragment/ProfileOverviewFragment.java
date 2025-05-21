@@ -452,16 +452,24 @@ public class ProfileOverviewFragment extends Fragment {
         Household sub = HouseholdDao.getHousehold(childIndex.getHousehold_id());
         VcaScreeningModel screen = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
 
-        if (sub != null) {
+        if (sub != null && sub.getSub_population() != null) {
             String mappedValues = keysToValues(sub.getSub_population());
-            if (mappedValues.contains("SIBS/INDEX FAMILY") && (!screen.getIndex_check_box().equals("yes") && !screen.getIndex_check_box().equals("1"))){
+
+            String indexCheck = screen != null && screen.getIndex_check_box() != null
+                    ? screen.getIndex_check_box().toLowerCase()
+                    : "";
+
+            boolean isIndex = indexCheck.equals("yes") || indexCheck.equals("1");
+
+            if (mappedValues != null && mappedValues.contains("SIBS/INDEX FAMILY") && !isIndex) {
                 siblingSubPop.setVisibility(View.VISIBLE);
             } else {
                 siblingSubPop.setVisibility(View.GONE);
             }
         } else {
-            siblingSubPop.setVisibility(View.GONE); // Default to hidden if no data
+            siblingSubPop.setVisibility(View.GONE);
         }
+
 
 
 

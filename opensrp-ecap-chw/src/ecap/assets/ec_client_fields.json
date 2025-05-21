@@ -32,6 +32,13 @@
           }
         },
         {
+          "column_name": "user_select_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.user_select_hiv"
+          }
+        },
+        {
           "column_name": "partner",
           "type": "Client",
           "json_mapping": {
@@ -6626,6 +6633,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
           }
         },
         {
