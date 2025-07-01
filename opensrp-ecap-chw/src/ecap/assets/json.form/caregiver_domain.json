@@ -132,6 +132,10 @@
           {
             "key": "stable",
             "text": "Stable"
+          },
+          {
+            "key": "schooled",
+            "text": "Schooled"
           }
         ]
       },

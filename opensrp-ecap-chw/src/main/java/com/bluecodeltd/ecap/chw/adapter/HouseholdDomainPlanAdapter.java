@@ -2,7 +2,10 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
+import static org.smartregister.client.utils.constants.JsonFormConstants.STEP1;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
@@ -11,6 +14,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +51,10 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -267,11 +275,51 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         formToBeOpened.put("entity_id", caseplan.getBase_entity_id());
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only",true);
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only",true);
+
+        try {
+            JSONArray subPopulation = getFieldJSONObject(fields(formToBeOpened, STEP1), "type").getJSONArray("options");
+            JSONArray filteredSubPopulation = new JSONArray();
+            Household household = HouseholdDao.getHousehold(caseplan.getHousehold_id());
+            int age = calculateAge(household.getCaregiver_birth_date());
+
+            for (int i = 0; i < subPopulation.length(); i++) {
+                JSONObject option = subPopulation.getJSONObject(i);
+
+                if (!(age > 18 && "schooled".equals(option.getString("key")))) {
+                    filteredSubPopulation.put(option);
+                }
+            }
+
+            getFieldJSONObject(fields(formToBeOpened, STEP1), "type").put("options", filteredSubPopulation);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("FilterOptions", "Error processing subPopulation options: " + e.getMessage());
+        }
+
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(caseplan, Map.class));
 
         startFormActivity(formToBeOpened);
 
+    }
+    public static int calculateAge(String dateString) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate birthDate = LocalDate.parse(dateString, formatter);
+
+            LocalDate currentDate = LocalDate.now();
+
+            if (birthDate.isAfter(currentDate)) {
+                throw new IllegalArgumentException("Birth date cannot be in the future.");
+            }
+
+            return Period.between(birthDate, currentDate).getYears();
+
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Please use 'dd-MM-yyyy'.", e);
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {

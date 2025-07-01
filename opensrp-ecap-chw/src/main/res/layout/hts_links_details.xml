@@ -180,11 +180,13 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_marginTop="5dp"
             android:weightSum="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+           >
 
             <TextView
                 android:layout_weight="1"
@@ -201,13 +203,40 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-
         <LinearLayout
+            android:id="@+id/artLayout"
             android:layout_marginTop="5dp"
             android:weightSum="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/artNumTxt"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="ART Number:"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/art_number"
+                android:layout_weight="1"
+                android:text="000"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/date"
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
 
             <TextView
                 android:layout_weight="1"
@@ -226,18 +255,19 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/label"
             android:layout_marginTop="5dp"
             android:weightSum="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:visibility="visible"
             >
 
             <TextView
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="HIV Testing Resuits:"
+                android:text="HIV Testing Results:"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"/>
 

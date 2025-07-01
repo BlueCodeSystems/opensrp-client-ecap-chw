@@ -72,27 +72,12 @@
         "type": "date_picker",
         "hint": "Date when Service/s Provided",
         "expanded": false,
-        "min_date": "today-100y",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "v_required": {
           "value": true,
           "err": "This field is required"
         }
-      },
-      {
-        "key": "signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "signature",
-        "type": "hidden"
-      },
-      {
-        "key": "hh_service_location",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hh_service_location",
-        "openmrs_data_type": "text",
-        "type": "gps"
       },
       {
         "key": "services",
@@ -171,7 +156,7 @@
         "openmrs_entity_id": "date_last_vl",
         "type": "date_picker",
         "hint": "Date of last VL test",
-        "min_date": "today-100y",
+        "min_date": "01-06-1900",
         "max_date": "today",
         "relevance": {
           "step1:is_hiv_positive": {
@@ -202,6 +187,8 @@
         "openmrs_entity_id": "date_next_vl",
         "type": "date_picker",
         "hint": "Date of next VL test",
+        "min_date": "today",
+        "max_date": "today + 100y",
         "expanded": false,
         "duration": {
           "label": ""
@@ -211,9 +198,9 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "step1:date_last_vl": {
-            "type": "date",
-            "ex": "greaterThanEqualTo(., step1:date_last_vl)"
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -343,8 +330,8 @@
             "text": "VMMC"
           },
           {
-            "key": "CD4",
-            "text": "CD4"
+            "key": "CD4 count",
+            "text": "CD4 count"
           },
           {
             "key": "Emergency Health Care",
@@ -407,18 +394,13 @@
             "text": "Adherence Support"
           },
           {
-            "key": "DART (Directly Administered ART)",
-            "text": "DART (Directly Administered ART)"
+            "key": "not applicable",
+            "text": "Not Applicable"
           },
           {
             "key": "other",
             "text": "Other Specify"
-          },
-          {
-            "key": "not applicable",
-            "text": "Not Applicable"
           }
-
         ],
         "relevance": {
           "step1:services": {
@@ -496,8 +478,8 @@
             "text": "Child received schoolbooks and other materials (pencils, pens etc)"
           },
           {
-            "key": "Child received bursary, tuition or school fees from ECAPII",
-            "text": "Child received bursary, tuition or school fees from ECAPII"
+            "key": "Child received bursary, tuition or school fees from ECAP II",
+            "text": "Child received bursary, tuition or school fees from ECAP II"
           },
           {
             "key": "Child received assistance for re-enrollment",
@@ -835,6 +817,13 @@
           "value": true,
           "err": "This field is required"
         }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
       }
     ]
   }

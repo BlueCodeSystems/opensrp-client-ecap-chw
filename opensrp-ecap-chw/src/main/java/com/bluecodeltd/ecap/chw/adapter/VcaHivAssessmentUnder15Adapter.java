@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
@@ -77,7 +79,11 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(assessmentUnder15Model.getAssessment_date());
+            String assessmentDate = assessmentUnder15Model.getDate_edited();
+            if(assessmentDate!=null){
+                holder.txtDate.setText(assessmentUnder15Model.getDate_edited());
+            }
+
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -256,7 +262,23 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
         formToBeOpened.put("entity_id", visit.getBase_entity_id());
 
+
+
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
+        JSONObject question = getFieldJSONObject(fields(formToBeOpened, "step1"), "Question");
+
+        String answer = (visit != null && visit.getQuestion() != null) ? visit.getQuestion() : "";
+
+        if ("yes".equalsIgnoreCase(answer)) {
+            question.put(JsonFormUtils.VALUE, "yes");
+        } else if ("no".equalsIgnoreCase(answer)) {
+            question.put(JsonFormUtils.VALUE, "no");
+        } else {
+            question.put(JsonFormUtils.VALUE, "");
+        }
+
+
+//        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
 
         startFormActivity(formToBeOpened);
 

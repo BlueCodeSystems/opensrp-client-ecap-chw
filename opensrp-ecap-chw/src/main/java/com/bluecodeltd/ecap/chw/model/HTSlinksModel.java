@@ -8,6 +8,7 @@ public class HTSlinksModel {
     private String first_name;
     private String middle_name;
     private String last_name;
+    private String gender;
     private String ecap_id;
     private String sub_population;
     private String birthdate;
@@ -21,12 +22,14 @@ public class HTSlinksModel {
     private String hiv_result;
     private String test_done_hf;
     private String hiv_recent_test;
+    private String art_number;
     private String art_date;
     private String art_date_initiated;
     private String comment;
     private String caseworker_name;
     private String checked_by;
     private String delete_status;
+    private String contact_accepts_HTS_offer;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -234,5 +237,29 @@ public class HTSlinksModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getArt_number() {
+        return art_number;
+    }
+
+    public void setArt_number(String art_number) {
+        this.art_number = art_number;
+    }
+
+    public String getContact_accepts_HTS_offer() {
+        return contact_accepts_HTS_offer;
+    }
+
+    public void setContact_accepts_HTS_offer(String contact_accepts_HTS_offer) {
+        this.contact_accepts_HTS_offer = contact_accepts_HTS_offer;
     }
 }

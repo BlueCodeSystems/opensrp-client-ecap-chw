@@ -10,6 +10,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +26,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -57,7 +65,14 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
     List<VCAServiceModel> services;
     ObjectMapper oMapper;
 
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+    private VCAServiceAdapter.OnDataUpdateListener onDataUpdateListener;
 
+    public void setOnDataUpdateListener(VCAServiceAdapter.OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
     public VCAServiceAdapter(List<VCAServiceModel> services, Context context){
 
         super();
@@ -110,8 +125,60 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 //                e.printStackTrace();
 //            }
 
+        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(service.getUnique_id());
+        Household household = HouseholdDao.getHousehold(vcaScreeningModel.getHousehold_id());
+
+        String encodedSignature = service.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
 
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
+
+        holder.edit.setOnClickListener(v -> {
+            if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_layout);
+                dialog.show();
+
+                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+
+                Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                dialogButton.setOnClickListener(va -> dialog.dismiss());
+//                }
+            } else {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+
+
+
+        });
 
         holder.linearLayout.setOnClickListener(v -> {
             if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
@@ -141,7 +208,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                 }
 
                 try {
-                    openFormUsingFormUtils(context, "service_report_vca", service);
+                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -164,7 +231,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                     e.printStackTrace();
                 }
                 service.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_vca");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_vca_edit");
                 try {
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
                     vcaScreeningForm.put("entity_id", service.getBase_entity_id());
@@ -260,6 +327,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
             switch (encounterType) {
 
+                case "VCA Service Report Edit":
                 case "VCA Service Report":
 
                     if (fields != null) {
@@ -339,10 +407,30 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         return services.size();
     }
 
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,txtserviceType, txtServices ;
-        ImageView delete;
+        ImageView delete,edit;
+        ImageView signatureView;
         LinearLayout linearLayout;
 
 
@@ -355,6 +443,8 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             txtserviceType = itemView.findViewById(R.id.service);
             txtServices = itemView.findViewById(R.id.services);
             delete = itemView.findViewById(R.id.delete_record);
+            signatureView = itemView.findViewById(R.id.signature_view);
+            edit = itemView.findViewById(R.id.edit_me);
 
         }
 

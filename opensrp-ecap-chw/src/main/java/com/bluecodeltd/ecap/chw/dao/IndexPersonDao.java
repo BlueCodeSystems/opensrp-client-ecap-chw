@@ -28,6 +28,8 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
+
+
     public static void deleteRecord (String vcaID) {
 
         String sql = "UPDATE ec_client_index SET is_closed = '1' WHERE base_entity_id = '" + vcaID + "'";
@@ -112,6 +114,44 @@ public class IndexPersonDao  extends AbstractDao {
 
         return values;
 
+    }
+
+    public static boolean hasBeneficiary10to17InHousehold(String householdID) {
+
+        String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
+                "FROM ec_client_index " +
+                "WHERE ((strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) * 12 + " +
+                "(strftime('%m', 'now') - substr(adolescent_birthdate, 4, 2))) BETWEEN 120 AND 204 " +
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+
+
+        List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
+
+
+        return ids != null && !ids.isEmpty();
+    }
+    public static boolean hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld(String householdID) {
+
+        String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
+                "FROM ec_client_index " +
+                "WHERE ((strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) * 12 + " +
+                "(strftime('%m', 'now') - substr(adolescent_birthdate, 4, 2))) BETWEEN 6 AND 60 " +
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+
+        List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
+
+        return ids != null && !ids.isEmpty();
+    }
+    public static boolean hasAtLeastOneVCAFiveMonthsAndBelow(String householdID) {
+        String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
+                "FROM ec_client_index " +
+                "WHERE ((strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) * 12 + " +
+                "(strftime('%m', 'now') - substr(adolescent_birthdate, 4, 2))) <= 5 " +
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+
+        List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
+
+        return ids != null && !ids.isEmpty();
     }
 
     public static DataMap<VCAServiceModel> getServiceModelMap() {
@@ -444,6 +484,17 @@ public class IndexPersonDao  extends AbstractDao {
         return values;
 
     }
+    public static List<CasePlanModel> getAllDomainsById() {
+
+        String sql = "SELECT * FROM ec_vca_case_plan_domain WHERE case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
+
+        List<CasePlanModel> values = AbstractDao.readData(sql, getCasePlanMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static CaseStatusModel getCaseStatus(String childID) {
 //        String sql = "SELECT ec_client_index.unique_id, ec_client_index.case_status " +
 //                "FROM ec_client_index " +
@@ -746,11 +797,16 @@ public class IndexPersonDao  extends AbstractDao {
 
             );
         };
-        List <Child> children =  AbstractDao.readData(sql, dataMap);
-        if (children == null) {
+        List<Child> children = null;
+        try {
+            children = AbstractDao.readData(sql, dataMap);
+        } catch (NullPointerException e) {
+            return new ArrayList<>();
+        } catch (Exception e) {
             return null;
         }
         return children;
+
     }
     public static boolean checkGraduationStatus(String householdID) {
         String sql = "SELECT case_status, last_name, is_hiv_positive " +

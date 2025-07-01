@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Household Visitation For VCA 0-20 years",
+    "title": "Quarterly Assessment Form For VCA ",
     "fields": [
       {
         "key": "unique_id",
@@ -80,13 +80,6 @@
             }
           }
         }
-      },
-      {
-        "key": "signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "signature",
-        "type": "hidden"
       },
       {
         "key": "caseworker_name",
@@ -152,6 +145,13 @@
         }
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
         "key": "vca_visit_location",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -171,7 +171,7 @@
         "type": "date_picker",
         "hint": "Date of Household Visit",
         "look_up": "true",
-        "min_date": "01-01-1900",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -551,22 +551,7 @@
           }
         }
       },
-      {
-        "key": "vl_other",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_other",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "",
-        "read_only": false,
-        "relevance": {
-          "step1:vl_last_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Other\")"
-          }
-        }
-      },
+
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -809,7 +794,7 @@
       {
         "key": "eid_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
         "type": "edit_text",
         "hint": "Check child’s under-five clinic card When was the last EID test done?",
@@ -969,7 +954,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_infection",
-        "type": "native_radio",
+        "type": "hidden",
         "label": "Is the child able to describe at least two HIV infection risks in their local community?",
         "options": [
           {
@@ -1147,14 +1132,7 @@
             "text": "No",
             "value": false
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
+        ]
       },
       {
         "key": "attending_under_five_clinic",
@@ -1304,23 +1282,7 @@
           }
         }
       },
-      {
-        "key": "muac_other_a",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_other_a",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "name",
-        "read_only": false,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "toaster",
         "openmrs_entity_parent": "",
@@ -1392,44 +1354,29 @@
           }
         }
       },
-      {
-        "key": "muac_other_b",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_other_b",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "name",
-        "read_only": false,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
-      },
+
+
       {
         "key": "nutrition_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_status",
-        "type": "edit_text",
-        "hint": "With reference to the age of the child, what is the nutrition status of the child?",
-        "edit_type": "name",
-        "read_only": "false",
-        "look_up": "true",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
+        "type": "native_radio",
+        "label": "With reference to the age of the child, what is the nutrition status of the child?",
+        "options": [
+          {
+            "key": "MAM",
+            "text": "MAM"
+          },
+          {
+            "key": "SAM",
+            "text": "SAM"
+          },
+          {
+            "key": "Normal",
+            "text": "Normal"
           }
-        }
+        ]
       },
       {
         "key": "spacer",
@@ -2372,7 +2319,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-100y",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "v_required": {
           "value": false,

@@ -63,7 +63,7 @@ import timber.log.Timber;
 public class HouseholdServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    HouseholdServiceAdapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView cname, hh_id,updatedCaregiverName;
@@ -108,13 +108,21 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
+
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                recreate();
+            }));
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
         if (recyclerViewadapter.getItemCount() > 0){
 
@@ -244,7 +252,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
                     switch (EncounterType) {
 
-                        case "Household Service Report":
+                        case "Household Service Report Edit":
 
                             Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
                             refreshData();
@@ -278,19 +286,26 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
-            tagSyncMetadata(event);
-            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-            return new ChildIndexEventClient(event, client);
+            switch (encounterType) {
+                case "Household Service Report Edit":
 
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_HOUSEHOLD_SERVICE);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
 
-
+            }
         } catch (JSONException e) {
             Timber.e(e);
         }

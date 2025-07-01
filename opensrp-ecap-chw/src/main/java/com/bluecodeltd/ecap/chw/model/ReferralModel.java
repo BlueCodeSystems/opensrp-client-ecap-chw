@@ -4,7 +4,6 @@ public class ReferralModel {
 
     private String unique_id;
     private String household_id;
-    private String referral_location;
     private String base_entity_id;
     private String relational_id;
     private String referred_date;
@@ -94,6 +93,8 @@ public class ReferralModel {
     private String specify_school;
     private String specify_stability;
     private String delete_status;
+    private String referral_location;
+    private String signature;
 
     public String getReferral_location() {
         return referral_location;
@@ -101,6 +102,14 @@ public class ReferralModel {
 
     public void setReferral_location(String referral_location) {
         this.referral_location = referral_location;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public String getUnique_id() {

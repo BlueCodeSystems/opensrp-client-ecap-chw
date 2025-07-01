@@ -1,0 +1,572 @@
+{
+  "count": 1,
+  "encounter_type": "Hiv Assessment For Caregiver Edit",
+  "entity_id": "",
+  "show_errors_on_submit": true,
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "HIV Assessment For Caregiver",
+    "fields": [
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Edited By",
+        "read_only": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Caseworker Phone",
+        "edit_type": "number",
+        "read_only": true,
+        "v_numeric": {
+          "value": false,
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        },
+        "v_regex": {
+          "value": "((07||09)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "date_edited_check",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited_check",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "hint": "Info Last Edited",
+        "read_only": "true",
+        "look_up": "true",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "informed_consent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "informed_consent",
+        "type": "native_radio",
+        "label": "Talk with the person in privacy.  Mention that all information given is confidential. Consent Given:",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "YES, Proceed"
+          },
+          {
+            "key": "no",
+            "text": "NO, Don`t  Proceed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select an option"
+        }
+      },
+      {
+        "key": "hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test",
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        },
+        "type": "native_radio",
+        "label": "In the last 12 months have you been tested for HIV?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:informed_consent": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_a",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for HIV",
+        "toaster_type": "info",
+        "toaster_info_text": "Test for HIV",
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_status",
+        "type": "native_radio",
+        "label": "What was your most recent HIV test result?",
+        "options": [
+          {
+            "key": "positive",
+            "text": "Positive"
+          },
+          {
+            "key": "negative",
+            "text": "Negative"
+          },
+          {
+            "key": "never_tested",
+            "text": "Never tested"
+          },
+          {
+            "key": "status_not_required",
+            "text": "Status not required based on risk assessment",
+            "value": false
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "on_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "on_art",
+        "type": "native_radio",
+        "label": "Are you on Art?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "start_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "start_date",
+        "type": "date_picker",
+        "hint": "Indicate date started ",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "step1:on_art": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health facility",
+        "relevance": {
+          "step1:on_art": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "Art number",
+        "relevance": {
+          "step1:on_art": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "symptoms",
+        "type": "native_radio",
+        "label": "Do you have any of the following symptoms?\n (A) Current cough,\n (B) Fever,\n (C) Weight loss,\n (D) Night sweats?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for HIV and Tb",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "relevance": {
+          "step1:symptoms": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "private_parts",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "private_parts",
+        "type": "native_radio",
+        "label": "Do you have any of the following on your private parts?\n(A) sores,\n (B) Blisters,\n (C) Unusual Discharge?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for HIV and STI",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "relevance": {
+          "step1:private_parts": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "exposed_to_HIV",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "exposed_to_HIV",
+        "type": "native_radio",
+        "label": "In the last 6 months, have you been exposed to HIV through a needle stick, an injection, or a piercing?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for HIV",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "relevance": {
+          "step1:exposed_to_HIV": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "unprotected_sex",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unprotected_sex",
+        "type": "native_radio",
+        "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV- positive?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for HIV",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "relevance": {
+          "step1:unprotected_sex": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "pregnant_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pregnant_breastfeeding",
+        "type": "native_radio",
+        "label": "Are you pregnant or breastfeeding?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"never_tested\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_5",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Test for HIV",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "relevance": {
+          "step1:pregnant_breastfeeding": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_tb_sti",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_tb_sti",
+        "type": "native_radio",
+        "label": "Was the test for HIV, TB and STI?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "risk_assessment_above_15.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "hiv_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_result",
+        "type": "native_radio",
+        "label": "Indicate HIV Test Result",
+        "options": [
+          {
+            "key": "Negative",
+            "text": "Negative"
+          },
+          {
+            "key": "Positive",
+            "text": "Positive"
+          }
+        ],
+        "relevance": {
+          "step1:hiv_tb": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_hiv_test",
+        "type": "date_picker",
+        "hint": "Date of  HIV test",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "relevance": {
+          "step1:hiv_tb": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      }
+    ]
+  }
+}

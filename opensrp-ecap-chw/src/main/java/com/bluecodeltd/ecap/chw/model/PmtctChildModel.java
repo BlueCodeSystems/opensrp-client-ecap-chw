@@ -20,6 +20,8 @@ public class PmtctChildModel {
     private String azt_3tc_npv_date;
     private String child_outcome;
 
+    private String delete_status;
+
     public String getBase_entity_id() {
         return base_entity_id;
     }
@@ -162,5 +164,13 @@ public class PmtctChildModel {
 
     public void setChild_outcome(String child_outcome) {
         this.child_outcome = child_outcome;
+    }
+
+    public String getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 }

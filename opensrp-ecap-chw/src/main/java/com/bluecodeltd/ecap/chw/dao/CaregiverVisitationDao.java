@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CaregiverVisitationDao extends AbstractDao {
+    public static boolean hasVisitsByID(String householdID) {
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date" +
+                " FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'  " +
+                "AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
+
+        List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
+        return values != null && values.size() > 0;
+    }
 
 
     public static List<CaregiverVisitationModel> getVisitsByID(String householdID) {
@@ -15,6 +23,18 @@ public class CaregiverVisitationDao extends AbstractDao {
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date" +
                 " FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "'  " +
                 "AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
+
+        List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
+    public static List<CaregiverVisitationModel> getCSVVisits() {
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date" +
+                " FROM ec_household_visitation_for_caregiver WHERE  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
 
         List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
         if (values == null || values.size() == 0)
@@ -114,6 +134,7 @@ public class CaregiverVisitationDao extends AbstractDao {
             record.setSchool_administration_name(getCursorValue(c, "school_administration_name"));
             record.setTelephone(getCursorValue(c, "telephone"));
             record.setSchool_administration_date_signed(getCursorValue(c, "school_administration_date_signed"));
+            record.setSignature(getCursorValue(c, "signature"));
 
 
             return record;
