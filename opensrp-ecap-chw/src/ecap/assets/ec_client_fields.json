@@ -3400,6 +3400,13 @@
           }
         },
         {
+          "column_name": "touching_in_sexual",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.touching_in_sexual"
+          }
+        },
+        {
           "column_name": "against_will",
           "type": "Client",
           "json_mapping": {

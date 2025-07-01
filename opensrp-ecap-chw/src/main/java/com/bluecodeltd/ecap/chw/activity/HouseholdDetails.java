@@ -227,7 +227,7 @@ public class HouseholdDetails extends AppCompatActivity {
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
         setupViewPager();
-        setupFabVisibility();
+//        setupFabVisibility();
         updateTasksTabTitle();
         updateChildTabTitle();
         updateCaseplanTitle();

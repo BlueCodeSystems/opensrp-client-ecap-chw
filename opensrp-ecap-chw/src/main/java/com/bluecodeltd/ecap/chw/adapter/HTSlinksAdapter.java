@@ -219,9 +219,12 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
 
         if (client != null) {
-            if (client.getHiv_status() != null && client.getHiv_status().equals("positive") ||
-                    client.getHiv_result() != null && client.getHiv_result().equals("positive")) {
+            if ((client.getHiv_status() != null && client.getHiv_status().equals("positive")) ||
+                    (client.getHiv_result() != null && client.getHiv_result().equals("Newly Tested HIV+"))) {
                 initial_artLayout.setVisibility(android.view.View.VISIBLE);
+                artLayout.setVisibility(android.view.View.VISIBLE);
+                artNumTxt.setVisibility(android.view.View.VISIBLE);
+                art_number.setVisibility(android.view.View.VISIBLE);
                 enrolled_on_ARTLayout.setVisibility(android.view.View.VISIBLE);
             }
 

@@ -190,7 +190,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     }
     @Override
     protected String getDefaultSortQuery() {
-        return "last_interacted_with DESC ";
+        return "last_interacted_with DESC";
     }
 
     @Override

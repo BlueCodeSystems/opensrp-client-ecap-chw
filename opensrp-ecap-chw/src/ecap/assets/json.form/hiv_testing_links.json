@@ -473,7 +473,7 @@
 
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is Required"
         },
         "relevance": {
@@ -492,9 +492,10 @@
         "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Positive\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
@@ -510,9 +511,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Positive\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
@@ -528,9 +530,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Positive\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },

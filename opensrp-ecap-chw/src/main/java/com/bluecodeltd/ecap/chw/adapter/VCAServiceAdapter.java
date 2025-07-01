@@ -144,6 +144,42 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
 
+        holder.edit.setOnClickListener(v -> {
+            if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_layout);
+                dialog.show();
+
+                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
+                String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+
+                Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                dialogButton.setOnClickListener(va -> dialog.dismiss());
+//                }
+            } else {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+
+
+
+        });
+
         holder.linearLayout.setOnClickListener(v -> {
             if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
 //                String caseStatus = caseStatusModel.getCase_status();
@@ -292,6 +328,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             switch (encounterType) {
 
                 case "VCA Service Report Edit":
+                case "VCA Service Report":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -392,7 +429,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,txtserviceType, txtServices ;
-        ImageView delete;
+        ImageView delete,edit;
         ImageView signatureView;
         LinearLayout linearLayout;
 
@@ -407,6 +444,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             txtServices = itemView.findViewById(R.id.services);
             delete = itemView.findViewById(R.id.delete_record);
             signatureView = itemView.findViewById(R.id.signature_view);
+            edit = itemView.findViewById(R.id.edit_me);
 
         }
 
