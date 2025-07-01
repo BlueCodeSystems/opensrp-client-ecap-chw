@@ -50,7 +50,7 @@ public class PMTCTMotherDao extends AbstractDao {
 
     public static PtctMotherModel getPMCTMother(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother WHERE pmtct_id = '" + pmtctID + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
 
@@ -61,18 +61,9 @@ public class PMTCTMotherDao extends AbstractDao {
 
         return values.get(0);
     }
-//    public static PtctMotherModel getPostnatalDate(String pmtctID) {
-//        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC LIMIT 1";
-//
-//        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
-//
-//        if (values.size() == 0) {
-//            return null;
-//        }
-//
-//
-//        return values.get(0);
-//    }
+
+
+
     public static List<PtctMotherModel> getPostnatalMother(String pmtctID) {
 
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
@@ -104,8 +95,8 @@ public class PMTCTMotherDao extends AbstractDao {
             PtctMotherModel record = new PtctMotherModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setLast_interacted_with(getCursorValue(c, "last_interacted_with"));
+            record.setIs_closed(getCursorValue(c, "is_closed"));
             record.setSm_number(getCursorValue(c, "sm_number"));
-            record.setProvince(getCursorValue(c, "province"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setWard(getCursorValue(c, "ward"));
             record.setFacility(getCursorValue(c, "facility"));
@@ -159,17 +150,26 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setDate_tested(getCursorValue(c, "date_tested"));
             record.setResult_of_hiv_test(getCursorValue(c, "result_of_hiv_test"));
             record.setRecency_test_result(getCursorValue(c, "recency_test_result"));
+            record.setApplicable_recency_result(getCursorValue(c, "applicable_recency_result"));
             record.setMale_hiv_tested(getCursorValue(c, "male_hiv_tested"));
             record.setMale_date_tested(getCursorValue(c, "male_date_tested"));
             record.setMale_result_of_hiv_test(getCursorValue(c, "male_result_of_hiv_test"));
             record.setTreatment_initiated(getCursorValue(c, "treatment_initiated"));
+            record.setOn_treatment_anc_visit(getCursorValue(c, "on_treatment_anc_visit"));
             record.setTb_screening(getCursorValue(c, "tb_screening"));
             record.setSyphilis_testing(getCursorValue(c, "syphilis_testing"));
             record.setDate_tested_syphilis(getCursorValue(c, "date_tested_syphilis"));
             record.setSyphilis_test_result(getCursorValue(c, "syphilis_test_result"));
+            record.setHiv_result_1st_trimester(getCursorValue(c, "hiv_result_1st_trimester"));
+            record.setHiv_result_2nd_trimester(getCursorValue(c, "hiv_result_2nd_trimester"));
+            record.setHiv_result_3rd_trimester(getCursorValue(c, "hiv_result_3rd_trimester"));
+            record.setVl_result_1st_trimester(getCursorValue(c, "vl_result_1st_trimester"));
+            record.setUnsuppressed_vl_1st(getCursorValue(c, "unsuppressed_vl_1st"));
+            record.setVl_result_2nd_trimester(getCursorValue(c, "vl_result_2nd_trimester"));
+            record.setUnsuppressed_vl_2nd(getCursorValue(c, "unsuppressed_vl_2nd"));
+            record.setVl_result_3rd_trimester(getCursorValue(c, "vl_result_3rd_trimester"));
             record.setUnsuppressed_vl_3rd(getCursorValue(c, "unsuppressed_vl_3rd"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
-
             return record;
         };
     }

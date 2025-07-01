@@ -26,6 +26,7 @@ public class HivRiskAssessmentAbove15Model {
     private String date_edited;
     private String assessment_date;
 
+
     public String getPhone() {
         return phone;
     }

@@ -20,6 +20,26 @@ public class MuacDao extends AbstractDao {
 
         return values.get(0);
     }
+    public static boolean areAllMuacGreen(String householdID) {
+        String sql = "SELECT ec_muac.muac, ec_client_index.household_id " +
+                "FROM ec_muac " +
+                "JOIN ec_client_index ON ec_muac.unique_id = ec_client_index.unique_id " +
+                "WHERE ec_client_index.household_id = '" + householdID + "'";
+
+        List<MuacModel> values = AbstractDao.readData(sql, getMuacModelMap());
+
+        if (values.isEmpty()) {
+            return false;
+        }
+
+        for (MuacModel muacModel : values) {
+            if (!"green".equalsIgnoreCase(muacModel.getMuac())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public static DataMap<MuacModel> getMuacModelMap() {
         return c -> {

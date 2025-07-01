@@ -8,9 +8,9 @@
         android:icon="@drawable/menu_vertical"
         android:orderInCategory="1"
         app:showAsAction="never"/>
-<!--    <item
-        android:id="@+id/delete_record"
-        android:title="Delete VCA"
-        app:showAsAction="never"/>-->
+    <item
+        android:id="@+id/generate_pdf"
+        android:title="Generate CSV"
+        app:showAsAction="never"/>
 
 </menu>

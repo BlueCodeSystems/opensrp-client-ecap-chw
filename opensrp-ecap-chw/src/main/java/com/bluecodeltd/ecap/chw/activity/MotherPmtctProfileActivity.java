@@ -7,6 +7,7 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -106,10 +107,13 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     public PmctMotherAncModel pmctMotherAncModel;
     public PmtctDeliveryDetailsModel pmtctDeliveryDetailsModel;
     public PmctMotherOutcomeModel pmctMotherOutcomeModel;
+
     Random Number;
     int Rnumber;
     ObjectMapper householdMapper;
     String clientId;
+
+    AlertDialog.Builder builder;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -131,6 +135,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         labourLayout = findViewById(R.id.labour_details);
         postnatalLayout = findViewById(R.id.postnatal_details);
 
+        builder = new AlertDialog.Builder(MotherPmtctProfileActivity.this);
+
 
         //commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
         Bundle extras = getIntent().getExtras();
@@ -138,6 +144,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             clientId= extras.getString("client_id");
 
         }
+
+
 
         ptctMotherModel = PMTCTMotherDao.getPMCTMother(clientId);
 
@@ -165,22 +173,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             motherName.setText("Name not available");
             txtAge.setText("Age not available");
         }
-//           CommonPersonObject personObject = getCommonRepository("ec_pmtct_mother").findByBaseEntityId(clientId);
-//           CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
-//           client.setColumnmaps(personObject.getColumnmaps());
-//        commonPersonObjectClient = client;
-//
-//        //Refresh activity using Intent
-//        refresh = getIntent().getExtras().getStri HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
-//        Child childIndex =mymap.get("Child")ng("1");
-//
-//        family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
-//
-//        motherName.setText(client.getColumnmaps().get("caregiver_name"));
-//        String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
-//        String age = getAge(birthdate);
-//        txtAge.setText(age);
-//
+
        oMapper = new ObjectMapper();
 //
         fab = findViewById(R.id.fabx);
@@ -433,6 +426,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
 
 
+
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
@@ -540,7 +534,6 @@ break;
     }
 
     public void startFormActivity(JSONObject jsonObject) {
-
         Form form = new Form();
         form.setWizard(false);
         form.setName(getString(org.smartregister.chw.core.R.string.child_details));
@@ -590,6 +583,21 @@ break;
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
                 getUniqueIdRepository().close(vca_id);
+                String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
+                switch (encounterType) {
+
+                    case "Mother Pmtct Child":
+                    case "Mother Pmtct":
+                    case "Mother Pmtct Postnatal":
+                    case "Mother Pmtct Delivery":
+
+                        finish();
+                        startActivity(getIntent());
+
+                        break;
+
+                }
 
                 Toasty.success(MotherPmtctProfileActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
@@ -841,6 +849,70 @@ break;
 
 
                 break;
+
+            case R.id.delete_record:
+
+
+            Boolean checkForLinks = PmtctChildDao.hasDeletedHei(clientId);
+            if (checkForLinks == false) {
+
+
+                builder.setMessage("You are about to delete this record");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
+
+                }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    ptctMotherModel.setDelete_status("1");
+                    JSONObject openForm = formUtils.getFormJson("mother_pmtct");
+                    try {
+                        CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(ptctMotherModel, Map.class));
+                        openForm.put("entity_id", ptctMotherModel.getBase_entity_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+
+                        ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
+                        if (childIndexEventClient == null) {
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient, true);
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+
+
+                    Toasty.success(MotherPmtctProfileActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+
+
+//                            super.onBackPressed();
+
+                    Intent returnToRegister = new Intent(this, PMTCTRegisterActivity.class);
+                    startActivity(returnToRegister);
+                    finish();
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
+            } else{
+                Toasty.success(MotherPmtctProfileActivity.this, "Delete the HEI before deleting the record", Toast.LENGTH_LONG, true).show();
+            }
+            break;
+
 
 
 

@@ -1,11 +1,11 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.bluecodeltd.ecap.chw.activity.HivTestingServiceActivity;
-import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.model.EventClient;
@@ -106,17 +106,27 @@ public class HivTestingRegisterPresenter implements IndexRegisterContract.Presen
 
     @Override
     public void onRegistrationSaved(boolean inEditMode) {
-        if (getView() != null) {
-            getView().refreshList(FetchStatus.fetched);
-            getView().hideProgressDialog();
-            NavigationMenu navigationMenu = NavigationMenu.getInstance((Activity) activityWeakReference.get(),
-                    null, null);
-            if (navigationMenu != null) {
-                navigationMenu.refreshCount();
+        try {
+            if (getView() != null) {
+                getView().refreshList(FetchStatus.fetched);
+                getView().hideProgressDialog();
             }
 
+            if (activityWeakReference != null) {
+                Activity activity = (Activity) activityWeakReference.get();
+                if (activity != null) {
+                    NavigationMenu navigationMenu = NavigationMenu.getInstance(activity, null, null);
+                    if (navigationMenu != null) {
+                        navigationMenu.refreshCount();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("onRegistrationSaved", "Error occurred: " + e.getMessage());
         }
     }
+
     @Override
     public HivTestingServiceActivity getView() {
         if (activityWeakReference.get() != null) {

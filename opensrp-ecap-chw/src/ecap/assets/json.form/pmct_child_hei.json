@@ -230,15 +230,6 @@
 
       },
       {
-        "key": "under_five_clinic_card",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "under_five_clinic_card",
-        "type": "edit_text",
-        "hint": "DBS at Birth"
-
-      },
-      {
         "key": "spacer",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -379,6 +370,13 @@
             "ex": "equalTo(., \"yes\")"
           }
         }
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden"
       }
     ]
   }

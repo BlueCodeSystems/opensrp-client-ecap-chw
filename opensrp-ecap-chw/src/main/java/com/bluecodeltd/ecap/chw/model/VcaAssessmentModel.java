@@ -1,7 +1,7 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class VcaAssessmentModel {
-
+private String unique_id;
     private String base_entity_id;
     private String is_hiv_positive;
     private String is_on_hiv_treatment;
@@ -440,5 +440,13 @@ public class VcaAssessmentModel {
 
     public void setDate_edited(String date_edited) {
         this.date_edited = date_edited;
+    }
+
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }

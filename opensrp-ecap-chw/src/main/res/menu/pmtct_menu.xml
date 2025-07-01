@@ -8,6 +8,12 @@
         android:icon="@drawable/baseline_refresh_white_24"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/delete_record"
+        android:title="Delete"
+        android:icon="@drawable/baseline_delete_white_24"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/case_status"

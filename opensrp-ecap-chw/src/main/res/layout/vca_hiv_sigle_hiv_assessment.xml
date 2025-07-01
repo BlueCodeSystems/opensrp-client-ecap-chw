@@ -70,6 +70,7 @@
             android:orientation="horizontal">
 
             <org.smartregister.view.customcontrols.CustomFontTextView
+                android:id="@+id/assessment_date"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 style="@style/CustomFontTextViewStyle.ClientList"
