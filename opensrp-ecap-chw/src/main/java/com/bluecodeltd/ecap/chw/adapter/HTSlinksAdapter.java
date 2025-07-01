@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import static android.view.View.GONE;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
@@ -183,6 +184,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView landmark = dialogView.findViewById(R.id.landmark);
         TextView phone = dialogView.findViewById(R.id.phone);
         TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
+        TextView art_number = dialogView.findViewById(R.id.art_number);
         TextView date_tested = dialogView.findViewById(R.id.hiv_status_r_nr);
         TextView test_results = dialogView.findViewById(R.id.test_results);
         TextView date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
@@ -190,14 +192,39 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView comment = dialogView.findViewById(R.id.comment);
         TextView caseworker_name = dialogView.findViewById(R.id.caseworker_name);
         TextView checked_by = dialogView.findViewById(R.id.checked_by);
+        TextView artNumTxt = dialogView.findViewById(R.id.artNumTxt);
 
         enrolled_on_ARTLayout = dialogView.findViewById(R.id.enrolled_on_ARTLayout);
         initial_artLayout = dialogView.findViewById(R.id.initial_artLayout);
 
+        LinearLayout date = dialogView.findViewById(R.id.date);
+        LinearLayout artLayout = dialogView.findViewById(R.id.artLayout);
+        LinearLayout label = dialogView.findViewById(R.id.label);
+
+
+
+        if (client.getHiv_status() != null &&
+                (client.getHiv_status().equals("Known Positive") ||
+                        client.getHiv_status().equals("Test Not Required (evidenced by an HIV risk assessment)"))){
+            date.setVisibility(GONE);
+            label.setVisibility(GONE);
+
+        }
+        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Negative")
+        ||  client.getHiv_status().equals("Test Not Required (evidenced by an HIV risk assessment)")) {
+            artLayout.setVisibility(GONE);
+            art_number.setVisibility(GONE);
+            artNumTxt.setVisibility(GONE);
+        }
+
+
         if (client != null) {
-            if (client.getHiv_status() != null && client.getHiv_status().equals("positive") ||
-                    client.getHiv_result() != null && client.getHiv_result().equals("positive")) {
+            if ((client.getHiv_status() != null && client.getHiv_status().equals("positive")) ||
+                    (client.getHiv_result() != null && client.getHiv_result().equals("Newly Tested HIV+"))) {
                 initial_artLayout.setVisibility(android.view.View.VISIBLE);
+                artLayout.setVisibility(android.view.View.VISIBLE);
+                artNumTxt.setVisibility(android.view.View.VISIBLE);
+                art_number.setVisibility(android.view.View.VISIBLE);
                 enrolled_on_ARTLayout.setVisibility(android.view.View.VISIBLE);
             }
 
@@ -243,6 +270,9 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             String hivStatusValue = client.getHiv_status();
             hiv_status.setText(hivStatusValue != null ? hivStatusValue : "Not Set");
 
+            String artNumberValue = client.getArt_number();
+            art_number.setText(artNumberValue != null ? artNumberValue : "Not Set");
+
             String dateTestedValue = client.getDate_tested();
             date_tested.setText(dateTestedValue != null ? dateTestedValue : "Not Set");
 
@@ -282,7 +312,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
     }
 
     public class View extends RecyclerView.ViewHolder {
-        TextView clientNameTextView, clientAgeTextView,clientDetails;
+        TextView clientNameTextView, clientAgeTextView,clientDetails,artNumTxt;
         ImageView editClient,deleteRecord;
         public View(@NonNull android.view.View itemView) {
             super(itemView);
@@ -291,6 +321,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             clientDetails = itemView.findViewById(R.id.details);
             editClient = itemView.findViewById(R.id.edit_client);
             deleteRecord = itemView.findViewById(R.id.delete);
+
         }
     }
 

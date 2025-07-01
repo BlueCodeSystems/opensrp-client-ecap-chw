@@ -130,7 +130,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_edited",
-        "type": "hidden",
+        "type": "edit_text",
         "hint": "Info Last Edited",
         "read_only": "true",
         "look_up": "true",
@@ -162,30 +162,6 @@
         "v_required": {
           "value": "true",
           "err": "Please select an option"
-        }
-      },
-      {
-        "key": "assessment_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "assessment_date",
-        "type": "date_picker",
-        "hint": "Date of Assessment",
-        "expanded": false,
-        "duration": {
-          "label": ""
-        },
-        "min_date": "today",
-        "max_date": "today + 100y",
-        "v_required": {
-          "value": false,
-          "err": "Assessment Date"
-        },
-        "relevance": {
-          "step1:informed_consent": {
-            "type": "string",
-            "ex": "equalTo(., \"Yes\")"
-          }
         }
       },
       {
@@ -302,7 +278,7 @@
         "hint": "Indicate date started ",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "relevance": {
           "step1:on_art": {
@@ -597,7 +573,7 @@
         "hint": "Date of  HIV test",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "relevance": {
           "step1:hiv_tb": {

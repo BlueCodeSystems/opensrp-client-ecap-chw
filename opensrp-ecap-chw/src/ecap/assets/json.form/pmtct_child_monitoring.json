@@ -177,6 +177,10 @@
           {
             "key": "24 months",
             "text": "24 months"
+          },
+          {
+            "key": "outcome",
+            "text": "Outcome"
           }
         ],
         "v_required": {

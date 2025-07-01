@@ -64,6 +64,7 @@ public class SignatureActivity extends AppCompatActivity {
 
     String hivstatus;
     String household_id;
+    String signature;
     String c_name;
     String intent_cname;
     @Override
@@ -96,6 +97,7 @@ public class SignatureActivity extends AppCompatActivity {
         hivstatus = getIntent().getExtras().getString("hivstatus");
         household_id = getIntent().getExtras().getString("hh_id");
         c_name = getIntent().getExtras().getString("vcaname");
+        signature =  getIntent().getExtras().getString("signature");
 
 
         // Get the JSON string from the Bundle
@@ -116,6 +118,13 @@ public class SignatureActivity extends AppCompatActivity {
         saveSignature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check if the signature pad is empty
+                if (signaturePad.isEmpty()) {
+                    Toasty.warning(SignatureActivity.this, "Please provide a signature before saving.", Toast.LENGTH_SHORT, true).show();
+                    return; // Exit the method if the signature pad is empty
+                }
+
+                // If the signature pad is not empty, proceed with saving
                 Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
                 String base64Signature = encodeBitmapToBase64(signatureBitmap);
 
@@ -132,9 +141,8 @@ public class SignatureActivity extends AppCompatActivity {
 
                 boolean is_edit_mode = false;
 
-
                 String encounterType = screeningFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
-                if(!screeningFormObject.optString("entity_id").isEmpty()){
+                if (!screeningFormObject.optString("entity_id").isEmpty()) {
                     is_edit_mode = true;
                 }
 
@@ -142,82 +150,80 @@ public class SignatureActivity extends AppCompatActivity {
 
                 String signatureString = screeningFormObject.toString();
                 try {
-
                     ChildIndexEventClient childIndexEventClient = processRegistration(signatureString);
 
                     if (childIndexEventClient == null) {
+                        Toasty.error(SignatureActivity.this, "Error processing registration.", Toast.LENGTH_SHORT, true).show();
                         return;
                     }
 
-                    saveRegistration(childIndexEventClient, is_edit_mode);
+                    boolean isSaved = saveRegistration(childIndexEventClient, is_edit_mode);
+                    if (!isSaved) {
+                        Toasty.error(SignatureActivity.this, "Failed to save data.", Toast.LENGTH_SHORT, true).show();
+                        return;
+                    }
 
                     switch (encounterType) {
                         case "Household Screening":
-//                            if(!householdId.equals("")) {
-//                                goToHouseholdProfile(householdId);
-//                            }
-                            Intent refreshActivity = new Intent(getApplicationContext(),HouseholdIndexActivity.class);
+                            Intent refreshActivity = new Intent(getApplicationContext(), HouseholdIndexActivity.class);
                             startActivity(refreshActivity);
                             finish();
-
                             break;
 
-                        case  "Household Service Report":
+                        case "Household Service Report":
                             Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
-
-                            Intent openHouseholdIntent = new Intent(SignatureActivity.this,HouseholdServiceActivity.class);
-                            openHouseholdIntent.putExtra("cname",intent_caregivername);
-                            openHouseholdIntent.putExtra("householdId",householdId);
+                            Intent openHouseholdIntent = new Intent(SignatureActivity.this, HouseholdServiceActivity.class);
+                            openHouseholdIntent.putExtra("cname", intent_caregivername);
+                            openHouseholdIntent.putExtra("householdId", householdId);
                             startActivity(openHouseholdIntent);
                             finish();
-
-
                             break;
 
-                        case  "VCA Service Report":
+                        case "VCA Service Report":
                             Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
-
-                            Intent openVcaIntent = new Intent(SignatureActivity.this,VcaServiceActivity.class);
-                            openVcaIntent.putExtra("vcaid",intent_vcaid);
-                            openVcaIntent.putExtra("vcaname",c_name);
-                            openVcaIntent.putExtra("hivtstatus",hivstatus);
-                            openVcaIntent.putExtra("hh_id",household_id);
+                            Intent openVcaIntent = new Intent(SignatureActivity.this, VcaServiceActivity.class);
+                            openVcaIntent.putExtra("vcaid", intent_vcaid);
+                            openVcaIntent.putExtra("vcaname", c_name);
+                            openVcaIntent.putExtra("hivtstatus", hivstatus);
+                            openVcaIntent.putExtra("hh_id", household_id);
                             startActivity(openVcaIntent);
                             finish();
-
-
-
                             break;
+
                         case "Household Visitation Form 0-20 years":
                             Toasty.success(getApplicationContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
-                            Intent intent = new Intent(SignatureActivity.this,IndexDetailsActivity.class);
-                            intent.putExtra("Child",childId);
+                            Intent intent = new Intent(SignatureActivity.this, IndexDetailsActivity.class);
+                            intent.putExtra("Child", childId);
                             startActivity(intent);
                             finish();
-
                             break;
 
                         case "Household Visitation For Caregiver":
                             Toasty.success(getApplicationContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
-                            Intent openHouseholdProfile = new Intent(SignatureActivity.this,HouseholdDetails.class);
-                            openHouseholdProfile.putExtra("householdId",householdId);
+                            Intent openHouseholdProfile = new Intent(SignatureActivity.this, HouseholdDetails.class);
+                            openHouseholdProfile.putExtra("householdId", householdId);
                             startActivity(openHouseholdProfile);
                             finish();
                             break;
 
                         case "Hiv Assessment For Caregiver":
-                            finish();
                             Toasty.success(getApplicationContext(), "HIV assessment Saved", Toast.LENGTH_LONG, true).show();
+                            finish();
                             break;
+
+                        case "Referral":
+                            Toasty.success(getApplicationContext(), "Referral Saved", Toast.LENGTH_LONG, true).show();
+                            finish();
+                            break;
+
                         default:
                             finish();
                             break;
                     }
-
                 } catch (Exception e) {
                     Timber.e(e);
+                    Toasty.error(SignatureActivity.this, "An error occurred while saving.", Toast.LENGTH_SHORT, true).show();
                 }
-
             }
         });
 

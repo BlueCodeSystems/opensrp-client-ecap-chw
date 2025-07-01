@@ -28,6 +28,7 @@ public class HouseholdServiceReportModel {
     private String other_services_household;
     private String delete_status;
     private String hh_service_location;
+    private String signature;
 
     public String getHh_service_location() {
         return hh_service_location;
@@ -243,5 +244,13 @@ public class HouseholdServiceReportModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

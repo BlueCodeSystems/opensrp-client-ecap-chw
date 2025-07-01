@@ -4,8 +4,8 @@ public class PtctMotherModel {
 
     private String base_entity_id;
     private String last_interacted_with;
+    private String is_closed;
     private String sm_number;
-    private String province;
     private String district;
     private String ward;
     private String facility;
@@ -59,14 +59,24 @@ public class PtctMotherModel {
     private String date_tested;
     private String result_of_hiv_test;
     private String recency_test_result;
+    private String applicable_recency_result;
     private String male_hiv_tested;
     private String male_date_tested;
     private String male_result_of_hiv_test;
     private String treatment_initiated;
+    private String on_treatment_anc_visit;
     private String tb_screening;
     private String syphilis_testing;
     private String date_tested_syphilis;
     private String syphilis_test_result;
+    private String hiv_result_1st_trimester;
+    private String hiv_result_2nd_trimester;
+    private String hiv_result_3rd_trimester;
+    private String vl_result_1st_trimester;
+    private String unsuppressed_vl_1st;
+    private String vl_result_2nd_trimester;
+    private String unsuppressed_vl_2nd;
+    private String vl_result_3rd_trimester;
     private String unsuppressed_vl_3rd;
     private String delete_status;
 
@@ -86,20 +96,20 @@ public class PtctMotherModel {
         this.last_interacted_with = last_interacted_with;
     }
 
+    public String getIs_closed() {
+        return is_closed;
+    }
+
+    public void setIs_closed(String is_closed) {
+        this.is_closed = is_closed;
+    }
+
     public String getSm_number() {
         return sm_number;
     }
 
     public void setSm_number(String sm_number) {
         this.sm_number = sm_number;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
     }
 
     public String getDistrict() {
@@ -526,6 +536,14 @@ public class PtctMotherModel {
         this.recency_test_result = recency_test_result;
     }
 
+    public String getApplicable_recency_result() {
+        return applicable_recency_result;
+    }
+
+    public void setApplicable_recency_result(String applicable_recency_result) {
+        this.applicable_recency_result = applicable_recency_result;
+    }
+
     public String getMale_hiv_tested() {
         return male_hiv_tested;
     }
@@ -558,6 +576,14 @@ public class PtctMotherModel {
         this.treatment_initiated = treatment_initiated;
     }
 
+    public String getOn_treatment_anc_visit() {
+        return on_treatment_anc_visit;
+    }
+
+    public void setOn_treatment_anc_visit(String on_treatment_anc_visit) {
+        this.on_treatment_anc_visit = on_treatment_anc_visit;
+    }
+
     public String getTb_screening() {
         return tb_screening;
     }
@@ -588,6 +614,70 @@ public class PtctMotherModel {
 
     public void setSyphilis_test_result(String syphilis_test_result) {
         this.syphilis_test_result = syphilis_test_result;
+    }
+
+    public String getHiv_result_1st_trimester() {
+        return hiv_result_1st_trimester;
+    }
+
+    public void setHiv_result_1st_trimester(String hiv_result_1st_trimester) {
+        this.hiv_result_1st_trimester = hiv_result_1st_trimester;
+    }
+
+    public String getHiv_result_2nd_trimester() {
+        return hiv_result_2nd_trimester;
+    }
+
+    public void setHiv_result_2nd_trimester(String hiv_result_2nd_trimester) {
+        this.hiv_result_2nd_trimester = hiv_result_2nd_trimester;
+    }
+
+    public String getHiv_result_3rd_trimester() {
+        return hiv_result_3rd_trimester;
+    }
+
+    public void setHiv_result_3rd_trimester(String hiv_result_3rd_trimester) {
+        this.hiv_result_3rd_trimester = hiv_result_3rd_trimester;
+    }
+
+    public String getVl_result_1st_trimester() {
+        return vl_result_1st_trimester;
+    }
+
+    public void setVl_result_1st_trimester(String vl_result_1st_trimester) {
+        this.vl_result_1st_trimester = vl_result_1st_trimester;
+    }
+
+    public String getUnsuppressed_vl_1st() {
+        return unsuppressed_vl_1st;
+    }
+
+    public void setUnsuppressed_vl_1st(String unsuppressed_vl_1st) {
+        this.unsuppressed_vl_1st = unsuppressed_vl_1st;
+    }
+
+    public String getVl_result_2nd_trimester() {
+        return vl_result_2nd_trimester;
+    }
+
+    public void setVl_result_2nd_trimester(String vl_result_2nd_trimester) {
+        this.vl_result_2nd_trimester = vl_result_2nd_trimester;
+    }
+
+    public String getUnsuppressed_vl_2nd() {
+        return unsuppressed_vl_2nd;
+    }
+
+    public void setUnsuppressed_vl_2nd(String unsuppressed_vl_2nd) {
+        this.unsuppressed_vl_2nd = unsuppressed_vl_2nd;
+    }
+
+    public String getVl_result_3rd_trimester() {
+        return vl_result_3rd_trimester;
+    }
+
+    public void setVl_result_3rd_trimester(String vl_result_3rd_trimester) {
+        this.vl_result_3rd_trimester = vl_result_3rd_trimester;
     }
 
     public String getUnsuppressed_vl_3rd() {

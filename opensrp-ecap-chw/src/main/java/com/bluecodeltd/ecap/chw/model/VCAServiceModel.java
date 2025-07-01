@@ -22,6 +22,7 @@ public class VCAServiceModel {
     private String delete_status;
 
     private  String vca_service_location;
+    private String signature;
 
     public String getVca_service_location() {
         return vca_service_location;
@@ -181,5 +182,13 @@ public class VCAServiceModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

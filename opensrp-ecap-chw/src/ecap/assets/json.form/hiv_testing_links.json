@@ -150,13 +150,13 @@
         "label": "Sub-population",
         "options": [
           {
-            "key": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
+            "key": "HIV Exposed Infants (HEIs)",
+            "text": "HIV Exposed Infants (HEIs)"
 
           },
           {
-            "key": "HIV Exposed Infants (HEIs)",
-            "text": "HIV Exposed Infants (HEIs)"
+            "key": "Children of Female Sex Workers (CFSWs)",
+            "text": "Children of Female Sex Workers (CFSWs)"
 
           },
           {
@@ -165,18 +165,13 @@
 
           },
           {
-            "key": "Adolescent Girls and Young Women (AGYW)",
-            "text": "Adolescent Girls and Young Women (AGYW)"
-          },
-          {
             "key": "Survivors of Sexual Violence",
             "text": "Survivors of Sexual Violence"
 
           },
           {
-            "key": "Children of Female Sex Workers (FSWs)",
-            "text": "Children of Female Sex Workers (FSWs)"
-
+            "key": "Adolescent Girls and Young Women (AGYW)",
+            "text": "Adolescent Girls and Young Women (AGYW)"
           },
           {
             "key": "Siblings of the Index/Other family members",
@@ -184,9 +179,17 @@
 
           },
           {
-            "key": "PBFW",
-            "text": "PBFW"
+            "key": "Caregiver-Women Living With HIV",
+            "text": "Caregiver-Women Living With HIV"
 
+          },
+          {
+            "key": "Caregiver-FSW",
+            "text": "Caregiver-FSW"
+          },
+          {
+            "key": "Caregiver-General",
+            "text": "Caregiver-General"
           }
         ],
         "v_required": {
@@ -200,7 +203,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Age",
+        "hint": "DOB",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -210,6 +213,28 @@
         "v_required": {
           "value": "true",
           "err": "Please enter the date of birth"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Sex",
+        "options": [
+          {
+            "key": "male",
+            "text": "Male"
+          },
+          {
+            "key": "female",
+            "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Gender is Required"
         }
       },
       {
@@ -297,6 +322,28 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
+      {
+        "key": "contact_accepts_HTS_offer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_accepts_HTS_offer",
+        "type": "native_radio",
+        "label": "Has the contact accepted the HTS offer?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is Required"
+        }
+      },
 
       {
         "key": "hiv_status",
@@ -322,6 +369,12 @@
         "v_required": {
           "value": true,
           "err": "This field is Required"
+        },
+        "relevance": {
+          "step1:contact_accepts_HTS_offer": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
         }
       },
       {
@@ -371,6 +424,7 @@
           }
         }
       },
+
       {
         "key": "test_done_hf",
         "openmrs_entity_parent": "",
@@ -419,13 +473,29 @@
 
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is Required"
         },
         "relevance": {
           "step1:hiv_result": {
             "type": "string",
             "ex": "equalTo(., \"Newly Tested HIV+\")"
+          }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "edit_type": "name",
+        "hint": "ART Number",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
@@ -441,9 +511,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
@@ -459,9 +530,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
