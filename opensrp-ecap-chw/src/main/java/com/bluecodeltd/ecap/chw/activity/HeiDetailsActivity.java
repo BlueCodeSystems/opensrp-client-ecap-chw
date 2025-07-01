@@ -97,14 +97,18 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
@@ -176,6 +180,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
 
         motherProfile = findViewById(R.id.motherProfile);
+
+        builder = new AlertDialog.Builder(HeiDetailsActivity.this);
 
         fab = findViewById(R.id.fab);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -542,6 +548,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
                         startActivity(i);
 
                         break;
+
+                    default:
+                        finish();
+                        startActivity(getIntent());
 
                 }
 
@@ -938,7 +948,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 modifiedChildModel.setPmtct_id(pmtctChild.getPmtct_id());
 //                if(childMonitoring == null){
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(modifiedChildModel, Map.class));
-
+                    populateHivStatus(formToBeOpened,pmtctChild.getInfants_date_of_birth());
 
 
                 break;
@@ -990,6 +1000,60 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
+                break;
+
+            case R.id.delete_record:
+
+                    builder.setMessage("You are about to delete this record");
+                    builder.setNegativeButton("NO", (dialog, id) -> {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+
+                    }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                        FormUtils formUtils = null;
+                        try {
+                            formUtils = new FormUtils(this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        pmtctChild.setDelete_status("1");
+                        JSONObject openForm = formUtils.getFormJson("pmct_child_hei");
+                        try {
+                            CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(pmtctChild, Map.class));
+                            openForm.put("entity_id", pmtctChild.getBase_entity_id());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+
+                            ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
+                            if (childIndexEventClient == null) {
+                                return;
+                            }
+                            saveRegistration(childIndexEventClient, true);
+
+
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+
+
+                        Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+
+                        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+                        startActivity(intent);
+                        this.finish();
+                    }));
+
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Alert");
+                    alert.show();
 
                 break;
 
@@ -1062,6 +1126,39 @@ public class HeiDetailsActivity extends AppCompatActivity {
         }
 
     }
+
+    public void populateHivStatus(JSONObject formToBeOpened, String dateString) {
+        // Parse the input date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        try {
+            Date inputDate = sdf.parse(dateString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(inputDate);
+
+            Calendar oneYearAgo = Calendar.getInstance();
+            oneYearAgo.add(Calendar.YEAR, -1);
+
+            JSONObject hivStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_test");
+
+            if (hivStatus != null) {
+                JSONArray valuesArray = new JSONArray();
+
+                if (calendar.before(oneYearAgo)) {
+                    valuesArray.put("R");
+                    valuesArray.put("NR");
+                } else {
+                    valuesArray.put("ND");
+                    valuesArray.put("D");
+                }
+                hivStatus.put("values", valuesArray);
+                hivStatus.put("keys", valuesArray);
+            }
+        } catch (ParseException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void showDeregisteredStatus(){
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);

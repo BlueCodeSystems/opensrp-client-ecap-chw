@@ -127,6 +127,25 @@
           "value": true,
           "err": "Please select Reason for Closing Case"
         }
+      },
+      {
+        "key": "location_moved_to",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "location_moved_to",
+        "type": "edit_text",
+        "hint": "Location",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide location"
+        },
+        "relevance": {
+          "step1:reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Moved (Relocated)\")"
+          }
+        }
       }
     ]
   }

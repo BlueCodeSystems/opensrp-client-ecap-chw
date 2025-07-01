@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/abym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/disabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/aged"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/illness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/childHeaded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/notChildHeaded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/femaleHeaded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/survivor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/malnutrition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/pbfw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:visibility="gone"/>
+
+</LinearLayout>
+

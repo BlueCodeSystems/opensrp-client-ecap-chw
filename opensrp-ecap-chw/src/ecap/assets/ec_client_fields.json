@@ -32,6 +32,13 @@
           }
         },
         {
+          "column_name": "user_select_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.user_select_hiv"
+          }
+        },
+        {
           "column_name": "partner",
           "type": "Client",
           "json_mapping": {
@@ -1436,6 +1443,13 @@
           }
         },
         {
+          "column_name": "change_caregiver_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.change_caregiver_date"
+          }
+        },
+        {
           "column_name": "new_caregiver_name",
           "type": "Client",
           "json_mapping": {
@@ -1492,6 +1506,13 @@
           }
         },
         {
+          "column_name": "household_receiving_district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_receiving_district"
+          }
+        },
+        {
           "column_name": "household_receiving_caseworker",
           "type": "Client",
           "json_mapping": {
@@ -1505,15 +1526,28 @@
           "json_mapping": {
             "field": "attributes.district_moved_to"
           }
+        },
+        {
+          "column_name": "location_moved_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.location_moved_to"
+          }
+        },
+        {
+          "column_name": "household_receiving_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_receiving_facility"
+          }
+        },
+        {
+          "column_name": "name_ovc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.name_ovc"
+          }
         }
-
-
-
-
-
-
-
-
 
       ]
     },
@@ -1860,6 +1894,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caregiver_art_number"
+          }
+        },
+        {
+          "column_name": "date_next_vl_vca",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_next_vl_vca"
           }
         },
         {
@@ -2581,6 +2622,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.district_moved_to"
+          }
+        },
+        {
+          "column_name": "name_ovc",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.name_ovc"
+          }
+        },
+        {
+          "column_name": "location_moved_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.location_moved_to"
+          }
+        },
+        {
+          "column_name": "ovc_district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ovc_district"
           }
         }
       ]
@@ -3335,6 +3397,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.aware_sexual"
+          }
+        },
+        {
+          "column_name": "touching_in_sexual",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.touching_in_sexual"
           }
         },
         {
@@ -4253,17 +4322,24 @@
           }
         },
         {
-          "column_name": "referral_location",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.referral_location"
-          }
-        },
-        {
           "column_name": "referred_date",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.referred_date"
+          }
+        },
+        {
+          "column_name": "signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.signature"
+          }
+        },
+        {
+          "column_name": "referral_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_location"
           }
         },
         {
@@ -6370,6 +6446,7 @@
             "field": "attributes.date_edited"
           }
         },
+
         {
           "column_name": "caseworker_name",
           "type": "Client",
@@ -6385,17 +6462,24 @@
           }
         },
         {
+          "column_name": "Question",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Question"
+          }
+        },
+        {
+          "column_name": "date_edited_check",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited_check"
+          }
+        },
+        {
           "column_name": "informed_consent",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.informed_consent"
-          }
-        },
-        {
-          "column_name": "assessment_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.assessment_date"
           }
         },
         {
@@ -6420,10 +6504,10 @@
           }
         },
         {
-          "column_name": "health_facility",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.health_facility"
+            "field": "attributes.facility"
           }
         },
         {
@@ -6431,6 +6515,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "Question",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.Question"
           }
         },
         {
@@ -6502,28 +6593,8 @@
           "json_mapping": {
             "field": "attributes.date_of_hiv_test"
           }
-        },
-        {
-          "column_name": "hiv_exposure",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_exposure"
-          }
-        },
-        {
-          "column_name": "delete_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.delete_status"
-          }
-        },
-        {
-          "column_name": "facility",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.facility"
-          }
         }
+
       ]
     },
     {
@@ -6569,6 +6640,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
           }
         },
         {
@@ -6724,24 +6802,31 @@
           }
         },
         {
-          "column_name": "date_edited",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_edited"
-          }
-        },
-        {
-          "column_name": "assessment_date",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.assessment_date"
-          }
-        },
-        {
           "column_name": "caseworker_name",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "date_edited_check",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited_check"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
           }
         },
         {
@@ -6780,10 +6865,10 @@
           }
         },
         {
-          "column_name": "facility",
+          "column_name": "health_facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.facility"
+            "field": "attributes.health_facility"
           }
         },
         {
@@ -6848,13 +6933,6 @@
           "json_mapping": {
             "field": "attributes.date_of_hiv_test"
           }
-        },
-        {
-          "column_name": "delete_status",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.delete_status"
-          }
         }
       ]
     },
@@ -6882,6 +6960,7 @@
             "field": "relationships.family"
           }
         },
+
         {
           "column_name": "household_type",
           "type": "Client",
@@ -6946,31 +7025,17 @@
           }
         },
         {
-          "column_name": "last_year",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.last_year"
-          }
-        },
-        {
-          "column_name": "relation",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.relation"
-          }
-        },
-        {
-          "column_name": "partner_caregiver",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partner_caregiver"
-          }
-        },
-        {
           "column_name": "active_on_treatment",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.active_on_treatment"
+          }
+        },
+        {
+          "column_name": "date_of_last_viral_load",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_last_viral_load"
           }
         },
         {
@@ -6995,13 +7060,6 @@
           }
         },
         {
-          "column_name": "hiv_adherence",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.hiv_adherence"
-          }
-        },
-        {
           "column_name": "months_medication",
           "type": "Client",
           "json_mapping": {
@@ -7020,13 +7078,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.viral_load_results"
-          }
-        },
-        {
-          "column_name": "date_of_last_viral_load",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.date_of_last_viral_load"
           }
         },
         {
@@ -7055,6 +7106,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.malnutrition_screened"
+          }
+        },
+        {
+          "column_name": "last_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_year"
+          }
+        },
+        {
+          "column_name": "relation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.relation"
+          }
+        },
+        {
+          "column_name": "partner_caregiver",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner_caregiver"
           }
         },
         {
@@ -7198,6 +7270,13 @@
           }
         },
         {
+          "column_name": "other_toilet_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_toilet_facility"
+          }
+        },
+        {
           "column_name": "sanitary_products",
           "type": "Client",
           "json_mapping": {
@@ -7205,10 +7284,10 @@
           }
         },
         {
-          "column_name": "other_sanitary_product_other",
+          "column_name": "other_sanitary_products",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.other_sanitary_product_other"
+            "field": "attributes.other_sanitary_products"
           }
         },
         {
@@ -7237,20 +7316,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.household_eaten_month"
-          }
-        },
-        {
-          "column_name": "child",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.child"
-          }
-        },
-        {
-          "column_name": "pregnant_caregiver",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.pregnant_caregiver"
           }
         },
         {
@@ -7309,6 +7374,7 @@
             "field": "attributes.caregiver_question"
           }
         }
+
       ]
     },
     {
@@ -8021,6 +8087,13 @@
           }
         },
         {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
 
           "column_name": "relationship",
           "type": "Client",
@@ -8058,10 +8131,25 @@
           }
         },
         {
+          "column_name": "contact_accepts_HTS_offer",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.contact_accepts_HTS_offer"
+          }
+        },
+
+        {
           "column_name": "hiv_status",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
           }
         },
         {
@@ -8161,13 +8249,6 @@
           }
         },
         {
-          "column_name": "province",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.province"
-          }
-        },
-        {
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
@@ -8202,7 +8283,6 @@
             "field": "attributes.caseworker_name"
           }
         },
-
         {
           "column_name": "pmtct_id",
           "type": "Client",
@@ -8217,8 +8297,6 @@
             "field": "attributes.ecap_id_question"
           }
         },
-
-
         {
           "column_name": "date_enrolled_ecap",
           "type": "Client",
@@ -8234,7 +8312,6 @@
           }
         },
         {
-
           "column_name": "date_enrolled_pmtct",
           "type": "Client",
           "json_mapping": {
@@ -8283,9 +8360,6 @@
             "field": "attributes.mothers_phone"
           }
         },
-
-
-
         {
           "column_name": "agyw_date_1st_visit",
           "type": "Client",
@@ -8546,6 +8620,13 @@
           }
         },
         {
+          "column_name": "applicable_recency_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.applicable_recency_result"
+          }
+        },
+        {
           "column_name": "male_hiv_tested",
           "type": "Client",
           "json_mapping": {
@@ -8574,6 +8655,13 @@
           }
         },
         {
+          "column_name": "on_treatment_anc_visit",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.on_treatment_anc_visit"
+          }
+        },
+        {
           "column_name": "tb_screening",
           "type": "Client",
           "json_mapping": {
@@ -8599,6 +8687,62 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.syphilis_test_result"
+          }
+        },
+        {
+          "column_name": "hiv_result_1st_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result_1st_trimester"
+          }
+        },
+        {
+          "column_name": "hiv_result_2nd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result_2nd_trimester"
+          }
+        },
+        {
+          "column_name": "hiv_result_3rd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result_3rd_trimester"
+          }
+        },
+        {
+          "column_name": "vl_result_1st_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_1st_trimester"
+          }
+        },
+        {
+          "column_name": "unsuppressed_vl_1st",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unsuppressed_vl_1st"
+          }
+        },
+        {
+          "column_name": "vl_result_2nd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_2nd_trimester"
+          }
+        },
+        {
+          "column_name": "unsuppressed_vl_2nd",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unsuppressed_vl_2nd"
+          }
+        },
+        {
+          "column_name": "vl_result_3rd_trimester",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vl_result_3rd_trimester"
           }
         },
         {
@@ -9114,6 +9258,49 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.high_risk_hei"
+          }
+        },
+
+        {
+          "column_name": "hiv_test_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test_outcome"
+          }
+        },
+        {
+          "column_name": "azt_3tc_npv_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.azt_3tc_npv_outcome"
+          }
+        },
+        {
+          "column_name": "ctx_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ctx_outcome"
+          }
+        },
+        {
+          "column_name": "iycf_counselling_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.iycf_counselling_outcome"
+          }
+        },
+        {
+          "column_name": "infant_feeding_options_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.infant_feeding_options_outcome"
+          }
+        },
+        {
+          "column_name": "high_risk_hei_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.high_risk_hei_outcome"
           }
         },
         {

@@ -53,6 +53,17 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:orientation="horizontal">
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/signature_view"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_edit"
+            android:paddingLeft="@dimen/contact_drawable_padding"
+            android:paddingTop="@dimen/contact_small_padding"
+            android:paddingBottom="@dimen/contact_small_padding"
+
+            />
 
         <View
             android:layout_width="1dp"

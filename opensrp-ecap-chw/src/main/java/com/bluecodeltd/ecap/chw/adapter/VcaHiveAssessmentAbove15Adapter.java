@@ -79,7 +79,10 @@ public class VcaHiveAssessmentAbove15Adapter extends RecyclerView.Adapter<VcaHiv
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(assessment.getDate_edited());
+        if(assessment.getDate_edited()!=null){
+            holder.txtDate.setText(assessment.getDate_edited());
+        }
+
 
         holder.linearLayout.setOnClickListener(v -> {
 

@@ -21,16 +21,15 @@ public class GraduationDao extends AbstractDao {
 
         return values.get(0);
     }
-    public static GraduationModel getGraduationStatus (String hhID) {
-
-        String sql = "SELECT graduation_status FROM ec_graduation WHERE household_id = '" + hhID + "' ORDER BY date_assessment DESC LIMIT 1";
+    public static GraduationModel getGraduationStatus(String hhID) {
+        String sql = "SELECT graduation_status FROM ec_graduation " +
+                "WHERE household_id = '" + hhID + "' " +
+                "ORDER BY ROWID DESC LIMIT 1";
 
         List<GraduationModel> values = AbstractDao.readData(sql, getGraduationModelMap());
-
-        if (values.size() == 0) {
+        if (values == null || values.isEmpty()) {
             return null;
         }
-
         return values.get(0);
     }
     public static int countVisits(String householdID){
@@ -89,6 +88,7 @@ public class GraduationDao extends AbstractDao {
             record.setRepeat_school(getCursorValue(c, "repeat_school"));
             record.setAdditional_information(getCursorValue(c, "additional_information"));
             record.setGraduation_status(getCursorValue(c, "graduation_status"));
+            record.setTouching_in_sexual(getCursorValue(c,"touching_in_sexual"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
 

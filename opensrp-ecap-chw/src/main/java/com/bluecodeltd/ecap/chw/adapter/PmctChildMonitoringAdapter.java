@@ -24,11 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -47,9 +49,14 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -155,14 +162,12 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
             if (v.getId() == R.id.edit_me) {
 
-                try {
-
-                    openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                    HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) context).getClientDetails();
+                    PmtctChildModel pmtctChildModel = null;
+                    if (mymap != null) {
+                        pmtctChildModel = mymap.get("client");
+                        checkAgeAndOpenForm(context,visit, pmtctChildModel.getInfants_date_of_birth());
+                    }
             }
 
 
@@ -419,4 +424,30 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
         }
     }
+    public void checkAgeAndOpenForm(Context context, ChildMonitoringModel visit,String dobString) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        try {
+            Date dob = sdf.parse(dobString);
+
+            Calendar today = Calendar.getInstance();
+            Calendar dobCalendar = Calendar.getInstance();
+            dobCalendar.setTime(dob);
+            int ageInYears = today.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
+
+            if (today.get(Calendar.DAY_OF_YEAR) < dobCalendar.get(Calendar.DAY_OF_YEAR)) {
+                ageInYears--;
+            }
+
+            if (ageInYears > 1) {
+                openFormUsingFormUtils(context, "pmtct_child_monitoring_nr_r", visit);
+            } else {
+                openFormUsingFormUtils(context, "pmtct_child_monitoring_nd_d", visit);
+            }
+        } catch (ParseException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

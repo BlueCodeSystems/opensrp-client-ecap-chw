@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,11 +20,15 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.AbymSubpopulationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.MuacDao;
+import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.model.AbymSubpopulationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.MuacModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 
 import java.util.Calendar;
@@ -36,14 +41,21 @@ import java.util.Objects;
 public class ProfileOverviewFragment extends Fragment {
 
     RelativeLayout myview;
-    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2, abymSubpopulation;
+    Button moreSubpopBtn;
+    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2,abymSubpopulation;
     ImageButton imgBtn;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
-    txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
+    TextView abymTxt,disabledTxt,agedTxt,illnessTxt,childHeadTxt,notChildHeadTx,femaleHeadedTxt,survivorTxt;
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6,otherSub,otherMemberSub, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
+            txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
             new_caregiver_name, overview_section_header3,overview_section_header5,overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
 
+    AbymSubpopulationModel abym;
 
+    LinearLayout abymSub,siblingSubPop;
+
+    MuacModel muacModel;
+    VcaScreeningModel childScreeningModel;
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
@@ -62,10 +74,11 @@ public class ProfileOverviewFragment extends Fragment {
         sub4 = view.findViewById(R.id.subpop4);
         sub5 = view.findViewById(R.id.subpop5);
         sub6 = view.findViewById(R.id.subpop6);
+        abymSub = view.findViewById(R.id.abymSub);
+        siblingSubPop = view.findViewById(R.id.siblingSubPop);
         txtSubPopulation = view.findViewById(R.id.sub_population);
         subPopLayout1 = view.findViewById(R.id.subPopLayout1);
         subPopLayout2 = view.findViewById(R.id.subPopLayout2);
-        abymSubpopulation = view.findViewById(R.id.abym_layout);
         myview = view.findViewById(R.id.myview);
         txtReferred = view.findViewById(R.id.referred);
         txtEnrolled = view.findViewById(R.id.enrolled);
@@ -109,6 +122,12 @@ public class ProfileOverviewFragment extends Fragment {
         linearlayout_phone = view.findViewById(R.id.linearlayout_phone);
 
 
+        moreSubpopBtn = view.findViewById(R.id.morePopulation);
+
+
+
+
+
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
 
@@ -149,6 +168,14 @@ public class ProfileOverviewFragment extends Fragment {
 //            linearlayout_phone.setVisibility(View.GONE);
 //            linearlayout_name.setVisibility(View.GONE);
 //        }
+
+        Household householdByVCA = HouseholdDao.getHouseholdByVCA(childIndex.getHousehold_id());
+        Boolean check = HouseholdDao.hasNonNullSubPopulationByVCA(childIndex.getUnique_id());
+        if(check.equals(true)) {
+
+
+        }
+
 
 
 
@@ -205,17 +232,13 @@ public class ProfileOverviewFragment extends Fragment {
             sub3.setVisibility(View.VISIBLE);
         }
 
-        if (Objects.equals(subpop4, "true")){
-            sub4.setVisibility(View.VISIBLE);
-        }
-
         if (Objects.equals(subpop5, "true")){
             sub5.setVisibility(View.VISIBLE);
         }
 
-        if (Objects.equals(subpop6, "true")){
-            sub6.setVisibility(View.VISIBLE);
-        }
+
+
+
 
         if (childIndex.getArt_number() != null){
             txtArtNumber.setText(childIndex.getArt_number());
@@ -223,11 +246,16 @@ public class ProfileOverviewFragment extends Fragment {
             txtArtNumber.setText("N/A");
         }
 
-        if (childIndex.getFacility() != null){
-            txtFacility.setText(childIndex.getFacility());
-        } else {
-            txtFacility.setText("N/A");
+        String facility = null;
+        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
+        if (childIndex.getFacility() != null) {
+            facility = childIndex.getFacility();
         }
+        else {
+            facility = "N/A";
+        }
+        txtFacility.setText(facility);
+
 
         if (childIndex.getCaregiver_sex() != null){
             txtGender.setText(childIndex.getGender());
@@ -243,12 +271,19 @@ public class ProfileOverviewFragment extends Fragment {
             txtReferred.setText("N/A");
         }
 
-
-        if (childIndex.getSchoolName() != null){
-            txtSchool.setText(childIndex.getSchoolName());
+        if (childIndex.getSchool() != null) {
+            if (childIndex.getSchool().equals("not_in_school")) {
+                txtSchool.setText("Not In School");
+            } else if (childIndex.getSchool().equals("other")) {
+                txtSchool.setText(childIndex.getOther_school() != null ? childIndex.getOther_school() : "N/A");
+            } else {
+                txtSchool.setText(childIndex.getSchoolName() != null ? childIndex.getSchoolName() : "N/A");
+            }
         } else {
             txtSchool.setText("N/A");
         }
+
+
 
 
         if (childIndex.getDate_enrolled()!= null){
@@ -279,25 +314,6 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText(childIndex.getVl_last_result());
         } else {
             txtVlResult.setText("N/A");
-        }
-
-        AbymSubpopulationModel abym = AbymSubpopulationDao.getAbymSubpopulation(childIndex.getUnique_id());
-        if(abym != null){
-
-            if (isYes(abym.getAbym_years()) &&
-                    isYes(abym.getAbym_sex_older_women()) &&
-                    isYes(abym.getAbym_transactional_sex()) &&
-                    isYes(abym.getAbym_sex_work()) &&
-                    isYes(abym.getAbym_economically_insecure()) &&
-                    isYes(abym.getAbym_violent_partner()) &&
-                    isYes(abym.getAbym_diagnosed())) {
-
-                abymSubpopulation.setVisibility(View.VISIBLE);
-
-            } else {
-                abymSubpopulation.setVisibility(View.GONE);
-            }
-
         }
 
         List<VCAServiceModel> sModel = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
@@ -396,12 +412,12 @@ public class ProfileOverviewFragment extends Fragment {
                 txtNextVl.setText("N/A");
             }
         }
-imgBtn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        myview2.setVisibility(View.VISIBLE);
-    }
-});
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myview2.setVisibility(View.VISIBLE);
+            }
+        });
 
 
         txtCaregiverName.setText(childIndex.getCaregiver_name() != null ? childIndex.getCaregiver_name() : "Not Set");
@@ -413,9 +429,72 @@ imgBtn.setOnClickListener(new View.OnClickListener() {
         txtDateEdited.setText(date_time != null ? date_time : "Not Set");
         txtcPhone.setText(childIndex.getPhone() != null ? childIndex.getPhone() : "Not Set");
 
+
+        abym = AbymSubpopulationDao.getAbymSubpopulation(childIndex.getUnique_id());
+        muacModel = MuacDao.getMuac(childIndex.getUnique_id());
+        childScreeningModel = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
+
+        boolean isSubpopulationVisible = false;
+
+        if ( !"female".equals(childIndex.getGender()) && abym != null && "yes".equals(abym.getAbym_years()) ) {
+            abymSub.setVisibility(View.VISIBLE);
+        } else{
+            abymSub.setVisibility(View.GONE);
+        }
+
+//        HouseholdMemberModel memberModel = HouseholdMemberDao.getMember(childIndex.getUnique_id());
+//        if(memberModel != null && "sibling".equals(memberModel.getMember_type())){
+//            siblingSubPop.setVisibility(View.VISIBLE);
+//        } else {
+//            siblingSubPop.setVisibility(View.GONE);
+//        }
+
+        Household sub = HouseholdDao.getHousehold(childIndex.getHousehold_id());
+        VcaScreeningModel screen = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
+
+        if (sub != null && sub.getSub_population() != null) {
+            String mappedValues = keysToValues(sub.getSub_population());
+
+            String indexCheck = screen != null && screen.getIndex_check_box() != null
+                    ? screen.getIndex_check_box().toLowerCase()
+                    : "";
+
+            boolean isIndex = indexCheck.equals("yes") || indexCheck.equals("1");
+
+            if (mappedValues != null && mappedValues.contains("SIBS/INDEX FAMILY") && !isIndex) {
+                siblingSubPop.setVisibility(View.VISIBLE);
+            } else {
+                siblingSubPop.setVisibility(View.GONE);
+            }
+        } else {
+            siblingSubPop.setVisibility(View.GONE);
+        }
+
+
+
+
+        if(muacModel != null &&  ("red".equals(muacModel.getMuac()) || "yellow".equals(muacModel.getMuac()))){
+            isSubpopulationVisible = true;
+        }
+
+
+
+
+
+        moreSubpopBtn.setVisibility(isSubpopulationVisible ? View.VISIBLE : View.GONE);
+
+        moreSubpopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         return view;
 
     }
+
 
     private boolean isYes(String value) {
         return value != null && value.equals("yes");

@@ -53,64 +53,46 @@ public class PMTCTMotherOverviewFragment extends Fragment {
 
 
 
-        public void setViews(){
+    public void setViews() {
+        if (getActivity() == null) return;  // safety check
 
-            HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
-            if (mymap != null) {
-                PtctMotherModel motherDetails = mymap.get("client");
-                PmtctDeliveryDetailsModel pmtctDeliveryModel= PmtctDeliveryDao.getPmtctDeliveryDetails(motherDetails.getPmtct_id());
+        HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
 
-                if (pmtctDeliveryModel != null) {
-                    String dateOfDelivery = pmtctDeliveryModel.getDate_of_delivery();
-                    txtdate_of_delivery.setText(dateOfDelivery != null ? dateOfDelivery : "Not set");
+        String notSet = "Not set";
 
-                    String placeOfDelivery = pmtctDeliveryModel.getPlace_of_delivery();
-                    txtplace_of_delivery.setText(placeOfDelivery != null ? placeOfDelivery : "Not set");
+        // Set default values first
+        txtdate_of_delivery.setText(notSet);
+        txtplace_of_delivery.setText(notSet);
+        txt_on_art_at_time_of_delivery.setText(notSet);
+        txtHouseholdId.setText(notSet);
+        txtAddress.setText(notSet);
+        txtPhone.setText(notSet);
+        txtPmtctDateEnrolled.setText(notSet);
 
-                    String onArtAtTimeOfDelivery = pmtctDeliveryModel.getOn_art_at_time_of_delivery();
-                    txt_on_art_at_time_of_delivery.setText(onArtAtTimeOfDelivery != null ? onArtAtTimeOfDelivery : "Not set");
-                } else {
-                    txtdate_of_delivery.setText("Not set");
-                    txtplace_of_delivery.setText("Not set");
-                    txt_on_art_at_time_of_delivery.setText("Not set");
-                }
+        if (mymap == null) return;
 
+        PtctMotherModel motherDetails = mymap.get("client");
+        if (motherDetails != null) {
+            // Mother details
+            txtHouseholdId.setText(getSafeString(motherDetails.getPmtct_id()));
+            txtAddress.setText(getSafeString(motherDetails.getHome_address()));
+            txtPhone.setText(getSafeString(motherDetails.getMothers_phone()));
+            txtPmtctDateEnrolled.setText(getSafeString(motherDetails.getDate_enrolled_pmtct()));
 
-
-
-                if (motherDetails != null) {
-                    String pmtctId = motherDetails.getPmtct_id();
-                    txtHouseholdId.setText(pmtctId != null ? pmtctId : "Not set");
-
-                    String homeAddress = motherDetails.getHome_address();
-                    txtAddress.setText(homeAddress != null ? homeAddress : "Not set");
-
-                    String mothersPhone = motherDetails.getMothers_phone();
-                    txtPhone.setText(mothersPhone != null ? mothersPhone : "Not set");
-
-                    String pmtct_date_enrolled = motherDetails.getDate_enrolled_pmtct();
-                    txtPmtctDateEnrolled.setText(pmtct_date_enrolled != null ? pmtct_date_enrolled : "Not set");
-
-//                    String artNumber = motherDetails.getArt_number();
-//                    txtArt.setText(artNumber != null ? artNumber : "Not set");
-                } else {
-
-                    txtHouseholdId.setText("Not set");
-                    txtAddress.setText("Not set");
-                    txtPhone.setText("Not set");
-                    txtPmtctDateEnrolled.setText("Not set");
-
-                }
-            } else {
-
-                txtHouseholdId.setText("Not set");
-                txtAddress.setText("Not set");
-                txtPhone.setText("Not set");
-                txtPmtctDateEnrolled.setText("Not set");
-
+            // Delivery details
+            PmtctDeliveryDetailsModel pmtctDeliveryModel = PmtctDeliveryDao.getPmtctDeliveryDetails(motherDetails.getPmtct_id());
+            if (pmtctDeliveryModel != null) {
+                txtdate_of_delivery.setText(getSafeString(pmtctDeliveryModel.getDate_of_delivery()));
+                txtplace_of_delivery.setText(getSafeString(pmtctDeliveryModel.getPlace_of_delivery()));
+                txt_on_art_at_time_of_delivery.setText(getSafeString(pmtctDeliveryModel.getOn_art_at_time_of_delivery()));
             }
-
         }
+    }
+
+    private String getSafeString(String value) {
+        return (value != null && !value.trim().isEmpty()) ? value : "Not set";
+    }
+
 
 
 }

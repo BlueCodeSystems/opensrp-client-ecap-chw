@@ -88,12 +88,11 @@ public class VcaHivAssesmentFragment extends Fragment {
 
         if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
             int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
-            if (compareAge <= 15){
+            if (compareAge <= 14){
                 getAssessmentUnder15(recyclerView,recyclerViewadapter,childId);
             } else {
                 getAssessmentAbove15(recyclerView,recyclerViewadapter,childId);
             }
-        } else {
         }
 
         return vieww;

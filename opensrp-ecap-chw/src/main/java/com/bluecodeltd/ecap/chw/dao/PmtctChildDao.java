@@ -10,7 +10,7 @@ import java.util.List;
 public class PmtctChildDao extends AbstractDao {
     public static List<PmtctChildModel> getPmctChildHei(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
         if (values == null || values.size() == 0)
@@ -21,7 +21,7 @@ public class PmtctChildDao extends AbstractDao {
     }
     public static PmtctChildModel getPMCTChild(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE unique_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_child WHERE unique_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
 
@@ -32,9 +32,19 @@ public class PmtctChildDao extends AbstractDao {
 
         return values.get(0);
     }
+
+    public static boolean hasDeletedHei(String pmtctID) {
+
+        String sql = "SELECT * FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
+
+        List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
+
+        return !values.isEmpty();
+    }
+
     public static String countMotherHei (String pmtctID){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -67,6 +77,7 @@ public class PmtctChildDao extends AbstractDao {
             record.setAzt_3tc_npv(getCursorValue(c, "azt_3tc_npv"));
             record.setAzt_3tc_npv_date(getCursorValue(c, "azt_3tc_npv_date"));
             record.setChild_outcome(getCursorValue(c, "child_outcome"));
+            record.setDelete_status(getCursorValue(c,"delete_status"));
 
 
             return record;
