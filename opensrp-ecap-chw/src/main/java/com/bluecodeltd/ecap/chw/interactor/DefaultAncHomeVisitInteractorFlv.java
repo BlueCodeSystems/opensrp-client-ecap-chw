@@ -183,7 +183,7 @@ public abstract class DefaultAncHomeVisitInteractorFlv implements AncHomeVisitIn
 
         String title = MessageFormat.format(context.getString(R.string.anc_home_visit_tt_immunization), individualVaccine.getRight());
         int overdueMonth = new Period(individualVaccine.getLeft(), new DateTime()).getMonths();
-        String dueState = (overdueMonth < 1) ? context.getString(R.string.due) : context.getString(R.string.overdue);
+        String dueState = (overdueMonth < 1) ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
         TTAction helper = new TTAction(individualVaccine, context);
         JSONObject jsonObject = JsonFormUtils.getJson(view.getContext(), Constants.JSON_FORM.ANC_HOME_VISIT.getTtImmunization(), memberObject.getBaseEntityId());
@@ -252,7 +252,7 @@ public abstract class DefaultAncHomeVisitInteractorFlv implements AncHomeVisitIn
             serviceIteration = visitDetail.get(0).getPreProcessedJson().substring(visitDetail.get(0).getPreProcessedJson().length() - 1);
 
         String iptp = MessageFormat.format(context.getString(R.string.anc_home_visit_iptp_sp), serviceIteration);
-        String dueState = (overdueMonth < 1) ? context.getString(R.string.due) : context.getString(R.string.overdue);
+        String dueState = (overdueMonth < 1) ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
         IPTPAction helper = new IPTPAction(context, serviceIteration);
         JSONObject jsonObject = JsonFormUtils.getJson(view.getContext(), Constants.JSON_FORM.ANC_HOME_VISIT.getIptpSp(), memberObject.getBaseEntityId());

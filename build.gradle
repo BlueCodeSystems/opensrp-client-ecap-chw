@@ -2,7 +2,7 @@
 
 buildscript {
 
-    ext.kotlinVersion = '1.5.21'
+    ext.kotlinVersion = '1.9.23'
     ext.koinVersion = '2.0.1'
     ext.espressoVersion = '3.2.0'
     ext.dokkaVersion = '0.10.1'
@@ -11,31 +11,27 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
-        jcenter()
         mavenLocal()
-        maven { url 'https://maven.fabric.io/public' }
-        maven { url "http://dl.bintray.com/ona/kujaku" }
+        maven { url "https://dl.bintray.com/ona/kujaku" }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://maven.google.com' }
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.2'
-        classpath "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.10.2"
-        classpath "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.10.2"
-        classpath 'io.fabric.tools:gradle:1.31.2'
+        classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.12.2"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokkaVersion}"
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
+//        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
+//        classpath 'com.google.gms:google-services:4.3.3'
+//        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-apply plugin: 'jacoco'
-
-jacoco {
-    toolVersion = "0.8.5"
-}
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 allprojects {
 
@@ -48,7 +44,6 @@ allprojects {
 	repositories {
         google()
         mavenCentral()
-        jcenter()
         mavenLocal()
         maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
@@ -59,6 +54,18 @@ allprojects {
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
         maven { url 'https://repo1.maven.org/maven2/com/ibm/fhir' }
+        maven {
+            url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+            authentication { basic(BasicAuthentication) }
+            credentials {
+                username = 'mapbox' // Do not change
+                password = localProperties["mapbox.sdk.token"] ?: ""
+            }
+        }
+
+        maven { url  "https://s01.oss.sonatype.org/content/repositories/snapshots" }
+        maven { url  "https://repo.spring.io/plugins-release" }
+        maven { url  "https://repository.liferay.com/nexus/content/repositories/public" }
     }
 }
 
@@ -69,13 +76,10 @@ subprojects {
     group = 'org.smartregister'
 
     ext.androidToolsBuildGradle = '4.0.1'
-    ext.androidBuildToolsVersion = '29.0.3'
+    ext.androidBuildToolsVersion = '34.0.0'
     ext.androidMinSdkVersion = 27
-    ext.androidCompileSdkVersion = 33
-    ext.androidTargetSdkVersion = 33
-
-    ext.androidAnnotationsVersion = '3.0.1'
-    ext.androidAnnotationsAPIVersion = '3.0.1'
+    ext.androidCompileSdkVersion = 34
+    ext.androidTargetSdkVersion = 34
 
     project.ext {
         if (project.hasProperty('preDexEnable')) {

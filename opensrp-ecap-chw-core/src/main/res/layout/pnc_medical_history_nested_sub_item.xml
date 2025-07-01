@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:orientation="horizontal">
+
+    <org.smartregister.view.customcontrols.CustomFontTextView
+        android:id="@+id/tvContent"
+        style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:singleLine="false"
+        android:textColor="@color/medical_history_item_grey"
+        android:textSize="@dimen/px_15_to_sp" />
+
+</LinearLayout>

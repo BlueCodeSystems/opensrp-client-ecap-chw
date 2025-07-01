@@ -59,15 +59,19 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             Household household = HouseholdDao.getHouseholdByBaseId(isClosed);
             String householdStatus = (household != null) ? household.getStatus() : null;
 
+
             if (householdStatus == null || !"1".equals(householdStatus)) {
                 if ("true".equals(screened)) {
                     homeIcon.setImageResource(R.mipmap.ic_home_active);
                 } else {
                     homeIcon.setImageResource(R.mipmap.ic_home);
+
                 }
             } else {
+
                 homeIcon.setImageResource(R.mipmap.ic_home);
                 homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
+
             }
 
             // Get Household Case Status
@@ -112,15 +116,15 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
                 if (genderList.get(i).equals("male") && age < 20){
 
-                    image.setImageResource(R.mipmap.ic_boy_child);
+                    image.setImageResource(org.smartregister.family.R.mipmap.ic_boy_child);
 
                 } else if(genderList.get(i).equals("female") && age < 20) {
 
-                    image.setImageResource(R.mipmap.ic_girl_child);
+                    image.setImageResource(org.smartregister.family.R.mipmap.ic_girl_child);
 
                 } else {
-                    image.setImageResource(R.drawable.ic_person_black_24dp);
-                    image.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+                    image.setImageResource(org.smartregister.family.R.drawable.ic_person_black_24dp);
+                    image.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
                 }
 
                 hLayout.addView(image);

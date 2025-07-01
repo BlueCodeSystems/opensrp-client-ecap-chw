@@ -49,7 +49,7 @@ public class ChwUpdateLastAsyncTask extends UpdateLastAsyncTask {
     }
 
     private void setVisitButtonNoDueStatus(Button dueButton) {
-        dueButton.setBackgroundResource(org.smartregister.chw.core.R.drawable.transparent_white_button);
+        dueButton.setBackgroundResource(org.smartregister.R.drawable.transparent_white_button);
         dueButton.setOnClickListener(null);
     }
 }
