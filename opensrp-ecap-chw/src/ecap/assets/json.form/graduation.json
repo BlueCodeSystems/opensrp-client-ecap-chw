@@ -704,14 +704,13 @@
         ]
       },
       {
-        "key": "child_beaten",
+        "key": "touching_in_sexual",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "child_beaten",
+        "openmrs_entity_id": "touching_in_sexual",
         "type": "native_radio",
-        "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
         "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
-        "label": "In the past 6 months, has any child, adolescent or youth in your household been beaten, punched, kicked, choked, hot water poured on them, tied up, starved etc. by and adult in the home?",
+        "label": "In the past 6 months,  months, are you aware of any child, adolescent or youth in your household being touched in a sexual way or forced to have sex against his or her will? Touching in a sexual way could include fondling, pinching, grabbing, or touching a child, adolescent, or youth on or around his or her sexual body parts",
         "options": [
           {
             "key": "yes",
@@ -721,8 +720,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
+
       {
         "key": "against_will",
         "openmrs_entity_parent": "",
@@ -741,7 +745,11 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
       },
       {
         "key": "toaster_bench_6",

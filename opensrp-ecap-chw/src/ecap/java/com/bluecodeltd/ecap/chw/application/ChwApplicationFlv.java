@@ -159,7 +159,6 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "first_name",
                 "last_name",
                 "pmtct_id",
-                "household_id",
                 "delete_status"
         });
 
@@ -215,7 +214,6 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "first_name",
                 "last_name",
                 "pmtct_id",
-                "household_id",
                 "delete_status"
         });
         return map;

@@ -88,6 +88,7 @@ public class GraduationDao extends AbstractDao {
             record.setRepeat_school(getCursorValue(c, "repeat_school"));
             record.setAdditional_information(getCursorValue(c, "additional_information"));
             record.setGraduation_status(getCursorValue(c, "graduation_status"));
+            record.setTouching_in_sexual(getCursorValue(c,"touching_in_sexual"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
 

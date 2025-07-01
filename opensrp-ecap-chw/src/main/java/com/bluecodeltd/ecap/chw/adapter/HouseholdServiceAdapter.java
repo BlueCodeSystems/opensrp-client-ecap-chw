@@ -158,7 +158,19 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                 holder.signatureView.setVisibility(View.GONE);
             }
         }
-
+        holder.edit.setOnClickListener(v -> {
+            if (household.getHousehold_case_status() != null &&
+                    (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
+                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
+            } else {
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+                    openFormUsingFormUtils(context, "service_report_household_edit", service);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         holder.linearLayout.setOnClickListener(v -> {
 
            if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
@@ -221,7 +233,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                     } catch (Exception e) {
                         Timber.e(e);
                     }
-                   refreshActivity();
+                    if (context instanceof Activity) {
+                        ((Activity) context).finish();
+                    }
 
                 }));
 
@@ -358,6 +372,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             switch (encounterType) {
 
                 case "Household Service Report Edit":
+                case "Household Service Report":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

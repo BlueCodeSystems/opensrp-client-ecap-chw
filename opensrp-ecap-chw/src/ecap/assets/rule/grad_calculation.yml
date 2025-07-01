@@ -44,7 +44,7 @@ actions:
 name: step2_correct
 description: step2_correct
 priority: 1
-condition: "step1_prevention_correct "
+condition: "step1_prevention_correct"
 actions:
   - "calculation = 1"
 ---
@@ -60,20 +60,8 @@ condition: "(step2_hiv_status_enrolled.contains('yes') || step2_hiv_status_enrol
             && (step4_prevention.contains('yes') || step4_prevention.contains('N/A'))
             
             && (step5_undernourished.contains('yes') || step5_undernourished.contains('N/A'))
-            
-            && (step6_school_fees.contains('yes') || step6_school_fees.contains('N/A') )
-            && step6_medical_costs.contains('yes') 
-            
-            && step7_record_abuse.contains('no') 
-            && step7_caregiver_beaten.contains('no') 
-            && step7_child_beaten.contains('no') 
-            && step7_against_will.contains('no') 
-            
-            && step8_stable_guardian.contains('yes')
-            
-            && (step9_in_school.contains('yes') || step9_in_school.contains('N/A')) 
-            && (step9_year_school.contains('yes') || step9_year_school.contains('N/A'))
-            && (step9_repeat_school.contains('yes') || step9_repeat_school.contains('N/A'))"
+            && step7_touching_in_sexual.contains('no') 
+            && step7_against_will.contains('no')"
 actions:
   - "calculation = 1"
 ---
@@ -89,19 +77,7 @@ condition: "!((step2_hiv_status_enrolled.contains('yes') || step2_hiv_status_enr
             && (step4_prevention.contains('yes') || step4_prevention.contains('N/A'))
             
             && (step5_undernourished.contains('yes') || step5_undernourished.contains('N/A'))
-            
-            && (step6_school_fees.contains('yes') || step6_school_fees.contains('N/A') )
-            && step6_medical_costs.contains('yes') 
-            
-            && step7_record_abuse.contains('no') 
-            && step7_caregiver_beaten.contains('no') 
-            && step7_child_beaten.contains('no') 
-            && step7_against_will.contains('no') 
-            
-            && step8_stable_guardian.contains('yes')
-            
-            && (step9_in_school.contains('yes') || step9_in_school.contains('N/A')) 
-            && (step9_year_school.contains('yes') || step9_year_school.contains('N/A'))
-            && (step9_repeat_school.contains('yes') || step9_repeat_school.contains('N/A')))"
+            && step7_touching_in_sexual.contains('no') 
+            && step7_against_will.contains('no'))"
 actions:
   - "calculation = 0"

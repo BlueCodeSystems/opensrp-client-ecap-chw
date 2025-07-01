@@ -79,14 +79,14 @@ actions:
 name: step7_toaster_bench_6
 description: step7_toaster_bench_6
 priority: 1
-condition: "step7_record_abuse.contains('no') && step7_caregiver_beaten.contains('no') && step7_child_beaten.contains('no') && step7_against_will.contains('no')"
+condition: "step7_against_will.contains('no') && step7_touching_in_sexual.contains('no')"
 actions:
   - "isRelevant = true"
 ---
 name: step7_toaster_bench_6_no
 description: step7_toaster_bench_6_no
 priority: 1
-condition: "step7_record_abuse.contains('yes') || step7_caregiver_beaten.contains('yes') || step7_child_beaten.contains('yes') || step7_against_will.contains('yes')"
+condition: "step7_step7_touching_in_sexual.contains('yes') || step7_against_will.contains('yes')"
 actions:
   - "isRelevant = true"
 ---
