@@ -43,6 +43,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void setupViews(View view) {
+
         if (view == null) {
             Log.e("setupViews", "View is null. Aborting setup.");
             return; // Exit if the view itself is null
@@ -160,6 +161,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
         /* Uncomment and modify if needed
         if (!isSyncing()) {
+
             AppUpdater appUpdater = new AppUpdater(getActivity());
             appUpdater.start();
         }
@@ -264,7 +266,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
-            Utils.showShortToast(getActivity(), getString(org.smartregister.chw.core.R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             getActivity().recreate();
             AppUpdater appUpdater = new AppUpdater(getActivity());
             appUpdater.start();

@@ -166,7 +166,7 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         JobsAidsBottomNavigationListener navigationListener = new JobsAidsBottomNavigationListener(this);
         Utils.setupBottomNavigation(bottomNavigationHelper, bottomNavigationView, navigationListener);
         if (bottomNavigationView != null)
-            bottomNavigationView.getMenu().findItem(R.id.action_job_aids).setChecked(true);
+            bottomNavigationView.getMenu().findItem(org.smartregister.family.R.id.action_job_aids).setChecked(true);
     }
 
     /**

@@ -318,7 +318,7 @@ public class MotherDetail extends AppCompatActivity {
 
         Form form = new Form();
         form.setWizard(false);
-        form.setName(getString(R.string.child_details));
+        form.setName(getString(org.smartregister.chw.core.R.string.child));
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));

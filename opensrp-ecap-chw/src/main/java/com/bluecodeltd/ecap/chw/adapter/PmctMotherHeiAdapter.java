@@ -50,7 +50,7 @@ Context context;
 
 
 
-                holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+                holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override

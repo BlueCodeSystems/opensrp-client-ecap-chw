@@ -39,6 +39,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     public void setupViews(View view) {
+
         try {
             super.setupViews(view);
 
@@ -122,6 +123,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
             e.printStackTrace();
             Log.e("SetupViews", "Error setting up views: " + e.getMessage());
         }
+
     }
 
 

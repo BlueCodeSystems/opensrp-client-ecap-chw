@@ -536,7 +536,7 @@ break;
     public void startFormActivity(JSONObject jsonObject) {
         Form form = new Form();
         form.setWizard(false);
-        form.setName(getString(R.string.child_details));
+        form.setName(getString(org.smartregister.chw.core.R.string.child_details));
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));

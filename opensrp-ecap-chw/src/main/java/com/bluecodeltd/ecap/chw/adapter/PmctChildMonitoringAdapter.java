@@ -284,7 +284,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
