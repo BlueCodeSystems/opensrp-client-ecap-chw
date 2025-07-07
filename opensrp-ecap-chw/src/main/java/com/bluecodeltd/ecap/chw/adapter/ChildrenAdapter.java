@@ -231,11 +231,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             if(cModel != null){
 
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
 
             } else {
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_warning, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
 
             }
 
