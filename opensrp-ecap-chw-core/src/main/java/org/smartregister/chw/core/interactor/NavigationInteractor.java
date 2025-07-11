@@ -63,7 +63,10 @@ public class NavigationInteractor implements NavigationContract.Interactor {
     public Date sync() {
         Date res = null;
         try {
-            res = new Date(getLastCheckTimeStamp());
+            Long lastCheckTimeStamp = getLastCheckTimeStamp();
+            if (lastCheckTimeStamp != null && lastCheckTimeStamp > 0) {
+                res = new Date(lastCheckTimeStamp);
+            }
         } catch (Exception e) {
             Timber.e(e.toString());
         }

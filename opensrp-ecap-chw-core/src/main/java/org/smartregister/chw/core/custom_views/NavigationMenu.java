@@ -181,8 +181,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
         tvLogo.setText(activity.getString(R.string.nav_logo));
 
         if (syncProgressBar != null) {
-            FadingCircle circle = new FadingCircle();
-            syncProgressBar.setIndeterminateDrawable(circle);
+            syncProgressBar.setIndeterminate(true);
         }
 
         // register top section menu items
@@ -201,6 +200,9 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
         // update all actions
         mPresenter.refreshLastSync();
         mPresenter.refreshNavigationCount(activity);
+        
+        // Check if sync is already in progress on initialization
+        refreshSyncProgressSpinner();
     }
 
     @Override
@@ -311,6 +313,11 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
         View.OnClickListener syncClicker = v -> {
             Toast.makeText(parentActivity, parentActivity.getResources().getText(R.string.action_start_sync), Toast.LENGTH_SHORT).show();
+            // Immediately show the progress bar
+            if (syncProgressBar != null && ivSync != null) {
+                syncProgressBar.setVisibility(View.VISIBLE);
+                ivSync.setVisibility(View.INVISIBLE);
+            }
             mPresenter.sync(parentActivity);
         };
 
@@ -425,6 +432,10 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         // hide the rotating menu
+        if (syncProgressBar != null && ivSync != null) {
+            syncProgressBar.setVisibility(View.INVISIBLE);
+            ivSync.setVisibility(View.VISIBLE);
+        }
         refreshSyncProgressSpinner();
         // update the time
         mPresenter.refreshLastSync();
