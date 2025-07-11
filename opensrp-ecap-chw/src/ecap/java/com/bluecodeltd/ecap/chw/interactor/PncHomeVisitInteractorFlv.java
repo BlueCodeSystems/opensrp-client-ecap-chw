@@ -265,7 +265,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
             public String evaluateSubTitle() {
                 StringBuilder builder = new StringBuilder();
                 String subTitleText = MessageFormat.format("{0}: {1}\n",
-                        context.getString(R.string.fp_counseling),
+                        context.getString(org.smartregister.chw.core.R.string.fp_counseling),
                         "Yes".equalsIgnoreCase(fp_counseling) ? evaluateFpPeriod() : context.getString(R.string.not_done).toLowerCase());
                 builder.append(subTitleText);
 
@@ -276,28 +276,28 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
                             method = context.getString(R.string.none);
                             break;
                         case "PPIUCD":
-                            method = context.getString(R.string.ppiucd);
+                            method = context.getString(org.smartregister.chw.core.R.string.ppiucd);
                             break;
                         case "Pills":
-                            method = context.getString(R.string.pills);
+                            method = context.getString(org.smartregister.chw.core.R.string.pills);
                             break;
                         case "Implant":
                             method = context.getString(R.string.implant);
                             break;
                         case "Condoms":
-                            method = context.getString(R.string.condoms);
+                            method = context.getString(org.smartregister.chw.core.R.string.condoms);
                             break;
                         case "LAM":
-                            method = context.getString(R.string.lam);
+                            method = context.getString(org.smartregister.chw.core.R.string.lam);
                             break;
                         case "Bead Counting":
-                            method = context.getString(R.string.standard_day_method);
+                            method = context.getString(org.smartregister.chw.core.R.string.standard_day_method);
                             break;
                         case "Permanent (BTL)":
-                            method = context.getString(R.string.permanent_blt);
+                            method = context.getString(org.smartregister.chw.core.R.string.permanent_blt);
                             break;
                         case "Permanent (Vasectomy)":
-                            method = context.getString(R.string.permanent_vasectomy);
+                            method = context.getString(org.smartregister.chw.core.R.string.permanent_vasectomy);
                             break;
                         default:
                             break;
@@ -345,7 +345,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
 
             @Override
             public String getPreProcessedSubTitle() {
-                return MessageFormat.format("{0} {1}", context.getString(R.string.due), new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(dob));
+                return MessageFormat.format("{0} {1}", context.getString(org.smartregister.chw.core.R.string.due), new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(dob));
             }
 
             @Override
@@ -418,7 +418,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
 
             @Override
             public String evaluateSubTitle() {
-                String counsellingStatus = "None".equals(couselling_pnc) ? context.getString(R.string.subtask_not_done) : context.getString(R.string.subtask_done);
+                String counsellingStatus = "None".equals(couselling_pnc) ? context.getString(org.smartregister.chw.core.R.string.subtask_not_done) : context.getString(org.smartregister.chw.core.R.string.subtask_done);
                 return MessageFormat.format("{0}: {1}", context.getString(R.string.counselling), counsellingStatus);
             }
 
@@ -457,7 +457,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
 
             @Override
             public String evaluateSubTitle() {
-                return MessageFormat.format("{0}: {1}", context.getString(R.string.mother_status), nutrition_status_mama);
+                return MessageFormat.format("{0}: {1}", context.getString(org.smartregister.chw.core.R.string.mother_status), nutrition_status_mama);
             }
 
             @Override
@@ -500,7 +500,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
 
             @Override
             public String evaluateSubTitle() {
-                return MessageFormat.format("{0}: {1}", context.getString(R.string.child_status), nutrition_status_1m);
+                return MessageFormat.format("{0}: {1}", context.getString(org.smartregister.chw.core.R.string.child_status), nutrition_status_1m);
             }
 
             @Override
@@ -798,7 +798,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
         public String getPreProcessed() {
             try {
                 scheduleStatus = (visitRule.getOverDueDate().toLocalDate().isBefore(LocalDate.now())) ? BaseAncHomeVisitAction.ScheduleStatus.OVERDUE : BaseAncHomeVisitAction.ScheduleStatus.DUE;
-                String due = (visitRule.getOverDueDate().toLocalDate().isBefore(LocalDate.now())) ? context.getString(R.string.overdue) : context.getString(R.string.due);
+                String due = (visitRule.getOverDueDate().toLocalDate().isBefore(LocalDate.now())) ? context.getString(org.smartregister.chw.core.R.string.overdue) : context.getString(org.smartregister.chw.core.R.string.due);
 
                 subTitle = MessageFormat.format("{0} {1}", due, DateTimeFormat.forPattern("dd MMM yyyy").print(visitRule.getOverDueDate().toLocalDate()));
                 JSONObject jsonObject = new JSONObject(jsonPayload);
@@ -909,7 +909,7 @@ public class PncHomeVisitInteractorFlv extends DefaultPncHomeVisitInteractorFlv 
         @Override
         public String evaluateSubTitle() {
             if ("No".equals(pnc_visit)) {
-                return context.getString(R.string.visit_not_done).replace("\n", "");
+                return context.getString(org.smartregister.chw.core.R.string.visit_not_done).replace("\n", "");
             } else {
                 if (date == null) {
                     return null;

@@ -20,6 +20,7 @@ import org.smartregister.chw.core.utils.QueryBuilder;
 import com.bluecodeltd.ecap.chw.model.ReferralRegisterFragmentModel;
 import com.bluecodeltd.ecap.chw.presenter.ReferralRegisterFragmentPresenter;
 import org.smartregister.chw.referral.activity.ReferralDetailsViewActivity;
+import org.smartregister.chw.referral.contract.BaseReferralRegisterFragmentContract;
 import org.smartregister.chw.referral.domain.MemberObject;
 import org.smartregister.chw.referral.fragment.BaseReferralRegisterFragment;
 import org.smartregister.chw.referral.provider.ReferralRegisterProvider;
@@ -30,6 +31,7 @@ import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.cursoradapter.SmartRegisterQueryBuilder;
 import org.smartregister.view.activity.BaseRegisterActivity;
+import org.smartregister.view.contract.BaseRegisterFragmentContract;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 
 import java.text.MessageFormat;
@@ -66,7 +68,7 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
 
         NavigationMenu.getInstance(getActivity(), null, toolbar);
 
-        View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
+        View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
         navbarContainer.setFocusable(false);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -75,18 +77,18 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
         searchBarLayout.setBackgroundResource(R.color.chw_primary);
         searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) Utils.convertDpToPixel(10, getActivity()));
 
-        CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
+        CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
             titleView.setPadding(0, titleView.getTop(), titleView.getPaddingRight(), titleView.getPaddingBottom());
         }
 
-        View topLeftLayout = view.findViewById(R.id.top_left_layout);
+        View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
         topLeftLayout.setVisibility(View.GONE);
 
-        View topRightLayout = view.findViewById(R.id.top_right_layout);
+        View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
         topRightLayout.setVisibility(View.VISIBLE);
 
-        View sortFilterBarLayout = view.findViewById(R.id.register_sort_filter_bar_layout);
+        View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
         sortFilterBarLayout.setVisibility(View.GONE);
 
         View filterSortLayout = view.findViewById(R.id.filter_sort_layout);
@@ -99,7 +101,7 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
-            getSearchView().setTextColor(getResources().getColor(R.color.text_black));
+            getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
         }
     }
 
@@ -109,7 +111,7 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
             return;
         }
         String viewConfigurationIdentifier = ((BaseRegisterActivity) getActivity()).getViewIdentifiers().get(0);
-        presenter = new ReferralRegisterFragmentPresenter(this, new ReferralRegisterFragmentModel(), viewConfigurationIdentifier);
+        presenter = (BaseRegisterFragmentContract.Presenter) new ReferralRegisterFragmentPresenter((BaseReferralRegisterFragmentContract.View) this,(BaseReferralRegisterFragmentContract.Model) new ReferralRegisterFragmentModel(), viewConfigurationIdentifier);
     }
 
     @Override
@@ -146,9 +148,9 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
     private void switchViews(View dueOnlyLayout, boolean isPress) {
         TextView dueOnlyTextView = dueOnlyLayout.findViewById(R.id.due_only_text_view);
         if (isPress) {
-            dueOnlyTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_due_filter_on, 0);
+            dueOnlyTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, org.smartregister.R.drawable.ic_due_filter_on, 0);
         } else {
-            dueOnlyTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_due_filter_off, 0);
+            dueOnlyTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, org.smartregister.R.drawable.ic_due_filter_off, 0);
 
         }
     }

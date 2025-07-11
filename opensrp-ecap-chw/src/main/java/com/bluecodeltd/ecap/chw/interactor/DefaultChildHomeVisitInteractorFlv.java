@@ -217,7 +217,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         Map<String, List<VisitDetail>> details = getDetails(Constants.EventType.CHILD_VACCINE_CARD_RECEIVED);
 
-        BaseAncHomeVisitAction vaccine_card = getBuilder(context.getString(R.string.vaccine_card_title))
+        BaseAncHomeVisitAction vaccine_card = getBuilder(context.getString(org.smartregister.chw.core.R.string.vaccine_card_title))
                 .withOptional(false)
                 .withDetails(details)
                 .withBaseEntityID(memberObject.getBaseEntityId())
@@ -226,7 +226,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
                 .withDestinationFragment(BaseAncHomeVisitFragment.getInstance(view, Constants.JSON_FORM.CHILD_HOME_VISIT.getVaccineCard(), null, details, null))
                 .build();
 
-        actionList.put(context.getString(R.string.vaccine_card_title), vaccine_card);
+        actionList.put(context.getString(org.smartregister.chw.core.R.string.vaccine_card_title), vaccine_card);
     }
 
     protected void evaluateImmunization() throws Exception {
@@ -267,7 +267,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
             List<VaccineWrapper> wrappers = VisitVaccineUtil.wrapVaccines(entry.getValue());
             List<VaccineDisplay> displays = VisitVaccineUtil.toDisplays(wrappers);
 
-            String title = MessageFormat.format(context.getString(R.string.immunizations_count), VisitVaccineUtil.getVaccineTitle(entry.getKey().name, context));
+            String title = MessageFormat.format(context.getString(org.smartregister.chw.core.R.string.immunizations_count), VisitVaccineUtil.getVaccineTitle(entry.getKey().name, context));
             BaseHomeVisitImmunizationFragmentFlv fragment =
                     BaseHomeVisitImmunizationFragmentFlv.getInstance(view, memberObject.getBaseEntityId(), details, displays, vaccinesDefaultChecked);
             if (ChwApplication.getApplicationFlavor().relaxVisitDateRestrictions()) {
@@ -282,7 +282,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
                     .withDetails(details)
                     .withDestinationFragment(fragment)
                     .withHelper(new ImmunizationActionHelper(context, wrappers))
-                    .withDisabledMessage(context.getString(R.string.fill_earler_immunization))
+                    .withDisabledMessage(context.getString(org.smartregister.chw.core.R.string.fill_earler_immunization))
                     .withValidator(validator)
                     .build();
 
@@ -310,7 +310,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         // alert if overdue after 14 days
         boolean isOverdue = new LocalDate().isAfter(new LocalDate(alert.startDate()).plusDays(14));
-        String dueState = !isOverdue ? context.getString(R.string.due) : context.getString(R.string.overdue);
+        String dueState = !isOverdue ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
         ExclusiveBreastFeedingAction helper = new ExclusiveBreastFeedingAction(context, alert);
         JSONObject jsonObject = getFormJson(Constants.JSON_FORM.PNC_HOME_VISIT.getExclusiveBreastFeeding(), memberObject.getBaseEntityId());
@@ -352,7 +352,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         // alert if overdue after 14 days
         boolean isOverdue = new LocalDate().isAfter(new LocalDate(alert.startDate()).plusDays(14));
-        String dueState = !isOverdue ? context.getString(R.string.due) : context.getString(R.string.overdue);
+        String dueState = !isOverdue ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
         VitaminaAction helper = new VitaminaAction(context, serviceIteration, alert);
         JSONObject jsonObject = getFormJson(Constants.JSON_FORM.CHILD_HOME_VISIT.getVitaminA(), memberObject.getBaseEntityId());
@@ -395,7 +395,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         // alert if overdue after 14 days
         boolean isOverdue = new LocalDate().isAfter(new LocalDate(alert.startDate()).plusDays(14));
-        String dueState = !isOverdue ? context.getString(R.string.due) : context.getString(R.string.overdue);
+        String dueState = !isOverdue ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
         DewormingAction helper = new DewormingAction(context, serviceIteration, alert);
         JSONObject jsonObject = getFormJson(Constants.JSON_FORM.CHILD_HOME_VISIT.getDEWORMING(), memberObject.getBaseEntityId());
@@ -441,7 +441,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         // alert if overdue after 14 days
         boolean isOverdue = new LocalDate().isAfter(new LocalDate(alert.startDate()).plusDays(14));
-        String dueState = !isOverdue ? context.getString(R.string.due) : context.getString(R.string.overdue);
+        String dueState = !isOverdue ? context.getString(org.smartregister.chw.core.R.string.due) : context.getString(org.smartregister.chw.core.R.string.overdue);
 
         MNPAction helper = new MNPAction(context, serviceIteration, alert);
         JSONObject jsonObject = getFormJson(Constants.JSON_FORM.CHILD_HOME_VISIT.getMNP(), memberObject.getBaseEntityId());
@@ -492,7 +492,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         Map<String, List<VisitDetail>> details = getDetails(Constants.EventType.MUAC);
 
-        BaseAncHomeVisitAction action = getBuilder(context.getString(R.string.muac_title))
+        BaseAncHomeVisitAction action = getBuilder(context.getString(org.smartregister.chw.core.R.string.muac_title))
                 .withOptional(false)
                 .withDetails(details)
                 .withBaseEntityID(memberObject.getBaseEntityId())
@@ -501,7 +501,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
                 .withDestinationFragment(BaseAncHomeVisitFragment.getInstance(view, Constants.JSON_FORM.CHILD_HOME_VISIT.getMUAC(), null, details, null))
                 .build();
 
-        actionList.put(context.getString(R.string.muac_title), action);
+        actionList.put(context.getString(org.smartregister.chw.core.R.string.muac_title), action);
     }
 
     protected void evaluateDietary() throws Exception {
@@ -512,7 +512,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
         Map<String, List<VisitDetail>> details = getDetails(Constants.EventType.MINIMUM_DIETARY_DIVERSITY);
 
-        BaseAncHomeVisitAction action = getBuilder(context.getString(R.string.minimum_dietary_title))
+        BaseAncHomeVisitAction action = getBuilder(context.getString(org.smartregister.chw.core.R.string.minimum_dietary_title))
                 .withOptional(false)
                 .withDetails(details)
                 .withBaseEntityID(memberObject.getBaseEntityId())
@@ -521,7 +521,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
                 .withDestinationFragment(BaseAncHomeVisitFragment.getInstance(view, Constants.JSON_FORM.CHILD_HOME_VISIT.getDIETARY(), null, details, null))
                 .build();
 
-        actionList.put(context.getString(R.string.minimum_dietary_title), action);
+        actionList.put(context.getString(org.smartregister.chw.core.R.string.minimum_dietary_title), action);
     }
 
     protected void evaluateECD() throws Exception {
@@ -538,7 +538,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
             Timber.e(e);
         }
 
-        BaseAncHomeVisitAction action = getBuilder(context.getString(R.string.ecd_title))
+        BaseAncHomeVisitAction action = getBuilder(context.getString(org.smartregister.chw.core.R.string.ecd_title))
                 .withOptional(false)
                 .withDetails(details)
                 .withBaseEntityID(memberObject.getBaseEntityId())
@@ -548,7 +548,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
                 .withJsonPayload(jsonObject.toString())
                 .build();
 
-        actionList.put(context.getString(R.string.ecd_title), action);
+        actionList.put(context.getString(org.smartregister.chw.core.R.string.ecd_title), action);
     }
 
     protected void evaluateLLITN() throws Exception {
@@ -669,11 +669,11 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
             String value = "";
             if ("chk_green".equalsIgnoreCase(muac)) {
-                value = context.getString(R.string.muac_choice_1);
+                value = context.getString(org.smartregister.chw.core.R.string.muac_choice_1);
             } else if ("chk_yellow".equalsIgnoreCase(muac)) {
-                value = context.getString(R.string.muac_choice_2);
+                value = context.getString(org.smartregister.chw.core.R.string.muac_choice_2);
             } else if ("chk_red".equalsIgnoreCase(muac)) {
-                value = context.getString(R.string.muac_choice_3);
+                value = context.getString(org.smartregister.chw.core.R.string.muac_choice_3);
             }
             return value;
         }
@@ -713,11 +713,11 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
 
             String value = "";
             if ("chk_no_animal_products".equalsIgnoreCase(diet_diversity)) {
-                value = context.getString(R.string.minimum_dietary_choice_1);
+                value = context.getString(org.smartregister.chw.core.R.string.minimum_dietary_choice_1);
             } else if ("chw_one_animal_product_or_fruit".equalsIgnoreCase(diet_diversity)) {
-                value = context.getString(R.string.minimum_dietary_choice_2);
+                value = context.getString(org.smartregister.chw.core.R.string.minimum_dietary_choice_2);
             } else if ("chw_one_animal_product_and_fruit".equalsIgnoreCase(diet_diversity)) {
-                value = context.getString(R.string.minimum_dietary_choice_3);
+                value = context.getString(org.smartregister.chw.core.R.string.minimum_dietary_choice_3);
             }
             return value;
         }
@@ -787,7 +787,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
         @Override
         public String getPreProcessedSubTitle() {
             return MessageFormat.format("{0} {1}",
-                    context.getString(isOverDue() ? R.string.overdue : R.string.due),
+                    context.getString(isOverDue() ? org.smartregister.chw.core.R.string.overdue : org.smartregister.chw.core.R.string.due),
                     org.smartregister.chw.core.utils.Utils.dd_MMM_yyyy.format(birthDate.toDate())
             );
         }
@@ -862,7 +862,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
             }
 
             return birth_cert.equalsIgnoreCase("Yes") ?
-                    MessageFormat.format("{0} {1} (#{2}) ", context.getString(R.string.issued), certDate, birth_cert_num) :
+                    MessageFormat.format("{0} {1} (#{2}) ", context.getString(org.smartregister.chw.core.R.string.issued), certDate, birth_cert_num) :
                     context.getString(R.string.not_done);
         }
 
@@ -890,7 +890,7 @@ public abstract class DefaultChildHomeVisitInteractorFlv implements CoreChildHom
         @Override
         public String getPreProcessedSubTitle() {
             return MessageFormat.format("{0} {1}",
-                    context.getString(isOverDue() ? R.string.overdue : R.string.due),
+                    context.getString(isOverDue() ? org.smartregister.chw.core.R.string.overdue : org.smartregister.chw.core.R.string.due),
                     org.smartregister.chw.core.utils.Utils.dd_MMM_yyyy.format(birthDate.toDate())
             );
         }

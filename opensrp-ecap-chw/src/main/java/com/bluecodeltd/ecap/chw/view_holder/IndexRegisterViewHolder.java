@@ -182,7 +182,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
             if ("green".equalsIgnoreCase(statusColor) && visitDate != null) {
                 backgroundResource = R.drawable.home_visit_due;
-                textColorResource = R.color.colorGreen;
+                textColorResource = org.smartregister.chw.core.R.color.colorGreen;
                 buttonText = "Visit Due: " + visitDate;
             } else if ("yellow".equalsIgnoreCase(statusColor) && visitDate != null) {
                 backgroundResource = R.drawable.home_visit_10days_less;
@@ -190,11 +190,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                 buttonText = "Visit Due: " + visitDate;
             } else if ("red".equalsIgnoreCase(statusColor) && visitDate != null) {
                 backgroundResource = R.drawable.home_visit_overdue;
-                textColorResource = R.color.red_overlay;
+                textColorResource = com.nerdstone.neatformcore.R.color.colorRed;
                 buttonText = "Visit Overdue: " + visitDate;
             } else {
-                backgroundResource = R.drawable.due_contact;
-                textColorResource = R.color.btn_blue;
+                backgroundResource = org.smartregister.family.R.drawable.due_contact;
+                textColorResource = org.smartregister.R.color.btn_blue;
                 buttonText = "Conduct Visit";
             }
 
@@ -206,11 +206,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         else {
             if(indexVCA != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
                 dueButton.setBackgroundResource(R.drawable.inactive_button);
-                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
                 dueButton.setText("Case Closed");
             } else {
-                dueButton.setBackgroundResource(R.drawable.due_contact);
-                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.btn_blue));
+                dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
                 dueButton.setText("Conduct Visit");
             }
         }

@@ -51,7 +51,7 @@ public class FamilyRegisterActivity extends CoreFamilyRegisterActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_register);
-            bottomNavigationView.getMenu().removeItem(R.id.action_family);
+            bottomNavigationView.getMenu().removeItem(org.smartregister.family.R.id.action_family);
         }
     }
 

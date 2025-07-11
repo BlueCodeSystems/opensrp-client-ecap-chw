@@ -50,11 +50,11 @@ public class IPTPAction extends HomeVisitActionHelper {
         JSONObject visit_field = JsonFormUtils.getFieldJSONObject(fields, "iptp{0}_date");
         visit_field.put("key", MessageFormat.format(visit_field.getString("key"), iteration));
         if (iteration.equalsIgnoreCase("1")) {
-            visit_field.put("hint", MessageFormat.format(visit_field.getString("hint"), context.getString(R.string.one)));
+            visit_field.put("hint", MessageFormat.format(visit_field.getString("hint"), context.getString(org.smartregister.chw.core.R.string.one)));
         } else if (iteration.equalsIgnoreCase("2")) {
-            visit_field.put("hint", MessageFormat.format(visit_field.getString("hint"), context.getString(R.string.two)));
+            visit_field.put("hint", MessageFormat.format(visit_field.getString("hint"), context.getString(org.smartregister.chw.core.R.string.two)));
         } else if (iteration.equalsIgnoreCase("3")) {
-            visit_field.put("hint", MessageFormat.format(visit_field.getString("hint"), context.getString(R.string.three)));
+            visit_field.put("hint", MessageFormat.format(visit_field.getString("hint"), context.getString(org.smartregister.chw.core.R.string.three)));
         }
 
         return jsonObject;
@@ -94,7 +94,7 @@ public class IPTPAction extends HomeVisitActionHelper {
                     context.getString(R.string.date_given),
                     new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(parsedDate));
         }
-        return context.getString(R.string.not_given);
+        return context.getString(org.smartregister.chw.core.R.string.not_given);
     }
 
     @Override

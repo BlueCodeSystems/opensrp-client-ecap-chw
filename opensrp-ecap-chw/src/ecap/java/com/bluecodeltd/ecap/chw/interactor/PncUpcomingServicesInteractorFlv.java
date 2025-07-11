@@ -45,7 +45,7 @@ public class PncUpcomingServicesInteractorFlv extends DefaultPncUpcomingServiceI
     }
 
     private String serviceName(String val) {
-        return MessageFormat.format(context.getString(R.string.pnc_health_facility_visit_num), val);
+        return MessageFormat.format(context.getString(org.smartregister.chw.core.R.string.pnc_health_facility_visit_num), val);
     }
 
     private void evaluateHealthFacility(List<BaseUpcomingService> serviceList) {

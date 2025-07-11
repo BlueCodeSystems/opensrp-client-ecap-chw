@@ -98,15 +98,15 @@ public class FamilyPlanningMemberProfileActivity extends CoreFamilyPlanningMembe
 
         OnClickFloatingMenu onClickFloatingMenu = viewId -> {
             switch (viewId) {
-                case R.id.family_planning_fab:
+                case org.smartregister.chw.core.R.id.family_planning_fab:
                     checkPhoneNumberProvided();
                     ((FamilyPlanningFloatingMenu) fpFloatingMenu).animateFAB();
                     break;
-                case R.id.call_layout:
+                case org.smartregister.chw.core.R.id.call_layout:
                     ((FamilyPlanningFloatingMenu) fpFloatingMenu).launchCallWidget();
                     ((FamilyPlanningFloatingMenu) fpFloatingMenu).animateFAB();
                     break;
-                case R.id.refer_to_facility_layout:
+                case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                     ((FamilyPlanningMemberProfilePresenter) fpProfilePresenter).referToFacility();
                     break;
                 default:
@@ -127,7 +127,7 @@ public class FamilyPlanningMemberProfileActivity extends CoreFamilyPlanningMembe
     public void onClick(View view) {
         super.onClick(view);
         int id = view.getId();
-        if (id == R.id.record_fp_followup_visit) {
+        if (id == org.smartregister.fp.R.id.record_fp_followup_visit) {
             openFollowUpVisitForm(false);
         }
         handleNotificationRowClick(this, view, notificationListAdapter, fpMemberObject.getBaseEntityId());
@@ -179,7 +179,7 @@ public class FamilyPlanningMemberProfileActivity extends CoreFamilyPlanningMembe
                 JSONObject form = new JSONObject(jsonString);
                 if (form.getString(JsonFormUtils.ENCOUNTER_TYPE).equals(CoreConstants.EventType.FAMILY_PLANNING_REFERRAL)) {
                     ((CoreFamilyPlanningProfilePresenter) fpProfilePresenter).createReferralEvent(Utils.getAllSharedPreferences(), jsonString);
-                    showToast(this.getString(R.string.referral_submitted));
+                    showToast(this.getString(org.smartregister.chw.core.R.string.referral_submitted));
                 }
             } catch (Exception ex) {
                 Timber.e(ex);

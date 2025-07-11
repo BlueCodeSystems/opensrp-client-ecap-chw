@@ -54,11 +54,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
         if (myitems.getStatus().equals("1")){
 
-            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, R.color.orange), android.graphics.PorterDuff.Mode.MULTIPLY);
+            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.orange), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         } else if(myitems.getStatus().equals("2")) {
 
-            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen), android.graphics.PorterDuff.Mode.MULTIPLY);
+            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         }
 

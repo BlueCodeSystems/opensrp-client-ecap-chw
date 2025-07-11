@@ -39,11 +39,12 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
     @Override
     public void setupViews(View view) {
+
         try {
             super.setupViews(view);
 
             // Toolbar customization
-            Toolbar toolbar = view.findViewById(R.id.register_toolbar);
+            Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
             if (toolbar != null) {
                 toolbar.setContentInsetsAbsolute(0, 0);
                 toolbar.setContentInsetsRelative(0, 0);
@@ -52,7 +53,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
             }
 
             // Navbar container
-            View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
+            View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
             if (navbarContainer != null) {
                 navbarContainer.setFocusable(false);
             }
@@ -81,7 +82,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
             }
 
             // Title view customization
-            CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
+            CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleView != null) {
                 titleView.setVisibility(View.VISIBLE);
                 titleView.setText(getString(R.string.all_households_title));
@@ -95,26 +96,26 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
                 getSearchView().setCompoundDrawablesWithIntrinsicBounds(
                         org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0
                 );
-                getSearchView().setTextColor(getResources().getColor(R.color.text_black));
+                getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
             }
 
             // Hide unused layouts
-            View topRightLayout = view.findViewById(R.id.top_right_layout);
+            View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
             if (topRightLayout != null) {
                 topRightLayout.setVisibility(View.GONE);
             }
 
-            View topLeftLayout = view.findViewById(org.smartregister.chw.core.R.id.top_left_layout);
+            View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
             if (topLeftLayout != null) {
                 topLeftLayout.setVisibility(View.GONE);
             }
 
-            View sortFilterBarLayout = view.findViewById(org.smartregister.chw.core.R.id.register_sort_filter_bar_layout);
+            View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
             if (sortFilterBarLayout != null) {
                 sortFilterBarLayout.setVisibility(View.GONE);
             }
 
-            View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
+            View filterSortLayout = view.findViewById(org.smartregister.R.id.filter_sort_layout);
             if (filterSortLayout != null) {
                 filterSortLayout.setVisibility(View.GONE);
             }
@@ -122,6 +123,7 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
             e.printStackTrace();
             Log.e("SetupViews", "Error setting up views: " + e.getMessage());
         }
+
     }
 
 

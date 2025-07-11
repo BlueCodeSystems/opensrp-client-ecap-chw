@@ -97,7 +97,7 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
     protected void setupViews() {
         super.setupViews();
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(getString(R.string.return_to_all_client));
+        toolbarTitle.setText(getString(org.smartregister.chw.core.R.string.return_to_all_client));
         layoutFamilyHasRow = findViewById(R.id.family_has_row);
         familyHeadTextView = findViewById(R.id.family_head);
         careGiverTextView = findViewById(R.id.primary_caregiver);
@@ -122,12 +122,12 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.action_location_info).setVisible(true);
-        menu.findItem(R.id.action_hiv_registration).setVisible(true);
-        menu.findItem(R.id.action_tb_registration).setVisible(true);
-        menu.findItem(R.id.action_anc_registration).setVisible(false);
-        menu.findItem(R.id.action_sick_child_follow_up).setVisible(false);
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_location_info).setVisible(true);
+        menu.findItem(org.smartregister.chw.core.R.id.action_hiv_registration).setVisible(true);
+        menu.findItem(org.smartregister.chw.core.R.id.action_tb_registration).setVisible(true);
+        menu.findItem(org.smartregister.chw.core.R.id.action_anc_registration).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_sick_child_follow_up).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(false);
         return true;
     }
 
@@ -135,16 +135,16 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         int itemId = item.getItemId();
-        if (itemId == R.id.action_location_info) {
+        if (itemId == org.smartregister.chw.core.R.id.action_location_info) {
             JSONObject preFilledForm = CoreJsonFormUtils.getAutoPopulatedJsonEditFormString(
                     CoreConstants.JSON_FORM.getFamilyDetailsRegister(), this,
                     getFamilyRegistrationDetails(), Utils.metadata().familyRegister.updateEventType);
             if (preFilledForm != null) startFormActivity(preFilledForm);
             return true;
-        } else if (itemId == R.id.action_hiv_registration) {
+        } else if (itemId == org.smartregister.chw.core.R.id.action_hiv_registration) {
             //TODO Start HIV registration form
             return true;
-        } else if (itemId == R.id.action_tb_registration) {
+        } else if (itemId == org.smartregister.chw.core.R.id.action_tb_registration) {
             //TODO Start HIV registration form
             return true;
         }
@@ -241,8 +241,8 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
         form.setName(getString(R.string.update_client_registration));
         form.setActionBarBackground(R.color.family_actionbar);
         form.setNavigationBackground(R.color.family_navigation);
-        form.setHomeAsUpIndicator(R.mipmap.ic_cross_white);
-        form.setPreviousLabel(getResources().getString(R.string.back));
+        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
+        form.setPreviousLabel(getResources().getString(org.smartregister.family.R.string.back));
         form.setWizard(false);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -329,10 +329,10 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
     @Override
     public void onClickMenu(int viewId) {
         switch (viewId) {
-            case R.id.call_layout:
+            case org.smartregister.chw.core.R.id.call_layout:
                 FamilyCallDialogFragment.launchDialog(this, familyBaseEntityId);
                 break;
-            case R.id.refer_to_facility_layout:
+            case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                 Utils.launchClientReferralActivity(this, Utils.getCommonReferralTypes(this), baseEntityId);
                 break;
             default:
