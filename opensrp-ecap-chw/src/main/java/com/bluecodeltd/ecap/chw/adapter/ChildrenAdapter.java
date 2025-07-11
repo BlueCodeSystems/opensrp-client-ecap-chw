@@ -142,11 +142,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         if(gradModel == null){
             holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
 
         } else {
 
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
 
         }
         if (!memberAge.equals("Invalid birthdate format")) {
@@ -230,11 +230,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             if(cModel != null){
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
+
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
 
             } else {
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_warning, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
+
             }
 
         } else {

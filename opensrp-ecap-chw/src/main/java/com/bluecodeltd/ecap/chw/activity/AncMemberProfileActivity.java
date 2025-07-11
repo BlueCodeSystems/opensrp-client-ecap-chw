@@ -116,15 +116,15 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
 
         OnClickFloatingMenu onClickFloatingMenu = viewId -> {
             switch (viewId) {
-                case R.id.anc_fab:
+                case org.smartregister.chw.core.R.id.anc_fab:
                     checkPhoneNumberProvided();
                     ((AncFloatingMenu) baseAncFloatingMenu).animateFAB();
                     break;
-                case R.id.call_layout:
+                case org.smartregister.chw.core.R.id.call_layout:
                     ((AncFloatingMenu) baseAncFloatingMenu).launchCallWidget();
                     ((AncFloatingMenu) baseAncFloatingMenu).animateFAB();
                     break;
-                case R.id.refer_to_facility_layout:
+                case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                     ((AncMemberProfilePresenter) ancMemberProfilePresenter()).referToFacility();
                     ((AncFloatingMenu) baseAncFloatingMenu).animateFAB();
                     break;
@@ -170,7 +170,7 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.action_remove_member) {
+        if (itemId == org.smartregister.chw.core.R.id.action_remove_member) {
             CommonRepository commonRepository = Utils.context().commonrepository(Utils.metadata().familyMemberRegister.tableName);
 
             final CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(memberObject.getBaseEntityId());
@@ -180,7 +180,7 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
 
             IndividualProfileRemoveActivity.startIndividualProfileActivity(AncMemberProfileActivity.this, client, memberObject.getFamilyBaseEntityId(), memberObject.getFamilyHead(), memberObject.getPrimaryCareGiver(), AncRegisterActivity.class.getCanonicalName());
             return true;
-        } else if (itemId == R.id.action_pregnancy_out_come) {
+        } else if (itemId == org.smartregister.chw.core.R.id.action_pregnancy_out_come) {
             CoreConstants.JSON_FORM.setLocaleAndAssetManager(ChwApplication.getCurrentLocale(), ChwApplication.getInstance().getApplicationContext().getAssets());
             PncRegisterActivity.startPncRegistrationActivity(AncMemberProfileActivity.this, memberObject.getBaseEntityId(), null, CoreConstants.JSON_FORM.getPregnancyOutcome(), AncLibrary.getInstance().getUniqueIdRepository().getNextUniqueId().getOpenmrsId(), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyName(), memberObject.getLastMenstrualPeriod());
             return true;
@@ -191,8 +191,8 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.anc_danger_signs_outcome).setVisible(false);
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.anc_danger_signs_outcome).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(false);
         return true;
     }
 
@@ -227,7 +227,7 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
 
                 } else if (form.getString(JsonFormUtils.ENCOUNTER_TYPE).equals(CoreConstants.EventType.ANC_REFERRAL)) {
                     ancMemberProfilePresenter().createReferralEvent(Utils.getAllSharedPreferences(), jsonString);
-                    showToast(this.getString(R.string.referral_submitted));
+                    showToast(this.getString(org.smartregister.chw.core.R.string.referral_submitted));
                 }
 
             } catch (Exception e) {
@@ -321,9 +321,9 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     public void onClick(View view) {
         super.onClick(view);
         int id = view.getId();
-        if (id == R.id.textview_record_visit || id == R.id.textview_record_reccuring_visit) {
+        if (id == org.smartregister.chw.core.R.id.textview_record_visit || id == org.smartregister.chw.opensrp_chw_anc.R.id.textview_record_reccuring_visit) {
             AncHomeVisitActivity.startMe(this, memberObject.getBaseEntityId(), false);
-        } else if (id == R.id.textview_edit) {
+        } else if (id == org.smartregister.chw.core.R.id.textview_edit) {
             AncHomeVisitActivity.startMe(this, memberObject.getBaseEntityId(), true);
         }
         handleNotificationRowClick(this, view, notificationListAdapter, memberObject.getBaseEntityId());

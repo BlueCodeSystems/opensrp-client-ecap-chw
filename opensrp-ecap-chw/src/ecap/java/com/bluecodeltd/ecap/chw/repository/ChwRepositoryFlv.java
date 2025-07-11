@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.repository;
 
 import android.content.Context;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.util.ChildDBConstants;
 import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
@@ -12,7 +13,6 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.smartregister.chw.anc.repository.VisitDetailsRepository;
 import org.smartregister.chw.anc.repository.VisitRepository;
-import org.smartregister.chw.core.BuildConfig;
 import org.smartregister.chw.core.repository.StockUsageReportRepository;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;

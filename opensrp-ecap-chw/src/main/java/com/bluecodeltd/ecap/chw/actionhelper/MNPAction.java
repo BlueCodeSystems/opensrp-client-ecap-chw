@@ -95,7 +95,7 @@ public class MNPAction extends HomeVisitActionHelper {
                     context.getString(R.string.date_given),
                     new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(parsedDate));
         }
-        return context.getString(R.string.not_given);
+        return context.getString(org.smartregister.chw.core.R.string.not_given);
     }
 
     @Override

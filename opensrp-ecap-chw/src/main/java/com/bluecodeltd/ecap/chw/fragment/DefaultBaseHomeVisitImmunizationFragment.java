@@ -65,14 +65,14 @@ public class DefaultBaseHomeVisitImmunizationFragment extends BaseHomeVisitFragm
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home_visit_immunization, container, false);
+        View view = inflater.inflate(org.smartregister.chw.opensrp_chw_anc.R.layout.fragment_home_visit_immunization, container, false);
         this.inflater = inflater;
 
-        multipleVaccineDatePickerView = view.findViewById(R.id.multiple_vaccine_date_pickerview);
-        singleVaccineAddView = view.findViewById(R.id.single_vaccine_add_layout);
+        multipleVaccineDatePickerView = view.findViewById(org.smartregister.chw.opensrp_chw_anc.R.id.multiple_vaccine_date_pickerview);
+        singleVaccineAddView = view.findViewById(org.smartregister.chw.opensrp_chw_anc.R.id.single_vaccine_add_layout);
         vaccinationNameLayout = view.findViewById(R.id.vaccination_name_layout);
 
-        saveButton = view.findViewById(R.id.save_btn);
+        saveButton = view.findViewById(org.smartregister.chw.opensrp_chw_anc.R.id.save_btn);
         saveButton.setOnClickListener(this);
 
         view.findViewById(R.id.close).setOnClickListener(this);
@@ -145,7 +145,7 @@ public class DefaultBaseHomeVisitImmunizationFragment extends BaseHomeVisitFragm
         for (Map.Entry<String, VaccineDisplay> entry : vaccineDisplays.entrySet()) {
             VaccineWrapper vaccineWrapper = entry.getValue().getVaccineWrapper();
 
-            View vaccinationName = inflater.inflate(R.layout.custom_vaccine_name_check, null);
+            View vaccinationName = inflater.inflate(org.smartregister.chw.core.R.layout.custom_vaccine_name_check, null);
             TextView vaccineView = vaccinationName.findViewById(R.id.vaccine);
             CheckBox checkBox = vaccinationName.findViewById(R.id.select);
             setCheckBoxState(checkBox, true);
@@ -254,11 +254,11 @@ public class DefaultBaseHomeVisitImmunizationFragment extends BaseHomeVisitFragm
         while (vaccineViews.size() > x) {
             VaccineView vaccineView = vaccineViews.get(x);
 
-            View layout = inflater.inflate(R.layout.custom_single_vaccine_view, null);
+            View layout = inflater.inflate(org.smartregister.chw.core.R.layout.custom_single_vaccine_view, null);
             TextView question = layout.findViewById(R.id.vaccines_given_when_title_question);
             DatePicker datePicker = layout.findViewById(R.id.earlier_date_picker);
             String translatedVaccineName = NCUtils.getStringResourceByName(vaccineView.vaccineName.toLowerCase().replace(" ", "_"), getActivity());
-            question.setText(getString(R.string.when_vaccine, translatedVaccineName));
+            question.setText(getString(org.smartregister.chw.core.R.string.when_vaccine, translatedVaccineName));
 
             VaccineDisplay vaccineDisplay = vaccineDisplays.get(vaccineView.getVaccineName());
             if (vaccineDisplay != null)
@@ -381,7 +381,7 @@ public class DefaultBaseHomeVisitImmunizationFragment extends BaseHomeVisitFragm
     @Override
     public void onClick(View v) {
         int viewID = v.getId();
-        if (viewID == R.id.save_btn) {
+        if (viewID == org.smartregister.chw.opensrp_chw_anc.R.id.save_btn) {
             onSave();
         } else if (viewID == R.id.add_date_separately) {
             onVariedResponsesMode();

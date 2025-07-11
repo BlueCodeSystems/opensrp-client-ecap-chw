@@ -205,11 +205,11 @@ public class LoginActivityTest extends BaseActivityTest<LoginActivity> {
 
         ReflectionHelpers.setField(spyActivity, "passwordEditText", passwordEditText);
 
-        Mockito.doNothing().when(spyActivity).showErrorDialog(RuntimeEnvironment.application.getString(R.string.unauthorized));
+        Mockito.doNothing().when(spyActivity).showErrorDialog("Unauthorized");
 
-        spyActivity.setUsernameError(R.string.unauthorized);
+        spyActivity.setUsernameError(1);
 
-        Mockito.verify(spyActivity).showErrorDialog(RuntimeEnvironment.application.getString(R.string.unauthorized));
+        Mockito.verify(spyActivity).showErrorDialog("Unauthorized");
     }
 
     @Test
@@ -223,11 +223,11 @@ public class LoginActivityTest extends BaseActivityTest<LoginActivity> {
 
         ReflectionHelpers.setField(spyActivity, "userNameEditText", userNameEditText);
 
-        Mockito.doNothing().when(spyActivity).showErrorDialog(RuntimeEnvironment.application.getString(R.string.unauthorized));
+        Mockito.doNothing().when(spyActivity).showErrorDialog("Unauthorized");
 
-        spyActivity.setPasswordError(R.string.unauthorized);
+        spyActivity.setPasswordError(1);
 
-        Mockito.verify(spyActivity).showErrorDialog(RuntimeEnvironment.application.getString(R.string.unauthorized));
+        Mockito.verify(spyActivity).showErrorDialog("Unauthorized");
     }
 
     @Test

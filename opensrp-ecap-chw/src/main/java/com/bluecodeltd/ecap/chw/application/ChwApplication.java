@@ -47,7 +47,6 @@ import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.evernote.android.job.JobManager;
-import com.onesignal.OneSignal;
 import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.domain.Form;
 
@@ -216,12 +215,13 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         context.updateApplicationContext(getApplicationContext());
         context.updateCommonFtsObject(getCommonFtsObject());
 
-        // Enable verbose OneSignal logging to debug issues if needed.
+        //TODO set this up afresh - OneSignal is deprecated
+     /*   // Enable verbose OneSignal logging to debug issues if needed.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
         // OneSignal Initialization
         OneSignal.initWithContext(this);
-        OneSignal.setAppId(ONESIGNAL_APP_ID);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);*/
 
         //Necessary to determine the right form to pick from assets
         CoreConstants.JSON_FORM.setLocaleAndAssetManager(ChwApplication.getCurrentLocale(),

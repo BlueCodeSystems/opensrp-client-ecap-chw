@@ -87,7 +87,7 @@ public abstract class DefaultChildProfileActivityFlv implements ChildProfileActi
             viewLastVisitRow.setVisibility(View.GONE);
         } else {
             layoutLastVisitRow.setVisibility(View.VISIBLE);
-            textViewLastVisit.setText(context.getString(org.smartregister.chw.core.R.string.last_visit_40_days_ago, days));
+            textViewLastVisit.setText(context.getString(R.string.last_visit_40_days_ago, days));
             viewLastVisitRow.setVisibility(View.VISIBLE);
         }
     }

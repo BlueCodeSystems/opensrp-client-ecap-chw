@@ -154,7 +154,7 @@ public class ClientReferralActivity extends AppCompatActivity implements ClientR
                 if (isReferralForm(encounterType)) {
                     CoreReferralUtils.createReferralEvent(Utils.getAllSharedPreferences(),
                             jsonString, encounterTypeToTableMap.get(encounterType), baseEntityId);
-                    Utils.showToast(this, this.getString(R.string.referral_submitted));
+                    Utils.showToast(this, this.getString(org.smartregister.chw.core.R.string.referral_submitted));
                 }
             } catch (Exception e) {
                 Timber.e(e, "ClientReferralActivity --> onActivityResult");

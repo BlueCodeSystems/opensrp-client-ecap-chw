@@ -18,11 +18,11 @@ public class FamilyOtherMemberProfileActivityFlv implements FamilyOtherMemberPro
     public OnClickFloatingMenu getOnClickFloatingMenu(final Activity activity, final String familyBaseEntityId, final String baseEntityId) {
         return viewId -> {
             switch (viewId) {
-                case R.id.call_layout:
+                case org.smartregister.chw.core.R.id.call_layout:
                     Toast.makeText(activity, "Call client", Toast.LENGTH_SHORT).show();
                     FamilyCallDialogFragment.launchDialog(activity, familyBaseEntityId);
                     break;
-                case R.id.refer_to_facility_layout:
+                case org.smartregister.chw.core.R.id.refer_to_facility_layout:
                     if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
                         com.bluecodeltd.ecap.chw.util.Utils.launchClientReferralActivity(activity,  com.bluecodeltd.ecap.chw.util.Utils.getCommonReferralTypes(activity), baseEntityId);
                     } else {

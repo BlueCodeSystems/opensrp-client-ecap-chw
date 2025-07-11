@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.bluecodeltd.ecap.chw">
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -345,10 +344,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3f94f9c3caeff331b3a2bd8c2182b663ad6a955a" />
-        <meta-data
+      <!--  <meta-data
             android:name="io.sentry.dsn"
             android:value="https://95f8b4cc9e9045e0a13bd2355d53bcb1@o977224.ingest.sentry.io/5933695" />
-
+-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

@@ -61,7 +61,7 @@ public abstract class DefaultAncUpcomingServicesInteractorFlv implements AncUpco
     protected void evaluateANCCard(List<BaseUpcomingService> services, MemberObject memberObject, Context context, Date createDate) {
         if (memberObject.getHasAncCard() != null && !memberObject.getHasAncCard().equalsIgnoreCase("Yes")) {
             BaseUpcomingService cardService = new BaseUpcomingService();
-            cardService.setServiceName(context.getString(R.string.anc_card));
+            cardService.setServiceName(context.getString(org.smartregister.chw.core.R.string.anc_card));
             cardService.setServiceDate(createDate);
             services.add(cardService);
         }
