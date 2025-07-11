@@ -22,7 +22,7 @@ public class TestChwApplication extends ChwApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        setTheme(R.style.Theme_AppCompat);
+       // setTheme(R.style.Theme_AppCompat);
     }
 
     @Override
