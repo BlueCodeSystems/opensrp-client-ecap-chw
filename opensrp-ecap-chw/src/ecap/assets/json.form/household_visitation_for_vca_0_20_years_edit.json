@@ -1353,22 +1353,148 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_status",
+        "type": "edit_text",
+        "hint": "What is the child’s MUAC measurement?",
+        "edit_type": "number",
+        "read_only": false,
+        "v_regex": {
+          "value": "^(0|[1-9]|1[0-9]|2[0-6])(\\.\\d+)?$",
+          "err": "Please enter a valid MUAC measurement (0–26 cm)"
+        }
+      },
+      {
+        "key": "medical_complications",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "medical_complications",
         "type": "native_radio",
-        "label": "With reference to the age of the child, what is the nutrition status of the child?",
+        "label": "Medical Complications?",
         "options": [
           {
-            "key": "MAM",
-            "text": "MAM"
+            "key": "Medical Complications present",
+            "text": "Medical Complications present"
           },
           {
-            "key": "SAM",
-            "text": "SAM"
-          },
-          {
-            "key": "Normal",
-            "text": "Normal"
+            "key": "No Medical Complications",
+            "text": "No Medical Complications"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "home_visitation_muac.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "patient toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "-Refer for in-patient care and rehabilitation according to IMCI protocal\n-Rehydrate if necessary\n-Give phased feeding following IMAM guidelines",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:medical_complications": {
+            "type": "string",
+            "ex": "equalTo(., \"Medical Complications present\")"
+          }
+        }
+      },
+      {
+        "key": "patient toaster 2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "-Treat as outpatient with RUTF & medications following IMAM guidelines",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:medical_complications": {
+            "type": "string",
+            "ex": "equalTo(., \"No Medical Complications\")"
+          }
+        }
+      },
+      {
+        "key": "patient toaster 3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": " -Treat any infections\n-Prevent further weight loss and infections with fortified blended flours\n -Ensure adequate micronutrient intake",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "home_visitation_muac.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_oedema",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_oedema",
+        "type": "native_radio",
+        "label": "Does the child have Oedema?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "home_visitation_muac.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "oedema_stage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "oedema_stage",
+        "type": "native_radio",
+        "label": "Oedema Stage",
+        "options": [
+          {
+            "key": "Grade 1",
+            "text": "Grade 1"
+          },
+          {
+            "key": "Grade 2",
+            "text": "Grade 2"
+          },
+          {
+            "key": "Grade 3",
+            "text": "Grade 3"
+          },
+          {
+            "key": "nill",
+            "text": "Nil"
+          }
+        ],
+        "relevance": {
+          "step1:child_oedema": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
       },
       {
         "key": "spacer",
