@@ -5998,6 +5998,30 @@
           }
         },
         {
+          "column_name": "medical_complications",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.medical_complications"
+          }
+        },
+
+        {
+          "column_name": "child_oedema",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_oedema"
+          }
+        },
+        {
+          "column_name": "oedema_stage",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.oedema_stage"
+          }
+        },
+
+
+        {
           "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
