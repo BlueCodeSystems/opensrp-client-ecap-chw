@@ -48,7 +48,7 @@ public class VcaVisitationDao extends AbstractDao {
                 "        AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> '1') \n" +
                 "        AND (ec_household.status IS NULL OR ec_household.status != '1')\n" +
                 "        AND strftime('%Y-%m-%d', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) >= date('now', '-5 years')\n" +
-                "       AND ec_household.household_id = '" + householdID + "'\n" +
+                "        AND ec_household.household_id = '" + householdID + "'\n" +
                 ")\n" +
                 "SELECT \n" +
                 "    nutrition_status,\n" +
@@ -69,14 +69,18 @@ public class VcaVisitationDao extends AbstractDao {
         }
 
         for (String status : values) {
-            if (!"Normal".equalsIgnoreCase(status)) {
+            try {
+                double nutritionValue = Double.parseDouble(status);
+                if (nutritionValue <= 12.5) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
 
         return true;
     }
-
     public static boolean areAllVcasVisited(String householdID) {
 
         String sql = "SELECT ec_household_visitation_for_vca_0_20_years.*, ec_client_index.household_id " +
@@ -323,6 +327,9 @@ public class VcaVisitationDao extends AbstractDao {
             record.setInfection_risk(getCursorValue(c,"infection_risk"));
             record.setVl_other(getCursorValue(c,"vl_other"));
             record.setReferred_health_facility(getCursorValue(c,"referred_health_facility"));
+            record.setChild_oedema(getCursorValue(c,"child_oedema"));
+            record.setMedical_complications(getCursorValue(c,"medical_complications"));
+            record.setOedema_stage(getCursorValue(c,"oedema_stage"));
 
 
 
