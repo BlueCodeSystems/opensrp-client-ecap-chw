@@ -62,15 +62,15 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
             if (householdStatus == null || !"1".equals(householdStatus)) {
                 if ("true".equals(screened)) {
-                    homeIcon.setImageResource(R.mipmap.ic_home_active);
+                    homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
                 } else {
-                    homeIcon.setImageResource(R.mipmap.ic_home);
+                    homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
 
                 }
             } else {
 
-                homeIcon.setImageResource(R.mipmap.ic_home);
-                homeIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorRed));
+                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+                homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
 
             }
 
