@@ -186,13 +186,6 @@ public class ProfileOverviewFragment extends Fragment {
         String subpop5 = childIndex.getSubpop5();
         String subpop6 = childIndex.getSubpop6();
 
-        assert subpop1 != null;
-        assert subpop2 != null;
-        assert subpop3 != null;
-        assert subpop4 != null;
-        assert subpop5 != null;
-        assert subpop6 != null;
-
         Household household = HouseholdDao.getVcaSubPop(childIndex.getHousehold_id(),childIndex.getUnique_id());
         if(household.getSub_population() != null){
             subPopLayout1.setVisibility(View.GONE);
