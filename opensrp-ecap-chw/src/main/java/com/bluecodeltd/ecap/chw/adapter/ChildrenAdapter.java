@@ -231,11 +231,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             if(cModel != null){
 
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
 
             } else {
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_warning, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
 
             }
 
@@ -288,7 +288,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 case (R.id.register_columns):
 
                     String subpop3 = child.getSubpop3();
-                    assert subpop3 != null;
+                    if (subpop3 == null) {
+                        Toasty.warning(context, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+                        return;
+                    }
 
                     if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 

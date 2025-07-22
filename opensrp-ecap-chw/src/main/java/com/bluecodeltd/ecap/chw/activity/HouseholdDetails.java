@@ -259,9 +259,16 @@ public class HouseholdDetails extends AppCompatActivity {
         allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
         allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
         allChildrenBirthDates = IndexPersonDao.getAllChildrenBirthdate(householdId);
-        assert allMalesBirthDates != null;
-        assert allFemalesBirthDates !=null;
-        assert allChildrenBirthDates !=null;
+        if (allMalesBirthDates == null) {
+            allMalesBirthDates = new ArrayList<>();
+        }
+        if (allFemalesBirthDates == null) {
+            allFemalesBirthDates = new ArrayList<>();
+        }
+        if (allChildrenBirthDates == null) {
+            allChildrenBirthDates = new ArrayList<>();
+        }
+
          countNumberOfMales(allMalesBirthDates);
          countNumberOfFemales(allFemalesBirthDates);
          countNumberofChildren(allChildrenBirthDates);
