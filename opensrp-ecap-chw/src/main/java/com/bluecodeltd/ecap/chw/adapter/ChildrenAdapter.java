@@ -288,7 +288,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 case (R.id.register_columns):
 
                     String subpop3 = child.getSubpop3();
-                    assert subpop3 != null;
+                    if (subpop3 == null) {
+                        Toasty.warning(context, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+                        return;
+                    }
 
                     if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 

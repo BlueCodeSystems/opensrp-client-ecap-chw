@@ -258,9 +258,18 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected void onResumption() {
-
-            super.onResumption();
-
+        super.onResumption();
+        
+        // Refresh the fragment data when returning from forms
+        if (clientAdapter != null) {
+            clientAdapter.notifyDataSetChanged();
+        }
+        
+        // Re-execute queries to get updated data
+        if (presenter != null) {
+            countExecute();
+            filterandSortInInitializeQueries();
+        }
     }
 
     @Override
