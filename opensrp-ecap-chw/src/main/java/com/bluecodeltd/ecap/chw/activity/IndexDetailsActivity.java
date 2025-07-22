@@ -1400,13 +1400,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
                     JSONObject under_five = getFieldJSONObject(fields(formToBeOpened, "step1"), "under_five");
-                    if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
-                        under_five.put("type", "native_radio");
-                        nutrition_status.put("type", "native_radio");
-                    } else if (vAge <= 5.0) {
-                        under_five.put("type", "native_radio");
-                        nutrition_status.put("type", "native_radio");
-                    } else {
+                    if (vAge > 5) {
                         under_five.put("type", "hidden");
                         nutrition_status.put("type", "hidden");
                     }
@@ -1416,15 +1410,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     JSONObject  child_receiving_breastfeeding = getFieldJSONObject(fields(formToBeOpened, "step1"), " child_receiving_breastfeeding");
 
 
-                    if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
+                    if (vAge <= 5) {
                         eid_test.put("type", "edit_text");
                         age_appropriate.put("type", "native_radio");
 //                        child_receiving_breastfeeding.put("type", "native_radio");
 
-                    } else if (vAge <= 2.0) {
-                        eid_test.put("type", "edit_text");
-                        age_appropriate.put("type", "native_radio");
-                    } else {
+                    }  else {
                         eid_test.put("type", "hidden");
                         age_appropriate.put("type", "hidden");
 //                        child_receiving_breastfeeding.put("type", "hidden");
@@ -1440,7 +1431,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
 
-                    if(vAge < 5.0){
+                    if(vAge < 5){
                         currently_in_school.put("type", "hidden");
                         verified_by_school.put("type", "hidden");
                         current_calendar.put("type", "hidden");
