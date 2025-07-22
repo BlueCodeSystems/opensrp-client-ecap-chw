@@ -197,26 +197,13 @@ android {
     }
 
 
-    signingConfigs {
-        release {
-            storeFile file("C:/Users/Bluecode/Documents/Monze/ecap2022.jks")
-            storePassword "ecap2022"
-            keyAlias "ecap2022"
-            keyPassword "ecap2022"
-        }
-        debug {
-            storeFile file("C:/Users/Bluecode/Documents/Monze/ecap2022.jks")
-            storePassword "ecap2022"
-            keyAlias "ecap2022"
-            keyPassword "ecap2022"
-        }
-    }
+
 
     buildTypes {
 
         release {
             //debuggable true // Useful when debugging release builds
-            signingConfig signingConfigs.release
+         
             minifyEnabled false
             //shrinkResources true
             zipAlignEnabled true
@@ -239,7 +226,7 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.release
+
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '4'
