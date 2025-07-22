@@ -53,7 +53,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
             super.setupViews(view);
 
             // Toolbar Setup
-            Toolbar toolbar = view.findViewById(R.id.register_toolbar);
+            Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
             if (toolbar != null) {
                 toolbar.setContentInsetsAbsolute(0, 0);
                 toolbar.setContentInsetsRelative(0, 0);
@@ -67,7 +67,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
             }
 
             // Navbar Setup
-            View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
+            View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
             if (navbarContainer != null) {
                 navbarContainer.setFocusable(false);
             } else {
@@ -101,7 +101,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
             }
 
             // Title Setup
-            CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
+            CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleView != null) {
                 titleView.setVisibility(View.VISIBLE);
                 titleView.setText(getString(R.string.all_index_title));
@@ -113,38 +113,38 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
             // Search View Customization
             if (getSearchView() != null) {
-                getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
+                getSearchView().setBackgroundResource(org.smartregister.R.color.white);
                 getSearchView().setCompoundDrawablesWithIntrinsicBounds(
                         org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0
                 );
-                getSearchView().setTextColor(getResources().getColor(R.color.text_black));
+                getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
             } else {
                 Log.w("setupViews", "Search view is null.");
             }
 
             // Hide Top Layouts
-            View topRightLayout = view.findViewById(R.id.top_right_layout);
+            View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
             if (topRightLayout != null) {
                 topRightLayout.setVisibility(View.GONE);
             } else {
                 Log.w("setupViews", "Top-right layout is null.");
             }
 
-            View topLeftLayout = view.findViewById(org.smartregister.chw.core.R.id.top_left_layout);
+            View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
             if (topLeftLayout != null) {
                 topLeftLayout.setVisibility(View.GONE);
             } else {
                 Log.w("setupViews", "Top-left layout is null.");
             }
 
-            View sortFilterBarLayout = view.findViewById(org.smartregister.chw.core.R.id.register_sort_filter_bar_layout);
+            View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
             if (sortFilterBarLayout != null) {
                 sortFilterBarLayout.setVisibility(View.GONE);
             } else {
                 Log.w("setupViews", "Sort filter bar layout is null.");
             }
 
-            View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
+            View filterSortLayout = view.findViewById(org.smartregister.R.id.filter_sort_layout);
             if (filterSortLayout != null) {
                 filterSortLayout.setVisibility(View.GONE);
             } else {
@@ -258,9 +258,18 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected void onResumption() {
-
-            super.onResumption();
-
+        super.onResumption();
+        
+        // Refresh the fragment data when returning from forms
+        if (clientAdapter != null) {
+            clientAdapter.notifyDataSetChanged();
+        }
+        
+        // Re-execute queries to get updated data
+        if (presenter != null) {
+            countExecute();
+            filterandSortInInitializeQueries();
+        }
     }
 
     @Override

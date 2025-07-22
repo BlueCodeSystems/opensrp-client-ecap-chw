@@ -113,7 +113,7 @@ allprojects {
 android {
     namespace  = "com.bluecodeltd.ecap.chw"
     useLibrary 'org.apache.http.legacy'
-    compileSdk androidCompileSdkVersion
+    compileSdk 35
 
     lintOptions {
         checkReleaseBuilds false
@@ -197,26 +197,11 @@ android {
     }
 
 
-    signingConfigs {
-        release {
-            storeFile file("C:/Users/Bluecode/Documents/Monze/ecap2022.jks")
-            storePassword "ecap2022"
-            keyAlias "ecap2022"
-            keyPassword "ecap2022"
-        }
-        debug {
-            storeFile file("C:/Users/Bluecode/Documents/Monze/ecap2022.jks")
-            storePassword "ecap2022"
-            keyAlias "ecap2022"
-            keyPassword "ecap2022"
-        }
-    }
-
     buildTypes {
 
         release {
             //debuggable true // Useful when debugging release builds
-            signingConfig signingConfigs.release
+
             minifyEnabled false
             //shrinkResources true
             zipAlignEnabled true
@@ -239,7 +224,7 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.release
+
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '4'
@@ -319,6 +304,7 @@ android {
             buildConfigField "int", "DATABASE_VERSION", '8'
         }
     }
+    buildToolsVersion '35.0.0'
 }
 
 dependencies {
@@ -391,8 +377,9 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:4.8.1'
     testImplementation 'org.robolectric:robolectric:4.13'
     testImplementation 'org.robolectric:shadows-multidex:4.3.1'
-    testImplementation 'org.robolectric:shadows-support-v4:3.4-rc2'
     testImplementation 'androidx.test:core:1.6.1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
 }
 
