@@ -1206,22 +1206,6 @@
         }
       },
       {
-        "key": "muac_measure",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_measure",
-        "type": "edit_text",
-        "hint": "What is the child’s MUAC measurement?",
-        "edit_type": "number",
-        "read_only": false,
-        "relevance": {
-          "step1:appropriate_vaccinations": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
         "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
