@@ -113,7 +113,7 @@ allprojects {
 android {
     namespace  = "com.bluecodeltd.ecap.chw"
     useLibrary 'org.apache.http.legacy'
-    compileSdk androidCompileSdkVersion
+    compileSdk 35
 
     lintOptions {
         checkReleaseBuilds false
@@ -197,26 +197,11 @@ android {
     }
 
 
-    /*signingConfigs {
-        release {
-            storeFile file("C:/Users/Bluecode/Documents/Monze/ecap2022.jks")
-            storePassword "ecap2022"
-            keyAlias "ecap2022"
-            keyPassword "ecap2022"
-        }
-        debug {
-            storeFile file("C:/Users/Bluecode/Documents/Monze/ecap2022.jks")
-            storePassword "ecap2022"
-            keyAlias "ecap2022"
-            keyPassword  githubProperties['gpr.usr']"ecap2022"
-        }
-    }*/
-
     buildTypes {
 
         release {
             //debuggable true // Useful when debugging release builds
-//            signingConfig signingConfigs.release
+
             minifyEnabled false
             //shrinkResources true
             zipAlignEnabled true
@@ -239,6 +224,7 @@ android {
         }
 
         debug {
+
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '4'
@@ -318,6 +304,7 @@ android {
             buildConfigField "int", "DATABASE_VERSION", '8'
         }
     }
+    buildToolsVersion '35.0.0'
 }
 
 dependencies {
