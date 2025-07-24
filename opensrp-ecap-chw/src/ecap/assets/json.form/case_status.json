@@ -197,8 +197,8 @@
             "text": "Declined"
           },
           {
-            "key": "VCA does not fall under priority sub-population",
-            "text": "VCA does not fall under priority sub-population"
+            "key": "HH does not have VCA who falls under priority sub-population",
+            "text": "HH does not have VCA who falls under priority sub-population"
           },
           {
             "key": "other",
@@ -222,14 +222,14 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
         "type": "toaster_notes",
-        "text": "Select only if VCA does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
+        "text": "Select only if household does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info",
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"VCA does not fall under priority sub-population\")"
+            "ex": "equalTo(., \"HH does not have VCA who falls under priority sub-population\")"
           }
         }
       },
