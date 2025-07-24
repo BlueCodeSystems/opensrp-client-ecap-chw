@@ -115,6 +115,12 @@ public class VcaVisitationModel {
 
     private String vl_other;
 
+    private String child_oedema;
+    private String medical_complications;
+
+    private String oedema_stage;
+
+
     public String getUnique_id() {
         return unique_id;
     }
@@ -993,5 +999,29 @@ public class VcaVisitationModel {
 
     public void setVl_other(String vl_other) {
         this.vl_other = vl_other;
+    }
+
+    public String getChild_oedema() {
+        return child_oedema;
+    }
+
+    public void setChild_oedema(String child_oedema) {
+        this.child_oedema = child_oedema;
+    }
+
+    public String getMedical_complications() {
+        return medical_complications;
+    }
+
+    public void setMedical_complications(String medical_complications) {
+        this.medical_complications = medical_complications;
+    }
+
+    public String getOedema_stage() {
+        return oedema_stage;
+    }
+
+    public void setOedema_stage(String oedema_stage) {
+        this.oedema_stage = oedema_stage;
     }
 }

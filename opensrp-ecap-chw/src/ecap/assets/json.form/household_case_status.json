@@ -140,6 +140,7 @@
             "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
             "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
           }
+
         ],
         "relevance": {
           "step1:household_case_status": {
@@ -152,6 +153,7 @@
           "err": "Please select Reason for Closing Case"
         }
       },
+
       {
         "key": "graduation_benchmark",
         "openmrs_entity_parent": "",
@@ -182,6 +184,10 @@
           {
             "key": "Transferred to other OVC program",
             "text": "Transferred to other OVC program"
+          },
+          {
+            "key": "HH does not have VCA who falls under priority sub-population",
+            "text": "HH does not have VCA who falls under priority sub-population"
           },
           {
             "key": "Transferred to other Ecap II /district",
@@ -217,6 +223,23 @@
         "v_required": {
           "value": true,
           "err": "Please select Reason for Closing Case"
+        }
+      },
+      {
+        "key": "priority sub-population",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "Select only if household does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"HH does not have VCA who falls under priority sub-population\")"
+          }
         }
       },
       {
