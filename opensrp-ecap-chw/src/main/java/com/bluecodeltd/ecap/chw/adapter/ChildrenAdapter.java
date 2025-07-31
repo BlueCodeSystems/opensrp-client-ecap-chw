@@ -289,7 +289,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                     String subpop3 = child.getSubpop3();
                     if (subpop3 == null) {
-                        Toasty.warning(context, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+                        Toasty.warning(context, "Go to the VCA Register to complete this VCA’s profile", Toast.LENGTH_LONG, true).show();
                         return;
                     }
 
