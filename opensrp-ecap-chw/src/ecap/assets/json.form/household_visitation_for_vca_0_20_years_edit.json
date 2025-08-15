@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Household Visitation Form 0-20 years",
+  "encounter_type": "Household Visitation Form 0-20 years Edit",
   "hide_blank_spaces": true,
   "entity_id": "",
   "relational_id": "",
@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Quarterly Assessment Form For VCA ",
+    "title": "Household Visitation For VCA 0-20 years",
     "fields": [
       {
         "key": "unique_id",
@@ -145,13 +145,6 @@
         }
       },
       {
-        "key": "signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "signature",
-        "type": "hidden"
-      },
-      {
         "key": "vca_visit_location",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -171,7 +164,7 @@
         "type": "date_picker",
         "hint": "Date of Household Visit",
         "look_up": "true",
-        "min_date": "01-11-2023",
+        "min_date": "01-01-1900",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -796,13 +789,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
-        "type": "edit_text",
+        "type": "date_picker",
         "hint": "Check child’s under-five clinic card When was the last EID test done?",
-        "edit_type": "number",
-        "read_only": "false",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Indicate the number of months "
+          "value": true,
+          "err": "Please enter date"
         },
         "relevance": {
           "rules-engine": {
@@ -954,7 +947,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_infection",
-        "type": "hidden",
+        "type": "native_radio",
         "label": "Is the child able to describe at least two HIV infection risks in their local community?",
         "options": [
           {
@@ -1338,7 +1331,6 @@
           }
         }
       },
-
 
       {
         "key": "nutrition_status",
@@ -2429,7 +2421,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "01-11-2023",
+        "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
           "value": false,

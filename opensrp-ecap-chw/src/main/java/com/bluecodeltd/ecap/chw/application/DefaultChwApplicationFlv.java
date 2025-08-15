@@ -301,6 +301,8 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "mothers_full_name",
                 "pmtct_id",
                 "household_id",
+                "first_name",
+                "last_name",
                 "delete_status"
         });
         return map;
@@ -346,6 +348,8 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "mothers_full_name",
                 "pmtct_id",
                 "household_id",
+                "first_name",
+                "last_name",
                 "delete_status"
         });
 

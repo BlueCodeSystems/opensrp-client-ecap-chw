@@ -1,0 +1,331 @@
+{
+  "count": "1",
+  "encounter_type": "Ptmct Child Monitoring",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "is_closed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_closed",
+        "type": "hidden"
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "hidden",
+        "read_only": "true",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "hidden"
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "Pediatic Care Follow Up (Routine Infant Testing and Follow Up Visit)"
+      },
+      {
+        "key": "pediatic_care_follow_up",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pediatic_care_follow_up",
+        "type": "native_radio",
+        "label": "Routine Infant Testing and Follow Up Visit",
+        "options": [
+          {
+            "key": "6 weeks",
+            "text": "6 weeks"
+          },
+          {
+            "key": "2 months",
+            "text": "2 months"
+          },
+          {
+            "key": "3 months",
+            "text": "3 months"
+          },
+          {
+            "key": "4 months",
+            "text": "4 months"
+          },
+          {
+            "key": "5 months",
+            "text": "5 months"
+          },
+          {
+            "key": "6 months",
+            "text": "6 months"
+          },
+          {
+            "key": "7 months",
+            "text": "7 months"
+          },
+          {
+            "key": "9 months",
+            "text": "9 months"
+          },
+          {
+            "key": "10 months",
+            "text": "10 months"
+          },
+          {
+            "key": "11 months",
+            "text": "11 months"
+          },
+          {
+            "key": "12 months",
+            "text": "12 months"
+          },
+          {
+            "key": "13 months",
+            "text": "13 months"
+          },
+          {
+            "key": "14 months",
+            "text": "14 months"
+          },
+          {
+            "key": "15 months",
+            "text": "15 months"
+          },
+          {
+            "key": "16 months",
+            "text": "16 months"
+          },
+          {
+            "key": "17 months",
+            "text": "17 months"
+          },
+          {
+            "key": "18 months",
+            "text": "18 months"
+          },
+          {
+            "key": "24 months",
+            "text": "24 months"
+          },
+          {
+            "key": "outcome",
+            "text": "Outcome"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the postnatal care visit"
+        }
+      },
+      {
+        "key": "date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date",
+        "type": "date_picker",
+        "hint": "Date",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date"
+        }
+      },
+      {
+        "key": "hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test",
+        "hint": "HIV Status",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "values": [
+          "ND",
+          "D"
+        ],
+        "keys": [
+          "ND",
+          "D"
+        ]
+      },
+      {
+        "key": "azt_3tc_npv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "azt_3tc_npv",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "AZT+3TC+NVP",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "ctx",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ctx",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "CTX",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "iycf_counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "iycf_counselling",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "IYCF Counselling",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "infant_feeding_options",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_feeding_options",
+        "type": "native_radio",
+        "label": "Infant Feeding Options (Exclusive Breast Feeding/Complementary Feeding/Non-breastfeeding)",
+        "options": [
+          {
+            "key": "Exclusive Breast Feeding",
+            "text": "Exclusive Breast Feeding"
+          },
+          {
+            "key": "Complementary Feeding",
+            "text": "Complementary Feeding"
+          },
+          {
+            "key": "Non-breastfeeding",
+            "text": "Non-breastfeeding"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "high_risk_hei",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "high_risk_hei",
+        "type": "native_radio",
+        "label": "High Risk HEI (Indicate Yes if mother's VL is >1000 and is breastfeeding copies/ml",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        }
+      }
+    ]
+  }
+}

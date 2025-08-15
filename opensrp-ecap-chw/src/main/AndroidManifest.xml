@@ -204,6 +204,10 @@
             android:name=".activity.UpcomingServicesActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.SignatureActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+
+        <activity
             android:name=".activity.IndexRegisterActivity"
             android:label="@string/facility_ovc_register"
             android:theme="@style/ChwTheme.NoActionBar" />

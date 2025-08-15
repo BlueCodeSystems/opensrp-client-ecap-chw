@@ -1,0 +1,21 @@
+---
+name: step1_medical_complications
+description: Flags severe acute malnutrition for children under 5 if MUAC < 11.5 cm
+priority: 1
+condition: "step1_nutrition_status < 11.5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_patient toaster 3
+description: Flags severe acute malnutrition for children under 5 if MUAC >= 11.5 cm to < 12.5
+priority: 1
+condition: "step1_nutrition_status >= 11.5 && step1_nutrition_status <= 12.5"
+actions:
+  - "isRelevant = true"
+---
+name: step1_child_oedema
+description: Flags severe acute malnutrition for children under 5 if MUAC >= 11.5 cm to <= 12.5
+priority: 1
+condition: "step1_nutrition_status >= 12.5 && step1_nutrition_status <= 26"
+actions:
+  - "isRelevant = true"

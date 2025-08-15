@@ -1,7 +1,8 @@
 {
   "count": "1",
-  "encounter_type": "Mother Pmtct Delivery",
+  "encounter_type": "Ptmct Child Outcome",
   "entity_id": "",
+  "relational_id": "",
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -44,19 +45,15 @@
       "openmrs_data_type": "phonenumber",
       "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "encounter_location": ""
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
   },
   "step1": {
-    "display_back_button": "true",
+    "title": "",
     "fields": [
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
       {
         "key": "info",
         "openmrs_entity_parent": "",
@@ -64,60 +61,56 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": " Labour and Delivery"
+        "text": "Child's Outcome"
       },
       {
         "key": "pmtct_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pmtct_id",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
         "hint": "ECAPII Comprehensive Program ID",
         "edit_type": "name"
       },
       {
-        "key": "date_of_delivery",
+        "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_delivery",
-        "type": "date_picker",
-        "hint": "Date of delivery",
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter date"
-        }
+        "openmrs_entity_id": "unique_id",
+        "type": "hidden"
       },
       {
-        "key": "place_of_delivery",
+        "key": "child_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "place_of_delivery",
-        "type": "edit_text",
-        "edit_type": "name",
-        "hint": "Place of delivery (Facility/Home)"
-      },
-      {
-        "key": "on_art_at_time_of_delivery",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "on_art_at_time_of_delivery",
+        "openmrs_entity_id": "child_outcome",
         "type": "native_radio",
-        "text_color": "#000000",
-        "label": "On ART at time of delivery?",
+        "label": "Childs Outcome",
         "options": [
           {
-            "key": "yes",
-            "text": "Yes"
+            "key": "Dead",
+            "text": "Dead"
           },
           {
-            "key": "no",
-            "text": "No"
+            "key": "Lost to follow up",
+            "text": "Lost to follow up"
+          },
+          {
+            "key": "Transited out",
+            "text": "Transited out"
+          },
+          {
+            "key": "Exited PMTCT Program",
+            "text": "Exited PMTCT Program"
+          },
+          {
+            "key": "Exited OVC program",
+            "text": "Exited OVC program"
           }
         ]
       }
+
     ]
   }
 }
